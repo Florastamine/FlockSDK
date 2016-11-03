@@ -1,0 +1,4 @@
+<material>
+    <technique name="shaders/techniques/DiffVColUnlitAlpha.xml" />
+    <texture unit="diffuse" name="textures/Smoke.dds" />
+</material>

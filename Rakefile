@@ -721,9 +721,9 @@ endif ()
 EOF
   # TODO: Rewrite in pure Ruby when it supports symlink creation on Windows platform and avoid forward/backward slash conversion
   if ENV['OS']
-    system("@echo off && mkdir \"#{dir}\"\\bin && copy Source\\Tools\\Urho3DPlayer\\Urho3DPlayer.* \"#{dir}\" >nul && (for %f in (*.bat Rakefile) do mklink \"#{dir}\"\\%f %cd%\\%f >nul) && mklink /D \"#{dir}\"\\CMake %cd%\\CMake && (for %d in (Autoload,CoreData,Data) do mklink /D \"#{dir}\"\\bin\\%d %cd%\\bin\\%d >nul)") && File.write("#{dir}/CMakeLists.txt", build_script) or abort 'Failed to scaffolding'
+    system("@echo off && mkdir \"#{dir}\"\\bin && copy Source\\Tools\\Urho3DPlayer\\Urho3DPlayer.* \"#{dir}\" >nul && (for %f in (*.bat Rakefile) do mklink \"#{dir}\"\\%f %cd%\\%f >nul) && mklink /D \"#{dir}\"\\CMake %cd%\\CMake && (for %d in (pfiles) do mklink /D \"#{dir}\"\\bin\\%d %cd%\\bin\\%d >nul)") && File.write("#{dir}/CMakeLists.txt", build_script) or abort 'Failed to scaffolding'
   else
-    system("bash -c \"mkdir -p '#{dir}'/bin && cp Source/Tools/Urho3DPlayer/Urho3DPlayer.* '#{dir}' && for f in {.,}*.sh Rakefile CMake; do ln -sf `pwd`/\\$f '#{dir}'; done && ln -sf `pwd`/bin/{Autoload,CoreData,Data} '#{dir}'/bin\"") && File.write("#{dir}/CMakeLists.txt", build_script) or abort 'Failed to scaffolding'
+    system("bash -c \"mkdir -p '#{dir}'/bin && cp Source/Tools/Urho3DPlayer/Urho3DPlayer.* '#{dir}' && for f in {.,}*.sh Rakefile CMake; do ln -sf `pwd`/\\$f '#{dir}'; done && ln -sf `pwd`/bin/{pfiles} '#{dir}'/bin\"") && File.write("#{dir}/CMakeLists.txt", build_script) or abort 'Failed to scaffolding'
   end
   return dir
 end
@@ -792,7 +792,7 @@ def android_wait_for_device retries = -1, retry_interval = 10, package = 'androi
   return retries == 0 ? nil : 0
 end
 
-def android_test_run parameter = '--es pickedLibrary Urho3DPlayer:Scripts/NinjaSnowWar.as', intent = '.SampleLauncher', package = 'com.github.urho3d', success_indicator = 'Added resource path /apk/CoreData/', payload = 'sleep 30'
+def android_test_run parameter = '--es pickedLibrary Urho3DPlayer:Scripts/NinjaSnowWar.as', intent = '.SampleLauncher', package = 'com.github.urho3d', success_indicator = 'Added resource path /apk/pfiles/', payload = 'sleep 30'
   # The device should have been found at this point
   return nil unless $specific_device
   # Capture adb's stdout and interpret it because adb neither uses stderr nor returns proper exit code on error

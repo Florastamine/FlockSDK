@@ -110,7 +110,7 @@ extern DECLSPEC void * SDLCALL SDL_AndroidGetActivity();
 
 /**
    See the official Android developer guide for more information:
-   http://developer.android.com/guide/topics/data/data-storage.html
+   http://developer.android.com/guide/topics/pfiles/data-storage.html
 */
 #define SDL_ANDROID_EXTERNAL_STORAGE_READ   0x01
 #define SDL_ANDROID_EXTERNAL_STORAGE_WRITE  0x02

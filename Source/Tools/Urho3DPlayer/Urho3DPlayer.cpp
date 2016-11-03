@@ -47,23 +47,12 @@ Urho3DPlayer::Urho3DPlayer(Context* context) :
 
 void Urho3DPlayer::Setup()
 {
+    const String Urho3DPlayer::An = "pfiles/core-main.lua"
+
     // Web platform depends on the resource system to read any data files. Skip parsing the command line file now
     // and try later when the resource system is live
-#ifndef __EMSCRIPTEN__
-    // Read command line from a file if no arguments given. This is primarily intended for mobile platforms.
-    // Note that the command file name uses a hardcoded path that does not utilize the resource system
-    // properly (including resource path prefix), as the resource system is not yet initialized at this point
+#ifndef __EMSCRIPTEN__ 
     FileSystem* filesystem = GetSubsystem<FileSystem>();
-    const String commandFileName = filesystem->GetProgramDir() + "Data/CommandLine.txt";
-    if (GetArguments().Empty() && filesystem->FileExists(commandFileName))
-    {
-        SharedPtr<File> commandFile(new File(context_, commandFileName));
-        String commandLine = commandFile->ReadLine();
-        commandFile->Close();
-        ParseArguments(commandLine, false);
-        // Reparse engine startup parameters now
-        engineParameters_ = Engine::ParseParameters(GetArguments());
-    }
 
     // Check for script file name from the arguments
     GetScriptFileName();
@@ -171,7 +160,7 @@ void Urho3DPlayer::Start()
 
         /// \hack If we are running the editor, also instantiate Lua subsystem to enable editing Lua ScriptInstances
 #ifdef URHO3D_LUA
-        if (scriptFileName_.Contains("Editor.as", false))
+        if (scriptFileName_.Contains("SDK.as", false))
             context_->RegisterSubsystem(new LuaScript(context_));
 #endif
         // If script loading is successful, proceed to main loop

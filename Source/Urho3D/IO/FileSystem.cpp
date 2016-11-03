@@ -720,11 +720,14 @@ String FileSystem::GetProgramDir() const
 
     // If the executable directory does not contain CoreData & Data directories, but the current working directory does, use the
     // current working directory instead
-    /// \todo Should not rely on such fixed convention
+    /// \todo Should not rely on such fixed convention 
+    /* 
     String currentDir = GetCurrentDir();
     if (!DirExists(programDir_ + "CoreData") && !DirExists(programDir_ + "Data") &&
         (DirExists(currentDir + "CoreData") || DirExists(currentDir + "Data")))
         programDir_ = currentDir;
+    */ 
+    programDir_ = GetCurrentDir();
 
     // Sanitate /./ construct away
     programDir_.Replace("/./", "/");

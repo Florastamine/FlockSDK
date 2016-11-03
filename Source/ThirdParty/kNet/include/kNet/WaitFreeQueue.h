@@ -23,7 +23,7 @@ namespace kNet
 {
 
 /// A wait-free queue for communication unidirectionally between two threads.
-/** This data structure is useful for simple and efficient lockless data/message passing between two-threads.
+/** This data structure is useful for simple and efficient lockless pfiles/message passing between two-threads.
 	It is implemented using a lockless circular ring buffer, and has the following properties:
 	 - At most one thread can act as a publisher/producer/writer and call Insert() to add new items to the queue.
 	 - At most one thread can consume/read the items from the queue by calling Front() and PopFront().

@@ -217,9 +217,9 @@ bool Engine::Initialize(const VariantMap& parameters)
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
             IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
-    Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "Data;CoreData").GetString().Split(';');
+    Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "pfiles").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, "ResourcePackages").GetString().Split(';');
-    Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "Autoload").GetString().Split(';');
+    Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "pfiles/early").GetString().Split(';');
 
     for (unsigned i = 0; i < resourcePaths.Size(); ++i)
     {
@@ -796,9 +796,9 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
             else if (argument == "mono")
                 ret["SoundStereo"] = false;
             else if (argument == "prepass")
-                ret["RenderPath"] = "RenderPaths/Prepass.xml";
+                ret["RenderPath"] = "shaders/render/Prepass.xml";
             else if (argument == "deferred")
-                ret["RenderPath"] = "RenderPaths/Deferred.xml";
+                ret["RenderPath"] = "shaders/render/Deferred.xml";
             else if (argument == "renderpath" && !value.Empty())
             {
                 ret["RenderPath"] = value;

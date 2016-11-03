@@ -1260,7 +1260,7 @@ macro (setup_main_executable)
     # Define resources
     if (NOT RESOURCE_DIRS)
         # If the macro caller has not defined the resource dirs then set them based on Urho3D project convention
-        foreach (DIR ${CMAKE_SOURCE_DIR}/bin/CoreData ${CMAKE_SOURCE_DIR}/bin/Data)
+        foreach (DIR ${CMAKE_SOURCE_DIR}/bin/pfiles)
             # Do not assume downstream project always follows Urho3D project convention, so double check if this directory exists before using it
             if (IS_DIRECTORY ${DIR})
                 list (APPEND RESOURCE_DIRS ${DIR})
@@ -1808,7 +1808,7 @@ if (ANDROID)
     # Create symbolic links in the build tree
     file (MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/Android/assets)
     if (NOT URHO3D_PACKAGING)
-        foreach (I CoreData Data)
+        foreach (I pfiles)
             if (NOT EXISTS ${CMAKE_SOURCE_DIR}/Android/assets/${I})
                 create_symlink (${CMAKE_SOURCE_DIR}/bin/${I} ${CMAKE_SOURCE_DIR}/Android/assets/${I} FALLBACK_TO_COPY)
             endif ()
@@ -1833,7 +1833,7 @@ else ()
     # Ensure the output directory exist before creating the symlinks
     file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
     # Create symbolic links in the build tree
-    foreach (I Autoload CoreData Data)
+    foreach (I pfiles)
         if (NOT EXISTS ${CMAKE_BINARY_DIR}/bin/${I})
             create_symlink (${CMAKE_SOURCE_DIR}/bin/${I} ${CMAKE_BINARY_DIR}/bin/${I} FALLBACK_TO_COPY)
         endif ()

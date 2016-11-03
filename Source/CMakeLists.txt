@@ -129,8 +129,3 @@ add_subdirectory (Tools)
 if (URHO3D_SAMPLES)
     add_subdirectory (Samples)
 endif ()
-
-# Urho3D extras
-if (URHO3D_EXTRAS)
-    add_subdirectory (Extras)
-endif ()

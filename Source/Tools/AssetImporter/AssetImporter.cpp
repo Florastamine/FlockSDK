@@ -489,10 +489,10 @@ void Run(const Vector<String>& arguments)
         if (resourcePath_.Empty())
         {
             resourcePath_ = outPath_;
-            // If output file already has the Models/ path (model mode), do not take it into the resource path
+            // If output file already has the objects/ path (model mode), do not take it into the resource path
             if (command == "model")
             {
-                if (resourcePath_.EndsWith("Models/", false))
+                if (resourcePath_.EndsWith("objects/", false))
                     resourcePath_ = resourcePath_.Substring(0, resourcePath_.Length() - 7);
             }
             if (resourcePath_.Empty())
@@ -1523,7 +1523,7 @@ void CollectSceneModels(OutScene& scene, aiNode* node)
     {
         OutModel model;
         model.rootNode_ = node;
-        model.outName_ = resourcePath_ + (useSubdirs_ ? "Models/" : "") + SanitateAssetName(FromAIString(node->mName)) + ".mdl";
+        model.outName_ = resourcePath_ + (useSubdirs_ ? "objects/" : "") + SanitateAssetName(FromAIString(node->mName)) + ".mdl";
         for (unsigned i = 0; i < meshes.Size(); ++i)
         {
             aiMesh* mesh = meshes[i].second_;
@@ -1693,7 +1693,7 @@ void BuildAndSaveScene(OutScene& scene, bool asPrefab)
         StaticModel* staticModel = model.bones_.Empty() ? modelNode->CreateComponent<StaticModel>() : modelNode->CreateComponent<AnimatedModel>();
 
         // Create a dummy model so that the reference can be stored
-        String modelName = (useSubdirs_ ? "Models/" : "") + GetFileNameAndExtension(model.outName_);
+        String modelName = (useSubdirs_ ? "objects/" : "") + GetFileNameAndExtension(model.outName_);
         if (!cache->Exists(modelName))
         {
             Model* dummyModel = new Model(context_);
@@ -1876,10 +1876,10 @@ void BuildAndSaveMaterial(aiMaterial* material, HashSet<String>& usedTextures)
     if (material->Get(AI_MATKEY_TWOSIDED, intVal) == AI_SUCCESS)
         twoSided = (intVal != 0);
 
-    String techniqueName = "Techniques/NoTexture";
+    String techniqueName = "shaders/techniques/NoTexture";
     if (!diffuseTexName.Empty())
     {
-        techniqueName = "Techniques/Diff";
+        techniqueName = "shaders/techniques/Diff";
         if (!normalTexName.Empty())
             techniqueName += "Normal";
         if (!specularTexName.Empty())
@@ -1952,7 +1952,7 @@ void BuildAndSaveMaterial(aiMaterial* material, HashSet<String>& usedTextures)
 
     FileSystem* fileSystem = context_->GetSubsystem<FileSystem>();
 
-    String outFileName = resourcePath_ + (useSubdirs_ ? "Materials/" : "" ) + matName + ".xml";
+    String outFileName = resourcePath_ + (useSubdirs_ ? "materials/" : "" ) + matName + ".xml";
     if (noOverwriteMaterial_ && fileSystem->FileExists(outFileName))
     {
         PrintLine("Skipping save of existing material " + matName);
@@ -2013,7 +2013,7 @@ void CopyTextures(const HashSet<String>& usedTextures, const String& sourcePath)
         else
         {
             String fullSourceName = sourcePath + *i;
-            String fullDestName = resourcePath_ + (useSubdirs_ ? "Textures/" : "") + *i;
+            String fullDestName = resourcePath_ + (useSubdirs_ ? "textures/" : "") + *i;
 
             if (!fileSystem->FileExists(fullSourceName))
             {
@@ -2349,7 +2349,7 @@ String GetMeshMaterialName(aiMesh* mesh)
     if (matName.Trimmed().Empty())
         matName = GenerateMaterialName(material);
 
-    return (useSubdirs_ ? "Materials/" : "") + matName + ".xml";
+    return (useSubdirs_ ? "materials/" : "") + matName + ".xml";
 }
 
 String GenerateMaterialName(aiMaterial* material)
@@ -2370,7 +2370,7 @@ String GetMaterialTextureName(const String& nameIn)
     if (nameIn.Length() && nameIn[0] == '*')
         return GenerateTextureName(ToInt(nameIn.Substring(1)));
     else
-        return (useSubdirs_ ? "Textures/" : "") + nameIn;
+        return (useSubdirs_ ? "textures/" : "") + nameIn;
 }
 
 String GenerateTextureName(unsigned texIndex)
@@ -2380,9 +2380,9 @@ String GenerateTextureName(unsigned texIndex)
         // If embedded texture contains encoded data, use the format hint for file extension. Else save RGBA8 data as PNG
         aiTexture* tex = scene_->mTextures[texIndex];
         if (!tex->mHeight)
-            return (useSubdirs_ ? "Textures/" : "") + inputName_ + "_Texture" + String(texIndex) + "." + tex->achFormatHint;
+            return (useSubdirs_ ? "textures/" : "") + inputName_ + "_Texture" + String(texIndex) + "." + tex->achFormatHint;
         else
-            return (useSubdirs_ ? "Textures/" : "") + inputName_ + "_Texture" + String(texIndex) + ".png";
+            return (useSubdirs_ ? "textures/" : "") + inputName_ + "_Texture" + String(texIndex) + ".png";
     }
 
     // Should not go here

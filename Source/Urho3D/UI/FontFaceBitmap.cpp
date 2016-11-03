@@ -289,7 +289,7 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
         pathName = GetPath(file->GetName());
     else
         // Otherwise, use the font resource's path
-        pathName = "Data/" + GetPath(font_->GetName());
+        pathName = "pfiles/" + GetPath(font_->GetName());
 
     // Pages
     childElem = rootElem.CreateChild("pages");
