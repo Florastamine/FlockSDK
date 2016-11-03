@@ -1,0 +1,4 @@
+<material>
+    <technique name="shaders/techniques/BasicVColUnlitAlpha.xml" />
+    <texture unit="diffuse" name="textures/SDK/IconCamera.png" />
+</material>
