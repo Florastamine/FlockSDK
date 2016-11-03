@@ -1,18 +1,5 @@
-<?xml version="1.0"?>
 <material>
-	<technique name="shaders/techniques/DiffAO.xml" quality="15" loddistance="0" />
-	<texture unit="diffuse" name="textures/Mushroom.dds" />
-	<parameter name="UOffset" value="1 0 0 0" />
-	<parameter name="VOffset" value="0 1 0 0" />
-	<parameter name="MatDiffColor" value="1 1 1 1" />
-	<parameter name="MatEmissiveColor" value="0 0 0" />
-	<parameter name="MatEnvMapColor" value="1 1 1" />
-	<parameter name="MatSpecColor" value="0.1 0.1 0.1 16" />
-	<parameter name="Roughness" value="0.5" />
-	<parameter name="Metallic" value="0" />
-	<cull value="ccw" />
-	<shadowcull value="ccw" />
-	<fill value="solid" />
-	<depthbias constant="0" slopescaled="0" />
-	<renderorder value="128" />
+    <technique name="Techniques/Diff.xml" />
+    <texture unit="diffuse" name="Textures/Mushroom.dds" />
+    <parameter name="MatSpecColor" value="0.1 0.1 0.1 16" />
 </material>
