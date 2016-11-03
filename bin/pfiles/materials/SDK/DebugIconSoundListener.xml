@@ -1,4 +1,0 @@
-<material>
-    <technique name="shaders/techniques/BasicVColUnlitAlpha.xml" />
-    <texture unit="diffuse" name="textures/SDK/IconSoundListener.png" />
-</material>

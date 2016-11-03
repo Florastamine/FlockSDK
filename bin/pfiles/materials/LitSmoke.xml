@@ -1,5 +1,0 @@
-<material>
-    <technique name="shaders/techniques/DiffLitParticleAlpha.xml" />
-    <parameter name="MatDiffColor" value="0.5 0.5 0.5 0.5" />    
-    <texture unit="diffuse" name="textures/Smoke.dds" />
-</material>

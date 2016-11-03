@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<material>
-	<technique name="shaders/techniques/DiffUnlitAlpha.xml" quality="0" loddistance="0" />
-	<texture unit="diffuse" name="textures/LogoLarge.png" />
-</material>
