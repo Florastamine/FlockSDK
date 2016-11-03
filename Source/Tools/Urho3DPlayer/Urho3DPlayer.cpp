@@ -47,7 +47,6 @@ Urho3DPlayer::Urho3DPlayer(Context* context) :
 
 void Urho3DPlayer::Setup()
 {
-    const String Urho3DPlayer::An = "pfiles/core-main.lua"
 
     // Web platform depends on the resource system to read any data files. Skip parsing the command line file now
     // and try later when the resource system is live
