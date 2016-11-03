@@ -35,10 +35,6 @@ generated/
 # Compiled Lua script
 *.luc
 
-# Generated documentation
-/Docs/html/
-/Docs/qch/
-
 # Eclipse project settings
 /.*project
 /.settings
@@ -79,7 +75,6 @@ CPackSourceConfig.cmake
 CTestTestfile.cmake
 /Source/**/*.cmake
 !/Source/ThirdParty/SDL/cmake/*.cmake
-/Docs/**/*.cmake
 
 # Precompiled header files
 *.gch/

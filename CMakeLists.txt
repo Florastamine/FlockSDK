@@ -187,5 +187,3 @@ file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
 # Urho3D source
 add_subdirectory (Source)
 
-# Urho3D documentation
-add_subdirectory (Docs)
