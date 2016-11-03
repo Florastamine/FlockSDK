@@ -94,3 +94,5 @@ configure*
 *.bak
 Thumbs.db
 .directory
+
+/.vscode
