@@ -271,7 +271,7 @@ Graphics::Graphics(Context* context) :
     maxScratchBufferRequest_(0),
     defaultTextureFilterMode_(FILTER_TRILINEAR),
     defaultTextureAnisotropy_(4),
-    shaderPath_("Shaders/HLSL/"),
+    shaderPath_("shaders/hlsl/"),
     shaderExtension_(".hlsl"),
     orientations_("LandscapeLeft LandscapeRight"),
     apiName_("D3D9")
@@ -875,7 +875,7 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
         return false;
 
     URHO3D_PROFILE(ResolveToTexture);
-    
+
     texture->SetResolveDirty(false);
 
     RECT rect;
@@ -2416,7 +2416,7 @@ void Graphics::CheckFeatureSupport()
 {
     anisotropySupport_ = true;
     dxtTextureSupport_ = true;
-    
+
     // Reset features first
     lightPrepassSupport_ = false;
     deferredSupport_ = false;
