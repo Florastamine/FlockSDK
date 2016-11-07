@@ -64,7 +64,7 @@ if %Bool_CMakeFound% == 0 (
 if %Bool_MakeFound% == 0 (
 	echo %String_TestGNUMake_Fail% 
 ) else (
-	%String_GNUMake% --directory=%OutputFolder%
+	%String_GNUMake% -j4 --directory=%OutputFolder%
 )
 
 endlocal
