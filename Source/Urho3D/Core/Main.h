@@ -75,7 +75,8 @@ int SDL_main(int argc, char** argv) \
 { \
     Urho3D::ParseArguments(argc, argv); \
     return function; \
-}
+} 
+
 // Linux or OS X: use main
 #else
 #define URHO3D_DEFINE_MAIN(function) \

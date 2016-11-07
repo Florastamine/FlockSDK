@@ -26,14 +26,14 @@
 
 using namespace Urho3D;
 
-/// Urho3DPlayer application runs a script specified on the command line.
-class Urho3DPlayer : public Application
+/// Downpour application runs a script specified on the command line.
+class Downpour : public Application
 {
-    URHO3D_OBJECT(Urho3DPlayer, Application);
+    URHO3D_OBJECT(Downpour, Application);
 
 public:
     /// Construct.
-    Urho3DPlayer(Context* context);
+    Downpour(Context* context);
 
     /// Setup before engine initialization. Verify that a script file has been specified.
     virtual void Setup();
@@ -48,9 +48,9 @@ private:
     /// Handle reload success of the script file.
     void HandleScriptReloadFinished(StringHash eventType, VariantMap& eventData);
     /// Handle reload failure of the script file.
-    void HandleScriptReloadFailed(StringHash eventType, VariantMap& eventData);
-    /// Parse script file name from the first argument.
-    void GetScriptFileName();
+    void HandleScriptReloadFailed(StringHash eventType, VariantMap& eventData); 
+
+    void Exit(void);
 
     /// Script file name.
     String scriptFileName_;
