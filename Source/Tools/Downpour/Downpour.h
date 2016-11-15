@@ -17,46 +17,44 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
+// THE SOFTWARE. 
+// 
 
-#pragma once
+#pragma once 
 
 #include <Urho3D/Engine/Application.h>
 
 using namespace Urho3D;
 
-/// Downpour application runs a script specified on the command line.
-class Downpour : public Application
-{
-    URHO3D_OBJECT(Downpour, Application);
+namespace Downpour {
+    class DownpourBase : public Urho3D::Application {
+        URHO3D_OBJECT(DownpourBase, Urho3D::Application);
 
-public:
-    /// Construct.
-    Downpour(Context* context);
+        public:
+            DownpourBase(Urho3D::Context *context);
 
-    /// Setup before engine initialization. Verify that a script file has been specified.
-    virtual void Setup();
-    /// Setup after engine initialization. Load the script and execute its start function.
-    virtual void Start();
-    /// Cleanup after the main loop. Run the script's stop function if it exists.
-    virtual void Stop();
+            virtual void Setup();
+            virtual void Start();
+            virtual void Stop();
 
-private:
-    /// Handle reload start of the script file.
-    void HandleScriptReloadStarted(StringHash eventType, VariantMap& eventData);
-    /// Handle reload success of the script file.
-    void HandleScriptReloadFinished(StringHash eventType, VariantMap& eventData);
-    /// Handle reload failure of the script file.
-    void HandleScriptReloadFailed(StringHash eventType, VariantMap& eventData); 
+            int argc_;
+            Urho3D::String argv_;
+            Urho3D::String moduleName_;
 
-    void Exit(void);
+            #ifdef URHO3D_ANGELSCRIPT
+                Urho3D::SharedPtr<Urho3D::ScriptFile> moduleEditorPtr_;
+            #endif 
+        private:
+            void HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
+            void HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
+            void HandleScriptReloadFailed(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData); 
+            void Exit(void);
+    };
+};
 
-    /// Script file name.
-    String scriptFileName_;
-    
-#ifdef URHO3D_ANGELSCRIPT
-    /// Script file.
-    SharedPtr<ScriptFile> scriptFile_;
-#endif
+namespace Downpour {
+    inline const char *GetEditorBootArg() { return("--run-editor"); }
+    inline const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
+    inline const char *GetCompiledScriptLocation() { return("pfiles/core-main.luc"); }
+    inline const char *GetSDKLocation() { return("pfiles/development/SDK_editor.as"); }
 };
