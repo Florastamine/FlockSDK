@@ -21,7 +21,7 @@
 #
 
 # Define target name
-set (TARGET_NAME Urho3DPlayer)
+set (TARGET_NAME Downpour)
 
 # Define source files
 define_source_files ()
