@@ -1008,7 +1008,7 @@ void InitParticleEffectPreview()
     particleEffectPreviewGridNode = particlePreviewScene.CreateChild("Grid");
     particleEffectPreviewGrid = particleEffectPreviewGridNode.CreateComponent("CustomGeometry");
     particleEffectPreviewGrid.numGeometries = 1;
-    particleEffectPreviewGrid.material = cache.GetResource("Material", "Materials/VColUnlit.xml");
+    particleEffectPreviewGrid.material = cache.GetResource("Material", "materials/VColUnlit.xml");
     particleEffectPreviewGrid.viewMask = 0x80000000; // Editor raycasts use viewmask 0x7fffffff
     particleEffectPreviewGrid.occludee = false;
 
@@ -1029,7 +1029,7 @@ void InitParticleEffectPreview()
 ParticleEffect@ CreateNewParticleEffect()
 {
     ParticleEffect@ effect = ParticleEffect();
-    Material@ res = cache.GetResource("Material", "Materials/Particle.xml");
+    Material@ res = cache.GetResource("Material", "materials/Particle.xml");
     if (res is null)
         log.Error("Could not load default material for new particle effect.");
     effect.material = res;
@@ -1520,8 +1520,8 @@ void RefreshParticleEffectMaterial()
             nameEdit.text = editParticleEffect.material.name;
         else
         {
-            nameEdit.text = "Materials/Particle.xml";
-            Material@ res = cache.GetResource("Material", "Materials/Particle.xml");
+            nameEdit.text = "materials/Particle.xml";
+            Material@ res = cache.GetResource("Material", "materials/Particle.xml");
             if (res !is null)
                 editParticleEffect.material = res;
         }

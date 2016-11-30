@@ -1048,7 +1048,7 @@ void CreateGrid()
     gridNode.name = "EditorGrid";
     grid = gridNode.CreateComponent("CustomGeometry");
     grid.numGeometries = 1;
-    grid.material = cache.GetResource("Material", "Materials/VColUnlit.xml");
+    grid.material = cache.GetResource("Material", "materials/VColUnlit.xml");
     grid.viewMask = 0x80000000; // Editor raycasts use viewmask 0x7fffffff
     grid.occludee = false;
 

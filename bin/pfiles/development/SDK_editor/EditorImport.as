@@ -301,7 +301,7 @@ void ImportTundraScene(const String&in fileName)
                 model.drawDistance = drawDistance;
                 model.castShadows = castShadows;
                 // Set default grey material to match Tundra defaults
-                model.material = cache.GetResource("Material", "Materials/DefaultGrey.xml");
+                model.material = cache.GetResource("Material", "materials/DefaultGrey.xml");
                 // Then try to assign the actual materials
                 for (uint i = 0; i < materialNames.length; ++i)
                 {
@@ -436,7 +436,7 @@ String GetOutModelName(const String&in ref)
 
 String GetOutMaterialName(const String&in ref)
 {
-    return "Materials/" + GetFullAssetName(ref).Replaced('/', '_').Replaced(".material", ".xml");
+    return "materials/" + GetFullAssetName(ref).Replaced('/', '_').Replaced(".material", ".xml");
 }
 
 String GetOutTextureName(const String&in ref)
