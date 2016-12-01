@@ -84,14 +84,6 @@ void StaticSprite2D::RegisterObject(Context* context)
 
 void StaticSprite2D::SetSprite(Sprite2D* sprite)
 {
-<<<<<<< HEAD
-	if (!sprite)
-	{
-		URHO3D_LOGERROR("Sprite must not be null!");
-		return;
-	}
-=======
->>>>>>> 8e2ecb9... Revert the check to not allow to set null sprite, as it should work without crashing. Safety checks in UpdateDrawRect() left.
     if (sprite == sprite_)
         return;
 
