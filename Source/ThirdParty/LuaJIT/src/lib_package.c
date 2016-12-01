@@ -375,15 +375,26 @@ static char *flor_get_library_without_arch(const char *libname) {
   } 
 
   return libname;
-}
+} 
 
 static int lj_cf_package_loader_c(lua_State *L)
 {
   const char *name = luaL_checkstring(L, 1);
-  const char *filename = findfile(L, name, "cpath");
+  const char *filename = findfile(L, name, "cpath"); 
+  const char *libname = flor_get_library_without_arch(name);
+
   if (filename == NULL) return 1;  /* library not found in this path */
-  if (ll_loadfunc(L, filename, flor_get_library_without_arch(name), 0) != 0) 
+  if (ll_loadfunc(L, filename, libname, 0) != 0) 
+  {
     loaderror(L, filename);
+    free((char *) libname); /* because libname was malloc()'ed. */
+  } 
+
+  if(libname) /* I don't really know if loaderror() halts execution or returns in some way */
+              /* So I just want to make sure if loaderror() does not halt execution, then  */
+              /* libname would still be freed.                                             */ 
+    free((char*) libname); 
+
   return 1;  /* library loaded successfully */
 }
 
