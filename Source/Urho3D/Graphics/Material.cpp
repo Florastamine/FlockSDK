@@ -1275,7 +1275,7 @@ void Material::ResetToDefaults()
     SetNumTechniques(1);
     Renderer* renderer = GetSubsystem<Renderer>();
     SetTechnique(0, renderer ? renderer->GetDefaultTechnique() :
-        GetSubsystem<ResourceCache>()->GetResource<Technique>("shaders/techniques/NoTexture.xml"));
+        GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/NoTexture.xml"));
 
     textures_.Clear();
 
