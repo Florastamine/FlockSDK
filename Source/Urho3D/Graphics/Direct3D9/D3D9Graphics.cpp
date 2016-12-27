@@ -81,22 +81,12 @@ static const D3DCMPFUNC d3dCmpFunc[] =
     D3DCMP_GREATEREQUAL
 };
 
-static const D3DTEXTUREFILTERTYPE d3dMinFilter[] =
+static const D3DTEXTUREFILTERTYPE d3dMinMagFilter[] =
 {
     D3DTEXF_POINT,
     D3DTEXF_LINEAR,
     D3DTEXF_LINEAR,
-    D3DTEXF_ANISOTROPIC,
     D3DTEXF_ANISOTROPIC
-};
-
-static const D3DTEXTUREFILTERTYPE d3dMagFilter[] =
-{
-    D3DTEXF_POINT,
-    D3DTEXF_LINEAR,
-    D3DTEXF_LINEAR,
-    D3DTEXF_ANISOTROPIC,
-    D3DTEXF_POINT,
 };
 
 static const D3DTEXTUREFILTERTYPE d3dMipFilter[] =
@@ -104,7 +94,6 @@ static const D3DTEXTUREFILTERTYPE d3dMipFilter[] =
     D3DTEXF_POINT,
     D3DTEXF_POINT,
     D3DTEXF_LINEAR,
-    D3DTEXF_ANISOTROPIC,
     D3DTEXF_ANISOTROPIC
 };
 
@@ -282,7 +271,7 @@ Graphics::Graphics(Context* context) :
     maxScratchBufferRequest_(0),
     defaultTextureFilterMode_(FILTER_TRILINEAR),
     defaultTextureAnisotropy_(4),
-    shaderPath_("Shaders/HLSL/"),
+    shaderPath_("shaders/hlsl/"),
     shaderExtension_(".hlsl"),
     orientations_("LandscapeLeft LandscapeRight"),
     apiName_("D3D9")
@@ -886,7 +875,7 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
         return false;
 
     URHO3D_PROFILE(ResolveToTexture);
-    
+
     texture->SetResolveDirty(false);
 
     RECT rect;
@@ -1457,18 +1446,13 @@ void Graphics::SetTexture(unsigned index, Texture* texture)
         if (filterMode == FILTER_DEFAULT)
             filterMode = defaultTextureFilterMode_;
 
-        D3DTEXTUREFILTERTYPE min, mag, mip;
-        min = d3dMinFilter[filterMode];
-        if (min != impl_->minFilters_[index])
+        D3DTEXTUREFILTERTYPE minMag, mip;
+        minMag = d3dMinMagFilter[filterMode];
+        if (minMag != impl_->minMagFilters_[index])
         {
-            impl_->device_->SetSamplerState(index, D3DSAMP_MINFILTER, min);
-            impl_->minFilters_[index] = min;
-        }
-        mag = d3dMagFilter[filterMode];
-        if (mag != impl_->magFilters_[index])
-        {
-            impl_->device_->SetSamplerState(index, D3DSAMP_MAGFILTER, mag);
-            impl_->magFilters_[index] = mag;
+            impl_->device_->SetSamplerState(index, D3DSAMP_MAGFILTER, minMag);
+            impl_->device_->SetSamplerState(index, D3DSAMP_MINFILTER, minMag);
+            impl_->minMagFilters_[index] = minMag;
         }
         mip = d3dMipFilter[filterMode];
         if (mip != impl_->mipFilters_[index])
@@ -2432,7 +2416,7 @@ void Graphics::CheckFeatureSupport()
 {
     anisotropySupport_ = true;
     dxtTextureSupport_ = true;
-    
+
     // Reset features first
     lightPrepassSupport_ = false;
     deferredSupport_ = false;
@@ -2587,8 +2571,7 @@ void Graphics::ResetCachedState()
     for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
     {
         textures_[i] = 0;
-        impl_->minFilters_[i] = D3DTEXF_POINT;
-        impl_->magFilters_[i] = D3DTEXF_POINT;
+        impl_->minMagFilters_[i] = D3DTEXF_POINT;
         impl_->mipFilters_[i] = D3DTEXF_NONE;
         impl_->uAddressModes_[i] = D3DTADDRESS_WRAP;
         impl_->vAddressModes_[i] = D3DTADDRESS_WRAP;

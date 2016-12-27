@@ -50,7 +50,6 @@ static const char* filterModeNames[] =
     "bilinear",
     "trilinear",
     "anisotropic",
-    "nearestanisotropic",
     "default",
     0
 };
