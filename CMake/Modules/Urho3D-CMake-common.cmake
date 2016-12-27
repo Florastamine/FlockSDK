@@ -114,7 +114,7 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     option (URHO3D_SAMPLES "Build sample applications" TRUE)
     option (URHO3D_UPDATE_SOURCE_TREE "Enable commands to copy back some of the generated build artifacts from build tree to source tree to facilitate devs to push them as part of a commit (for library devs with push right only)")
     option (URHO3D_BINDINGS "Enable API binding generation support for script subystems")
-    cmake_dependent_option (URHO3D_CLANG_TOOLS "Build Clang tools (native on host system only)" FALSE " AND NOT ARM " FALSE)
+    cmake_dependent_option (URHO3D_CLANG_TOOLS "Build Clang tools (native on host system only)" FALSE "NOT ARM" FALSE)
     mark_as_advanced (URHO3D_UPDATE_SOURCE_TREE URHO3D_BINDINGS URHO3D_CLANG_TOOLS)
     cmake_dependent_option (URHO3D_TOOLS "Build tools (native, RPI, and generic ARM only)" TRUE " " FALSE)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native, RPI, and generic ARM only)" FALSE " " FALSE)
@@ -331,7 +331,7 @@ if (URHO3D_D3D11)
 endif ()
 
 # Add definitions for GLEW
-if ( AND NOT ARM  AND URHO3D_OPENGL)
+if (NOT ARM  AND URHO3D_OPENGL)
     add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU)
 endif ()
 
