@@ -44,12 +44,6 @@ for a in $@; do
         Eclipse\ CDT4\ -\ Unix\ Makefiles)
             ECLIPSE=1
             ;;
-        -DIOS=1)
-            IOS=1
-            ;;
-        -DANDROID=1)
-            ANDROID=1 && OPTS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAINS/android.toolchain.cmake"
-            ;;
         -DRPI=1)
             if [[ ! $(uname -m) =~ ^arm ]]; then OPTS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAINS/raspberrypi.toolchain.cmake"; fi
             ;;
@@ -58,9 +52,6 @@ for a in $@; do
             ;;
         -DWIN32=1)
             OPTS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAINS/mingw.toolchain.cmake"
-            ;;
-        -DWEB=1)
-            OPTS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAINS/emscripten.toolchain.cmake"
             ;;
     esac
 done
