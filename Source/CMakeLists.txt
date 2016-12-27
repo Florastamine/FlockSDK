@@ -28,7 +28,7 @@ if (HAVE_STDINT_H)
 endif ()
 
 # Setup RPATH settings
-if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32 AND NOT ANDROID AND NOT IOS AND NOT WEB)
+if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
     # Add RPATH entries when building
     set (CMAKE_SKIP_BUILD_RPATH FALSE)
     # But don't set them yet in the build tree
@@ -101,7 +101,7 @@ if (URHO3D_PHYSICS)
     add_subdirectory (ThirdParty/Bullet)
 endif ()
 
-if (NOT ANDROID AND NOT ARM AND NOT WEB)
+if (NOT ARM)
     if (URHO3D_OPENGL)
         add_subdirectory (ThirdParty/GLEW)
     elseif (NOT URHO3D_D3D11)

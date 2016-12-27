@@ -25,10 +25,6 @@ set (TARGET_NAME sqlite)
 
 # https://www.sqlite.org/compile.html
 add_definitions (-DSQLITE_USE_URI=1 -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_SOUNDEX)
-# Do not use pthread and dl libraries for Web platform
-if (WEB)
-    add_definitions (-DSQLITE_THREADSAFE=0 -DSQLITE_OMIT_LOAD_EXTENSION)
-endif ()
 
 # Define source files
 set (SOURCE_FILES src/sqlite3.c)
@@ -40,30 +36,28 @@ setup_library ()
 install_header_files (DIRECTORY src/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/SQLite FILES_MATCHING PATTERN *.h)  # Note: the trailing slash is significant
 
 # Setup additional SQLite CLI standalone target (this target can be transfered and executed on an embedded device, such as Raspberry Pi and Android)
-if (NOT IOS AND NOT WEB)
-    # Define target name for SQLite shell
-    set (TARGET_NAME isql)
+# Define target name for SQLite shell
+set (TARGET_NAME isql)
 
-    # Define source files
-    set (SOURCE_FILES src/shell.c src/sqlite3.c src/sqlite3.h)
+# Define source files
+set (SOURCE_FILES src/shell.c src/sqlite3.c src/sqlite3.h)
 
-    # Define dependency libs
-    if (NOT WIN32)
-        set (LIBS dl)
-        if (READLINE_FOUND)
-            add_definitions (-DHAVE_READLINE)
-            # FIXME: temporary quick fix
-            if (RPI AND CMAKE_CROSSCOMPILING)
-                set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=\"${SYSROOT}\"")
-            endif ()
-            list (APPEND INCLUDE_DIRS ${READLINE_INCLUDE_DIRS})
-            list (APPEND LIBS ${READLINE_LIBRARIES})
+# Define dependency libs
+if (NOT WIN32)
+    set (LIBS dl)
+    if (READLINE_FOUND)
+        add_definitions (-DHAVE_READLINE)
+        # FIXME: temporary quick fix
+        if (RPI AND CMAKE_CROSSCOMPILING)
+            set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=\"${SYSROOT}\"")
         endif ()
+        list (APPEND INCLUDE_DIRS ${READLINE_INCLUDE_DIRS})
+        list (APPEND LIBS ${READLINE_LIBRARIES})
     endif ()
-
-    # Setup target
-    setup_executable (NODEPS)
 endif ()
+
+# Setup target
+setup_executable (NODEPS)
 
 # SQLite will not work correctly with the -ffast-math option of GCC
 string (REPLACE -ffast-math "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
