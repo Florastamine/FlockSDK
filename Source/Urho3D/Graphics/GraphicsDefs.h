@@ -229,6 +229,7 @@ enum TextureFilterMode
     FILTER_BILINEAR,
     FILTER_TRILINEAR,
     FILTER_ANISOTROPIC,
+    FILTER_NEAREST_ANISOTROPIC,
     FILTER_DEFAULT,
     MAX_FILTERMODES
 };
@@ -420,6 +421,10 @@ extern URHO3D_API const StringHash PSP_LIGHTMATRICES;
 extern URHO3D_API const StringHash PSP_VSMSHADOWPARAMS;
 extern URHO3D_API const StringHash PSP_ROUGHNESS;
 extern URHO3D_API const StringHash PSP_METALLIC;
+extern URHO3D_API const StringHash PSP_LIGHTRAD;
+extern URHO3D_API const StringHash PSP_LIGHTLENGTH;
+extern URHO3D_API const StringHash PSP_ZONEMIN;
+extern URHO3D_API const StringHash PSP_ZONEMAX;
 
 // Scale calculation from bounding box diagonal.
 extern URHO3D_API const Vector3 DOT_SCALE;

@@ -583,7 +583,7 @@ Technique* Renderer::GetDefaultTechnique() const
 {
     // Assign default when first asked if not assigned yet
     if (!defaultTechnique_)
-        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = GetSubsystem<ResourceCache>()->GetResource<Technique>("shaders/techniques/NoTexture.xml");
+        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/NoTexture.xml");
 
     return defaultTechnique_;
 }
@@ -1617,12 +1617,12 @@ void Renderer::Initialize()
     // Validate the shadow quality level
     SetShadowQuality(shadowQuality_);
 
-    defaultLightRamp_ = cache->GetResource<Texture2D>("textures/Ramp.png");
-    defaultLightSpot_ = cache->GetResource<Texture2D>("textures/Spot.png");
+    defaultLightRamp_ = cache->GetResource<Texture2D>("Textures/Ramp.png");
+    defaultLightSpot_ = cache->GetResource<Texture2D>("Textures/Spot.png");
     defaultMaterial_ = new Material(context_);
 
     defaultRenderPath_ = new RenderPath();
-    defaultRenderPath_->Load(cache->GetResource<XMLFile>("shaders/render/Forward.xml"));
+    defaultRenderPath_->Load(cache->GetResource<XMLFile>("RenderPaths/Forward.xml"));
 
     CreateGeometries();
     CreateInstancingBuffer();

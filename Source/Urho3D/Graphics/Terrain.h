@@ -22,6 +22,7 @@
 
 #pragma once
 
+#include "../Container/ArrayPtr.h"
 #include "../Scene/Component.h"
 
 namespace Urho3D

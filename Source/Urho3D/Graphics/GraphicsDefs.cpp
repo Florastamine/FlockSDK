@@ -85,6 +85,10 @@ extern URHO3D_API const StringHash PSP_LIGHTMATRICES("LightMatricesPS");
 extern URHO3D_API const StringHash PSP_VSMSHADOWPARAMS("VSMShadowParams");
 extern URHO3D_API const StringHash PSP_ROUGHNESS("Roughness");
 extern URHO3D_API const StringHash PSP_METALLIC("Metallic");
+extern URHO3D_API const StringHash PSP_LIGHTRAD("LightRad");
+extern URHO3D_API const StringHash PSP_LIGHTLENGTH("LightLength");
+extern URHO3D_API const StringHash PSP_ZONEMIN("ZoneMin");
+extern URHO3D_API const StringHash PSP_ZONEMAX("ZoneMax");
 
 extern URHO3D_API const Vector3 DOT_SCALE(1 / 3.0f, 1 / 3.0f, 1 / 3.0f);
 
@@ -103,7 +107,7 @@ extern URHO3D_API const VertexElement LEGACY_VERTEXELEMENTS[] =
     VertexElement(TYPE_VECTOR4, SEM_TEXCOORD, 4, true),      // Instancematrix1
     VertexElement(TYPE_VECTOR4, SEM_TEXCOORD, 5, true),      // Instancematrix2
     VertexElement(TYPE_VECTOR4, SEM_TEXCOORD, 6, true),      // Instancematrix3
-    VertexElement(TYPE_INT, SEM_OBJECTINDEX, 0, false)      // Objectindex
+    VertexElement(TYPE_INT, SEM_OBJECTINDEX, 0, false)       // Objectindex
 };
 
 extern URHO3D_API const unsigned ELEMENT_TYPESIZES[] =
