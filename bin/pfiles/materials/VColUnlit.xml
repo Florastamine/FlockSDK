@@ -1,3 +1,3 @@
 <material>
-    <technique name="Techniques/NoTextureUnlitVCol.xml" />
+    <technique name="shaders/techniques/NoTextureUnlitVCol.xml" />
 </material>

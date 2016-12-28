@@ -339,7 +339,7 @@ static void loaderror(lua_State *L, const char *filename)
 {
   luaL_error(L, "error loading module " LUA_QS " from file " LUA_QS ":\n\t%s",
 	     lua_tostring(L, 1), filename, lua_tostring(L, -1));
-}
+} 
 
 static int lj_cf_package_loader_lua(lua_State *L)
 {
@@ -350,6 +350,31 @@ static int lj_cf_package_loader_lua(lua_State *L)
   if (luaL_loadfile(L, filename) != 0)
     loaderror(L, filename);
   return 1;  /* library loaded successfully */
+} 
+
+static char *flor_strcut(const char *str) {
+  if(str != NULL) {
+    char *rcut = (char *) malloc(sizeof(char) * (strlen(str) - 3 + 1));
+    memcpy(rcut, &str[0], strlen(str) - 3);
+    rcut[strlen(rcut) - 1] = 0;
+
+    return rcut;
+  }
+
+  return NULL;
+}
+
+static char *flor_get_library_without_arch(const char *libname) {
+  if(libname != NULL) {
+    const int llen = strlen(libname);
+    const char a = *(libname + llen - 2), b = *(libname + llen - 1); 
+
+    if((a == '3' && b == '2') || (a == '6' && b == '4')) {
+      return flor_strcut(libname);
+    } 
+  } 
+
+  return libname;
 }
 
 static int lj_cf_package_loader_c(lua_State *L)
@@ -357,7 +382,7 @@ static int lj_cf_package_loader_c(lua_State *L)
   const char *name = luaL_checkstring(L, 1);
   const char *filename = findfile(L, name, "cpath");
   if (filename == NULL) return 1;  /* library not found in this path */
-  if (ll_loadfunc(L, filename, name, 0) != 0)
+  if (ll_loadfunc(L, filename, flor_get_library_without_arch(name), 0) != 0) 
     loaderror(L, filename);
   return 1;  /* library loaded successfully */
 }
@@ -607,4 +632,3 @@ LUALIB_API int luaopen_package(lua_State *L)
   lua_pop(L, 1);
   return 1;
 }
-

@@ -47,21 +47,20 @@ namespace Urho3D
 
 static const char* checkDirs[] =
 {
-    "Fonts",
-    "Materials",
-    "Models",
-    "Music",
-    "Objects",
-    "Particle",
-    "PostProcess",
-    "RenderPaths",
-    "Scenes",
-    "Scripts",
-    "Sounds",
-    "Shaders",
-    "Techniques",
-    "Textures",
-    "UI",
+    "fonts",
+    "materials",
+    "objects",
+    "sound/stream",
+    "particles",
+    "shaders/pp",
+    "shaders/render",
+    "levels",
+    "logic",
+    "sound",
+    "shaders",
+    "shaders/techniques",
+    "textures",
+    "ui",
     0
 };
 

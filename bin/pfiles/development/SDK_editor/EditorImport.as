@@ -43,7 +43,7 @@ void ImportAnimation(const String&in fileName)
 
   String modelName = "objects/" + GetFileName(fileName) + ".ani";
   String outFileName = sceneResourcePath + modelName;
-  fileSystem.CreateDir(sceneResourcePath + "Models");
+  fileSystem.CreateDir(sceneResourcePath + "objects");
 
   Array<String> args;
   args.Push("anim");
@@ -71,7 +71,7 @@ void ImportModel(const String&in fileName)
 
     String modelName = "objects/" + GetFileName(fileName) + ".mdl";
     String outFileName = sceneResourcePath + modelName;
-    fileSystem.CreateDir(sceneResourcePath + "Models");
+    fileSystem.CreateDir(sceneResourcePath + "objects");
 
     Array<String> args;
     args.Push("model");
@@ -149,9 +149,9 @@ void ImportScene(const String&in fileName)
 
 void ImportTundraScene(const String&in fileName)
 {
-    fileSystem.CreateDir(sceneResourcePath + "Materials");
-    fileSystem.CreateDir(sceneResourcePath + "Models");
-    fileSystem.CreateDir(sceneResourcePath + "Textures");
+    fileSystem.CreateDir(sceneResourcePath + "materials");
+    fileSystem.CreateDir(sceneResourcePath + "objects");
+    fileSystem.CreateDir(sceneResourcePath + "textures");
 
     XMLFile source;
     source.Load(File(fileName, FILE_READ));
