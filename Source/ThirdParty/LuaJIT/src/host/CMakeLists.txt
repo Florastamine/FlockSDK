@@ -22,9 +22,7 @@
 
 if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
     # Set CMake minimum version and CMake policy required by Urho3D-CMake-common module
-    if (APPLE)
-        cmake_minimum_required (VERSION 3.4.1)
-    elseif (WIN32)
+    if (WIN32)
         cmake_minimum_required (VERSION 3.2.3)
     else ()
         cmake_minimum_required (VERSION 2.8.6)
@@ -38,8 +36,6 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
         if (CMAKE_VERSION VERSION_GREATER 3.0.0 OR CMAKE_VERSION VERSION_EQUAL 3.0.0)
             # Disallow use of the LOCATION target property - so we set to OLD as we still need it
             cmake_policy (SET CMP0026 OLD)
-            # MACOSX_RPATH is enabled by default
-            cmake_policy (SET CMP0042 NEW)
         endif ()
     endif ()
 

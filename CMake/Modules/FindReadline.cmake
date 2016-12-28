@@ -28,9 +28,6 @@
 #
 
 if (APPLE AND NOT READLINE_INCLUDE_DIRS AND NOT READLINE_LIBRARIES)
-    # Assuming GNU Readline development library is installed using Homebrew (keg-only - prebuilt universal binary)
-    execute_process (COMMAND find /usr/local/Cellar/readline -type d -name include OUTPUT_VARIABLE INC_HINTS ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-    execute_process (COMMAND find /usr/local/Cellar/readline -type d -name lib OUTPUT_VARIABLE LIB_HINTS ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 elseif (NATIVE_64BIT AND NOT URHO3D_64BIT)
     # To cater for 32-bit build on 64-bit host system using Debian-based distros; no special handling required for Redhat-based distros but no harm done in doing below
     set (LIB_HINTS /usr/lib32)

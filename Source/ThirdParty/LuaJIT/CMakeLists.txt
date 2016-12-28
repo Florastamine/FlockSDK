@@ -25,9 +25,7 @@
 
 if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
     # Set CMake minimum version and CMake policy required by Urho3D-CMake-common module
-    if (APPLE)
-        cmake_minimum_required (VERSION 3.4.1)
-    elseif (WIN32)
+    if (WIN32)
         cmake_minimum_required (VERSION 3.2.3)
     else ()
         cmake_minimum_required (VERSION 2.8.6)
@@ -41,8 +39,6 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
         if (CMAKE_VERSION VERSION_GREATER 3.0.0 OR CMAKE_VERSION VERSION_EQUAL 3.0.0)
             # Disallow use of the LOCATION target property - so we set to OLD as we still need it
             cmake_policy (SET CMP0026 OLD)
-            # MACOSX_RPATH is enabled by default
-            cmake_policy (SET CMP0042 NEW)
         endif ()
     endif ()
 
@@ -199,7 +195,7 @@ if (NOT LUAJIT_CACHE STREQUAL "${URHO3D_64BIT}-${LUAJIT_DISABLE_FFI}-${LUAJIT_DI
     else ()
         string (REPLACE " " ";" TARGET_TCFLAGS "${CMAKE_C_FLAGS}")   # Convert string of flags to list of flags
         get_directory_property (COMPILE_DEFINITIONS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMPILE_DEFINITIONS)
-        string (REPLACE ";" ";-D" COMPILE_DEFINITIONS "-D${COMPILE_DEFINITIONS}")    # Prefix defines with -D 
+        string (REPLACE ";" ";-D" COMPILE_DEFINITIONS "-D${COMPILE_DEFINITIONS}")    # Prefix defines with -D
         execute_process (COMMAND egrep -V RESULT_VARIABLE EGREP_EXIT_CODE OUTPUT_QUIET ERROR_QUIET)
         if (EGREP_EXIT_CODE EQUAL 0)
             set (FILTER COMMAND egrep "LJ_|MIPSEL")
@@ -406,7 +402,6 @@ else ()
         set (CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -m32")
     endif ()
     if (APPLE)
-        set (LJVM_MODE machasm)
     else ()
         set (LJVM_MODE elfasm)
     endif ()
@@ -453,7 +448,7 @@ endif ()
 install_header_files (DIRECTORY src/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/LuaJIT FILES_MATCHING PATTERN *.h *.hpp)  # Note: the trailing slash is significant
 
 # Setup additional Lua standalone target (this target can be transfered and executed on an embedded device, such as Raspberry Pi and Android)
-if (NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-LuaJIT)
+if (NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-LuaJIT AND NOT IOS AND NOT WEB)
     # Define target name for LuaJIT interpreter cum compiler
     set (TARGET_NAME luajit_interpreter)   # Note: intended target name is 'luajit' which clashes with 'LuaJIT' library target above for case-insensitive platform
 

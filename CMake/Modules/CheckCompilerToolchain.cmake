@@ -41,28 +41,6 @@
 #  HAVE_ALTIVEC
 #
 
-if (EMSCRIPTEN AND CMAKE_HOST_WIN32)
-    set (EMCC_FIX EMCC_FIX)
-    set (NULL_DEVICE${EMCC_FIX} ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/null.c)
-    execute_process (COMMAND ${CMAKE_COMMAND} -E touch ${NULL_DEVICE${EMCC_FIX}})
-endif ()
-
-if (NOT MSVC AND NOT DEFINED NATIVE_PREDEFINED_MACROS)
-    if (IOS OR TVOS)
-        # Assume arm64 is the native arch (this does not prevent our build system to target armv7 later in universal binary build)
-        set (ARCH_FLAGS -arch arm64)
-    elseif (ANDROID_COMPILER_IS_CLANG)
-        # Use the same target flag as configured by Android/CMake toolchain file
-        string (REGEX REPLACE "^.*-target ([^ ]+).*$" "-target;\\1" ARCH_FLAGS "${ANDROID_CXX_FLAGS}")  # Stringify for string replacement
-    endif ()
-    execute_process (COMMAND ${CMAKE_C_COMPILER} ${ARCH_FLAGS} -E -dM -xc ${NULL_DEVICE${EMCC_FIX}} RESULT_VARIABLE CC_EXIT_STATUS OUTPUT_VARIABLE NATIVE_PREDEFINED_MACROS ERROR_QUIET)
-    if (NOT CC_EXIT_STATUS EQUAL 0)
-        message (FATAL_ERROR "Could not check compiler toolchain as it does not handle '-E -dM' compiler flags correctly")
-    endif ()
-    string (REPLACE \n ";" NATIVE_PREDEFINED_MACROS "${NATIVE_PREDEFINED_MACROS}")    # Stringify for string replacement
-    set (NATIVE_PREDEFINED_MACROS ${NATIVE_PREDEFINED_MACROS} CACHE INTERNAL "Compiler toolchain native predefined macros")
-endif ()
-
 macro (check_native_define REGEX OUTPUT_VAR)
     if (NOT DEFINED ${OUTPUT_VAR})
         string (REGEX MATCH "#define +${REGEX} +([^;]+)" matched "${NATIVE_PREDEFINED_MACROS}")
@@ -143,7 +121,7 @@ if (NOT ARM)
             check_extension (sse)
             check_extension (sse2)
         endif ()
-        if (NOT APPLE AND NOT WIN32)    # Linux only
+        if (NOT WIN32)    # Linux only
             check_extension (mmx)
             check_extension (3dnow __3dNOW__)
         endif ()

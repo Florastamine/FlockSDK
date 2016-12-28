@@ -728,7 +728,7 @@ enum aiComponent
  *  MD3 file. This can also be a search path.
  *
  * By default Assimp's behaviour is as follows: If a MD3 file
- * <tt>any_path/objects/any_q3_subdir/model_name/file_name.md3</tt> is
+ * <tt>any_path/models/any_q3_subdir/model_name/file_name.md3</tt> is
  * loaded, the library tries to locate the corresponding shader file in
  * <tt>any_path/scripts/model_name.shader</tt>. This property overrides this
  * behaviour. It can either specify a full path to the shader to be loaded

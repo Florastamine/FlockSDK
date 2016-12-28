@@ -59,7 +59,7 @@ add_definitions (-DURHO3D_IS_BUILDING)
 if (ODBC_VERSION AND NOT ODBC_VERSION VERSION_LESS 3)
     add_definitions (-DODBC_3_OR_LATER)
 endif ()
-if (ANDROID AND DEFINED ENV{ASSET_DIR_INDICATOR})
+if (DEFINED ENV{ASSET_DIR_INDICATOR})
     add_definitions (-DASSET_DIR_INDICATOR=\"$ENV{ASSET_DIR_INDICATOR}\")
 endif ()
 
@@ -100,9 +100,6 @@ else ()
         list (APPEND EXCLUDED_SOURCE_DIRS Graphics/Direct3D11)
     endif ()
 endif ()
-if (APPLE AND NOT IOS)
-    set (GLOB_OBJC_PATTERN *.m)     # Should only pick up MacFileWatcher.m for MacOSX platform at the moment
-endif ()
 string (REPLACE ";" "/[^;]+;" EXCLUDE_PATTERNS "${EXCLUDED_SOURCE_DIRS};")
 define_source_files (EXCLUDE_PATTERNS ${EXCLUDE_PATTERNS} GLOB_CPP_PATTERNS *.cpp ${GLOB_OBJC_PATTERN} RECURSE GROUP PCH Precompiled.h)
 
@@ -124,29 +121,15 @@ add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/librevision.h
     DEPENDS ${URHO3D_DEPS} ${CMAKE_SOURCE_DIR}/CMake/Modules/GetUrho3DRevision.cmake
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "Generating GIT revision number (tag + last commit SHA-1)")
-if (EMSCRIPTEN)
-    # Emscripten will attempt to generate system libraries in LLVM bitcode (libcxxabi, gl, libc, and dlmalloc) when linking for the very first time
-    # However, currently it does so without any locking resulting in potentially multiple same generation with build system that supports concurrent build processes such as ours
-    # Workaround that by calling Emscripten builder to generate all the required system libraries (in case it is the very first time) ahead of time in an orderly fashion
-    set (EMBUILDER_SYSTEM_LIBS_symbolic EMBUILDER_SYSTEM_LIBS_symbolic)
-    list (APPEND EMSCRIPTEN_SYSTEM_LIBS dlmalloc libc libcxxabi gl)
-    add_custom_command (OUTPUT ${EMBUILDER_SYSTEM_LIBS_symbolic}
-        COMMAND ${EMBUILDER} build ${EMSCRIPTEN_SYSTEM_LIBS})
-    list (APPEND SYMBOLIC_SOURCES ${EMBUILDER_SYSTEM_LIBS_symbolic})
-endif ()
 set_source_files_properties (${SYMBOLIC_SOURCES} PROPERTIES SYMBOLIC TRUE)
 
 # Use the AutoBinder tool to generate source files for binding script subsystems
 if (URHO3D_BINDINGS)
     # Build the Clang-tools as external project (even when we are not cross-compiling because it needs C++11 standard on) for auto-binding generation
     include (ExternalProject)
-    if (IOS)
-        # For iOS target, ensure the host environment is cleared first; Also workaround a known CMake/Xcode generator bug which prevents it from installing binaries correctly
-        set (IOS_FIX CMAKE_COMMAND /usr/bin/env -i PATH=$ENV{PATH} ${CMAKE_COMMAND} BUILD_COMMAND bash -c "sed -i '' 's/EFFECTIVE_PLATFORM_NAME//g' CMakeScripts/install_postBuildPhase.make*")
-    endif ()
     ExternalProject_Add (AutoBinder
             SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/Clang-Tools
-            CMAKE_ARGS -DURHO3D_CLANG_TOOLS=AutoBinder -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool/clang -DDEST_INCLUDE_DIR=${DEST_INCLUDE_DIR} -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} ${IOS_FIX})
+            CMAKE_ARGS -DURHO3D_CLANG_TOOLS=AutoBinder -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool/clang -DDEST_INCLUDE_DIR=${DEST_INCLUDE_DIR} -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR})
     file (MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated/generated)
     foreach (SCRIPT AngelScript LuaScript JavaScript)
         string (TOUPPER URHO3D_${SCRIPT} OPT)
@@ -168,12 +151,9 @@ if (URHO3D_LUA)
     if (CMAKE_CROSSCOMPILING OR URHO3D_LUAJIT)
         # When cross-compiling or using LuaJIT, build the tolua++ host tool as external project using normal Lua (there is not much point using LuaJIT for the tool building even when technically it can)
         include (ExternalProject)
-        if (IOS)
-            set (IOS_FIX CMAKE_COMMAND /usr/bin/env -i PATH=$ENV{PATH} ${CMAKE_COMMAND} BUILD_COMMAND bash -c "sed -i '' 's/EFFECTIVE_PLATFORM_NAME//g' CMakeScripts/install_postBuildPhase.make*")
-        endif ()
         ExternalProject_Add (tolua++
             SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/ThirdParty/toluapp/src/bin
-            CMAKE_ARGS -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -DURHO3D_UPDATE_SOURCE_TREE=${URHO3D_UPDATE_SOURCE_TREE} ${IOS_FIX})
+            CMAKE_ARGS -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -DURHO3D_UPDATE_SOURCE_TREE=${URHO3D_UPDATE_SOURCE_TREE})
     else ()
         # Otherwise, build it internally as per normal
         add_subdirectory (../ThirdParty/toluapp/src/bin ../ThirdParty/toluapp/src/bin)
@@ -272,18 +252,11 @@ if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3.
     list (APPEND LIBS gcc)
 endif ()
 
-# Setup library output path
-if (ANDROID)
-    set (OUTPUT_PATH ${ANDROID_LIBRARY_OUTPUT_PATH})
-else ()
-    set (OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-endif ()
+# Setup library output path 
+set (OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 set_output_directories (${OUTPUT_PATH} ARCHIVE LIBRARY)
 
 # Setup target
-if (IOS)
-    set (EXCLUDE_FROM_ALL EXCLUDE_FROM_ALL)
-endif ()
 setup_library (${URHO3D_LIB_TYPE} ${EXCLUDE_FROM_ALL})
 file (READ .soversion SOVERSION)
 string (STRIP ${SOVERSION} SOVERSION)
@@ -303,9 +276,7 @@ if (MINGW)
     set (CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES_INIT} -lwinmm")
     set (CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES_INIT} -lwinmm")
 endif ()
-if (APPLE)
-    set (FORCE_LOAD -force_load)
-elseif (NOT MSVC)
+if (NOT MSVC)
     set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -Wl,--whole-archive)
     if (WIN32 AND URHO3D_LIB_TYPE STREQUAL SHARED)
         set_target_properties (${TARGET_NAME} PROPERTIES PREFIX "")
@@ -334,14 +305,7 @@ if (NOT XCODE AND NOT MSVC)
         set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -Wl,--no-whole-archive)
     endif ()
     if (NOT URHO3D_LIB_TYPE STREQUAL SHARED)
-        if (APPLE)
-            # Apple libtool takes archives directly as input
-            add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND mv $<TARGET_FILE:${TARGET_NAME}>{,.engine}
-                COMMAND libtool -static $<TARGET_FILE:${TARGET_NAME}>.engine ${ARCHIVES} -o $<TARGET_FILE:${TARGET_NAME}>
-                COMMAND rm $<TARGET_FILE:${TARGET_NAME}>.engine
-                COMMENT "Merging all archives into a single static library using libtool")
-        elseif (EMSCRIPTEN OR CMAKE_BINARY_DIR MATCHES " ")
+        if (CMAKE_BINARY_DIR MATCHES " ")
             # Do it the hard way by first extracting the object (bitcode) files and appending them to final archive:
             # a) For Emscripten build as Emscripten emar (llvm-ar) neither takes archives directly as input nor supports MRI-style script
             # b) When the build tree path contains spaces because MRI script does not support spaces in path even with proper escape
@@ -496,18 +460,10 @@ configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Urho3D.pc.in ${CMAKE_CURRENT_BINARY_
 if (MSVC)
     add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -DLIB_NAME=$<TARGET_LINKER_FILE_NAME:${TARGET_NAME}> -P ${CMAKE_SOURCE_DIR}/CMake/Modules/AdjustPkgConfigForMSVC.cmake)
 endif ()
-if (ANDROID)
-    set (RENAME RENAME Urho3D-${ANDROID_NDK_ABI_NAME}.pc)
-endif ()
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/Urho3D.pc DESTINATION ${DEST_PKGCONFIG_DIR} ${RENAME})
 
 # Define post build steps
-if (ANDROID_NDK_GDB)
-    # Copy the library while it still has debug symbols for ndk-gdb
-    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${TARGET_NAME}> ${NDK_GDB_SOLIB_PATH}
-        COMMENT "Copying Urho3D library with debug symbols to ${NDK_GDB_SOLIB_PATH} directory")
-endif ()
-if (URHO3D_LIB_TYPE STREQUAL SHARED AND (ANDROID OR ARM))
+if (URHO3D_LIB_TYPE STREQUAL SHARED AND ARM)
     # Strip the output shared library for embedded devices
     add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} $<TARGET_FILE:${TARGET_NAME}>
         COMMENT "Stripping Urho3D shared library")

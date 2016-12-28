@@ -34,10 +34,6 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
     # But don't set them yet in the build tree
     set (CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     if (APPLE)
-        if (CMAKE_VERSION VERSION_GREATER 2.8.12 OR CMAKE_VERSION VERSION_EQUAL 2.8.12)
-            set (CMAKE_MACOSX_RPATH TRUE)
-        endif ()
-        set (ORIGIN @loader_path)
     else ()
         set (ORIGIN $ORIGIN)
     endif ()
@@ -59,9 +55,6 @@ endforeach ()
 
 if (URHO3D_ANGELSCRIPT)
     add_subdirectory (ThirdParty/AngelScript)
-    if (EMSCRIPTEN OR (ARM AND NATIVE_64BIT))
-        add_subdirectory (ThirdParty/boost)
-    endif ()
 endif ()
 
 if (URHO3D_LUA)
@@ -114,11 +107,6 @@ endif ()
 
 # Urho3D game engine library
 add_subdirectory (Urho3D)
-
-# Urho3D Clang tools
-if (URHO3D_CLANG_TOOLS)
-    add_subdirectory (Clang-Tools)
-endif ()
 
 # Urho3D tools
 add_subdirectory (Tools)

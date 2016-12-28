@@ -28,4 +28,4 @@ using namespace Urho3D;
 int main(int argc, char* argv[])
 {
     std::cout << GetRevision() << "\n" << GetCompilerDefines();
-} 
+}

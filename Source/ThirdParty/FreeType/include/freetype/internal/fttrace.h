@@ -59,7 +59,7 @@ FT_TRACE_DEF( ttdriver )  /* TT font driver          (ttdriver.c) */
 FT_TRACE_DEF( ttgload )   /* TT glyph loader         (ttgload.c)  */
 FT_TRACE_DEF( ttinterp )  /* bytecode interpreter    (ttinterp.c) */
 FT_TRACE_DEF( ttobjs )    /* TT objects manager      (ttobjs.c)   */
-FT_TRACE_DEF( ttpload )   /* TT pfiles/program loader  (ttpload.c)  */
+FT_TRACE_DEF( ttpload )   /* TT data/program loader  (ttpload.c)  */
 FT_TRACE_DEF( ttgxvar )   /* TrueType GX var handler (ttgxvar.c)  */
 
   /* Type 1 driver components */

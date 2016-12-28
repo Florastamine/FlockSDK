@@ -36,8 +36,6 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
         if (CMAKE_VERSION VERSION_GREATER 3.0.0 OR CMAKE_VERSION VERSION_EQUAL 3.0.0)
             # Disallow use of the LOCATION target property - so we set to OLD as we still need it
             cmake_policy (SET CMP0026 OLD)
-            # MACOSX_RPATH is enabled by default
-            cmake_policy (SET CMP0042 NEW)
         endif ()
     endif ()
 

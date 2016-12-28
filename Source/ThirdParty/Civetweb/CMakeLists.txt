@@ -34,6 +34,7 @@ if (WIN32)
             add_definitions (-D_TIMESPEC_DEFINED)
         endif ()
     endif ()
+elseif (APPLE)
 endif ()
 
 # Define source files

@@ -31,8 +31,6 @@ define_source_files (GLOB_CPP_PATTERNS source/*.cpp GLOB_H_PATTERNS include/*.h 
 if (ARM)
     enable_language (ASM)
     if (XCODE)
-        # It is safe to add this assembler code in universal binary build because it has sufficient preprocessor define guards to exclude unsupported archs
-        set (ASM_FILES source/as_callfunc_arm_xcode.S)
     else ()
         set (ASM_FILES source/as_callfunc_arm_gcc.S)
         set (CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} ${ARM_CFLAGS}")

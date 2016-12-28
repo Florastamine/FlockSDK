@@ -55,14 +55,6 @@ generated/
 /*.project
 /*.workspace
 
-# Android project settings
-/Android/local.properties
-
-# Android output directories
-/Android/Urho3D/
-/Android/ThirdParty/
-/Android/libs/
-
 # CMake generated build files
 CMakeCache.txt
 CMakeFiles/
