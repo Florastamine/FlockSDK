@@ -1648,7 +1648,7 @@ void CreateResourcePreview(String path, Node@ previewNode)
     staticModel.model = cache.GetResource("Model", "objects/SDK/ImagePlane.mdl");
     Material@ material =  cache.GetResource("Material", "materials/SDK/TexturedUnlit.xml");
     Texture2D@ texture = Texture2D();
-    Image@ noPreviewImage = cache.GetResource("Image", "textures/Editor/NoPreviewAvailable.png");
+    Image@ noPreviewImage = cache.GetResource("Image", "textures/SDK/NoPreviewAvailable.png");
     texture.SetData(noPreviewImage, false);
     material.textures[0] = texture;
     staticModel.material = material;

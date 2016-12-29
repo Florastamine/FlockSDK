@@ -1,4 +1,0 @@
-<material>
-    <technique name="shaders/techniques/DiffUnlitParticleAdd.xml" />
-    <texture unit="diffuse" name="textures/Flare.dds" />
-</material>

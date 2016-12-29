@@ -1,5 +1,0 @@
-<material>
-    <technique name="shaders/techniques/Diff.xml" />
-    <texture unit="diffuse" name="textures/Mushroom.dds" />
-    <parameter name="MatSpecColor" value="0.1 0.1 0.1 16" />
-</material>
