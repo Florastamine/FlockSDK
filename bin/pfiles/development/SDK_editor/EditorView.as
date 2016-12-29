@@ -148,7 +148,7 @@ class ViewportContext
 
     void CreateViewportContextUI()
     {
-        Font@ font = cache.GetResource("Font", "Fonts/SDK/Anonymous Pro.ttf");
+        Font@ font = cache.GetResource("Font", "fonts/SDK/Anonymous Pro.ttf");
 
         viewportContextUI = UIElement();
         viewportUI.AddChild(viewportContextUI);
@@ -1176,7 +1176,7 @@ void UpdateStats(float timeStep)
     renderStatsText.size = renderStatsText.minSize;
 
     // Relayout stats bar
-    Font@ font = cache.GetResource("Font", "Fonts/SDK/Anonymous Pro.ttf");
+    Font@ font = cache.GetResource("Font", "fonts/SDK/Anonymous Pro.ttf");
     if (graphics.width >= editorModeText.size.x + renderStatsText.size.x + 45)
     {
         SetupStatsBarText(editorModeText, font, 35, 64, HA_LEFT, VA_TOP);
