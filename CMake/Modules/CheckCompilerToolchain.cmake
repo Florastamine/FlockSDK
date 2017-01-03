@@ -23,12 +23,7 @@
 # Check the chosen compiler toolchain in the build tree
 #
 # Native ABI:
-#  NATIVE_64BIT
-#
-# Target architecture:
-#  ARM
-#  RPI
-#  POWERPC
+#  NATIVE_64BIT 
 #
 # Compiler version in major.minor.patch format, except MSVC where it follows its own format:
 #  COMPILER_VERSION
@@ -72,10 +67,6 @@ else ()
     if (SIZEOF_POINTER EQUAL 8)
         set (NATIVE_64BIT 1)
     endif ()
-    # Android arm64 compiler only emits __aarch64__ while iOS arm64 emits __aarch64__, __arm64__, and __arm__; for armv7a all emit __arm__
-    check_native_define ("__(arm|aarch64)__" ARM)
-    # For completeness sake as currently we do not support PowerPC (yet)
-    check_native_define ("__(ppc|PPC|powerpc|POWERPC)(64)*__" POWERPC)
     # GCC/Clang and all their derivatives should understand this command line option to get the compiler version
     if (NOT DEFINED COMPILER_VERSION)
         execute_process (COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE COMPILER_VERSION ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -125,10 +116,6 @@ if (NOT ARM)
             check_extension (mmx)
             check_extension (3dnow __3dNOW__)
         endif ()
-    endif ()
-    # For completeness sake as currently we do not support PowerPC (yet)
-    if (POWERPC)
-        check_extension (altivec)
     endif ()
 endif ()
 

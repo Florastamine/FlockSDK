@@ -23,23 +23,6 @@
 # Define target name
 set (TARGET_NAME Urho3D)
 
-# Generate JSON compilation database format specification
-if (URHO3D_CLANG_TOOLS OR URHO3D_BINDINGS)
-    set (CMAKE_EXPORT_COMPILE_COMMANDS 1)
-    # Clang assumes all their tools to be installed in a relative path to their libs but this is not the case for our own Clang-tools
-    # Clang has a hard-coded way to search for their headers (see http://clang.llvm.org/docs/LibTooling.html#builtin-includes)
-    # In order for our Clang-tools to work correctly we need to make this Clang's assumption to be true
-    execute_process (COMMAND ${LLVM_CONFIG} --version OUTPUT_VARIABLE LLVM_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
-    string (REGEX REPLACE "([.0123456789]+).*" \\1 LLVM_VERSION "${LLVM_VERSION}")      # Stringify against empty output variable
-    execute_process (COMMAND ${LLVM_CONFIG} --libdir OUTPUT_VARIABLE LLVM_LIBDIR OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
-    execute_process (COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/tool/lib/clang/${LLVM_VERSION})
-    create_symlink (${LLVM_LIBDIR}/clang/${LLVM_VERSION}/include ${CMAKE_BINARY_DIR}/bin/tool/lib/clang/${LLVM_VERSION}/include FALLBACK_TO_COPY)
-    # TODO: Remove this workaround when Travis CI VM has been migrated to Ubuntu 14.04 LTS (ancient glibc header has incorrect defines)
-    if (DEFINED ENV{TRAVIS})
-        add_definitions (-D__extern_always_inline=inline)
-    endif ()
-endif ()
-
 # Check sincosf support
 if (NOT MSVC)   # There is no chance MSVC would pass this one as it does not have libm
     include (CheckLibraryExists)
@@ -123,29 +106,6 @@ add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/librevision.h
     COMMENT "Generating GIT revision number (tag + last commit SHA-1)")
 set_source_files_properties (${SYMBOLIC_SOURCES} PROPERTIES SYMBOLIC TRUE)
 
-# Use the AutoBinder tool to generate source files for binding script subsystems
-if (URHO3D_BINDINGS)
-    # Build the Clang-tools as external project (even when we are not cross-compiling because it needs C++11 standard on) for auto-binding generation
-    include (ExternalProject)
-    ExternalProject_Add (AutoBinder
-            SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/Clang-Tools
-            CMAKE_ARGS -DURHO3D_CLANG_TOOLS=AutoBinder -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool/clang -DDEST_INCLUDE_DIR=${DEST_INCLUDE_DIR} -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR})
-    file (MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated/generated)
-    foreach (SCRIPT AngelScript LuaScript JavaScript)
-        string (TOUPPER URHO3D_${SCRIPT} OPT)
-        if (${OPT})
-            list (APPEND SCRIPT_SUBSYSTEMS -s ${SCRIPT})
-            list (APPEND GEN_CPP_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated/${SCRIPT}API.cpp)
-        endif ()
-    endforeach ()
-    string (REGEX REPLACE "[^;]+API\\.cpp" "" ANNOTATED_SOURCES "${CPP_FILES}")    # Stringify to preserve the semicolons
-    add_custom_command (OUTPUT ${GEN_CPP_FILES}
-        COMMAND ${CMAKE_BINARY_DIR}/bin/tool/clang/AutoBinder -p ${CMAKE_BINARY_DIR} -t ${CMAKE_BINARY_DIR}/bin/tool/clang/Templates -o ${CMAKE_CURRENT_BINARY_DIR}/generated ${SCRIPT_SUBSYSTEMS} ${ANNOTATED_SOURCES}
-        COMMAND ${CMAKE_COMMAND} -E touch ${GEN_CPP_FILES}   # TODO: fake the output - WIP
-        DEPENDS AutoBinder ${H_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Generating source files for binding script subsystems")
-endif ()
 if (URHO3D_LUA)
     # The host tool must be built natively
     if (CMAKE_CROSSCOMPILING OR URHO3D_LUAJIT)
@@ -153,7 +113,7 @@ if (URHO3D_LUA)
         include (ExternalProject)
         ExternalProject_Add (tolua++
             SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/ThirdParty/toluapp/src/bin
-            CMAKE_ARGS -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -DURHO3D_UPDATE_SOURCE_TREE=${URHO3D_UPDATE_SOURCE_TREE})
+            CMAKE_ARGS -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR})
     else ()
         # Otherwise, build it internally as per normal
         add_subdirectory (../ThirdParty/toluapp/src/bin ../ThirdParty/toluapp/src/bin)
@@ -185,9 +145,7 @@ endif ()
 if (MSVC)
     set (PRE_EXPORT_HEADER "\n#pragma warning(disable: 4251)\n#pragma warning(disable: 4275)\n")
 endif ()
-if (URHO3D_CLANG_TOOLS)
-    set (ANNOTATE_NONSCRIPTABLE "__attribute__((annotate(\"nonscriptable\")))")
-endif ()
+
 generate_export_header (${TARGET_NAME} ${URHO3D_LIB_TYPE} EXPORT_MACRO_NAME URHO3D_API EXPORT_FILE_NAME Urho3D.h.new)
 execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/Urho3D.h.new ${CMAKE_CURRENT_BINARY_DIR}/Urho3D.h)
 file (REMOVE ${CMAKE_CURRENT_BINARY_DIR}/Urho3D.h.new)
