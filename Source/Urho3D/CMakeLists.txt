@@ -263,7 +263,7 @@ if (NOT XCODE AND NOT MSVC)
         set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -Wl,--no-whole-archive)
     endif ()
     if (NOT URHO3D_LIB_TYPE STREQUAL SHARED)
-        if (CMAKE_BINARY_DIR MATCHES " ")
+        if (CMAKE_BINARY_DIR MATCHES "[ +*;,]")
             # Do it the hard way by first extracting the object (bitcode) files and appending them to final archive:
             # a) For Emscripten build as Emscripten emar (llvm-ar) neither takes archives directly as input nor supports MRI-style script
             # b) When the build tree path contains spaces because MRI script does not support spaces in path even with proper escape

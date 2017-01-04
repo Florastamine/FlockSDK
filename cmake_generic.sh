@@ -38,12 +38,6 @@ IFS=#
 OPTS=
 for a in $@; do
     case $a in
-        --fix-scm)
-            FIX_SCM=1
-            ;;
-        Eclipse\ CDT4\ -\ Unix\ Makefiles)
-            ECLIPSE=1
-            ;;
         -DWIN32=1)
             OPTS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAINS/mingw.toolchain.cmake"
             ;;
