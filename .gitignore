@@ -87,5 +87,6 @@ configure*
 Thumbs.db
 .directory
 
+/Build/targets
 /.vscode
 *.user

@@ -3,9 +3,9 @@ This is a fork of the [Urho3D game engine](https://github.com/urho3d/Urho3D) whi
 A list of modifications, cuts, and updates since the fork was born: 
 * Rest in pieces `ARM`, `PowerPC`, `Raspberry Pi`, `Android`, `iOS`, `OS X`, `tvOS`, `Xcode`, `Haiku` and `Web` targets. This fork puts heavy emphasises on `Windows` and `Linux` targets. 
 * Modifications to the both the game engine and the `AngelScript`-based editor to use a different folder naming and structure. 
+* A collection of build scripts for compiling the SDK with custom settings related to the game project. 
 * Reworked `Urho3DPlayer`. 
 * Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
-* Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/). 
+* Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
 
-The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D).
-
+The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
