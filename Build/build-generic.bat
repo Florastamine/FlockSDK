@@ -19,7 +19,129 @@ rem AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 rem WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
 rem IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 
+set "SDKName=Downpour/IWBHT_SDK"
 set "BuildTargetFolder=.\targets\%1"
-set "ExtraCXXFlags=-Ofast -Os -fno-exceptions -Wall"
+set "ExtraCXXFlags=-Ofast -Os -fno-exceptions -Wall" 
+set "StripFlags=-s -R .gnu.version -R .comment"
+set "NumSpawn=4" 
+set "Debug=1"
 
-..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_ANGELSCRIPT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=1 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_DATABASE_SQLITE=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
+set "Color_Red=0c"
+set "Color_Default=0f"
+
+set "Bool_GCCFound=0"
+set "Bool_StripFound=0"
+set "Bool_MakeFound=0"
+set "String_Make=love" 
+set "String_Strip=per" 
+set "ResetERRORLEVEL=verify > nul"
+
+set "String_GCCNotFound_1=gcc/g++ is required for building %SDKName%."
+set "String_GCCNotFound_2=Have you tried setting up your build environment before attempting to build %SDKName%?"
+
+set "String_MakeNotFound_1=make is required for generating Makefiles which will then be used for building %SDKName%." 
+set "String_StripNotFound=strip cannot be found. I won't be stripping symbols from executables." 
+
+call :Debug "BuildTargetFolder = %BuildTargetFolder%" 
+
+where /q "gcc"
+set "__gcc=%errorlevel%"
+call :Debug "__gcc =  %__gcc%"
+%ResetERRORLEVEL%
+
+where /q "g++"  
+set "__g++=%errorlevel%" 
+call :Debug "__g++ = %__g++%"
+%ResetERRORLEVEL%
+
+if %__gcc% == 0 ( if %__g++% == 0 ( set "Bool_GCCFound=1" ) )
+
+where /q "make" 
+if %errorlevel% == 0 (
+    call :Debug "Found 'make'."
+    set "Bool_MakeFound=1"
+    set "String_Make=make -j%NumSpawn% "
+)
+%ResetERRORLEVEL% 
+
+if %Bool_MakeFound% == 0 (
+    call :Debug "The 'make' identifier cannot be found. Will be searching for mingw32-make instead."
+    where /q "mingw32-make"
+    if %errorlevel% == 0 (
+        call :Debug "Found 'mingw32-make'."
+        set "Bool_MakeFound=1"
+        set "String_Make=mingw32-make -j%NumSpawn% "
+    ) else (
+        call :Debug "'mingw32-make' also cannot be found. Bool_MakeFound = %Bool_MakeFound%."
+    )
+)
+
+where /q "strip"
+if %errorlevel% == 0 (
+    call :Debug "Found 'strip'."
+    set "Bool_StripFound=1"
+    set "String_Strip=strip"
+) else (
+    call :Debug "'strip' cannot be found."
+)
+%ResetERRORLEVEL%
+
+if %Bool_MakeFound% == 0 (
+    call :F_PrintTextPause %Color_Red% "%String_MakeNotFound_1%" "%String_GCCNotFound_2%" 
+    exit /b 0 
+) 
+
+if %Bool_GCCFound% == 0 (
+    call :F_PrintTextPause %Color_Red% "%String_GCCNotFound_1%" "%String_GCCNotFound_2%" 
+    exit /b 0 
+) 
+
+if %Bool_StripFound% == 0 (
+    call :F_PrintText %Color_Default% "%String_StripNotFound%" 
+) 
+
+call ..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_ANGELSCRIPT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=1 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_DATABASE_SQLITE=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
+start /wait /b %String_Make% --directory=%BuildTargetFolder% 
+
+if %Bool_StripFound% == 1 (
+    call :F_PrintText "Stripping targets..."
+    %String_Strip% %StripFlags% %BuildTargetFolder%\bin\*.exe 
+    %String_Strip% %StripFlags% %BuildTargetFolder%\bin\tool\*.exe 
+)
+
+exit /b 0 
+
+:F_PrintText  
+color %1
+echo. 
+echo ------------------------------------------
+:Top 
+if (%2) == () (
+    goto Bottom 
+) else (
+    echo %~2 
+    shift 
+    goto Top
+)
+:Bottom
+echo ------------------------------------------
+echo. 
+color 
+exit /b 0 
+
+:F_PrintTextPause 
+call :F_PrintText %*
+
+pause 
+exit /b 0  
+rem ??? Profit 
+rem exit /b 
+
+:Debug 
+if %Debug% == 1 (
+    echo. 
+    echo [Debug Info] 
+    echo %*
+    echo.
+)
+exit /b 0 
