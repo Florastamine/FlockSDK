@@ -30,11 +30,29 @@ These prebuilt binaries are provided with the intention of providing a quick way
 * build-linux-64-gl 
 
 ## Building 
+
+### On Linux 
+It's really easy to build the SDK with Linux. On Windows it takes an additional step to make sure the necessary tools are in `%PATH%` before building. 
+
+You'll need a working installation of `gcc/g++` toolchain and `cmake` (>=`3.2.3`). Pull the source code off GitHub: 
+```bash 
+git clone https://github.com/Florastamine/IWBHT_SDK && cd ./IWBHT_SDK/Build  
+``` 
+
+Type 
+```bash 
+./build-linux-<target>-gl.sh 
+``` 
+...to initiate the build process, where: 
+* target = 32, 64
+
+For example: `build-linux-64-gl.sh`. 
+
 ### On Windows 
 You'll need a working `MinGW`/`MinGW-W64` and `CMake` (>=`3.2.3`) installation. First off, make sure both of them are correctly installed. Grab the source code and go to the `Build` directory:
 ```bash 
 git clone https://github.com/Florastamine/IWBHT_SDK
-cd .\Build 
+cd .IWBHT_SDK\Build 
 ```
 
 Set up the build environment by making `gcc/g++` and `cmake` available in your `PATH`: 
@@ -67,11 +85,10 @@ If not, take a look at the folders you've just specified to make sure `gcc/g++` 
 Invoke the script of your choice to initiate the build process: 
 
 ```bash 
-.\build-<platform>-<target>-<renderer>.bat
+.\build-windows-<target>-<renderer>.bat
 ```
 
 Where: 
-* platform = windows, linux 
 * target = 32, 64
 * renderer = d3d9, d3d11, gl 
 
