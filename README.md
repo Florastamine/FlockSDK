@@ -14,6 +14,21 @@ A list of modifications, cuts, and updates since the fork was born:
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 
+## Prebuilt binaries 
+These prebuilt binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
+
+### For Windows 
+* [build-windows-32-d3d9](https://drive.google.com/file/d/0Bx0q4f1kFRaiTUpEbmVuaHIzdjA/view?usp=sharing)
+* [build-windows-32-d3d11](https://drive.google.com/file/d/0Bx0q4f1kFRaiM3JwVURTNWlKV1k/view?usp=sharing)
+* [build-windows-32-gl](https://drive.google.com/file/d/0Bx0q4f1kFRaiSXd5LXY3b0ZkQkU/view?usp=sharing)
+* [build-windows-64-d3d9](https://drive.google.com/file/d/0Bx0q4f1kFRaiX2ltSVlqa092a2M/view?usp=sharing)
+* [build-windows-64-d3d11](https://drive.google.com/file/d/0Bx0q4f1kFRaiZ3YxR1VMZ1pza1E/view?usp=sharing)
+* [build-windows-64-gl](https://drive.google.com/file/d/0Bx0q4f1kFRaiTkx3M2ExNTREc1k/view?usp=sharing)
+
+### For Linux 
+* build-linux-32-gl 
+* build-linux-64-gl 
+
 ## Building 
 ### On Windows 
 You'll need a working `MinGW`/`MinGW-W64` and `CMake` (>=`3.2.3`) installation. First off, make sure both of them are correctly installed. Grab the source code and go to the `Build` directory:
