@@ -104,7 +104,7 @@ call ..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_ANGE
 start /wait /b %String_Make% --directory=%BuildTargetFolder% 
 
 if %Bool_StripFound% == 1 (
-    call :F_PrintText "Stripping targets..."
+    call :F_PrintText %Color_Default% "Stripping targets..."
     %String_Strip% %StripFlags% %BuildTargetFolder%\bin\*.exe 
     %String_Strip% %StripFlags% %BuildTargetFolder%\bin\tool\*.exe 
 )
