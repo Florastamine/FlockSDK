@@ -17,6 +17,8 @@ The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D),
 ## Prebuilt binaries 
 These prebuilt binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
 
+Binaries are updated once a month. 
+
 ### For Windows 
 * [build-windows-32-d3d9](https://drive.google.com/file/d/0Bx0q4f1kFRaiTUpEbmVuaHIzdjA/view?usp=sharing)
 * [build-windows-32-d3d11](https://drive.google.com/file/d/0Bx0q4f1kFRaiM3JwVURTNWlKV1k/view?usp=sharing)

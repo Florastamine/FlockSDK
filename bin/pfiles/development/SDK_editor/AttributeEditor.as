@@ -509,6 +509,11 @@ UIElement@ CreateAttributeEditor(ListView@ list, Array<Serializable@>@ serializa
                     break;
                 }
                 nameIndex = vectorStruct.restartIndex;
+
+                 // Create small divider for repeated instances
+                 UIElement@ divider = UIElement();
+                 divider.SetFixedHeight(8);
+                 list.AddItem(divider);
             }
         }
     }
