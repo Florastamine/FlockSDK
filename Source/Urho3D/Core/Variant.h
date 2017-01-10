@@ -61,6 +61,7 @@ enum VariantType
     VAR_DOUBLE,
     VAR_STRINGVECTOR,
     VAR_RECT,
+    VAR_INT64,
     MAX_VAR_TYPES
 };
 
@@ -208,6 +209,13 @@ public:
 
     /// Construct from integer.
     Variant(int value) :
+        type_(VAR_NONE)
+    {
+        *this = value;
+    }
+
+    /// Construct from 64 bit integer.
+    Variant(long long int value) :
         type_(VAR_NONE)
     {
         *this = value;
@@ -457,6 +465,22 @@ public:
     {
         SetType(VAR_INT);
         value_.int_ = rhs;
+        return *this;
+    }
+
+    /// Assign from 64 bit integer.
+    Variant& operator =(long long int rhs)
+    {
+        SetType(VAR_INT64);
+        *reinterpret_cast<long long int*>(&value_) = rhs;
+        return *this;
+    }
+
+    /// Assign from unsigned 64 bit integer.
+    Variant& operator =(unsigned long long int rhs)
+    {
+        SetType(VAR_INT64);
+        *reinterpret_cast<long long int*>(&value_) = (long long int)rhs;
         return *this;
     }
 
@@ -926,11 +950,41 @@ public:
             return 0;
     }
 
+    /// Return 64 bit int or zero on type mismatch. Floats and doubles are converted.
+    long long int GetInt64() const
+    {
+        if (type_ == VAR_INT64)
+            return *(reinterpret_cast<const long long int*>(&value_));
+        else if (type_ == VAR_INT)
+            return value_.int_;
+        else if (type_ == VAR_FLOAT)
+            return (long long int)value_.float_;
+        else if (type_ == VAR_DOUBLE)
+            return (long long int)*reinterpret_cast<const double*>(&value_);
+        else
+            return 0;
+    }
+
+    /// Return unsigned 64 bit int or zero on type mismatch. Floats and doubles are converted.
+    unsigned long long int GetUInt64() const
+    {
+        if (type_ == VAR_INT64)
+            return *(reinterpret_cast<const unsigned long long int*>(&value_));
+        else if (type_ == VAR_INT)
+            return static_cast<unsigned long long int>(value_.int_);
+        else if (type_ == VAR_FLOAT)
+            return (unsigned long long int)value_.float_;
+        else if (type_ == VAR_DOUBLE)
+            return (unsigned long long int)*reinterpret_cast<const double*>(&value_);
+        else
+            return 0;
+    }
+
     /// Return unsigned int or zero on type mismatch. Floats and doubles are converted.
     unsigned GetUInt() const
     {
         if (type_ == VAR_INT)
-            return value_.int_;
+            return (unsigned)value_.int_;
         else if (type_ == VAR_FLOAT)
             return (unsigned)value_.float_;
         else if (type_ == VAR_DOUBLE)
