@@ -47,7 +47,7 @@ uint uiScriptFilter = 0;
 uint uiParticleFilter = 0;
 uint uiRenderPathFilter = 0;
 uint uiExportFilter = 0;
-String uiScenePath = fileSystem.programDir + "pfiles/levels";
+String uiScenePath = fileSystem.programDir + "pfiles/virtuals";
 String uiElementPath = fileSystem.programDir + "pfiles/ui";
 String uiNodePath = fileSystem.programDir + "pfiles/objects";
 String uiImportPath;
