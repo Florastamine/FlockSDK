@@ -55,6 +55,8 @@ namespace Downpour {
 namespace Downpour {
     inline const char *GetEditorBootArg() { return("--run-editor"); }
     inline const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
-    inline const char *GetCompiledScriptLocation() { return("pfiles/core-main.luc"); }
-    inline const char *GetSDKLocation() { return("pfiles/development/SDK_editor.as"); }
+    inline const char *GetCompiledScriptLocation() { return("pfiles/core-main.dcs"); }
+    inline const char *GetSDKLocation() { return("pfiles/development/SDK_editor.as"); } 
+    inline const char *GetCompiledScriptExtension() { return (".dcs"); } 
+    inline const char *GetScriptExtension() { return(".lua"); } 
 };

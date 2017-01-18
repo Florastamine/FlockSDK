@@ -32,9 +32,6 @@ generated/
 # Compiled AngelScript
 *.asc
 
-# Compiled Lua script
-*.luc
-
 # Eclipse project settings
 /.*project
 /.settings

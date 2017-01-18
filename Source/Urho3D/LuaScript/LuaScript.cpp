@@ -353,16 +353,16 @@ int LuaScript::Loader(lua_State* L)
 
 #ifdef URHO3D_LUA_RAW_SCRIPT_LOADER
     // First attempt to load lua script file from the file system
-    // Attempt to load .luc file first, then fall back to .lua
+    // Attempt to load .dcs file first, then fall back to .lua
     LuaScript* lua = ::GetContext(L)->GetSubsystem<LuaScript>();
-    if (lua->LoadRawFile(fileName + ".luc") || lua->LoadRawFile(fileName + ".lua"))
+    if ( lua->LoadRawFile(fileName + GetCompiledScriptExtension()) || lua->LoadRawFile(fileName + GetScriptExtension()) )
         return 1;
 #endif
 
     ResourceCache* cache = ::GetContext(L)->GetSubsystem<ResourceCache>();
 
-    // Attempt to get .luc file first
-    LuaFile* lucFile = cache->GetResource<LuaFile>(fileName + ".luc", false);
+    // Attempt to get .dcs file first
+    LuaFile* lucFile = cache->GetResource<LuaFile>(fileName + ".dcs", false);
     if (lucFile)
         return lucFile->LoadChunk(L) ? 1 : 0;
 

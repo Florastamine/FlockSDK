@@ -1165,7 +1165,7 @@ void InitResourcePicker()
     // Fill resource picker data
     Array<String> fontFilters = {"*.ttf", "*.otf", "*.fnt", "*.xml", "*.sdf"};
     Array<String> imageFilters = {"*.png", "*.jpg", "*.bmp", "*.tga", "*.hdr"};
-    Array<String> luaFileFilters = {"*.lua", "*.luc"};
+    Array<String> luaFileFilters = {"*.lua", "*.dcs"};
     Array<String> scriptFilters = {"*.as", "*.asc"};
     Array<String> soundFilters = {"*.wav","*.ogg"};
     Array<String> textureFilters = {"*.dds", "*.png", "*.jpg", "*.bmp", "*.tga", "*.ktx", "*.pvr", "*.hdr"};

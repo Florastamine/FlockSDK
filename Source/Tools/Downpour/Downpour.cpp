@@ -71,7 +71,7 @@ void DownpourBase::Setup()
 void DownpourBase::Start()
 {
     Urho3D::String extension = Urho3D::GetExtension(moduleName_);
-    if (extension != ".lua" && extension != ".luc")
+    if (extension != ".lua" && extension != GetCompiledScriptExtension())
     {
 #ifdef URHO3D_ANGELSCRIPT
         // Instantiate and register the AngelScript subsystem
