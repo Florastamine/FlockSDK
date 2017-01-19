@@ -355,7 +355,7 @@ int LuaScript::Loader(lua_State* L)
     // First attempt to load lua script file from the file system
     // Attempt to load .dcs file first, then fall back to .lua
     LuaScript* lua = ::GetContext(L)->GetSubsystem<LuaScript>();
-    if ( lua->LoadRawFile(fileName + GetCompiledScriptExtension()) || lua->LoadRawFile(fileName + GetScriptExtension()) )
+    if ( lua->LoadRawFile(fileName + ".dcs") || lua->LoadRawFile(fileName + ".lua") )
         return 1;
 #endif
 
