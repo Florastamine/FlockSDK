@@ -20,6 +20,8 @@
 #include "development/SDK_editor/EditorColorWheel.as"
 #include "development/SDK_editor/EditorEventsHandlers.as"
 #include "development/SDK_editor/EditorViewDebugIcons.as"
+#include "development/SDK_editor/EditorViewSelectableOrigins.as"
+#include "development/SDK_editor/EditorViewPaintSelection.as" 
 
 String configFileName;
 
@@ -124,6 +126,8 @@ void HandleUpdate(StringHash eventType, VariantMap& eventData)
     UpdateGizmo();
     UpdateDirtyUI();
     UpdateViewDebugIcons();
+    UpdateOrigins();
+    UpdatePaintSelection();
 
     // Handle Particle Editor looping.
     if (particleEffectWindow !is null and particleEffectWindow.visible)

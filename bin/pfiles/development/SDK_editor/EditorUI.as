@@ -1168,7 +1168,8 @@ String ExtractFileName(VariantMap& eventData, bool forSave = false)
 void HandleOpenSceneFile(StringHash eventType, VariantMap& eventData)
 {
     CloseFileSelector(uiSceneFilter, uiScenePath);
-    LoadScene(ExtractFileName(eventData));
+    LoadScene(ExtractFileName(eventData)); 
+    SendEvent(EDITOR_EVENT_SCENE_LOADED);
 }
 
 void HandleSaveSceneFile(StringHash eventType, VariantMap& eventData)
