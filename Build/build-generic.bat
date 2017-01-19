@@ -22,7 +22,6 @@ rem IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 set "SDKName=Downpour/IWBHT_SDK"
 set "BuildTargetFolder=.\targets\%1"
 set "ExtraCXXFlags=-Ofast -Os -fno-exceptions -Wall" 
-set "StripFlags=-s -R .gnu.version -R .comment"
 set "NumSpawn=4" 
 set "Debug=1"
 
@@ -30,17 +29,16 @@ set "Color_Red=0c"
 set "Color_Default=0f"
 
 set "Bool_GCCFound=0"
-set "Bool_StripFound=0"
 set "Bool_MakeFound=0"
 set "String_Make=love" 
-set "String_Strip=per" 
+rem set "String_Strip=per" 
 set "ResetERRORLEVEL=verify > nul"
 
 set "String_GCCNotFound_1=gcc/g++ is required for building %SDKName%."
 set "String_GCCNotFound_2=Have you tried setting up your build environment before attempting to build %SDKName%?"
 
 set "String_MakeNotFound_1=make is required for generating Makefiles which will then be used for building %SDKName%." 
-set "String_StripNotFound=strip cannot be found. I won't be stripping symbols from executables." 
+rem set "String_StripNotFound=strip cannot be found. I won't be stripping symbols from executables." 
 
 call :Debug "BuildTargetFolder = %BuildTargetFolder%" 
 
@@ -76,14 +74,15 @@ if %Bool_MakeFound% == 0 (
     )
 )
 
-where /q "strip"
-if %errorlevel% == 0 (
-    call :Debug "Found 'strip'."
-    set "Bool_StripFound=1"
-    set "String_Strip=strip"
-) else (
-    call :Debug "'strip' cannot be found."
-)
+rem where /q "strip"
+rem if %errorlevel% == 0 (
+rem     call :Debug "Found 'strip'."
+rem     set "Bool_StripFound=1"
+rem     set "String_Strip=strip"
+rem ) else (
+rem     call :Debug "'strip' cannot be found."
+rem ) 
+
 %ResetERRORLEVEL%
 
 if %Bool_MakeFound% == 0 (
@@ -96,9 +95,9 @@ if %Bool_GCCFound% == 0 (
     exit /b 0 
 ) 
 
-if %Bool_StripFound% == 0 (
-    call :F_PrintText %Color_Default% "%String_StripNotFound%" 
-) 
+rem if %Bool_StripFound% == 0 (
+rem     call :F_PrintText %Color_Default% "%String_StripNotFound%" 
+rem ) 
 
 call ..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_ANGELSCRIPT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=1 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_DATABASE_SQLITE=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
 start /wait /b %String_Make% --directory=%BuildTargetFolder% 
