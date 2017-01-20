@@ -214,22 +214,22 @@ ADD_ASSIMP_IMPORTER(ASE
   code/ASEParser.h
 )
 
-ADD_ASSIMP_IMPORTER(ASSBIN
-  code/AssbinExporter.h
-  code/AssbinExporter.cpp
-  code/AssbinLoader.h
-  code/AssbinLoader.cpp
-)
+# ADD_ASSIMP_IMPORTER(ASSBIN
+#   code/AssbinExporter.h
+#   code/AssbinExporter.cpp
+#   code/AssbinLoader.h
+#   code/AssbinLoader.cpp
+# )
 
-ADD_ASSIMP_IMPORTER(ASSXML
-  code/AssxmlExporter.h
-  code/AssxmlExporter.cpp
-)
+# ADD_ASSIMP_IMPORTER(ASSXML
+#   code/AssxmlExporter.h
+#   code/AssxmlExporter.cpp
+# )
 
-ADD_ASSIMP_IMPORTER(B3D
-  code/B3DImporter.cpp
-  code/B3DImporter.h
-)
+# ADD_ASSIMP_IMPORTER(B3D
+#   code/B3DImporter.cpp
+#   code/B3DImporter.h
+# )
 
 ADD_ASSIMP_IMPORTER(BVH
   code/BVHLoader.cpp
@@ -252,27 +252,27 @@ ADD_ASSIMP_IMPORTER(DXF
   code/DXFHelper.h
 )
 
-ADD_ASSIMP_IMPORTER(CSM
-  code/CSMLoader.cpp
-  code/CSMLoader.h
-)
+# ADD_ASSIMP_IMPORTER(CSM
+#   code/CSMLoader.cpp
+#   code/CSMLoader.h
+# )
 
-ADD_ASSIMP_IMPORTER(HMP
-  code/HMPFileData.h
-  code/HMPLoader.cpp
-  code/HMPLoader.h
-  code/HalfLifeFileData.h
-)
+# ADD_ASSIMP_IMPORTER(HMP
+#   code/HMPFileData.h
+#   code/HMPLoader.cpp
+#   code/HMPLoader.h
+#   code/HalfLifeFileData.h
+# )
 
 #FIXME: allow to set IRRMESH by option
-ADD_ASSIMP_IMPORTER(IRR
-  code/IRRLoader.cpp
-  code/IRRLoader.h
-  code/IRRMeshLoader.cpp
-  code/IRRMeshLoader.h
-  code/IRRShared.cpp
-  code/IRRShared.h
-)
+# ADD_ASSIMP_IMPORTER(IRR
+#   code/IRRLoader.cpp
+#   code/IRRLoader.h
+#   code/IRRMeshLoader.cpp
+#   code/IRRMeshLoader.h
+#   code/IRRShared.cpp
+#   code/IRRShared.h
+# )
 
 ADD_ASSIMP_IMPORTER(LWO
   code/LWOAnimation.cpp
@@ -289,18 +289,18 @@ ADD_ASSIMP_IMPORTER(LWS
   code/LWSLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(MD2
-  code/MD2FileData.h
-  code/MD2Loader.cpp
-  code/MD2Loader.h
-  code/MD2NormalTable.h
-)
+# ADD_ASSIMP_IMPORTER(MD2
+#   code/MD2FileData.h
+#   code/MD2Loader.cpp
+#   code/MD2Loader.h
+#   code/MD2NormalTable.h
+# )
 
-ADD_ASSIMP_IMPORTER(MD3
-  code/MD3FileData.h
-  code/MD3Loader.cpp
-  code/MD3Loader.h
-)
+# ADD_ASSIMP_IMPORTER(MD3
+#   code/MD3FileData.h
+#   code/MD3Loader.cpp
+#   code/MD3Loader.h
+# )
 
 ADD_ASSIMP_IMPORTER(MD5
   code/MD5Loader.cpp
@@ -309,20 +309,20 @@ ADD_ASSIMP_IMPORTER(MD5
   code/MD5Parser.h
 )
 
-ADD_ASSIMP_IMPORTER(MDC
-  code/MDCFileData.h
-  code/MDCLoader.cpp
-  code/MDCLoader.h
-  code/MDCNormalTable.h
-)
+# ADD_ASSIMP_IMPORTER(MDC
+#   code/MDCFileData.h
+#   code/MDCLoader.cpp
+#   code/MDCLoader.h
+#   code/MDCNormalTable.h
+# )
 
-ADD_ASSIMP_IMPORTER(MDL
-  code/MDLDefaultColorMap.h
-  code/MDLFileData.h
-  code/MDLLoader.cpp
-  code/MDLLoader.h
-  code/MDLMaterialLoader.cpp
-)
+# ADD_ASSIMP_IMPORTER(MDL
+#   code/MDLDefaultColorMap.h
+#   code/MDLFileData.h
+#   code/MDLLoader.cpp
+#   code/MDLLoader.h
+#   code/MDLMaterialLoader.cpp
+# )
 
 SET( MaterialSystem_SRCS
   code/MaterialSystem.cpp
@@ -330,20 +330,20 @@ SET( MaterialSystem_SRCS
 )
 SOURCE_GROUP( MaterialSystem FILES ${MaterialSystem_SRCS})
 
-ADD_ASSIMP_IMPORTER(NFF
-  code/NFFLoader.cpp
-  code/NFFLoader.h
-)
+# ADD_ASSIMP_IMPORTER(NFF
+#   code/NFFLoader.cpp
+#   code/NFFLoader.h
+# )
 
-ADD_ASSIMP_IMPORTER(NDO
-  code/NDOLoader.cpp
-  code/NDOLoader.h
-)
+# ADD_ASSIMP_IMPORTER(NDO
+#  code/NDOLoader.cpp
+#   code/NDOLoader.h
+# )
 
-ADD_ASSIMP_IMPORTER(OFF
-  code/OFFLoader.cpp
-  code/OFFLoader.h
-)
+# ADD_ASSIMP_IMPORTER(OFF
+#   code/OFFLoader.cpp
+#   code/OFFLoader.h
+# )
 
 ADD_ASSIMP_IMPORTER(OBJ
   code/ObjFileData.h
@@ -388,16 +388,16 @@ ADD_ASSIMP_IMPORTER(PLY
   code/PlyExporter.h
 )
 
-ADD_ASSIMP_IMPORTER(MS3D
-  code/MS3DLoader.cpp
-  code/MS3DLoader.h
-)
+# ADD_ASSIMP_IMPORTER(MS3D
+#   code/MS3DLoader.cpp
+#   code/MS3DLoader.h
+# )
 
-ADD_ASSIMP_IMPORTER(COB
-  code/COBLoader.cpp
-  code/COBLoader.h
-  code/COBScene.h
-)
+# ADD_ASSIMP_IMPORTER(COB
+#   code/COBLoader.cpp
+#   code/COBLoader.h
+#   code/COBScene.h
+# )
 
 ADD_ASSIMP_IMPORTER(BLEND
   code/BlenderLoader.cpp
@@ -417,31 +417,30 @@ ADD_ASSIMP_IMPORTER(BLEND
   code/BlenderTessellator.cpp
 )
 
-ADD_ASSIMP_IMPORTER(IFC
-  code/IFCLoader.cpp
-  code/IFCLoader.h
-  code/IFCReaderGen.cpp
-  code/IFCReaderGen.h
-  code/IFCUtil.h
-  code/IFCUtil.cpp
-  code/IFCGeometry.cpp
-  code/IFCMaterial.cpp
-  code/IFCProfile.cpp
-  code/IFCCurve.cpp
-  code/IFCBoolean.cpp
-  code/IFCOpenings.cpp
-  code/STEPFile.h
-  code/STEPFileReader.h
-  code/STEPFileReader.cpp
-  code/STEPFileEncoding.cpp
-  code/STEPFileEncoding.h
-)
+# ADD_ASSIMP_IMPORTER(IFC
+#   code/IFCLoader.cpp
+#   code/IFCLoader.h
+#   code/IFCReaderGen.cpp
+#   code/IFCReaderGen.h
+#   code/IFCUtil.h
+#   code/IFCUtil.cpp
+#   code/IFCGeometry.cpp
+#   code/IFCMaterial.cpp
+#   code/IFCProfile.cpp
+#   code/IFCCurve.cpp
+#   code/IFCBoolean.cpp
+#   code/IFCOpenings.cpp
+#   code/STEPFile.h
+#   code/STEPFileReader.h
+#   code/STEPFileReader.cpp
+#   code/STEPFileEncoding.cpp
+#   code/STEPFileEncoding.h
+# )
 
-ADD_ASSIMP_IMPORTER(XGL
-  code/XGLLoader.cpp
-  code/XGLLoader.h
-)
-
+# ADD_ASSIMP_IMPORTER(XGL
+#   code/XGLLoader.cpp
+#   code/XGLLoader.h
+# )
 
 ADD_ASSIMP_IMPORTER(FBX
   code/FBXImporter.cpp
@@ -525,20 +524,20 @@ SET( PostProcessing_SRCS
 )
 SOURCE_GROUP( PostProcessing FILES ${PostProcessing_SRCS})
 
-ADD_ASSIMP_IMPORTER(Q3D
-  code/Q3DLoader.cpp
-  code/Q3DLoader.h
-)
+# ADD_ASSIMP_IMPORTER(Q3D
+#   code/Q3DLoader.cpp
+#   code/Q3DLoader.h
+# )
 
-ADD_ASSIMP_IMPORTER(Q3BSP
-  code/Q3BSPFileData.h
-  code/Q3BSPFileParser.h
-  code/Q3BSPFileParser.cpp
-  code/Q3BSPFileImporter.h
-  code/Q3BSPFileImporter.cpp
-  code/Q3BSPZipArchive.h
-  code/Q3BSPZipArchive.cpp
-)
+# ADD_ASSIMP_IMPORTER(Q3BSP
+#   code/Q3BSPFileData.h
+#   code/Q3BSPFileParser.h
+#   code/Q3BSPFileParser.cpp
+#   code/Q3BSPFileImporter.h
+#   code/Q3BSPFileImporter.cpp
+#   code/Q3BSPZipArchive.h
+#   code/Q3BSPZipArchive.cpp
+# )
 
 ADD_ASSIMP_IMPORTER(RAW
   code/RawLoader.cpp
