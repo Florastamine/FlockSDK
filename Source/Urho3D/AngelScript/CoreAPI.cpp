@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2016 the Urho3D project.
+// Copyright (c) 2008-2017 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -286,7 +286,7 @@ static void ConstructVariantScriptObject(asIScriptObject* value, Variant* ptr)
 {
     if (value)
     {
-        asIObjectType* scriptObjectInterface = value->GetEngine()->GetObjectTypeByName("ScriptObject");
+        asITypeInfo* scriptObjectInterface = value->GetEngine()->GetTypeInfoByName("ScriptObject");
         if (value->GetObjectType()->Implements(scriptObjectInterface))
             new(ptr) Variant(value);
         else
@@ -372,7 +372,7 @@ static asIScriptObject* VariantGetScriptObject(Variant* ptr)
     if (!object)
         return 0;
 
-    asIObjectType* scriptObjectInterface = object->GetEngine()->GetObjectTypeByName("ScriptObject");
+    asITypeInfo* scriptObjectInterface = object->GetEngine()->GetTypeInfoByName("ScriptObject");
     if (!object->GetObjectType()->Implements(scriptObjectInterface))
         return 0;
 
@@ -824,13 +824,13 @@ static CScriptArray* AttributeInfoGetEnumNames(AttributeInfo* ptr)
     return VectorToArray<String>(enumNames, "Array<String>");
 }
 
-static CScriptArray* AttributeInfoGetVariantStructureElementsNames(AttributeInfo* ptr)
+static CScriptArray* AttributeInfoGetVariantStructureElementNames(AttributeInfo* ptr)
 {
-    Vector<String> variantStructureElementsNames;
-    const char** variantStructureElementsNamesPtrs = ptr->variantStructureElementsNames_;
-    while (variantStructureElementsNamesPtrs && *variantStructureElementsNamesPtrs)
-        variantStructureElementsNames.Push(*variantStructureElementsNamesPtrs++);
-    return VectorToArray<String>(variantStructureElementsNames, "Array<String>");
+    Vector<String> variantStructureElementNames;
+    const char** variantStructureElementNamesPtrs = ptr->variantStructureElementNames_;
+    while (variantStructureElementNamesPtrs && *variantStructureElementNamesPtrs)
+        variantStructureElementNames.Push(*variantStructureElementNamesPtrs++);
+    return VectorToArray<String>(variantStructureElementNames, "Array<String>");
 }
 
 static void SendEvent(const String& eventType, VariantMap& eventData)
@@ -966,7 +966,7 @@ void RegisterObject(asIScriptEngine* engine)
     engine->RegisterObjectBehaviour("AttributeInfo", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(DestructAttributeInfo), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("AttributeInfo", "AttributeInfo& opAssign(const AttributeInfo&in)", asMETHODPR(AttributeInfo, operator =, (const AttributeInfo&), AttributeInfo&), asCALL_THISCALL);
     engine->RegisterObjectMethod("AttributeInfo", "Array<String>@ get_enumNames() const", asFUNCTION(AttributeInfoGetEnumNames), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("AttributeInfo", "Array<String>@ get_variantStructureElementsNames() const", asFUNCTION(AttributeInfoGetVariantStructureElementsNames), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("AttributeInfo", "Array<String>@ get_variantStructureElementNames() const", asFUNCTION(AttributeInfoGetVariantStructureElementNames), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectProperty("AttributeInfo", "VariantType type", offsetof(AttributeInfo, type_));
     engine->RegisterObjectProperty("AttributeInfo", "String name", offsetof(AttributeInfo, name_));
     engine->RegisterObjectProperty("AttributeInfo", "Variant defaultValue", offsetof(AttributeInfo, defaultValue_));

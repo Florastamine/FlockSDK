@@ -1503,20 +1503,20 @@ void InitVectorStructs()
     vectorStructs.Push(VectorStruct("CrowdManager", "   >AreaCost", crowdManagerAreaCostVariables, 1));
     
     Array<String> categories = GetObjectCategories();
-    for (int categoryIndex = 0; categoryIndex < categories.length; categoryIndex++)
+    for (uint categoryIndex = 0; categoryIndex < categories.length; categoryIndex++)
     {
         Array<String> objectsNames = GetObjectsByCategory(categories[categoryIndex]);
-        for (int objectIndex = 0; objectIndex < objectsNames.length; objectIndex++)
+        for (uint objectIndex = 0; objectIndex < objectsNames.length; objectIndex++)
         {
             String objectName = objectsNames[objectIndex];
-            Array<AttributeInfo> attributes = GetObjectsAttriuteInfos(objectName);
-            
-            for (int attributeIndex = 0; attributeIndex < attributes.length; attributeIndex++)
+            Array<AttributeInfo> attributes = GetObjectAttributeInfos(objectName);
+
+            for (uint attributeIndex = 0; attributeIndex < attributes.length; attributeIndex++)
             {
                 AttributeInfo attribute = attributes[attributeIndex];
-                if (attribute.type == VAR_VARIANTVECTOR and attribute.variantStructureElementsNames.length > 0)
+                if (attribute.type == VAR_VARIANTVECTOR and attribute.variantStructureElementNames.length > 0)
                 {
-                    Array<String> elementsNames = attribute.variantStructureElementsNames;
+                    Array<String> elementsNames = attribute.variantStructureElementNames;
                     vectorStructs.Push(VectorStruct(objectName, attribute.name, elementsNames, 1));
                 }
             }
