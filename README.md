@@ -18,17 +18,7 @@ The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D),
 ## Prebuilt binaries ([release log](https://github.com/Florastamine/IWBHT_SDK/blob/master/ReleaseNotes.md))
 These prebuilt binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
 
-### For Windows 
-* [build-windows-32-d3d9](https://drive.google.com/file/d/0Bx0q4f1kFRaiTUpEbmVuaHIzdjA/view?usp=sharing)
-* [build-windows-32-d3d11](https://drive.google.com/file/d/0Bx0q4f1kFRaiM3JwVURTNWlKV1k/view?usp=sharing)
-* [build-windows-32-gl](https://drive.google.com/file/d/0Bx0q4f1kFRaiSXd5LXY3b0ZkQkU/view?usp=sharing)
-* [build-windows-64-d3d9](https://drive.google.com/file/d/0Bx0q4f1kFRaiX2ltSVlqa092a2M/view?usp=sharing)
-* [build-windows-64-d3d11](https://drive.google.com/file/d/0Bx0q4f1kFRaiZ3YxR1VMZ1pza1E/view?usp=sharing)
-* [build-windows-64-gl](https://drive.google.com/file/d/0Bx0q4f1kFRaiTkx3M2ExNTREc1k/view?usp=sharing)
-
-### For Linux 
-* build-linux-32-gl 
-* build-linux-64-gl 
+Latest **unstable** binaries were built and released on `01.27.2017`, and can be downloaded [here](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing). Old binaries can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/ReleaseNotes.md). 
 
 ## Building 
 
