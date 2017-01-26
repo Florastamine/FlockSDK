@@ -111,6 +111,11 @@ Input::Input(Context* context) :
     mouseMoveScaled_(false),
     initialized_(false)
 {
+    context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
+
+    for (int i = 0; i < TOUCHID_MAX; i++)
+        availableTouchIDs_.Push(i);
+
     SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(Input, HandleScreenMode));
 
     // Try to initialize right now, but skip if screen mode is not yet set
@@ -119,6 +124,7 @@ Input::Input(Context* context) :
 
 Input::~Input()
 {
+    context_->ReleaseSDL();
 }
 
 void Input::Update()
