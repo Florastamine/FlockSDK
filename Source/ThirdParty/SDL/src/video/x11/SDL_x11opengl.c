@@ -32,7 +32,6 @@
 
 #if SDL_VIDEO_OPENGL_GLX
 #include "SDL_loadso.h"
-#include "SDL_x11opengles.h"
 
 #if defined(__IRIX__)
 /* IRIX doesn't have a GL library versioning system */

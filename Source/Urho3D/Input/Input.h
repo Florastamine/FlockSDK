@@ -50,26 +50,6 @@ class XMLFile;
 
 const IntVector2 MOUSE_POSITION_OFFSCREEN = IntVector2(M_MIN_INT, M_MIN_INT);
 
-/// %Input state for a finger touch.
-struct TouchState
-{
-    /// Return last touched UI element, used by scripting integration.
-    UIElement* GetTouchedElement();
-
-    /// Touch (finger) ID.
-    int touchID_;
-    /// Position in screen coordinates.
-    IntVector2 position_;
-    /// Last position in screen coordinates.
-    IntVector2 lastPosition_;
-    /// Movement since last frame.
-    IntVector2 delta_;
-    /// Finger pressure.
-    float pressure_;
-    /// Last touched UI element from screen joystick.
-    WeakPtr<UIElement> touchedElement_;
-};
-
 /// %Input state for a joystick.
 struct JoystickState
 {
@@ -198,20 +178,6 @@ public:
     void SetScreenJoystickVisible(SDL_JoystickID id, bool enable);
     /// Show or hide on-screen keyboard on platforms that support it. When shown, keypresses from it are delivered as key events.
     void SetScreenKeyboardVisible(bool enable);
-    /// Set touch emulation by mouse. Only available on desktop platforms. When enabled, actual mouse events are no longer sent and the mouse cursor is forced visible.
-    void SetTouchEmulation(bool enable);
-    /// Begin recording a touch gesture. Return true if successful. The E_GESTURERECORDED event (which contains the ID for the new gesture) will be sent when recording finishes.
-    bool RecordGesture();
-    /// Save all in-memory touch gestures. Return true if successful.
-    bool SaveGestures(Serializer& dest);
-    /// Save a specific in-memory touch gesture to a file. Return true if successful.
-    bool SaveGesture(Serializer& dest, unsigned gestureID);
-    /// Load touch gestures from a file. Return number of loaded gestures, or 0 on failure.
-    unsigned LoadGestures(Deserializer& source);
-    /// Remove an in-memory gesture by ID. Return true if was found.
-    bool RemoveGesture(unsigned gestureID);
-    /// Remove all in-memory gestures.
-    void RemoveAllGestures();
     /// Set the mouse cursor position. Uses the backbuffer (Graphics width/height) coordinates.
     void SetMousePosition(const IntVector2& position);
     /// Center the mouse position.
@@ -258,11 +224,6 @@ public:
     /// Return mouse wheel movement since last frame.
     int GetMouseMoveWheel() const { return mouseMoveWheel_; }
 
-    /// Return number of active finger touches.
-    unsigned GetNumTouches() const { return touches_.Size(); }
-    /// Return active finger touch by index.
-    TouchState* GetTouch(unsigned index) const;
-
     /// Return number of connected joysticks.
     unsigned GetNumJoysticks() const { return joysticks_.Size(); }
     /// Return joystick state by ID, or null if does not exist.
@@ -281,9 +242,6 @@ public:
     bool GetScreenKeyboardSupport() const;
     /// Return whether on-screen keyboard is being shown.
     bool IsScreenKeyboardVisible() const;
-
-    /// Return whether touch emulation is enabled.
-    bool GetTouchEmulation() const { return touchEmulation_; }
 
     /// Return whether the operating system mouse cursor is visible.
     bool IsMouseVisible() const { return mouseVisible_; }
@@ -314,16 +272,8 @@ private:
     void LoseFocus();
     /// Clear input state.
     void ResetState();
-    /// Clear touch states and send touch end events.
-    void ResetTouches();
     /// Reset input accumulation.
     void ResetInputAccumulation();
-    /// Get the index of a touch based on the touch ID.
-    unsigned GetTouchIndexFromID(int touchID);
-    /// Used internally to return and remove the next available touch index.
-    unsigned PopTouchIndex();
-    /// Push a touch index back into the list of available when finished with it.
-    void PushTouchIndex(int touchID);
     /// Send an input focus or window minimization change event.
     void SendInputFocusEvent();
     /// Handle a mouse button change.
@@ -340,8 +290,6 @@ private:
     void HandleScreenMode(StringHash eventType, VariantMap& eventData);
     /// Handle frame start event.
     void HandleBeginFrame(StringHash eventType, VariantMap& eventData);
-    /// Handle touch events from the controls of screen joystick(s).
-    void HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventData);
     /// Handle SDL event.
     void HandleSDLEvent(void* sdlEvent);
 
@@ -371,12 +319,6 @@ private:
     HashSet<int> scancodeDown_;
     /// Key pressed state by scancode.
     HashSet<int> scancodePress_;
-    /// Active finger touches.
-    HashMap<int, TouchState> touches_;
-    /// List that maps between event touch IDs and normalised touch IDs
-    List<int> availableTouchIDs_;
-    /// Mapping of touch indices
-    HashMap<int, int> touchIDMap_;
     /// String for text input.
     String textInput_;
     /// Opened joysticks.
@@ -415,8 +357,6 @@ private:
     /// Flag to determine whether SDL mouse relative was used.
     bool sdlMouseRelative_;
 #endif
-    /// Touch emulation mode flag.
-    bool touchEmulation_;
     /// Input focus flag.
     bool inputFocus_;
     /// Minimized flag.

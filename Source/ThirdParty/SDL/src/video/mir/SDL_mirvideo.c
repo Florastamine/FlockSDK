@@ -153,17 +153,6 @@ MIR_CreateDevice(int device_index)
     device->SetDisplayMode   = MIR_SetDisplayMode;
     device->free             = MIR_DeleteDevice;
 
-    /* miropengles */
-    device->GL_SwapWindow      = MIR_GL_SwapWindow;
-    device->GL_MakeCurrent     = MIR_GL_MakeCurrent;
-    device->GL_CreateContext   = MIR_GL_CreateContext;
-    device->GL_DeleteContext   = MIR_GL_DeleteContext;
-    device->GL_LoadLibrary     = MIR_GL_LoadLibrary;
-    device->GL_UnloadLibrary   = MIR_GL_UnloadLibrary;
-    device->GL_GetSwapInterval = MIR_GL_GetSwapInterval;
-    device->GL_SetSwapInterval = MIR_GL_SetSwapInterval;
-    device->GL_GetProcAddress  = MIR_GL_GetProcAddress;
-
     /* mirwindow */
     device->CreateWindow         = MIR_CreateWindow;
     device->DestroyWindow        = MIR_DestroyWindow;

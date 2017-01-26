@@ -333,7 +333,7 @@ UIElement* UIElement::LoadChildXML(const XMLElement& childElem, XMLFile* styleFi
     return child;
 }
 
-bool UIElement::SaveXML(XMLElement& dest) const
+bool UIElement::SaveXML(XMLElement& dest) const 
 {
     // Write type
     if (GetTypeName() != "UIElement")

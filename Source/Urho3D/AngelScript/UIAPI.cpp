@@ -123,9 +123,6 @@ static void RegisterUIElement(asIScriptEngine* engine)
     engine->RegisterGlobalProperty("const uint DD_SOURCE_AND_TARGET", (void*)&DD_SOURCE_AND_TARGET);
 
     RegisterUIElement<UIElement>(engine, "UIElement");
-
-    // Register TouchState touchedElement property now
-    engine->RegisterObjectMethod("TouchState", "UIElement@+ get_touchedElement()", asMETHOD(TouchState, GetTouchedElement), asCALL_THISCALL);
 }
 
 static void RegisterBorderImage(asIScriptEngine* engine)

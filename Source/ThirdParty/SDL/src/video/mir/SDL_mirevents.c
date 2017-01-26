@@ -29,7 +29,6 @@
 
 #include "../../events/SDL_events_c.h"
 #include "../../events/SDL_keyboard_c.h"
-#include "../../events/SDL_touch_c.h"
 #include "../../events/scancodes_xfree86.h"
 
 #include "SDL_mirevents.h"
@@ -131,13 +130,13 @@ HandleMouseMotion(SDL_Window* sdl_window, int x, int y)
 static void
 HandleTouchPress(int device_id, int source_id, SDL_bool down, float x, float y, float pressure)
 {
-    SDL_SendTouch(device_id, source_id, down, x, y, pressure);
+    return;
 }
 
 static void
 HandleTouchMotion(int device_id, int source_id, float x, float y, float pressure)
 {
-    SDL_SendTouchMotion(device_id, source_id, x, y, pressure);
+    return; 
 }
 
 static void
@@ -149,47 +148,11 @@ HandleMouseScroll(SDL_Window* sdl_window, int hscroll, int vscroll)
 static void
 AddTouchDevice(int device_id)
 {
-    if (SDL_AddTouch(device_id, "") < 0)
-        SDL_SetError("Error: can't add touch %s, %d", __FILE__, __LINE__);
+    return;
 }
 
 static void
-HandleTouchEvent(MirTouchEvent const* touch, int device_id, SDL_Window* sdl_window)
-{
-    int i, point_count;
-    point_count = MIR_mir_touch_event_point_count(touch);
-
-    AddTouchDevice(device_id);
-
-    for (i = 0; i < point_count; i++) {
-        int id = MIR_mir_touch_event_id(touch, i);
-
-        int width  = sdl_window->w;
-        int height = sdl_window->h;
-
-        float x = MIR_mir_touch_event_axis_value(touch, i, mir_touch_axis_x);
-        float y = MIR_mir_touch_event_axis_value(touch, i, mir_touch_axis_y);
-
-        float n_x = x / width;
-        float n_y = y / height;
-
-        float pressure = MIR_mir_touch_event_axis_value(touch, i, mir_touch_axis_pressure);
-
-        switch (MIR_mir_touch_event_action(touch, i)) {
-            case mir_touch_action_up:
-                HandleTouchPress(device_id, id, SDL_FALSE, n_x, n_y, pressure);
-                break;
-            case mir_touch_action_down:
-                HandleTouchPress(device_id, id, SDL_TRUE, n_x, n_y, pressure);
-                break;
-            case mir_touch_action_change:
-                HandleTouchMotion(device_id, id, n_x, n_y, pressure);
-                break;
-            case mir_touch_actions:
-                break;
-        }
-    }
-}
+HandleTouchEvent(MirTouchEvent const* touch, int device_id, SDL_Window* sdl_window) { return; }
 
 static void
 HandleMouseEvent(MirPointerEvent const* pointer, SDL_Window* sdl_window)
@@ -245,11 +208,6 @@ MIR_HandleInput(MirInputEvent const* input_event, SDL_Window* window)
             break;
         case (mir_input_event_type_pointer):
             HandleMouseEvent(MIR_mir_input_event_get_pointer_event(input_event), window);
-            break;
-        case (mir_input_event_type_touch):
-            HandleTouchEvent(MIR_mir_input_event_get_touch_event(input_event),
-                             MIR_mir_input_event_get_device_id(input_event),
-                             window);
             break;
         default:
             break;

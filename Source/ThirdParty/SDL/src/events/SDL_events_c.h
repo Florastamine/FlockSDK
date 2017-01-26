@@ -25,10 +25,8 @@
 #include "SDL_thread.h"
 #include "SDL_clipboardevents_c.h"
 #include "SDL_dropevents_c.h"
-#include "SDL_gesture_c.h"
 #include "SDL_keyboard_c.h"
 #include "SDL_mouse_c.h"
-#include "SDL_touch_c.h"
 #include "SDL_windowevents_c.h"
 
 /* Start and stop the event processing loop */

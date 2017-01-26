@@ -251,11 +251,6 @@ SetupWindowData(_THIS, SDL_Window * window, HWND hwnd, SDL_bool created)
         }
     }
 
-    /* Enable multi-touch */
-    if (videodata->RegisterTouchWindow) {
-        videodata->RegisterTouchWindow(hwnd, (TWF_FINETOUCH|TWF_WANTPALM));
-    }
-
     /* Enable dropping files */
     DragAcceptFiles(hwnd, TRUE);
 

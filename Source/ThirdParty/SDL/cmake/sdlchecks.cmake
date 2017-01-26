@@ -195,99 +195,6 @@ endmacro()
 # Requires:
 # - n/a
 # Optional:
-# - ESD_SHARED opt
-# - HAVE_DLOPEN opt
-macro(CheckESD)
-  if(ESD)
-    # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
-    find_package (Esound)
-    if(ESOUND_FOUND)
-      include_directories (${ESOUND_INCLUDE_DIRS})
-      set(HAVE_ESD TRUE)
-      file(GLOB ESD_SOURCES ${SDL2_SOURCE_DIR}/src/audio/esd/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${ESD_SOURCES})
-      set(SDL_AUDIO_DRIVER_ESD 1)
-      if(ESD_SHARED)
-        if(NOT HAVE_DLOPEN)
-          message_warn("You must have SDL_LoadObject() support for dynamic ESD loading")
-        else()
-          get_soname (ESD_LIB_SONAME ESOUND_LIBRARIES)
-          set(SDL_AUDIO_DRIVER_ESD_DYNAMIC "\"${ESD_LIB_SONAME}\"")
-          set(HAVE_ESD_SHARED TRUE)
-        endif()
-      else()
-        list (APPEND EXTRA_LIBS esd)
-      endif()
-      set(HAVE_SDL_AUDIO TRUE)
-    endif()
-  endif()
-endmacro()
-
-# Requires:
-# - n/a
-# Optional:
-# - ARTS_SHARED opt
-# - HAVE_DLOPEN opt
-macro(CheckARTS)
-  if(ARTS)
-    # Urho3D - bug fix - do not use (host) arts-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
-    find_package (aRts)
-    if(ARTS_FOUND)
-      include_directories (${ARTS_INCLUDE_DIRS})
-      file(GLOB ARTS_SOURCES ${SDL2_SOURCE_DIR}/src/audio/arts/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${ARTS_SOURCES})
-      set(SDL_AUDIO_DRIVER_ARTS 1)
-      set(HAVE_ARTS TRUE)
-      if(ARTS_SHARED)
-        if(NOT HAVE_DLOPEN)
-          message_warn("You must have SDL_LoadObject() support for dynamic ARTS loading")
-        else()
-          get_soname (ARTSC_LIB_SONAME ARTS_LIBRARIES)
-          set(SDL_AUDIO_DRIVER_ARTS_DYNAMIC "\"${ARTSC_LIB_SONAME}\"")
-          set(HAVE_ARTS_SHARED TRUE)
-        endif()
-      else()
-        list (APPEND EXTRA_LIBS artsc)
-      endif()
-      set(HAVE_SDL_AUDIO TRUE)
-    endif()
-  endif()
-endmacro()
-
-# Requires:
-# - n/a
-# Optional:
-# - NAS_SHARED opt
-# - HAVE_DLOPEN opt
-macro(CheckNAS)
-  if(NAS)
-    # Urho3D - bug fix - do not use check_include_file() for detection as it only works for host environment and not for rooted environment when cross-compiling
-    find_package (NetworkAudioSystem)
-    if(NAS_FOUND)
-      include_directories (${NAS_INCLUDE_DIRS})
-      set(HAVE_NAS TRUE)
-      file(GLOB NAS_SOURCES ${SDL2_SOURCE_DIR}/src/audio/nas/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${NAS_SOURCES})
-      set(SDL_AUDIO_DRIVER_NAS 1)
-      if(NAS_SHARED)
-        if(NOT HAVE_DLOPEN)
-          message_warn("You must have SDL_LoadObject() support for dynamic NAS loading")
-        else()
-          get_soname (AUDIO_LIB_SONAME NAS_LIBRARIES)
-          set(SDL_AUDIO_DRIVER_NAS_DYNAMIC "\"${AUDIO_LIB_SONAME}\"")
-          set(HAVE_NAS_SHARED TRUE)
-        endif()
-      else()
-        list (APPEND EXTRA_LIBS audio)
-      endif()
-      set(HAVE_SDL_AUDIO TRUE)
-    endif()
-  endif()
-endmacro()
-
-# Requires:
-# - n/a
-# Optional:
 # - SNDIO_SHARED opt
 # - HAVE_DLOPEN opt
 macro(CheckSNDIO)
@@ -687,46 +594,6 @@ macro(CheckDirectFB)
 endmacro()
 
 # Requires:
-# - n/a
-macro(CheckVivante)
-  if(VIDEO_VIVANTE)
-    # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" compiler flag or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
-    set (CMAKE_REQUIRED_INCLUDES_VIVANTE_SAVED ${CMAKE_REQUIRED_INCLUDES})
-    if (CMAKE_CROSSCOMPILING AND NOT "${CMAKE_C_FLAGS} ${CMAKE_REQUIRED_FLAGS}" MATCHES --sysroot)
-      find_path (VIVANTE_INCLUDE_DIRS NAMES gc_vdk.h EGL/eglvivante.h)
-      if (VIVANTE_INCLUDE_DIRS)
-        # Assume the header search path has not been adjusted elsewhere yet, there is no harm anyway when a same entry is added twice into the list
-        list (APPEND CMAKE_REQUIRED_INCLUDES ${VIVANTE_INCLUDE_DIRS})
-      endif ()
-    endif ()
-    check_c_source_compiles("
-        #include <gc_vdk.h>
-        int main(int argc, char** argv) {}" HAVE_VIDEO_VIVANTE_VDK)
-    check_c_source_compiles("
-        #define LINUX
-        #define EGL_API_FB
-        #include <EGL/eglvivante.h>
-        int main(int argc, char** argv) {}" HAVE_VIDEO_VIVANTE_EGL_FB)
-    if(HAVE_VIDEO_VIVANTE_VDK OR HAVE_VIDEO_VIVANTE_EGL_FB)
-      set(HAVE_VIDEO_VIVANTE TRUE)
-      set(HAVE_SDL_VIDEO TRUE)
-
-      file(GLOB VIVANTE_SOURCES ${SDL2_SOURCE_DIR}/src/video/vivante/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${VIVANTE_SOURCES})
-      set(SDL_VIDEO_DRIVER_VIVANTE 1)
-      if(HAVE_VIDEO_VIVANTE_VDK)
-        set(SDL_VIDEO_DRIVER_VIVANTE_VDK 1)
-        list(APPEND EXTRA_LIBS VDK VIVANTE)
-      else()
-        set(SDL_CFLAGS "${SDL_CFLAGS} -DLINUX -DEGL_API_FB")
-        list(APPEND EXTRA_LIBS EGL)
-      endif(HAVE_VIDEO_VIVANTE_VDK)
-    endif(HAVE_VIDEO_VIVANTE_VDK OR HAVE_VIDEO_VIVANTE_EGL_FB)
-    set (CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES_VIVANTE_SAVED})
-  endif(VIDEO_VIVANTE)
-endmacro(CheckVivante)
-
-# Requires:
 # - nada
 # Urho3D - rename the macro to be generic OpenGL check and make it also work for OSX platform
 macro(CheckOpenGL)
@@ -758,44 +625,6 @@ endmacro()
 
 # Requires:
 # - nada
-# Urho3D - rename the macro to be generic OpenGLES check and make it also work for iOS platform
-macro(CheckOpenGLES)
-  if(VIDEO_OPENGLES)
-    # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" option or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
-    if (CMAKE_CROSSCOMPILING AND SYSROOT AND NOT CMAKE_REQUIRED_INCLUDES)
-      set (CMAKE_REQUIRED_FLAGS "--sysroot=\"${SYSROOT}\" ${ORIG_CMAKE_REQUIRED_FLAGS}")
-    endif ()
-    check_c_source_compiles("
-        #define EGL_API_FB
-        #include <EGL/egl.h>
-        int main (int argc, char** argv) {}" HAVE_VIDEO_OPENGL_EGL)
-    if(HAVE_VIDEO_OPENGL_EGL)
-        set(SDL_VIDEO_OPENGL_EGL 1)
-    endif()
-    check_c_source_compiles("
-      #include <GLES/gl.h>
-      #include <GLES/glext.h>
-      int main (int argc, char** argv) {}" HAVE_VIDEO_OPENGLES_V1)
-    if(HAVE_VIDEO_OPENGLES_V1)
-        set(HAVE_VIDEO_OPENGLES TRUE)
-        set(SDL_VIDEO_OPENGL_ES 1)
-        set(SDL_VIDEO_RENDER_OGL_ES 1)
-    endif()
-    check_c_source_compiles("
-      #include <GLES2/gl2.h>
-      #include <GLES2/gl2ext.h>
-      int main (int argc, char** argv) {}" HAVE_VIDEO_OPENGLES_V2)
-    if(HAVE_VIDEO_OPENGLES_V2)
-        set(HAVE_VIDEO_OPENGLES TRUE)
-        set(SDL_VIDEO_OPENGL_ES2 1)
-        set(SDL_VIDEO_RENDER_OGL_ES2 1)
-    endif()
-    set (CMAKE_REQUIRED_FLAGS ${ORIG_CMAKE_REQUIRED_FLAGS})
-  endif()
-endmacro()
-
-# Requires:
-# - nada
 # Optional:
 # - THREADS opt
 # Sets:
@@ -819,18 +648,6 @@ macro(CheckPTHREAD)
     elseif(OPENBSD)
       set(PTHREAD_CFLAGS "-D_REENTRANT")
       set(PTHREAD_LDFLAGS "-pthread")
-    elseif(SOLARIS)
-      set(PTHREAD_CFLAGS "-D_REENTRANT")
-      set(PTHREAD_LDFLAGS "-pthread -lposix4")
-    elseif(SYSV5)
-      set(PTHREAD_CFLAGS "-D_REENTRANT -Kthread")
-      set(PTHREAD_LDFLAGS "")
-    elseif(AIX)
-      set(PTHREAD_CFLAGS "-D_REENTRANT -mthreads")
-      set(PTHREAD_LDFLAGS "-pthread")
-    elseif(HPUX)
-      set(PTHREAD_CFLAGS "-D_REENTRANT")
-      set(PTHREAD_LDFLAGS "-L/usr/lib -pthread")
     else()
       set(PTHREAD_CFLAGS "-D_REENTRANT")
       set(PTHREAD_LDFLAGS "-lpthread")
@@ -1068,25 +885,3 @@ macro(CheckUSBHID)
     set(CMAKE_REQUIRED_FLAGS ${ORIG_CMAKE_REQUIRED_FLAGS})
   endif()
 endmacro()
-
-# Requires:
-# - n/a
-macro(CheckRPI)
-  if(VIDEO_RPI)
-    # Urho3D - bug fix - when cross-compiling the headers are rooted
-    set(CMAKE_REQUIRED_FLAGS "${VIDEO_RPI_INCLUDE_FLAGS} ${ORIG_CMAKE_REQUIRED_FLAGS}")
-    # Urho3D - bug fix - commented out CMAKE_REQUIRED_LIBRARIES as it actually causes the detection to fail
-    check_c_source_compiles("
-        #include <bcm_host.h>
-        int main(int argc, char **argv) {}" HAVE_VIDEO_RPI)
-    set(CMAKE_REQUIRED_FLAGS ${ORIG_CMAKE_REQUIRED_FLAGS})
-
-    if(SDL_VIDEO AND HAVE_VIDEO_RPI)
-      set(HAVE_SDL_VIDEO TRUE)
-      set(SDL_VIDEO_DRIVER_RPI 1)
-      file(GLOB VIDEO_RPI_SOURCES ${SDL2_SOURCE_DIR}/src/video/raspberry/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${VIDEO_RPI_SOURCES})
-      list (APPEND EXTRA_LIBS bcm_host)
-    endif(SDL_VIDEO AND HAVE_VIDEO_RPI)
-  endif(VIDEO_RPI)
-endmacro(CheckRPI)

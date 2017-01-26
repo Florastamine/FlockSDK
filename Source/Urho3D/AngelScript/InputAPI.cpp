@@ -463,35 +463,6 @@ static Input* GetInput()
     return GetScriptContext()->GetSubsystem<Input>();
 }
 
-static bool InputSaveGestures(File* file, Input* ptr)
-{
-    return file && ptr->SaveGestures(*file);
-}
-
-static bool InputSaveGesturesVectorBuffer(VectorBuffer& buffer, Input* ptr)
-{
-    return ptr->SaveGestures(buffer);
-}
-
-static bool InputSaveGesture(File* file, unsigned gestureID, Input* ptr)
-{
-    return file && ptr->SaveGesture(*file, gestureID);
-}
-
-static bool InputSaveGestureVectorBuffer(VectorBuffer& buffer, unsigned gestureID, Input* ptr)
-{
-    return ptr->SaveGesture(buffer, gestureID);
-}
-
-static unsigned InputLoadGestures(File* file, Input* ptr)
-{
-    return file ? ptr->LoadGestures(*file) : 0;
-}
-
-static unsigned InputLoadGesturesVectorBuffer(VectorBuffer& buffer, Input* ptr)
-{
-    return ptr->LoadGestures(buffer);
-}
 
 static void InputSetMouseVisible(bool enable, Input* ptr)
 {
@@ -516,15 +487,6 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterEnumValue("MouseMode", "MM_WRAP", MM_WRAP);
     engine->RegisterEnumValue("MouseMode", "MM_FREE", MM_FREE);
 
-    engine->RegisterObjectType("TouchState", 0, asOBJ_REF);
-    engine->RegisterObjectBehaviour("TouchState", asBEHAVE_ADDREF, "void f()", asFUNCTION(FakeAddRef), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectBehaviour("TouchState", asBEHAVE_RELEASE, "void f()", asFUNCTION(FakeReleaseRef), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectProperty("TouchState", "const int touchID", offsetof(TouchState, touchID_));
-    engine->RegisterObjectProperty("TouchState", "const IntVector2 position", offsetof(TouchState, position_));
-    engine->RegisterObjectProperty("TouchState", "const IntVector2 lastPosition", offsetof(TouchState, lastPosition_));
-    engine->RegisterObjectProperty("TouchState", "const IntVector2 delta", offsetof(TouchState, delta_));
-    engine->RegisterObjectProperty("TouchState", "const float pressure", offsetof(TouchState, pressure_));
-
     engine->RegisterObjectType("JoystickState", 0, asOBJ_REF);
     engine->RegisterObjectBehaviour("JoystickState", asBEHAVE_ADDREF, "void f()", asFUNCTION(FakeAddRef), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("JoystickState", asBEHAVE_RELEASE, "void f()", asFUNCTION(FakeReleaseRef), asCALL_CDECL_OBJLAST);
@@ -542,15 +504,6 @@ static void RegisterInput(asIScriptEngine* engine)
     RegisterObject<Input>(engine, "Input");
     engine->RegisterObjectMethod("Input", "int AddScreenJoystick(XMLFile@+ layoutFile = null, XMLFile@+ styleFile = null)", asMETHOD(Input, AddScreenJoystick), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool RemoveScreenJoystick(int)", asMETHOD(Input, RemoveScreenJoystick), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "bool RecordGesture()", asMETHOD(Input, RecordGesture), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "bool SaveGestures(File@+)", asFUNCTION(InputSaveGestures), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "bool SaveGestures(VectorBuffer&)", asFUNCTION(InputSaveGesturesVectorBuffer), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "bool SaveGesture(File@+, uint)", asFUNCTION(InputSaveGesture), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "bool SaveGesture(VectorBuffer&, uint)", asFUNCTION(InputSaveGestureVectorBuffer), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "uint LoadGestures(File@+)", asFUNCTION(InputLoadGestures), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "uint LoadGestures(VectorBuffer&)", asFUNCTION(InputLoadGesturesVectorBuffer), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("Input", "bool RemoveGesture(uint)", asMETHOD(Input, RemoveGesture), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "void RemoveAllGestures()", asMETHOD(Input, RemoveAllGestures), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "void CenterMousePosition()", asMETHOD(Input, CenterMousePosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int GetKeyFromName(const String&in) const", asMETHOD(Input, GetKeyFromName), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int GetKeyFromScancode(int) const", asMETHOD(Input, GetKeyFromScancode), asCALL_THISCALL);
@@ -576,8 +529,6 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Input", "void set_screenKeyboardVisible(bool)", asMETHOD(Input, SetScreenKeyboardVisible), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_screenKeyboardVisible() const", asMETHOD(Input, IsScreenKeyboardVisible), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_screenKeyboardSupport() const", asMETHOD(Input, GetScreenKeyboardSupport), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "void set_touchEmulation(bool)", asMETHOD(Input, SetTouchEmulation), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "bool get_touchEmulation() const", asMETHOD(Input, GetTouchEmulation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "void set_toggleFullscreen(bool)", asMETHOD(Input, SetToggleFullscreen), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_toggleFullscreen() const", asMETHOD(Input, GetToggleFullscreen), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_keyDown(int) const", asMETHOD(Input, GetKeyDown), asCALL_THISCALL);
@@ -595,8 +546,6 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Input", "int get_mouseMoveX() const", asMETHOD(Input, GetMouseMoveX), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveY() const", asMETHOD(Input, GetMouseMoveY), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveWheel() const", asMETHOD(Input, GetMouseMoveWheel), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "uint get_numTouches() const", asMETHOD(Input, GetNumTouches), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "TouchState@+ get_touches(uint) const", asMETHOD(Input, GetTouch), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "uint get_numJoysticks() const", asMETHOD(Input, GetNumJoysticks), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticks(int)", asMETHOD(Input, GetJoystick), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticksByIndex(uint)", asMETHOD(Input, GetJoystickByIndex), asCALL_THISCALL);

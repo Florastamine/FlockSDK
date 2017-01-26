@@ -31,9 +31,7 @@
 #include "SDL_waylandvideo.h"
 #include "SDL_waylandevents_c.h"
 #include "SDL_waylandwindow.h"
-#include "SDL_waylandopengles.h"
 #include "SDL_waylandmouse.h"
-#include "SDL_waylandtouch.h"
 
 #include <sys/types.h>
 #include <unistd.h>

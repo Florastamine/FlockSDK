@@ -142,60 +142,6 @@ URHO3D_EVENT(E_JOYSTICKHATMOVE, JoystickHatMove)
     URHO3D_PARAM(P_POSITION, Position);            // int
 }
 
-/// Finger pressed on the screen.
-URHO3D_EVENT(E_TOUCHBEGIN, TouchBegin)
-{
-    URHO3D_PARAM(P_TOUCHID, TouchID);              // int
-    URHO3D_PARAM(P_X, X);                          // int
-    URHO3D_PARAM(P_Y, Y);                          // int
-    URHO3D_PARAM(P_PRESSURE, Pressure);            // float
-}
-
-/// Finger released from the screen.
-URHO3D_EVENT(E_TOUCHEND, TouchEnd)
-{
-    URHO3D_PARAM(P_TOUCHID, TouchID);              // int
-    URHO3D_PARAM(P_X, X);                          // int
-    URHO3D_PARAM(P_Y, Y);                          // int
-}
-
-/// Finger moved on the screen.
-URHO3D_EVENT(E_TOUCHMOVE, TouchMove)
-{
-    URHO3D_PARAM(P_TOUCHID, TouchID);              // int
-    URHO3D_PARAM(P_X, X);                          // int
-    URHO3D_PARAM(P_Y, Y);                          // int
-    URHO3D_PARAM(P_DX, DX);                        // int
-    URHO3D_PARAM(P_DY, DY);                        // int
-    URHO3D_PARAM(P_PRESSURE, Pressure);            // float
-}
-
-/// A touch gesture finished recording.
-URHO3D_EVENT(E_GESTURERECORDED, GestureRecorded)
-{
-    URHO3D_PARAM(P_GESTUREID, GestureID);          // unsigned
-}
-
-/// A recognized touch gesture was input by the user.
-URHO3D_EVENT(E_GESTUREINPUT, GestureInput)
-{
-    URHO3D_PARAM(P_GESTUREID, GestureID);          // unsigned
-    URHO3D_PARAM(P_CENTERX, CenterX);              // int
-    URHO3D_PARAM(P_CENTERY, CenterY);              // int
-    URHO3D_PARAM(P_NUMFINGERS, NumFingers);        // int
-    URHO3D_PARAM(P_ERROR, Error);                  // float
-}
-
-/// Pinch/rotate multi-finger touch gesture motion update.
-URHO3D_EVENT(E_MULTIGESTURE, MultiGesture)
-{
-    URHO3D_PARAM(P_CENTERX, CenterX);              // int
-    URHO3D_PARAM(P_CENTERY, CenterY);              // int
-    URHO3D_PARAM(P_NUMFINGERS, NumFingers);        // int
-    URHO3D_PARAM(P_DTHETA, DTheta);                // float (degrees)
-    URHO3D_PARAM(P_DDIST, DDist);                  // float
-}
-
 /// A file was drag-dropped into the application window.
 URHO3D_EVENT(E_DROPFILE, DropFile)
 {

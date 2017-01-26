@@ -35,12 +35,7 @@
 #include "SDL_x11video.h"
 #include "SDL_x11framebuffer.h"
 #include "SDL_x11shape.h"
-#include "SDL_x11touch.h"
 #include "SDL_x11xinput2.h"
-
-#if SDL_VIDEO_OPENGL_EGL
-#include "SDL_x11opengles.h"
-#endif
 
 #ifdef X_HAVE_UTF8_STRING
 #include <locale.h>
@@ -501,8 +496,6 @@ X11_VideoInit(_THIS)
     }
     X11_InitMouse(_this);
 
-    X11_InitTouch(_this);
-
 #if SDL_USE_LIBDBUS
     SDL_DBus_Init();
 #endif
@@ -525,7 +518,6 @@ X11_VideoQuit(_THIS)
     X11_QuitModes(_this);
     X11_QuitKeyboard(_this);
     X11_QuitMouse(_this);
-    X11_QuitTouch(_this);
 
 #if SDL_USE_LIBDBUS
     SDL_DBus_Quit();

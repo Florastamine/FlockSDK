@@ -187,14 +187,14 @@ public:
         int dragButtons;
         /// How many buttons initiated the drag.
         int numDragButtons;
-        /// Sum of all touch locations
-        IntVector2 sumPos;
         /// Flag for a drag start event pending.
         bool dragBeginPending;
         /// Timer used to trigger drag begin event.
         Timer dragBeginTimer;
         /// Drag start position.
-        IntVector2 dragBeginSumPos;
+        IntVector2 dragBeginSumPos; 
+
+        IntVector2 sumPos;
     };
 
 private:
@@ -246,12 +246,6 @@ private:
     void HandleMouseMove(StringHash eventType, VariantMap& eventData);
     /// Handle mouse wheel event.
     void HandleMouseWheel(StringHash eventType, VariantMap& eventData);
-    /// Handle touch begin event.
-    void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
-    /// Handle touch end event.
-    void HandleTouchEnd(StringHash eventType, VariantMap& eventData);
-    /// Handle touch move event.
-    void HandleTouchMove(StringHash eventType, VariantMap& eventData);
     /// Handle keypress event.
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
     /// Handle text input event.
@@ -268,8 +262,6 @@ private:
     HashMap<WeakPtr<UIElement>, DragData*>::Iterator DragElementErase(HashMap<WeakPtr<UIElement>, DragData*>::Iterator dragElement);
     /// Handle clean up on a drag cancel.
     void ProcessDragCancel();
-    /// Sum touch positions and return the begin position ready to send.
-    IntVector2 SumTouchPositions(UI::DragData* dragData, const IntVector2& oldSendPos);
     /// Resize root element to effective size.
     void ResizeRootElement();
     /// Return effective size of the root element, according to UI scale and resolution / custom size.
@@ -319,8 +311,6 @@ private:
     int maxFontTextureSize_;
     /// Initialized flag.
     bool initialized_;
-    /// Touch used flag.
-    bool usingTouchInput_;
     /// Flag to switch mouse wheel event to be sent to non-focused element at cursor.
     bool nonFocusedMouseWheel_;
     /// Flag for using operating system clipboard instead of internal.
@@ -347,8 +337,6 @@ private:
     int dragElementsCount_;
     /// Number of elements in dragElements_ with dragPending = false.
     int dragConfirmedCount_;
-    /// UI elements that are being touched with touch input.
-    HashMap<WeakPtr<UIElement>, int> touchDragElements_;
     /// Confirmed drag elements cache.
     Vector<UIElement*> dragElementsConfirmed_;
     /// Current scale of UI.

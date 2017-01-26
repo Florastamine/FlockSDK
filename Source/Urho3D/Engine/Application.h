@@ -68,8 +68,6 @@ protected:
     int exitCode_;
 };
 
-// Macro for defining a main function which creates a Context and the application, then runs it
-#ifndef IOS
 #define URHO3D_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
@@ -78,16 +76,4 @@ int RunApplication() \
     return application->Run(); \
 } \
 URHO3D_DEFINE_MAIN(RunApplication());
-#else
-// On iOS we will let this function exit, so do not hold the context and application in SharedPtr's
-#define URHO3D_DEFINE_APPLICATION_MAIN(className) \
-int RunApplication() \
-{ \
-    Urho3D::Context* context = new Urho3D::Context(); \
-    className* application = new className(context); \
-    return application->Run(); \
-} \
-URHO3D_DEFINE_MAIN(RunApplication());
-#endif
-
 }

@@ -23,23 +23,18 @@
 #if SDL_VIDEO_DRIVER_X11
 
 #include "SDL_x11video.h"
-#include "SDL_x11touch.h"
 #include "SDL_x11xinput2.h"
-#include "../../events/SDL_touch_c.h"
-
 
 void
 X11_InitTouch(_THIS)
 {
-    if (X11_Xinput2IsMultitouchSupported()) {
-        X11_InitXinput2Multitouch(_this);
-    }
+    return;
 }
 
 void
 X11_QuitTouch(_THIS)
 {
-    SDL_TouchQuit();
+    return;
 }
 
 #endif /* SDL_VIDEO_DRIVER_X11 */

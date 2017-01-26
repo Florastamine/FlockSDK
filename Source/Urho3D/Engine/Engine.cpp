@@ -58,10 +58,6 @@
 #include "../Urho2D/Urho2D.h"
 #endif
 
-#if defined(__EMSCRIPTEN__) && defined(URHO3D_TESTING)
-#include <emscripten/emscripten.h>
-#endif
-
 #include "../DebugNew.h"
 
 
@@ -406,10 +402,6 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Init FPU state of main thread
     InitFPU();
-
-    // Initialize input
-    if (HasParameter(parameters, "TouchEmulation"))
-        GetSubsystem<Input>()->SetTouchEmulation(GetParameter(parameters, "TouchEmulation").GetBool());
 
     // Initialize network
 #ifdef URHO3D_NETWORK
@@ -904,8 +896,6 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret["TextureAnisotropy"] = ToInt(value);
                 ++i;
             }
-            else if (argument == "touch")
-                ret["TouchEmulation"] = true;
 #ifdef URHO3D_TESTING
             else if (argument == "timeout" && !value.Empty())
             {
@@ -949,9 +939,6 @@ void Engine::DoExit()
         graphics->Close();
 
     exiting_ = true;
-#if defined(__EMSCRIPTEN__) && defined(URHO3D_TESTING)
-    emscripten_force_exit(EXIT_SUCCESS);    // Some how this is required to signal emrun to stop
-#endif
 }
 
 }

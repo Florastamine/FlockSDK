@@ -474,8 +474,6 @@ SDL_PushEvent(SDL_Event * event)
         return -1;
     }
 
-    SDL_GestureProcessEvent(event);
-
     return 1;
 }
 

@@ -27,17 +27,12 @@
 #include "../SDL_sysvideo.h"
 #include "../SDL_pixels_c.h"
 #include "../../events/SDL_keyboard_c.h"
-#include "../../events/SDL_mouse_c.h"
+#include "../../events/SDL_mouse_c.h"S
 
 #include "SDL_x11video.h"
 #include "SDL_x11mouse.h"
 #include "SDL_x11shape.h"
 #include "SDL_x11xinput2.h"
-
-#if SDL_VIDEO_OPENGL_EGL
-#include "SDL_x11opengles.h"
-#endif
-
 #include "SDL_timer.h"
 #include "SDL_syswm.h"
 #include "SDL_assert.h"
