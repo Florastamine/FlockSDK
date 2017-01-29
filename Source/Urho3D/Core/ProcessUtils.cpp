@@ -28,10 +28,6 @@
 #include <cstdio>
 #include <fcntl.h>
 
-#ifdef __APPLE__
-#include "TargetConditionals.h"
-#endif
-
 #if defined(IOS)
 #include "../Math/MathDefs.h"
 #include <mach/mach_host.h>
@@ -394,8 +390,6 @@ String GetPlatform()
     return "iOS";
 #elif defined(_WIN32)
     return "Windows";
-#elif defined(__APPLE__)
-    return "Mac OS X";
 #elif defined(RPI)
     return "Raspberry Pi";
 #elif defined(__EMSCRIPTEN__)

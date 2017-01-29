@@ -44,7 +44,7 @@
 
 // Use a "click inside window to focus" mechanism on desktop platforms when the mouse cursor is hidden
 // TODO: For now, in this particular case only, treat all the ARM on Linux as "desktop" (e.g. RPI, odroid, etc), revisit this again when we support "mobile" ARM on Linux
-#if defined(_WIN32) || (defined(__APPLE__) && !defined(IOS)) || (defined(__linux__) && !defined(__ANDROID__))
+#if defined(_WIN32) || defined(__linux__)
 #define REQUIRE_CLICK_TO_FOCUS
 #endif
 

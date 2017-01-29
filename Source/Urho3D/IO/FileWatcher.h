@@ -88,16 +88,8 @@ private:
     /// HashMap for the directory and sub-directories (needed for inotify's int handles).
     HashMap<int, String> dirHandle_;
     /// Linux inotify needs a handle.
-    int watchHandle_;
-
-#elif defined(__APPLE__) && !defined(IOS)
-    
-    /// Flag indicating whether the running OS supports individual file watching.
-    bool supported_;
-    /// Pointer to internal MacFileWatcher delegate.
-    void* watcher_;
-
-#endif
+    int watchHandle_; 
+#endif 
 };
 
 }

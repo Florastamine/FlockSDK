@@ -62,10 +62,6 @@
 #define MAX_PATH 256
 #endif
 
-#if defined(__APPLE__)
-#include <mach-o/dyld.h>
-#endif
-
 extern "C"
 {
 #ifdef __ANDROID__
@@ -445,13 +441,7 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 #else
         Vector<String> arguments;
         arguments.Push(fileName);
-        bool success = SystemRun(
-#if defined(__APPLE__)
-            "/usr/bin/open",
-#else
-            "/usr/bin/xdg-open",
-#endif
-            arguments) == 0;
+        bool success = SystemRun("/usr/bin/xdg-open", arguments) == 0;
 #endif
         if (!success)
             URHO3D_LOGERROR("Failed to open " + fileName + " externally");
@@ -690,24 +680,13 @@ String FileSystem::GetProgramDir() const
     if (!programDir_.Empty())
         return programDir_;
 
-#if defined(__ANDROID__)
-    // This is an internal directory specifier pointing to the assets in the .apk
-    // Files from this directory will be opened using special handling
-    programDir_ = APK;
-    return programDir_;
-#elif defined(IOS)
+#if defined(IOS)
     programDir_ = AddTrailingSlash(SDL_IOS_GetResourceDir());
     return programDir_;
 #elif defined(_WIN32)
     wchar_t exeName[MAX_PATH];
     exeName[0] = 0;
     GetModuleFileNameW(0, exeName, MAX_PATH);
-    programDir_ = GetPath(String(exeName));
-#elif defined(__APPLE__)
-    char exeName[MAX_PATH];
-    memset(exeName, 0, MAX_PATH);
-    unsigned size = MAX_PATH;
-    _NSGetExecutablePath(exeName, &size);
     programDir_ = GetPath(String(exeName));
 #elif defined(__linux__)
     char exeName[MAX_PATH];
