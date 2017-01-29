@@ -42,10 +42,6 @@
 #include <unistd.h>
 #endif
 
-#if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
-#include <emscripten/threading.h>
-#endif
-
 #if defined(__i386__)
 // From http://stereopsis.com/FPU.html
 
@@ -385,12 +381,6 @@ unsigned GetNumPhysicalCPUs()
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numPhysicalCores_;
-#elif defined(__EMSCRIPTEN__)
-#ifdef __EMSCRIPTEN_PTHREADS__
-    return emscripten_num_logical_cores();
-#else
-    return 1; // Targeting a single-threaded Emscripten build.
-#endif
 #else
     struct cpu_id_t data;
     GetCPUData(&data);
@@ -404,12 +394,6 @@ unsigned GetNumLogicalCPUs()
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numLogicalCores_;
-#elif defined(__EMSCRIPTEN__)
-#ifdef __EMSCRIPTEN_PTHREADS__
-    return emscripten_num_logical_cores();
-#else
-    return 1; // Targeting a single-threaded Emscripten build.
-#endif
 #else
     struct cpu_id_t data;
     GetCPUData(&data);

@@ -52,18 +52,6 @@
 #define glClearDepth glClearDepthf
 #endif
 
-#ifdef __EMSCRIPTEN__
-// Emscripten provides even all GL extension functions via static linking. However there is
-// no GLES2-specific extension header at the moment to include instanced rendering declarations,
-// so declare them manually from GLES3 gl2ext.h. Emscripten will provide these when linking final output.
-extern "C"
-{
-    GL_APICALL void GL_APIENTRY glDrawArraysInstancedANGLE (GLenum mode, GLint first, GLsizei count, GLsizei primcount);
-    GL_APICALL void GL_APIENTRY glDrawElementsInstancedANGLE (GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei primcount);
-    GL_APICALL void GL_APIENTRY glVertexAttribDivisorANGLE (GLuint index, GLuint divisor);
-}
-#endif
-
 #ifdef _WIN32
 // Prefer the high-performance GPU on switchable GPU systems
 #include <windows.h>
@@ -430,11 +418,9 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
                 window_ = SDL_CreateWindow(windowTitle_.CString(), x, y, width, height, flags);
             else
             {
-#ifndef __EMSCRIPTEN__
                 if (!window_)
                     window_ = SDL_CreateWindowFrom(externalWindow_, SDL_WINDOW_OPENGL);
                 fullscreen = false;
-#endif
             }
 
             if (window_)
@@ -918,7 +904,7 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount,
     unsigned instanceCount)
 {
-#if !defined(GL_ES_VERSION_2_0) || defined(__EMSCRIPTEN__)
+#if !defined(GL_ES_VERSION_2_0) 
     if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
         return;
 
@@ -930,10 +916,6 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 
     GetGLPrimitiveType(indexCount, type, primitiveCount, glPrimitiveType);
     GLenum indexType = indexSize == sizeof(unsigned short) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-#ifdef __EMSCRIPTEN__
-    glDrawElementsInstancedANGLE(glPrimitiveType, indexCount, indexType, reinterpret_cast<const GLvoid*>(indexStart * indexSize),
-        instanceCount);
-#else
     if (gl3Support)
     {
         glDrawElementsInstanced(glPrimitiveType, indexCount, indexType, reinterpret_cast<const GLvoid*>(indexStart * indexSize),
@@ -944,7 +926,6 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
         glDrawElementsInstancedARB(glPrimitiveType, indexCount, indexType, reinterpret_cast<const GLvoid*>(indexStart * indexSize),
             instanceCount);
     }
-#endif
 
     numPrimitives_ += instanceCount * primitiveCount;
     ++numBatches_;
@@ -2082,7 +2063,7 @@ unsigned Graphics::GetFormat(CompressedFormat format) const
     case CF_DXT1:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT1_EXT : 0;
 
-#if !defined(GL_ES_VERSION_2_0) || defined(__EMSCRIPTEN__)
+#if !defined(GL_ES_VERSION_2_0)
     case CF_DXT3:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT3_EXT : 0;
 
@@ -3307,11 +3288,6 @@ void Graphics::SetVertexAttribDivisor(unsigned location, unsigned divisor)
         glVertexAttribDivisor(location, divisor);
     else if (instancingSupport_)
         glVertexAttribDivisorARB(location, divisor);
-#else
-#ifdef __EMSCRIPTEN__
-    if (instancingSupport_)
-        glVertexAttribDivisorANGLE(location, divisor);
-#endif
 #endif
 }
 

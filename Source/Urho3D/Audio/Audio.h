@@ -116,11 +116,7 @@ public:
     void MixOutput(void* dest, unsigned samples);
 
     /// Final multiplier for for audio byte conversion
-#ifdef __EMSCRIPTEN__
-    static const int SAMPLE_SIZE_MUL = 2;
-#else
     static const int SAMPLE_SIZE_MUL = 1;
-#endif
 private:
     /// Handle render update event.
     void HandleRenderUpdate(StringHash eventType, VariantMap& eventData);

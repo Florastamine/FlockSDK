@@ -108,18 +108,10 @@ struct JoystickState
     PODVector<int> hats_;
 };
 
-#ifdef __EMSCRIPTEN__
-class EmscriptenInput;
-#endif
-
 /// %Input subsystem. Converts operating system window messages to input state and events.
 class URHO3D_API Input : public Object
 {
     URHO3D_OBJECT(Input, Object);
-
-#ifdef __EMSCRIPTEN__
-    friend class EmscriptenInput;
-#endif
 
 public:
     /// Construct.
@@ -293,21 +285,10 @@ private:
     /// Handle SDL event.
     void HandleSDLEvent(void* sdlEvent);
 
-#ifndef __EMSCRIPTEN__
     /// Set SDL mouse mode relative.
     void SetMouseModeRelative(SDL_bool enable);
     /// Set SDL mouse mode absolute.
     void SetMouseModeAbsolute(SDL_bool enable);
-#else
-    /// Set whether the operating system mouse cursor is visible (Emscripten platform only).
-    void SetMouseVisibleEmscripten(bool enable, bool suppressEvent = false);
-    /// Set mouse mode final resolution (Emscripten platform only).
-    void SetMouseModeEmscriptenFinal(MouseMode mode, bool suppressEvent = false);
-    /// SetMouseMode  (Emscripten platform only).
-    void SetMouseModeEmscripten(MouseMode mode, bool suppressEvent);
-    /// Handle frame end event.
-    void HandleEndFrame(StringHash eventType, VariantMap& eventData);
-#endif
 
     /// Graphics subsystem.
     WeakPtr<Graphics> graphics_;
@@ -353,10 +334,8 @@ private:
     MouseMode mouseMode_;
     /// The last mouse mode set by SetMouseMode.
     MouseMode lastMouseMode_;
-#ifndef __EMSCRIPTEN__
     /// Flag to determine whether SDL mouse relative was used.
     bool sdlMouseRelative_;
-#endif
     /// Input focus flag.
     bool inputFocus_;
     /// Minimized flag.
@@ -369,17 +348,6 @@ private:
     bool mouseMoveScaled_;
     /// Initialized flag.
     bool initialized_;
-
-#ifdef __EMSCRIPTEN__
-    /// Emscripten Input glue instance.
-    UniquePtr<EmscriptenInput> emscriptenInput_;
-    /// Flag used to detect mouse jump when exiting pointer-lock.
-    bool emscriptenExitingPointerLock_;
-    /// Flag used to detect mouse jump on initial mouse click when entering pointer-lock.
-    bool emscriptenEnteredPointerLock_;
-    /// Flag indicating current pointer-lock status.
-    bool emscriptenPointerLock_;
-#endif
 };
 
 }

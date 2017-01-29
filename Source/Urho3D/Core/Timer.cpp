@@ -30,8 +30,6 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <mmsystem.h>
-#elif __EMSCRIPTEN__
-#include <emscripten/emscripten.h>
 #else
 #include <sys/time.h>
 #include <unistd.h>
@@ -73,8 +71,6 @@ static unsigned Tick()
 {
 #ifdef _WIN32
     return (unsigned)timeGetTime();
-#elif __EMSCRIPTEN__
-    return (unsigned)emscripten_get_now();
 #else
     struct timeval time;
     gettimeofday(&time, NULL);
@@ -93,8 +89,6 @@ static long long HiresTick()
     }
     else
         return timeGetTime();
-#elif __EMSCRIPTEN__
-    return (unsigned)(emscripten_get_now()*1000.0);
 #else
     struct timeval time;
     gettimeofday(&time, NULL);

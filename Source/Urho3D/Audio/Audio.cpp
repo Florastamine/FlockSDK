@@ -84,12 +84,7 @@ bool Audio::SetMode(int bufferLengthMSec, int mixRate, bool stereo, bool interpo
 
     desired.freq = mixRate;
 
-// The concept behind the emscripten audio port is to treat it as 16 bit until the final accumulation form the clip buffer
-#ifdef __EMSCRIPTEN__
-    desired.format = AUDIO_F32LSB;
-#else
     desired.format = AUDIO_S16;
-#endif
     desired.channels = (Uint8)(stereo ? 2 : 1);
     desired.callback = SDLAudioCallback;
     desired.userdata = this;
@@ -106,16 +101,6 @@ bool Audio::SetMode(int bufferLengthMSec, int mixRate, bool stereo, bool interpo
         URHO3D_LOGERROR("Could not initialize audio output");
         return false;
     }
-
-#ifdef __EMSCRIPTEN__
-    if (obtained.format != AUDIO_F32LSB && obtained.format != AUDIO_F32MSB && obtained.format != AUDIO_F32SYS)
-    {
-        URHO3D_LOGERROR("Could not initialize audio output, 32-bit float buffer format not supported");
-        SDL_CloseAudioDevice(deviceID_);
-        deviceID_ = 0;
-        return false;
-    }
-#else
     if (obtained.format != AUDIO_S16SYS && obtained.format != AUDIO_S16LSB && obtained.format != AUDIO_S16MSB)
     {
         URHO3D_LOGERROR("Could not initialize audio output, 16-bit buffer format not supported");
@@ -123,7 +108,6 @@ bool Audio::SetMode(int bufferLengthMSec, int mixRate, bool stereo, bool interpo
         deviceID_ = 0;
         return false;
     }
-#endif
 
     stereo_ = obtained.channels == 2;
     sampleSize_ = (unsigned)(stereo_ ? sizeof(int) : sizeof(short));
@@ -310,15 +294,9 @@ void Audio::MixOutput(void* dest, unsigned samples)
             source->Mix(clipPtr, workSamples, mixRate_, stereo_, interpolation_);
         }
         // Copy output from clip buffer to destination
-#ifdef __EMSCRIPTEN__
-        float* destPtr = (float*)dest;
-        while (clipSamples--)
-            *destPtr++ = (float)Clamp(*clipPtr++, -32768, 32767) / 32768.0f;
-#else
         short* destPtr = (short*)dest;
         while (clipSamples--)
             *destPtr++ = (short)Clamp(*clipPtr++, -32768, 32767);
-#endif
         samples -= workSamples;
         ((unsigned char*&)dest) += sampleSize_ * SAMPLE_SIZE_MUL * workSamples;
     }

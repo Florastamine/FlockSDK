@@ -457,10 +457,6 @@ bool Texture2DArray::Create()
         requestedLevels_ = 1;
     else if (usage_ == TEXTURE_RENDERTARGET)
     {
-#ifdef __EMSCRIPTEN__
-        // glGenerateMipmap appears to not be working on WebGL, disable rendertarget mipmaps for now
-        requestedLevels_ = 1;
-#else
         if (requestedLevels_ != 1)
         {
             // Generate levels for the first time now
@@ -468,7 +464,6 @@ bool Texture2DArray::Create()
             // Determine max. levels automatically
             requestedLevels_ = 0;
         }
-#endif
     }
 
     levels_ = CheckMaxLevels(width_, height_, requestedLevels_);
