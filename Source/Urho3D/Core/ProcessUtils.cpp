@@ -105,7 +105,7 @@ struct CpuCoreCount
     unsigned numLogicalCores_;
 };
 
-// This function is used by all the target triplets with Linux as the OS, such as Android, RPI, desktop Linux, etc
+// This function is used by all the target triplets with Linux as the OS, such as desktop Linux, etc
 static void GetCPUData(struct CpuCoreCount* data)
 {
     // Sanity check
@@ -384,16 +384,10 @@ String GetConsoleInput()
 
 String GetPlatform()
 {
-#if defined(__ANDROID__)
-    return "Android";
 #elif defined(IOS)
     return "iOS";
 #elif defined(_WIN32)
     return "Windows";
-#elif defined(RPI)
-    return "Raspberry Pi";
-#elif defined(__EMSCRIPTEN__)
-    return "Web";
 #elif defined(__linux__)
     return "Linux";
 #else

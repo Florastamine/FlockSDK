@@ -172,12 +172,6 @@ set (ORIG_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
 set (ORIG_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
 set (ORIG_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
 
-if (RPI)
-  # Urho3D - TODO - move the find_package(VideoCore REQUIRED) call from Urho3D common module to here later after we have refactored the library dependency handling
-  # Urho3D - bug fix - adjust the header search path for subsequent pthread, EGL and OpenGLES2 checks
-  list (APPEND CMAKE_REQUIRED_INCLUDES ${VIDEOCORE_INCLUDE_DIRS})
-endif ()
-
 if(CYGWIN)
   # We build SDL on cygwin without the UNIX emulation layer
   # Urho3D - bug fix - we do not support Cygwin build so this fix is untested, just for completeness sake
@@ -467,11 +461,7 @@ if(LIBC)
     add_definitions(-D_USE_MATH_DEFINES) # needed for M_PI
     set(STDC_HEADERS 1)
   else()
-    set(HAVE_LIBC TRUE)
-    # Urho3D - temporary bug fix - starting since Raspbian Jessie some of the headers are installed in the arch-specific directory and it seems that older CMake (prior to release 3.2.3) does not include this directory by default yet, so we have to do that manually
-    if (RPI AND CMAKE_LIBRARY_ARCHITECTURE)
-      include_directories (${SYSROOT}/usr/include/${CMAKE_LIBRARY_ARCHITECTURE})    # SYSROOT is empty when we are not cross-compiling
-    endif ()
+    set(HAVE_LIBC TRUE) 
     # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" compiler flag or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
     set (CMAKE_REQUIRED_INCLUDES_SYS_TYPES_SAVED ${CMAKE_REQUIRED_INCLUDES})
     if (CMAKE_CROSSCOMPILING AND NOT "${CMAKE_C_FLAGS} ${CMAKE_REQUIRED_FLAGS}" MATCHES --sysroot)

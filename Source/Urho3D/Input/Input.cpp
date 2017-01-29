@@ -222,7 +222,6 @@ void Input::Update()
         mouseMove_ = mousePosition - lastMousePosition_;
         mouseMoveScaled_ = true; // Already in backbuffer scale, since GetMousePosition() operates in that
 
-#ifndef __EMSCRIPTEN__
         if (graphics_->GetExternalWindow())
             lastMousePosition_ = mousePosition;
         else
@@ -230,13 +229,6 @@ void Input::Update()
             // Recenter the mouse cursor manually after move
             CenterMousePosition();
         }
-#else
-        if (mouseMode_ == MM_ABSOLUTE || mouseMode_ == MM_FREE)
-            lastMousePosition_ = mousePosition;
-
-        if (emscriptenExitingPointerLock_)
-            SuppressNextMouseMove();
-#endif
         // Send mouse move event if necessary
         if (mouseMove_ != IntVector2::ZERO)
         {
@@ -276,8 +268,6 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
         enable = false;
     }
 
-    // SDL Raspberry Pi "video driver" does not have proper OS mouse support yet, so no-op for now
-#ifndef RPI
     if (enable != mouseVisible_)
     {
         if (initialized_)
@@ -293,16 +283,12 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
 
             if (!enable && inputFocus_)
             {
-#ifndef __EMSCRIPTEN__
                 if (mouseVisible_)
                     lastVisibleMousePosition_ = GetMousePosition();
 
                 if (mouseMode_ == MM_ABSOLUTE)
                     SetMouseModeAbsolute(SDL_TRUE);
-#else
-                if (mouseMode_ == MM_ABSOLUTE && !emscriptenPointerLock_)
-                    emscriptenInput_->RequestPointerLock(MM_ABSOLUTE, suppressEvent);
-#endif
+
                 SDL_ShowCursor(SDL_FALSE);
                 mouseVisible_ = false;
             }
@@ -312,8 +298,6 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
 
                 SDL_ShowCursor(SDL_TRUE);
                 mouseVisible_ = true;
-
-#ifndef __EMSCRIPTEN__
                 if (mouseMode_ == MM_ABSOLUTE)
                     SetMouseModeAbsolute(SDL_FALSE);
 
@@ -338,10 +322,6 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
                         lastMousePosition_ = lastVisibleMousePosition_;
                     }
                 }
-#else
-                if (mouseMode_ == MM_ABSOLUTE && emscriptenPointerLock_)
-                    emscriptenInput_->ExitPointerLock(suppressEvent);
-#endif
             }
         }
         else
@@ -364,16 +344,11 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
             }
         }
     }
-#endif
 }
 
 void Input::ResetMouseVisible()
 {
-#ifndef __EMSCRIPTEN__
     SetMouseVisible(lastMouseVisible_, false);
-#else
-    SetMouseVisibleEmscripten(lastMouseVisible_, false);
-#endif
 }
 
 void Input::SetMouseGrabbed(bool grab, bool suppressEvent)
@@ -392,8 +367,6 @@ void Input::ResetMouseGrabbed()
     SetMouseGrabbed(lastMouseGrabbed_, true);
 }
 
-
-#ifndef __EMSCRIPTEN__
 void Input::SetMouseModeAbsolute(SDL_bool enable)
 {
     SDL_Window* const window = graphics_->GetWindow();
@@ -411,15 +384,10 @@ void Input::SetMouseModeRelative(SDL_bool enable)
     if (result == -1)
         SDL_SetWindowGrab(window, enable);
 }
-#endif
 
 void Input::SetMouseMode(MouseMode mode, bool suppressEvent)
 {
     const MouseMode previousMode = mouseMode_;
-
-#ifdef __EMSCRIPTEN__
-    SetMouseModeEmscripten(mode, suppressEvent);
-#else
     if (mode != mouseMode_)
     {
         if (initialized_)
@@ -472,7 +440,6 @@ void Input::SetMouseMode(MouseMode mode, bool suppressEvent)
             mouseMode_ = mode;
         }
     }
-#endif
 
     if (!suppressEvent)
     {
@@ -968,11 +935,7 @@ bool Input::IsScreenKeyboardVisible() const
 
 bool Input::IsMouseLocked() const
 {
-#ifdef __EMSCRIPTEN__
-    return emscriptenPointerLock_;
-#else
     return !((mouseMode_ == MM_ABSOLUTE && mouseVisible_) || mouseMode_ == MM_FREE);
-#endif
 }
 
 bool Input::IsMinimized() const
@@ -998,15 +961,7 @@ void Input::Initialize()
 
     // Set the initial activation
     initialized_ = true;
-#ifndef __EMSCRIPTEN__
     GainFocus();
-#else
-    // Note: Page visibility and focus are slightly different, however we can't query last focus with Emscripten (1.29.0)
-    if (emscriptenInput_->IsVisible())
-        GainFocus();
-    else
-        LoseFocus();
-#endif
 
     ResetJoysticks();
     ResetState();
@@ -1049,11 +1004,9 @@ void Input::GainFocus()
     focusedThisFrame_ = false;
 
     // Restore mouse mode
-#ifndef __EMSCRIPTEN__
     const MouseMode mm = mouseMode_;
     mouseMode_ = MM_FREE;
     SetMouseMode(mm, true);
-#endif
 
     SuppressNextMouseMove();
 
@@ -1075,12 +1028,10 @@ void Input::LoseFocus()
     SDL_ShowCursor(SDL_TRUE);
 
     // Change mouse mode -- removing any cursor grabs, etc.
-#ifndef __EMSCRIPTEN__
     const MouseMode mm = mouseMode_;
     SetMouseMode(MM_FREE, true);
     // Restore flags to reflect correct mouse state.
     mouseMode_ = mm;
-#endif
 
     SendInputFocusEvent();
 }
