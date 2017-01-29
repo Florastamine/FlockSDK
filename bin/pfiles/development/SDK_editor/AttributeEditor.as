@@ -22,7 +22,7 @@ Color normalTextColor(1.0f, 1.0f, 1.0f);
 Color modifiedTextColor(1.0f, 0.8f, 0.5f);
 Color nonEditableTextColor(0.7f, 0.7f, 0.7f);
 
-String sceneResourcePath = AddTrailingSlash(fileSystem.programDir + "pfiles");
+String sceneResourcePath = AddTrailingSlash(fileSystem.programDir + "Data");
 bool rememberResourcePath = true;
 
 // Exceptions for string attributes that should not be continuously edited
@@ -279,7 +279,7 @@ UIElement@ CreateNumAttributeEditor(ListView@ list, Array<Serializable@>@ serial
     uint numCoords = 1;
     if (type == VAR_VECTOR2 || type == VAR_INTVECTOR2)
         numCoords = 2;
-    if (type == VAR_VECTOR3 || type == VAR_QUATERNION)
+    if (type == VAR_VECTOR3 || type == VAR_INTVECTOR3 || type == VAR_QUATERNION)
         numCoords = 3;
     else if (type == VAR_VECTOR4 || type == VAR_COLOR || type == VAR_INTRECT || type == VAR_RECT)
         numCoords = 4;
@@ -435,7 +435,7 @@ UIElement@ CreateAttributeEditor(ListView@ list, Array<Serializable@>@ serializa
         parent = CreateStringAttributeEditor(list, serializables, info, index, subIndex);
     else if (type == VAR_BOOL)
         parent = CreateBoolAttributeEditor(list, serializables, info, index, subIndex);
-    else if ((type >= VAR_FLOAT && type <= VAR_VECTOR4) || type == VAR_QUATERNION || type == VAR_COLOR || type == VAR_INTVECTOR2 || type == VAR_INTRECT || type == VAR_DOUBLE || type == VAR_RECT)
+    else if ((type >= VAR_FLOAT && type <= VAR_VECTOR4) || type == VAR_QUATERNION || type == VAR_COLOR || type == VAR_INTVECTOR2 || type == VAR_INTVECTOR3 || type == VAR_INTRECT || type == VAR_DOUBLE || type == VAR_RECT)
         parent = CreateNumAttributeEditor(list, serializables, info, index, subIndex);
     else if (type == VAR_INT)
         parent = CreateIntAttributeEditor(list, serializables, info, index, subIndex);
@@ -510,10 +510,10 @@ UIElement@ CreateAttributeEditor(ListView@ list, Array<Serializable@>@ serializa
                 }
                 nameIndex = vectorStruct.restartIndex;
 
-                 // Create small divider for repeated instances
-                 UIElement@ divider = UIElement();
-                 divider.SetFixedHeight(8);
-                 list.AddItem(divider);
+                // Create small divider for repeated instances
+                UIElement@ divider = UIElement();
+                divider.SetFixedHeight(8);
+                list.AddItem(divider);
             }
         }
     }
@@ -867,7 +867,7 @@ void SanitizeNumericalValue(VariantType type, String& value)
 {
     if ((type >= VAR_FLOAT && type <= VAR_COLOR) || type == VAR_RECT)
         value = String(value.ToFloat());
-    else if (type == VAR_INT || type == VAR_INTRECT || type == VAR_INTVECTOR2)
+    else if (type == VAR_INT || type == VAR_INTRECT || type == VAR_INTVECTOR2 || type == VAR_INTVECTOR3)
         value = String(value.ToInt());
     else if (type == VAR_DOUBLE)
         value = String(value.ToDouble());
@@ -1165,7 +1165,7 @@ void InitResourcePicker()
     // Fill resource picker data
     Array<String> fontFilters = {"*.ttf", "*.otf", "*.fnt", "*.xml", "*.sdf"};
     Array<String> imageFilters = {"*.png", "*.jpg", "*.bmp", "*.tga", "*.hdr"};
-    Array<String> luaFileFilters = {"*.lua", "*.dcs"};
+    Array<String> luaFileFilters = {"*.lua", "*.luc"};
     Array<String> scriptFilters = {"*.as", "*.asc"};
     Array<String> soundFilters = {"*.wav","*.ogg"};
     Array<String> textureFilters = {"*.dds", "*.png", "*.jpg", "*.bmp", "*.tga", "*.ktx", "*.pvr", "*.hdr"};
@@ -1492,7 +1492,7 @@ class VectorStruct
     }
 };
 
-Array<VectorStruct@> vectorStructs; 
+Array<VectorStruct@> vectorStructs;
 
 void InitVectorStructs()
 {

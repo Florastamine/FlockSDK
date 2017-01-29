@@ -188,6 +188,13 @@ void LuaScriptInstance::OnSetAttribute(const AttributeInfo& attr, const Variant&
                 tolua_register_gc(luaState_, lua_gettop(luaState_));
             }
             break;
+        case VAR_INTVECTOR3:
+            {
+                IntVector3* value = new IntVector3(src.GetIntVector3());
+                tolua_pushusertype(luaState_, value, "IntVector3");
+                tolua_register_gc(luaState_, lua_gettop(luaState_));
+            }
+            break;
         default:
             URHO3D_LOGERROR("Unsupported data type");
             lua_settop(luaState_, top);
@@ -264,6 +271,9 @@ void LuaScriptInstance::OnGetAttribute(const AttributeInfo& attr, Variant& dest)
         break;
     case VAR_INTVECTOR2:
         dest = *((IntVector2*)tolua_tousertype(luaState_, -1, 0));
+        break;
+    case VAR_INTVECTOR3:
+        dest = *((IntVector3*)tolua_tousertype(luaState_, -1, 0));
         break;
     default:
         URHO3D_LOGERROR("Unsupported data type");
@@ -580,10 +590,12 @@ void LuaScriptInstance::GetScriptAttributes()
                     info.type_ = VAR_QUATERNION;
                 else if (typeName == "Color")
                     info.type_ = VAR_COLOR;
-                else if (typeName == "Intrect")
+                else if (typeName == "IntRect")
                     info.type_ = VAR_INTRECT;
-                else if (typeName == "Intvector2")
+                else if (typeName == "IntVector2")
                     info.type_ = VAR_INTVECTOR2;
+                else if (typeName == "IntVector3")
+                    info.type_ = VAR_INTVECTOR3;
             }
             break;
         default:
