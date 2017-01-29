@@ -88,15 +88,9 @@ Engine::Engine(Context* context) :
     timeStep_(0.0f),
     timeStepSmoothing_(2),
     minFps_(10),
-#if defined(IOS) || defined(__ANDROID__) || defined(__arm__) || defined(__aarch64__)
-    maxFps_(60),
-    maxInactiveFps_(10),
-    pauseMinimized_(true),
-#else
     maxFps_(200),
     maxInactiveFps_(60),
     pauseMinimized_(false),
-#endif
 #ifdef URHO3D_TESTING
     timeOut_(0),
 #endif
@@ -542,10 +536,6 @@ void Engine::SetPauseMinimized(bool enable)
 
 void Engine::SetAutoExit(bool enable)
 {
-    // On mobile platforms exit is mandatory if requested by the platform itself and should not be attempted to be disabled
-#if defined(__ANDROID__) || defined(IOS)
-    enable = true;
-#endif
     autoExit_ = enable;
 }
 
@@ -556,11 +546,7 @@ void Engine::SetNextTimeStep(float seconds)
 
 void Engine::Exit()
 {
-#if defined(IOS)
-    // On iOS it's not legal for the application to exit on its own, instead it will be minimized with the home key
-#else
     DoExit();
-#endif
 }
 
 void Engine::DumpProfiler()
@@ -690,16 +676,7 @@ void Engine::ApplyFrameLimit()
         maxFps = Min(maxInactiveFps_, maxFps);
 
     long long elapsed = 0;
-
-#ifndef __EMSCRIPTEN__
-    // Perform waiting loop if maximum FPS set
-#ifndef IOS
     if (maxFps)
-#else
-    // If on iOS and target framerate is 60 or above, just let the animation callback handle frame timing
-    // instead of waiting ourselves
-    if (maxFps < 60)
-#endif
     {
         URHO3D_PROFILE(ApplyFrameLimit);
 
@@ -719,7 +696,6 @@ void Engine::ApplyFrameLimit()
             }
         }
     }
-#endif
 
     elapsed = frameTimer_.GetUSec(true);
 #ifdef URHO3D_TESTING

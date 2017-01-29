@@ -33,13 +33,6 @@
 
 #include <cstdio>
 
-#ifdef __ANDROID__
-#include <android/log.h>
-#endif
-#ifdef IOS
-extern "C" void SDL_IOS_LogMessage(const char* message);
-#endif
-
 #include "../DebugNew.h"
 
 namespace Urho3D
@@ -80,7 +73,6 @@ Log::~Log()
 
 void Log::Open(const String& fileName)
 {
-#if !defined(__ANDROID__) && !defined(IOS)
     if (fileName.Empty())
         return;
     if (logFile_ && logFile_->IsOpen())
@@ -99,18 +91,15 @@ void Log::Open(const String& fileName)
         logFile_.Reset();
         Write(LOG_ERROR, "Failed to create log file " + fileName);
     }
-#endif
 }
 
 void Log::Close()
 {
-#if !defined(__ANDROID__) && !defined(IOS)
     if (logFile_ && logFile_->IsOpen())
     {
         logFile_->Close();
         logFile_.Reset();
     }
-#endif
 }
 
 void Log::SetLevel(int level)
@@ -170,12 +159,6 @@ void Log::Write(int level, const String& message)
     if (logInstance->timeStamp_)
         formattedMessage = "[" + Time::GetTimeStamp() + "] " + formattedMessage;
 
-#if defined(__ANDROID__)
-    int androidLevel = ANDROID_LOG_DEBUG + level;
-    __android_log_print(androidLevel, "Urho3D", "%s", message.CString());
-#elif defined(IOS)
-    SDL_IOS_LogMessage(message.CString());
-#else
     if (logInstance->quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
@@ -184,7 +167,6 @@ void Log::Write(int level, const String& message)
     }
     else
         PrintUnicodeLine(formattedMessage, level == LOG_ERROR);
-#endif
 
     if (logInstance->logFile_)
     {
@@ -223,18 +205,6 @@ void Log::WriteRaw(const String& message, bool error)
         return;
 
     logInstance->lastMessage_ = message;
-
-#if defined(__ANDROID__)
-    if (logInstance->quiet_)
-    {
-        if (error)
-            __android_log_print(ANDROID_LOG_ERROR, "Urho3D", message.CString());
-    }
-    else
-        __android_log_print(error ? ANDROID_LOG_ERROR : ANDROID_LOG_INFO, "Urho3D", message.CString());
-#elif defined(IOS)
-    SDL_IOS_LogMessage(message.CString());
-#else
     if (logInstance->quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
@@ -243,7 +213,6 @@ void Log::WriteRaw(const String& message, bool error)
     }
     else
         PrintUnicode(message, error);
-#endif
 
     if (logInstance->logFile_)
     {

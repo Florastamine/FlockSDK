@@ -26,11 +26,6 @@
 #include "../IO/IOEvents.h"
 #include "../IO/Log.h"
 
-#ifdef IOS
-#include "../Graphics/Graphics.h"
-#include <SDL/SDL.h>
-#endif
-
 #include "../DebugNew.h"
 
 namespace Urho3D

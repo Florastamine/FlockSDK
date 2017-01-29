@@ -292,11 +292,6 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 
     bool maximize = false;
 
-#if defined(IOS) || defined(TVOS)
-    // iOS and tvOS app always take the fullscreen (and with status bar hidden)
-    fullscreen = true;
-#endif
-
     // Fullscreen or Borderless can not be resizable
     if (fullscreen || borderless)
         resizable = false;
@@ -370,11 +365,6 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
     {
         // Close the existing window and OpenGL context, mark GPU objects as lost
         Release(false, true);
-
-#ifdef IOS
-        // On iOS window needs to be resizable to handle orientation changes properly
-        resizable = true;
-#endif
 
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -484,11 +474,6 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 
     // Set vsync
     SDL_GL_SetSwapInterval(vsync ? 1 : 0);
-
-    // Store the system FBO on IOS now
-#ifdef IOS
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&impl_->systemFBO_);
-#endif
 
     fullscreen_ = fullscreen;
     borderless_ = borderless;
@@ -2068,12 +2053,6 @@ bool Graphics::GetDither() const
 
 bool Graphics::IsDeviceLost() const
 {
-    // On iOS treat window minimization as device loss, as it is forbidden to access OpenGL when minimized
-#ifdef IOS
-    if (window_ && (SDL_GetWindowFlags(window_) & SDL_WINDOW_MINIMIZED) != 0)
-        return true;
-#endif
-
     return impl_->context_ == 0;
 }
 
@@ -2421,17 +2400,6 @@ void Graphics::Restore()
     if (!window_)
         return;
 
-#ifdef __ANDROID__
-    // On Android the context may be lost behind the scenes as the application is minimized
-    if (impl_->context_ && !SDL_GL_GetCurrentContext())
-    {
-        impl_->context_ = 0;
-        // Mark GPU objects lost without a current context. In this case they just mark their internal state lost
-        // but do not perform OpenGL commands to delete the GL objects
-        Release(false, false);
-    }
-#endif
-
     // Ensure first that the context exists
     if (!impl_->context_)
     {
@@ -2447,10 +2415,6 @@ void Graphics::Restore()
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
             impl_->context_ = SDL_GL_CreateContext(window_);
         }
-#endif
-
-#ifdef IOS
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&impl_->systemFBO_);
 #endif
 
         if (!impl_->context_)
@@ -2785,17 +2749,8 @@ void Graphics::CheckFeatureSupport()
     }
     else
     {
-        #ifdef IOS
-        // iOS hack: depth renderbuffer seems to fail, so use depth textures for everything
-        // if supported
-        glesDepthStencilFormat = GL_DEPTH_COMPONENT;
-#endif
         shadowMapFormat_ = GL_DEPTH_COMPONENT;
         hiresShadowMapFormat_ = 0;
-        // WebGL shadow map rendering seems to be extremely slow without an attached dummy color texture
-        #ifdef __EMSCRIPTEN__
-        dummyColorFormat_ = GetRGBAFormat();
-#endif
     }
 #endif
 

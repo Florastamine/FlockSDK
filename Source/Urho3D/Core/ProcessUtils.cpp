@@ -28,10 +28,7 @@
 #include <cstdio>
 #include <fcntl.h>
 
-#if defined(IOS)
-#include "../Math/MathDefs.h"
-#include <mach/mach_host.h>
-#elif !defined(__linux__) && !defined(__EMSCRIPTEN__)
+#if !defined(__linux__) 
 #include <LibCpuId/libcpuid.h>
 #endif
 
@@ -91,14 +88,7 @@ static String currentLine;
 static Vector<String> arguments;
 static String miniDumpDir;
 
-#if defined(IOS)
-static void GetCPUData(host_basic_info_data_t* data)
-{
-    mach_msg_type_number_t infoCount;
-    infoCount = HOST_BASIC_INFO_COUNT;
-    host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)data, &infoCount);
-}
-#elif defined(__linux__)
+#if defined(__linux__)
 struct CpuCoreCount
 {
     unsigned numPhysicalCores_;
@@ -198,7 +188,6 @@ void OpenConsoleWindow()
 
 void PrintUnicode(const String& str, bool error)
 {
-#if !defined(__ANDROID__) && !defined(IOS)
 #ifdef _WIN32
     // If the output stream has been redirected, use fprintf instead of WriteConsoleW,
     // though it means that proper Unicode output will not work
@@ -217,7 +206,6 @@ void PrintUnicode(const String& str, bool error)
 #else
     fprintf(error ? stderr : stdout, "%s", str.CString());
 #endif
-#endif
 }
 
 void PrintUnicodeLine(const String& str, bool error)
@@ -227,9 +215,7 @@ void PrintUnicodeLine(const String& str, bool error)
 
 void PrintLine(const String& str, bool error)
 {
-#if !defined(__ANDROID__) && !defined(IOS)
     fprintf(error ? stderr : stdout, "%s\n", str.CString());
-#endif
 }
 
 const Vector<String>& ParseArguments(const String& cmdLine, bool skipFirstArgument)
@@ -365,7 +351,7 @@ String GetConsoleInput()
             }
         }
     }
-#elif !defined(__ANDROID__) && !defined(IOS)
+#else 
     int flags = fcntl(STDIN_FILENO, F_GETFL);
     fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
     for (;;)
@@ -376,7 +362,7 @@ String GetConsoleInput()
         else
             break;
     }
-#endif
+#endif 
 
     return ret;
 #endif
@@ -384,9 +370,7 @@ String GetConsoleInput()
 
 String GetPlatform()
 {
-#elif defined(IOS)
-    return "iOS";
-#elif defined(_WIN32)
+#if defined(_WIN32)
     return "Windows";
 #elif defined(__linux__)
     return "Linux";
@@ -397,16 +381,7 @@ String GetPlatform()
 
 unsigned GetNumPhysicalCPUs()
 {
-#if defined(IOS)
-    host_basic_info_data_t data;
-    GetCPUData(&data);
-#if defined(TARGET_IPHONE_SIMULATOR)
-    // Hardcoded to dual-core on simulator mode even if the host has more
-    return Min(2, data.physical_cpu);
-#else
-    return data.physical_cpu;
-#endif
-#elif defined(__linux__)
+#if defined(__linux__)
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numPhysicalCores_;
@@ -425,15 +400,7 @@ unsigned GetNumPhysicalCPUs()
 
 unsigned GetNumLogicalCPUs()
 {
-#if defined(IOS)
-    host_basic_info_data_t data;
-    GetCPUData(&data);
-#if defined(TARGET_IPHONE_SIMULATOR)
-    return Min(2, data.logical_cpu);
-#else
-    return data.logical_cpu;
-#endif
-#elif defined(__linux__)
+#if defined(__linux__)
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numLogicalCores_;

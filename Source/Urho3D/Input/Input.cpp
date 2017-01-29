@@ -354,12 +354,10 @@ void Input::ResetMouseVisible()
 void Input::SetMouseGrabbed(bool grab, bool suppressEvent)
 {
 // To not interfere with touch UI operation, never report the mouse as grabbed on Android / iOS
-#if !defined(__ANDROID__) && !defined(IOS)
     mouseGrabbed_ = grab;
 
     if (!suppressEvent)
         lastMouseGrabbed_ = grab;
-#endif
 }
 
 void Input::ResetMouseGrabbed()
@@ -1475,11 +1473,6 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
             case SDL_WINDOWEVENT_MAXIMIZED:
             case SDL_WINDOWEVENT_RESTORED:
-#if defined(IOS) || defined (__ANDROID__)
-                // On iOS we never lose the GL context, but may have done GPU object changes that could not be applied yet. Apply them now
-                // On Android the old GL context may be lost already, restore GPU objects to the new GL context
-                graphics_->Restore();
-#endif
                 minimized_ = false;
                 SendInputFocusEvent();
                 break;
