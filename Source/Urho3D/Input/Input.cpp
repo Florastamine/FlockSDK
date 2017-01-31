@@ -57,8 +57,6 @@ const StringHash VAR_BUTTON_MOUSE_BUTTON_BINDING("VAR_BUTTON_MOUSE_BUTTON_BINDIN
 const StringHash VAR_LAST_KEYSYM("VAR_LAST_KEYSYM");
 const StringHash VAR_SCREEN_JOYSTICK_ID("VAR_SCREEN_JOYSTICK_ID"); 
 
-const unsigned TOUCHID_MAX = 32;
-
 /// Convert SDL keycode if necessary.
 int ConvertSDLKeyCode(int keySym, int scanCode)
 {
@@ -114,9 +112,6 @@ Input::Input(Context* context) :
     initialized_(false)
 {
     context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
-
-    for (int i = 0; i < TOUCHID_MAX; i++)
-        availableTouchIDs_.Push(i);
 
     SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(Input, HandleScreenMode));
 
@@ -361,7 +356,6 @@ void Input::ResetMouseVisible()
 
 void Input::SetMouseGrabbed(bool grab, bool suppressEvent)
 {
-// To not interfere with touch UI operation, never report the mouse as grabbed on Android / iOS
     mouseGrabbed_ = grab;
 
     if (!suppressEvent)
