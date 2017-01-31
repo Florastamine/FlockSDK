@@ -55,7 +55,9 @@ const int SCREEN_JOYSTICK_START_ID = 0x40000000;
 const StringHash VAR_BUTTON_KEY_BINDING("VAR_BUTTON_KEY_BINDING");
 const StringHash VAR_BUTTON_MOUSE_BUTTON_BINDING("VAR_BUTTON_MOUSE_BUTTON_BINDING");
 const StringHash VAR_LAST_KEYSYM("VAR_LAST_KEYSYM");
-const StringHash VAR_SCREEN_JOYSTICK_ID("VAR_SCREEN_JOYSTICK_ID");
+const StringHash VAR_SCREEN_JOYSTICK_ID("VAR_SCREEN_JOYSTICK_ID"); 
+
+const unsigned TOUCHID_MAX = 32;
 
 /// Convert SDL keycode if necessary.
 int ConvertSDLKeyCode(int keySym, int scanCode)
