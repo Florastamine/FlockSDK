@@ -400,6 +400,12 @@ public:
         return it;
     }
 
+    /// Return index of value in vector, or size if not found.
+    unsigned IndexOf(const T& value) const
+    {
+        return Find(value) - Begin();
+    }
+
     /// Return whether contains a specific value.
     bool Contains(const T& value) const { return Find(value) != End(); }
 
@@ -976,6 +982,12 @@ public:
         while (it != End() && *it != value)
             ++it;
         return it;
+    }
+
+    /// Return index of value in vector, or size if not found.
+    unsigned IndexOf(const T& value) const
+    {
+        return Find(value) - Begin();
     }
 
     /// Return whether contains a specific value.
