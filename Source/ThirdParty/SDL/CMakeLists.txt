@@ -461,7 +461,7 @@ if(LIBC)
     add_definitions(-D_USE_MATH_DEFINES) # needed for M_PI
     set(STDC_HEADERS 1)
   else()
-    set(HAVE_LIBC TRUE) 
+    set(HAVE_LIBC TRUE)
     # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" compiler flag or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
     set (CMAKE_REQUIRED_INCLUDES_SYS_TYPES_SAVED ${CMAKE_REQUIRED_INCLUDES})
     if (CMAKE_CROSSCOMPILING AND NOT "${CMAKE_C_FLAGS} ${CMAKE_REQUIRED_FLAGS}" MATCHES --sysroot)
@@ -613,24 +613,18 @@ if(UNIX)    # Urho3D - at this point both UNIX and UNIX_SYS should be equivalent
     CheckOSS()
     CheckALSA()
     CheckPulseAudio()
-    CheckESD()
-    CheckARTS()
-    CheckNAS()
     CheckSNDIO()
     CheckFusionSound()
   endif()
 
   if(SDL_VIDEO)
     # Need to check for Raspberry PI first and add platform specific compiler flags, otherwise the test for GLES fails!
-    CheckRPI()
     CheckX11()
     CheckMir()
     CheckDirectFB()
     # Urho3D - raname macros
     CheckOpenGL()
-    CheckOpenGLES()
     CheckWayland()
-    CheckVivante()
   endif()
 
   if(LINUX)
@@ -1121,4 +1115,3 @@ setup_library ()
 # Install headers for building and using the Urho3D library (install dependency for InputEvents.h)
 install_header_files (DIRECTORY include/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/SDL FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK)    # Note: the trailing slash is significant
 install_header_files (FILES ${SDL2_BINARY_DIR}/include/generated/SDL_config.h DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/SDL)
-
