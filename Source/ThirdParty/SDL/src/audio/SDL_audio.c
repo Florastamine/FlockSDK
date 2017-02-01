@@ -43,8 +43,6 @@ extern AudioBootStrap ALSA_bootstrap;
 extern AudioBootStrap SNDIO_bootstrap;
 extern AudioBootStrap BSD_AUDIO_bootstrap;
 extern AudioBootStrap QSAAUDIO_bootstrap;
-extern AudioBootStrap SUNAUDIO_bootstrap;
-extern AudioBootStrap NAS_bootstrap;
 extern AudioBootStrap XAUDIO2_bootstrap;
 extern AudioBootStrap DSOUND_bootstrap;
 extern AudioBootStrap WINMM_bootstrap;
@@ -74,9 +72,6 @@ static const AudioBootStrap *const bootstrap[] = {
 #endif
 #if SDL_AUDIO_DRIVER_SUNAUDIO
     &SUNAUDIO_bootstrap,
-#endif
-#if SDL_AUDIO_DRIVER_NAS
-    &NAS_bootstrap,
 #endif
 #if SDL_AUDIO_DRIVER_XAUDIO2
     &XAUDIO2_bootstrap,
