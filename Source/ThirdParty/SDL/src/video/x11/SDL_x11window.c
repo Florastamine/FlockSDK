@@ -50,25 +50,6 @@ static Bool isUnmapNotify(Display *dpy, XEvent *ev, XPointer win)
     return ev->type == UnmapNotify && ev->xunmap.window == *((Window*)win);
 }
 
-/*
-static Bool isConfigureNotify(Display *dpy, XEvent *ev, XPointer win)
-{
-    return ev->type == ConfigureNotify && ev->xconfigure.window == *((Window*)win);
-}
-static Bool
-X11_XIfEventTimeout(Display *display, XEvent *event_return, Bool (*predicate)(), XPointer arg, int timeoutMS)
-{
-    Uint32 start = SDL_GetTicks();
-
-    while (!X11_XCheckIfEvent(display, event_return, predicate, arg)) {
-        if (SDL_TICKS_PASSED(SDL_GetTicks(), start + timeoutMS)) {
-            return False;
-        }
-    }
-    return True;
-}
-*/
-
 static SDL_bool
 X11_IsWindowLegacyFullscreen(_THIS, SDL_Window * window)
 {
@@ -90,35 +71,6 @@ X11_IsWindowMapped(_THIS, SDL_Window * window)
         return SDL_FALSE;
     }
 }
-
-#if 0
-static SDL_bool
-X11_IsActionAllowed(SDL_Window *window, Atom action)
-{
-    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
-    Atom _NET_WM_ALLOWED_ACTIONS = data->videodata->_NET_WM_ALLOWED_ACTIONS;
-    Atom type;
-    Display *display = data->videodata->display;
-    int form;
-    unsigned long remain;
-    unsigned long len, i;
-    Atom *list;
-    SDL_bool ret = SDL_FALSE;
-
-    if (X11_XGetWindowProperty(display, data->xwindow, _NET_WM_ALLOWED_ACTIONS, 0, 1024, False, XA_ATOM, &type, &form, &len, &remain, (unsigned char **)&list) == Success)
-    {
-        for (i=0; i<len; ++i)
-        {
-            if (list[i] == action) {
-                ret = SDL_TRUE;
-                break;
-            }
-        }
-        X11_XFree(list);
-    }
-    return ret;
-}
-#endif /* 0 */
 
 void
 X11_SetNetWMState(_THIS, Window xwindow, Uint32 flags)
@@ -382,8 +334,8 @@ X11_CreateWindow(_THIS, SDL_Window * window)
         XVisualInfo *vinfo = NULL;
 
 #if SDL_VIDEO_OPENGL_EGL
-        if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES 
-#if SDL_VIDEO_OPENGL_GLX            
+        if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
+#if SDL_VIDEO_OPENGL_GLX
             && ( !_this->gl_data || ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile )
 #endif
         ) {
@@ -592,13 +544,13 @@ X11_CreateWindow(_THIS, SDL_Window * window)
     windowdata = (SDL_WindowData *) window->driverdata;
 
 #if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
-    if ((window->flags & SDL_WINDOW_OPENGL) && 
+    if ((window->flags & SDL_WINDOW_OPENGL) &&
         _this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES
-#if SDL_VIDEO_OPENGL_GLX            
+#if SDL_VIDEO_OPENGL_GLX
         && ( !_this->gl_data || ! _this->gl_data->HAS_GLX_EXT_create_context_es2_profile )
-#endif  
+#endif
     ) {
-#if SDL_VIDEO_OPENGL_EGL  
+#if SDL_VIDEO_OPENGL_EGL
         if (!_this->egl_data) {
             X11_XDestroyWindow(display, w);
             return -1;
@@ -616,15 +568,13 @@ X11_CreateWindow(_THIS, SDL_Window * window)
 #endif /* SDL_VIDEO_OPENGL_EGL */
     }
 #endif
-    
+
 
 #ifdef X_HAVE_UTF8_STRING
     if (SDL_X11_HAVE_UTF8 && windowdata->ic) {
         X11_XGetICValues(windowdata->ic, XNFilterEvents, &fevent, NULL);
     }
 #endif
-
-    X11_Xinput2SelectTouch(_this, window);
 
     X11_XSelectInput(display, w,
                  (FocusChangeMask | EnterWindowMask | LeaveWindowMask |
@@ -919,7 +869,7 @@ X11_SetWindowOpacity(_THIS, SDL_Window * window, float opacity)
     return 0;
 }
 
-int 
+int
 X11_SetWindowModalFor(_THIS, SDL_Window * modal_window, SDL_Window * parent_window) {
     SDL_WindowData *data = (SDL_WindowData *) modal_window->driverdata;
     SDL_WindowData *parent_data = (SDL_WindowData *) parent_window->driverdata;
@@ -930,7 +880,7 @@ X11_SetWindowModalFor(_THIS, SDL_Window * modal_window, SDL_Window * parent_wind
 }
 
 int
-X11_SetWindowInputFocus(_THIS, SDL_Window * window) 
+X11_SetWindowInputFocus(_THIS, SDL_Window * window)
 {
     if (X11_IsWindowMapped(_this, window)) {
         SDL_WindowData *data = (SDL_WindowData *) window->driverdata;

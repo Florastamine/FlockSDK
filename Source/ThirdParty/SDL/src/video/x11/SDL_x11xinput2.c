@@ -25,16 +25,11 @@
 #include "SDL_x11video.h"
 #include "SDL_x11xinput2.h"
 #include "../../events/SDL_mouse_c.h"
-#include "../../events/SDL_touch_c.h"
 
 #define MAX_AXIS 16
 
 #if SDL_VIDEO_DRIVER_X11_XINPUT2
 static int xinput2_initialized = 0;
-
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH
-static int xinput2_multitouch_supported = 0;
-#endif
 
 /* Opcode returned X11_XQueryExtension
  * It will be used in event processing
@@ -108,10 +103,6 @@ X11_InitXinput2(_THIS)
 
     xinput2_initialized = 1;
 
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH  /* Multitouch needs XInput 2.2 */
-    xinput2_multitouch_supported = xinput2_version_atleast(version, 2, 2);
-#endif
-
     /* Enable  Raw motion events for this display */
     eventmask.deviceid = XIAllMasterDevices;
     eventmask.mask_len = sizeof(mask);
@@ -167,110 +158,15 @@ X11_HandleXinput2Event(SDL_VideoData *videodata,XGenericEventCookie *cookie)
         case XI_RawButtonRelease:
             videodata->global_mouse_changed = SDL_TRUE;
             break;
-
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH
-        case XI_TouchBegin: {
-            const XIDeviceEvent *xev = (const XIDeviceEvent *) cookie->data;
-            SDL_SendTouch(xev->sourceid,xev->detail,
-                      SDL_TRUE, xev->event_x, xev->event_y, 1.0);
-            return 1;
-            }
-            break;
-        case XI_TouchEnd: {
-            const XIDeviceEvent *xev = (const XIDeviceEvent *) cookie->data;
-            SDL_SendTouch(xev->sourceid,xev->detail,
-                      SDL_FALSE, xev->event_x, xev->event_y, 1.0);
-            return 1;
-            }
-            break;
-        case XI_TouchUpdate: {
-            const XIDeviceEvent *xev = (const XIDeviceEvent *) cookie->data;
-            SDL_SendTouchMotion(xev->sourceid,xev->detail,
-                                xev->event_x, xev->event_y, 1.0);
-            return 1;
-            }
-            break;
-#endif
     }
 #endif
     return 0;
 }
-
-void
-X11_InitXinput2Multitouch(_THIS)
-{
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH
-    SDL_VideoData *data = (SDL_VideoData *) _this->driverdata;
-    XIDeviceInfo *info;
-    int ndevices,i,j;
-    info = X11_XIQueryDevice(data->display, XIAllDevices, &ndevices);
-
-    for (i = 0; i < ndevices; i++) {
-        XIDeviceInfo *dev = &info[i];
-        for (j = 0; j < dev->num_classes; j++) {
-            SDL_TouchID touchId;
-            XIAnyClassInfo *class = dev->classes[j];
-            XITouchClassInfo *t = (XITouchClassInfo*)class;
-
-            /* Only touch devices */
-            if (class->type != XITouchClass)
-                continue;
-
-            touchId = t->sourceid;
-            SDL_AddTouch(touchId, dev->name);
-        }
-    }
-    X11_XIFreeDeviceInfo(info);
-#endif
-}
-
-void
-X11_Xinput2SelectTouch(_THIS, SDL_Window *window)
-{
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH
-    SDL_VideoData *data = NULL;
-    XIEventMask eventmask;
-    unsigned char mask[3] = { 0,0,0 };
-    SDL_WindowData *window_data = NULL;
-    
-    if (!X11_Xinput2IsMultitouchSupported()) {
-        return;
-    }
-
-    data = (SDL_VideoData *) _this->driverdata;
-    window_data = (SDL_WindowData*)window->driverdata;
-
-    eventmask.deviceid = XIAllMasterDevices;
-    eventmask.mask_len = sizeof(mask);
-    eventmask.mask = mask;
-
-    XISetMask(mask, XI_TouchBegin);
-    XISetMask(mask, XI_TouchUpdate);
-    XISetMask(mask, XI_TouchEnd);
-
-    X11_XISelectEvents(data->display,window_data->xwindow,&eventmask,1);
-#endif
-}
-
 
 int
 X11_Xinput2IsInitialized()
 {
-#if SDL_VIDEO_DRIVER_X11_XINPUT2
-    return xinput2_initialized;
-#else
     return 0;
-#endif
-}
-
-int
-X11_Xinput2IsMultitouchSupported()
-{
-#if SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH
-    return xinput2_initialized && xinput2_multitouch_supported;
-#else
-    return 0;
-#endif
 }
 
 #endif /* SDL_VIDEO_DRIVER_X11 */

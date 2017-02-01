@@ -84,12 +84,6 @@ Network::Network(Context* context) :
     blacklistedRemoteEvents_.Insert(E_JOYSTICKBUTTONUP);
     blacklistedRemoteEvents_.Insert(E_JOYSTICKAXISMOVE);
     blacklistedRemoteEvents_.Insert(E_JOYSTICKHATMOVE);
-    blacklistedRemoteEvents_.Insert(E_TOUCHBEGIN);
-    blacklistedRemoteEvents_.Insert(E_TOUCHEND);
-    blacklistedRemoteEvents_.Insert(E_TOUCHMOVE);
-    blacklistedRemoteEvents_.Insert(E_GESTURERECORDED);
-    blacklistedRemoteEvents_.Insert(E_GESTUREINPUT);
-    blacklistedRemoteEvents_.Insert(E_MULTIGESTURE);
     blacklistedRemoteEvents_.Insert(E_DROPFILE);
     blacklistedRemoteEvents_.Insert(E_INPUTFOCUS);
     blacklistedRemoteEvents_.Insert(E_MOUSEVISIBLECHANGED);
