@@ -49,36 +49,13 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
 endif ()
 
 # Add targets
-foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB)
+foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript SQLite Bullet lodepng Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
     add_subdirectory (ThirdParty/${TARGET})
-endforeach ()
-
-if (URHO3D_ANGELSCRIPT)
-    add_subdirectory (ThirdParty/AngelScript)
-endif ()
-
-if (URHO3D_LUA)
-    add_subdirectory (ThirdParty/Lua${JIT})
-    add_subdirectory (ThirdParty/toluapp/src/lib)
-endif ()
+endforeach () 
 
 if (URHO3D_NETWORK)
     add_subdirectory (ThirdParty/Civetweb)
     add_subdirectory (ThirdParty/kNet)
-endif ()
-
-if (URHO3D_DATABASE_ODBC)
-    add_subdirectory (ThirdParty/nanodbc)
-endif ()
-if (URHO3D_DATABASE_SQLITE)
-    add_subdirectory (ThirdParty/SQLite)
-endif ()
-
-if (URHO3D_NAVIGATION)
-    add_subdirectory (ThirdParty/Detour)
-    add_subdirectory (ThirdParty/DetourCrowd)
-    add_subdirectory (ThirdParty/DetourTileCache)
-    add_subdirectory (ThirdParty/Recast)
 endif ()
 
 if (URHO3D_URHO2D)
@@ -88,10 +65,6 @@ if (URHO3D_URHO2D)
         # Add definition for Spine
         add_definitions (-DURHO3D_SPINE)
     endif ()
-endif ()
-
-if (URHO3D_PHYSICS)
-    add_subdirectory (ThirdParty/Bullet)
 endif ()
 
 if (NOT ARM)
@@ -110,4 +83,3 @@ add_subdirectory (Urho3D)
 
 # Urho3D tools
 add_subdirectory (Tools)
-
