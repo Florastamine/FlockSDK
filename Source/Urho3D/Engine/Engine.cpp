@@ -350,10 +350,8 @@ bool Engine::Initialize(const VariantMap& parameters)
             graphics->SetWindowPosition(GetParameter(parameters, "WindowPositionX").GetInt(),
                 GetParameter(parameters, "WindowPositionY").GetInt());
 
-#ifdef URHO3D_OPENGL
         if (HasParameter(parameters, "ForceGL2"))
             graphics->SetForceGL2(GetParameter(parameters, "ForceGL2").GetBool());
-#endif
 
         if (!graphics->SetMode(
             GetParameter(parameters, "WindowWidth", 0).GetInt(),
