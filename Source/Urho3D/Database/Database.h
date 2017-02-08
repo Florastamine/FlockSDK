@@ -31,8 +31,7 @@ namespace Urho3D
 /// Supported database API.
 enum DBAPI
 {
-    DBAPI_SQLITE = 0,
-    DBAPI_ODBC
+    DBAPI_SQLITE = 0
 };
 
 class DbConnection;

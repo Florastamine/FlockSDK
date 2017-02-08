@@ -2,8 +2,7 @@ $#include "Database/Database.h"
 
 enum DBAPI
 {
-    DBAPI_SQLITE = 0,
-    DBAPI_ODBC
+    DBAPI_SQLITE = 0
 };
 
 class Database : public Object

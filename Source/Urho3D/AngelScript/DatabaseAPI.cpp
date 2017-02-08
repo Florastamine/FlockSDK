@@ -98,7 +98,6 @@ void RegisterDatabase(asIScriptEngine* engine)
 {
     engine->RegisterEnum("DBAPI");
     engine->RegisterEnumValue("DBAPI", "DBAPI_SQLITE", DBAPI_SQLITE);
-    engine->RegisterEnumValue("DBAPI", "DBAPI_ODBC", DBAPI_ODBC);
 
     RegisterObject<Database>(engine, "Database");
     engine->RegisterObjectMethod("Database", "DbConnection@+ Connect(const String&in)", asMETHOD(Database, Connect), asCALL_THISCALL);

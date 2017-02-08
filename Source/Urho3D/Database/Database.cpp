@@ -30,21 +30,13 @@ namespace Urho3D
 
 Database::Database(Context* context_) :
     Object(context_),
-#ifdef ODBC_3_OR_LATER
-    poolSize_(0)
-#else
     poolSize_(M_MAX_UNSIGNED)
-#endif
 {
 }
 
 DBAPI Database::GetAPI()
 {
-#ifdef URHO3D_DATABASE_ODBC
-    return DBAPI_ODBC;
-#else
     return DBAPI_SQLITE;
-#endif
 }
 
 DbConnection* Database::Connect(const String& connectionString)
