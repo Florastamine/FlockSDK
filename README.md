@@ -6,12 +6,15 @@ This is a fork of the [Urho3D game engine](https://github.com/urho3d/Urho3D) whi
 
 A list of modifications, cuts, and updates since the fork was born: 
 * Rest in pieces `ARM`, `PowerPC`, `Raspberry Pi`, `Android`, `iOS`, `OS X`, `tvOS`, `Xcode`, `Haiku` and `Web` targets. This fork puts heavy emphasises on `Windows` and `Linux` targets. 
+* Removed `nanodbc`/`ODBC` support in favor of `SQLite`. 
+* Completely removed `Direct3D11`/`Direct3D9` support, leaving only the `OpenGL` renderer across all platforms (`Windows` and `Linux`). 
 * Modifications to the both the game engine and the `AngelScript`-based editor to use a different folder naming and structure. 
 * A collection of build scripts for compiling the SDK with custom settings related to the game project. 
 * Reworked `Urho3DPlayer`. 
 * Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
 * Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
 * Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, `Q3D` and `Q3BSP`. 
+* Upgrades of several libraries to their newer versions (`AngelScript`, `FreeType`, `SQLite`)
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 
@@ -32,7 +35,7 @@ git clone https://github.com/Florastamine/IWBHT_SDK && cd ./IWBHT_SDK/Build
 
 Type 
 ```bash 
-./build-linux-<target>-gl.sh 
+./build-linux-<target>.sh 
 ``` 
 ...to initiate the build process, where: 
 * target = 32, 64
@@ -76,11 +79,10 @@ If not, take a look at the folders you've just specified to make sure `gcc/g++` 
 Invoke the script of your choice to initiate the build process: 
 
 ```bash 
-.\build-windows-<target>-<renderer>.bat
+.\build-windows-<target>.bat
 ```
 
 Where: 
 * target = 32, 64
-* renderer = d3d9, d3d11, gl 
 
-For example: `build-windows-64-d3d11.bat`.
+For example: `build-windows-64.bat`.

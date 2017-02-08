@@ -33,10 +33,7 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
     set (CMAKE_SKIP_BUILD_RPATH FALSE)
     # But don't set them yet in the build tree
     set (CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-    if (APPLE)
-    else ()
-        set (ORIGIN $ORIGIN)
-    endif ()
+    set (ORIGIN $ORIGIN)
     # When installing/packaging set the first RPATH entry to the library location relative to the executable
     set (CMAKE_INSTALL_RPATH ${ORIGIN}/../lib${LIB_SUFFIX}/${PATH_SUFFIX})    # The library location is based on SDK install destination
     # The second entry to the library location relative to the executable in the tool directory

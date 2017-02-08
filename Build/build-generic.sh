@@ -63,7 +63,7 @@ function CheckToolPrint() {
 CheckToolPrint "cmake" "make" "gcc" "g++" "strip" 
 
 # If yes, then begin generating build files and place it into $BuildTargetFolder. 
-../cmake_generic.sh ./$BuildTargetFolder -DWIN32=0 -DURHO3D_OPENGL=1 -DURHO3D_ANGELSCRIPT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=1 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_DATABASE_SQLITE=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=$ExtraCXXFlags $* 
+../cmake_generic.sh ./$BuildTargetFolder -DWIN32=0 -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=1 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=$ExtraCXXFlags $* 
 
 # Build the project. 
 make -j$NumSpawn --directory=./$BuildTargetFolder 
