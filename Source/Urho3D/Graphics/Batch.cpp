@@ -113,13 +113,9 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, unsigned split
     offset.x_ += scale.x_ + pixelUVOffset.x_ / width;
     offset.y_ += scale.y_ + pixelUVOffset.y_ / height;
 
-#ifdef URHO3D_OPENGL
     offset.z_ = 0.5f;
     scale.z_ = 0.5f;
     offset.y_ = 1.0f - offset.y_;
-#else
-    scale.y_ = -scale.y_;
-#endif
 
     // If using 4 shadow samples, offset the position diagonally by half pixel
     if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
@@ -148,13 +144,8 @@ void CalculateSpotMatrix(Matrix4& dest, Light* light)
     spotProj.m22_ = 1.0f / Max(light->GetRange(), M_EPSILON);
     spotProj.m32_ = 1.0f;
 
-#ifdef URHO3D_OPENGL
     texAdjust.SetTranslation(Vector3(0.5f, 0.5f, 0.5f));
     texAdjust.SetScale(Vector3(0.5f, -0.5f, 0.5f));
-#else
-    texAdjust.SetTranslation(Vector3(0.5f, 0.5f, 0.0f));
-    texAdjust.SetScale(Vector3(0.5f, -0.5f, 1.0f));
-#endif
 
     dest = texAdjust * spotProj * spotView;
 }
@@ -350,13 +341,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 case LIGHT_POINT:
                     {
                         Matrix4 lightVecRot(lightNode->GetWorldRotation().RotationMatrix());
-                        // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
-                        // the next parameter
-#ifdef URHO3D_OPENGL
                         graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 16);
-#else
-                        graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 12);
-#endif
                     }
                     break;
                 }
@@ -410,13 +395,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 case LIGHT_POINT:
                     {
                         Matrix4 lightVecRot(lightNode->GetWorldRotation().RotationMatrix());
-                        // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
-                        // the next parameter
-#ifdef URHO3D_OPENGL
                         graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 16);
-#else
-                        graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 12);
-#endif
                     }
                     break;
                 }
@@ -431,17 +410,10 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     unsigned faceHeight = (unsigned)(shadowMap->GetHeight() / 3);
                     float width = (float)shadowMap->GetWidth();
                     float height = (float)shadowMap->GetHeight();
-#ifdef URHO3D_OPENGL
                     float mulX = (float)(faceWidth - 3) / width;
                     float mulY = (float)(faceHeight - 3) / height;
                     float addX = 1.5f / width;
                     float addY = 1.5f / height;
-#else
-                    float mulX = (float)(faceWidth - 4) / width;
-                    float mulY = (float)(faceHeight - 4) / height;
-                    float addX = 2.5f / width;
-                    float addY = 2.5f / height;
-#endif
                     // If using 4 shadow samples, offset the position diagonally by half pixel
                     if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
                     {

@@ -254,15 +254,7 @@ if (WINDOWS)
 else ()
   set (DIRECTX OFF)  # Make it off explicitly when not targeting Windows platform, just in case user passes it in accidentally via CLI
 endif ()
-# Urho3D - commented out RENDER_D3D as an option to avoid potential conflict with our URHO3D_OPENGL and URHO3D_D3D11 build options on Windows platform
-#          Instead just initialize the variable according to our build options; Urho3D also by default disables the SDL renderer subsystem
-if (WINDOWS)
-  if (URHO3D_OPENGL)
-    set (RENDER_D3D FALSE)
-  else ()
-    set (RENDER_D3D TRUE)
-  endif ()
-endif ()
+set (RENDER_D3D FALSE) 
 
 # TODO: We should (should we?) respect cmake's ${BUILD_SHARED_LIBS} flag here
 # The options below are for compatibility to configure's default behaviour.

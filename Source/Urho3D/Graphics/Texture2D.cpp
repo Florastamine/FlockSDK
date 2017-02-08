@@ -42,9 +42,7 @@ namespace Urho3D
 Texture2D::Texture2D(Context* context) :
     Texture(context)
 {
-#ifdef URHO3D_OPENGL
     target_ = GL_TEXTURE_2D;
-#endif
 }
 
 Texture2D::~Texture2D()

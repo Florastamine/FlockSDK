@@ -67,15 +67,9 @@ if (URHO3D_URHO2D)
     endif ()
 endif ()
 
-if (NOT ARM)
-    if (URHO3D_OPENGL)
-        add_subdirectory (ThirdParty/GLEW)
-    elseif (NOT URHO3D_D3D11)
-        add_subdirectory (ThirdParty/MojoShader)
-    endif ()
-    if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-        add_subdirectory (ThirdParty/LibCpuId)
-    endif ()
+add_subdirectory (ThirdParty/GLEW)
+if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
+    add_subdirectory (ThirdParty/LibCpuId)
 endif ()
 
 # Urho3D game engine library

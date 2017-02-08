@@ -41,10 +41,6 @@
 #  DirectX_XAudio2_FOUND
 #  DirectX_XInput_FOUND
 #
-# When any of the Direct3D components is being searched for and found:
-#  DIRECT3D_LIBRARIES
-#  DIRECT3D_DLL
-#
 # When corresponding header listed below is found:
 #  HAVE_<UPCASE_NAME>_H
 #  HAVE_D3D_H (Currently synonym to HAVE_D3D9_H)
@@ -55,7 +51,6 @@ set (DIRECTX_HEADERS d3dcompiler.h d3d9.h d3d11.h ddraw.h dsound.h dinput.h dxgi
 # Optional input variables (see corresponding code comments for details):
 #  DIRECTX_INC_SEARCH_PATHS
 #  DIRECTX_LIB_SEARCH_PATHS
-#  DIRECT3D_DLL_REDIST_SEARCH_PATHS
 #
 
 if (CMAKE_CL_64)

@@ -449,9 +449,6 @@ Matrix4 Camera::GetProjection() const
 
 Matrix4 Camera::GetGPUProjection() const
 {
-#ifndef URHO3D_OPENGL
-    return GetProjection(); // Already matches API-specific format
-#else
     // See formulation for depth range conversion at http://www.ogre3d.org/forums/viewtopic.php?f=4&t=13357
     Matrix4 ret = GetProjection();
 
@@ -461,7 +458,6 @@ Matrix4 Camera::GetGPUProjection() const
     ret.m23_ = 2.0f * ret.m23_ - ret.m33_;
 
     return ret;
-#endif
 }
 
 void Camera::GetFrustumSize(Vector3& near, Vector3& far) const

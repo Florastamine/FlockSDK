@@ -121,12 +121,7 @@ if (URHO3D_64BIT)
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-64bit)
 endif ()
 set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-${URHO3D_LIB_TYPE})
-if (WIN32 AND NOT URHO3D_OPENGL)
-    if (URHO3D_D3D11)
-        set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-3D11)   # The artifact name has a space constraint on our website when viewed in a mobile browser, 3D11 stands for Direct3D 11
-    else ()
-        set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-3D9)
-    endif ()
+if (WIN32)
 elseif (X86)    # Take advantage of Android toolchain setting X86 variable to true for both 'x86' and 'x86_64' ABIs
     set (CPACK_SYSTEM_NAME ${CPACK_SYSTEM_NAME}-IA)     # Stands for Intel Architecture
 endif ()

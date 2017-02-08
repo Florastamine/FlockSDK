@@ -62,21 +62,9 @@ option (URHO3D_PHYSICS "Enable physics support" TRUE)
 option (URHO3D_URHO2D "Enable 2D graphics and physics support" TRUE)
 
 if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
-    set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED")
-    # The URHO3D_OPENGL option is not available on non-Windows platforms as they should always use OpenGL, i.e. URHO3D_OPENGL variable will always be forced to TRUE
-    if (MSVC)
-        # On MSVC compiler, default to false (i.e. prefers Direct3D)
-        # OpenGL can be manually enabled with -DURHO3D_OPENGL=1, but Windows graphics card drivers are usually better optimized for Direct3D
-        set (DEFAULT_OPENGL FALSE)
-    else ()
-        # On non-MSVC compiler on Windows platform, default to true to enable use of OpenGL instead of Direct3D
-        # Direct3D can be manually enabled with -DURHO3D_OPENGL=0, but it is likely to fail unless the MinGW-w64 distribution is used due to dependency to Direct3D headers and libs
-        set (DEFAULT_OPENGL TRUE)
-    endif ()
-    cmake_dependent_option (URHO3D_OPENGL "Use OpenGL instead of Direct3D (Windows platform only)" ${DEFAULT_OPENGL} "WIN32" TRUE)      # Force the variable to TRUE when not WIN32
-    # On Windows platform Direct3D11 can be optionally chosen
-    # Using Direct3D11 on non-MSVC compiler may require copying and renaming Microsoft official libraries (.lib to .a), else link failures or non-functioning graphics may result
-    cmake_dependent_option (URHO3D_D3D11 "Use Direct3D11 instead of Direct3D9 (Windows platform only); overrides URHO3D_OPENGL option" FALSE "WIN32" FALSE)
+    set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED") 
+    set (DEFAULT_OPENGL TRUE)
+
     if (NOT ARM)
         # It is not possible to turn SSE off on 64-bit MSVC and it appears it is also not able to do so safely on 64-bit GCC
         cmake_dependent_option (URHO3D_SSE "Enable SSE/SSE2 instruction set (32-bit Web and Intel platforms only, including Android on Intel Atom); default to true on Intel and false on Web platform; the effective SSE level could be higher, see also URHO3D_DEPLOYMENT_TARGET and CMAKE_OSX_DEPLOYMENT_TARGET build options" ${HAVE_SSE2} "NOT URHO3D_64BIT" TRUE)
@@ -97,13 +85,11 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     cmake_dependent_option (URHO3D_TOOLS "Build tools (native only)" TRUE "NOT IOS  " FALSE)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native only)" FALSE "NOT IOS  " FALSE)
     option (URHO3D_PCH "Enable PCH support" TRUE)
-    cmake_dependent_option (URHO3D_DATABASE_ODBC "Enable Database support with ODBC, requires vendor-specific ODBC driver" FALSE "NOT IOS  ;NOT MSVC OR NOT MSVC_VERSION VERSION_LESS 1900" FALSE)
-    option (URHO3D_DATABASE_SQLITE "Enable Database support with SQLite embedded")
     cmake_dependent_option (URHO3D_MINIDUMPS "Enable minidumps on crash (VS only)" TRUE "MSVC" FALSE)
     option (URHO3D_FILEWATCHER "Enable filewatcher support" TRUE)
     option (URHO3D_TESTING "Enable testing support")
     cmake_dependent_option (URHO3D_STATIC_RUNTIME "Use static C/C++ runtime libraries and eliminate the need for runtime DLLs installation (VS only)" FALSE "MSVC" FALSE)
-    if (((URHO3D_LUA AND NOT URHO3D_LUAJIT) OR URHO3D_DATABASE_SQLITE)  AND NOT IOS  AND NOT WIN32)
+    if ((URHO3D_LUA AND NOT URHO3D_LUAJIT) AND NOT WIN32)
         # Find GNU Readline development library for Lua interpreter and SQLite's isql
         find_package (Readline)
     endif ()
@@ -225,15 +211,8 @@ if (URHO3D_THREADING)
     add_definitions (-DURHO3D_THREADING)
 endif ()
 
-# URHO3D_D3D11 overrides URHO3D_OPENGL option
-if (URHO3D_D3D11)
-    set (URHO3D_OPENGL 0)
-endif ()
-
 # Add definitions for GLEW
-if (NOT ARM  AND URHO3D_OPENGL)
-    add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU)
-endif ()
+add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU) 
 
 # Default library type is STATIC
 if (URHO3D_LIB_TYPE)
@@ -292,27 +271,13 @@ if (URHO3D_URHO2D)
 endif ()
 
 # Add definition for Database
-if (URHO3D_DATABASE_ODBC)
-    set (URHO3D_DATABASE_SQLITE 0)
-    find_package (ODBC REQUIRED)
-    set (URHO3D_C++11 1)
-endif ()
-if (URHO3D_DATABASE_SQLITE OR URHO3D_DATABASE_ODBC)
-    set (URHO3D_DATABASE 1)
-    add_definitions (-DURHO3D_DATABASE)
-endif ()
+set (URHO3D_DATABASE 1)
+add_definitions (-DURHO3D_DATABASE)
 
 # TODO: The logic below is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling, until then ensure the DirectX package is not being searched again in external projects such as when building LuaJIT library
 if (WIN32 AND NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-)
     set (DIRECTX_REQUIRED_COMPONENTS)
     set (DIRECTX_OPTIONAL_COMPONENTS DInput DSound XAudio2 XInput)
-    if (NOT URHO3D_OPENGL)
-        if (URHO3D_D3D11)
-            list (APPEND DIRECTX_REQUIRED_COMPONENTS D3D11)
-        else ()
-            list (APPEND DIRECTX_REQUIRED_COMPONENTS D3D)
-        endif ()
-    endif ()
     find_package (DirectX REQUIRED ${DIRECTX_REQUIRED_COMPONENTS} OPTIONAL_COMPONENTS ${DIRECTX_OPTIONAL_COMPONENTS})
     if (DIRECTX_FOUND)
         include_directories (${DIRECTX_INCLUDE_DIRS})   # These variables may be empty when WinSDK or MinGW is being used
@@ -1060,22 +1025,11 @@ macro (define_dependency_libs TARGET)
         endif ()
 
         # Graphics
-        if (URHO3D_OPENGL)
-            if (APPLE)
-                # Do nothing
-            elseif (WIN32)
-                list (APPEND LIBS opengl32)
-            else ()
-                list (APPEND LIBS GL)
-            endif ()
-        elseif (DIRECT3D_LIBRARIES)
-            list (APPEND LIBS ${DIRECT3D_LIBRARIES})
-        endif ()
-
-        # Database
-        if (URHO3D_DATABASE_ODBC)
-            list (APPEND LIBS ${ODBC_LIBRARIES})
-        endif ()
+        if (WIN32) 
+            list (APPEND LIBS opengl32) 
+        else () 
+            list (APPEND LIBS GL) 
+        endif () 
 
         # This variable value can either be 'Urho3D' target or an absolute path to an actual static/shared Urho3D library or empty (if we are building the library itself)
         # The former would cause CMake not only to link against the Urho3D library but also to add a dependency to Urho3D target

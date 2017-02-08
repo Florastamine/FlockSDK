@@ -61,9 +61,7 @@ static SharedPtr<Image> GetTileImage(Image* src, int tileX, int tileY, int tileW
 TextureCube::TextureCube(Context* context) :
     Texture(context)
 {
-#ifdef URHO3D_OPENGL
     target_ = GL_TEXTURE_CUBE_MAP;
-#endif
 
     // Default to clamp mode addressing
     addressMode_[COORD_U] = ADDRESS_CLAMP;
@@ -292,9 +290,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
         for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
         {
             renderSurfaces_[i] = new RenderSurface(this);
-#ifdef URHO3D_OPENGL
             renderSurfaces_[i]->target_ = GL_TEXTURE_CUBE_MAP_POSITIVE_X + i;
-#endif
         }
 
         // Nearest filtering by default

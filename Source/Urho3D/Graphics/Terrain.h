@@ -23,6 +23,7 @@
 #pragma once
 
 #include "../Container/ArrayPtr.h"
+#include "../Container/Vector.h"
 #include "../Scene/Component.h"
 
 namespace Urho3D
@@ -32,7 +33,7 @@ class Image;
 class IndexBuffer;
 class Material;
 class Node;
-class TerrainPatch;
+class TerrainPatch; 
 
 /// Heightmap terrain component.
 class URHO3D_API Terrain : public Component
@@ -101,7 +102,7 @@ public:
     /// Set occludee flag for patches.
     void SetOccludee(bool enable);
     /// Apply changes from the heightmap image.
-    void ApplyHeightMap();
+    void ApplyHeightMap(); 
 
     /// Return patch quads per side.
     int GetPatchSize() const { return patchSize_; }
@@ -209,7 +210,7 @@ public:
     /// Return heightmap attribute.
     ResourceRef GetHeightMapAttr() const;
     /// Return material attribute.
-    ResourceRef GetMaterialAttr() const;
+    ResourceRef GetMaterialAttr() const; 
 
 private:
     /// Regenerate terrain geometry.
