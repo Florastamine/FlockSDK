@@ -112,6 +112,9 @@ void ShowHierarchyWindow()
 
 void HideHierarchyWindow()
 {
+    if (viewportMode == VIEWPORT_COMPACT) 
+        return; 
+
     hierarchyWindow.visible = false;
 }
 
