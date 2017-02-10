@@ -17,7 +17,7 @@ void CreateMaterialEditor()
     if (materialWindow !is null)
         return;
 
-    materialWindow = LoadEditorUI("ui/SDK/EditorMaterialWindow.xml");
+    materialWindow = LoadEditorUI("ui/SDK/EditorMaterialWindow.xml"); 
     ui.root.AddChild(materialWindow);
     materialWindow.opacity = uiMaxOpacity;
 
@@ -344,13 +344,10 @@ void RefreshMaterialMiscParameters()
     attrEdit.text = String(bias.slopeScaledBias);
     attrEdit = materialWindow.GetChild("RenderOrderEdit", true);
     attrEdit.text = String(uint(editMaterial.renderOrder));
-
-    /*
     attrEdit = materialWindow.GetChild("VSDefinesEdit", true);
     attrEdit.text = editMaterial.vertexShaderDefines;
     attrEdit = materialWindow.GetChild("PSDefinesEdit", true);
     attrEdit.text = editMaterial.pixelShaderDefines;
-    */
 
     DropDownList@ attrList = materialWindow.GetChild("CullModeEdit", true);
     attrList.selection = editMaterial.cullMode;
@@ -359,14 +356,12 @@ void RefreshMaterialMiscParameters()
     attrList = materialWindow.GetChild("FillModeEdit", true);
     attrList.selection = editMaterial.fillMode;
 
-    /*
-    CheckBox@ attrCheckBox; materialWindow.GetChild("OcclusionEdit", true);
+    CheckBox@ attrCheckBox = materialWindow.GetChild("OcclusionEdit", true);
     attrCheckBox.checked = editMaterial.occlusion;
     attrCheckBox = materialWindow.GetChild("AlphaToCoverageEdit", true);
     attrCheckBox.checked = editMaterial.alphaToCoverage;
     attrCheckBox = materialWindow.GetChild("LineAntiAliasEdit", true);
     attrCheckBox.checked = editMaterial.lineAntiAlias;
-    */
 
     inMaterialRefresh = false;
 }
