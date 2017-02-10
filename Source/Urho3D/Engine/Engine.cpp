@@ -177,7 +177,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, "LogLevel"))
             log->SetLevel(GetParameter(parameters, "LogLevel").GetInt());
         log->SetQuiet(GetParameter(parameters, "LogQuiet", false).GetBool());
-        log->Open(GetParameter(parameters, "LogName", "Urho3D.log").GetString());
+        log->Open(GetParameter(parameters, "LogName", "Downpour.log").GetString());
     }
 
     // Set maximally accurate low res timer

@@ -14,7 +14,7 @@ A list of modifications, cuts, and updates since the fork was born:
 * Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
 * Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
 * Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, `Q3D` and `Q3BSP`. 
-* Upgrades of several libraries to their newer versions (`AngelScript`, `FreeType`, `SQLite`)
+* Upgrades of several libraries to their newer versions (`SDL`, `AngelScript`, `FreeType`, `SQLite`)
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 

@@ -276,7 +276,7 @@ bool SaveScene(const String&in fileName)
         UpdateWindowTitle();
     }
     else
-        MessageBox("Could not save scene successfully!\nSee Urho3D.log for more detail.");
+        MessageBox("Could not save scene successfully!\nSee Downpour.log for more detail.");
 
     return success;
 }
@@ -471,7 +471,7 @@ bool SaveNode(const String&in fileName)
     if (success)
         instantiateFileName = fileName;
     else
-        MessageBox("Could not save node successfully!\nSee Urho3D.log for more detail.");
+        MessageBox("Could not save node successfully!\nSee Downpour.log for more detail.");
 
     return success;
 }

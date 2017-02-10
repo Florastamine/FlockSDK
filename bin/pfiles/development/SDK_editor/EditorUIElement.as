@@ -142,7 +142,7 @@ void OpenUILayout(const String&in fileName)
         ClearEditActions();
     }
     else
-        MessageBox("Could not load UI layout successfully!\nSee Urho3D.log for more detail.");
+        MessageBox("Could not load UI layout successfully!\nSee Downpour.log for more detail.");
 
     suppressUIElementChanges = false;
 }
@@ -271,7 +271,7 @@ bool SaveUILayout(const String&in fileName)
         }
     }
     if (!success)
-        MessageBox("Could not save UI layout successfully!\nSee Urho3D.log for more detail.");
+        MessageBox("Could not save UI layout successfully!\nSee Downpour.log for more detail.");
 
     return success;
 }
@@ -370,7 +370,7 @@ bool SaveChildUIElement(const String&in fileName)
             editUIElement.vars[CHILD_ELEMENT_FILENAME_VAR] = fileName;
     }
     if (!success)
-        MessageBox("Could not save child UI element successfully!\nSee Urho3D.log for more detail.");
+        MessageBox("Could not save child UI element successfully!\nSee Downpour.log for more detail.");
 
     return success;
 }
