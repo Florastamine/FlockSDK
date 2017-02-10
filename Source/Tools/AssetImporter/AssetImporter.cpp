@@ -1806,7 +1806,7 @@ void BuildAndSaveScene(OutScene& scene, bool asPrefab)
 void ExportMaterials(HashSet<String>& usedTextures)
 {
     if (useSubdirs_)
-        context_->GetSubsystem<FileSystem>()->CreateDir(resourcePath_ + "Materials");
+        context_->GetSubsystem<FileSystem>()->CreateDir(resourcePath_ + "materials");
 
     for (unsigned i = 0; i < scene_->mNumMaterials; ++i)
         BuildAndSaveMaterial(scene_->mMaterials[i], usedTextures);
@@ -1975,7 +1975,7 @@ void CopyTextures(const HashSet<String>& usedTextures, const String& sourcePath)
     FileSystem* fileSystem = context_->GetSubsystem<FileSystem>();
 
     if (useSubdirs_)
-        fileSystem->CreateDir(resourcePath_ + "Textures");
+        fileSystem->CreateDir(resourcePath_ + "textures");
 
     for (HashSet<String>::ConstIterator i = usedTextures.Begin(); i != usedTextures.End(); ++i)
     {
