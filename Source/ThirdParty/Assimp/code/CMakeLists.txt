@@ -278,24 +278,6 @@ ADD_ASSIMP_IMPORTER(PLY
   PlyExporter.h
 )
 
-ADD_ASSIMP_IMPORTER(BLEND
-  BlenderLoader.cpp
-  BlenderLoader.h
-  BlenderDNA.cpp
-  BlenderDNA.h
-  BlenderDNA.inl
-  BlenderScene.cpp
-  BlenderScene.h
-  BlenderSceneGen.h
-  BlenderIntermediate.h
-  BlenderModifier.h
-  BlenderModifier.cpp
-  BlenderBMesh.h
-  BlenderBMesh.cpp
-  BlenderTessellator.h
-  BlenderTessellator.cpp
-)
-
 ADD_ASSIMP_IMPORTER(FBX
   FBXImporter.cpp
   FBXCompileConfig.h
