@@ -18,9 +18,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+// 
 
-#include "../Precompiled.h"
+#include <vector> 
+#include <lodepng/lodepng.h> 
+
+#include "../Precompiled.h" 
+
+#include "../Container/Vector.h"
 
 #include "../AngelScript/APITemplates.h"
 #include "../Graphics/AnimatedModel.h"
@@ -53,7 +58,7 @@
 #include "../Graphics/Skybox.h"
 #include "../Graphics/VertexBuffer.h"
 #include "../Graphics/Zone.h"
-#include "../Scene/Scene.h"
+#include "../Scene/Scene.h" 
 
 #ifdef _MSC_VER
 #pragma warning(disable:4345)
@@ -127,7 +132,7 @@ static void RegisterCamera(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Camera", "Frustum get_viewSpaceFrustum() const", asMETHOD(Camera, GetViewSpaceFrustum), asCALL_THISCALL);
     engine->RegisterObjectMethod("Camera", "float get_halfViewSize() const", asMETHOD(Camera, GetHalfViewSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("Camera", "Matrix3x4 get_effectiveWorldTransform() const", asMETHOD(Camera, GetEffectiveWorldTransform), asCALL_THISCALL);
-}
+}  
 
 static Node* BoneGetNode(Bone* ptr)
 {
@@ -1765,6 +1770,21 @@ static void RegisterDecalSet(asIScriptEngine* engine)
     engine->RegisterObjectMethod("DecalSet", "void set_optimizeBufferSize(bool)", asMETHOD(DecalSet, SetOptimizeBufferSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("DecalSet", "bool get_optimizeBufferSize() const", asMETHOD(DecalSet, GetOptimizeBufferSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("DecalSet", "Zone@+ get_zone() const", asMETHOD(DecalSet, GetZone), asCALL_THISCALL);
+} 
+
+CScriptArray *Load16BitGrayScaleMap(const String &s) 
+{
+    std::vector<unsigned char> in, out; 
+    PODVector<unsigned char> out_cv; 
+
+    unsigned w, h; 
+
+    if( lodepng::load_file(in, std::string(s.CString())) ) 
+        if( lodepng::decode(out, w, h, in, LCT_GREY, 16) ) 
+            for(int i = 0; i < out.size(); ++i) 
+                out_cv.Push(out[i]); 
+    
+    return VectorToArray<unsigned char>(out_cv, "Array<uint8>"); 
 }
 
 static void RegisterTerrain(asIScriptEngine* engine)
@@ -1825,8 +1845,8 @@ static void RegisterTerrain(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Terrain", "Terrain@+ get_westNeighbor() const", asMETHOD(Terrain, GetEastNeighbor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Terrain", "void set_eastNeighbor(Terrain@+)", asMETHOD(Terrain, SetWestNeighbor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Terrain", "Terrain@+ get_eastNeighbor() const", asMETHOD(Terrain, GetWestNeighbor), asCALL_THISCALL);
+    engine->RegisterGlobalFunction("Array<uint8>@ load_16bit_height_map(const String&)", asFUNCTION(Load16BitGrayScaleMap), asCALL_CDECL);
 }
-
 
 static CScriptArray* GraphicsGetResolutions(Graphics* ptr)
 {
