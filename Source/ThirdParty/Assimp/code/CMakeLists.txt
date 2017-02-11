@@ -198,23 +198,6 @@ ADD_ASSIMP_IMPORTER(ASE
   ASEParser.h
 )
 
-ADD_ASSIMP_IMPORTER(ASSBIN
-  AssbinExporter.h
-  AssbinExporter.cpp
-  AssbinLoader.h
-  AssbinLoader.cpp
-)
-
-ADD_ASSIMP_IMPORTER(ASSXML
-  AssxmlExporter.h
-  AssxmlExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER(B3D
-  B3DImporter.cpp
-  B3DImporter.h
-)
-
 ADD_ASSIMP_IMPORTER(BVH
   BVHLoader.cpp
   BVHLoader.h
@@ -236,28 +219,6 @@ ADD_ASSIMP_IMPORTER(DXF
   DXFHelper.h
 )
 
-ADD_ASSIMP_IMPORTER(CSM
-  CSMLoader.cpp
-  CSMLoader.h
-)
-
-ADD_ASSIMP_IMPORTER(HMP
-  HMPFileData.h
-  HMPLoader.cpp
-  HMPLoader.h
-  HalfLifeFileData.h
-)
-
-#FIXME: allow to set IRRMESH by option
-ADD_ASSIMP_IMPORTER(IRR
-  IRRLoader.cpp
-  IRRLoader.h
-  IRRMeshLoader.cpp
-  IRRMeshLoader.h
-  IRRShared.cpp
-  IRRShared.h
-)
-
 ADD_ASSIMP_IMPORTER(LWO
   LWOAnimation.cpp
   LWOAnimation.h
@@ -273,19 +234,6 @@ ADD_ASSIMP_IMPORTER(LWS
   LWSLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(MD2
-  MD2FileData.h
-  MD2Loader.cpp
-  MD2Loader.h
-  MD2NormalTable.h
-)
-
-ADD_ASSIMP_IMPORTER(MD3
-  MD3FileData.h
-  MD3Loader.cpp
-  MD3Loader.h
-)
-
 ADD_ASSIMP_IMPORTER(MD5
   MD5Loader.cpp
   MD5Loader.h
@@ -293,41 +241,11 @@ ADD_ASSIMP_IMPORTER(MD5
   MD5Parser.h
 )
 
-ADD_ASSIMP_IMPORTER(MDC
-  MDCFileData.h
-  MDCLoader.cpp
-  MDCLoader.h
-  MDCNormalTable.h
-)
-
-ADD_ASSIMP_IMPORTER(MDL
-  MDLDefaultColorMap.h
-  MDLFileData.h
-  MDLLoader.cpp
-  MDLLoader.h
-  MDLMaterialLoader.cpp
-)
-
 SET( MaterialSystem_SRCS
   MaterialSystem.cpp
   MaterialSystem.h
 )
 SOURCE_GROUP( MaterialSystem FILES ${MaterialSystem_SRCS})
-
-ADD_ASSIMP_IMPORTER(NFF
-  NFFLoader.cpp
-  NFFLoader.h
-)
-
-ADD_ASSIMP_IMPORTER(NDO
-  NDOLoader.cpp
-  NDOLoader.h
-)
-
-ADD_ASSIMP_IMPORTER(OFF
-  OFFLoader.cpp
-  OFFLoader.h
-)
 
 ADD_ASSIMP_IMPORTER(OBJ
   ObjFileData.h
@@ -341,19 +259,6 @@ ADD_ASSIMP_IMPORTER(OBJ
 
   ObjExporter.h
   ObjExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER(OGRE
-  OgreImporter.h
-  OgreStructs.h
-  OgreParsingUtils.h
-  OgreBinarySerializer.h
-  OgreXmlSerializer.h
-  OgreImporter.cpp
-  OgreStructs.cpp
-  OgreBinarySerializer.cpp
-  OgreXmlSerializer.cpp
-  OgreMaterial.cpp
 )
 
 ADD_ASSIMP_IMPORTER(OPENGEX
@@ -373,17 +278,6 @@ ADD_ASSIMP_IMPORTER(PLY
   PlyExporter.h
 )
 
-ADD_ASSIMP_IMPORTER(MS3D
-  MS3DLoader.cpp
-  MS3DLoader.h
-)
-
-ADD_ASSIMP_IMPORTER(COB
-  COBLoader.cpp
-  COBLoader.h
-  COBScene.h
-)
-
 ADD_ASSIMP_IMPORTER(BLEND
   BlenderLoader.cpp
   BlenderLoader.h
@@ -401,32 +295,6 @@ ADD_ASSIMP_IMPORTER(BLEND
   BlenderTessellator.h
   BlenderTessellator.cpp
 )
-
-ADD_ASSIMP_IMPORTER(IFC
-  IFCLoader.cpp
-  IFCLoader.h
-  IFCReaderGen.cpp
-  IFCReaderGen.h
-  IFCUtil.h
-  IFCUtil.cpp
-  IFCGeometry.cpp
-  IFCMaterial.cpp
-  IFCProfile.cpp
-  IFCCurve.cpp
-  IFCBoolean.cpp
-  IFCOpenings.cpp
-  STEPFile.h
-  STEPFileReader.h
-  STEPFileReader.cpp
-  STEPFileEncoding.cpp
-  STEPFileEncoding.h
-)
-
-ADD_ASSIMP_IMPORTER(XGL
-  XGLLoader.cpp
-  XGLLoader.h
-)
-
 
 ADD_ASSIMP_IMPORTER(FBX
   FBXImporter.cpp
@@ -510,21 +378,6 @@ SET( PostProcessing_SRCS
 )
 SOURCE_GROUP( PostProcessing FILES ${PostProcessing_SRCS})
 
-ADD_ASSIMP_IMPORTER(Q3D
-  Q3DLoader.cpp
-  Q3DLoader.h
-)
-
-ADD_ASSIMP_IMPORTER(Q3BSP
-  Q3BSPFileData.h
-  Q3BSPFileParser.h
-  Q3BSPFileParser.cpp
-  Q3BSPFileImporter.h
-  Q3BSPFileImporter.cpp
-  Q3BSPZipArchive.h
-  Q3BSPZipArchive.cpp
-)
-
 ADD_ASSIMP_IMPORTER(RAW
   RawLoader.cpp
   RawLoader.h
@@ -540,11 +393,6 @@ ADD_ASSIMP_IMPORTER(STL
   STLLoader.h
   STLExporter.h
   STLExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER(TERRAGEN
-  TerragenLoader.cpp
-  TerragenLoader.h
 )
 
 ADD_ASSIMP_IMPORTER(3D

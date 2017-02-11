@@ -94,17 +94,11 @@ corresponding preprocessor flag to selectively disable formats.
 #ifndef ASSIMP_BUILD_NO_COLLADA_IMPORTER
 #   include "ColladaLoader.h"
 #endif
-#ifndef ASSIMP_BUILD_NO_TERRAGEN_IMPORTER
-#   include "TerragenLoader.h"
-#endif
 #ifndef ASSIMP_BUILD_NO_3D_IMPORTER
 #   include "UnrealLoader.h"
 #endif
 #ifndef ASSIMP_BUILD_NO_LWS_IMPORTER
 #   include "LWSLoader.h"
-#endif
-#ifndef ASSIMP_BUILD_NO_OGRE_IMPORTER
-#   include "OgreImporter.h"
 #endif
 #ifndef ASSIMP_BUILD_NO_OPENGEX_IMPORTER
 #   include "OpenGEXImporter.h"
@@ -128,7 +122,7 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
     // Add an instance of each worker class here
     // (register_new_importers_here)
     // ----------------------------------------------------------------------------
-    out.reserve(64);
+    out.reserve(32);
 #if (!defined ASSIMP_BUILD_NO_X_IMPORTER)
     out.push_back( new XFileImporter());
 #endif
@@ -171,17 +165,11 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
 #if (!defined ASSIMP_BUILD_NO_COLLADA_IMPORTER)
     out.push_back( new ColladaLoader());
 #endif
-#if (!defined ASSIMP_BUILD_NO_TERRAGEN_IMPORTER)
-    out.push_back( new TerragenImporter());
-#endif
 #if (!defined ASSIMP_BUILD_NO_3D_IMPORTER)
     out.push_back( new UnrealImporter());
 #endif
 #if (!defined ASSIMP_BUILD_NO_LWS_IMPORTER)
     out.push_back( new LWSImporter());
-#endif
-#if (!defined ASSIMP_BUILD_NO_OGRE_IMPORTER)
-    out.push_back( new Ogre::OgreImporter());
 #endif
 #if (!defined ASSIMP_BUILD_NO_OPENGEX_IMPORTER )
     out.push_back( new OpenGEX::OpenGEXImporter() );

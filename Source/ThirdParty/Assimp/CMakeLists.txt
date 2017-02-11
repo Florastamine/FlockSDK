@@ -358,19 +358,6 @@ ADD_ASSIMP_IMPORTER(OBJ
   code/ObjExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(OGRE
-  code/OgreImporter.h
-  code/OgreStructs.h
-  code/OgreParsingUtils.h
-  code/OgreBinarySerializer.h
-  code/OgreXmlSerializer.h
-  code/OgreImporter.cpp
-  code/OgreStructs.cpp
-  code/OgreBinarySerializer.cpp
-  code/OgreXmlSerializer.cpp
-  code/OgreMaterial.cpp
-)
-
 ADD_ASSIMP_IMPORTER(OPENGEX
   code/OpenGEXExporter.cpp
   code/OpenGEXExporter.h
@@ -554,11 +541,6 @@ ADD_ASSIMP_IMPORTER(STL
   code/STLLoader.h
   code/STLExporter.h
   code/STLExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER(TERRAGEN
-  code/TerragenLoader.cpp
-  code/TerragenLoader.h
 )
 
 ADD_ASSIMP_IMPORTER(3D
