@@ -13,15 +13,15 @@ A list of modifications, cuts, and updates since the fork was born:
 * Reworked `Urho3DPlayer`. 
 * Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
 * Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
-* Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, `Q3D` and `Q3BSP`. 
+* Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, [Blender](https://www.blender.org), [Ogre3D](http://www.ogre3d.org)'s `.xml`, [Terragen](http://planetside.co.uk), `Q3D` and `Q3BSP`. 
 * Upgrades of several libraries to their newer versions (`SDL`, `AngelScript`, `FreeType`, `SQLite`)
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 
-## Prebuilt binaries ([release log](https://github.com/Florastamine/IWBHT_SDK/blob/master/ReleaseNotes.md))
+## Prebuilt binaries ([release log](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md))
 These prebuilt binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
 
-Latest **unstable** binaries were built and released on `01.27.2017`, and can be downloaded [here](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing). Old binaries can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/ReleaseNotes.md). 
+Latest **unstable** binaries were built and released on `02.11.2017`, and can be downloaded [here](https://drive.google.com/open?id=0Bx0q4f1kFRaiOWFaUnAtcTZLYms). Old binaries can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md). 
 
 ## Building 
 
@@ -40,7 +40,7 @@ Type
 ...to initiate the build process, where: 
 * target = 32, 64
 
-For example: `build-linux-64-gl.sh`. 
+For example: `build-linux-64.sh`. 
 
 ### On Windows 
 You'll need a working `MinGW`/`MinGW-W64` and `CMake` (>=`3.2.3`) installation. First off, make sure both of them are correctly installed. Grab the source code and go to the `Build` directory:
