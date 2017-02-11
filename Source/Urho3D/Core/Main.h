@@ -25,7 +25,6 @@
 #include "../Core/ProcessUtils.h"
 
 #if defined(_WIN32) && !defined(URHO3D_WIN32_CONSOLE)
-#include "../Core/MiniDump.h"
 #include <windows.h>
 #ifdef _MSC_VER
 #include <crtdbg.h>
@@ -43,22 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
     Urho3D::ParseArguments(GetCommandLineW()); \
     return function; \
 }
-// MSVC release mode: write minidump on crash
-#elif defined(_MSC_VER) && defined(URHO3D_MINIDUMPS) && !defined(URHO3D_WIN32_CONSOLE)
-#define URHO3D_DEFINE_MAIN(function) \
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) \
-{ \
-    Urho3D::ParseArguments(GetCommandLineW()); \
-    int exitCode; \
-    __try \
-    { \
-        exitCode = function; \
-    } \
-    __except(Urho3D::WriteMiniDump("Urho3D", GetExceptionInformation())) \
-    { \
-    } \
-    return exitCode; \
-}
+
 // Other Win32 or minidumps disabled: just execute the function
 #elif defined(_WIN32) && !defined(URHO3D_WIN32_CONSOLE)
 #define URHO3D_DEFINE_MAIN(function) \

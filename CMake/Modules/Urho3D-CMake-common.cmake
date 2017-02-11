@@ -85,7 +85,6 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     cmake_dependent_option (URHO3D_TOOLS "Build tools (native only)" TRUE "NOT IOS  " FALSE)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native only)" FALSE "NOT IOS  " FALSE)
     option (URHO3D_PCH "Enable PCH support" TRUE)
-    cmake_dependent_option (URHO3D_MINIDUMPS "Enable minidumps on crash (VS only)" TRUE "MSVC" FALSE)
     option (URHO3D_FILEWATCHER "Enable filewatcher support" TRUE)
     option (URHO3D_TESTING "Enable testing support")
     cmake_dependent_option (URHO3D_STATIC_RUNTIME "Use static C/C++ runtime libraries and eliminate the need for runtime DLLs installation (VS only)" FALSE "MSVC" FALSE)
@@ -171,11 +170,6 @@ if (NEON)
     endif ()
 elseif (NOT URHO3D_SSE)
     add_definitions (-DSTBI_NO_SIMD)    # GCC/Clang/MinGW will switch this off automatically except MSVC, but no harm to make it explicit for all
-endif ()
-
-# Enable structured exception handling and minidumps on MSVC only.
-if (MSVC AND URHO3D_MINIDUMPS)
-    add_definitions (-DURHO3D_MINIDUMPS)
 endif ()
 
 # By default use the MSVC dynamic runtime. To eliminate the need to distribute the runtime installer,
@@ -1009,10 +1003,6 @@ macro (define_dependency_libs TARGET)
         # Core
         if (WIN32)
             list (APPEND LIBS winmm)
-            if (URHO3D_MINIDUMPS)
-                list (APPEND LIBS dbghelp)
-            endif ()
-        elseif (APPLE)
         endif ()
 
         # Graphics
