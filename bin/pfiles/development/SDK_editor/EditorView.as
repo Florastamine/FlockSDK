@@ -1395,11 +1395,13 @@ void UpdateView(float timeStep)
                 cameraNode.Translate(Vector3(0, 0, -cameraBaseSpeed) * -input.mouseMoveWheel*20 * timeStep *
                 speedMultiplier);
             }
+            /* 
             else
             {
                 float zoom = camera.zoom + -input.mouseMoveWheel *.1 * speedMultiplier;
                 camera.zoom = Clamp(zoom, .1, 30);
-            }
+            } 
+            */ 
         }
         else if (hotKeyMode == HOTKEYS_MODE_BLENDER) 
         {
