@@ -41,7 +41,7 @@
 #define ANGELSCRIPT_H
 
 // Urho3D: Define AS_MAX_PORTABILITY for Web and 64-bit ARM platforms
-#if defined(__EMSCRIPTEN__) || defined(__aarch64__)
+#if defined(__aarch64__)
 #define AS_MAX_PORTABILITY
 #endif
 

@@ -52,7 +52,6 @@ set (CMAKE_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKE
 
 # Define all supported build options
 include (CMakeDependentOption)
-option (URHO3D_C++11 "Enable C++11 standard")
 cmake_dependent_option (URHO3D_64BIT "Enable 64-bit build, the default is set based on the native ABI of the chosen compiler toolchain" ${NATIVE_64BIT} "NOT MSVC AND NOT (ARM AND NOT IOS)  AND NOT POWERPC" ${NATIVE_64BIT})     # Intentionally only enable the option for iOS but not for tvOS as the latter is 64-bit only
 option (URHO3D_ANGELSCRIPT "Enable AngelScript scripting support" TRUE)
 option (URHO3D_LUA "Enable additional Lua scripting support" TRUE)
@@ -280,31 +279,29 @@ if (WIN32 AND NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-)
 endif ()
 
 # Platform and compiler specific options
-if (URHO3D_C++11)
-    add_definitions (-DURHO3D_CXX11)   # Note the define is NOT 'URHO3D_C++11'!
-    if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
-        # Use gnu++11/gnu++0x instead of c++11/c++0x as the latter does not work as expected when cross compiling
-        if (VERIFIED_SUPPORTED_STANDARD)
-            set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=${VERIFIED_SUPPORTED_STANDARD}")
-        else ()
-            foreach (STANDARD gnu++11 gnu++0x)  # Fallback to gnu++0x on older GCC version
-                execute_process (COMMAND ${CMAKE_COMMAND} -E echo COMMAND ${CMAKE_CXX_COMPILER} -std=${STANDARD} -E - RESULT_VARIABLE GCC_EXIT_CODE OUTPUT_QUIET ERROR_QUIET)
-                if (GCC_EXIT_CODE EQUAL 0)
-                    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=${STANDARD}")
-                    set (VERIFIED_SUPPORTED_STANDARD ${STANDARD} CACHE INTERNAL "GNU extension of C++11 standard that is verified to be supported by the chosen compiler")
-                    break ()
-                endif ()
-            endforeach ()
-            if (NOT GCC_EXIT_CODE EQUAL 0)
-                message (FATAL_ERROR "Your GCC version ${COMPILER_VERSION} is too old to enable C++11 standard")
+if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
+    # Use gnu++11/gnu++0x instead of c++11/c++0x as the latter does not work as expected when cross compiling
+    if (VERIFIED_SUPPORTED_STANDARD)
+        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=${VERIFIED_SUPPORTED_STANDARD}")
+    else ()
+        foreach (STANDARD gnu++11 gnu++0x)  # Fallback to gnu++0x on older GCC version
+            execute_process (COMMAND ${CMAKE_COMMAND} -E echo COMMAND ${CMAKE_CXX_COMPILER} -std=${STANDARD} -E - RESULT_VARIABLE GCC_EXIT_CODE OUTPUT_QUIET ERROR_QUIET)
+            if (GCC_EXIT_CODE EQUAL 0)
+                set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=${STANDARD}")
+                set (VERIFIED_SUPPORTED_STANDARD ${STANDARD} CACHE INTERNAL "GNU extension of C++11 standard that is verified to be supported by the chosen compiler")
+                break ()
             endif ()
+        endforeach ()
+        if (NOT GCC_EXIT_CODE EQUAL 0)
+            message (FATAL_ERROR "Your GCC version ${COMPILER_VERSION} is too old to enable C++11 standard")
         endif ()
-    elseif (CMAKE_CXX_COMPILER_ID MATCHES Clang)
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    elseif (MSVC80)
-        message (FATAL_ERROR "Your MSVC version is too told to enable C++11 standard")
     endif ()
+elseif (CMAKE_CXX_COMPILER_ID MATCHES Clang)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif (MSVC80)
+    message (FATAL_ERROR "Your MSVC version is too old to enable C++11 standard")
 endif ()
+
 if (MSVC)
     # VS-specific setup
     add_definitions (-D_CRT_SECURE_NO_WARNINGS)
