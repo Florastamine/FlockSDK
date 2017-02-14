@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file  SMDLoader.h
- *  @brief Defintion of the Valve SMD file format
+ *  @brief Definition of the Valve SMD file format
  */
 
 #ifndef AI_SMDLOADER_H_INCLUDED
@@ -53,14 +53,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../include/assimp/types.h"
 #include "../include/assimp/texture.h"
 #include "../include/assimp/anim.h"
-#include "../include/assimp/material.h"
+#include "../include/assimp/material.h" 
+
 struct aiNode;
 
 // STL headers
 #include <vector>
 
 namespace Assimp    {
-
 
 namespace SMD   {
 

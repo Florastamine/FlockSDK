@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -52,13 +52,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "StringComparison.h"
 #include "fast_atof.h"
 #include "SkeletonMeshBuilder.h"
+#include "../include/assimp/config.h" 
 #include "../include/assimp/Importer.hpp"
 #include "../include/assimp/scene.h"
-#include <boost/scoped_ptr.hpp>
 #include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/DefaultLogger.hpp"
-
-
+#include <memory>
 
 using namespace Assimp;
 
@@ -285,9 +284,6 @@ void MD5Importer::AttachChilds_Mesh(int iParentID,aiNode* piParent, BoneList& bo
                 aiQuaternion quat;
                 MD5::ConvertQuaternion ( bones[i].mRotationQuat, quat );
 
-                // FIX to get to Assimp's quaternion conventions
-                quat.w *= -1.f;
-
                 bones[i].mTransform = aiMatrix4x4 ( quat.GetMatrix());
                 bones[i].mTransform.a4 = bones[i].mPositionXYZ.x;
                 bones[i].mTransform.b4 = bones[i].mPositionXYZ.y;
@@ -357,7 +353,7 @@ void MD5Importer::AttachChilds_Anim(int iParentID,aiNode* piParent, AnimBoneList
 void MD5Importer::LoadMD5MeshFile ()
 {
     std::string pFile = mFile + "md5mesh";
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL || !file->FileSize())    {
@@ -572,7 +568,7 @@ void MD5Importer::LoadMD5MeshFile ()
 void MD5Importer::LoadMD5AnimFile ()
 {
     std::string pFile = mFile + "md5anim";
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( !file.get() || !file->FileSize())   {
@@ -656,9 +652,6 @@ void MD5Importer::LoadMD5AnimFile ()
 
                     MD5::ConvertQuaternion(vTemp, qKey->mValue);
                     qKey->mTime = vKey->mTime = dTime;
-
-                    // we need this to get to Assimp quaternion conventions
-                    qKey->mValue.w *= -1.f;
                 }
             }
 
@@ -687,7 +680,7 @@ void MD5Importer::LoadMD5AnimFile ()
 void MD5Importer::LoadMD5CameraFile ()
 {
     std::string pFile = mFile + "md5camera";
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( !file.get() || !file->FileSize())   {
@@ -741,7 +734,7 @@ void MD5Importer::LoadMD5CameraFile ()
     for (std::vector<unsigned int>::const_iterator it = cuts.begin(); it != cuts.end()-1; ++it) {
 
         aiAnimation* anim = *tmp++ = new aiAnimation();
-        anim->mName.length = ::sprintf(anim->mName.data,"anim%u_from_%u_to_%u",(unsigned int)(it-cuts.begin()),(*it),*(it+1));
+        anim->mName.length = ::ai_snprintf(anim->mName.data, MAXLEN, "anim%u_from_%u_to_%u",(unsigned int)(it-cuts.begin()),(*it),*(it+1));
 
         anim->mTicksPerSecond = cameraParser.fFrameRate;
         anim->mChannels = new aiNodeAnim*[anim->mNumChannels = 1];

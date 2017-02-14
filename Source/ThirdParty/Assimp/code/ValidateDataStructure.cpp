@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -51,7 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "BaseImporter.h"
 #include "fast_atof.h"
 #include "ProcessHelper.h"
-#include <boost/scoped_array.hpp>
+#include <memory>
 
 // CRT headers
 #include <stdarg.h>
@@ -463,7 +463,7 @@ void ValidateDSProcess::Validate( const aiMesh* pMesh)
             ReportError("aiMesh::mBones is NULL (aiMesh::mNumBones is %i)",
                 pMesh->mNumBones);
         }
-        boost::scoped_array<float> afSum(NULL);
+        std::unique_ptr<float[]> afSum(nullptr);
         if (pMesh->mNumVertices)
         {
             afSum.reset(new float[pMesh->mNumVertices]);

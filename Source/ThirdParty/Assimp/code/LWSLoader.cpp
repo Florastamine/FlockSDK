@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -58,7 +58,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../include/assimp/DefaultLogger.hpp"
 #include "../include/assimp/scene.h"
 #include "../include/assimp/IOSystem.hpp"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 
 using namespace Assimp;
@@ -323,11 +323,11 @@ void LWSImporter::SetupNodeName(aiNode* nd, LWS::NodeDesc& src)
             else ++s;
             std::string::size_type t = src.path.substr(s).find_last_of(".");
 
-            nd->mName.length = ::sprintf(nd->mName.data,"%s_(%08X)",src.path.substr(s).substr(0,t).c_str(),combined);
+            nd->mName.length = ::ai_snprintf(nd->mName.data, MAXLEN, "%s_(%08X)",src.path.substr(s).substr(0,t).c_str(),combined);
             return;
         }
     }
-    nd->mName.length = ::sprintf(nd->mName.data,"%s_(%08X)",src.name,combined);
+    nd->mName.length = ::ai_snprintf(nd->mName.data, MAXLEN, "%s_(%08X)",src.name,combined);
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -511,7 +511,7 @@ void LWSImporter::InternReadFile( const std::string& pFile, aiScene* pScene,
     IOSystem* pIOHandler)
 {
     io = pIOHandler;
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL) {

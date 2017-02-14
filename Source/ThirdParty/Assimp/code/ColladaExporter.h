@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -45,14 +45,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_COLLADAEXPORTER_H_INC
 
 #include "../include/assimp/ai_assert.h"
-#include "../include/assimp/material.h"
-#include "../include/assimp/mesh.h"
-#include "../include/assimp/light.h"
+#include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/Exporter.hpp"
+#include "../include/assimp/scene.h"
 #include <sstream>
 #include <vector>
 #include <map>
-#include <boost/lexical_cast.hpp>
 
 struct aiScene;
 struct aiNode;
@@ -115,7 +113,7 @@ protected:
     void WriteSceneLibrary();
 
     /// Recursively writes the given node
-    void WriteNode( aiNode* pNode);
+    void WriteNode( const aiScene* scene, aiNode* pNode);
 
     /// Enters a new xml element, which increases the indentation
     void PushTag() { startstr.append( "  "); }
@@ -123,7 +121,7 @@ protected:
     void PopTag() { ai_assert( startstr.length() > 1); startstr.erase( startstr.length() - 2); }
 
     /// Creates a mesh ID for the given mesh
-    std::string GetMeshId( size_t pIndex) const { return std::string( "meshId" ) + boost::lexical_cast<std::string> (pIndex); }
+    std::string GetMeshId( size_t pIndex) const { return std::string( "meshId" ) + std::to_string(pIndex); }
 
 public:
     /// Stringstream to write all output into

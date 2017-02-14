@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -46,19 +46,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <functional>
 
-#include "FBXParser.h"
+#include "FBXMeshGeometry.h"
 #include "FBXDocument.h"
 #include "FBXImporter.h"
 #include "FBXImportSettings.h"
 #include "FBXDocumentUtil.h"
-#include <boost/foreach.hpp>
 
 
 namespace Assimp {
 namespace FBX {
 
-    using namespace Util;
-
+using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
 Geometry::Geometry(uint64_t id, const Element& element, const std::string& name, const Document& doc)
@@ -66,7 +64,7 @@ Geometry::Geometry(uint64_t id, const Element& element, const std::string& name,
     , skin()
 {
     const std::vector<const Connection*>& conns = doc.GetConnectionsByDestinationSequenced(ID(),"Deformer");
-    BOOST_FOREACH(const Connection* con, conns) {
+    for(const Connection* con : conns) {
         const Skin* const sk = ProcessSimpleConnection<Skin>(*con, false, "Skin -> Geometry", element);
         if(sk) {
             skin = sk;
@@ -82,6 +80,9 @@ Geometry::~Geometry()
 
 }
 
+const Skin* Geometry::DeformerSkin() const {
+    return skin;
+}
 
 
 // ------------------------------------------------------------------------------------------------
@@ -128,7 +129,7 @@ MeshGeometry::MeshGeometry(uint64_t id, const Element& element, const std::strin
     // generate output vertices, computing an adjacency table to
     // preserve the mapping from fbx indices to *this* indexing.
     unsigned int count = 0;
-    BOOST_FOREACH(int index, tempFaces) {
+    for(int index : tempFaces) {
         const int absi = index < 0 ? (-index - 1) : index;
         if(static_cast<size_t>(absi) >= vertex_count) {
             DOMError("polygon vertex index out of range",&PolygonVertexIndex);
@@ -154,7 +155,7 @@ MeshGeometry::MeshGeometry(uint64_t id, const Element& element, const std::strin
     }
 
     cursor = 0;
-    BOOST_FOREACH(int index, tempFaces) {
+    for(int index : tempFaces) {
         const int absi = index < 0 ? (-index - 1) : index;
         mappings[mapping_offsets[absi] + mapping_counts[absi]++] = cursor++;
     }
@@ -182,14 +183,93 @@ MeshGeometry::MeshGeometry(uint64_t id, const Element& element, const std::strin
     }
 }
 
-
 // ------------------------------------------------------------------------------------------------
 MeshGeometry::~MeshGeometry()
 {
 
 }
 
+// ------------------------------------------------------------------------------------------------
+const std::vector<aiVector3D>& MeshGeometry::GetVertices() const {
+    return vertices;
+}
 
+// ------------------------------------------------------------------------------------------------
+const std::vector<aiVector3D>& MeshGeometry::GetNormals() const {
+    return normals;
+}
+
+// ------------------------------------------------------------------------------------------------
+const std::vector<aiVector3D>& MeshGeometry::GetTangents() const {
+    return tangents;
+}
+
+// ------------------------------------------------------------------------------------------------
+const std::vector<aiVector3D>& MeshGeometry::GetBinormals() const {
+    return binormals;
+}
+
+// ------------------------------------------------------------------------------------------------
+const std::vector<unsigned int>& MeshGeometry::GetFaceIndexCounts() const {
+    return faces;
+}
+
+// ------------------------------------------------------------------------------------------------
+const std::vector<aiVector2D>& MeshGeometry::GetTextureCoords( unsigned int index ) const {
+    static const std::vector<aiVector2D> empty;
+    return index >= AI_MAX_NUMBER_OF_TEXTURECOORDS ? empty : uvs[ index ];
+}
+
+std::string MeshGeometry::GetTextureCoordChannelName( unsigned int index ) const {
+    return index >= AI_MAX_NUMBER_OF_TEXTURECOORDS ? "" : uvNames[ index ];
+}
+
+const std::vector<aiColor4D>& MeshGeometry::GetVertexColors( unsigned int index ) const {
+    static const std::vector<aiColor4D> empty;
+    return index >= AI_MAX_NUMBER_OF_COLOR_SETS ? empty : colors[ index ];
+}
+
+const MatIndexArray& MeshGeometry::GetMaterialIndices() const {
+    return materials;
+}
+
+// ------------------------------------------------------------------------------------------------
+const unsigned int* MeshGeometry::ToOutputVertexIndex( unsigned int in_index, unsigned int& count ) const {
+    if ( in_index >= mapping_counts.size() ) {
+        return NULL;
+    }
+
+    ai_assert( mapping_counts.size() == mapping_offsets.size() );
+    count = mapping_counts[ in_index ];
+
+    ai_assert( count != 0 );
+    ai_assert( mapping_offsets[ in_index ] + count <= mappings.size() );
+
+    return &mappings[ mapping_offsets[ in_index ] ];
+}
+
+// ------------------------------------------------------------------------------------------------
+unsigned int MeshGeometry::FaceForVertexIndex( unsigned int in_index ) const {
+    ai_assert( in_index < vertices.size() );
+
+    // in the current conversion pattern this will only be needed if
+    // weights are present, so no need to always pre-compute this table
+    if ( facesVertexStartIndices.empty() ) {
+        facesVertexStartIndices.resize( faces.size() + 1, 0 );
+
+        std::partial_sum( faces.begin(), faces.end(), facesVertexStartIndices.begin() + 1 );
+        facesVertexStartIndices.pop_back();
+    }
+
+    ai_assert( facesVertexStartIndices.size() == faces.size() );
+    const std::vector<unsigned int>::iterator it = std::upper_bound(
+        facesVertexStartIndices.begin(),
+        facesVertexStartIndices.end(),
+        in_index
+        );
+
+    return static_cast< unsigned int >( std::distance( facesVertexStartIndices.begin(), it - 1 ) );
+}
 
 // ------------------------------------------------------------------------------------------------
 void MeshGeometry::ReadLayer(const Scope& layer)
@@ -273,7 +353,7 @@ void MeshGeometry::ReadVertexData(const std::string& type, int index, const Scop
         // sometimes, there will be only negative entries. Drop the material
         // layer in such a case (I guess it means a default material should
         // be used). This is what the converter would do anyway, and it
-        // avoids loosing the material if there are more material layers
+        // avoids losing the material if there are more material layers
         // coming of which at least one contains actual data (did observe
         // that with one test file).
         const size_t count_neg = std::count_if(temp_materials.begin(),temp_materials.end(),std::bind2nd(std::less<int>(),0));
@@ -347,23 +427,28 @@ void ResolveVertexDataArray(std::vector<T>& data_out, const Scope& source,
     const std::vector<unsigned int>& mapping_offsets,
     const std::vector<unsigned int>& mappings)
 {
-    std::vector<T> tempUV;
-    ParseVectorDataArray(tempUV,GetRequiredElement(source,dataElementName));
+
 
     // handle permutations of Mapping and Reference type - it would be nice to
     // deal with this more elegantly and with less redundancy, but right
     // now it seems unavoidable.
     if (MappingInformationType == "ByVertice" && ReferenceInformationType == "Direct") {
+		std::vector<T> tempData;
+		ParseVectorDataArray(tempData, GetRequiredElement(source, dataElementName));
+
         data_out.resize(vertex_count);
-        for (size_t i = 0, e = tempUV.size(); i < e; ++i) {
+		for (size_t i = 0, e = tempData.size(); i < e; ++i) {
 
             const unsigned int istart = mapping_offsets[i], iend = istart + mapping_counts[i];
             for (unsigned int j = istart; j < iend; ++j) {
-                data_out[mappings[j]] = tempUV[i];
+				data_out[mappings[j]] = tempData[i];
             }
         }
     }
     else if (MappingInformationType == "ByVertice" && ReferenceInformationType == "IndexToDirect") {
+		std::vector<T> tempData;
+		ParseVectorDataArray(tempData, GetRequiredElement(source, dataElementName));
+
         data_out.resize(vertex_count);
 
         std::vector<int> uvIndices;
@@ -373,24 +458,30 @@ void ResolveVertexDataArray(std::vector<T>& data_out, const Scope& source,
 
             const unsigned int istart = mapping_offsets[i], iend = istart + mapping_counts[i];
             for (unsigned int j = istart; j < iend; ++j) {
-                if(static_cast<size_t>(uvIndices[i]) >= tempUV.size()) {
+				if (static_cast<size_t>(uvIndices[i]) >= tempData.size()) {
                     DOMError("index out of range",&GetRequiredElement(source,indexDataElementName));
                 }
-                data_out[mappings[j]] = tempUV[uvIndices[i]];
+				data_out[mappings[j]] = tempData[uvIndices[i]];
             }
         }
     }
     else if (MappingInformationType == "ByPolygonVertex" && ReferenceInformationType == "Direct") {
-        if (tempUV.size() != vertex_count) {
+		std::vector<T> tempData;
+		ParseVectorDataArray(tempData, GetRequiredElement(source, dataElementName));
+
+		if (tempData.size() != vertex_count) {
             FBXImporter::LogError(Formatter::format("length of input data unexpected for ByPolygon mapping: ")
-                << tempUV.size() << ", expected " << vertex_count
+				<< tempData.size() << ", expected " << vertex_count
             );
             return;
         }
 
-        data_out.swap(tempUV);
+		data_out.swap(tempData);
     }
     else if (MappingInformationType == "ByPolygonVertex" && ReferenceInformationType == "IndexToDirect") {
+		std::vector<T> tempData;
+		ParseVectorDataArray(tempData, GetRequiredElement(source, dataElementName));
+
         data_out.resize(vertex_count);
 
         std::vector<int> uvIndices;
@@ -402,12 +493,12 @@ void ResolveVertexDataArray(std::vector<T>& data_out, const Scope& source,
         }
 
         unsigned int next = 0;
-        BOOST_FOREACH(int i, uvIndices) {
-            if(static_cast<size_t>(i) >= tempUV.size()) {
+        for(int i : uvIndices) {
+			if (static_cast<size_t>(i) >= tempData.size()) {
                 DOMError("index out of range",&GetRequiredElement(source,indexDataElementName));
             }
 
-            data_out[next++] = tempUV[i];
+			data_out[next++] = tempData[i];
         }
     }
     else {
@@ -460,32 +551,38 @@ void MeshGeometry::ReadVertexDataColors(std::vector<aiColor4D>& colors_out, cons
         mappings);
 }
 
-
 // ------------------------------------------------------------------------------------------------
+static const std::string TangentIndexToken = "TangentIndex";
+static const std::string TangentsIndexToken = "TangentsIndex";
+
 void MeshGeometry::ReadVertexDataTangents(std::vector<aiVector3D>& tangents_out, const Scope& source,
     const std::string& MappingInformationType,
     const std::string& ReferenceInformationType)
 {
     const char * str = source.Elements().count( "Tangents" ) > 0 ? "Tangents" : "Tangent";
+    const char * strIdx = source.Elements().count( "Tangents" ) > 0 ? TangentsIndexToken.c_str() : TangentIndexToken.c_str();
     ResolveVertexDataArray(tangents_out,source,MappingInformationType,ReferenceInformationType,
         str,
-        "TangentIndex",
+        strIdx,
         vertices.size(),
         mapping_counts,
         mapping_offsets,
         mappings);
 }
 
-
 // ------------------------------------------------------------------------------------------------
+static const std::string BinormalIndexToken = "BinormalIndex";
+static const std::string BinormalsIndexToken = "BinormalsIndex";
+
 void MeshGeometry::ReadVertexDataBinormals(std::vector<aiVector3D>& binormals_out, const Scope& source,
     const std::string& MappingInformationType,
     const std::string& ReferenceInformationType)
 {
     const char * str = source.Elements().count( "Binormals" ) > 0 ? "Binormals" : "Binormal";
+    const char * strIdx = source.Elements().count( "Binormals" ) > 0 ? BinormalsIndexToken.c_str() : BinormalIndexToken.c_str();
     ResolveVertexDataArray(binormals_out,source,MappingInformationType,ReferenceInformationType,
         str,
-        "BinormalIndex",
+        strIdx,
         vertices.size(),
         mapping_counts,
         mapping_offsets,

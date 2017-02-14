@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -56,13 +56,13 @@ namespace Assimp    {
  *  Construct IrrXML-Reader in BaseImporter::InternReadFile():
  *  @code
  * // open the file
- * boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile));
+ * std::unique_ptr<IOStream> file( pIOHandler->Open( pFile));
  * if( file.get() == NULL) {
  *    throw DeadlyImportError( "Failed to open file " + pFile + ".");
  * }
  *
  * // generate a XML reader for it
- * boost::scoped_ptr<CIrrXML_IOStreamReader> mIOWrapper( new CIrrXML_IOStreamReader( file.get()));
+ * std::unique_ptr<CIrrXML_IOStreamReader> mIOWrapper( new CIrrXML_IOStreamReader( file.get()));
  * mReader = irr::io::createIrrXMLReader( mIOWrapper.get());
  * if( !mReader) {
  *    ThrowException( "xxxx: Unable to open file.");
@@ -76,7 +76,7 @@ public:
 
     // ----------------------------------------------------------------------------------
     //! Construction from an existing IOStream
-    CIrrXML_IOStreamReader(IOStream* _stream)
+    explicit CIrrXML_IOStreamReader(IOStream* _stream)
         : stream (_stream)
         , t (0)
     {

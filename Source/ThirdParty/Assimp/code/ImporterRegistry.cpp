@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -38,8 +38,6 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
-
-// Modified by Lasse Oorni for Urho3D
 
 /** @file ImporterRegistry.cpp
 
@@ -85,6 +83,9 @@ corresponding preprocessor flag to selectively disable formats.
 #ifndef ASSIMP_BUILD_NO_RAW_IMPORTER
 #   include "RawLoader.h"
 #endif
+#ifndef ASSIMP_BUILD_NO_SIB_IMPORTER
+#   include "SIBImporter.h"
+#endif
 #ifndef ASSIMP_BUILD_NO_AC_IMPORTER
 #   include "ACLoader.h"
 #endif
@@ -106,8 +107,14 @@ corresponding preprocessor flag to selectively disable formats.
 #ifndef ASSIMP_BUILD_NO_FBX_IMPORTER
 #   include "FBXImporter.h"
 #endif
+#ifndef ASSIMP_BUILD_NO_GLTF_IMPORTER
+#   include "glTFImporter.h"
+#endif
 #ifndef ASSIMP_BUILD_NO_C4D_IMPORTER
 #   include "C4DImporter.h"
+#endif
+#ifndef ASSIMP_BUILD_NO_3MF_IMPORTER
+#   include "D3MFImporter.h"
 #endif
 
 namespace Assimp {
@@ -153,6 +160,9 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
 #if (!defined ASSIMP_BUILD_NO_RAW_IMPORTER)
     out.push_back( new RAWImporter());
 #endif
+#if (!defined ASSIMP_BUILD_NO_SIB_IMPORTER)
+    out.push_back( new SIBImporter());
+#endif
 #if (!defined ASSIMP_BUILD_NO_AC_IMPORTER)
     out.push_back( new AC3DImporter());
 #endif
@@ -174,10 +184,23 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
 #if ( !defined ASSIMP_BUILD_NO_FBX_IMPORTER )
     out.push_back( new FBXImporter() );
 #endif
-
-#ifndef ASSIMP_BUILD_NO_C4D_IMPORTER
+#if ( !defined ASSIMP_BUILD_NO_GLTF_IMPORTER )
+    out.push_back( new glTFImporter() );
+#endif
+#if ( !defined ASSIMP_BUILD_NO_C4D_IMPORTER )
     out.push_back( new C4DImporter() );
 #endif
+#if ( !defined ASSIMP_BUILD_NO_3MF_IMPORTER )
+    out.push_back(new D3MFImporter() );
+#endif
+}
+
+/** will delete all registered importers. */
+void DeleteImporterInstanceList(std::vector< BaseImporter* >& deleteList){
+	for(size_t i= 0; i<deleteList.size();++i){
+		delete deleteList[i];
+		deleteList[i]=NULL;
+	}//for
 }
 
 } // namespace Assimp

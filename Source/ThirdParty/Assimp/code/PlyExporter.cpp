@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if !defined(ASSIMP_BUILD_NO_EXPORT) && !defined(ASSIMP_BUILD_NO_PLY_EXPORTER)
 
 #include "PlyExporter.h"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <cmath>
 #include "Exceptional.h"
 #include "../include/assimp/scene.h"
@@ -53,7 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "qnan.h"
 
 
-using namespace Assimp;
+//using namespace Assimp;
 namespace Assimp    {
 
 // ------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void ExportScenePly(const char* pFile,IOSystem* pIOSystem, const aiScene* pScene
     PlyExporter exporter(pFile, pScene);
 
     // we're still here - export successfully completed. Write the file.
-    boost::scoped_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
+    std::unique_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
     if(outfile == NULL) {
         throw DeadlyExportError("could not open output .ply file: " + std::string(pFile));
     }
@@ -78,15 +78,13 @@ void ExportScenePlyBinary(const char* pFile, IOSystem* pIOSystem, const aiScene*
     PlyExporter exporter(pFile, pScene, true);
 
     // we're still here - export successfully completed. Write the file.
-    boost::scoped_ptr<IOStream> outfile(pIOSystem->Open(pFile, "wb"));
+    std::unique_ptr<IOStream> outfile(pIOSystem->Open(pFile, "wb"));
     if (outfile == NULL) {
         throw DeadlyExportError("could not open output .ply file: " + std::string(pFile));
     }
 
     outfile->Write(exporter.mOutput.str().c_str(), static_cast<size_t>(exporter.mOutput.tellp()), 1);
 }
-
-} // end of namespace Assimp
 
 #define PLY_EXPORT_HAS_NORMALS 0x1
 #define PLY_EXPORT_HAS_TANGENTS_BITANGENTS 0x2
@@ -101,6 +99,7 @@ PlyExporter::PlyExporter(const char* _filename, const aiScene* pScene, bool bina
     // make sure that all formatting happens using the standard, C locale and not the user's current locale
     const std::locale& l = std::locale("C");
     mOutput.imbue(l);
+    mOutput.precision(16);
 
     unsigned int faces = 0u, vertices = 0u, components = 0u;
     for (unsigned int i = 0; i < pScene->mNumMeshes; ++i) {
@@ -217,6 +216,11 @@ PlyExporter::PlyExporter(const char* _filename, const aiScene* pScene, bool bina
 }
 
 // ------------------------------------------------------------------------------------------------
+PlyExporter::~PlyExporter() {
+    // empty
+}
+
+// ------------------------------------------------------------------------------------------------
 void PlyExporter::WriteMeshVerts(const aiMesh* m, unsigned int components)
 {
     static const float inf = std::numeric_limits<float>::infinity();
@@ -306,10 +310,10 @@ void PlyExporter::WriteMeshVertsBinary(const aiMesh* m, unsigned int components)
 
         for (unsigned int n = PLY_EXPORT_HAS_TEXCOORDS, c = 0; (components & n) && c != AI_MAX_NUMBER_OF_TEXTURECOORDS; n <<= 1, ++c) {
             if (m->HasTextureCoords(c)) {
-                mOutput.write(reinterpret_cast<const char*>(&m->mTextureCoords[c][i].x), 6);
+                mOutput.write(reinterpret_cast<const char*>(&m->mTextureCoords[c][i].x), 8);
             }
             else {
-                mOutput.write(reinterpret_cast<const char*>(&defaultUV.x), 6);
+                mOutput.write(reinterpret_cast<const char*>(&defaultUV.x), 8);
             }
         }
 
@@ -367,4 +371,6 @@ void PlyExporter::WriteMeshIndicesBinary(const aiMesh* m, unsigned int offset)
     WriteMeshIndicesBinary_Generic<unsigned char, int>(m, offset, mOutput);
 }
 
-#endif
+} // end of namespace Assimp
+
+#endif // !defined(ASSIMP_BUILD_NO_EXPORT) && !defined(ASSIMP_BUILD_NO_PLY_EXPORTER)

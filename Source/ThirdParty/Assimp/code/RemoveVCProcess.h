@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_REMOVEVCPROCESS_H_INCLUDED
 
 #include "BaseProcess.h"
-#include "../include/assimp/mesh.h"
+#include "../include/assimp/mesh.h" 
 
 class RemoveVCProcessTest;
 

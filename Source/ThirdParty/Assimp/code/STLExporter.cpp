@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/scene.h"
 #include "../include/assimp/Exporter.hpp"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include "Exceptional.h"
 #include "ByteSwapper.h"
 
@@ -62,7 +62,7 @@ void ExportSceneSTL(const char* pFile,IOSystem* pIOSystem, const aiScene* pScene
     STLExporter exporter(pFile, pScene);
 
     // we're still here - export successfully completed. Write the file.
-    boost::scoped_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
+    std::unique_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
     if(outfile == NULL) {
         throw DeadlyExportError("could not open output .stl file: " + std::string(pFile));
     }
@@ -75,7 +75,7 @@ void ExportSceneSTLBinary(const char* pFile,IOSystem* pIOSystem, const aiScene* 
     STLExporter exporter(pFile, pScene, true);
 
     // we're still here - export successfully completed. Write the file.
-    boost::scoped_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wb"));
+    std::unique_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wb"));
     if(outfile == NULL) {
         throw DeadlyExportError("could not open output .stl file: " + std::string(pFile));
     }
@@ -94,6 +94,7 @@ STLExporter :: STLExporter(const char* _filename, const aiScene* pScene, bool bi
     // make sure that all formatting happens using the standard, C locale and not the user's current locale
     const std::locale& l = std::locale("C");
     mOutput.imbue(l);
+    mOutput.precision(16);
     if (binary) {
         char buf[80] = {0} ;
         buf[0] = 'A'; buf[1] = 's'; buf[2] = 's'; buf[3] = 'i'; buf[4] = 'm'; buf[5] = 'p';

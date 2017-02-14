@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -51,11 +51,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SkeletonMeshBuilder.h"
 #include "TargetAnimation.h"
 #include "../include/assimp/Importer.hpp"
-#include <boost/scoped_ptr.hpp>
 #include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/DefaultLogger.hpp"
 #include "../include/assimp/scene.h"
 
+#include <memory>
 
 // utilities
 #include "fast_atof.h"
@@ -130,7 +130,7 @@ void ASEImporter::SetupProperties(const Importer* pImp)
 void ASEImporter::InternReadFile( const std::string& pFile,
     aiScene* pScene, IOSystem* pIOHandler)
 {
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL) {
@@ -225,17 +225,13 @@ void ASEImporter::InternReadFile( const std::string& pFile,
         + mParser->m_vCameras.size() + mParser->m_vDummies.size());
 
     // Lights
-    for (std::vector<ASE::Light>::iterator it = mParser->m_vLights.begin(),
-         end = mParser->m_vLights.end();it != end; ++it)nodes.push_back(&(*it));
+    for (auto &light : mParser->m_vLights)nodes.push_back(&light);
     // Cameras
-    for (std::vector<ASE::Camera>::iterator it = mParser->m_vCameras.begin(),
-         end = mParser->m_vCameras.end();it != end; ++it)nodes.push_back(&(*it));
+    for (auto &camera : mParser->m_vCameras)nodes.push_back(&camera);
     // Meshes
-    for (std::vector<ASE::Mesh>::iterator it = mParser->m_vMeshes.begin(),
-        end = mParser->m_vMeshes.end();it != end; ++it)nodes.push_back(&(*it));
+    for (auto &mesh : mParser->m_vMeshes)nodes.push_back(&mesh);
     // Dummies
-    for (std::vector<ASE::Dummy>::iterator it = mParser->m_vDummies.begin(),
-        end = mParser->m_vDummies.end();it != end; ++it)nodes.push_back(&(*it));
+    for (auto &dummy : mParser->m_vDummies)nodes.push_back(&dummy);
 
     // build the final node graph
     BuildNodes(nodes);
@@ -657,8 +653,8 @@ void ASEImporter::BuildNodes(std::vector<BaseNode*>& nodes) {
     ch->mParent = root;
 
     // Change the transformation matrix of all nodes
-    for (std::vector<BaseNode*>::iterator it = nodes.begin(), end = nodes.end();it != end; ++it)    {
-        aiMatrix4x4& m = (*it)->mTransform;
+    for (BaseNode *node : nodes) {
+        aiMatrix4x4& m = node->mTransform;
         m.Transpose(); // row-order vs column-order
     }
 

@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -55,7 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Exceptional.h"
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <ctime>
 #include <set>
 
@@ -75,7 +75,7 @@ void ExportSceneCollada(const char* pFile, IOSystem* pIOSystem, const aiScene* p
     ColladaExporter iDoTheExportThing( pScene, pIOSystem, path, file);
 
     // we're still here - export successfully completed. Write result to the given IOSYstem
-    boost::scoped_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
+    std::unique_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
     if(outfile == NULL) {
         throw DeadlyExportError("could not open output .dae file: " + std::string(pFile));
     }
@@ -94,6 +94,7 @@ ColladaExporter::ColladaExporter( const aiScene* pScene, IOSystem* pIOSystem, co
 {
     // make sure that all formatting happens using the standard, C locale and not the user's current locale
     mOutput.imbue( std::locale("C") );
+    mOutput.precision(16);
 
     mScene = pScene;
     mSceneOwned = false;
@@ -268,7 +269,7 @@ void ColladaExporter::WriteTextures() {
 
             std::string name = mFile + "_texture_" + (i < 1000 ? "0" : "") + (i < 100 ? "0" : "") + (i < 10 ? "0" : "") + str + "." + ((const char*) texture->achFormatHint);
 
-            boost::scoped_ptr<IOStream> outfile(mIOSystem->Open(mPath + name, "wb"));
+            std::unique_ptr<IOStream> outfile(mIOSystem->Open(mPath + name, "wb"));
             if(outfile == NULL) {
                 throw DeadlyExportError("could not open output texture file: " + mPath + name);
             }
@@ -527,6 +528,13 @@ void ColladaExporter::ReadMaterialSurface( Surface& poSurface, const aiMaterial*
 }
 
 // ------------------------------------------------------------------------------------------------
+// Reimplementation of isalnum(,C locale), because AppVeyor does not see standard version.
+static bool isalnum_C(char c)
+{
+  return ( nullptr != strchr("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",c) );
+}
+
+// ------------------------------------------------------------------------------------------------
 // Writes an image entry for the given surface
 void ColladaExporter::WriteImageEntry( const Surface& pSurface, const std::string& pNameAdd)
 {
@@ -540,7 +548,7 @@ void ColladaExporter::WriteImageEntry( const Surface& pSurface, const std::strin
     std::stringstream imageUrlEncoded;
     for( std::string::const_iterator it = pSurface.texture.begin(); it != pSurface.texture.end(); ++it )
     {
-      if( isalnum( *it) || *it == '_' || *it == '.' || *it == '/' || *it == '\\' )
+      if( isalnum_C( (unsigned char) *it) || *it == ':' || *it == '_' || *it == '.' || *it == '/' || *it == '\\' )
         imageUrlEncoded << *it;
       else
         imageUrlEncoded << '%' << std::hex << size_t( (unsigned char) *it) << std::dec;
@@ -629,11 +637,9 @@ void ColladaExporter::WriteMaterials()
     aiString name;
     if( mat->Get( AI_MATKEY_NAME, name) != aiReturn_SUCCESS )
       name = "mat";
-    materials[a].name = std::string( "m") + boost::lexical_cast<std::string> (a) + name.C_Str();
+    materials[a].name = std::string( "m") + std::to_string(a) + name.C_Str();
     for( std::string::iterator it = materials[a].name.begin(); it != materials[a].name.end(); ++it ) {
-        // isalnum on MSVC asserts for code points outside [0,255]. Thus prevent unwanted promotion
-        // of char to signed int and take the unsigned char value.
-      if( !isalnum( static_cast<uint8_t>(*it) ) ) {
+      if( !isalnum_C( *it ) ) {
         *it = '_';
       }
     }
@@ -807,7 +813,7 @@ void ColladaExporter::WriteGeometry( size_t pIndex)
     {
         if( mesh->HasTextureCoords( a) )
         {
-            WriteFloatArray( idstr + "-tex" + boost::lexical_cast<std::string> (a), mesh->mNumUVComponents[a] == 3 ? FloatType_TexCoord3 : FloatType_TexCoord2,
+            WriteFloatArray( idstr + "-tex" + std::to_string(a), mesh->mNumUVComponents[a] == 3 ? FloatType_TexCoord3 : FloatType_TexCoord2,
                 (float*) mesh->mTextureCoords[a], mesh->mNumVertices);
         }
     }
@@ -816,7 +822,7 @@ void ColladaExporter::WriteGeometry( size_t pIndex)
     for( size_t a = 0; a < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++a)
     {
         if( mesh->HasVertexColors( a) )
-            WriteFloatArray( idstr + "-color" + boost::lexical_cast<std::string> (a), FloatType_Color, (float*) mesh->mColors[a], mesh->mNumVertices);
+            WriteFloatArray( idstr + "-color" + std::to_string(a), FloatType_Color, (float*) mesh->mColors[a], mesh->mNumVertices);
     }
 
     // assemble vertex structure
@@ -867,7 +873,7 @@ void ColladaExporter::WriteGeometry( size_t pIndex)
         mOutput << startstr << "</lines>" << endstr;
     }
 
-    // triangle - dont use it, because compatibility problems
+    // triangle - don't use it, because compatibility problems
 
     // polygons
     if (countPoly)
@@ -875,6 +881,11 @@ void ColladaExporter::WriteGeometry( size_t pIndex)
         mOutput << startstr << "<polylist count=\"" << countPoly << "\" material=\"defaultMaterial\">" << endstr;
         PushTag();
         mOutput << startstr << "<input offset=\"0\" semantic=\"VERTEX\" source=\"#" << idstrEscaped << "-vertices\" />" << endstr;
+        for( size_t a = 0; a < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++a )
+        {
+            if( mesh->HasTextureCoords( a) )
+                mOutput << startstr << "<input offset=\"0\" semantic=\"TEXCOORD\" source=\"#" << idstrEscaped << "-tex" << a << "\" set=\"" << a << "\" />" << endstr;
+        }
 
         mOutput << startstr << "<vcount>";
         for( size_t a = 0; a < mesh->mNumFaces; ++a )
@@ -1006,7 +1017,7 @@ void ColladaExporter::WriteSceneLibrary()
 
     // start recursive write at the root node
     for( size_t a = 0; a < mScene->mRootNode->mNumChildren; ++a )
-        WriteNode( mScene->mRootNode->mChildren[a]);
+        WriteNode( mScene, mScene->mRootNode->mChildren[a]);
 
     PopTag();
     mOutput << startstr << "</visual_scene>" << endstr;
@@ -1015,10 +1026,25 @@ void ColladaExporter::WriteSceneLibrary()
 }
 
 // ------------------------------------------------------------------------------------------------
+// Helper to find a bone by name in the scene
+aiBone* findBone( const aiScene* scene, const char * name) {
+    for (size_t m=0; m<scene->mNumMeshes; m++) {
+        aiMesh * mesh = scene->mMeshes[m];
+        for (size_t b=0; b<mesh->mNumBones; b++) {
+            aiBone * bone = mesh->mBones[b];
+            if (0 == strcmp(name, bone->mName.C_Str())) {
+                return bone;
+            }
+        }
+    }
+    return NULL;
+}
+
+// ------------------------------------------------------------------------------------------------
 // Recursively writes the given node
-void ColladaExporter::WriteNode(aiNode* pNode)
+void ColladaExporter::WriteNode( const aiScene* pScene, aiNode* pNode)
 {
-    // the must have a name
+    // the node must have a name
     if (pNode->mName.length == 0)
     {
         std::stringstream ss;
@@ -1026,12 +1052,25 @@ void ColladaExporter::WriteNode(aiNode* pNode)
         pNode->mName.Set(ss.str());
     }
 
+    // If the node is associated with a bone, it is a joint node (JOINT)
+    // otherwise it is a normal node (NODE)
+    const char * node_type;
+    if (NULL == findBone(pScene, pNode->mName.C_Str())) {
+        node_type = "NODE";
+    } else {
+        node_type = "JOINT";
+    }
+
     const std::string node_name_escaped = XMLEscape(pNode->mName.data);
-    mOutput << startstr << "<node id=\"" << node_name_escaped << "\" name=\"" << node_name_escaped << "\">" << endstr;
+    mOutput << startstr
+            << "<node id=\"" << node_name_escaped
+            << "\" name=\"" << node_name_escaped
+            << "\" type=\"" << node_type
+            << "\">" << endstr;
     PushTag();
 
     // write transformation - we can directly put the matrix there
-    // TODO: (thom) decompose into scale - rot - quad to allow adressing it by animations afterwards
+    // TODO: (thom) decompose into scale - rot - quad to allow addressing it by animations afterwards
     const aiMatrix4x4& mat = pNode->mTransformation;
     mOutput << startstr << "<matrix>";
     mOutput << mat.a1 << " " << mat.a2 << " " << mat.a3 << " " << mat.a4 << " ";
@@ -1070,8 +1109,19 @@ void ColladaExporter::WriteNode(aiNode* pNode)
     PushTag();
     mOutput << startstr << "<technique_common>" << endstr;
     PushTag();
-    mOutput << startstr << "<instance_material symbol=\"defaultMaterial\" target=\"#" << XMLEscape(materials[mesh->mMaterialIndex].name) << "\" />" << endstr;
-        PopTag();
+    mOutput << startstr << "<instance_material symbol=\"defaultMaterial\" target=\"#" << XMLEscape(materials[mesh->mMaterialIndex].name) << "\">" << endstr;
+    PushTag();
+    for( size_t a = 0; a < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++a )
+    {
+        if( mesh->HasTextureCoords( a) )
+            // semantic       as in <texture texcoord=...>
+            // input_semantic as in <input semantic=...>
+            // input_set      as in <input set=...>
+            mOutput << startstr << "<bind_vertex_input semantic=\"CHANNEL" << a << "\" input_semantic=\"TEXCOORD\" input_set=\"" << a << "\"/>" << endstr;
+    }
+    PopTag();
+    mOutput << startstr << "</instance_material>" << endstr;
+    PopTag();
     mOutput << startstr << "</technique_common>" << endstr;
     PopTag();
     mOutput << startstr << "</bind_material>" << endstr;
@@ -1081,7 +1131,7 @@ void ColladaExporter::WriteNode(aiNode* pNode)
 
     // recurse into subnodes
     for( size_t a = 0; a < pNode->mNumChildren; ++a )
-        WriteNode( pNode->mChildren[a]);
+        WriteNode( pScene, pNode->mChildren[a]);
 
     PopTag();
     mOutput << startstr << "</node>" << endstr;

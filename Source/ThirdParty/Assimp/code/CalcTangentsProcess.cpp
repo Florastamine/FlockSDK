@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -108,7 +108,7 @@ void CalcTangentsProcess::Execute( aiScene* pScene)
 }
 
 // ------------------------------------------------------------------------------------------------
-// Calculates tangents and bitangents for the given mesh
+// Calculates tangents and bi-tangents for the given mesh
 bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
 {
     // we assume that the mesh is still in the verbose vertex format where each face has its own set

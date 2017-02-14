@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -45,7 +45,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../include/assimp/ai_assert.h"
 #include "DefaultIOStream.h"
-#include <boost/static_assert.hpp>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -86,8 +85,9 @@ aiReturn DefaultIOStream::Seek(size_t pOffset,
     }
 
     // Just to check whether our enum maps one to one with the CRT constants
-    BOOST_STATIC_ASSERT(aiOrigin_CUR == SEEK_CUR &&
-        aiOrigin_END == SEEK_END && aiOrigin_SET == SEEK_SET);
+    static_assert(aiOrigin_CUR == SEEK_CUR &&
+        aiOrigin_END == SEEK_END && aiOrigin_SET == SEEK_SET, "aiOrigin_CUR == SEEK_CUR && \
+        aiOrigin_END == SEEK_END && aiOrigin_SET == SEEK_SET");
 
     // do the seek
     return (0 == ::fseek(mFile, (long)pOffset,(int)pOrigin) ? AI_SUCCESS : AI_FAILURE);

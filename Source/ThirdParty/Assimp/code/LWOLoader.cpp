@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -53,8 +53,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ByteSwapper.h"
 #include "ProcessHelper.h"
 #include "ConvertToLHProcess.h"
-#include <boost/scoped_ptr.hpp>
 #include "../include/assimp/IOSystem.hpp"
+#include <memory>
 #include <sstream>
 #include <iomanip>
 
@@ -139,7 +139,7 @@ void LWOImporter::InternReadFile( const std::string& pFile,
     aiScene* pScene,
     IOSystem* pIOHandler)
 {
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL)
@@ -246,8 +246,7 @@ void LWOImporter::InternReadFile( const std::string& pFile,
     apcMeshes.reserve(mLayers->size()*std::min(((unsigned int)mSurfaces->size()/2u), 1u));
 
     unsigned int iDefaultSurface = UINT_MAX; // index of the default surface
-    for (LayerList::iterator lit = mLayers->begin(), lend = mLayers->end();lit != lend;++lit)   {
-        LWO::Layer& layer = *lit;
+	for (LWO::Layer &layer : *mLayers) {
         if (layer.skip)
             continue;
 
@@ -765,7 +764,7 @@ void LWOImporter::LoadLWOPoints(unsigned int length)
     }
     else mCurLayer->mTempPoints.resize( regularSize );
 
-    // perform endianess conversions
+    // perform endianness conversions
 #ifndef AI_BUILD_BIG_ENDIAN
     for (unsigned int i = 0; i < length>>2;++i)
         ByteSwap::Swap4( mFileBuffer + (i << 2));
@@ -909,12 +908,12 @@ void LWOImporter::LoadLWO2PolygonTags(unsigned int length)
 template <class T>
 VMapEntry* FindEntry(std::vector< T >& list,const std::string& name, bool perPoly)
 {
-    for (typename std::vector< T >::iterator it = list.begin(), end = list.end();it != end; ++it)   {
-        if ((*it).name == name) {
+    for (auto & elem : list)   {
+        if (elem.name == name) {
             if (!perPoly)   {
                 DefaultLogger::get()->warn("LWO2: Found two VMAP sections with equal names");
             }
-            return &(*it);
+            return &elem;
         }
     }
     list.push_back( T() );
@@ -941,8 +940,8 @@ inline void CreateNewEntry(T& chan, unsigned int srcIdx)
 template <class T>
 inline void CreateNewEntry(std::vector< T >& list, unsigned int srcIdx)
 {
-    for (typename std::vector< T >::iterator it =  list.begin(), end = list.end();it != end;++it)   {
-        CreateNewEntry( *it, srcIdx );
+    for (auto &elem : list)   {
+        CreateNewEntry( elem, srcIdx );
     }
 }
 
@@ -1167,7 +1166,7 @@ void LWOImporter::LoadLWO2Clip(unsigned int length)
             std::ostringstream ss;
             GetS0(s,head.length);
 
-            head.length -= (unsigned int)s.length()+1;
+            head.length -= (uint16_t)s.length()+1;
             ss << s;
             ss << std::setw(digits) << offset + start;
             GetS0(s,head.length);
@@ -1370,7 +1369,7 @@ void LWOImporter::LoadLWO2File()
                 // if the name is empty, generate a default name
                 if (layer.mName.empty())    {
                     char buffer[128]; // should be sufficiently large
-                    ::sprintf(buffer,"Layer_%i", iUnnamed++);
+                    ::ai_snprintf(buffer, 128, "Layer_%i", iUnnamed++);
                     layer.mName = buffer;
                 }
 

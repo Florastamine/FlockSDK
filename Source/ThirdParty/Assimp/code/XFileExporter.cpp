@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -51,13 +51,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "DefaultIOSystem.h"
 #include <ctime>
 #include <set>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include "Exceptional.h"
 #include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/scene.h"
 #include "../include/assimp/light.h"
-
-
 
 using namespace Assimp;
 
@@ -81,7 +79,7 @@ void ExportSceneXFile(const char* pFile,IOSystem* pIOSystem, const aiScene* pSce
     XFileExporter iDoTheExportThing( pScene, pIOSystem, path, file, &props);
 
     // we're still here - export successfully completed. Write result to the given IOSYstem
-    boost::scoped_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
+    std::unique_ptr<IOStream> outfile (pIOSystem->Open(pFile,"wt"));
     if(outfile == NULL) {
         throw DeadlyExportError("could not open output .x file: " + std::string(pFile));
     }
@@ -106,6 +104,7 @@ XFileExporter::XFileExporter(const aiScene* pScene, IOSystem* pIOSystem, const s
 {
     // make sure that all formatting happens using the standard, C locale and not the user's current locale
     mOutput.imbue( std::locale("C") );
+    mOutput.precision(16);
 
     // start writing
     WriteFile();
@@ -309,12 +308,12 @@ void XFileExporter::WriteNode( aiNode* pNode)
 
     WriteFrameTransform(m);
 
-    for (size_t i = 0; i < pNode->mNumMeshes; i++)
+    for (size_t i = 0; i < pNode->mNumMeshes; ++i)
         WriteMesh(mScene->mMeshes[pNode->mMeshes[i]]);
 
     // recursive call the Nodes
     for (size_t i = 0; i < pNode->mNumChildren; ++i)
-        WriteNode( mScene->mRootNode->mChildren[i]);
+        WriteNode(pNode->mChildren[i]);
 
     PopTag();
 
@@ -531,4 +530,3 @@ void XFileExporter::writePath(aiString path)
 
 #endif
 #endif
-

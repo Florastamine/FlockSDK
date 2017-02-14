@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -49,17 +49,16 @@ struct aiScene;
 namespace Assimp {
 namespace FBX {
 
-    class Document;
+class Document;
 
-
-/** Convert a FBX #Document to #aiScene
+/** 
+ *  Convert a FBX #Document to #aiScene
  *  @param out Empty scene to be populated
- *  @param doc Parsed FBX document */
+ *  @param doc Parsed FBX document 
+ */
 void ConvertToAssimpScene(aiScene* out, const Document& doc);
 
-
 }
 }
 
-
-#endif
+#endif // INCLUDED_AI_FBX_CONVERTER_H

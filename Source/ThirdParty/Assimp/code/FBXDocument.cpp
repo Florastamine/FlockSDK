@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -44,17 +44,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef ASSIMP_BUILD_NO_FBX_IMPORTER
 
-#include <functional>
-
-#include "FBXParser.h"
 #include "FBXDocument.h"
+#include "FBXMeshGeometry.h"
+#include "FBXParser.h"
 #include "FBXUtil.h"
 #include "FBXImporter.h"
 #include "FBXImportSettings.h"
 #include "FBXDocumentUtil.h"
 #include "FBXProperties.h"
-#include <boost/foreach.hpp>
-#include <boost/make_shared.hpp>
+
+#include <memory>
+#include <functional>
+
 
 namespace Assimp {
 namespace FBX {
@@ -75,6 +76,12 @@ LazyObject::LazyObject(uint64_t id, const Element& element, const Document& doc)
 LazyObject::~LazyObject()
 {
 
+}
+
+// ------------------------------------------------------------------------------------------------
+static void dumpObjectClassInfo( const char* obtype, const std::string &classtag ) {
+    DefaultLogger::get()->debug( "obtype: " + std::string(obtype ));
+    DefaultLogger::get()->debug( "Classtag: " + classtag );
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -135,6 +142,10 @@ const Object* LazyObject::Get(bool dieOnError)
         // so avoid constructing strings all the time.
         const char* obtype = key.begin();
         const size_t length = static_cast<size_t>(key.end()-key.begin());
+
+        // For debugging
+        //dumpObjectClassInfo( objtype, classtag );
+
         if (!strncmp(obtype,"Geometry",length)) {
             if (!strcmp(classtag.c_str(),"Mesh")) {
                 object.reset(new MeshGeometry(id,element,name,doc));
@@ -165,10 +176,10 @@ const Object* LazyObject::Get(bool dieOnError)
                 object.reset(new Skin(id,element,doc,name));
             }
         }
-        else if (!strncmp(obtype,"Model",length)) {
+        else if ( !strncmp( obtype, "Model", length ) ) {
             // FK and IK effectors are not supported
-            if (strcmp(classtag.c_str(),"IKEffector") && strcmp(classtag.c_str(),"FKEffector")) {
-                object.reset(new Model(id,element,doc,name));
+            if ( strcmp( classtag.c_str(), "IKEffector" ) && strcmp( classtag.c_str(), "FKEffector" ) ) {
+                object.reset( new Model( id, element, doc, name ) );
             }
         }
         else if (!strncmp(obtype,"Material",length)) {
@@ -179,6 +190,9 @@ const Object* LazyObject::Get(bool dieOnError)
         }
         else if (!strncmp(obtype,"LayeredTexture",length)) {
             object.reset(new LayeredTexture(id,element,doc,name));
+        }
+        else if (!strncmp(obtype,"Video",length)) {
+            object.reset(new Video(id,element,doc,name));
         }
         else if (!strncmp(obtype,"AnimationStack",length)) {
             object.reset(new AnimationStack(id,element,name,doc));
@@ -234,7 +248,7 @@ Object::~Object()
 
 
 // ------------------------------------------------------------------------------------------------
-FileGlobalSettings::FileGlobalSettings(const Document& doc, boost::shared_ptr<const PropertyTable> props)
+FileGlobalSettings::FileGlobalSettings(const Document& doc, std::shared_ptr<const PropertyTable> props)
 : props(props)
 , doc(doc)
 {
@@ -255,8 +269,8 @@ Document::Document(const Parser& parser, const ImportSettings& settings)
 , parser(parser)
 {
     // Cannot use array default initialization syntax because vc8 fails on it
-    for (unsigned int i = 0; i < sizeof(creationTimeStamp) / sizeof(creationTimeStamp[0]); ++i) {
-        creationTimeStamp[i] = 0;
+    for (auto &timeStamp : creationTimeStamp) {
+        timeStamp = 0;
     }
 
     ReadHeader();
@@ -275,18 +289,20 @@ Document::Document(const Parser& parser, const ImportSettings& settings)
 // ------------------------------------------------------------------------------------------------
 Document::~Document()
 {
-    BOOST_FOREACH(ObjectMap::value_type& v, objects) {
+    for(ObjectMap::value_type& v : objects) {
         delete v.second;
     }
 
-    BOOST_FOREACH(ConnectionMap::value_type& v, src_connections) {
+    for(ConnectionMap::value_type& v : src_connections) {
         delete v.second;
     }
     // |dest_connections| contain the same Connection objects as the |src_connections|
 }
 
-
 // ------------------------------------------------------------------------------------------------
+static const int LowerSupportedVersion = 7100;
+static const int UpperSupportedVersion = 7400;
+
 void Document::ReadHeader()
 {
     // Read ID objects from "Objects" section
@@ -301,10 +317,10 @@ void Document::ReadHeader()
 
     // While we maye have some success with newer files, we don't support
     // the older 6.n fbx format
-    if(fbxVersion < 7100) {
+    if(fbxVersion < LowerSupportedVersion ) {
         DOMError("unsupported, old format version, supported are only FBX 2011, FBX 2012 and FBX 2013");
     }
-    if(fbxVersion > 7300) {
+    if(fbxVersion > UpperSupportedVersion ) {
         if(Settings().strictMode) {
             DOMError("unsupported, newer format version, supported are only FBX 2011, FBX 2012 and FBX 2013"
                 " (turn off strict mode to try anyhow) ");
@@ -342,11 +358,11 @@ void Document::ReadGlobalSettings()
     if(!ehead || !ehead->Compound()) {
         DOMWarning("no GlobalSettings dictionary found");
 
-        globals.reset(new FileGlobalSettings(*this, boost::make_shared<const PropertyTable>()));
+        globals.reset(new FileGlobalSettings(*this, std::make_shared<const PropertyTable>()));
         return;
     }
 
-    boost::shared_ptr<const PropertyTable> props = GetPropertyTable(*this, "", *ehead, *ehead->Compound(), true);
+    std::shared_ptr<const PropertyTable> props = GetPropertyTable(*this, "", *ehead, *ehead->Compound(), true);
 
     if(!props) {
         DOMError("GlobalSettings dictionary contains no property table");
@@ -371,7 +387,7 @@ void Document::ReadObjects()
     objects[0] = new LazyObject(0L, *eobjects, *this);
 
     const Scope& sobjects = *eobjects->Compound();
-    BOOST_FOREACH(const ElementMap::value_type& el, sobjects.Elements()) {
+    for(const ElementMap::value_type& el : sobjects.Elements()) {
 
         // extract ID
         const TokenList& tok = el.second->Tokens();
@@ -404,7 +420,6 @@ void Document::ReadObjects()
         }
     }
 }
-
 
 // ------------------------------------------------------------------------------------------------
 void Document::ReadPropertyTemplates()
@@ -454,8 +469,8 @@ void Document::ReadPropertyTemplates()
 
             const Element* Properties70 = (*sc)["Properties70"];
             if(Properties70) {
-                boost::shared_ptr<const PropertyTable> props = boost::make_shared<const PropertyTable>(
-                    *Properties70,boost::shared_ptr<const PropertyTable>(static_cast<const PropertyTable*>(NULL))
+                std::shared_ptr<const PropertyTable> props = std::make_shared<const PropertyTable>(
+                    *Properties70,std::shared_ptr<const PropertyTable>(static_cast<const PropertyTable*>(NULL))
                 );
 
                 templates[oname+"."+pname] = props;
@@ -483,6 +498,11 @@ void Document::ReadConnections()
     for(ElementMap::const_iterator it = conns.first; it != conns.second; ++it) {
         const Element& el = *(*it).second;
         const std::string& type = ParseTokenAsString(GetRequiredToken(el,0));
+
+        // PP = property-property connection, ignored for now
+        // (tokens: "PP", ID1, "Property1", ID2, "Property2")
+        if(type == "PP") continue;
+
         const uint64_t src = ParseTokenAsID(GetRequiredToken(el,1));
         const uint64_t dest = ParseTokenAsID(GetRequiredToken(el,2));
 
@@ -517,7 +537,7 @@ const std::vector<const AnimationStack*>& Document::AnimationStacks() const
     }
 
     animationStacksResolved.reserve(animationStacks.size());
-    BOOST_FOREACH(uint64_t id, animationStacks) {
+    for(uint64_t id : animationStacks) {
         LazyObject* const lazy = GetObject(id);
         const AnimationStack* stack;
         if(!lazy || !(stack = lazy->Get<AnimationStack>())) {

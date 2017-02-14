@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -38,21 +38,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------
 */
 
-// Modified by Lasse Oorni for Urho3D
-
-/** Small helper classes to optimise finding vertizes close to a given location
+/** Small helper classes to optimize finding vertices close to a given location
  */
 #ifndef AI_D3DSSPATIALSORT_H_INC
 #define AI_D3DSSPATIALSORT_H_INC
 
-#include "../include/assimp/types.h"
+#include "../include/assimp/types.h" 
 #include <vector>
-// Urho3D: VS2008 compatibility
-#if !defined(_MSC_VER) || (_MSC_VER >= 1600)
 #include <stdint.h>
-#else
-#include "../include/assimp/Compiler/pstdint.h"
-#endif
 
 namespace Assimp    {
 
@@ -73,7 +66,7 @@ public:
     /** Construction from a given face array, handling smoothing groups
      *  properly
      */
-    SGSpatialSort(const std::vector<aiVector3D>& vPositions);
+    explicit SGSpatialSort(const std::vector<aiVector3D>& vPositions);
 
     // -------------------------------------------------------------------
     /** Add a vertex to the spatial sort

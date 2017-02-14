@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -52,10 +52,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SkeletonMeshBuilder.h"
 #include "../include/assimp/Importer.hpp"
 #include "../include/assimp/IOSystem.hpp"
-#include <boost/scoped_ptr.hpp>
 #include "../include/assimp/scene.h"
 #include "../include/assimp/DefaultLogger.hpp"
-
+#include <memory>
 
 using namespace Assimp;
 
@@ -122,7 +121,7 @@ void SMDImporter::SetupProperties(const Importer* pImp)
 // Imports the given file into the given scene structure.
 void SMDImporter::InternReadFile( const std::string& pFile, aiScene* pScene, IOSystem* pIOHandler)
 {
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL) {
@@ -216,7 +215,7 @@ void SMDImporter::InternReadFile( const std::string& pFile, aiScene* pScene, IOS
 void SMDImporter::LogErrorNoThrow(const char* msg)
 {
     char szTemp[1024];
-    sprintf(szTemp,"Line %u: %s",iLineNumber,msg);
+    ai_snprintf(szTemp,1024,"Line %u: %s",iLineNumber,msg);
     DefaultLogger::get()->error(szTemp);
 }
 
@@ -226,7 +225,7 @@ void SMDImporter::LogWarning(const char* msg)
 {
     char szTemp[1024];
     ai_assert(strlen(msg) < 1000);
-    sprintf(szTemp,"Line %u: %s",iLineNumber,msg);
+    ai_snprintf(szTemp,1024,"Line %u: %s",iLineNumber,msg);
     DefaultLogger::get()->warn(szTemp);
 }
 
@@ -655,7 +654,7 @@ void SMDImporter::CreateOutputMaterials()
         pScene->mMaterials[iMat] = pcMat;
 
         aiString szName;
-        szName.length = (size_t)::sprintf(szName.data,"Texture_%u",iMat);
+        szName.length = (size_t)ai_snprintf(szName.data,MAXLEN,"Texture_%u",iMat);
         pcMat->AddProperty(&szName,AI_MATKEY_NAME);
 
         if (aszTextures[iMat].length())

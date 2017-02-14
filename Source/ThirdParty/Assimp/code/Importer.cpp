@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  @brief Implementation of the CPP-API class #Importer
  */
 
-#include "../include/assimp/version.h"
+#include "../include/assimp/version.h" 
 
 // ------------------------------------------------------------------------------------------------
 /* Uncomment this line to prevent Assimp from catching unknown exceptions.
@@ -77,7 +77,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exceptional.h"
 #include "Profiler.h"
 #include <set>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <cctype>
 
 #ifndef ASSIMP_BUILD_NO_VALIDATEDS_PROCESS
@@ -90,6 +90,8 @@ using namespace Assimp::Formatter;
 namespace Assimp {
     // ImporterRegistry.cpp
     void GetImporterInstanceList(std::vector< BaseImporter* >& out);
+	void DeleteImporterInstanceList(std::vector< BaseImporter* >& out);
+
     // PostStepRegistry.cpp
     void GetPostProcessingStepInstanceList(std::vector< BaseProcess* >& out);
 }
@@ -140,7 +142,7 @@ void AllocateFromAssimpHeap::operator delete[] ( void* data)    {
 // ------------------------------------------------------------------------------------------------
 // Importer constructor.
 Importer::Importer()
-{
+ : pimpl( NULL ) {
     // allocate the pimpl first
     pimpl = new ImporterPimpl();
 
@@ -173,8 +175,7 @@ Importer::Importer()
 Importer::~Importer()
 {
     // Delete all import plugins
-    for( unsigned int a = 0; a < pimpl->mImporter.size(); a++)
-        delete pimpl->mImporter[a];
+	DeleteImporterInstanceList(pimpl->mImporter);
 
     // Delete all post-processing plug-ins
     for( unsigned int a = 0; a < pimpl->mPostProcessingSteps.size(); a++)
@@ -197,7 +198,7 @@ Importer::~Importer()
 // ------------------------------------------------------------------------------------------------
 // Copy constructor - copies the config of another Importer, not the scene
 Importer::Importer(const Importer &other)
-{
+	: pimpl(NULL) {
     new(this) Importer();
 
     pimpl->mIntProperties    = other.pimpl->mIntProperties;
@@ -491,7 +492,7 @@ const aiScene* Importer::ReadFileFromMemory( const void* pBuffer,
         pHint = "";
     }
 
-    if (!pBuffer || !pLength || strlen(pHint) > 100) {
+    if (!pBuffer || !pLength || strlen(pHint) > MaxLenHint ) {
         pimpl->mErrorString = "Invalid parameters passed to ReadFileFromMemory()";
         return NULL;
     }
@@ -503,8 +504,9 @@ const aiScene* Importer::ReadFileFromMemory( const void* pBuffer,
     SetIOHandler(new MemoryIOSystem((const uint8_t*)pBuffer,pLength));
 
     // read the file and recover the previous IOSystem
-    char fbuff[128];
-    sprintf(fbuff,"%s.%s",AI_MEMORYIO_MAGIC_FILENAME,pHint);
+    static const size_t BufferSize(Importer::MaxLenHint + 28);
+    char fbuff[ BufferSize ];
+    ai_snprintf(fbuff, BufferSize, "%s.%s",AI_MEMORYIO_MAGIC_FILENAME,pHint);
 
     ReadFile(fbuff,pFlags);
     SetIOHandler(io);
@@ -602,7 +604,7 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags)
             FreeScene();
         }
 
-        // First check if the file is accessable at all
+        // First check if the file is accessible at all
         if( !pimpl->mIOHandler->Exists( pFile)) {
 
             pimpl->mErrorString = "Unable to open file \"" + pFile + "\".";
@@ -610,7 +612,7 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags)
             return NULL;
         }
 
-        boost::scoped_ptr<Profiler> profiler(GetPropertyInteger(AI_CONFIG_GLOB_MEASURE_TIME,0)?new Profiler():NULL);
+        std::unique_ptr<Profiler> profiler(GetPropertyInteger(AI_CONFIG_GLOB_MEASURE_TIME,0)?new Profiler():NULL);
         if (profiler) {
             profiler->BeginRegion("total");
         }
@@ -656,7 +658,12 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags)
         }
 
         // Dispatch the reading to the worker class for this format
-        DefaultLogger::get()->info("Found a matching importer for this file format");
+        const aiImporterDesc *desc( imp->GetInfo() );
+        std::string ext( "unknown" );
+        if ( NULL != desc ) {
+            ext = desc->mName;
+        }
+        DefaultLogger::get()->info("Found a matching importer for this file format: " + ext + "." );
         pimpl->mProgressHandler->UpdateFileRead( 0, fileSize );
 
         if (profiler) {
@@ -716,7 +723,7 @@ const aiScene* Importer::ReadFile( const char* _pFile, unsigned int pFlags)
     catch (std::exception &e)
     {
 #if (defined _MSC_VER) &&   (defined _CPPRTTI)
-        // if we have RTTI get the full name of the exception that occured
+        // if we have RTTI get the full name of the exception that occurred
         pimpl->mErrorString = std::string(typeid( e ).name()) + ": " + e.what();
 #else
         pimpl->mErrorString = std::string("std::exception: ") + e.what();
@@ -778,7 +785,7 @@ const aiScene* Importer::ApplyPostProcessing(unsigned int pFlags)
     }
 #endif // ! DEBUG
 
-    boost::scoped_ptr<Profiler> profiler(GetPropertyInteger(AI_CONFIG_GLOB_MEASURE_TIME,0)?new Profiler():NULL);
+    std::unique_ptr<Profiler> profiler(GetPropertyInteger(AI_CONFIG_GLOB_MEASURE_TIME,0)?new Profiler():NULL);
     for( unsigned int a = 0; a < pimpl->mPostProcessingSteps.size(); a++)   {
 
         BaseProcess* process = pimpl->mPostProcessingSteps[a];
@@ -828,6 +835,80 @@ const aiScene* Importer::ApplyPostProcessing(unsigned int pFlags)
     DefaultLogger::get()->info("Leaving post processing pipeline");
 
     ASSIMP_END_EXCEPTION_REGION(const aiScene*);
+    return pimpl->mScene;
+}
+
+// ------------------------------------------------------------------------------------------------
+const aiScene* Importer::ApplyCustomizedPostProcessing( BaseProcess *rootProcess, bool requestValidation ) {
+    ASSIMP_BEGIN_EXCEPTION_REGION();
+
+    // Return immediately if no scene is active
+    if ( NULL == pimpl->mScene ) {
+        return NULL;
+    }
+
+    // If no flags are given, return the current scene with no further action
+    if ( NULL == rootProcess ) {
+        return pimpl->mScene;
+    }
+
+    // In debug builds: run basic flag validation
+    DefaultLogger::get()->info( "Entering customized post processing pipeline" );
+
+#ifndef ASSIMP_BUILD_NO_VALIDATEDS_PROCESS
+    // The ValidateDS process plays an exceptional role. It isn't contained in the global
+    // list of post-processing steps, so we need to call it manually.
+    if ( requestValidation )
+    {
+        ValidateDSProcess ds;
+        ds.ExecuteOnScene( this );
+        if ( !pimpl->mScene ) {
+            return NULL;
+        }
+    }
+#endif // no validation
+#ifdef ASSIMP_BUILD_DEBUG
+    if ( pimpl->bExtraVerbose )
+    {
+#ifdef ASSIMP_BUILD_NO_VALIDATEDS_PROCESS
+        DefaultLogger::get()->error( "Verbose Import is not available due to build settings" );
+#endif  // no validation
+    }
+#else
+    if ( pimpl->bExtraVerbose ) {
+        DefaultLogger::get()->warn( "Not a debug build, ignoring extra verbose setting" );
+    }
+#endif // ! DEBUG
+
+    std::unique_ptr<Profiler> profiler( GetPropertyInteger( AI_CONFIG_GLOB_MEASURE_TIME, 0 ) ? new Profiler() : NULL );
+
+    if ( profiler ) {
+        profiler->BeginRegion( "postprocess" );
+    }
+
+    rootProcess->ExecuteOnScene( this );
+
+    if ( profiler ) {
+        profiler->EndRegion( "postprocess" );
+    }
+
+    // If the extra verbose mode is active, execute the ValidateDataStructureStep again - after each step
+    if ( pimpl->bExtraVerbose || requestValidation  ) {
+        DefaultLogger::get()->debug( "Verbose Import: revalidating data structures" );
+
+        ValidateDSProcess ds;
+        ds.ExecuteOnScene( this );
+        if ( !pimpl->mScene ) {
+            DefaultLogger::get()->error( "Verbose Import: failed to revalidate data structures" );
+        }
+    }
+
+    // clear any data allocated by post-process steps
+    pimpl->mPPShared->Clean();
+    DefaultLogger::get()->info( "Leaving customized post processing pipeline" );
+
+    ASSIMP_END_EXCEPTION_REGION( const aiScene* );
+
     return pimpl->mScene;
 }
 
@@ -1112,4 +1193,3 @@ void Importer::GetMemoryRequirements(aiMemoryInfo& in) const
     }
     in.total += in.materials;
 }
-

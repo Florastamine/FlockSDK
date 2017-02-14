@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -38,8 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------
 */
 
-// Modified by Lasse Oorni for Urho3D
-
 /** @file Declares a helper class, "SceneCombiner" providing various
  *  utilities to merge scenes.
  */
@@ -52,12 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stddef.h>
 #include <set>
 #include <list>
-// Urho3D: VS2008 compatibility
-#if !defined(_MSC_VER) || (_MSC_VER >= 1600)
 #include <stdint.h>
-#else
-#include "../include/assimp/Compiler/pstdint.h"
-#endif
 
 #include <vector>
 
@@ -172,7 +165,7 @@ struct SceneHelper
         id[0] = 0;
     }
 
-    SceneHelper (aiScene* _scene)
+    explicit SceneHelper (aiScene* _scene)
         : scene     (_scene)
         , idlen     (0)
     {
@@ -279,7 +272,7 @@ public:
     /** Merges two or more materials
      *
      *  The materials should be complementary as much as possible. In case
-     *  of a property present in different materials, the first occurence
+     *  of a property present in different materials, the first occurrence
      *  is used.
      *
      *  @param dest Destination material. Must be empty.
@@ -329,7 +322,7 @@ public:
      *    the master graph), a scene is attached to the root of the master
      *    graph (as an additional child node)
      *  @duplicates List of duplicates. If elem[n] == n the scene is not
-     *    a duplicate. Otherwise elem[n] links scene n to its first occurence.
+     *    a duplicate. Otherwise elem[n] links scene n to its first occurrence.
      */
     static void AttachToGraph ( aiScene* master,
         std::vector<NodeAttachmentInfo>& srcList);

@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -52,8 +52,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../include/assimp/postprocess.h"
 #include <ios>
 #include <list>
-#include <boost/scoped_ptr.hpp>
-#include <boost/scoped_array.hpp>
+#include <memory>
 #include <sstream>
 #include <cctype>
 
@@ -63,7 +62,7 @@ using namespace Assimp;
 // ------------------------------------------------------------------------------------------------
 // Constructor to be privately used by Importer
 BaseImporter::BaseImporter()
-: progress()
+: m_progress()
 {
     // nothing to do here
 }
@@ -79,8 +78,8 @@ BaseImporter::~BaseImporter()
 // Imports the given file and returns the imported data.
 aiScene* BaseImporter::ReadFile(const Importer* pImp, const std::string& pFile, IOSystem* pIOHandler)
 {
-    progress = pImp->GetProgressHandler();
-    ai_assert(progress);
+    m_progress = pImp->GetProgressHandler();
+    ai_assert(m_progress);
 
     // Gather configuration properties for this run
     SetupProperties( pImp );
@@ -98,8 +97,8 @@ aiScene* BaseImporter::ReadFile(const Importer* pImp, const std::string& pFile, 
 
     } catch( const std::exception& err )    {
         // extract error description
-        mErrorText = err.what();
-        DefaultLogger::get()->error(mErrorText);
+        m_ErrorText = err.what();
+        DefaultLogger::get()->error(m_ErrorText);
         return NULL;
     }
 
@@ -149,10 +148,10 @@ void BaseImporter::GetExtensionList(std::set<std::string>& extensions)
     if (!pIOHandler)
         return false;
 
-    boost::scoped_ptr<IOStream> pStream (pIOHandler->Open(pFile));
+    std::unique_ptr<IOStream> pStream (pIOHandler->Open(pFile));
     if (pStream.get() ) {
         // read 200 characters from the file
-        boost::scoped_array<char> _buffer (new char[searchBytes+1 /* for the '\0' */]);
+        std::unique_ptr<char[]> _buffer (new char[searchBytes+1 /* for the '\0' */]);
         char* buffer = _buffer.get();
         if( NULL == buffer ) {
             return false;
@@ -256,7 +255,7 @@ void BaseImporter::GetExtensionList(std::set<std::string>& extensions)
         const uint32_t* magic_u32;
     };
     magic = reinterpret_cast<const char*>(_magic);
-    boost::scoped_ptr<IOStream> pStream (pIOHandler->Open(pFile));
+    std::unique_ptr<IOStream> pStream (pIOHandler->Open(pFile));
     if (pStream.get() ) {
 
         // skip to offset
@@ -274,7 +273,7 @@ void BaseImporter::GetExtensionList(std::set<std::string>& extensions)
 
         for (unsigned int i = 0; i < num; ++i) {
             // also check against big endian versions of tokens with size 2,4
-            // that's just for convinience, the chance that we cause conflicts
+            // that's just for convenience, the chance that we cause conflicts
             // is quite low and it can save some lines and prevent nasty bugs
             if (2 == size) {
                 uint16_t rev = *magic_u16;
@@ -336,7 +335,7 @@ void BaseImporter::ConvertToUTF8(std::vector<char>& data)
     // UTF 32 BE with BOM
     if(*((uint32_t*)&data.front()) == 0xFFFE0000) {
 
-        // swap the endianess ..
+        // swap the endianness ..
         for(uint32_t* p = (uint32_t*)&data.front(), *end = (uint32_t*)&data.back(); p <= end; ++p) {
             AI_SWAP4P(p);
         }
@@ -367,7 +366,7 @@ void BaseImporter::ConvertToUTF8(std::vector<char>& data)
     // UTF 16 BE with BOM
     if(*((uint16_t*)&data.front()) == 0xFFFE) {
 
-        // swap the endianess ..
+        // swap the endianness ..
         for(uint16_t* p = (uint16_t*)&data.front(), *end = (uint16_t*)&data.back(); p <= end; ++p) {
             ByteSwap::Swap2(p);
         }
@@ -435,22 +434,27 @@ void BaseImporter::ConvertUTF8toISO8859_1(std::string& data)
 
 // ------------------------------------------------------------------------------------------------
 void BaseImporter::TextFileToBuffer(IOStream* stream,
-    std::vector<char>& data)
+    std::vector<char>& data,
+    TextFileMode mode)
 {
     ai_assert(NULL != stream);
 
     const size_t fileSize = stream->FileSize();
-    if(!fileSize) {
-        throw DeadlyImportError("File is empty");
+    if (mode == FORBID_EMPTY) {
+        if(!fileSize) {
+            throw DeadlyImportError("File is empty");
+        }
     }
 
     data.reserve(fileSize+1);
     data.resize(fileSize);
-    if(fileSize != stream->Read( &data[0], 1, fileSize)) {
-        throw DeadlyImportError("File read error");
-    }
+    if(fileSize > 0) {
+        if(fileSize != stream->Read( &data[0], 1, fileSize)) {
+            throw DeadlyImportError("File read error");
+        }
 
-    ConvertToUTF8(data);
+        ConvertToUTF8(data);
+    }
 
     // append a binary zero to simplify string parsing
     data.push_back(0);
@@ -529,7 +533,7 @@ BatchLoader::~BatchLoader()
 
         delete (*it).scene;
     }
-    data->pImporter->SetIOHandler(NULL); /* get pointer back into our posession */
+    data->pImporter->SetIOHandler(NULL); /* get pointer back into our possession */
     delete data->pImporter;
     delete data;
 }

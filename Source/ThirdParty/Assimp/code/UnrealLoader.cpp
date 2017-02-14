@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -61,7 +61,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <assimp/IOSystem.hpp>
 #include <assimp/scene.h>
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 using namespace Assimp;
 
@@ -171,9 +171,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
 
     // collect triangles
     std::vector<Unreal::Triangle> triangles(numTris);
-    for (std::vector<Unreal::Triangle>::iterator it = triangles.begin(), end = triangles.end();it != end; ++it) {
-        Unreal::Triangle& tri = *it;
-
+    for (auto & tri : triangles) {
         for (unsigned int i = 0; i < 3;++i) {
 
             tri.mVertex[i] = d_reader.GetI2();
@@ -222,9 +220,9 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
 
     // collect vertices
     std::vector<aiVector3D> vertices(numVert);
-    for (std::vector<aiVector3D>::iterator it = vertices.begin(), end = vertices.end(); it != end; ++it)    {
+    for (auto &vertex : vertices)    {
         int32_t val = a_reader.GetI4();
-        Unreal::DecompressVertex(*it,val);
+        Unreal::DecompressVertex(vertex ,val);
     }
 
     // list of textures.
@@ -235,7 +233,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
     nd->mName.Set("<UnrealRoot>");
 
     // we can live without the uc file if necessary
-    boost::scoped_ptr<IOStream> pb (pIOHandler->Open(uc_path));
+    std::unique_ptr<IOStream> pb (pIOHandler->Open(uc_path));
     if (pb.get())   {
 
         std::vector<char> _data;
@@ -330,8 +328,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
     materials.reserve(textures.size()*2+5);
 
     // find out how many output meshes and materials we'll have and build material indices
-    for (std::vector<Unreal::Triangle>::iterator it = triangles.begin(), end = triangles.end();it != end; ++it) {
-        Unreal::Triangle& tri = *it;
+	for (Unreal::Triangle &tri : triangles) {
         Unreal::TempMat mat(tri);
         std::vector<Unreal::TempMat>::iterator nt = std::find(materials.begin(),materials.end(),mat);
         if (nt == materials.end()) {
@@ -377,7 +374,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
         aiColor3D color(1.f,1.f,1.f);
 
         aiString s;
-        ::sprintf(s.data,"mat%u_tx%u_",i,materials[i].tex);
+        ::ai_snprintf( s.data, MAXLEN, "mat%u_tx%u_",i,materials[i].tex );
 
         // set the two-sided flag
         if (materials[i].type == Unreal::MF_NORMAL_TS) {
@@ -397,7 +394,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
 
         // a special name for the weapon attachment point
         if (materials[i].type == Unreal::MF_WEAPON_PLACEHOLDER) {
-            s.length = ::sprintf(s.data,"$WeaponTag$");
+            s.length = ::ai_snprintf( s.data, MAXLEN, "$WeaponTag$" );
             color = aiColor3D(0.f,0.f,0.f);
         }
 
@@ -418,8 +415,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
     }
 
     // fill them.
-    for (std::vector<Unreal::Triangle>::iterator it = triangles.begin(), end = triangles.end();it != end; ++it) {
-        Unreal::Triangle& tri = *it;
+    for (const Unreal::Triangle &tri : triangles) {
         Unreal::TempMat mat(tri);
         std::vector<Unreal::TempMat>::iterator nt = std::find(materials.begin(),materials.end(),mat);
 

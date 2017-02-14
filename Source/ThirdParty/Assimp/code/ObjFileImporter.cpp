@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -46,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ObjFileImporter.h"
 #include "ObjFileParser.h"
 #include "ObjFileData.h"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/ai_assert.h>
@@ -114,37 +114,43 @@ const aiImporterDesc* ObjFileImporter::GetInfo () const
 
 // ------------------------------------------------------------------------------------------------
 //  Obj-file import implementation
-void ObjFileImporter::InternReadFile( const std::string& pFile, aiScene* pScene, IOSystem* pIOHandler)
-{
+void ObjFileImporter::InternReadFile( const std::string &file, aiScene* pScene, IOSystem* pIOHandler) {
     // Read file into memory
-    const std::string mode = "rb";
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, mode));
-    if( !file.get() ) {
-        throw DeadlyImportError( "Failed to open file " + pFile + "." );
+    static const std::string mode = "rb";
+    std::unique_ptr<IOStream> fileStream( pIOHandler->Open( file, mode));
+    if( !fileStream.get() ) {
+        throw DeadlyImportError( "Failed to open file " + file + "." );
     }
 
     // Get the file-size and validate it, throwing an exception when fails
-    size_t fileSize = file->FileSize();
+    size_t fileSize = fileStream->FileSize();
     if( fileSize < ObjMinSize ) {
         throw DeadlyImportError( "OBJ-file is too small.");
     }
 
     // Allocate buffer and read file into it
-    TextFileToBuffer(file.get(),m_Buffer);
+    TextFileToBuffer( fileStream.get(),m_Buffer);
 
     // Get the model name
     std::string  modelName, folderName;
-    std::string::size_type pos = pFile.find_last_of( "\\/" );
+    std::string::size_type pos = file.find_last_of( "\\/" );
     if ( pos != std::string::npos ) {
-        modelName = pFile.substr(pos+1, pFile.size() - pos - 1);
-        folderName = pFile.substr( 0, pos );
-        if ( folderName.empty() ) {
+        modelName = file.substr(pos+1, file.size() - pos - 1);
+        folderName = file.substr( 0, pos );
+        if ( !folderName.empty() ) {
             pIOHandler->PushDirectory( folderName );
         }
     } else {
-        modelName = pFile;
+        modelName = file;
     }
 
+    // This next stage takes ~ 1/3th of the total readFile task
+    // so should amount for 1/3th of the progress
+    // only update every 100KB or it'll be too slow
+    unsigned int progress = 0;
+    unsigned int progressCounter = 0;
+    const unsigned int updateProgressEveryBytes = 100 * 1024;
+    const unsigned int progressTotal = (3*m_Buffer.size()/updateProgressEveryBytes);
     // process all '\'
     std::vector<char> ::iterator iter = m_Buffer.begin();
     while (iter != m_Buffer.end())
@@ -159,10 +165,19 @@ void ObjFileImporter::InternReadFile( const std::string& pFile, aiScene* pScene,
         }
         else
             ++iter;
+
+        if (++progressCounter >= updateProgressEveryBytes)
+        {
+            m_progress->UpdateFileRead(++progress, progressTotal);
+            progressCounter = 0;
+        }
     }
 
+    // 1/3rd progress
+    m_progress->UpdateFileRead(1, 3);
+
     // parse the file into a temporary representation
-    ObjFileParser parser(m_Buffer, modelName, pIOHandler);
+    ObjFileParser parser(m_Buffer, modelName, pIOHandler, m_progress, file);
 
     // And create the proper return structures out of it
     CreateDataFromImport(parser.GetModel(), pScene);
@@ -293,7 +308,11 @@ aiMesh *ObjFileImporter::createTopology( const ObjFile::Model* pModel, const Obj
     if( !pObjMesh ) {
         return NULL;
     }
-    ai_assert( NULL != pObjMesh );
+
+    if( pObjMesh->m_Faces.empty() ) {
+        return NULL;
+    }
+
     aiMesh* pMesh = new aiMesh;
     if( !pObjMesh->m_name.empty() ) {
         pMesh->mName.Set( pObjMesh->m_name );
@@ -397,6 +416,10 @@ void ObjFileImporter::createVertexArray(const ObjFile::Model* pModel,
     if ( !pModel->m_Normals.empty() && pObjMesh->m_hasNormals )
         pMesh->mNormals = new aiVector3D[ pMesh->mNumVertices ];
 
+    // Allocate buffer for vertex-color vectors
+    if ( !pModel->m_VertexColors.empty() )
+        pMesh->mColors[0] = new aiColor4D[ pMesh->mNumVertices ];
+
     // Allocate buffer for texture coordinates
     if ( !pModel->m_TextureCoord.empty() && pObjMesh->m_uiUVCoordinates[0] )
     {
@@ -428,6 +451,13 @@ void ObjFileImporter::createVertexArray(const ObjFile::Model* pModel,
                     throw DeadlyImportError("OBJ: vertex normal index out of range");
 
                 pMesh->mNormals[ newIndex ] = pModel->m_Normals[ normal ];
+            }
+
+            // Copy all vertex colors
+            if ( !pModel->m_VertexColors.empty())
+            {
+                const aiVector3D color = pModel->m_VertexColors[ vertex ];
+                pMesh->mColors[0][ newIndex ] = aiColor4D(color.x, color.y, color.z, 1.0);
             }
 
             // Copy all texture coordinates
@@ -634,6 +664,22 @@ void ObjFileImporter::createMaterials(const ObjFile::Model* pModel, aiScene* pSc
             {
                 addTextureMappingModeProperty(mat, aiTextureType_NORMALS);
             }
+        }
+
+        if( 0 != pCurrentMaterial->textureReflection[0].length )
+        {
+            ObjFile::Material::TextureType type = 0 != pCurrentMaterial->textureReflection[1].length ?
+                ObjFile::Material::TextureReflectionCubeTopType :
+                ObjFile::Material::TextureReflectionSphereType;
+
+            unsigned count = type == ObjFile::Material::TextureReflectionSphereType ? 1 : 6;
+            for( unsigned i = 0; i < count; i++ )
+                mat->AddProperty(&pCurrentMaterial->textureReflection[i], AI_MATKEY_TEXTURE_REFLECTION(i));
+
+            if(pCurrentMaterial->clamp[type])
+                //TODO addTextureMappingModeProperty should accept an index to handle clamp option for each
+                //texture of a cubemap
+                addTextureMappingModeProperty(mat, aiTextureType_REFLECTION);
         }
 
         if ( 0 != pCurrentMaterial->textureDisp.length )

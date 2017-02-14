@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -48,11 +48,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "STLLoader.h"
 #include "ParsingUtils.h"
 #include "fast_atof.h"
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include "../include/assimp/IOSystem.hpp"
 #include "../include/assimp/scene.h"
-#include "../include/assimp/DefaultLogger.hpp"
-
+#include "../include/assimp/DefaultLogger.hpp" 
 
 using namespace Assimp;
 
@@ -74,7 +73,7 @@ static const aiImporterDesc desc = {
 // 1) 80 byte header
 // 2) 4 byte face count
 // 3) 50 bytes per face
-bool IsBinarySTL(const char* buffer, unsigned int fileSize) {
+static bool IsBinarySTL(const char* buffer, unsigned int fileSize) {
     if( fileSize < 84 ) {
         return false;
     }
@@ -88,7 +87,7 @@ bool IsBinarySTL(const char* buffer, unsigned int fileSize) {
 // An ascii STL buffer will begin with "solid NAME", where NAME is optional.
 // Note: The "solid NAME" check is necessary, but not sufficient, to determine
 // if the buffer is ASCII; a binary header could also begin with "solid NAME".
-bool IsAsciiSTL(const char* buffer, unsigned int fileSize) {
+static bool IsAsciiSTL(const char* buffer, unsigned int fileSize) {
     if (IsBinarySTL(buffer, fileSize))
         return false;
 
@@ -172,7 +171,7 @@ void addFacesToMesh(aiMesh* pMesh)
 void STLImporter::InternReadFile( const std::string& pFile,
     aiScene* pScene, IOSystem* pIOHandler)
 {
-    boost::scoped_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
+    std::unique_ptr<IOStream> file( pIOHandler->Open( pFile, "rb"));
 
     // Check whether we can read from the file
     if( file.get() == NULL) {
@@ -406,7 +405,7 @@ bool STLImporter::LoadBinaryFile()
     }
     bool bIsMaterialise = false;
 
-    // search for an occurence of "COLOR=" in the header
+    // search for an occurrence of "COLOR=" in the header
     const unsigned char* sz2 = (const unsigned char*)mBuffer;
     const unsigned char* const szEnd = sz2+80;
     while (sz2 < szEnd) {

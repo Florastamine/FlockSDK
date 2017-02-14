@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -156,6 +156,7 @@ struct Material
     aiString textureEmissive;
     aiString textureBump;
     aiString textureNormal;
+    aiString textureReflection[6];
     aiString textureSpecularity;
     aiString textureOpacity;
     aiString textureDisp;
@@ -167,6 +168,13 @@ struct Material
         TextureEmissiveType,
         TextureBumpType,
         TextureNormalType,
+        TextureReflectionSphereType,
+        TextureReflectionCubeTopType,
+        TextureReflectionCubeBottomType,
+        TextureReflectionCubeFrontType,
+        TextureReflectionCubeBackType,
+        TextureReflectionCubeLeftType,
+        TextureReflectionCubeRightType,
         TextureSpecularityType,
         TextureOpacityType,
         TextureDispType,
@@ -232,9 +240,11 @@ struct Mesh {
     unsigned int m_uiMaterialIndex;
     /// True, if normals are stored.
     bool m_hasNormals;
+    /// True, if vertex colors are stored.
+    bool m_hasVertexColors;
 
     /// Constructor
-    Mesh( const std::string &name ) 
+    explicit Mesh( const std::string &name ) 
     : m_name( name )
     , m_pMaterial(NULL)
     , m_uiNumIndices(0)
@@ -281,6 +291,8 @@ struct Model
     std::vector<aiVector3D> m_Vertices;
     //! vector with all generated normals
     std::vector<aiVector3D> m_Normals;
+    //! vector with all vertex colors
+    std::vector<aiVector3D> m_VertexColors;
     //! Group map
     GroupMap m_Groups;
     //! Group to face id assignment

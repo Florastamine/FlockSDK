@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -42,8 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** @file Implementation of the helper class to quickly find vertices close to a given position */
 
 #include "SpatialSort.h"
-#include <boost/static_assert.hpp>
-#include "../include/assimp/ai_assert.h"
+#include "../include/assimp/ai_assert.h" 
 
 using namespace Assimp;
 
@@ -192,14 +191,14 @@ namespace {
         // If this assertion fails, signed int is not big enough to store a float on your platform.
         //  Please correct the declaration of BinFloat a few lines above - but do it in a portable,
         //  #ifdef'd manner!
-        BOOST_STATIC_ASSERT( sizeof(BinFloat) >= sizeof(float));
+        static_assert( sizeof(BinFloat) >= sizeof(float), "sizeof(BinFloat) >= sizeof(float)");
 
         #if defined( _MSC_VER)
             // If this assertion fails, Visual C++ has finally moved to ILP64. This means that this
             //  code has just become legacy code! Find out the current value of _MSC_VER and modify
             //  the #if above so it evaluates false on the current and all upcoming VC versions (or
             //  on the current platform, if LP64 or LLP64 are still used on other platforms).
-            BOOST_STATIC_ASSERT( sizeof(BinFloat) == sizeof(float));
+            static_assert( sizeof(BinFloat) == sizeof(float), "sizeof(BinFloat) == sizeof(float)");
 
             // This works best on Visual C++, but other compilers have their problems with it.
             const BinFloat binValue = reinterpret_cast<BinFloat const &>(pValue);
@@ -235,7 +234,7 @@ namespace {
 } // namespace
 
 // ------------------------------------------------------------------------------------------------
-// Fills an array with indices of all positions indentical to the given position. In opposite to
+// Fills an array with indices of all positions identical to the given position. In opposite to
 // FindPositions(), not an epsilon is used but a (very low) tolerance of four floating-point units.
 void SpatialSort::FindIdenticalPositions( const aiVector3D& pPosition,
     std::vector<unsigned int>& poResults) const
@@ -246,7 +245,7 @@ void SpatialSort::FindIdenticalPositions( const aiVector3D& pPosition,
 
     // The best way to overcome this is the unit in the last place (ULP). A precision of 2 ULPs
     //  tells us that a float does not differ more than 2 bits from the "real" value. ULPs are of
-    //  logarithmic precision - around 1, they are 1÷(2^24) and around 10000, they are 0.00125.
+    //  logarithmic precision - around 1, they are 1ï¿½(2^24) and around 10000, they are 0.00125.
 
     // For standard C math, we can assume a precision of 0.5 ULPs according to IEEE 754. The
     //  incoming vertex positions might have already been transformed, probably using rather

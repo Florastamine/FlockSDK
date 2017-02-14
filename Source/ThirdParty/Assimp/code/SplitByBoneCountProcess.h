@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -101,7 +101,7 @@ public:
     size_t mMaxBoneCount;
 
     /// Per mesh index: Array of indices of the new submeshes.
-    std::vector< std::vector<size_t> > mSubMeshIndices;
+    std::vector< std::vector<unsigned int> > mSubMeshIndices;
 };
 
 } // end of namespace Assimp

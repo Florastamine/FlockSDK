@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -86,8 +86,8 @@ static const aiImporterDesc desc = {
     int chunkSize = chunk.Size-sizeof(Discreet3DS::Chunk);               \
     if(chunkSize <= 0)                                                   \
         continue;                                                        \
-    const int oldReadLimit = stream->GetReadLimit();                     \
-    stream->SetReadLimit(stream->GetCurrentPos() + chunkSize);           \
+    const unsigned int oldReadLimit = stream->SetReadLimit(              \
+        stream->GetCurrentPos() + chunkSize);                            \
 
 
 // ------------------------------------------------------------------------------------------------
@@ -186,18 +186,17 @@ void Discreet3DSImporter::InternReadFile( const std::string& pFile,
     // internal verbose representation. Finally compute normal
     // vectors from the smoothing groups we read from the
     // file.
-    for (std::vector<D3DS::Mesh>::iterator i = mScene->mMeshes.begin(),
-         end = mScene->mMeshes.end(); i != end;++i) {
-        if ((*i).mFaces.size() > 0 && (*i).mPositions.size() == 0)  {
+    for (auto &mesh : mScene->mMeshes) {
+        if (mesh.mFaces.size() > 0 && mesh.mPositions.size() == 0)  {
             delete mScene;
             throw DeadlyImportError("3DS file contains faces but no vertices: " + pFile);
         }
-        CheckIndices(*i);
-        MakeUnique  (*i);
-        ComputeNormalsWithSmoothingsGroups<D3DS::Face>(*i);
+        CheckIndices(mesh);
+        MakeUnique  (mesh);
+        ComputeNormalsWithSmoothingsGroups<D3DS::Face>(mesh);
     }
 
-    // Replace all occurences of the default material with a
+    // Replace all occurrences of the default material with a
     // valid material. Generate it if no material containing
     // DEFAULT in its name has been found in the file
     ReplaceDefaultMaterial();

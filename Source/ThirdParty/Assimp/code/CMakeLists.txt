@@ -1,3 +1,41 @@
+# Open Asset Import Library (assimp)
+# ----------------------------------------------------------------------
+#
+# Copyright (c) 2006-2016, assimp team
+# All rights reserved.
+#
+# Redistribution and use of this software in source and binary forms,
+# with or without modification, are permitted provided that the
+# following conditions are met:
+#
+# * Redistributions of source code must retain the above
+#   copyright notice, this list of conditions and the
+#   following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above
+#   copyright notice, this list of conditions and the
+#   following disclaimer in the documentation and/or other
+#   materials provided with the distribution.
+#
+# * Neither the name of the assimp team, nor the names of its
+#   contributors may be used to endorse or promote products
+#   derived from this software without specific prior
+#   written permission of the assimp team.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#----------------------------------------------------------------------
+
 # Listing and grouping of all the source files.
 # 1) Set the file lists for each component
 # 2) Create a Source Group for each component, for IDE project orginization
@@ -61,20 +99,6 @@ SET( Core_SRCS
   Assimp.cpp
 )
 
-SET( Boost_SRCS
-  BoostWorkaround/boost/math/common_factor_rt.hpp
-  BoostWorkaround/boost/foreach.hpp
-  BoostWorkaround/boost/format.hpp
-  BoostWorkaround/boost/scoped_array.hpp
-  BoostWorkaround/boost/scoped_ptr.hpp
-  BoostWorkaround/boost/shared_array.hpp
-  BoostWorkaround/boost/shared_ptr.hpp
-  BoostWorkaround/boost/make_shared.hpp
-  BoostWorkaround/boost/static_assert.hpp
-  BoostWorkaround/boost/tuple/tuple.hpp
-)
-SOURCE_GROUP(Boost FILES ${Boost_SRCS})
-
 SET( Logging_SRCS
   ${HEADER_PATH}/DefaultLogger.hpp
   ${HEADER_PATH}/LogStream.hpp
@@ -113,6 +137,7 @@ SET( Common_SRCS
   StreamReader.h
   StreamWriter.h
   StringComparison.h
+  StringUtils.h
   SGSpatialSort.cpp
   SGSpatialSort.h
   VertexTriangleAdjacency.cpp
@@ -177,7 +202,7 @@ SET(ASSIMP_LOADER_SRCS "")
 SET(ASSIMP_IMPORTERS_ENABLED "") # list of enabled importers
 SET(ASSIMP_IMPORTERS_DISABLED "") # disabled list (used to print)
 
-ADD_ASSIMP_IMPORTER(3DS
+ADD_ASSIMP_IMPORTER( 3DS
   3DSConverter.cpp
   3DSHelper.h
   3DSLoader.cpp
@@ -186,24 +211,24 @@ ADD_ASSIMP_IMPORTER(3DS
   3DSExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(AC
+ADD_ASSIMP_IMPORTER( AC
   ACLoader.cpp
   ACLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(ASE
+ADD_ASSIMP_IMPORTER( ASE
   ASELoader.cpp
   ASELoader.h
   ASEParser.cpp
   ASEParser.h
 )
 
-ADD_ASSIMP_IMPORTER(BVH
+ADD_ASSIMP_IMPORTER( BVH
   BVHLoader.cpp
   BVHLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(COLLADA
+ADD_ASSIMP_IMPORTER( COLLADA
   ColladaHelper.h
   ColladaLoader.cpp
   ColladaLoader.h
@@ -213,13 +238,13 @@ ADD_ASSIMP_IMPORTER(COLLADA
   ColladaExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(DXF
+ADD_ASSIMP_IMPORTER( DXF
   DXFLoader.cpp
   DXFLoader.h
   DXFHelper.h
 )
 
-ADD_ASSIMP_IMPORTER(LWO
+ADD_ASSIMP_IMPORTER( LWO
   LWOAnimation.cpp
   LWOAnimation.h
   LWOBLoader.cpp
@@ -229,12 +254,12 @@ ADD_ASSIMP_IMPORTER(LWO
   LWOMaterial.cpp
 )
 
-ADD_ASSIMP_IMPORTER(LWS
+ADD_ASSIMP_IMPORTER( LWS
   LWSLoader.cpp
   LWSLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(MD5
+ADD_ASSIMP_IMPORTER( MD5
   MD5Loader.cpp
   MD5Loader.h
   MD5Parser.cpp
@@ -247,7 +272,7 @@ SET( MaterialSystem_SRCS
 )
 SOURCE_GROUP( MaterialSystem FILES ${MaterialSystem_SRCS})
 
-ADD_ASSIMP_IMPORTER(OBJ
+ADD_ASSIMP_IMPORTER( OBJ
   ObjFileData.h
   ObjFileImporter.cpp
   ObjFileImporter.h
@@ -256,12 +281,11 @@ ADD_ASSIMP_IMPORTER(OBJ
   ObjFileParser.cpp
   ObjFileParser.h
   ObjTools.h
-
   ObjExporter.h
   ObjExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(OPENGEX
+ADD_ASSIMP_IMPORTER( OPENGEX
   OpenGEXExporter.cpp
   OpenGEXExporter.h
   OpenGEXImporter.cpp
@@ -269,7 +293,7 @@ ADD_ASSIMP_IMPORTER(OPENGEX
   OpenGEXStructs.h
 )
 
-ADD_ASSIMP_IMPORTER(PLY
+ADD_ASSIMP_IMPORTER( PLY
   PlyLoader.cpp
   PlyLoader.h
   PlyParser.cpp
@@ -278,7 +302,8 @@ ADD_ASSIMP_IMPORTER(PLY
   PlyExporter.h
 )
 
-ADD_ASSIMP_IMPORTER(FBX
+
+ADD_ASSIMP_IMPORTER( FBX
   FBXImporter.cpp
   FBXCompileConfig.h
   FBXImporter.h
@@ -295,6 +320,7 @@ ADD_ASSIMP_IMPORTER(FBX
   FBXDocument.cpp
   FBXProperties.h
   FBXProperties.cpp
+  FBXMeshGeometry.h
   FBXMeshGeometry.cpp
   FBXMaterial.cpp
   FBXModel.cpp
@@ -360,29 +386,30 @@ SET( PostProcessing_SRCS
 )
 SOURCE_GROUP( PostProcessing FILES ${PostProcessing_SRCS})
 
-ADD_ASSIMP_IMPORTER(RAW
-  RawLoader.cpp
-  RawLoader.h
+
+ADD_ASSIMP_IMPORTER( SIB
+  SIBImporter.cpp
+  SIBImporter.h
 )
 
-ADD_ASSIMP_IMPORTER(SMD
+ADD_ASSIMP_IMPORTER( SMD
   SMDLoader.cpp
   SMDLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(STL
+ADD_ASSIMP_IMPORTER( STL
   STLLoader.cpp
   STLLoader.h
   STLExporter.h
   STLExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(3D
+ADD_ASSIMP_IMPORTER( 3D
   UnrealLoader.cpp
   UnrealLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(X
+ADD_ASSIMP_IMPORTER( X
   XFileHelper.h
   XFileImporter.cpp
   XFileImporter.h
@@ -391,6 +418,25 @@ ADD_ASSIMP_IMPORTER(X
   XFileExporter.h
   XFileExporter.cpp
 )
+
+ADD_ASSIMP_IMPORTER( GLTF
+  glTFAsset.h
+  glTFAsset.inl
+  glTFAssetWriter.h
+  glTFAssetWriter.inl
+  glTFImporter.cpp
+  glTFImporter.h
+  glTFExporter.h
+  glTFExporter.cpp
+)
+
+ADD_ASSIMP_IMPORTER( 3MF
+    D3MFImporter.h
+    D3MFImporter.cpp
+    D3MFOpcPackage.h
+    D3MFOpcPackage.cpp
+)
+
 
 SET( Step_SRCS
   StepExporter.h
@@ -462,14 +508,19 @@ SOURCE_GROUP( unzip FILES ${unzip_SRCS})
 SET ( openddl_parser_SRCS
   ../contrib/openddlparser/code/OpenDDLParser.cpp
   ../contrib/openddlparser/code/DDLNode.cpp
+  ../contrib/openddlparser/code/OpenDDLCommon.cpp
+  ../contrib/openddlparser/code/OpenDDLExport.cpp
   ../contrib/openddlparser/code/Value.cpp
   ../contrib/openddlparser/include/openddlparser/OpenDDLParser.h
   ../contrib/openddlparser/include/openddlparser/OpenDDLParserUtils.h
   ../contrib/openddlparser/include/openddlparser/OpenDDLCommon.h
+  ../contrib/openddlparser/include/openddlparser/OpenDDLExport.h
   ../contrib/openddlparser/include/openddlparser/DDLNode.h
   ../contrib/openddlparser/include/openddlparser/Value.h
 )
 SOURCE_GROUP( openddl_parser FILES ${openddl_parser_SRCS})
+
+INCLUDE_DIRECTORIES( "../contrib/rapidjson/include" )
 
 # VC2010 fixes
 if(MSVC10)
@@ -516,13 +567,12 @@ SET( assimp_src
   ${Clipper_SRCS}
   ${openddl_parser_SRCS}
   # Necessary to show the headers in the project when using the VC++ generator:
-  ${Boost_SRCS}
 
   ${PUBLIC_HEADERS}
   ${COMPILER_HEADERS}
 
 )
-add_definitions( -DOPENDDLPARSER_BUILD )
+ADD_DEFINITIONS( -DOPENDDLPARSER_BUILD )
 
 INCLUDE_DIRECTORIES(
   ../contrib/openddlparser/include
@@ -538,8 +588,8 @@ ADD_LIBRARY( assimp ${assimp_src} )
 TARGET_LINK_LIBRARIES(assimp ${ZLIB_LIBRARIES} ${OPENDDL_PARSER_LIBRARIES} )
 
 IF (ASSIMP_BUILD_NONFREE_C4D_IMPORTER)
-  TARGET_LINK_LIBRARIES(assimp optimized ${C4D_RELEASE_LIBRARY})
-  TARGET_LINK_LIBRARIES(assimp debug ${C4D_DEBUG_LIBRARY})
+  TARGET_LINK_LIBRARIES(assimp optimized ${C4D_RELEASE_LIBRARIES})
+  TARGET_LINK_LIBRARIES(assimp debug ${C4D_DEBUG_LIBRARIES})
   TARGET_LINK_LIBRARIES(assimp ${C4D_EXTRA_LIBRARIES})
 ENDIF (ASSIMP_BUILD_NONFREE_C4D_IMPORTER)
 
@@ -557,8 +607,10 @@ if( MSVC )
     set(MSVC_PREFIX "vc110")
   elseif( MSVC12 )
     set(MSVC_PREFIX "vc120")
+  elseif( MSVC14 )
+    set(MSVC_PREFIX "vc140")
   else()
-    set(MSVC_PREFIX "vc130")
+    set(MSVC_PREFIX "vc150")
   endif()
   set(LIBRARY_SUFFIX "${ASSIMP_LIBRARY_SUFFIX}-${MSVC_PREFIX}-mt" CACHE STRING "the suffix for the assimp windows library")
 endif()
@@ -575,7 +627,7 @@ if (UNZIP_FOUND)
   INCLUDE_DIRECTORIES(${UNZIP_INCLUDE_DIRS})
   TARGET_LINK_LIBRARIES(assimp ${UNZIP_LIBRARIES})
 else (UNZIP_FOUND)
-  INCLUDE_DIRECTORIES("../contrib/unzip")
+  INCLUDE_DIRECTORIES("../")
 endif (UNZIP_FOUND)
 
 INSTALL( TARGETS assimp
@@ -587,7 +639,7 @@ INSTALL( FILES ${PUBLIC_HEADERS} DESTINATION ${ASSIMP_INCLUDE_INSTALL_DIR}/assim
 INSTALL( FILES ${COMPILER_HEADERS} DESTINATION ${ASSIMP_INCLUDE_INSTALL_DIR}/assimp/Compiler COMPONENT assimp-dev)
 
 if(MSVC AND ASSIMP_INSTALL_PDB)
-  install(FILES ${Assimp_BINARY_DIR}/code/Debug/assimp${CMAKE_DEBUG_POSTFIX}.pdb
+  install(FILES ${Assimp_BINARY_DIR}/code/Debug/assimp${LIBRARY_SUFFIX}${CMAKE_DEBUG_POSTFIX}.pdb
     DESTINATION ${ASSIMP_LIB_INSTALL_DIR}
     CONFIGURATIONS Debug
   )

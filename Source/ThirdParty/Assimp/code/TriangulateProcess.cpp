@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2015, assimp team
+Copyright (c) 2006-2016, assimp team
 
 All rights reserved.
 
@@ -64,7 +64,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "TriangulateProcess.h"
 #include "ProcessHelper.h"
 #include "PolyTools.h"
-#include <boost/scoped_array.hpp>
+#include <memory>
 
 //#define AI_BUILD_TRIANGULATE_COLOR_FACE_WINDING
 //#define AI_BUILD_TRIANGULATE_DEBUG_POLYS
@@ -191,8 +191,8 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
 
     const aiVector3D* verts = pMesh->mVertices;
 
-    // use boost::scoped_array to avoid slow std::vector<bool> specialiations
-    boost::scoped_array<bool> done(new bool[max_out]);
+    // use std::unique_ptr to avoid slow std::vector<bool> specialiations
+    std::unique_ptr<bool[]> done(new bool[max_out]);
     for( unsigned int a = 0; a < pMesh->mNumFaces; a++) {
         aiFace& face = pMesh->mFaces[a];
 
@@ -342,7 +342,7 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
                     for(;*loc != ' '; ++loc);
                     *loc++ = '_';
                 }
-                *(loc+sprintf(loc,"%i",i)) = ' ';
+                *(loc+::ai_snprintf(loc, POLY_GRID_XPAD,"%i",i)) = ' ';
             }
 
 

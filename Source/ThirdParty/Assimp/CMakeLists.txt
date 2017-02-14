@@ -1,12 +1,47 @@
+# Open Asset Import Library (assimp)
+# ----------------------------------------------------------------------
 #
+# Copyright (c) 2006-2016, assimp team
+# All rights reserved.
+#
+# Redistribution and use of this software in source and binary forms,
+# with or without modification, are permitted provided that the
+# following conditions are met:
+#
+# * Redistributions of source code must retain the above
+#   copyright notice, this list of conditions and the
+#   following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above
+#   copyright notice, this list of conditions and the
+#   following disclaimer in the documentation and/or other
+#   materials provided with the distribution.
+#
+# * Neither the name of the assimp team, nor the names of its
+#   contributors may be used to endorse or promote products
+#   derived from this software without specific prior
+#   written permission of the assimp team.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#----------------------------------------------------------------------
+
 # Listing and grouping of all the source files.
 # 1) Set the file lists for each component
 # 2) Create a Source Group for each component, for IDE project orginization
 # 3) Add libassimp using the file lists (eliminates duplication of file names between
 #    source groups and library command)
 #
-
-# Modified by Lasse Oorni and Yao Wei Tjong for Urho3D
 
 if (MINGW)
     # The IFCReaderGen.cpp.obj has too many sections in DEBUG configuration build
@@ -17,9 +52,7 @@ endif ()
 
 INCLUDE_DIRECTORIES( code )
 INCLUDE_DIRECTORIES( include )
-INCLUDE_DIRECTORIES( code/BoostWorkaround )
 INCLUDE_DIRECTORIES( contrib/unzip )
-ADD_DEFINITIONS( -DASSIMP_BUILD_BOOST_WORKAROUND )
 
 SET( HEADER_PATH include/assimp )
 
@@ -27,7 +60,8 @@ SET( COMPILER_HEADERS
   ${HEADER_PATH}/Compiler/pushpack1.h
   ${HEADER_PATH}/Compiler/poppack1.h
   ${HEADER_PATH}/Compiler/pstdint.h
-)
+) 
+
 SOURCE_GROUP( Compiler FILES ${COMPILER_HEADERS})
 
 SET( PUBLIC_HEADERS
@@ -77,20 +111,6 @@ SET( Core_SRCS
   code/Assimp.cpp
 )
 
-SET( Boost_SRCS
-  code/BoostWorkaround/boost/math/common_factor_rt.hpp
-  code/BoostWorkaround/boost/foreach.hpp
-  code/BoostWorkaround/boost/format.hpp
-  code/BoostWorkaround/boost/scoped_array.hpp
-  code/BoostWorkaround/boost/scoped_ptr.hpp
-  code/BoostWorkaround/boost/shared_array.hpp
-  code/BoostWorkaround/boost/shared_ptr.hpp
-  code/BoostWorkaround/boost/make_shared.hpp
-  code/BoostWorkaround/boost/static_assert.hpp
-  code/BoostWorkaround/boost/tuple/tuple.hpp
-)
-SOURCE_GROUP(Boost FILES ${Boost_SRCS})
-
 SET( Logging_SRCS
   ${HEADER_PATH}/DefaultLogger.hpp
   ${HEADER_PATH}/LogStream.hpp
@@ -126,6 +146,7 @@ SET( Common_SRCS
   code/IFF.h
   code/MemoryIOWrapper.h
   code/ParsingUtils.h
+  code/StringUtils.h
   code/StreamReader.h
   code/StreamWriter.h
   code/StringComparison.h
@@ -191,9 +212,8 @@ ENDMACRO()
 
 SET(ASSIMP_LOADER_SRCS "")
 SET(ASSIMP_IMPORTERS_ENABLED "") # list of enabled importers
-SET(ASSIMP_IMPORTERS_DISABLED "") # disabled list (used to print)
 
-ADD_ASSIMP_IMPORTER(3DS
+ADD_ASSIMP_IMPORTER( 3DS
   code/3DSConverter.cpp
   code/3DSHelper.h
   code/3DSLoader.cpp
@@ -202,24 +222,24 @@ ADD_ASSIMP_IMPORTER(3DS
   code/3DSExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(AC
+ADD_ASSIMP_IMPORTER( AC
   code/ACLoader.cpp
   code/ACLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(ASE
+ADD_ASSIMP_IMPORTER( ASE
   code/ASELoader.cpp
   code/ASELoader.h
   code/ASEParser.cpp
   code/ASEParser.h
 )
 
-ADD_ASSIMP_IMPORTER(BVH
+ADD_ASSIMP_IMPORTER( BVH
   code/BVHLoader.cpp
   code/BVHLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(COLLADA
+ADD_ASSIMP_IMPORTER( COLLADA
   code/ColladaHelper.h
   code/ColladaLoader.cpp
   code/ColladaLoader.h
@@ -229,13 +249,13 @@ ADD_ASSIMP_IMPORTER(COLLADA
   code/ColladaExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(DXF
+ADD_ASSIMP_IMPORTER( DXF
   code/DXFLoader.cpp
   code/DXFLoader.h
   code/DXFHelper.h
 )
 
-ADD_ASSIMP_IMPORTER(LWO
+ADD_ASSIMP_IMPORTER( LWO
   code/LWOAnimation.cpp
   code/LWOAnimation.h
   code/LWOBLoader.cpp
@@ -245,12 +265,12 @@ ADD_ASSIMP_IMPORTER(LWO
   code/LWOMaterial.cpp
 )
 
-ADD_ASSIMP_IMPORTER(LWS
+ADD_ASSIMP_IMPORTER( LWS
   code/LWSLoader.cpp
   code/LWSLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(MD5
+ADD_ASSIMP_IMPORTER( MD5
   code/MD5Loader.cpp
   code/MD5Loader.h
   code/MD5Parser.cpp
@@ -263,7 +283,7 @@ SET( MaterialSystem_SRCS
 )
 SOURCE_GROUP( MaterialSystem FILES ${MaterialSystem_SRCS})
 
-ADD_ASSIMP_IMPORTER(OBJ
+ADD_ASSIMP_IMPORTER( OBJ
   code/ObjFileData.h
   code/ObjFileImporter.cpp
   code/ObjFileImporter.h
@@ -276,7 +296,7 @@ ADD_ASSIMP_IMPORTER(OBJ
   code/ObjExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(OPENGEX
+ADD_ASSIMP_IMPORTER( OPENGEX
   code/OpenGEXExporter.cpp
   code/OpenGEXExporter.h
   code/OpenGEXImporter.cpp
@@ -284,7 +304,7 @@ ADD_ASSIMP_IMPORTER(OPENGEX
   code/OpenGEXStructs.h
 )
 
-ADD_ASSIMP_IMPORTER(PLY
+ADD_ASSIMP_IMPORTER( PLY
   code/PlyLoader.cpp
   code/PlyLoader.h
   code/PlyParser.cpp
@@ -293,7 +313,8 @@ ADD_ASSIMP_IMPORTER(PLY
   code/PlyExporter.h
 )
 
-ADD_ASSIMP_IMPORTER(FBX
+
+ADD_ASSIMP_IMPORTER( FBX
   code/FBXImporter.cpp
   code/FBXCompileConfig.h
   code/FBXImporter.h
@@ -310,6 +331,7 @@ ADD_ASSIMP_IMPORTER(FBX
   code/FBXDocument.cpp
   code/FBXProperties.h
   code/FBXProperties.cpp
+  code/FBXMeshGeometry.h
   code/FBXMeshGeometry.cpp
   code/FBXMaterial.cpp
   code/FBXModel.cpp
@@ -375,29 +397,29 @@ SET( PostProcessing_SRCS
 )
 SOURCE_GROUP( PostProcessing FILES ${PostProcessing_SRCS})
 
-ADD_ASSIMP_IMPORTER(RAW
-  code/RawLoader.cpp
-  code/RawLoader.h
+ADD_ASSIMP_IMPORTER( SIB
+  code/SIBImporter.cpp
+  code/SIBImporter.h
 )
 
-ADD_ASSIMP_IMPORTER(SMD
+ADD_ASSIMP_IMPORTER( SMD
   code/SMDLoader.cpp
   code/SMDLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(STL
+ADD_ASSIMP_IMPORTER( STL
   code/STLLoader.cpp
   code/STLLoader.h
   code/STLExporter.h
   code/STLExporter.cpp
 )
 
-ADD_ASSIMP_IMPORTER(3D
+ADD_ASSIMP_IMPORTER( 3D
   code/UnrealLoader.cpp
   code/UnrealLoader.h
 )
 
-ADD_ASSIMP_IMPORTER(X
+ADD_ASSIMP_IMPORTER( X
   code/XFileHelper.h
   code/XFileImporter.cpp
   code/XFileImporter.h
@@ -405,6 +427,24 @@ ADD_ASSIMP_IMPORTER(X
   code/XFileParser.h
   code/XFileExporter.h
   code/XFileExporter.cpp
+)
+
+ADD_ASSIMP_IMPORTER( GLTF
+  code/glTFAsset.h
+  code/glTFAsset.inl
+  code/glTFAssetWriter.h
+  code/glTFAssetWriter.inl
+  code/glTFImporter.cpp
+  code/glTFImporter.h
+  code/glTFExporter.h
+  code/glTFExporter.cpp
+)
+
+ADD_ASSIMP_IMPORTER( 3MF
+  code/D3MFImporter.h
+  code/D3MFImporter.cpp
+  code/D3MFOpcPackage.h
+  code/D3MFOpcPackage.cpp
 )
 
 SET( Step_SRCS
@@ -474,6 +514,21 @@ SET( unzip_SRCS
 )
 SOURCE_GROUP( unzip FILES ${unzip_SRCS})
 
+SET ( openddl_parser_SRCS
+  contrib/openddlparser/code/OpenDDLParser.cpp
+  contrib/openddlparser/code/DDLNode.cpp
+  contrib/openddlparser/code/OpenDDLCommon.cpp
+  contrib/openddlparser/code/OpenDDLExport.cpp
+  contrib/openddlparser/code/Value.cpp
+  contrib/openddlparser/include/openddlparser/OpenDDLParser.h
+  contrib/openddlparser/include/openddlparser/OpenDDLParserUtils.h
+  contrib/openddlparser/include/openddlparser/OpenDDLCommon.h
+  contrib/openddlparser/include/openddlparser/OpenDDLExport.h
+  contrib/openddlparser/include/openddlparser/DDLNode.h
+  contrib/openddlparser/include/openddlparser/Value.h
+)
+SOURCE_GROUP( openddl_parser FILES ${openddl_parser_SRCS}) 
+
 SET( zlib_SRCS
   contrib/zlib/adler32.c
   contrib/zlib/compress.c
@@ -504,17 +559,7 @@ SET( zlib_SRCS
 )
 SOURCE_GROUP( zlib FILES ${zlib_SRCS})
 
-SET ( openddl_parser_SRCS
-  contrib/openddlparser/code/OpenDDLParser.cpp
-  contrib/openddlparser/code/DDLNode.cpp
-  contrib/openddlparser/code/Value.cpp
-  contrib/openddlparser/include/openddlparser/OpenDDLParser.h
-  contrib/openddlparser/include/openddlparser/OpenDDLParserUtils.h
-  contrib/openddlparser/include/openddlparser/OpenDDLCommon.h
-  contrib/openddlparser/include/openddlparser/DDLNode.h
-  contrib/openddlparser/include/openddlparser/Value.h
-)
-SOURCE_GROUP( openddl_parser FILES ${openddl_parser_SRCS})
+INCLUDE_DIRECTORIES( "contrib/rapidjson/include" )
 
 # VC2010 fixes
 if(MSVC10)
@@ -529,9 +574,7 @@ if ( MSVC )
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )
 endif ( MSVC )
 
-# Urho3D: disable status prints
-# MESSAGE(STATUS "Enabled formats:${ASSIMP_IMPORTERS_ENABLED}")
-# MESSAGE(STATUS "Disabled formats:${ASSIMP_IMPORTERS_DISABLED}")
+MESSAGE(STATUS "Enabled formats:${ASSIMP_IMPORTERS_ENABLED}")
 
 SET( SOURCE_FILES
   # Assimp Files
@@ -555,19 +598,17 @@ SET( SOURCE_FILES
   ${Clipper_SRCS}
   ${openddl_parser_SRCS}
   # Necessary to show the headers in the project when using the VC++ generator:
-  ${Boost_SRCS}
 
   ${PUBLIC_HEADERS}
   ${COMPILER_HEADERS}
 
 )
-add_definitions( -DOPENDDLPARSER_BUILD )
+ADD_DEFINITIONS( -DOPENDDLPARSER_BUILD )
 
 INCLUDE_DIRECTORIES(
   contrib/openddlparser/include
 )
 
-# Urho3D: set the corresponding "no importer" define
 IF (ASSIMP_BUILD_NONFREE_C4D_IMPORTER)
   SET( SOURCE_FILES ${SOURCE_FILES} ${C4D_SRCS})
   INCLUDE_DIRECTORIES(${C4D_INCLUDES})
@@ -576,5 +617,4 @@ ELSE (ASSIMP_BUILD_NONFREE_C4D_IMPORTER)
 ENDIF (ASSIMP_BUILD_NONFREE_C4D_IMPORTER)
 
 set (TARGET_NAME Assimp)
-list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH YES)   # Since we only build AssetImporter as a single-arch native tool, there is no point to build Assimp as universal binary library
 setup_library ()
