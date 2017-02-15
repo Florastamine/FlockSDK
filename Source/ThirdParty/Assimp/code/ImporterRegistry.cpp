@@ -65,9 +65,6 @@ corresponding preprocessor flag to selectively disable formats.
 #ifndef ASSIMP_BUILD_NO_OBJ_IMPORTER
 #   include "ObjFileImporter.h"
 #endif
-#ifndef ASSIMP_BUILD_NO_SMD_IMPORTER
-#   include "SMDLoader.h"
-#endif
 #ifndef ASSIMP_BUILD_NO_MD5_IMPORTER
 #   include "MD5Loader.h"
 #endif
@@ -86,17 +83,11 @@ corresponding preprocessor flag to selectively disable formats.
 #ifndef ASSIMP_BUILD_NO_SIB_IMPORTER
 #   include "SIBImporter.h"
 #endif
-#ifndef ASSIMP_BUILD_NO_AC_IMPORTER
-#   include "ACLoader.h"
-#endif
 #ifndef ASSIMP_BUILD_NO_BVH_IMPORTER
 #   include "BVHLoader.h"
 #endif
 #ifndef ASSIMP_BUILD_NO_COLLADA_IMPORTER
 #   include "ColladaLoader.h"
-#endif
-#ifndef ASSIMP_BUILD_NO_3D_IMPORTER
-#   include "UnrealLoader.h"
 #endif
 #ifndef ASSIMP_BUILD_NO_LWS_IMPORTER
 #   include "LWSLoader.h"
@@ -142,9 +133,6 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
 #if (!defined ASSIMP_BUILD_NO_ASE_IMPORTER)
     out.push_back( new ASEImporter());
 #endif
-#if (!defined ASSIMP_BUILD_NO_SMD_IMPORTER)
-    out.push_back( new SMDImporter());
-#endif
 #if (!defined ASSIMP_BUILD_NO_MD5_IMPORTER)
     out.push_back( new MD5Importer());
 #endif
@@ -163,17 +151,11 @@ void GetImporterInstanceList(std::vector< BaseImporter* >& out)
 #if (!defined ASSIMP_BUILD_NO_SIB_IMPORTER)
     out.push_back( new SIBImporter());
 #endif
-#if (!defined ASSIMP_BUILD_NO_AC_IMPORTER)
-    out.push_back( new AC3DImporter());
-#endif
 #if (!defined ASSIMP_BUILD_NO_BVH_IMPORTER)
     out.push_back( new BVHLoader());
 #endif
 #if (!defined ASSIMP_BUILD_NO_COLLADA_IMPORTER)
     out.push_back( new ColladaLoader());
-#endif
-#if (!defined ASSIMP_BUILD_NO_3D_IMPORTER)
-    out.push_back( new UnrealImporter());
 #endif
 #if (!defined ASSIMP_BUILD_NO_LWS_IMPORTER)
     out.push_back( new LWSImporter());

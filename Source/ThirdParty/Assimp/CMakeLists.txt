@@ -1,54 +1,8 @@
-# Open Asset Import Library (assimp)
-# ----------------------------------------------------------------------
-#
-# Copyright (c) 2006-2016, assimp team
-# All rights reserved.
-#
-# Redistribution and use of this software in source and binary forms,
-# with or without modification, are permitted provided that the
-# following conditions are met:
-#
-# * Redistributions of source code must retain the above
-#   copyright notice, this list of conditions and the
-#   following disclaimer.
-#
-# * Redistributions in binary form must reproduce the above
-#   copyright notice, this list of conditions and the
-#   following disclaimer in the documentation and/or other
-#   materials provided with the distribution.
-#
-# * Neither the name of the assimp team, nor the names of its
-#   contributors may be used to endorse or promote products
-#   derived from this software without specific prior
-#   written permission of the assimp team.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-#----------------------------------------------------------------------
-
 # Listing and grouping of all the source files.
 # 1) Set the file lists for each component
 # 2) Create a Source Group for each component, for IDE project orginization
 # 3) Add libassimp using the file lists (eliminates duplication of file names between
-#    source groups and library command)
-#
-
-if (MINGW)
-    # The IFCReaderGen.cpp.obj has too many sections in DEBUG configuration build
-    # Since GCC does not support /bigobj compiler flags as in MSVC, we use optimization flags to reduce the object file size
-    set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O1")
-    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O1")
-endif ()
+#    source groups and library command). 
 
 INCLUDE_DIRECTORIES( code )
 INCLUDE_DIRECTORIES( include )
@@ -205,7 +159,6 @@ MACRO(ADD_ASSIMP_IMPORTER name)
     SOURCE_GROUP(${name} FILES ${ARGN})
   ELSE()
     SET(${name}_SRC "")
-    SET(ASSIMP_IMPORTERS_DISABLED "${ASSIMP_IMPORTERS_DISABLED} ${name}")
     add_definitions(-DASSIMP_BUILD_NO_${name}_IMPORTER)
   ENDIF()
 ENDMACRO()
@@ -220,11 +173,6 @@ ADD_ASSIMP_IMPORTER( 3DS
   code/3DSLoader.h
   code/3DSExporter.h
   code/3DSExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER( AC
-  code/ACLoader.cpp
-  code/ACLoader.h
 )
 
 ADD_ASSIMP_IMPORTER( ASE
@@ -312,7 +260,6 @@ ADD_ASSIMP_IMPORTER( PLY
   code/PlyExporter.cpp
   code/PlyExporter.h
 )
-
 
 ADD_ASSIMP_IMPORTER( FBX
   code/FBXImporter.cpp
@@ -402,9 +349,9 @@ ADD_ASSIMP_IMPORTER( SIB
   code/SIBImporter.h
 )
 
-ADD_ASSIMP_IMPORTER( SMD
-  code/SMDLoader.cpp
-  code/SMDLoader.h
+ADD_ASSIMP_IMPORTER(RAW
+  code/RawLoader.cpp
+  code/RawLoader.h
 )
 
 ADD_ASSIMP_IMPORTER( STL
@@ -412,11 +359,6 @@ ADD_ASSIMP_IMPORTER( STL
   code/STLLoader.h
   code/STLExporter.h
   code/STLExporter.cpp
-)
-
-ADD_ASSIMP_IMPORTER( 3D
-  code/UnrealLoader.cpp
-  code/UnrealLoader.h
 )
 
 ADD_ASSIMP_IMPORTER( X
