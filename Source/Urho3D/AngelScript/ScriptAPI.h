@@ -47,10 +47,6 @@ void RegisterInputAPI(asIScriptEngine* engine);
 void RegisterAudioAPI(asIScriptEngine* engine);
 /// Register the UI library to script.
 void RegisterUIAPI(asIScriptEngine* engine);
-#ifdef URHO3D_NETWORK
-/// Register the Network library to script.
-void RegisterNetworkAPI(asIScriptEngine* engine);
-#endif
 #ifdef URHO3D_DATABASE
 /// Register the Database library to script.
 void RegisterDatabaseAPI(asIScriptEngine* engine);

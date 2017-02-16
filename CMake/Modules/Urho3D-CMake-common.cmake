@@ -56,7 +56,6 @@ cmake_dependent_option (URHO3D_64BIT "Enable 64-bit build, the default is set ba
 option (URHO3D_ANGELSCRIPT "Enable AngelScript scripting support" TRUE)
 option (URHO3D_LUA "Enable additional Lua scripting support" TRUE)
 option (URHO3D_NAVIGATION "Enable navigation support" TRUE)
-cmake_dependent_option (URHO3D_NETWORK "Enable networking support" TRUE "NOT WEB" FALSE)
 option (URHO3D_PHYSICS "Enable physics support" TRUE)
 option (URHO3D_URHO2D "Enable 2D graphics and physics support" TRUE)
 
@@ -246,11 +245,6 @@ endif ()
 # Add definition for Navigation
 if (URHO3D_NAVIGATION)
     add_definitions (-DURHO3D_NAVIGATION)
-endif ()
-
-# Add definition for Network
-if (URHO3D_NETWORK)
-    add_definitions (-DURHO3D_NETWORK)
 endif ()
 
 # Add definition for Physics
@@ -980,9 +974,8 @@ macro (define_dependency_libs TARGET)
             list (APPEND LIBS dl m rt)
         endif ()
     endif ()
-
-    # ThirdParty/kNet & ThirdParty/Civetweb external dependency
-    if (${TARGET} MATCHES Civetweb|kNet|Urho3D)
+    
+    if (${TARGET} MATCHES Urho3D)
         if (WIN32)
             list (APPEND LIBS ws2_32)
         endif ()

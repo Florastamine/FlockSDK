@@ -40,9 +40,6 @@
 #ifdef URHO3D_NAVIGATION
 #include "../Navigation/NavigationMesh.h"
 #endif
-#ifdef URHO3D_NETWORK
-#include "../Network/Network.h"
-#endif
 #ifdef URHO3D_DATABASE
 #include "../Database/Database.h"
 #endif
@@ -115,9 +112,6 @@ Engine::Engine(Context* context) :
 #endif
     context_->RegisterSubsystem(new ResourceCache(context_));
     context_->RegisterSubsystem(new Localization(context_));
-#ifdef URHO3D_NETWORK
-    context_->RegisterSubsystem(new Network(context_));
-#endif
 #ifdef URHO3D_DATABASE
     context_->RegisterSubsystem(new Database(context_));
 #endif
@@ -394,12 +388,6 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Init FPU state of main thread
     InitFPU();
-
-    // Initialize network
-#ifdef URHO3D_NETWORK
-    if (HasParameter(parameters, "PackageCacheDir"))
-        GetSubsystem<Network>()->SetPackageCacheDir(GetParameter(parameters, "PackageCacheDir").GetString());
-#endif
 
 #ifdef URHO3D_TESTING
     if (HasParameter(parameters, "TimeOut"))

@@ -50,11 +50,6 @@ foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript S
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 
-if (URHO3D_NETWORK)
-    add_subdirectory (ThirdParty/Civetweb)
-    add_subdirectory (ThirdParty/kNet)
-endif ()
-
 if (URHO3D_URHO2D)
     add_subdirectory (ThirdParty/Box2D)
     if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/spine)
