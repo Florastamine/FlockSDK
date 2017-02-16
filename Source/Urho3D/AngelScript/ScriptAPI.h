@@ -59,10 +59,8 @@ void RegisterPhysicsAPI(asIScriptEngine* engine);
 /// Register the Navigation library to script.
 void RegisterNavigationAPI(asIScriptEngine* engine);
 #endif
-#ifdef URHO3D_URHO2D
 /// Register the Urho2D library to script.
 void RegisterUrho2DAPI(asIScriptEngine* engine);
-#endif
 /// Register the Script interfaces to script.
 void RegisterScriptInterfaceAPI(asIScriptEngine* engine);
 /// Register the Script library to script.

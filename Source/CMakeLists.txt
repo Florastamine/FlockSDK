@@ -50,14 +50,7 @@ foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript S
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 
-if (URHO3D_URHO2D)
-    add_subdirectory (ThirdParty/Box2D)
-    if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/spine)
-        add_subdirectory (ThirdParty/spine)
-        # Add definition for Spine
-        add_definitions (-DURHO3D_SPINE)
-    endif ()
-endif ()
+add_subdirectory (ThirdParty/Box2D)
 
 add_subdirectory (ThirdParty/GLEW)
 if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)

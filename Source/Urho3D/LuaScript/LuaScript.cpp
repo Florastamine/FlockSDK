@@ -66,9 +66,7 @@ extern int tolua_PhysicsLuaAPI_open(lua_State*);
 extern int tolua_ResourceLuaAPI_open(lua_State*);
 extern int tolua_SceneLuaAPI_open(lua_State*);
 extern int tolua_UILuaAPI_open(lua_State*);
-#ifdef URHO3D_URHO2D
 extern int tolua_Urho2DLuaAPI_open(lua_State*);
-#endif
 extern int tolua_LuaScriptLuaAPI_open(lua_State*);
 
 namespace Urho3D
@@ -113,9 +111,7 @@ LuaScript::LuaScript(Context* context) :
     tolua_PhysicsLuaAPI_open(luaState_);
 #endif
     tolua_UILuaAPI_open(luaState_);
-#ifdef URHO3D_URHO2D
     tolua_Urho2DLuaAPI_open(luaState_);
-#endif
     tolua_LuaScriptLuaAPI_open(luaState_);
 
     SetContext(luaState_, context_);

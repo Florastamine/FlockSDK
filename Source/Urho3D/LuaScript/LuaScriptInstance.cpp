@@ -32,7 +32,7 @@
 #include "../LuaScript/LuaScript.h"
 #include "../LuaScript/LuaScriptEventInvoker.h"
 #include "../LuaScript/LuaScriptInstance.h"
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS)
 #include "../Physics/PhysicsEvents.h"
 #endif
 #include "../Resource/ResourceCache.h"
@@ -617,7 +617,7 @@ void LuaScriptInstance::SubscribeToScriptMethodEvents()
     if (scene && scriptObjectMethods_[LSOM_POSTUPDATE])
         SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(LuaScriptInstance, HandlePostUpdate));
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS)
     Component* world = GetFixedUpdateSource();
 
     if (world && scriptObjectMethods_[LSOM_FIXEDUPDATE])
@@ -636,7 +636,7 @@ void LuaScriptInstance::UnsubscribeFromScriptMethodEvents()
     UnsubscribeFromEvent(E_SCENEUPDATE);
     UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS)
     UnsubscribeFromEvent(E_PHYSICSPRESTEP);
     UnsubscribeFromEvent(E_PHYSICSPOSTSTEP);
 #endif
@@ -679,7 +679,7 @@ void LuaScriptInstance::HandlePostUpdate(StringHash eventType, VariantMap& event
     }
 }
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS) 
 
 void LuaScriptInstance::HandleFixedUpdate(StringHash eventType, VariantMap& eventData)
 {

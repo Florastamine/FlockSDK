@@ -51,9 +51,7 @@
 #include "../Scene/Scene.h"
 #include "../Scene/SceneEvents.h"
 #include "../UI/UI.h"
-#ifdef URHO3D_URHO2D
 #include "../Urho2D/Urho2D.h"
-#endif
 
 #include "../DebugNew.h"
 
@@ -158,11 +156,8 @@ bool Engine::Initialize(const VariantMap& parameters)
         // Register graphics library objects explicitly in headless mode to allow them to work without using actual GPU resources
         RegisterGraphicsLibrary(context_);
     }
-
-#ifdef URHO3D_URHO2D
     // 2D graphics library is dependent on 3D graphics library
     RegisterUrho2DLibrary(context_);
-#endif
 
     // Start logging
     Log* log = GetSubsystem<Log>();

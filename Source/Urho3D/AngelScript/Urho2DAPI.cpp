@@ -19,9 +19,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
-#ifdef URHO3D_URHO2D
-
 #include "../Precompiled.h"
 
 #include "../AngelScript/APITemplates.h"
@@ -778,5 +775,3 @@ void RegisterUrho2DAPI(asIScriptEngine* engine)
 }
 
 }
-
-#endif

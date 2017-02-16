@@ -129,9 +129,7 @@ Script::Script(Context* context) :
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationAPI(scriptEngine_);
 #endif
-#ifdef URHO3D_URHO2D
     RegisterUrho2DAPI(scriptEngine_);
-#endif
     RegisterScriptAPI(scriptEngine_);
     RegisterEngineAPI(scriptEngine_);
 

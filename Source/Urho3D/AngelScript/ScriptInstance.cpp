@@ -29,7 +29,7 @@
 #include "../Core/Profiler.h"
 #include "../IO/Log.h"
 #include "../IO/MemoryBuffer.h"
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS)
 #include "../Physics/PhysicsEvents.h"
 #endif
 #include "../Resource/ResourceCache.h"
@@ -508,7 +508,7 @@ void ScriptInstance::OnSceneSet(Scene* scene)
     {
         UnsubscribeFromEvent(E_SCENEUPDATE);
         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS) 
         UnsubscribeFromEvent(E_PHYSICSPRESTEP);
         UnsubscribeFromEvent(E_PHYSICSPOSTSTEP);
 #endif
@@ -742,7 +742,7 @@ void ScriptInstance::UpdateEventSubscription()
             if (methods_[METHOD_POSTUPDATE])
                 SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(ScriptInstance, HandleScenePostUpdate));
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS) 
             if (methods_[METHOD_FIXEDUPDATE] || methods_[METHOD_FIXEDPOSTUPDATE])
             {
                 Component* world = GetFixedUpdateSource();
@@ -776,7 +776,7 @@ void ScriptInstance::UpdateEventSubscription()
         {
             UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS) 
             Component* world = GetFixedUpdateSource();
             if (world)
             {
@@ -852,7 +852,7 @@ void ScriptInstance::HandleScenePostUpdate(StringHash eventType, VariantMap& eve
     scriptFile_->Execute(scriptObject_, methods_[METHOD_POSTUPDATE], parameters);
 }
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_URHO2D)
+#if defined(URHO3D_PHYSICS) 
 
 void ScriptInstance::HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData)
 {

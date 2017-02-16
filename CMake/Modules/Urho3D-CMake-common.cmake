@@ -57,7 +57,6 @@ option (URHO3D_ANGELSCRIPT "Enable AngelScript scripting support" TRUE)
 option (URHO3D_LUA "Enable additional Lua scripting support" TRUE)
 option (URHO3D_NAVIGATION "Enable navigation support" TRUE)
 option (URHO3D_PHYSICS "Enable physics support" TRUE)
-option (URHO3D_URHO2D "Enable 2D graphics and physics support" TRUE)
 
 if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED") 
@@ -250,11 +249,6 @@ endif ()
 # Add definition for Physics
 if (URHO3D_PHYSICS)
     add_definitions (-DURHO3D_PHYSICS)
-endif ()
-
-# Add definition for Urho2D
-if (URHO3D_URHO2D)
-    add_definitions (-DURHO3D_URHO2D)
 endif ()
 
 # Add definition for Database
