@@ -57,9 +57,7 @@ extern int tolua_MathLuaAPI_open(lua_State*);
 #ifdef URHO3D_NAVIGATION
 extern int tolua_NavigationLuaAPI_open(lua_State*);
 #endif
-#ifdef URHO3D_DATABASE
 extern int tolua_DatabaseLuaAPI_open(lua_State*);
-#endif
 #ifdef URHO3D_PHYSICS
 extern int tolua_PhysicsLuaAPI_open(lua_State*);
 #endif
@@ -104,9 +102,7 @@ LuaScript::LuaScript(Context* context) :
 #ifdef URHO3D_NAVIGATION
     tolua_NavigationLuaAPI_open(luaState_);
 #endif
-#ifdef URHO3D_DATABASE
     tolua_DatabaseLuaAPI_open(luaState_);
-#endif
 #ifdef URHO3D_PHYSICS
     tolua_PhysicsLuaAPI_open(luaState_);
 #endif

@@ -40,9 +40,7 @@
 #ifdef URHO3D_NAVIGATION
 #include "../Navigation/NavigationMesh.h"
 #endif
-#ifdef URHO3D_DATABASE
 #include "../Database/Database.h"
-#endif
 #ifdef URHO3D_PHYSICS
 #include "../Physics/PhysicsWorld.h"
 #endif
@@ -110,9 +108,7 @@ Engine::Engine(Context* context) :
 #endif
     context_->RegisterSubsystem(new ResourceCache(context_));
     context_->RegisterSubsystem(new Localization(context_));
-#ifdef URHO3D_DATABASE
     context_->RegisterSubsystem(new Database(context_));
-#endif
     context_->RegisterSubsystem(new Input(context_));
     context_->RegisterSubsystem(new Audio(context_));
     context_->RegisterSubsystem(new UI(context_));
@@ -330,7 +326,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
         if (HasParameter(parameters, "ExternalWindow"))
             graphics->SetExternalWindow(GetParameter(parameters, "ExternalWindow").GetVoidPtr());
-        graphics->SetWindowTitle(GetParameter(parameters, "WindowTitle", "Urho3D").GetString());
+        graphics->SetWindowTitle(GetParameter(parameters, "WindowTitle", "Downpour").GetString());
         graphics->SetWindowIcon(cache->GetResource<Image>(GetParameter(parameters, "WindowIcon", String::EMPTY).GetString()));
         graphics->SetFlushGPU(GetParameter(parameters, "FlushGPU", false).GetBool());
         graphics->SetOrientations(GetParameter(parameters, "Orientations", "LandscapeLeft LandscapeRight").GetString());

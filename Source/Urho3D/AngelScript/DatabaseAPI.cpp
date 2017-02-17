@@ -19,9 +19,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
-#ifdef URHO3D_DATABASE
-
 #include "../Precompiled.h"
 
 #include "../AngelScript/APITemplates.h"
@@ -118,5 +115,3 @@ void RegisterDatabaseAPI(asIScriptEngine* engine)
 }
 
 }
-
-#endif

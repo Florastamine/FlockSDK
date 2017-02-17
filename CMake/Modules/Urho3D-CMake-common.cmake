@@ -251,10 +251,6 @@ if (URHO3D_PHYSICS)
     add_definitions (-DURHO3D_PHYSICS)
 endif ()
 
-# Add definition for Database
-set (URHO3D_DATABASE 1)
-add_definitions (-DURHO3D_DATABASE)
-
 # TODO: The logic below is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling, until then ensure the DirectX package is not being searched again in external projects such as when building LuaJIT library
 if (WIN32 AND NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-)
     set (DIRECTX_REQUIRED_COMPONENTS)
