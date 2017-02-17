@@ -9,12 +9,13 @@ A list of modifications, cuts, and updates since the fork was born:
 * Removed `nanodbc`/`ODBC` support in favor of `SQLite`. 
 * Completely removed `Direct3D11`/`Direct3D9` support, leaving only the `OpenGL` renderer across all platforms (`Windows` and `Linux`). 
 * Modifications to the both the game engine and the `AngelScript`-based editor to use a different folder naming and structure. 
+* Moving to `C++11` and thus removed support for non-compliant-`C++11` compilers, for example, `MSVC 9` (`_MSC_VER == 1500`) and `MSVC 10` (`_MSC_VER == 1600`). 
 * A collection of build scripts for compiling the SDK with custom settings related to the game project. 
 * Reworked `Urho3DPlayer`. 
 * Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
 * Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
 * Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, [Blender](https://www.blender.org), [Ogre3D](http://www.ogre3d.org)'s `.xml`, [Terragen](http://planetside.co.uk), `Q3D` and `Q3BSP`. 
-* Upgrades of several libraries to their newer versions (`SDL`, `AngelScript`, `FreeType`, `SQLite`)
+* Upgrades of several libraries to their newer versions (`SDL`, `AngelScript`, `FreeType`, `SQLite`, `pugixml`, `libcpuid`, `Open Asset Import Library (assimp)`)
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 
@@ -37,7 +38,7 @@ Type
 ```bash 
 ./build-linux-<target>.sh 
 ``` 
-...to initiate the build process, where: 
+to initiate the build process, where: 
 * target = 32, 64
 
 For example: `build-linux-64.sh`. 
@@ -46,7 +47,7 @@ For example: `build-linux-64.sh`.
 You'll need a working `MinGW`/`MinGW-W64` and `CMake` (>=`3.2.3`) installation. First off, make sure both of them are correctly installed. Grab the source code and go to the `Build` directory:
 ```bash 
 git clone https://github.com/Florastamine/IWBHT_SDK
-cd .IWBHT_SDK\Build 
+cd .\IWBHT_SDK\Build 
 ```
 
 Set up the build environment by making `gcc/g++` and `cmake` available in your `PATH`: 
@@ -61,7 +62,7 @@ set "PATH=%PATH%;C:\MinGW32\bin;C:\CMake\bin"
 
 For example:
 ```bash 
-.\build-shell.bat C:\MinGW32 C:\MinGW32\bin C:\CMake 
+.\build-shell.bat "C:\MinGW32" "C:\MinGW32\bin" "C:\CMake" 
 ``` 
 
 You should see something like this: 
