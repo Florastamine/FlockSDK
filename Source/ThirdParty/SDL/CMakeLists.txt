@@ -665,7 +665,7 @@ if(UNIX)    # Urho3D - at this point both UNIX and UNIX_SYS should be equivalent
       set(HAVE_IBUS_IBUS_H TRUE)
       include_directories(${IBUS_H_INCLUDE_DIRS} ${GLIB_H_INCLUDE_DIRS} ${GLIB_CONFIG_H_INCLUDE_DIRS})
       list(APPEND EXTRA_LIBS ibus-1.0)
-      add_definitions (-DSDL_USE_IME)
+      set (SDL_USE_IME 1)
     endif ()
 
     # Urho3D - bug fix - use find_path() to detect fcitx's header file so it works for both native and cross-compiling builds
@@ -673,7 +673,7 @@ if(UNIX)    # Urho3D - at this point both UNIX and UNIX_SYS should be equivalent
     if (FCITX_H_INCLUDE_DIRS)
       set (HAVE_FCITX_FRONTEND_H TRUE)
       include_directories (${FCITX_H_INCLUDE_DIRS})
-      add_definitions (-DSDL_USE_IME)
+      set (SDL_USE_IME 1)
     endif ()
 
     # Urho3D - bug fix - moved below logic from generic Unix block to Linux-specific block
