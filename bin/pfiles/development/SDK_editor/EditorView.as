@@ -1796,6 +1796,24 @@ void DrawNodeDebug(Node@ node, DebugRenderer@ debug, bool drawNode = true)
 
 void ViewMouseMove()
 {
+    Ray cameraRay = GetActiveViewportCameraRay();
+    Component@ selectedComponent;
+
+    if (pickMode < PICK_RIGIDBODIES && editorScene.octree !is null)
+    {
+        RayQueryResult result = editorScene.octree.RaycastSingle(cameraRay, RAY_TRIANGLE, camera.farClip,
+            pickModeDrawableFlags[pickMode], 0x7fffffff);
+
+        if (result.drawable !is null && result.drawable.typeName == "TerrainPatch" && result.drawable.node.parent !is null)
+        {
+            Terrain@ terrainComponent = result.drawable.node.parent.GetComponent("Terrain");
+            terrainEditor.UpdateBrushVisualizer(terrainComponent, result.position);
+        }
+        else {
+            terrainEditor.HideBrushVisualizer();
+        }
+    }
+
     // setting mouse position based on mouse position
     if (ui.IsDragging()) { }
     else if (ui.focusElement !is null || input.mouseButtonDown[MOUSEB_LEFT|MOUSEB_MIDDLE|MOUSEB_RIGHT])
@@ -1941,7 +1959,21 @@ void ViewRaycast(bool mouseClick)
                 }
             }
             else if (drawable.node.parent !is null)
-                selectedComponent = drawable.node.parent.GetComponent("Terrain");
+            {
+                Terrain@ terrainComponent = drawable.node.parent.GetComponent("Terrain");
+                selectedComponent = terrainComponent;
+            
+                if(selectedComponent is terrainComponent && input.mouseButtonDown[MOUSEB_LEFT])
+                {
+                    selectedComponent = terrainComponent;
+                    IntVector2 pos = terrainComponent.WorldToHeightMap(result.position);
+                    terrainEditor.Work(terrainComponent, result.position); 
+                }
+                else
+                {
+                    terrainEditor.targetColorSelected = false;
+                }
+            }
         }
     }
     else

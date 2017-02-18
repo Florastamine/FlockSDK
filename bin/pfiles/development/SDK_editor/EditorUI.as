@@ -61,7 +61,9 @@ String screenshotDir = fileSystem.programDir + "Screenshots";
 bool uiFaded = false;
 float uiMinOpacity = 0.3;
 float uiMaxOpacity = 0.7;
-bool uiHidden = false;
+bool uiHidden = false; 
+
+TerrainEditor terrainEditor; 
 
 void CreateUI()
 {
@@ -93,7 +95,8 @@ void CreateUI()
     CreateResourceBrowser();
     CreateCamera();
     CreateLayerEditor();
-    CreateColorWheel();
+    CreateColorWheel(); 
+    terrainEditor.Create();
 
     SubscribeToEvent("ScreenMode", "ResizeUI");
     SubscribeToEvent("MenuSelected", "HandleMenuSelected");
@@ -522,6 +525,7 @@ void CreateMenuBar()
         popup.AddChild(CreateMenuItem("Attribute inspector", @ToggleAttributeInspectorWindow, KEY_I, QUAL_CTRL));
         popup.AddChild(CreateMenuItem("Resource browser", @ToggleResourceBrowserWindow, KEY_B, QUAL_CTRL));
         popup.AddChild(CreateMenuItem("Material editor", @ToggleMaterialEditor));
+        popup.AddChild(CreateMenuItem("Terrain editor", TerrainEditorShowCallback(terrainEditor.Show)));
         popup.AddChild(CreateMenuItem("Particle editor", @ToggleParticleEffectEditor));
         popup.AddChild(CreateMenuItem("Spawn editor", @ToggleSpawnEditor));
         popup.AddChild(CreateMenuItem("Sound Type editor", @ToggleSoundTypeEditor));
@@ -1749,7 +1753,8 @@ void SetIconEnabledColor(UIElement@ element, bool enabled, bool partial = false)
 
 void UpdateDirtyUI()
 {
-    UpdateDirtyToolBar();
+    UpdateDirtyToolBar(); 
+    terrainEditor.UpdateDirty(); 
 
     // Perform hierarchy selection latently after the new selections are finalized (used in undo/redo action)
     if (!hierarchyUpdateSelections.empty)
