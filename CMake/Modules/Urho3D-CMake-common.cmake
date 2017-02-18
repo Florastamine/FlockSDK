@@ -53,7 +53,6 @@ set (CMAKE_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKE
 # Define all supported build options
 include (CMakeDependentOption)
 cmake_dependent_option (URHO3D_64BIT "Enable 64-bit build, the default is set based on the native ABI of the chosen compiler toolchain" ${NATIVE_64BIT} "NOT MSVC AND NOT (ARM AND NOT IOS)  AND NOT POWERPC" ${NATIVE_64BIT})     # Intentionally only enable the option for iOS but not for tvOS as the latter is 64-bit only
-option (URHO3D_ANGELSCRIPT "Enable AngelScript scripting support" TRUE)
 option (URHO3D_LUA "Enable additional Lua scripting support" TRUE)
 option (URHO3D_NAVIGATION "Enable navigation support" TRUE)
 option (URHO3D_PHYSICS "Enable physics support" TRUE)
@@ -216,12 +215,7 @@ if (NOT URHO3D_LIB_TYPE STREQUAL SHARED)
     else ()
         add_definitions (-DURHO3D_STATIC_DEFINE)
     endif ()
-endif ()
-
-# Add definition for AngelScript
-if (URHO3D_ANGELSCRIPT)
-    add_definitions (-DURHO3D_ANGELSCRIPT)
-endif ()
+endif () 
 
 # Add definition for Lua and LuaJIT
 if (URHO3D_LUAJIT)
