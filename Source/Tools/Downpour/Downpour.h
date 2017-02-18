@@ -24,8 +24,6 @@
 
 #include <Urho3D/Engine/Application.h>
 
-using namespace Urho3D;
-
 namespace Downpour {
     class DownpourBase : public Urho3D::Application {
         URHO3D_OBJECT(DownpourBase, Urho3D::Application);
@@ -40,10 +38,7 @@ namespace Downpour {
             int argc_;
             Urho3D::String argv_;
             Urho3D::String moduleName_;
-
-            #ifdef URHO3D_ANGELSCRIPT
-                Urho3D::SharedPtr<Urho3D::ScriptFile> moduleEditorPtr_;
-            #endif 
+            Urho3D::SharedPtr<Urho3D::ScriptFile> moduleEditorPtr_;
         private:
             void HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
             void HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);

@@ -20,19 +20,15 @@
 // THE SOFTWARE.
 // 
 
-#ifdef    URHO3D_ANGELSCRIPT 
 #include <Urho3D/AngelScript/ScriptFile.h>
 #include <Urho3D/AngelScript/Script.h>
-#endif 
 
 #include <Urho3D/Core/Main.h>
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/IO/Log.h>
 
-#ifdef    URHO3D_LUA 
 #include <Urho3D/LuaScript/LuaScript.h> 
-#endif 
 
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Resource/ResourceEvents.h>
@@ -73,7 +69,6 @@ void DownpourBase::Start()
     Urho3D::String extension = Urho3D::GetExtension(moduleName_);
     if (extension != GetScriptExtension() && extension != GetCompiledScriptExtension())
     {
-#ifdef URHO3D_ANGELSCRIPT
         // Instantiate and register the AngelScript subsystem
         context_->RegisterSubsystem(new Urho3D::Script(context_));
 
@@ -81,10 +76,8 @@ void DownpourBase::Start()
         moduleEditorPtr_ = GetSubsystem<Urho3D::ResourceCache>()->GetResource<Urho3D::ScriptFile>(moduleName_);
 
         ///hack If we are running the editor, also instantiate Lua subsystem to enable editing Lua ScriptInstances
-#ifdef URHO3D_LUA
         if (moduleName_.Contains("SDK"))
             context_->RegisterSubsystem(new Urho3D::LuaScript(context_));
-#endif
         // If script loading is successful, proceed to main loop
         if (moduleEditorPtr_ && moduleEditorPtr_->Execute("void Start()"))
         {
@@ -94,14 +87,9 @@ void DownpourBase::Start()
             SubscribeToEvent(moduleEditorPtr_, Urho3D::E_RELOADFAILED, URHO3D_HANDLER(Downpour::DownpourBase, HandleScriptReloadFailed));
             return;
         }
-#else
-        ErrorExit("AngelScript is not enabled!");
-        return;
-#endif
     }
     else
     {
-#ifdef URHO3D_LUA
         // Instantiate and register the Lua script subsystem
         Urho3D::LuaScript* luaScript = new Urho3D::LuaScript(context_);
         context_->RegisterSubsystem(luaScript);
@@ -112,10 +100,6 @@ void DownpourBase::Start()
             luaScript->ExecuteFunction("Start");
             return;
         }
-#else
-        ErrorExit("Lua is not enabled!");
-        return;
-#endif
     }
 
     // The script was not successfully loaded. Show the last error message and do not run the main loop
@@ -124,55 +108,40 @@ void DownpourBase::Start()
 
 void DownpourBase::Stop()
 {
-#ifdef URHO3D_ANGELSCRIPT
     if (moduleEditorPtr_)
     {
         // Execute the optional stop function
         if (moduleEditorPtr_->GetFunction("void Stop()"))
             moduleEditorPtr_->Execute("void Stop()");
     }
-#else
-    if (false)
-    {
-    }
-#endif
-
-#ifdef URHO3D_LUA
     else
     {
         Urho3D::LuaScript* luaScript = GetSubsystem<Urho3D::LuaScript>();
         if (luaScript && luaScript->GetFunction("Stop", true))
             luaScript->ExecuteFunction("Stop");
     }
-#endif
 }
 
 void DownpourBase::HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
 {
-#ifdef URHO3D_ANGELSCRIPT
     if (moduleEditorPtr_->GetFunction("void Stop()"))
         moduleEditorPtr_->Execute("void Stop()");
-#endif
 }
 
 void DownpourBase::HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
 {
-#ifdef URHO3D_ANGELSCRIPT
     // Restart the script application after reload
     if (!moduleEditorPtr_->Execute("void Start()"))
     {
         moduleEditorPtr_.Reset();
         ErrorExit();
     }
-#endif
 }
 
 void DownpourBase::HandleScriptReloadFailed(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
 {
-#ifdef URHO3D_ANGELSCRIPT
     moduleEditorPtr_.Reset();
     ErrorExit();
-#endif
 }
 
 void DownpourBase::Exit(void) 
@@ -192,4 +161,3 @@ int main(int argc, char **argv)
 
     return (Urho3D::SharedPtr<Downpour::DownpourBase>(DPGame))->Run();
 } 
-
