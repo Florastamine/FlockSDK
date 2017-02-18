@@ -51,13 +51,7 @@ endif ()
 
 if (URHO3D_TOOLS)
     # Urho3D tools
-    add_subdirectory (AssetImporter)
     add_subdirectory (PackageTool)
-    add_subdirectory (RampGenerator)
-    add_subdirectory (SpritePacker)
-    if (URHO3D_ANGELSCRIPT)
-        add_subdirectory (ScriptCompiler)
-    endif ()
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal
     add_subdirectory (PackageTool)

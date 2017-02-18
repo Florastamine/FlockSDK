@@ -28,13 +28,13 @@
 #include <Urho3D/IO/PackageFile.h>
 
 #ifdef WIN32
-#include <windows.h>
-#endif
+    #define WIN32_LEAN_AND_MEAN 
+    #define WIN32_EXTRA_LEAN 
+    #include <windows.h>
+#endif 
 
 #include <LZ4/lz4.h>
 #include <LZ4/lz4hc.h>
-
-#include <Urho3D/DebugNew.h>
 
 using namespace Urho3D;
 
