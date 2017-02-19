@@ -1,9 +1,11 @@
 const uint TERRAIN_EDITMODE_RAISELOWERHEIGHT = 0, 
            TERRAIN_EDITMODE_SETHEIGHT = 1, 
-		   TERRAIN_EDITMODE_SMOOTHHEIGHT = 3, 
+		   TERRAIN_EDITMODE_SMOOTHHEIGHT = 3; 
+           /* 
 		   TERRAIN_EDITMODE_PAINTBRUSH = 4, 
 		   TERRAIN_EDITMODE_PAINTTREES = 5, 
-		   TERRAIN_EDITMODE_PAINTFOLIAGE = 6;
+		   TERRAIN_EDITMODE_PAINTFOLIAGE = 6; 
+           */ 
 
 funcdef bool TerrainEditorShowCallback();
 
@@ -120,9 +122,11 @@ class TerrainEditor
         SubscribeToEvent(window.GetChild("RaiseLowerHeight", true), "Toggled", "OnEditModeSelected");
         SubscribeToEvent(window.GetChild("SetHeight", true), "Toggled", "OnEditModeSelected");
         SubscribeToEvent(window.GetChild("SmoothHeight", true), "Toggled", "OnEditModeSelected");
-        SubscribeToEvent(window.GetChild("PaintBrush", true), "Toggled", "OnEditModeSelected");
-        SubscribeToEvent(window.GetChild("PaintTrees", true), "Toggled", "OnEditModeSelected");
-        SubscribeToEvent(window.GetChild("PaintFoliage", true), "Toggled", "OnEditModeSelected");
+        /* 
+        SubscribeToEvent(window.GetChild("PaintBrush", true), "Toggled", "OnEditModeSelected"); 
+        SubscribeToEvent(window.GetChild("PaintTrees", true), "Toggled", "OnEditModeSelected"); 
+        SubscribeToEvent(window.GetChild("PaintFoliage", true), "Toggled", "OnEditModeSelected"); 
+        */ 
         SubscribeToEvent(window.GetChild("CloseButton", true), "Released", "Hide");
         SubscribeToEvent(window.GetChild("CreateTerrainButton", true), "Released", "CreateTerrain");
         SubscribeToEvent(brushSizeSlider, "DragEnd", "UpdateScaledBrush");
@@ -197,17 +201,21 @@ class TerrainEditor
 
         CheckBox@ raiseLowerHeight = window.GetChild("RaiseLowerHeight", true);
         CheckBox@ setHeight = window.GetChild("SetHeight", true);
-        CheckBox@ smoothHeight = window.GetChild("SmoothHeight", true);
+        CheckBox@ smoothHeight = window.GetChild("SmoothHeight", true); 
+        /* 
         CheckBox@ paintBrush = window.GetChild("PaintBrush", true);
         CheckBox@ paintTrees = window.GetChild("PaintTrees", true);
-        CheckBox@ paintFoliage = window.GetChild("PaintFoliage", true);
+        CheckBox@ paintFoliage = window.GetChild("PaintFoliage", true); 
+        */ 
 
         raiseLowerHeight.checked = (editMode == TERRAIN_EDITMODE_RAISELOWERHEIGHT) ? true : false;
         setHeight.checked = (editMode == TERRAIN_EDITMODE_SETHEIGHT) ? true : false;
-        smoothHeight.checked = (editMode == TERRAIN_EDITMODE_SMOOTHHEIGHT) ? true : false;
+        smoothHeight.checked = (editMode == TERRAIN_EDITMODE_SMOOTHHEIGHT) ? true : false; 
+        /* 
         paintBrush.checked = (editMode == TERRAIN_EDITMODE_PAINTBRUSH) ? true : false;
         paintTrees.checked = (editMode == TERRAIN_EDITMODE_PAINTTREES) ? true : false;
-        paintFoliage.checked = (editMode == TERRAIN_EDITMODE_PAINTFOLIAGE) ? true : false;
+        paintFoliage.checked = (editMode == TERRAIN_EDITMODE_PAINTFOLIAGE) ? true : false; 
+        */ 
 
         raiseLowerHeight.enabled = !raiseLowerHeight.checked;
         setHeight.enabled = !setHeight.checked;
@@ -399,7 +407,8 @@ class TerrainEditor
 
         else if (edit.name == "SmoothHeight")
             SetEditMode(TERRAIN_EDITMODE_SMOOTHHEIGHT, "Smooth the terrain");
-
+        
+        /* 
         else if (edit.name == "PaintBrush")
             SetEditMode(TERRAIN_EDITMODE_PAINTBRUSH, "Paint textures onto the terrain");
 
@@ -408,6 +417,7 @@ class TerrainEditor
 
         else if (edit.name == "PaintFoliage")
             SetEditMode(TERRAIN_EDITMODE_PAINTFOLIAGE, "Paint foliage onto the terrain");
+        */ 
     }
 
     private void OnBrushSelected(StringHash eventType, VariantMap& eventData)
