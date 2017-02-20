@@ -1292,7 +1292,6 @@ void Scene::FinishSaving(Serializer* dest) const
 void Scene::PreloadResources(File* file, bool isSceneFile)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
-#ifdef URHO3D_THREADING
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     // Read node ID (not needed)
@@ -1362,13 +1361,11 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
     unsigned numChildren = file->ReadVLE();
     for (unsigned i = 0; i < numChildren; ++i)
         PreloadResources(file, false);
-#endif
 }
 
 void Scene::PreloadResourcesXML(const XMLElement& element)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
-#ifdef URHO3D_THREADING
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
@@ -1442,13 +1439,11 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
         PreloadResourcesXML(childElem);
         childElem = childElem.GetNext("node");
     }
-#endif
 }
 
 void Scene::PreloadResourcesJSON(const JSONValue& value)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
-#ifdef URHO3D_THREADING
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
@@ -1525,7 +1520,6 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
         const JSONValue& childVal = childrenArray.At(i);
         PreloadResourcesJSON(childVal);
     }
-#endif
 }
 
 void RegisterSceneLibrary(Context* context)

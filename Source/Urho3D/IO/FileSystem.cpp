@@ -369,7 +369,6 @@ int FileSystem::SystemRun(const String& fileName, const Vector<String>& argument
 
 unsigned FileSystem::SystemCommandAsync(const String& commandLine)
 {
-#ifdef URHO3D_THREADING
     if (allowedPaths_.Empty())
     {
         unsigned requestID = nextAsyncExecID_;
@@ -382,15 +381,10 @@ unsigned FileSystem::SystemCommandAsync(const String& commandLine)
         URHO3D_LOGERROR("Executing an external command is not allowed");
         return M_MAX_UNSIGNED;
     }
-#else
-    URHO3D_LOGERROR("Can not execute an asynchronous command as threading is disabled");
-    return M_MAX_UNSIGNED;
-#endif
 }
 
 unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>& arguments)
 {
-#ifdef URHO3D_THREADING
     if (allowedPaths_.Empty())
     {
         unsigned requestID = nextAsyncExecID_;
@@ -403,10 +397,6 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
         URHO3D_LOGERROR("Executing an external command is not allowed");
         return M_MAX_UNSIGNED;
     }
-#else
-    URHO3D_LOGERROR("Can not run asynchronously as threading is disabled");
-    return M_MAX_UNSIGNED;
-#endif
 }
 
 bool FileSystem::SystemOpen(const String& fileName, const String& mode)

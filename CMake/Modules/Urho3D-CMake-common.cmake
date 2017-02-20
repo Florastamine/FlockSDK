@@ -112,7 +112,6 @@ endif ()
 option (URHO3D_PACKAGING "Enable resources packaging support, on Web platform default to 1, on other platforms default to 0" ${WEB})
 option (URHO3D_PROFILING "Enable profiling support" TRUE)
 option (URHO3D_LOGGING "Enable logging support" TRUE)
-option (URHO3D_THREADING "Enable thread support, on Web platform default to 0, on other platforms default to 1" TRUE)
 if (URHO3D_TESTING)
     set (DEFAULT_TIMEOUT 5)
     set (URHO3D_TEST_TIMEOUT ${DEFAULT_TIMEOUT} CACHE STRING "Number of seconds to test run the executables (when testing support is enabled only), default to 10 on Web platform and 5 on other platforms")
@@ -193,11 +192,6 @@ endif ()
 # Enable logging by default. If disabled, LOGXXXX macros become no-ops and the Log subsystem is not instantiated.
 if (URHO3D_LOGGING)
     add_definitions (-DURHO3D_LOGGING)
-endif ()
-
-# Enable threading by default, except for Emscripten.
-if (URHO3D_THREADING)
-    add_definitions (-DURHO3D_THREADING)
 endif ()
 
 # Add definitions for GLEW

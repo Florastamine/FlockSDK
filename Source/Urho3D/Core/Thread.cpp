@@ -34,8 +34,6 @@
 
 namespace Urho3D
 {
-
-#ifdef URHO3D_THREADING
 #ifdef _WIN32
 
 DWORD WINAPI ThreadFunctionStatic(void* data)
@@ -56,7 +54,6 @@ void* ThreadFunctionStatic(void* data)
 }
 
 #endif
-#endif
 
 ThreadID Thread::mainThreadID;
 
@@ -73,7 +70,6 @@ Thread::~Thread()
 
 bool Thread::Run()
 {
-#ifdef URHO3D_THREADING
     // Check if already running
     if (handle_)
         return false;
@@ -89,14 +85,10 @@ bool Thread::Run()
     pthread_create((pthread_t*)handle_, &type, ThreadFunctionStatic, this);
 #endif
     return handle_ != 0;
-#else
-    return false;
-#endif
 }
 
 void Thread::Stop()
 {
-#ifdef URHO3D_THREADING
     // Check if already stopped
     if (!handle_)
         return;
@@ -112,12 +104,10 @@ void Thread::Stop()
     delete thread;
 #endif
     handle_ = 0;
-#endif
 }
 
 void Thread::SetPriority(int priority)
 {
-#ifdef URHO3D_THREADING
 #ifdef _WIN32
     if (handle_)
         SetThreadPriority((HANDLE)handle_, priority);
@@ -126,7 +116,6 @@ void Thread::SetPriority(int priority)
     pthread_t* thread = (pthread_t*)handle_;
     if (thread)
         pthread_setschedprio(*thread, priority);
-#endif
 #endif
 }
 
@@ -146,11 +135,7 @@ ThreadID Thread::GetCurrentThreadID()
 
 bool Thread::IsMainThread()
 {
-#ifdef URHO3D_THREADING
     return GetCurrentThreadID() == mainThreadID;
-#else
-    return true;
-#endif
 }
 
 }
