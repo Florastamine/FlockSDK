@@ -174,7 +174,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Set amount of worker threads according to the available physical CPU cores. Using also hyperthreaded cores results in
     // unpredictable extra synchronization overhead. Also reserve one core for the main thread
-    unsigned numThreads = GetParameter(parameters, "WorkerThreads", true).GetBool() ? GetNumPhysicalCPUs() - 1 : 0;
+    unsigned numThreads = GetNumPhysicalCPUs() - 1;
     if (numThreads)
     {
         GetSubsystem<WorkQueue>()->CreateThreads(numThreads);
@@ -751,8 +751,6 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret["Shadows"] = false;
             else if (argument == "lqshadows")
                 ret["LowQualityShadows"] = true;
-            else if (argument == "nothreads")
-                ret["WorkerThreads"] = false;
             else if (argument == "v")
                 ret["VSync"] = true;
             else if (argument == "t")
