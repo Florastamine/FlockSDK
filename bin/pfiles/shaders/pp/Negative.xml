@@ -1,0 +1,5 @@
+<renderpath>
+    <command type="quad" tag="Negative" vs="Negative" ps="Negative" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>
