@@ -55,7 +55,6 @@ include (CMakeDependentOption)
 cmake_dependent_option (URHO3D_64BIT "Enable 64-bit build, the default is set based on the native ABI of the chosen compiler toolchain" ${NATIVE_64BIT} "NOT MSVC AND NOT (ARM AND NOT IOS)  AND NOT POWERPC" ${NATIVE_64BIT})     # Intentionally only enable the option for iOS but not for tvOS as the latter is 64-bit only
 option (URHO3D_LUA "Enable additional Lua scripting support" TRUE)
 option (URHO3D_NAVIGATION "Enable navigation support" TRUE)
-option (URHO3D_PHYSICS "Enable physics support" TRUE)
 
 if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED") 
@@ -231,11 +230,6 @@ endif ()
 # Add definition for Navigation
 if (URHO3D_NAVIGATION)
     add_definitions (-DURHO3D_NAVIGATION)
-endif ()
-
-# Add definition for Physics
-if (URHO3D_PHYSICS)
-    add_definitions (-DURHO3D_PHYSICS)
 endif ()
 
 # TODO: The logic below is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling, until then ensure the DirectX package is not being searched again in external projects such as when building LuaJIT library

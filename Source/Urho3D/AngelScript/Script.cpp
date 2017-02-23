@@ -121,9 +121,7 @@ Script::Script(Context* context) :
     RegisterAudioAPI(scriptEngine_);
     RegisterUIAPI(scriptEngine_);
     RegisterDatabaseAPI(scriptEngine_);
-#ifdef URHO3D_PHYSICS
     RegisterPhysicsAPI(scriptEngine_);
-#endif
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationAPI(scriptEngine_);
 #endif

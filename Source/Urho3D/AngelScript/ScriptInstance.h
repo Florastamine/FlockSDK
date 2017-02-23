@@ -174,12 +174,10 @@ private:
     void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle scene post-update event.
     void HandleScenePostUpdate(StringHash eventType, VariantMap& eventData);
-#if defined(URHO3D_PHYSICS) 
     /// Handle physics pre-step event.
     void HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData);
     /// Handle physics post-step event.
     void HandlePhysicsPostStep(StringHash eventType, VariantMap& eventData);
-#endif
     /// Handle an event in script.
     void HandleScriptEvent(StringHash eventType, VariantMap& eventData);
     /// Handle script file reload start.

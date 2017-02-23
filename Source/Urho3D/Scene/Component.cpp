@@ -28,9 +28,7 @@
 #include "../Scene/ReplicationState.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneEvents.h"
-#ifdef URHO3D_PHYSICS
 #include "../Physics/PhysicsWorld.h"
-#endif
 #include "../Urho2D/PhysicsWorld2D.h"
 
 #include "../DebugNew.h"
@@ -289,9 +287,7 @@ Component* Component::GetFixedUpdateSource()
 
     if (scene)
     {
-#ifdef URHO3D_PHYSICS
         ret = scene->GetComponent<PhysicsWorld>();
-#endif
         if (!ret)
             ret = scene->GetComponent<PhysicsWorld2D>();
     }

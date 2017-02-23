@@ -29,9 +29,7 @@
 #include "../Core/Profiler.h"
 #include "../IO/Log.h"
 #include "../IO/MemoryBuffer.h"
-#if defined(URHO3D_PHYSICS)
 #include "../Physics/PhysicsEvents.h"
-#endif
 #include "../Resource/ResourceCache.h"
 #include "../Resource/ResourceEvents.h"
 #include "../Scene/Scene.h"
@@ -508,10 +506,8 @@ void ScriptInstance::OnSceneSet(Scene* scene)
     {
         UnsubscribeFromEvent(E_SCENEUPDATE);
         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
-#if defined(URHO3D_PHYSICS) 
         UnsubscribeFromEvent(E_PHYSICSPRESTEP);
         UnsubscribeFromEvent(E_PHYSICSPOSTSTEP);
-#endif
         subscribed_ = false;
         subscribedPostFixed_ = false;
     }
@@ -742,7 +738,6 @@ void ScriptInstance::UpdateEventSubscription()
             if (methods_[METHOD_POSTUPDATE])
                 SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(ScriptInstance, HandleScenePostUpdate));
 
-#if defined(URHO3D_PHYSICS) 
             if (methods_[METHOD_FIXEDUPDATE] || methods_[METHOD_FIXEDPOSTUPDATE])
             {
                 Component* world = GetFixedUpdateSource();
@@ -757,7 +752,6 @@ void ScriptInstance::UpdateEventSubscription()
                 else
                     URHO3D_LOGERROR("No physics world, can not subscribe script object to fixed update events");
             }
-#endif
             subscribedPostFixed_ = true;
         }
 
@@ -775,15 +769,12 @@ void ScriptInstance::UpdateEventSubscription()
         if (subscribedPostFixed_)
         {
             UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
-
-#if defined(URHO3D_PHYSICS) 
             Component* world = GetFixedUpdateSource();
             if (world)
             {
                 UnsubscribeFromEvent(world, E_PHYSICSPRESTEP);
                 UnsubscribeFromEvent(world, E_PHYSICSPOSTSTEP);
             }
-#endif
 
             subscribedPostFixed_ = false;
         }
@@ -852,8 +843,6 @@ void ScriptInstance::HandleScenePostUpdate(StringHash eventType, VariantMap& eve
     scriptFile_->Execute(scriptObject_, methods_[METHOD_POSTUPDATE], parameters);
 }
 
-#if defined(URHO3D_PHYSICS) 
-
 void ScriptInstance::HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData)
 {
     if (!scriptObject_)
@@ -884,8 +873,6 @@ void ScriptInstance::HandlePhysicsPostStep(StringHash eventType, VariantMap& eve
     parameters.Push(eventData[P_TIMESTEP]);
     scriptFile_->Execute(scriptObject_, methods_[METHOD_FIXEDPOSTUPDATE], parameters);
 }
-
-#endif
 
 void ScriptInstance::HandleScriptEvent(StringHash eventType, VariantMap& eventData)
 {

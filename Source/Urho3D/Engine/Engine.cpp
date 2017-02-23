@@ -41,9 +41,7 @@
 #include "../Navigation/NavigationMesh.h"
 #endif
 #include "../Database/Database.h"
-#ifdef URHO3D_PHYSICS
 #include "../Physics/PhysicsWorld.h"
-#endif
 #include "../Resource/ResourceCache.h"
 #include "../Resource/Localization.h"
 #include "../Scene/Scene.h"
@@ -115,10 +113,7 @@ Engine::Engine(Context* context) :
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
     RegisterSceneLibrary(context_);
-
-#ifdef URHO3D_PHYSICS
     RegisterPhysicsLibrary(context_);
-#endif
 
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);

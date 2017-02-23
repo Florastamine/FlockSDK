@@ -155,11 +155,9 @@ list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${ALL_OBJ_FILES} librevision.h Urho3D
 # Define dependency libs
 # Add include directories to find the precompiled header, export header, and installed headers from thirdparty libs
 set (INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
-if (URHO3D_PHYSICS)
-    # Bullet library depends on its own include dir to be added in the header search path
-    # This is more practical than patching its header files in many places to make them work with relative path
-    list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/Bullet)
-endif ()
+# Bullet library depends on its own include dir to be added in the header search path
+# This is more practical than patching its header files in many places to make them work with relative path
+list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/Bullet)
 if (URHO3D_NAVIGATION)
     # DetourTileCache and DetourCrowd libraries depend on Detour's include dir to be added in the header search path
     list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/Detour)
@@ -347,11 +345,9 @@ if (GLOBAL_INCLUDE_DIRS)
     string (REPLACE "${SYSROOT}" "" GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS})
 endif ()
 set (ENGINE_INCLUDE_DIRS "${DASH}I\"\${includedir}\" ${DASH}I\"\${includedir}/Urho3D/ThirdParty\"")
-if (URHO3D_PHYSICS)
-    # Bullet library depends on its own include dir to be added in the header search path
-    # This is more practical than patching its header files in many places to make them work with relative path
-    set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Urho3D/ThirdParty/Bullet\"")
-endif ()
+# Bullet library depends on its own include dir to be added in the header search path
+# This is more practical than patching its header files in many places to make them work with relative path
+set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Urho3D/ThirdParty/Bullet\"")
 if (URHO3D_LUA)
     # ditto for Lua/LuaJIT
     set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Urho3D/ThirdParty/Lua${JIT}\"")

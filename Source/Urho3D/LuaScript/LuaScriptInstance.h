@@ -156,12 +156,10 @@ private:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle the logic post update event.
     void HandlePostUpdate(StringHash eventType, VariantMap& eventData);
-#if defined(URHO3D_PHYSICS) 
     /// Handle the physics update event.
     void HandleFixedUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle the physics post update event.
     void HandlePostFixedUpdate(StringHash eventType, VariantMap& eventData);
-#endif
     /// Release the script object.
     void ReleaseObject();
 

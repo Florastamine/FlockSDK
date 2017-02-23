@@ -42,9 +42,7 @@
 #include "../Navigation/NavigationMesh.h"
 #include "../Navigation/Obstacle.h"
 #include "../Navigation/OffMeshConnection.h"
-#ifdef URHO3D_PHYSICS
 #include "../Physics/CollisionShape.h"
-#endif
 #include "../Scene/Scene.h"
 
 #include <cfloat>
@@ -908,7 +906,6 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
 
     Matrix3x4 inverse = node_->GetWorldTransform().Inverse();
 
-#ifdef URHO3D_PHYSICS
     // Prefer compatible physics collision shapes (triangle mesh, convex hull, box) if found.
     // Then fallback to visible geometry
     PODVector<CollisionShape*> collisionShapes;
@@ -936,7 +933,6 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
         }
     }
     if (!collisionShapeFound)
-#endif
     {
         PODVector<Drawable*> drawables;
         node->GetDerivedComponents<Drawable>(drawables);
@@ -1007,7 +1003,6 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
                 continue;
             }
 
-#ifdef URHO3D_PHYSICS
             CollisionShape* shape = dynamic_cast<CollisionShape*>(geometryList[i].component_);
             if (shape)
             {
@@ -1072,7 +1067,6 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
 
                 continue;
             }
-#endif
             Drawable* drawable = dynamic_cast<Drawable*>(geometryList[i].component_);
             if (drawable)
             {

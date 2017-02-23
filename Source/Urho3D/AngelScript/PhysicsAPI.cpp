@@ -20,8 +20,6 @@
 // THE SOFTWARE.
 //
 
-#ifdef URHO3D_PHYSICS
-
 #include "../Precompiled.h"
 
 #include "../AngelScript/APITemplates.h"
@@ -351,5 +349,3 @@ void RegisterPhysicsAPI(asIScriptEngine* engine)
 }
 
 }
-
-#endif

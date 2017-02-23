@@ -55,11 +55,11 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D AND TARGET Urho3D)
     # A special case where library location is already known to be in the build tree of Urho3D project
     set (URHO3D_HOME ${CMAKE_BINARY_DIR})
     set (URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include ${URHO3D_HOME}/include/Urho3D/ThirdParty)
-    if (URHO3D_PHYSICS)
-        # Bullet library depends on its own include dir to be added in the header search path
-        # This is more practical than patching its header files in many places to make them work with relative path
-        list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include/Urho3D/ThirdParty/Bullet)
-    endif ()
+
+    # Bullet library depends on its own include dir to be added in the header search path
+    # This is more practical than patching its header files in many places to make them work with relative path
+    list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include/Urho3D/ThirdParty/Bullet)
+
     if (URHO3D_LUA)
         # ditto for Lua/LuaJIT
         list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_HOME}/include/Urho3D/ThirdParty/Lua${JIT})
@@ -131,9 +131,7 @@ else ()
             get_filename_component (URHO3D_HOME ${URHO3D_INCLUDE_DIRS} PATH)
         endif ()
         list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_BASE_INCLUDE_DIR}/ThirdParty)
-        if (URHO3D_PHYSICS)
-            list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_BASE_INCLUDE_DIR}/ThirdParty/Bullet)
-        endif ()
+        list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_BASE_INCLUDE_DIR}/ThirdParty/Bullet)
         if (URHO3D_LUA)
             list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_BASE_INCLUDE_DIR}/ThirdParty/Lua${JIT})
         endif ()
