@@ -26,7 +26,6 @@
 #cmakedefine URHO3D_STATIC_DEFINE
 #cmakedefine URHO3D_SSE
 #cmakedefine URHO3D_LUAJIT
-#cmakedefine URHO3D_TESTING
 
 #ifdef @STATIC_DEFINE@
 #  define @EXPORT_MACRO_NAME@

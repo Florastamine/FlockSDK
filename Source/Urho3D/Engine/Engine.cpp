@@ -82,9 +82,6 @@ Engine::Engine(Context* context) :
     maxFps_(200),
     maxInactiveFps_(60),
     pauseMinimized_(false),
-#ifdef URHO3D_TESTING
-    timeOut_(0),
-#endif
     autoExit_(true),
     initialized_(false),
     exiting_(false),
@@ -372,11 +369,6 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Init FPU state of main thread
     InitFPU();
-
-#ifdef URHO3D_TESTING
-    if (HasParameter(parameters, "TimeOut"))
-        timeOut_ = GetParameter(parameters, "TimeOut", 0).GetInt() * 1000000LL;
-#endif
 
 #ifdef URHO3D_PROFILING
     if (GetParameter(parameters, "EventProfiler", true).GetBool())
@@ -668,14 +660,6 @@ void Engine::ApplyFrameLimit()
     }
 
     elapsed = frameTimer_.GetUSec(true);
-#ifdef URHO3D_TESTING
-    if (timeOut_ > 0)
-    {
-        timeOut_ -= elapsed;
-        if (timeOut_ <= 0)
-            Exit();
-    }
-#endif
 
     // If FPS lower than minimum, clamp elapsed time
     if (minFps_)
@@ -840,13 +824,6 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret["TextureAnisotropy"] = ToInt(value);
                 ++i;
             }
-#ifdef URHO3D_TESTING
-            else if (argument == "timeout" && !value.Empty())
-            {
-                ret["TimeOut"] = ToInt(value);
-                ++i;
-            }
-#endif
         }
     }
 

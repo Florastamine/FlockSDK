@@ -293,10 +293,6 @@ const Vector<String>& GetArguments()
 String GetConsoleInput()
 {
     String ret;
-#ifdef URHO3D_TESTING
-    // When we are running automated tests, reading the console may block. Just return empty in that case
-    return ret;
-#else
 #ifdef _WIN32
     HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -360,7 +356,6 @@ String GetConsoleInput()
 #endif 
 
     return ret;
-#endif
 }
 
 String GetPlatform()

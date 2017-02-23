@@ -80,7 +80,6 @@ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native only)" FALSE "NOT IOS  " FALSE)
     option (URHO3D_PCH "Enable PCH support" TRUE)
     option (URHO3D_FILEWATCHER "Enable filewatcher support" TRUE)
-    option (URHO3D_TESTING "Enable testing support")
     cmake_dependent_option (URHO3D_STATIC_RUNTIME "Use static C/C++ runtime libraries and eliminate the need for runtime DLLs installation (VS only)" FALSE "MSVC" FALSE)
     if ((URHO3D_LUA AND NOT URHO3D_LUAJIT) AND NOT WIN32)
         # Find GNU Readline development library for Lua interpreter and SQLite's isql
@@ -111,12 +110,6 @@ endif ()
 option (URHO3D_PACKAGING "Enable resources packaging support, on Web platform default to 1, on other platforms default to 0" ${WEB})
 option (URHO3D_PROFILING "Enable profiling support" TRUE)
 option (URHO3D_LOGGING "Enable logging support" TRUE)
-if (URHO3D_TESTING)
-    set (DEFAULT_TIMEOUT 5)
-    set (URHO3D_TEST_TIMEOUT ${DEFAULT_TIMEOUT} CACHE STRING "Number of seconds to test run the executables (when testing support is enabled only), default to 10 on Web platform and 5 on other platforms")
-else ()
-    unset (URHO3D_TEST_TIMEOUT CACHE)
-endif ()
 
 if (CMAKE_CROSSCOMPILING  AND NOT IOS)
     set (URHO3D_SCP_TO_TARGET "" CACHE STRING "Use scp to transfer executables to target system (non-Android cross-compiling build only), SSH digital key must be setup first for this to work, typical value has a pattern of usr@tgt:remote-loc")
@@ -145,11 +138,6 @@ endif()
 # Union all the sysroot variables into one so it can be referred to generically later
 # TODO: to be replaced with CMAKE_SYSROOT later if it is more beneficial
 set (SYSROOT ${MINGW_SYSROOT} CACHE INTERNAL "Path to system root of the cross-compiling target")  # SYSROOT is empty for native build
-
-# Enable testing
-if (URHO3D_TESTING)
-    enable_testing ()
-endif ()
 
 # Enable coverity scan modeling
 if ($ENV{COVERITY_SCAN_BRANCH})
@@ -915,17 +903,6 @@ macro (adjust_target_name)
     if (TARGET_NAME MATCHES _.*$)
         string (REGEX REPLACE _.*$ "" OUTPUT_NAME ${TARGET_NAME})
         set_target_properties (${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
-    endif ()
-endmacro ()
-
-# Macro for setting up a test case
-macro (setup_test)
-    if (URHO3D_TESTING)
-        cmake_parse_arguments (ARG "" NAME OPTIONS ${ARGN})
-        if (NOT ARG_NAME)
-            set (ARG_NAME ${TARGET_NAME})
-        endif ()
-        list (APPEND ARG_OPTIONS -timeout ${URHO3D_TEST_TIMEOUT})
     endif ()
 endmacro ()
 
