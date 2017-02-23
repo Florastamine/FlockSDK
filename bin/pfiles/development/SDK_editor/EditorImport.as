@@ -26,7 +26,7 @@ int ExecuteAssetImporter(Array<String>@ args)
         if (GetPlatform() == "Windows")
             exeSuffix = ".exe";
         // Try both with and without the tool directory; a packaged build may not have the tool directory
-        assetImporterPath = fileSystem.programDir + "tool/AssetImporter" + exeSuffix;
+        assetImporterPath = fileSystem.programDir + "tool/bin/AssetImporter" + exeSuffix;
         if (!fileSystem.FileExists(assetImporterPath))
             assetImporterPath = fileSystem.programDir + "AssetImporter" + exeSuffix;
     }
@@ -112,274 +112,33 @@ void ImportScene(const String&in fileName)
 
     ui.cursor.shape = CS_BUSY;
 
-    // Handle Tundra scene files here in code, otherwise via AssetImporter
-    if (GetExtension(fileName) == ".txml")
-        ImportTundraScene(fileName);
+    // Export scene to a temp file, then load and delete it if successful
+    Array<String> options = importOptions.Trimmed().Split(' ');
+    bool isBinary = false;
+    for (uint i = 0; i < options.length; ++i)
+        if (options[i] == "-b")
+            isBinary = true;
+    String tempSceneName = sceneResourcePath + (isBinary ? TEMP_BINARY_SCENE_NAME : TEMP_SCENE_NAME);
+
+    Array<String> args;
+    args.Push("scene");
+    args.Push("\"" + fileName + "\"");
+    args.Push("\"" + tempSceneName + "\"");
+    args.Push("-p \"" + sceneResourcePath + "\"");
+    for (uint i = 0; i < options.length; ++i)
+        args.Push(options[i]);
+    if (applyMaterialList)
+        args.Push("-l");
+
+    if (ExecuteAssetImporter(args) == 0)
+    {
+        skipMruScene = true; // set to avoid adding tempscene to mru
+        LoadScene(tempSceneName);
+        fileSystem.Delete(tempSceneName);
+        UpdateWindowTitle();
+    }
     else
-    {
-        // Export scene to a temp file, then load and delete it if successful
-        Array<String> options = importOptions.Trimmed().Split(' ');
-        bool isBinary = false;
-        for (uint i = 0; i < options.length; ++i)
-            if (options[i] == "-b")
-                isBinary = true;
-        String tempSceneName = sceneResourcePath + (isBinary ? TEMP_BINARY_SCENE_NAME : TEMP_SCENE_NAME);
-
-        Array<String> args;
-        args.Push("scene");
-        args.Push("\"" + fileName + "\"");
-        args.Push("\"" + tempSceneName + "\"");
-        args.Push("-p \"" + sceneResourcePath + "\"");
-        for (uint i = 0; i < options.length; ++i)
-            args.Push(options[i]);
-        if (applyMaterialList)
-            args.Push("-l");
-
-        if (ExecuteAssetImporter(args) == 0)
-        {
-            skipMruScene = true; // set to avoid adding tempscene to mru
-            LoadScene(tempSceneName);
-            fileSystem.Delete(tempSceneName);
-            UpdateWindowTitle();
-        }
-        else
-            log.Error("Failed to execute AssetImporter to import scene");
-    }
-}
-
-void ImportTundraScene(const String&in fileName)
-{
-    fileSystem.CreateDir(sceneResourcePath + "materials");
-    fileSystem.CreateDir(sceneResourcePath + "objects");
-    fileSystem.CreateDir(sceneResourcePath + "textures");
-
-    XMLFile source;
-    source.Load(File(fileName, FILE_READ));
-    String filePath = GetPath(fileName);
-
-    XMLElement sceneElem = source.root;
-    XMLElement entityElem = sceneElem.GetChild("entity");
-
-    Array<String> convertedMaterials;
-    Array<String> convertedMeshes;
-    Array<ParentAssignment> parentAssignments;
-
-    // Read the scene directory structure recursively to get assetname to full assetname mappings
-    Array<String> fileNames = fileSystem.ScanDir(filePath, "*.*", SCAN_FILES, true);
-    for (uint i = 0; i < fileNames.length; ++i)
-    {
-        AssetMapping mapping;
-        mapping.assetName = GetFileNameAndExtension(fileNames[i]);
-        mapping.fullAssetName = fileNames[i];
-        assetMappings.Push(mapping);
-    }
-
-    // Clear old scene, then create a zone and a directional light first
-    ResetScene();
-
-    // Set standard gravity
-    editorScene.CreateComponent("PhysicsWorld");
-    editorScene.physicsWorld.gravity = Vector3(0, -9.81, 0);
-
-    // Create zone & global light
-    Node@ zoneNode = editorScene.CreateChild("Zone");
-    Zone@ zone = zoneNode.CreateComponent("Zone");
-    zone.boundingBox = BoundingBox(-1000, 1000);
-    zone.ambientColor = Color(0.364, 0.364, 0.364);
-    zone.fogColor = Color(0.707792, 0.770537, 0.831373);
-    zone.fogStart = 100.0;
-    zone.fogEnd = 500.0;
-
-    Node@ lightNode = editorScene.CreateChild("GlobalLight");
-    Light@ light = lightNode.CreateComponent("Light");
-    lightNode.rotation = Quaternion(60, 30, 0);
-    light.lightType = LIGHT_DIRECTIONAL;
-    light.color = Color(0.639, 0.639, 0.639);
-    light.castShadows = true;
-    light.shadowCascade = CascadeParameters(5, 15.0, 50.0, 0.0, 0.9);
-
-    // Loop through scene entities
-    while (!entityElem.isNull)
-    {
-        String nodeName;
-        String meshName;
-        String parentName;
-        Vector3 meshPos;
-        Vector3 meshRot;
-        Vector3 meshScale(1, 1, 1);
-        Vector3 pos;
-        Vector3 rot;
-        Vector3 scale(1, 1, 1);
-        bool castShadows = false;
-        float drawDistance = 0;
-        Array<String> materialNames;
-
-        int shapeType = -1;
-        float mass = 0.0f;
-        Vector3 bodySize;
-        bool trigger = false;
-        bool kinematic = false;
-        uint collisionLayer;
-        uint collisionMask;
-        String collisionMeshName;
-
-        XMLElement compElem = entityElem.GetChild("component");
-        while (!compElem.isNull)
-        {
-            String compType = compElem.GetAttribute("type");
-
-            if (compType == "EC_Mesh" || compType == "Mesh")
-            {
-                Array<String> coords = GetComponentAttribute(compElem, "Transform").Split(',');
-                meshPos = GetVector3FromStrings(coords, 0);
-                meshPos.z = -meshPos.z; // Convert to lefthanded
-                meshRot = GetVector3FromStrings(coords, 3);
-                meshScale = GetVector3FromStrings(coords, 6);
-                meshName = GetComponentAttribute(compElem, "Mesh ref");
-                castShadows = GetComponentAttribute(compElem, "Cast shadows").ToBool();
-                drawDistance = GetComponentAttribute(compElem, "Draw distance").ToFloat();
-                materialNames = GetComponentAttribute(compElem, "Mesh materials").Split(';');
-                ProcessRef(meshName);
-                for (uint i = 0; i < materialNames.length; ++i)
-                    ProcessRef(materialNames[i]);
-            }
-            if (compType == "EC_Name" || compType == "Name")
-                nodeName = GetComponentAttribute(compElem, "name");
-            if (compType == "EC_Placeable" || compType == "Placeable")
-            {
-                Array<String> coords = GetComponentAttribute(compElem, "Transform").Split(',');
-                pos = GetVector3FromStrings(coords, 0);
-                pos.z = -pos.z; // Convert to lefthanded
-                rot = GetVector3FromStrings(coords, 3);
-                scale = GetVector3FromStrings(coords, 6);
-                parentName = GetComponentAttribute(compElem, "Parent entity ref");
-            }
-            if (compType == "EC_RigidBody" || compType == "RigidBody")
-            {
-                shapeType = GetComponentAttribute(compElem, "Shape type").ToInt();
-                mass = GetComponentAttribute(compElem, "Mass").ToFloat();
-                bodySize = GetComponentAttribute(compElem, "Size").ToVector3();
-                collisionMeshName = GetComponentAttribute(compElem, "Collision mesh ref");
-                trigger = GetComponentAttribute(compElem, "Phantom").ToBool();
-                kinematic = GetComponentAttribute(compElem, "Kinematic").ToBool();
-                collisionLayer = GetComponentAttribute(compElem, "Collision Layer").ToInt();
-                collisionMask = GetComponentAttribute(compElem, "Collision Mask").ToInt();
-                ProcessRef(collisionMeshName);
-            }
-
-            compElem = compElem.GetNext("component");
-        }
-
-        // If collision mesh not specified for the rigid body, assume same as the visible mesh
-        if ((shapeType == 4 || shapeType == 6) && collisionMeshName.Trimmed().empty)
-            collisionMeshName = meshName;
-
-        if (!meshName.empty || shapeType >= 0)
-        {
-            for (uint i = 0; i < materialNames.length; ++i)
-                ConvertMaterial(materialNames[i], filePath, convertedMaterials);
-
-            ConvertModel(meshName, filePath, convertedMeshes);
-            ConvertModel(collisionMeshName, filePath, convertedMeshes);
-
-            Node@ newNode = editorScene.CreateChild(nodeName);
-
-            // Calculate final transform in an Ogre-like fashion
-            Quaternion quat = GetTransformQuaternion(rot);
-            Quaternion meshQuat = GetTransformQuaternion(meshRot);
-            Quaternion finalQuat = quat * meshQuat;
-            Vector3 finalScale = scale * meshScale;
-            Vector3 finalPos = pos + quat * (scale * meshPos);
-
-            newNode.SetTransform(finalPos, finalQuat, finalScale);
-
-            // Create model
-            if (!meshName.empty)
-            {
-                StaticModel@ model = newNode.CreateComponent("StaticModel");
-                model.model = cache.GetResource("Model", GetOutModelName(meshName));
-                model.drawDistance = drawDistance;
-                model.castShadows = castShadows;
-                // Set default grey material to match Tundra defaults
-                model.material = cache.GetResource("Material", "materials/DefaultGrey.xml");
-                // Then try to assign the actual materials
-                for (uint i = 0; i < materialNames.length; ++i)
-                {
-                    Material@ mat = cache.GetResource("Material", GetOutMaterialName(materialNames[i]));
-                    if (mat !is null)
-                        model.materials[i] = mat;
-                }
-            }
-
-            // Create rigidbody & collision shape
-            if (shapeType >= 0)
-            {
-                RigidBody@ body = newNode.CreateComponent("RigidBody");
-
-                // If mesh has scaling, undo it for the collision shape
-                bodySize.x /= meshScale.x;
-                bodySize.y /= meshScale.y;
-                bodySize.z /= meshScale.z;
-
-                CollisionShape@ shape = newNode.CreateComponent("CollisionShape");
-                switch (shapeType)
-                {
-                case 0:
-                    shape.SetBox(bodySize);
-                    break;
-
-                case 1:
-                    shape.SetSphere(bodySize.x);
-                    break;
-
-                case 2:
-                    shape.SetCylinder(bodySize.x, bodySize.y);
-                    break;
-
-                case 3:
-                    shape.SetCapsule(bodySize.x, bodySize.y);
-                    break;
-
-                case 4:
-                    shape.SetTriangleMesh(cache.GetResource("Model", GetOutModelName(collisionMeshName)), 0, bodySize);
-                    break;
-
-                case 6:
-                    shape.SetConvexHull(cache.GetResource("Model", GetOutModelName(collisionMeshName)), 0, bodySize);
-                    break;
-                }
-
-                body.collisionLayer = collisionLayer;
-                body.collisionMask = collisionMask;
-                body.trigger = trigger;
-                body.mass = mass;
-            }
-
-            // Store pending parent assignment if necessary
-            if (!parentName.empty)
-            {
-                ParentAssignment assignment;
-                assignment.childID = newNode.id;
-                assignment.parentName = parentName;
-                parentAssignments.Push(assignment);
-            }
-        }
-
-        entityElem = entityElem.GetNext("entity");
-    }
-
-    // Process any parent assignments now
-    for (uint i = 0; i < parentAssignments.length; ++i)
-    {
-        Node@ childNode = editorScene.GetNode(parentAssignments[i].childID);
-        Node@ parentNode = editorScene.GetChild(parentAssignments[i].parentName, true);
-        if (childNode !is null && parentNode !is null)
-            childNode.parent = parentNode;
-    }
-
-    UpdateHierarchyItem(editorScene, true);
-    UpdateWindowTitle();
-    assetMappings.Clear();
+        log.Error("Failed to execute AssetImporter to import scene");
 }
 
 String GetFullAssetName(const String& assetName)
