@@ -1,3 +1,4 @@
 <technique vs="Water" ps="Water">
     <pass name="refract" />
+    <pass name="litalpha" depthwrite="false" blend="addalpha" />
 </technique>
