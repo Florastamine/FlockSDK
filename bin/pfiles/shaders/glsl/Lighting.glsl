@@ -68,7 +68,7 @@ float GetVertexLightVolumetric(int index, vec3 worldPos)
 
 #ifdef SHADOW
 
-#if defined(DIRLIGHT) && (!defined(GL_ES) || defined(WEBGL))
+#if defined(DIRLIGHT) 
     #define NUMCASCADES 4
 #else
     #define NUMCASCADES 1
@@ -164,7 +164,7 @@ float GetIntensity(vec3 color)
 
 #ifdef SHADOW
 
-#if defined(DIRLIGHT) && (!defined(GL_ES) || defined(WEBGL))
+#if defined(DIRLIGHT) 
     #define NUMCASCADES 4
 #else
     #define NUMCASCADES 1
@@ -195,7 +195,6 @@ float Chebyshev(vec2 Moments, float depth)
 }
 #endif
 
-#ifndef GL_ES
 float GetShadow(vec4 shadowPos)
 {
     #if defined(SIMPLE_SHADOW)
@@ -230,28 +229,6 @@ float GetShadow(vec4 shadowPos)
         return cShadowIntensity.y + cShadowIntensity.x * Chebyshev(samples, shadowPos.z / shadowPos.w);
     #endif
 }
-#else
-float GetShadow(highp vec4 shadowPos)
-{
-    #if defined(SIMPLE_SHADOW)
-        // Take one sample
-        return cShadowIntensity.y + (texture2DProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z ? cShadowIntensity.x : 0.0);
-    #elif defined(PCF_SHADOW)
-        // Take four samples and average them
-        vec2 offsets = cShadowMapInvSize * shadowPos.w;
-        vec4 inLight = vec4(
-            texture2DProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)).r * shadowPos.w > shadowPos.z
-        );
-        return cShadowIntensity.y + dot(inLight, vec4(cShadowIntensity.x));
-    #elif defined(VSM_SHADOW)
-        vec2 samples = texture2D(sShadowMap, shadowPos.xy / shadowPos.w).rg; 
-        return cShadowIntensity.y + cShadowIntensity.x * Chebyshev(samples, shadowPos.z / shadowPos.w);
-    #endif
-}
-#endif
 
 #ifdef POINTLIGHT
 float GetPointShadow(vec3 lightVec)
@@ -281,7 +258,6 @@ float GetDirShadowFade(float inLight, float depth)
     return min(inLight + max((depth - cShadowDepthFade.z) * cShadowDepthFade.w, 0.0), 1.0);
 }
 
-#if !defined(GL_ES) || defined(WEBGL)
 float GetDirShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
 {
     vec4 shadowPos;
@@ -297,14 +273,7 @@ float GetDirShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
         
     return GetDirShadowFade(GetShadow(shadowPos), depth);
 }
-#else
-float GetDirShadow(const highp vec4 iShadowPos[NUMCASCADES], float depth)
-{
-    return GetDirShadowFade(GetShadow(iShadowPos[0]), depth);
-}
-#endif
 
-#ifndef GL_ES
 float GetDirShadowDeferred(vec4 projWorldPos, vec3 normal, float depth)
 {
     vec4 shadowPos;
@@ -333,13 +302,8 @@ float GetDirShadowDeferred(vec4 projWorldPos, vec3 normal, float depth)
     return GetDirShadowFade(GetShadow(shadowPos), depth);
 }
 #endif
-#endif
 
-#ifndef GL_ES
 float GetShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
-#else
-float GetShadow(const highp vec4 iShadowPos[NUMCASCADES], float depth)
-#endif
 {
     #if defined(DIRLIGHT)
         return GetDirShadow(iShadowPos, depth);
@@ -350,7 +314,6 @@ float GetShadow(const highp vec4 iShadowPos[NUMCASCADES], float depth)
     #endif
 }
 
-#ifndef GL_ES
 float GetShadowDeferred(vec4 projWorldPos, vec3 normal, float depth)
 {
     #ifdef DIRLIGHT
@@ -370,6 +333,5 @@ float GetShadowDeferred(vec4 projWorldPos, vec3 normal, float depth)
         #endif
     #endif
 }
-#endif
 #endif
 #endif

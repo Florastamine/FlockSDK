@@ -272,13 +272,8 @@
         // OpenGL ES does not support textureLod without extensions and does not have the sZoneCubeMap sampler,
         // so for now, sample without explicit LOD, and from the environment sampler, where the zone texture will be put
         // on mobile hardware
-        #ifndef GL_ES
-            vec3 cube = textureLod(sZoneCubeMap, reflectVec, mipSelect).rgb;
-            vec3 cubeD = textureLod(sZoneCubeMap, wsNormal, 9.0).rgb;
-        #else
-            vec3 cube = textureCube(sEnvCubeMap, reflectVec).rgb;
-            vec3 cubeD = textureCube(sEnvCubeMap, wsNormal).rgb;
-        #endif
+        vec3 cube = textureLod(sZoneCubeMap, reflectVec, mipSelect).rgb;
+        vec3 cubeD = textureLod(sZoneCubeMap, wsNormal, 9.0).rgb; 
 
         // Fake the HDR texture
         float brightness = clamp(cAmbientColor.a, 0.0, 1.0);

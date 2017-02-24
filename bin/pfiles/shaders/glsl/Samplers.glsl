@@ -9,24 +9,20 @@ uniform samplerCube sEnvCubeMap;
 uniform sampler2D sLightRampMap;
 uniform sampler2D sLightSpotMap;
 uniform samplerCube sLightCubeMap;
-#ifndef GL_ES
-    uniform sampler3D sVolumeMap;
-    uniform sampler2D sAlbedoBuffer;
-    uniform sampler2D sNormalBuffer;
-    uniform sampler2D sDepthBuffer;
-    uniform sampler2D sLightBuffer;
-    #ifdef VSM_SHADOW
-        uniform sampler2D sShadowMap;
-    #else
-        uniform sampler2DShadow sShadowMap;
-    #endif
-    uniform samplerCube sFaceSelectCubeMap;
-    uniform samplerCube sIndirectionCubeMap;
-    uniform samplerCube sZoneCubeMap;
-    uniform sampler3D sZoneVolumeMap;
+uniform sampler3D sVolumeMap;
+uniform sampler2D sAlbedoBuffer;
+uniform sampler2D sNormalBuffer;
+uniform sampler2D sDepthBuffer;
+uniform sampler2D sLightBuffer;
+#ifdef VSM_SHADOW
+    uniform sampler2D sShadowMap;
 #else
-    uniform highp sampler2D sShadowMap;
+    uniform sampler2DShadow sShadowMap;
 #endif
+uniform samplerCube sFaceSelectCubeMap;
+uniform samplerCube sIndirectionCubeMap;
+uniform samplerCube sZoneCubeMap;
+uniform sampler3D sZoneVolumeMap;
 
 #ifdef GL3
 #define texture2D texture

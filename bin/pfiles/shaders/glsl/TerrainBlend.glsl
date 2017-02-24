@@ -7,21 +7,13 @@
 
 varying vec2 vTexCoord;
 
-#ifndef GL_ES
 varying vec2 vDetailTexCoord;
-#else
-varying mediump vec2 vDetailTexCoord;
-#endif
 
 varying vec3 vNormal;
 varying vec4 vWorldPos;
 #ifdef PERPIXEL
     #ifdef SHADOW
-        #ifndef GL_ES
-            varying vec4 vShadowPos[NUMCASCADES];
-        #else
-            varying highp vec4 vShadowPos[NUMCASCADES];
-        #endif
+        varying vec4 vShadowPos[NUMCASCADES];
     #endif
     #ifdef SPOTLIGHT
         varying vec4 vSpotPos;
@@ -45,11 +37,7 @@ uniform sampler2D sDetailMap1;
 uniform sampler2D sDetailMap2;
 uniform sampler2D sDetailMap3;
 
-#ifndef GL_ES
-uniform vec2 cDetailTiling;
-#else
-uniform mediump vec2 cDetailTiling;
-#endif
+uniform vec2 cDetailTiling; 
 
 void VS()
 {
