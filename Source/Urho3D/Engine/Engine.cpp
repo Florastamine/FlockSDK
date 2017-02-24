@@ -155,6 +155,9 @@ bool Engine::Initialize(const VariantMap& parameters)
     }
 
     // Add resource paths
+    if (!InitializeResourceCache(parameters, false))
+        return false;
+
     ResourceCache* cache = GetSubsystem<ResourceCache>();
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
 
@@ -364,12 +367,23 @@ bool Engine::Initialize(const VariantMap& parameters)
     return true;
 }
 
-#if 0
+bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOld /*= true*/)
 {
-    // Add resource paths
     ResourceCache* cache = GetSubsystem<ResourceCache>();
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
 
+    // Remove all resource paths and packages
+    if (removeOld)
+    {
+        Vector<String> resourceDirs = cache->GetResourceDirs();
+        Vector<SharedPtr<PackageFile> > packageFiles = cache->GetPackageFiles();
+        for (unsigned i = 0; i < resourceDirs.Size(); ++i)
+            cache->RemoveResourceDir(resourceDirs[i]);
+        for (unsigned i = 0; i < packageFiles.Size(); ++i)
+            cache->RemovePackageFile(packageFiles[i]);
+    }
+
+    // Add resource paths
     Vector<String> resourcePrefixPaths = GetParameter(parameters, EP_RESOURCE_PREFIX_PATHS, String::EMPTY).GetString().Split(';', true);
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
@@ -499,8 +513,9 @@ bool Engine::Initialize(const VariantMap& parameters)
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
                 autoLoadPaths[i].CString());
     }
+
+    return true;
 }
-#endif
 
 void Engine::RunFrame()
 {
