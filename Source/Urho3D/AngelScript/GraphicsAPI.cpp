@@ -2198,17 +2198,6 @@ static void RegisterOctree(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("Octree@+ get_octree()", asFUNCTION(GetOctree), asCALL_CDECL);
 }
 
-bool ObjWriteDrawablesToOBJ(CScriptArray* drawablesArray, File* file, bool asZUp, bool asRightHanded, bool writeLightmapUV)
-{
-    PODVector<Drawable*> drawables = ArrayToPODVector<Drawable*>(drawablesArray);
-    return WriteDrawablesToOBJ(drawables, file, asZUp, asRightHanded, writeLightmapUV);
-}
-
-static void RegisterOBJExport(asIScriptEngine* engine)
-{
-    engine->RegisterGlobalFunction("bool WriteDrawablesToOBJ(Array<Drawable@>@, File@+, bool, bool, bool = false)", asFUNCTION(ObjWriteDrawablesToOBJ), asCALL_CDECL);
-}
-
 void RegisterGraphicsAPI(asIScriptEngine* engine)
 {
     RegisterSkeleton(engine);
@@ -2238,7 +2227,6 @@ void RegisterGraphicsAPI(asIScriptEngine* engine)
     RegisterOctree(engine);
     RegisterGraphics(engine);
     RegisterRenderer(engine);
-    RegisterOBJExport(engine);
 }
 
 }
