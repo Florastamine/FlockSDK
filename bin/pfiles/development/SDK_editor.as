@@ -24,12 +24,10 @@
 #include "development/SDK_editor/EditorViewSelectableOrigins.as"
 #include "development/SDK_editor/EditorViewPaintSelection.as" 
 
-String configFileName;
+const String SDKConfigFile = "SDKConfig.xml"; 
 
-void Start()
-{
-    // Assign the value ASAP because configFileName is needed on exit, including exit on error
-    configFileName = fileSystem.GetAppPreferencesDir("urho3d", "Editor") + "Config.xml";
+void Start() 
+{ 
     localization.LoadJSONFile("development/SDK_editor/EditorStrings.json");
 
     if (engine.headless)
@@ -160,11 +158,11 @@ void HandleReloadFinishOrFail(StringHash eventType, VariantMap& eventData)
 
 void LoadConfig()
 {
-    if (!fileSystem.FileExists(configFileName))
+    if (!fileSystem.FileExists(SDKConfigFile))
         return;
 
     XMLFile config;
-    config.Load(File(configFileName, FILE_READ));
+    config.Load(File(SDKConfigFile, FILE_READ));
 
     XMLElement configElem = config.root;
     if (configElem.isNull)
@@ -425,7 +423,7 @@ void SaveConfig()
     
     SaveSoundTypes(soundTypesElem);
 
-    config.Save(File(configFileName, FILE_WRITE));
+    config.Save(File(SDKConfigFile, FILE_WRITE));
 }
 
 void MakeBackup(const String&in fileName)

@@ -355,17 +355,8 @@ void CheckKeyboardQualifers()
     if (hideAltInfo)
         selectedNodeInfoState = 0;
 
-    bool showNameForOther = false;
-
-    // In-B.mode Key_Space are busy by quick menu, so we use other key for B.mode
-    if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-      showNameForOther = (input.keyPress[KEY_TAB] && ui.focusElement is null);
-    else
-      showNameForOther = (input.keyPress[KEY_SPACE] && ui.focusElement is null);
-
-    if (showNameForOther)
-        showNamesForAll =!showNamesForAll;
-
+    if (input.keyPress[KEY_SPACE] && ui.focusElement is null)
+        showNamesForAll = !showNamesForAll;
 }
 
 String NodeInfo(Node& node, int st)

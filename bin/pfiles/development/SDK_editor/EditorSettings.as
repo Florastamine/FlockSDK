@@ -46,9 +46,6 @@ void UpdateEditorSettingsDialog()
     CheckBox@ middleMousePanToggle = settingsDialog.GetChild("MiddleMousePanToggle", true);
     middleMousePanToggle.checked = mmbPanMode;
 
-    DropDownList@ hotKeysModeEdit = settingsDialog.GetChild("HotKeysModeEdit", true);
-    hotKeysModeEdit.selection = hotKeyMode;
-
     DropDownList@ newNodeModeEdit = settingsDialog.GetChild("NewNodeModeEdit", true);
     newNodeModeEdit.selection = newNodeMode;
 
@@ -142,7 +139,6 @@ void UpdateEditorSettingsDialog()
         SubscribeToEvent(mouseWheelCameraPositionToggle, "Toggled", "EditMouseWheelCameraPosition");
         SubscribeToEvent(middleMousePanToggle, "Toggled", "EditMiddleMousePan");
         SubscribeToEvent(mouseOrbitEdit, "ItemSelected", "EditMouseOrbitMode");
-        SubscribeToEvent(hotKeysModeEdit, "ItemSelected", "EditHotKeyMode");
         SubscribeToEvent(newNodeModeEdit, "ItemSelected", "EditNewNodeMode");
         SubscribeToEvent(distanceEdit, "TextChanged", "EditNewNodeDistance");
         SubscribeToEvent(distanceEdit, "TextFinished", "EditNewNodeDistance");

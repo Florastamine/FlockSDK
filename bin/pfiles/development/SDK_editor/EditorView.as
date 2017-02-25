@@ -72,8 +72,7 @@ const uint VIEWPORT_QUAD         = 0x0000f000;
 
 enum HotKeysMode
 {
-    HOTKEYS_MODE_STANDARD = 0,
-    HOTKEYS_MODE_BLENDER
+    HOTKEYS_MODE_STANDARD = 0 
 }
 
 enum EditMode
@@ -1237,9 +1236,6 @@ void UpdateStats(float timeStep)
 {
     String adding = "";
     // Todo: add localization
-    if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-        adding = localization.Get("  CameraFlyMode: ") + (cameraFlyMode ? "True" : "False");
-
     editorModeText.text = String(
         localization.Get("Mode: ") + localization.Get(editModeText[editMode]) +
         localization.Get("  Axis: ") + localization.Get(axisModeText[axisMode]) +
@@ -1334,15 +1330,6 @@ void UpdateView(float timeStep)
         ReleaseMouseLock();
         return;
     }
-    
-    // Check for camara fly mode
-    if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-    {
-        if (input.keyDown[KEY_LSHIFT] && input.keyPress[KEY_F])
-        {
-            cameraFlyMode = !cameraFlyMode;
-        }
-    }
 
     // Move camera
     float speedMultiplier = 1.0;
@@ -1351,7 +1338,7 @@ void UpdateView(float timeStep)
     
     if (!input.keyDown[KEY_LCTRL] && !input.keyDown[KEY_LALT])
     {
-        if (hotKeyMode == HOTKEYS_MODE_STANDARD || (hotKeyMode == HOTKEYS_MODE_BLENDER && cameraFlyMode && !input.keyDown[KEY_LSHIFT])) 
+        if (hotKeyMode == HOTKEYS_MODE_STANDARD) 
         {
             if (input.keyDown[KEY_W] || input.keyDown[KEY_UP])
             {
@@ -1403,47 +1390,6 @@ void UpdateView(float timeStep)
             } 
             */ 
         }
-        else if (hotKeyMode == HOTKEYS_MODE_BLENDER) 
-        {
-            if (mouseWheelCameraPosition && !camera.orthographic)
-            {   
-                if (input.keyDown[KEY_LSHIFT])
-                    cameraNode.Translate(Vector3(0, -cameraBaseSpeed, 0) * -input.mouseMoveWheel*20* timeStep * speedMultiplier);
-                else if (input.keyDown[KEY_LCTRL])
-                    cameraNode.Translate(Vector3(-cameraBaseSpeed,0, 0) * -input.mouseMoveWheel*20 * timeStep * speedMultiplier);
-                else
-                {
-                    Vector3 center = SelectedNodesCenterPoint();
-                    float distance = (cameraNode.worldPosition - center).length;
-                    float ratio = distance / 40.0f;
-                    float factor = ratio < 1.0f ? ratio : 1.0f;
-                    cameraNode.Translate(Vector3(0, 0, -cameraBaseSpeed) * -input.mouseMoveWheel*40*factor*timeStep*speedMultiplier);
-                }
-            }
-            else
-            {   
-                if (input.keyDown[KEY_LSHIFT])
-                {
-                    cameraNode.Translate(Vector3(0, -cameraBaseSpeed, 0) * -input.mouseMoveWheel*20* timeStep * speedMultiplier);
-                }
-                else if (input.keyDown[KEY_LCTRL])
-                {
-                    cameraNode.Translate(Vector3(-cameraBaseSpeed,0, 0) * -input.mouseMoveWheel*20 * timeStep * speedMultiplier);
-                }
-                else 
-                {
-                    if (input.qualifierDown[QUAL_ALT])
-                    {
-                        float zoom = camera.zoom + -input.mouseMoveWheel *.1 * speedMultiplier;
-                        camera.zoom = Clamp(zoom, .1, 30);
-                    }
-                    else 
-                    {
-                        cameraNode.Translate(Vector3(0, 0, -cameraBaseSpeed) * -input.mouseMoveWheel*20 * timeStep * speedMultiplier);
-                    }
-                }
-            }
-        }
     }
 
     if (input.keyDown[KEY_HOME])
@@ -1462,13 +1408,6 @@ void UpdateView(float timeStep)
 
     if (hotKeyMode == HOTKEYS_MODE_STANDARD) 
         changeCamViewButton = input.mouseButtonDown[MOUSEB_RIGHT] || input.mouseButtonDown[MOUSEB_MIDDLE];
-    else if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-    {
-        changeCamViewButton = input.mouseButtonDown[MOUSEB_MIDDLE] || cameraFlyMode;
-
-        if (input.mouseButtonPress[MOUSEB_RIGHT] || input.keyDown[KEY_ESCAPE])
-            cameraFlyMode = false;
-    }
 
     if (changeCamViewButton)
     {
@@ -1488,11 +1427,6 @@ void UpdateView(float timeStep)
                     else
                         panTheCamera = input.keyDown[KEY_LSHIFT];
                 }
-            }
-            else if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-            {
-                if (!cameraFlyMode)
-                    panTheCamera = input.keyDown[KEY_LSHIFT];
             }
 
             if (panTheCamera)
@@ -1518,22 +1452,6 @@ void UpdateView(float timeStep)
                         orbiting = true;
                     }    
                 }
-                else if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-                {
-                    if (input.mouseButtonDown[MOUSEB_MIDDLE])
-                    {
-                        Vector3 centerPoint = Vector3(0,0,0);
-                        
-                        if ((selectedNodes.length > 0 || selectedComponents.length > 0))
-                            centerPoint = SelectedNodesCenterPoint();
-                        else
-                            centerPoint = lastSelectedNodesCenterPoint;
-                            
-                        Vector3 d = cameraNode.worldPosition - centerPoint;
-                        cameraNode.worldPosition = centerPoint - q * Vector3(0.0, 0.0, d.length);
-                        orbiting = true;
-                    }
-                }
             }
         }
     }
@@ -1542,60 +1460,6 @@ void UpdateView(float timeStep)
 
     if (orbiting && !input.mouseButtonDown[MOUSEB_MIDDLE])
         orbiting = false;
-
-    if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-    {
-        if (viewCloser && lastSelectedDrawable.Get() !is null)
-        {
-            SetMouseLock();
-            BoundingBox bb;
-            Vector3 centerPoint;
-
-            if (selectedNodes.length <= 1)
-            {
-                Drawable@ drawable = lastSelectedDrawable.Get();
-                if (drawable !is null) 
-                {
-                    bb = drawable.boundingBox;
-                    centerPoint = drawable.node.worldPosition;
-                }
-            }
-            else
-            {
-                for (uint i = 0; i < selectedNodes.length; i++)
-                {
-                    bb.Merge(selectedNodes[i].position);
-                }
-
-                centerPoint = SelectedNodesCenterPoint();
-            }
-
-            float distance = bb.size.length;
-            if (camera.orthographic) // if we use viewCloser for 2D get current distance to avoid near clip
-                distance = cameraNode.worldPosition.length;
-
-            Quaternion q = Quaternion(activeViewport.cameraPitch, activeViewport.cameraYaw, 0);
-            cameraNode.rotation = q;
-            cameraNode.worldPosition = centerPoint -  cameraNode.worldDirection * distance;
-            // ReacquireCameraYawPitch();
-            viewCloser =  false;
-        }
-        else 
-            viewCloser =  false;
-    }
-
-    // Move/rotate/scale object
-    if (hotKeyMode == HOTKEYS_MODE_BLENDER) // force to select component node for manipulation if selected only component and not his node
-    {
-        if ((editMode != EDIT_SELECT && editNodes.empty) && lastSelectedComponent.Get() !is null)
-        {
-            if (lastSelectedComponent.Get() !is null)
-            {
-                Component@ component  = lastSelectedComponent.Get();
-                SelectNode(component.node, false);
-            }
-        }
-    }
 
     if (!editNodes.empty && editMode != EDIT_SELECT && input.keyDown[KEY_LCTRL])
     {
@@ -1938,15 +1802,6 @@ void ViewRaycast(bool mouseClick)
                     lastSelectedComponent = drawable;
                 }
             }
-            else if (hotKeyMode == HOTKEYS_MODE_BLENDER) 
-            {
-                if (input.mouseButtonDown[MOUSEB_RIGHT]) 
-                {
-                    lastSelectedNode = drawable.node;
-                    lastSelectedDrawable = drawable;
-                    lastSelectedComponent = drawable;
-                }
-            }
              
             // If selecting a terrain patch, select the parent terrain instead
             if (drawable.typeName != "TerrainPatch")
@@ -2007,12 +1862,6 @@ void ViewRaycast(bool mouseClick)
         mouseButtonPressRL = input.mouseButtonPress[MOUSEB_LEFT];
         componentSelectQualifier = input.qualifierDown[QUAL_SHIFT];
         multiselect = input.qualifierDown[QUAL_CTRL];
-    }
-    else if (hotKeyMode == HOTKEYS_MODE_BLENDER)
-    {
-        mouseButtonPressRL = input.mouseButtonPress[MOUSEB_RIGHT];
-        componentSelectQualifier = input.qualifierDown[QUAL_CTRL];
-        multiselect = input.qualifierDown[QUAL_SHIFT];
     }
     
     if (mouseClick && mouseButtonPressRL)

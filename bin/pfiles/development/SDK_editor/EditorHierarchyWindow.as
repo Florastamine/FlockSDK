@@ -1694,23 +1694,6 @@ bool Paste()
     return false;
 }
 
-bool BlenderModeDelete()
-{
-    if (ui.focusElement is null)
-    {
-        Array<UIElement@> actions;
-        actions.Push(CreateContextMenuItem("Delete?", "HandleBlenderModeDelete"));
-        actions.Push(CreateContextMenuItem("Cancel", "HandleEmpty"));
-
-        if (actions.length > 0) 
-        {
-            ActivateContextMenu(actions);
-            return true;
-        }
-    }
-    return false;
-}
-
 bool Delete()
 {
     if (CheckHierarchyWindowFocus())
@@ -1844,11 +1827,6 @@ void HandleHierarchyContextCut()
 }
 
 void HandleHierarchyContextDelete()
-{
-    Delete();
-}
-
-void HandleBlenderModeDelete() 
 {
     Delete();
 }
