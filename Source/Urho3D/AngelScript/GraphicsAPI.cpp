@@ -21,7 +21,6 @@
 // 
 
 #include <vector> 
-#include <lodepng/lodepng.h> 
 
 #include "../Precompiled.h" 
 
@@ -1772,21 +1771,6 @@ static void RegisterDecalSet(asIScriptEngine* engine)
     engine->RegisterObjectMethod("DecalSet", "Zone@+ get_zone() const", asMETHOD(DecalSet, GetZone), asCALL_THISCALL);
 } 
 
-CScriptArray *Load16BitGrayScaleMap(const String &s) 
-{
-    std::vector<unsigned char> in, out; 
-    PODVector<unsigned char> out_cv; 
-
-    unsigned w, h; 
-
-    if( lodepng::load_file(in, std::string(s.CString())) ) 
-        if( lodepng::decode(out, w, h, in, LCT_GREY, 16) ) 
-            for(int i = 0; i < out.size(); ++i) 
-                out_cv.Push(out[i]); 
-    
-    return VectorToArray<unsigned char>(out_cv, "Array<uint8>"); 
-}
-
 static void RegisterTerrain(asIScriptEngine* engine)
 {
     RegisterDrawable<TerrainPatch>(engine, "TerrainPatch");
@@ -1845,7 +1829,6 @@ static void RegisterTerrain(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Terrain", "Terrain@+ get_westNeighbor() const", asMETHOD(Terrain, GetEastNeighbor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Terrain", "void set_eastNeighbor(Terrain@+)", asMETHOD(Terrain, SetWestNeighbor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Terrain", "Terrain@+ get_eastNeighbor() const", asMETHOD(Terrain, GetWestNeighbor), asCALL_THISCALL);
-    engine->RegisterGlobalFunction("Array<uint8>@ load_16bit_height_map(const String&)", asFUNCTION(Load16BitGrayScaleMap), asCALL_CDECL);
 }
 
 static CScriptArray* GraphicsGetResolutions(Graphics* ptr)
