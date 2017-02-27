@@ -21,7 +21,7 @@ rem IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 
 set "SDKName=Downpour/IWBHT_SDK"
 set "BuildTargetFolder=.\targets\%1"
-set "ExtraCXXFlags=-Ofast -Os -fno-exceptions -Wall" 
+set "ExtraCXXFlags=-O2 -fno-exceptions -Wall" 
 set "NumSpawn=4" 
 set "Debug=1"
 

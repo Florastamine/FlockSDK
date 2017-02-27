@@ -22,7 +22,7 @@ source "build-common.sh"
 
 SDKName="Downpour/IWBHT_SDK"
 BuildTargetFolder="./targets"
-ExtraCXXFlags="-Ofast -Os -fno-exceptions -Wall" 
+ExtraCXXFlags="-O2 -fno-exceptions -Wall" 
 StripFlags="-s -R .gnu.version -R .comment"
 NumSpawn="4" 
 
