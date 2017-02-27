@@ -24,7 +24,7 @@
 
 #include "../Audio/BufferedSoundStream.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

@@ -26,7 +26,7 @@
 
 #include <cstdio>
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

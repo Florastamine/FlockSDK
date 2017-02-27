@@ -22,12 +22,6 @@
 
 #pragma once
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable:4244) // Conversion from 'double' to 'float'
-#pragma warning(disable:4702) // unreachable code
-#endif
-
 #include "../Math/Random.h"
 
 #include <cstdlib>
@@ -276,7 +270,3 @@ inline float HalfToFloat(unsigned short value)
 URHO3D_API void SinCos(float angle, float& sin, float& cos);
 
 }
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif

@@ -25,7 +25,7 @@
 #include "../Core/Context.h"
 #include "../Navigation/Navigable.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

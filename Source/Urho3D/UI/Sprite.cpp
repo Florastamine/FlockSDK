@@ -27,7 +27,7 @@
 #include "../Resource/ResourceCache.h"
 #include "../UI/Sprite.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

@@ -59,7 +59,7 @@
 
 #include <SDL/SDL.h>
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

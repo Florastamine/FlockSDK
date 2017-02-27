@@ -23,6 +23,5 @@
 #pragma once
 
 @URHO_HEADERS@
-#include <Urho3D/DebugNew.h>
 
 using namespace Urho3D;

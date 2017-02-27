@@ -61,7 +61,7 @@ public:
 
     /// Copy-construct from another matrix.
     Matrix3x4(const Matrix3x4& matrix)
-#if defined(URHO3D_SSE) && (!defined(_MSC_VER) || _MSC_VER >= 1700) /* Visual Studio 2012 and newer. VS2010 has a bug with these, see https://github.com/urho3d/Urho3D/issues/1044 */
+#if defined(URHO3D_SSE) 
     {
         _mm_storeu_ps(&m00_, _mm_loadu_ps(&matrix.m00_));
         _mm_storeu_ps(&m10_, _mm_loadu_ps(&matrix.m10_));
@@ -199,7 +199,7 @@ public:
     /// Assign from another matrix.
     Matrix3x4& operator =(const Matrix3x4& rhs)
     {
-#if defined(URHO3D_SSE) && (!defined(_MSC_VER) || _MSC_VER >= 1700) /* Visual Studio 2012 and newer. VS2010 has a bug with these, see https://github.com/urho3d/Urho3D/issues/1044 */
+#if defined(URHO3D_SSE) 
         _mm_storeu_ps(&m00_, _mm_loadu_ps(&rhs.m00_));
         _mm_storeu_ps(&m10_, _mm_loadu_ps(&rhs.m10_));
         _mm_storeu_ps(&m20_, _mm_loadu_ps(&rhs.m20_));

@@ -24,7 +24,7 @@
 
 #include "../IO/Serializer.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

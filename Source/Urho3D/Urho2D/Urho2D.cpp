@@ -52,7 +52,7 @@
 #include "../Urho2D/TileMapLayer2D.h"
 #include "../Urho2D/TmxFile2D.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

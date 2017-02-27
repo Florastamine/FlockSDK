@@ -25,7 +25,7 @@
 #include "../../Graphics/Graphics.h"
 #include "../../Graphics/GraphicsImpl.h"
 
-#include "../../DebugNew.h"
+
 
 namespace Urho3D
 {

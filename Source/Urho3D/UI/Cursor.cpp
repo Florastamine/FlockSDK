@@ -31,7 +31,7 @@
 
 #include <SDL/SDL_mouse.h>
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

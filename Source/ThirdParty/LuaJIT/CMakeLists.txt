@@ -54,14 +54,7 @@ elseif (NOT BAKED_CMAKE_SOURCE_DIR)
     set (BAKED_CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
 endif ()
 
-# Makefile: Compiler options
-if (NOT MSVC)
-    # Since the assembler part does NOT maintain a frame pointer, it's pointless
-    # to slow down the C part by not omitting it. Debugging, tracebacks and
-    # unwinding are not affected -- the assembler part has frame unwind
-    # information and GCC emits it where needed (x64) or with -g (see CCDEBUG).
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fomit-frame-pointer")
-endif ()
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fomit-frame-pointer") 
 
 # Makefile: Build mode
 # When LuaJIT is enabled for Urho3D, always build as static library to be linked against in main Urho3D executable or library CMake target
@@ -167,42 +160,15 @@ endmacro ()
 
 # Makefile: Flags and options for host and target
 if (NOT LUAJIT_CACHE STREQUAL "${URHO3D_64BIT}-${LUAJIT_DISABLE_FFI}-${LUAJIT_DISABLE_JIT}-${LUAJIT_ENABLE_GC64}-${LUAJIT_NUMMODE}")
-    if (MSVC)
-        if (URHO3D_64BIT)
-            set (MSVC_ARCH_BITS 64)
-            set (MSVC_TARGET_ARCH X64)
-        else ()
-            set (MSVC_ARCH_BITS 32)
-            set (MSVC_TARGET_ARCH X86)
-        endif ()
-        if (LUAJIT_DISABLE_FFI)
-            set (MSVC_HASFFI 0)
-        else ()
-            set (MSVC_HASFFI 1)
-        endif ()
-        if (LUAJIT_DISABLE_JIT)
-            set (MSVC_HASJIT 0)
-        else ()
-            set (MSVC_HASJIT 1)
-        endif ()
-        set (TARGET_TESTARCH
-            "LJ_TARGET_${MSVC_TARGET_ARCH} 1\n"
-            "LJ_ARCH_BITS ${MSVC_ARCH_BITS}\n"
-            "LJ_HASFFI ${MSVC_HASFFI}\n"
-            "LJ_HASJIT ${MSVC_HASJIT}\n"
-            "LJ_ARCH_HASFPU 1\n"
-            "LJ_ABI_SOFTFP 0\n")
-    else ()
-        string (REPLACE " " ";" TARGET_TCFLAGS "${CMAKE_C_FLAGS}")   # Convert string of flags to list of flags
-        get_directory_property (COMPILE_DEFINITIONS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMPILE_DEFINITIONS)
-        string (REPLACE ";" ";-D" COMPILE_DEFINITIONS "-D${COMPILE_DEFINITIONS}")    # Prefix defines with -D
-        execute_process (COMMAND egrep -V RESULT_VARIABLE EGREP_EXIT_CODE OUTPUT_QUIET ERROR_QUIET)
-        if (EGREP_EXIT_CODE EQUAL 0)
-            set (FILTER COMMAND egrep "LJ_|MIPSEL")
-        endif ()
-        execute_process (COMMAND ${CMAKE_C_COMPILER} ${COMPILE_DEFINITIONS} ${TARGET_TCFLAGS} ${ARCH_FLAGS} ${CMAKE_CURRENT_SOURCE_DIR}/src/lj_arch.h -E -dM
-            ${FILTER} OUTPUT_VARIABLE TARGET_TESTARCH ERROR_QUIET)
+    string (REPLACE " " ";" TARGET_TCFLAGS "${CMAKE_C_FLAGS}")   # Convert string of flags to list of flags
+    get_directory_property (COMPILE_DEFINITIONS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMPILE_DEFINITIONS)
+    string (REPLACE ";" ";-D" COMPILE_DEFINITIONS "-D${COMPILE_DEFINITIONS}")    # Prefix defines with -D
+    execute_process (COMMAND egrep -V RESULT_VARIABLE EGREP_EXIT_CODE OUTPUT_QUIET ERROR_QUIET)
+    if (EGREP_EXIT_CODE EQUAL 0)
+        set (FILTER COMMAND egrep "LJ_|MIPSEL")
     endif ()
+    execute_process (COMMAND ${CMAKE_C_COMPILER} ${COMPILE_DEFINITIONS} ${TARGET_TCFLAGS} ${ARCH_FLAGS} ${CMAKE_CURRENT_SOURCE_DIR}/src/lj_arch.h -E -dM
+        ${FILTER} OUTPUT_VARIABLE TARGET_TESTARCH ERROR_QUIET)
     find_string ("LJ_TARGET_(X64|X86|ARM|ARM64|PS3|PPC|MIPS) 1" TARGET_LJARCH)
     if (NOT TARGET_LJARCH)
         message (FATAL_ERROR "Unsupported target architecture")
@@ -459,9 +425,7 @@ if (NOT CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-LuaJIT AND NOT IOS AN
     if (NOT TARGET LuaJIT_universal)
         set (LIBS LuaJIT)
     endif ()
-    if (NOT MSVC)
-        list (APPEND LIBS m)
-    endif ()
+    list (APPEND LIBS m)
 
     # Setup target
     setup_executable (NODEPS)

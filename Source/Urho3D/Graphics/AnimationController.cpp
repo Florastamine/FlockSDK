@@ -35,7 +35,7 @@
 #include "../Scene/Scene.h"
 #include "../Scene/SceneEvents.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

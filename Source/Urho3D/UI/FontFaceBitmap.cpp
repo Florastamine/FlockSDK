@@ -34,7 +34,7 @@
 #include "../UI/FontFaceBitmap.h"
 #include "../UI/UI.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

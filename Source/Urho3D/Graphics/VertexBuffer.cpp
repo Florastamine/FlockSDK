@@ -28,7 +28,7 @@
 #include "../Graphics/VertexBuffer.h"
 #include "../Math/MathDefs.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

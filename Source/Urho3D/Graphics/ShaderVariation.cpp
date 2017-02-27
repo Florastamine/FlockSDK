@@ -26,7 +26,7 @@
 #include "../Graphics/Shader.h"
 #include "../Graphics/ShaderVariation.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

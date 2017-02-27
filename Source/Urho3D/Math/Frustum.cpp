@@ -24,7 +24,7 @@
 
 #include "../Math/Frustum.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

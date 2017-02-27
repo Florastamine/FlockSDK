@@ -29,7 +29,7 @@
 #include "../UI/Font.h"
 #include "../UI/FontFace.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

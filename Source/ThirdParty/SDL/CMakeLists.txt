@@ -134,9 +134,6 @@ if(CMAKE_COMPILER_IS_GNUCC)
 elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
   set(USE_CLANG TRUE)
   set(OPT_DEF_ASM TRUE)
-elseif(MSVC_VERSION GREATER 1400) # VisualStudio 8.0+
-  set(OPT_DEF_ASM TRUE)
-  #set(CMAKE_C_FLAGS "/ZI /WX- /
 else()
   set(OPT_DEF_ASM FALSE)
 endif()
@@ -376,11 +373,7 @@ if(ASSEMBLY)
     if(URHO3D_ALTIVEC)
       set(SDL_ALTIVEC_BLITTERS 1)
     endif()
-  elseif(MSVC_VERSION GREATER 1500)
-    # TODO: SDL_cpuinfo.h needs to support the user's configuration wish
-    # Urho3D - move the HAVE_MMX, HAVE_3DNOW, HAVE_SSE and HAVE_SSE2 initialization to Urho3D common module
-    set(SDL_ASSEMBLY_ROUTINES 1)
-  endif()
+  endif() 
 endif()
 
 # Urho3D - move from Unix platform-specific section below to here
@@ -742,8 +735,6 @@ elseif(WINDOWS)
 
   file(GLOB CORE_SOURCES ${SDL2_SOURCE_DIR}/src/core/windows/*.c)
   set(SOURCE_FILES ${SOURCE_FILES} ${CORE_SOURCES})
-
-  # Urho3D - commented out MSVC-specific compiler flags setup as we have configured MSVC compiler flags globally in Urho3D common module
 
   # Check for DirectX
   if(DIRECTX)

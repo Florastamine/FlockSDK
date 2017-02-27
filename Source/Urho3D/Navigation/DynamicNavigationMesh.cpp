@@ -46,9 +46,6 @@
 #include <DetourTileCache/DetourTileCacheBuilder.h>
 #include <Recast/Recast.h>
 
-// DebugNew is deliberately not used because the macro 'free' conflicts with DetourTileCache's LinearAllocator interface
-//#include "../DebugNew.h"
-
 static const unsigned TILECACHE_MAXLAYERS = 255;
 
 namespace Urho3D

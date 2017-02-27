@@ -34,7 +34,7 @@
 #include "../Urho2D/Sprite2D.h"
 #include "../Urho2D/SpriteSheet2D.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

@@ -59,10 +59,6 @@
 #include "../Graphics/Zone.h"
 #include "../Scene/Scene.h" 
 
-#ifdef _MSC_VER
-#pragma warning(disable:4345)
-#endif
-
 namespace Urho3D
 {
 

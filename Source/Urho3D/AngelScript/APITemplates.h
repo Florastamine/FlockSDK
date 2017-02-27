@@ -43,11 +43,6 @@
 #include <AngelScript/angelscript.h>
 #include <cstring>
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable:4505)
-#endif
-
 namespace Urho3D
 {
 
@@ -1308,7 +1303,3 @@ template <class T> void RegisterButton(asIScriptEngine* engine, const char* clas
 }
 
 }
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif

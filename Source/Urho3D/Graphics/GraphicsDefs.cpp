@@ -25,7 +25,7 @@
 #include "../Graphics/GraphicsDefs.h"
 #include "../Math/Vector3.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

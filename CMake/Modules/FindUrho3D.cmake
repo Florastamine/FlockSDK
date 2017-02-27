@@ -44,11 +44,8 @@
 #  URHO3D_DLL_REL
 #  URHO3D_DLL_DBG
 #
-# MSVC only:
-#  URHO3D_STATIC_RUNTIME
-#
 
-set (AUTO_DISCOVER_VARS URHO3D_SSE URHO3D_STATIC_RUNTIME)
+set (AUTO_DISCOVER_VARS URHO3D_SSE)
 set (PATH_SUFFIX Urho3D)
 if (CMAKE_PROJECT_NAME STREQUAL Urho3D AND TARGET Urho3D)
     # A special case where library location is already known to be in the build tree of Urho3D project
@@ -137,10 +134,6 @@ else ()
         # Intentionally do no cache the URHO3D_VERSION as it has potential to change frequently
         file (STRINGS ${URHO3D_BASE_INCLUDE_DIR}/librevision.h URHO3D_VERSION REGEX "^const char\\* revision=\"[^\"]*\".*$")
         string (REGEX REPLACE "^const char\\* revision=\"([^\"]*)\".*$" \\1 URHO3D_VERSION "${URHO3D_VERSION}")      # Stringify to guard against empty variable
-        # The library type is baked into export header only for MSVC as it has no other way to differentiate them, fortunately both types cannot coexist for MSVC anyway unlike other compilers
-        if (MSVC)
-            file (STRINGS ${URHO3D_BASE_INCLUDE_DIR}/Urho3D.h MSVC_STATIC_LIB REGEX "^#define URHO3D_STATIC_DEFINE$")
-        endif ()
     endif ()
     if (URHO3D_64BIT AND MINGW AND CMAKE_CROSSCOMPILING)
         # For 64-bit MinGW on Linux host system, force to search in 'lib64' path even when the Windows platform is not defaulted to use it
@@ -162,21 +155,9 @@ else ()
             if (NOT URHO3D_LIBRARIES)
                 set (URHO3D_LIBRARIES ${URHO3D_LIBRARIES_DBG})
             endif ()
-        endif ()
+        endif () 
         # Ensure the module has found the right one if the library type is specified
-        if (MSVC)
-            if (URHO3D_LIB_TYPE)
-                if (NOT ((URHO3D_LIB_TYPE STREQUAL STATIC AND MSVC_STATIC_LIB) OR (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT MSVC_STATIC_LIB)))
-                    unset (URHO3D_LIBRARIES)    # Not a right type, so nullify the search result
-                endif ()
-            else ()
-                if (MSVC_STATIC_LIB)
-                    set (URHO3D_LIB_TYPE STATIC)
-                else ()
-                    set (URHO3D_LIB_TYPE SHARED)
-                endif ()
-            endif ()
-        elseif (URHO3D_LIBRARIES)
+        if (URHO3D_LIBRARIES)
             get_filename_component (EXT ${URHO3D_LIBRARIES} EXT)
             if (EXT STREQUAL .a)
                 set (URHO3D_LIB_TYPE STATIC)
@@ -213,13 +194,6 @@ else ()
                 else ()
                     set (CMAKE_TRY_COMPILE_CONFIGURATION Debug)
                 endif ()
-                if (MSVC AND URHO3D_DLL)
-                    # This is a hack as it relies on internal implementation of try_run
-                    foreach (DLL ${URHO3D_DLL})
-                        get_filename_component (NAME ${DLL} NAME)
-                        execute_process (COMMAND ${CMAKE_COMMAND} -E copy ${DLL} ${CMAKE_BINARY_DIR}/CMakeFiles/CMakeTmp/${CMAKE_TRY_COMPILE_CONFIGURATION}/${NAME})
-                    endforeach ()
-                endif ()
             endif ()
             # Since in cross-compiling mode we cannot run the test target executable and auto-discover the build options used by the found library,
             # the next best thing is to evaluate the found export header indirectly (assuming the found library was built using the same export header)
@@ -236,26 +210,11 @@ else ()
                     try_run (URHO3D_RUN_RESULT URHO3D_COMPILE_RESULT ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_LIST_DIR}/CheckUrho3DLibrary.cpp
                         CMAKE_FLAGS -DCOMPILE_DEFINITIONS:STRING=${COMPILER_FLAGS} -DLINK_LIBRARIES:STRING=${URHO3D_LIBRARIES} -DINCLUDE_DIRECTORIES:STRING=${URHO3D_INCLUDE_DIRS} ${COMPILER_STATIC_DEFINE} ${COMPILER_STATIC_RUNTIME_FLAGS}
                         COMPILE_OUTPUT_VARIABLE TRY_COMPILE_OUT RUN_OUTPUT_VARIABLE TRY_RUN_OUT)
-                    if (MSVC AND NOT URHO3D_COMPILE_RESULT AND NOT COMPILER_STATIC_RUNTIME_FLAGS)
-                        # Give a second chance for MSVC to use static runtime flag
-                        if (URHO3D_LIBRARIES_REL)
-                            set (COMPILER_STATIC_RUNTIME_FLAGS COMPILE_DEFINITIONS /MT)
-                        else ()
-                            set (COMPILER_STATIC_RUNTIME_FLAGS COMPILE_DEFINITIONS /MTd)
-                        endif ()
-                    else ()
                         break ()    # Other compilers break immediately rendering the while-loop a no-ops
-                    endif ()
                 endwhile ()
             endif ()
             set (URHO3D_COMPILE_RESULT ${URHO3D_COMPILE_RESULT} CACHE INTERNAL "FindUrho3D module's compile result")
             if (URHO3D_COMPILE_RESULT AND URHO3D_RUN_RESULT EQUAL 0)
-                # Auto-discover build options used by the found library
-                if (MSVC)
-                    if (COMPILER_STATIC_RUNTIME_FLAGS)
-                        set (TRY_RUN_OUT "${TRY_RUN_OUT}#define URHO3D_STATIC_RUNTIME\n")
-                    endif ()
-                endif ()
                 set (URHO3D_64BIT ${ABI_64BIT} CACHE BOOL "Enable 64-bit build, the value is auto-discovered based on the found Urho3D library" FORCE) # Force it as it is more authoritative than user-specified option
                 set (URHO3D_LIB_TYPE ${URHO3D_LIB_TYPE} CACHE STRING "Urho3D library type, the value is auto-discovered based on the found Urho3D library" FORCE) # Use the Force, Luke
                 foreach (VAR ${AUTO_DISCOVER_VARS})

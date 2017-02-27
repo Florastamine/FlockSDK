@@ -35,8 +35,6 @@
 
 #include "Downpour.h"
 
-#include <Urho3D/DebugNew.h> 
-
 namespace Downpour {
 
 DownpourBase::DownpourBase(Urho3D::Context* context) :

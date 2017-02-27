@@ -40,7 +40,7 @@
 
 #include <SDL/SDL.h>
 
-#include "../DebugNew.h"
+
 
 // Use a "click inside window to focus" mechanism on desktop platforms when the mouse cursor is hidden
 // TODO: For now, in this particular case only, treat all the ARM on Linux as "desktop" (e.g. RPI, odroid, etc), revisit this again when we support "mobile" ARM on Linux

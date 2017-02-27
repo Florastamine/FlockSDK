@@ -497,10 +497,6 @@ private:
     /// Copy chars from one buffer to another.
     static void CopyChars(char* dest, const char* src, unsigned count)
     {
-#ifdef _MSC_VER
-        if (count)
-            memcpy(dest, src, count);
-#else
         char* end = dest + count;
         while (dest != end)
         {
@@ -508,7 +504,6 @@ private:
             ++dest;
             ++src;
         }
-#endif
     }
 
     /// Replace a substring with another substring.

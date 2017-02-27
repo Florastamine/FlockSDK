@@ -51,7 +51,7 @@
 #include <Detour/DetourNavMeshQuery.h>
 #include <Recast/Recast.h>
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

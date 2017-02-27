@@ -28,7 +28,7 @@
 #include "../Urho2D/CollisionChain2D.h"
 #include "../Urho2D/PhysicsUtils2D.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

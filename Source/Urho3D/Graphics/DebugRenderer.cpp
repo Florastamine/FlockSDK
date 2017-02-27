@@ -35,7 +35,7 @@
 #include "../Math/Polyhedron.h"
 #include "../Resource/ResourceCache.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

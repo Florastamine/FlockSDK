@@ -52,10 +52,6 @@
 #include "../Urho2D/TileMapLayer2D.h"
 #include "../Urho2D/TmxFile2D.h"
 
-#ifdef _MSC_VER
-#pragma warning(disable:4345)
-#endif
-
 namespace Urho3D
 {
 

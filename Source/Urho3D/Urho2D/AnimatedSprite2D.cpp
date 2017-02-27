@@ -32,7 +32,7 @@
 #include "../Urho2D/Sprite2D.h"
 #include "../Urho2D/SpriterInstance2D.h"
 
-#include "../DebugNew.h"
+
 
 #ifdef URHO3D_SPINE
 #include <spine/spine.h>

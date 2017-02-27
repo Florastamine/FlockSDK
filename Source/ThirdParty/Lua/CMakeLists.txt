@@ -48,9 +48,7 @@ set (SOURCE_FILES src/lua.c)
 
 # Define dependency libs
 set (LIBS Lua)
-if (NOT MSVC)
-    list (APPEND LIBS m)
-endif ()
+list (APPEND LIBS m) 
 
 # Setup target
 setup_executable (NODEPS)

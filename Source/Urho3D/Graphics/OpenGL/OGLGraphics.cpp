@@ -45,7 +45,7 @@
 
 #include <SDL/SDL.h>
 
-#include "../../DebugNew.h"
+
 
 #ifdef GL_ES_VERSION_2_0
 #define GL_DEPTH_COMPONENT24 GL_DEPTH_COMPONENT24_OES

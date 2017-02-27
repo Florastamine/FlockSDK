@@ -35,8 +35,6 @@
 
 #include <AngelScript/angelscript.h>
 
-#include "../DebugNew.h"
-
 namespace Urho3D
 {
 

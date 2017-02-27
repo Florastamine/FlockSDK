@@ -56,58 +56,33 @@ else ()
 endif ()
 set (CMAKE_REQUIRED_INCLUDES_SAVED ${CMAKE_REQUIRED_INCLUDES})
 
-# Version older than VS2012 fallbacks to search for the DirectX SDK
-if (NOT MSVC_VERSION GREATER 1600 OR MINGW)     # MinGW reuses the logic below to check for the existence of DirectX headers and libraries
-    if (MINGW)
-        if (NOT MINGW_SYSROOT)
-            if (DEFINED ENV{MINGW_SYSROOT})
-                file (TO_CMAKE_PATH $ENV{MINGW_SYSROOT} MINGW_SYSROOT)
-            else ()
-                execute_process (COMMAND ${CMAKE_COMMAND} -E echo "#include <_mingw.h>" COMMAND ${CMAKE_C_COMPILER} -E -M - OUTPUT_FILE ${CMAKE_BINARY_DIR}/find_mingw_sysroot_output ERROR_QUIET)
-                file (STRINGS ${CMAKE_BINARY_DIR}/find_mingw_sysroot_output MINGW_SYSROOT REGEX _mingw\\.h)
-                string (REGEX REPLACE "^[^ ]* *(.*)/include.*$" \\1 MINGW_SYSROOT "${MINGW_SYSROOT}")  # Stringify for string replacement
-                string (REPLACE "\\ " " " MINGW_SYSROOT "${MINGW_SYSROOT}")
-                execute_process (COMMAND ${CMAKE_COMMAND} -E remove find_mingw_sysroot_output)
-            endif ()
-            if (NOT EXISTS ${MINGW_SYSROOT})
-                message (FATAL_ERROR "Could not find MinGW system root. "
-                    "Use MINGW_SYSROOT environment variable or build option to specify the location of system root.")
-            endif ()
-            set (MINGW_SYSROOT ${MINGW_SYSROOT} CACHE PATH "Path to MinGW system root (MinGW build only); should only be used when the system root could not be auto-detected" FORCE)
-        endif ()
-        # MinGW Cross-compiling uses CMAKE_FIND_ROOT_PATH while MinGW on Windows host uses CMAKE_PREFIX_PATH
-        if (CMAKE_HOST_WIN32)
-            set (CMAKE_PREFIX_PATH ${MINGW_SYSROOT})
-        endif ()
-        # MinGW does not need search paths as DirectX headers and libraries (when installed) are in its default search path
-        # However, we do not explicitly unset the DIRECTX_INC_SEARCH_PATHS and DIRECTX_LIB_SEARCH_PATHS variables here, so module user could set these two variables externally when for some reasons the DirectX headers and libraries are not installed in MinGW default search path
+if (MINGW)
+if (NOT MINGW_SYSROOT)
+    if (DEFINED ENV{MINGW_SYSROOT})
+        file (TO_CMAKE_PATH $ENV{MINGW_SYSROOT} MINGW_SYSROOT)
     else ()
-        list (APPEND DIRECTX_INC_SEARCH_PATHS
-            "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include"
-            "C:/Program Files/Microsoft DirectX SDK (June 2010)/Include"
-            $ENV{DIRECTX_ROOT}/Include
-            $ENV{DXSDK_DIR}/Include)
-        list (APPEND DIRECTX_LIB_SEARCH_PATHS
-            "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/${PATH_SUFFIX}"
-            "C:/Program Files/Microsoft DirectX SDK (June 2010)/Lib/${PATH_SUFFIX}"
-            $ENV{DIRECTX_ROOT}/Lib/${PATH_SUFFIX}
-            $ENV{DXSDK_DIR}/Lib/${PATH_SUFFIX})
-        if (NOT CMAKE_CL_64)
-            list (APPEND DIRECTX_LIB_SEARCH_PATHS
-                "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib"
-                "C:/Program Files/Microsoft DirectX SDK (June 2010)/Lib"
-                $ENV{DIRECTX_ROOT}/Lib
-                $ENV{DXSDK_DIR}/Lib)
-        endif ()
+        execute_process (COMMAND ${CMAKE_COMMAND} -E echo "#include <_mingw.h>" COMMAND ${CMAKE_C_COMPILER} -E -M - OUTPUT_FILE ${CMAKE_BINARY_DIR}/find_mingw_sysroot_output ERROR_QUIET)
+        file (STRINGS ${CMAKE_BINARY_DIR}/find_mingw_sysroot_output MINGW_SYSROOT REGEX _mingw\\.h)
+        string (REGEX REPLACE "^[^ ]* *(.*)/include.*$" \\1 MINGW_SYSROOT "${MINGW_SYSROOT}")  # Stringify for string replacement
+        string (REPLACE "\\ " " " MINGW_SYSROOT "${MINGW_SYSROOT}")
+        execute_process (COMMAND ${CMAKE_COMMAND} -E remove find_mingw_sysroot_output)
     endif ()
-    find_path (DIRECTX_INCLUDE_DIRS NAMES ${DIRECTX_HEADERS} PATHS ${DIRECTX_INC_SEARCH_PATHS} DOC "DirectX include directory")
-    if (MINGW)
-        set (FAIL_MESSAGE "Could NOT find DirectX using MinGW default search paths")
-    else ()
-        set (FAIL_MESSAGE "Could NOT find DirectX using DirectX SDK default search paths")
+    if (NOT EXISTS ${MINGW_SYSROOT})
+        message (FATAL_ERROR "Could not find MinGW system root. "
+            "Use MINGW_SYSROOT environment variable or build option to specify the location of system root.")
     endif ()
-    mark_as_advanced (DIRECTX_INCLUDE_DIRS)
+    set (MINGW_SYSROOT ${MINGW_SYSROOT} CACHE PATH "Path to MinGW system root (MinGW build only); should only be used when the system root could not be auto-detected" FORCE)
 endif ()
+# MinGW Cross-compiling uses CMAKE_FIND_ROOT_PATH while MinGW on Windows host uses CMAKE_PREFIX_PATH
+if (CMAKE_HOST_WIN32)
+    set (CMAKE_PREFIX_PATH ${MINGW_SYSROOT})
+endif ()
+find_path (DIRECTX_INCLUDE_DIRS NAMES ${DIRECTX_HEADERS} PATHS ${DIRECTX_INC_SEARCH_PATHS} DOC "DirectX include directory")
+if (MINGW)
+    set (FAIL_MESSAGE "Could NOT find DirectX using MinGW default search paths")
+endif ()
+mark_as_advanced (DIRECTX_INCLUDE_DIRS)
+endif() 
 
 # For now take shortcut for the other DirectX components by just checking on the headers and not the libraries
 include (CheckIncludeFiles)

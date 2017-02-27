@@ -43,7 +43,7 @@
 #include "../Scene/SceneEvents.h"
 #include "../Scene/ValueAnimation.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

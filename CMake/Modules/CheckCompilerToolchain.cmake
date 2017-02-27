@@ -25,9 +25,8 @@
 # Native ABI:
 #  NATIVE_64BIT 
 #
-# Compiler version in major.minor.patch format, except MSVC where it follows its own format:
-#  COMPILER_VERSION
-#
+# Compiler version in major.minor.patch format. 
+# 
 # CPU SIMD instruction extensions support:
 #  HAVE_MMX
 #  HAVE_3DNOW
@@ -55,23 +54,15 @@ macro (check_native_define REGEX OUTPUT_VAR)
     endif ()
 endmacro ()
 
-if (MSVC)
-    # TODO: revisit this later because VS may use Clang as compiler in the future
-    # On MSVC compiler, use the chosen CMake/VS generator to determine the ABI
-    set (NATIVE_64BIT ${CMAKE_CL_64})
-    # Determine MSVC compiler version based on CMake informational variables
-    set (COMPILER_VERSION ${MSVC_VERSION})
-else ()
-    # Determine the native ABI based on the size of pointer
-    check_native_define (__SIZEOF_POINTER__ SIZEOF_POINTER)
-    if (SIZEOF_POINTER EQUAL 8)
-        set (NATIVE_64BIT 1)
-    endif ()
-    # GCC/Clang and all their derivatives should understand this command line option to get the compiler version
-    if (NOT DEFINED COMPILER_VERSION)
-        execute_process (COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE COMPILER_VERSION ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-        set (COMPILER_VERSION ${COMPILER_VERSION} CACHE INTERNAL "GCC/Clang Compiler version")
-    endif ()
+# Determine the native ABI based on the size of pointer
+check_native_define (__SIZEOF_POINTER__ SIZEOF_POINTER)
+if (SIZEOF_POINTER EQUAL 8)
+    set (NATIVE_64BIT 1)
+endif ()
+# GCC/Clang and all their derivatives should understand this command line option to get the compiler version
+if (NOT DEFINED COMPILER_VERSION)
+    execute_process (COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE COMPILER_VERSION ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set (COMPILER_VERSION ${COMPILER_VERSION} CACHE INTERNAL "GCC/Clang Compiler version")
 endif ()
 
 macro (check_extension CPU_INSTRUCTION_EXTENSION)
@@ -96,27 +87,18 @@ macro (check_extension CPU_INSTRUCTION_EXTENSION)
     endif ()
 endmacro ()
 
-if (NOT ARM)
-    if (MSVC)
-        # In our documentation we have already declared that we only support CPU with SSE2 extension on Windows platform, so we can safely hard-code these for MSVC compiler
-        foreach (VAR HAVE_MMX HAVE_SSE HAVE_SSE2)
-            set (${VAR} 1)
-        endforeach ()
-    else ()
-        if (MINGW AND COMPILER_VERSION VERSION_LESS 4.9.1)
-            if (NOT DEFINED URHO3D_SSE)     # Only give the warning once during initial configuration
-                # Certain MinGW versions fail to compile SSE code. This is the initial guess for known "bad" version range, and can be tightened later
-                message (WARNING "Disabling SSE by default due to MinGW version. It is recommended to upgrade to MinGW with GCC >= 4.9.1. You can also try to re-enable SSE with CMake option -DURHO3D_SSE=1, but this may result in compile errors.")
-            endif ()
-        elseif (NOT EMSCRIPTEN)     # Emscripten does not support SSE/SSE2 (yet) now but erroneously responding positively to our probe, so skip them for Emscripten for now
-            check_extension (sse)
-            check_extension (sse2)
-        endif ()
-        if (NOT WIN32)    # Linux only
-            check_extension (mmx)
-            check_extension (3dnow __3dNOW__)
-        endif ()
+if (MINGW AND COMPILER_VERSION VERSION_LESS 4.9.1)
+    if (NOT DEFINED URHO3D_SSE)     # Only give the warning once during initial configuration
+        # Certain MinGW versions fail to compile SSE code. This is the initial guess for known "bad" version range, and can be tightened later
+        message (WARNING "Disabling SSE by default due to MinGW version. It is recommended to upgrade to MinGW with GCC >= 4.9.1. You can also try to re-enable SSE with CMake option -DURHO3D_SSE=1, but this may result in compile errors.")
     endif ()
+elseif (NOT EMSCRIPTEN)     # Emscripten does not support SSE/SSE2 (yet) now but erroneously responding positively to our probe, so skip them for Emscripten for now
+    check_extension (sse)
+    check_extension (sse2)
+endif ()
+if (NOT WIN32)    # Linux only
+    check_extension (mmx)
+    check_extension (3dnow __3dNOW__)
 endif ()
 
 # Explicitly set the variable to 1 when it is defined and truthy or 0 when it is not defined or falsy

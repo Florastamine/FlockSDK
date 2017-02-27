@@ -35,9 +35,6 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <io.h>
-#if defined(_MSC_VER)
-#include <float.h>
-#endif
 #else
 #include <unistd.h>
 #endif
@@ -72,7 +69,7 @@ inline void SetFPUState(unsigned control)
 #include <SDL/SDL.h>
 #endif
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {
@@ -141,9 +138,7 @@ void InitFPU()
 {
     // Make sure FPU is in round-to-nearest, single precision mode
     // This ensures Direct3D and OpenGL behave similarly, and all threads behave similarly
-#if defined(_MSC_VER) && defined(_M_IX86)
-    _controlfp(_RC_NEAR | _PC_24, _MCW_RC | _MCW_PC);
-#elif defined(__i386__)
+#if defined(__i386__)
     unsigned control = GetFPUState();
     control &= ~(FPU_CW_PREC_MASK | FPU_CW_ROUND_MASK);
     control |= (FPU_CW_PREC_SINGLE | FPU_CW_ROUND_NEAR);

@@ -26,7 +26,7 @@
 #include "../Resource/JSONFile.h"
 #include "../Urho2D/TileMapDefs2D.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

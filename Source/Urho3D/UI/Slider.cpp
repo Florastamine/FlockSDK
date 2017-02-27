@@ -28,7 +28,7 @@
 #include "../UI/Slider.h"
 #include "../UI/UIEvents.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

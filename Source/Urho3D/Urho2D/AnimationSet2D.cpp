@@ -37,7 +37,7 @@
 #include "../Urho2D/SpriterData2D.h"
 #include "../Urho2D/SpriteSheet2D.h"
 
-#include "../DebugNew.h"
+
 
 #ifdef URHO3D_SPINE
 #include <spine/spine.h>

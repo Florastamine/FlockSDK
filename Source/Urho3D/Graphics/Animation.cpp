@@ -34,7 +34,7 @@
 #include "../Resource/XMLFile.h"
 #include "../Resource/JSONFile.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

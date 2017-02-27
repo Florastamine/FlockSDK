@@ -36,7 +36,7 @@ extern "C"
 #include <lauxlib.h>
 }
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

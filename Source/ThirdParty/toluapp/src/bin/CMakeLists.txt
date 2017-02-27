@@ -70,9 +70,7 @@ define_source_files (EXTRA_CPP_FILES tolua.c ${CMAKE_CURRENT_BINARY_DIR}/generat
 
 # Define dependency libs
 set (LIBS toluapp Lua)
-if (NOT MSVC)
-    list (APPEND LIBS m)
-endif ()
+list (APPEND LIBS m)
 set (INCLUDE_DIRS ../../include ../../../../ThirdParty/Lua/src)
 
 # Setup target

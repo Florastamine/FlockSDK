@@ -26,7 +26,7 @@
 #include "../Core/EventProfiler.h"
 #include "../IO/Log.h"
 
-#include "../DebugNew.h"
+
 
 #ifndef MINI_URHO
 #include <SDL/SDL.h>

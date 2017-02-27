@@ -41,7 +41,7 @@
 #include "../Urho2D/Drawable2D.h"
 #include "../Urho2D/Renderer2D.h"
 
-#include "../DebugNew.h"
+
 
 namespace Urho3D
 {

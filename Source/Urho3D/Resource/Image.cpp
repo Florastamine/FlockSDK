@@ -35,7 +35,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <STB/stb_image.h>
 #include <STB/stb_image_write.h>
-#include "../DebugNew.h"
+
 
 #ifndef MAKEFOURCC
 #define MAKEFOURCC(ch0, ch1, ch2, ch3) ((unsigned)(ch0) | ((unsigned)(ch1) << 8) | ((unsigned)(ch2) << 16) | ((unsigned)(ch3) << 24))
