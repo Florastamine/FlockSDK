@@ -36,14 +36,13 @@
 #  DirectX_DInput_FOUND
 #  DirectX_DSound_FOUND
 #  DirectX_XAudio2_FOUND
-#  DirectX_XInput_FOUND
 #
 # When corresponding header listed below is found:
 #  HAVE_<UPCASE_NAME>_H
 #  HAVE_D3D_H (Currently synonym to HAVE_D3D9_H)
 #
 
-set (DIRECTX_HEADERS dsound.h dinput.h dxgi.h xaudio2.h xinput.h)
+set (DIRECTX_HEADERS dsound.h dinput.h dxgi.h xaudio2.h)
 
 # Optional input variables (see corresponding code comments for details):
 #  DIRECTX_INC_SEARCH_PATHS
@@ -116,14 +115,9 @@ include (CheckIncludeFileCXX)
 foreach (NAME ${DIRECTX_HEADERS})
     string (REPLACE . _ BASE_NAME ${NAME})
     string (TOUPPER ${BASE_NAME} UPCASE_NAME)
-    if (NAME STREQUAL xinput.h)
-        # Workaround an issue in finding xinput.h using check_include_file() as it depends on windows.h but not included it by itself in WinSDK
-        check_include_files (windows.h\;${NAME} HAVE_${UPCASE_NAME})
-    else ()
-        check_include_file_cxx (${NAME} HAVE_${UPCASE_NAME})
-    endif ()
+    check_include_file_cxx (${NAME} HAVE_${UPCASE_NAME})
 endforeach ()
-foreach (COMPONENT DInput DSound XAudio2 XInput)
+foreach (COMPONENT DInput DSound XAudio2)
     string (TOUPPER ${COMPONENT} UPCASE_NAME)
     if (HAVE_${UPCASE_NAME}_H)
         set (DirectX_${COMPONENT}_FOUND TRUE)
