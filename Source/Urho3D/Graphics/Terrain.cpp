@@ -20,8 +20,6 @@
 // THE SOFTWARE.
 //
 
-#include <lodepng/lodepng.h> 
-
 #include "../Precompiled.h"
 
 #include "../Core/Context.h"

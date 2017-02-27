@@ -24,8 +24,6 @@
 
 #include "../Core/Object.h"
 
-#include <SDL/SDL_joystick.h>
-#include <SDL/SDL_gamecontroller.h>
 #include <SDL/SDL_keycode.h>
 #include <SDL/SDL_mouse.h>
 
@@ -98,48 +96,6 @@ URHO3D_EVENT(E_TEXTEDITING, TextEditing)
     URHO3D_PARAM(P_COMPOSITION, Composition);      // String
     URHO3D_PARAM(P_CURSOR, Cursor);                // int
     URHO3D_PARAM(P_SELECTION_LENGTH, SelectionLength);  // int
-}
-
-/// Joystick connected.
-URHO3D_EVENT(E_JOYSTICKCONNECTED, JoystickConnected)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-}
-
-/// Joystick disconnected.
-URHO3D_EVENT(E_JOYSTICKDISCONNECTED, JoystickDisconnected)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-}
-
-/// Joystick button pressed.
-URHO3D_EVENT(E_JOYSTICKBUTTONDOWN, JoystickButtonDown)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-    URHO3D_PARAM(P_BUTTON, Button);                // int
-}
-
-/// Joystick button released.
-URHO3D_EVENT(E_JOYSTICKBUTTONUP, JoystickButtonUp)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-    URHO3D_PARAM(P_BUTTON, Button);                // int
-}
-
-/// Joystick axis moved.
-URHO3D_EVENT(E_JOYSTICKAXISMOVE, JoystickAxisMove)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-    URHO3D_PARAM(P_AXIS, Button);                  // int
-    URHO3D_PARAM(P_POSITION, Position);            // float
-}
-
-/// Joystick POV hat moved.
-URHO3D_EVENT(E_JOYSTICKHATMOVE, JoystickHatMove)
-{
-    URHO3D_PARAM(P_JOYSTICKID, JoystickID);        // int
-    URHO3D_PARAM(P_HAT, Button);                   // int
-    URHO3D_PARAM(P_POSITION, Position);            // int
 }
 
 /// A file was drag-dropped into the application window.
@@ -559,34 +515,4 @@ static const int SCANCODE_EJECT = SDL_SCANCODE_EJECT;
 static const int SCANCODE_SLEEP = SDL_SCANCODE_SLEEP;
 static const int SCANCODE_APP1 = SDL_SCANCODE_APP1;
 static const int SCANCODE_APP2 = SDL_SCANCODE_APP2;
-
-static const int HAT_CENTER = SDL_HAT_CENTERED;
-static const int HAT_UP = SDL_HAT_UP;
-static const int HAT_RIGHT = SDL_HAT_RIGHT;
-static const int HAT_DOWN = SDL_HAT_DOWN;
-static const int HAT_LEFT = SDL_HAT_LEFT;
-
-static const int CONTROLLER_BUTTON_A = SDL_CONTROLLER_BUTTON_A;
-static const int CONTROLLER_BUTTON_B = SDL_CONTROLLER_BUTTON_B;
-static const int CONTROLLER_BUTTON_X = SDL_CONTROLLER_BUTTON_X;
-static const int CONTROLLER_BUTTON_Y = SDL_CONTROLLER_BUTTON_Y;
-static const int CONTROLLER_BUTTON_BACK = SDL_CONTROLLER_BUTTON_BACK;
-static const int CONTROLLER_BUTTON_GUIDE = SDL_CONTROLLER_BUTTON_GUIDE;
-static const int CONTROLLER_BUTTON_START = SDL_CONTROLLER_BUTTON_START;
-static const int CONTROLLER_BUTTON_LEFTSTICK = SDL_CONTROLLER_BUTTON_LEFTSTICK;
-static const int CONTROLLER_BUTTON_RIGHTSTICK = SDL_CONTROLLER_BUTTON_RIGHTSTICK;
-static const int CONTROLLER_BUTTON_LEFTSHOULDER = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
-static const int CONTROLLER_BUTTON_RIGHTSHOULDER = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
-static const int CONTROLLER_BUTTON_DPAD_UP = SDL_CONTROLLER_BUTTON_DPAD_UP;
-static const int CONTROLLER_BUTTON_DPAD_DOWN = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
-static const int CONTROLLER_BUTTON_DPAD_LEFT = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
-static const int CONTROLLER_BUTTON_DPAD_RIGHT = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
-
-static const int CONTROLLER_AXIS_LEFTX = SDL_CONTROLLER_AXIS_LEFTX;
-static const int CONTROLLER_AXIS_LEFTY = SDL_CONTROLLER_AXIS_LEFTY;
-static const int CONTROLLER_AXIS_RIGHTX = SDL_CONTROLLER_AXIS_RIGHTX;
-static const int CONTROLLER_AXIS_RIGHTY = SDL_CONTROLLER_AXIS_RIGHTY;
-static const int CONTROLLER_AXIS_TRIGGERLEFT = SDL_CONTROLLER_AXIS_TRIGGERLEFT;
-static const int CONTROLLER_AXIS_TRIGGERRIGHT = SDL_CONTROLLER_AXIS_TRIGGERRIGHT;
-
 }

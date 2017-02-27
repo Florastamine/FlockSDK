@@ -40,9 +40,6 @@
 #include "SDL_error.h"
 #include "SDL_events.h"
 #include "SDL_filesystem.h"
-#include "SDL_joystick.h"
-#include "SDL_gamecontroller.h"
-#include "SDL_haptic.h"
 #include "SDL_hints.h"
 #include "SDL_loadso.h"
 #include "SDL_log.h"
@@ -75,15 +72,9 @@ extern "C" {
 #define SDL_INIT_TIMER          0x00000001u
 #define SDL_INIT_AUDIO          0x00000010u
 #define SDL_INIT_VIDEO          0x00000020u  /**< SDL_INIT_VIDEO implies SDL_INIT_EVENTS */
-#define SDL_INIT_JOYSTICK       0x00000200u  /**< SDL_INIT_JOYSTICK implies SDL_INIT_EVENTS */
-#define SDL_INIT_HAPTIC         0x00001000u
-#define SDL_INIT_GAMECONTROLLER 0x00002000u  /**< SDL_INIT_GAMECONTROLLER implies SDL_INIT_JOYSTICK */
 #define SDL_INIT_EVENTS         0x00004000u
 #define SDL_INIT_NOPARACHUTE    0x00100000u  /**< compatibility; this flag is ignored. */
-#define SDL_INIT_EVERYTHING ( \
-                SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS | \
-                SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER \
-            )
+#define SDL_INIT_EVERYTHING ( SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS ) 
 /* @} */
 
 /**

@@ -186,7 +186,7 @@ if (NOT DEFINED SDL_RENDER_ENABLED_BY_DEFAULT)
 endif ()
 
 set(SDL_SUBSYSTEMS
-    Atomic Audio Video Render Events Joystick Haptic Power Threads Timers
+    Atomic Audio Video Render Events Power Threads Timers
     File Loadso CPUinfo Filesystem Dlopen)
 foreach(_SUB ${SDL_SUBSYSTEMS})
   string(TOUPPER ${_SUB} _OPT)
@@ -194,12 +194,10 @@ foreach(_SUB ${SDL_SUBSYSTEMS})
     set(SDL_${_OPT}_ENABLED_BY_DEFAULT ON)
   endif()
   # Urho3D - bug fix - prevent SDL_DLOPEN build option from being declared twice
-  if (NOT _OPT MATCHES DLOPEN|HAPTIC)
+  if (NOT _OPT MATCHES DLOPEN)
     option(SDL_${_OPT} "Enable the ${_SUB} subsystem" ${SDL_${_OPT}_ENABLED_BY_DEFAULT})
   endif ()
 endforeach()
-# Urho3D - declare SDL_HAPTIC as a dependent option to SDL_JOYSTICK as haptic requires some private functions from the joystick subsystem
-dep_option (SDL_HAPTIC "Enable the Haptic subsystem" ${SDL_HAPTIC_ENABLED_BY_DEFAULT} SDL_JOYSTICK OFF)
 
 # Urho3D - TODO - put all these options into SDL-specific namespace group, they are littering CMake-gui all over the place as it is now
 #          Also there seems to be duplicate between SDL_SUBSYSTEMS above with build options below: SDL_ATOMIC vs GCC_ATOMICS, SDL_THREADS vs PTHREADS, SDL_DLOPEN (subsystem) vs SDL_DLOPEN (option)
@@ -273,7 +271,7 @@ set (SOURCE_FILE_PATTERNS
   ${SDL2_SOURCE_DIR}/src/thread/*.c
   ${SDL2_SOURCE_DIR}/src/timer/*.c)
 # Urho3D - exclude source files from disabled subsystems, except SDL_ATOMIC, SDL_THREADS and SDL_TIMERS as SDL always needs them even when they may be just generic or dummy implementations
-foreach (_SUB AUDIO CPUINFO EVENTS FILE HAPTIC JOYSTICK POWER RENDER VIDEO)
+foreach (_SUB AUDIO CPUINFO EVENTS FILE POWER RENDER VIDEO)
   string (TOLOWER ${_SUB} _DIR)
   if (${SDL_${_SUB}})
     list (APPEND SOURCE_FILE_PATTERNS ${SDL2_SOURCE_DIR}/src/${_DIR}/*.c)
@@ -619,13 +617,6 @@ if(UNIX)    # Urho3D - at this point both UNIX and UNIX_SYS should be equivalent
       set(SDL_INPUT_LINUXEV 1)
     endif()
 
-    if(SDL_HAPTIC AND HAVE_INPUT_EVENTS)
-      set(SDL_HAPTIC_LINUX 1)
-      file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/linux/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${HAPTIC_SOURCES})
-      set(HAVE_SDL_HAPTIC TRUE)
-    endif()
-
     if(HAVE_INPUT_KD)
       set(SDL_INPUT_LINUXKD 1)
     endif()
@@ -683,16 +674,7 @@ if(UNIX)    # Urho3D - at this point both UNIX and UNIX_SYS should be equivalent
       set(SOURCE_FILES ${SOURCE_FILES} ${POWER_SOURCES})
       set(HAVE_SDL_POWER TRUE)
     endif()
-    if(SDL_JOYSTICK)
-      set(SDL_JOYSTICK_LINUX 1)
-      file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/linux/*.c)
-      set(SOURCE_FILES ${SOURCE_FILES} ${JOYSTICK_SOURCES})
-      set(HAVE_SDL_JOYSTICK TRUE)
-    endif()
   else ()
-    if(SDL_JOYSTICK)
-      CheckUSBHID()   # seems to be BSD specific - limit the test to BSD only?
-    endif()
   endif()
 
   if(INPUT_TSLIB)
@@ -864,48 +846,8 @@ elseif(WINDOWS)
       set(HAVE_VIDEO_OPENGL TRUE)
     endif()
   endif()
-
-  if(SDL_JOYSTICK)
-    file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/windows/*.c)
-    set(SOURCE_FILES ${SOURCE_FILES} ${JOYSTICK_SOURCES})
-    if(HAVE_DINPUT_H)
-      set(SDL_JOYSTICK_DINPUT 1)
-      list(APPEND EXTRA_LIBS dinput8)
-      if(CMAKE_COMPILER_IS_MINGW)
-        list(APPEND EXTRA_LIBS dxerr8)
-      elseif (NOT USE_WINSDK_DIRECTX)
-        list(APPEND EXTRA_LIBS dxerr)
-      endif()
-    endif()
-    if(HAVE_XINPUT_H)
-      set(SDL_JOYSTICK_XINPUT 1)
-    endif()
-    if(NOT HAVE_DINPUT_H AND NOT HAVE_XINPUT_H)
-      set(SDL_JOYSTICK_WINMM 1)
-    endif()
-    set(HAVE_SDL_JOYSTICK TRUE)
-
-    if(SDL_HAPTIC)
-      if(HAVE_DINPUT_H OR HAVE_XINPUT_H)
-        file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/windows/*.c)
-        if(HAVE_DINPUT_H)
-          set(SDL_HAPTIC_DINPUT 1)
-        endif()
-        if(HAVE_XINPUT_H)
-          set(SDL_HAPTIC_XINPUT 1)
-        endif()
-      else()
-        file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/dummy/*.c)
-        set(SDL_HAPTIC_DUMMY 1)
-      endif()
-      set(SOURCE_FILES ${SOURCE_FILES} ${HAPTIC_SOURCES})
-      set(HAVE_SDL_HAPTIC TRUE)
-    endif()
-  endif()
-
-  # Urho3D - commented out adding main entry point for Windows platform
-  # Urho3D - commented out '-mwindows' linker flags setup as it appears to be automatically added by CMake; also commented out 'mingw32' library dependency as it does not appear to be needed, at least that the case for MinGW
-endif()
+  
+endif() 
 
 # Dummies
 # configure.in does it differently:
@@ -915,18 +857,6 @@ endif()
 # so it always adds a dummy, without checking, if it was actually requested.
 # This leads to missing internal references on building, since the
 # src/X/*.c does not get included.
-if(NOT HAVE_SDL_JOYSTICK)
-  set(SDL_JOYSTICK_DISABLED 1)
-  if(SDL_JOYSTICK AND NOT APPLE) # results in unresolved symbols on OSX
-    file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/dummy/*.c)
-    set(SOURCE_FILES ${SOURCE_FILES} ${JOYSTICK_SOURCES})
-  endif()
-endif()
-if(NOT HAVE_SDL_HAPTIC)
-  set(SDL_HAPTIC_DISABLED 1)
-  file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/dummy/*.c)
-  set(SOURCE_FILES ${SOURCE_FILES} ${HAPTIC_SOURCES})
-endif()
 if(NOT HAVE_SDL_LOADSO)
   set(SDL_LOADSO_DISABLED 1)
   file(GLOB LOADSO_SOURCES ${SDL2_SOURCE_DIR}/src/loadso/dummy/*.c)

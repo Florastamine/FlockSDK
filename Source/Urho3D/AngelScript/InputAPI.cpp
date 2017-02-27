@@ -430,39 +430,12 @@ static void RegisterInputConstants(asIScriptEngine* engine)
     engine->RegisterGlobalProperty("const int SCANCODE_SLEEP", (void*)&SCANCODE_SLEEP);
     engine->RegisterGlobalProperty("const int SCANCODE_APP1", (void*)&SCANCODE_APP1);
     engine->RegisterGlobalProperty("const int SCANCODE_APP2", (void*)&SCANCODE_APP2);
-    engine->RegisterGlobalProperty("const int HAT_CENTER", (void*)&HAT_CENTER);
-    engine->RegisterGlobalProperty("const int HAT_UP", (void*)&HAT_UP);
-    engine->RegisterGlobalProperty("const int HAT_RIGHT", (void*)&HAT_RIGHT);
-    engine->RegisterGlobalProperty("const int HAT_DOWN", (void*)&HAT_DOWN);
-    engine->RegisterGlobalProperty("const int HAT_LEFT", (void*)&HAT_LEFT);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_A", (void*)&CONTROLLER_BUTTON_A);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_B", (void*)&CONTROLLER_BUTTON_B);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_X", (void*)&CONTROLLER_BUTTON_X);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_Y", (void*)&CONTROLLER_BUTTON_Y);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_BACK", (void*)&CONTROLLER_BUTTON_BACK);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_GUIDE", (void*)&CONTROLLER_BUTTON_GUIDE);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_START", (void*)&CONTROLLER_BUTTON_START);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_LEFTSTICK", (void*)&CONTROLLER_BUTTON_LEFTSTICK);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_RIGHTSTICK", (void*)&CONTROLLER_BUTTON_RIGHTSTICK);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_LEFTSHOULDER", (void*)&CONTROLLER_BUTTON_LEFTSHOULDER);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_RIGHTSHOULDER", (void*)&CONTROLLER_BUTTON_RIGHTSHOULDER);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_DPAD_UP", (void*)&CONTROLLER_BUTTON_DPAD_UP);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_DPAD_DOWN", (void*)&CONTROLLER_BUTTON_DPAD_DOWN);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_DPAD_LEFT", (void*)&CONTROLLER_BUTTON_DPAD_LEFT);
-    engine->RegisterGlobalProperty("const int CONTROLLER_BUTTON_DPAD_RIGHT", (void*)&CONTROLLER_BUTTON_DPAD_RIGHT);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_LEFTX", (void*)&CONTROLLER_AXIS_LEFTX);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_LEFTY", (void*)&CONTROLLER_AXIS_LEFTY);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_RIGHTX", (void*)&CONTROLLER_AXIS_RIGHTX);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_RIGHTY", (void*)&CONTROLLER_AXIS_RIGHTY);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_TRIGGERLEFT", (void*)&CONTROLLER_AXIS_TRIGGERLEFT);
-    engine->RegisterGlobalProperty("const int CONTROLLER_AXIS_TRIGGERRIGHT", (void*)&CONTROLLER_AXIS_TRIGGERRIGHT);
 }
 
 static Input* GetInput()
 {
     return GetScriptContext()->GetSubsystem<Input>();
 }
-
 
 static void InputSetMouseVisible(bool enable, Input* ptr)
 {
@@ -487,23 +460,7 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterEnumValue("MouseMode", "MM_WRAP", MM_WRAP);
     engine->RegisterEnumValue("MouseMode", "MM_FREE", MM_FREE);
 
-    engine->RegisterObjectType("JoystickState", 0, asOBJ_REF);
-    engine->RegisterObjectBehaviour("JoystickState", asBEHAVE_ADDREF, "void f()", asFUNCTION(FakeAddRef), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectBehaviour("JoystickState", asBEHAVE_RELEASE, "void f()", asFUNCTION(FakeReleaseRef), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectProperty("JoystickState", "const String name", offsetof(JoystickState, name_));
-    engine->RegisterObjectProperty("JoystickState", "const int joystickID", offsetof(JoystickState, joystickID_));
-    engine->RegisterObjectMethod("JoystickState", "bool get_controller() const", asMETHOD(JoystickState, IsController), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "uint get_numButtons() const", asMETHOD(JoystickState, GetNumButtons), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "uint get_numAxes() const", asMETHOD(JoystickState, GetNumAxes), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "uint get_numHats() const", asMETHOD(JoystickState, GetNumHats), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "bool get_buttonDown(uint) const", asMETHOD(JoystickState, GetButtonDown), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "bool get_buttonPress(uint) const", asMETHOD(JoystickState, GetButtonPress), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "float get_axisPosition(uint) const", asMETHOD(JoystickState, GetAxisPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JoystickState", "int get_hatPosition(uint) const", asMETHOD(JoystickState, GetHatPosition), asCALL_THISCALL);
-
     RegisterObject<Input>(engine, "Input");
-    engine->RegisterObjectMethod("Input", "int AddScreenJoystick(XMLFile@+ layoutFile = null, XMLFile@+ styleFile = null)", asMETHOD(Input, AddScreenJoystick), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "bool RemoveScreenJoystick(int)", asMETHOD(Input, RemoveScreenJoystick), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "void CenterMousePosition()", asMETHOD(Input, CenterMousePosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int GetKeyFromName(const String&in) const", asMETHOD(Input, GetKeyFromName), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int GetKeyFromScancode(int) const", asMETHOD(Input, GetKeyFromScancode), asCALL_THISCALL);
@@ -524,8 +481,6 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Input", "void ResetMouseMode()", asMETHOD(Input, ResetMouseMode), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "MouseMode get_mouseMode() const", asMETHOD(Input, GetMouseMode), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_mouseLocked() const", asMETHOD(Input, IsMouseLocked), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "void set_screenJoystickVisible(int, bool)", asMETHOD(Input, SetScreenJoystickVisible), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "bool get_screenJoystickVisible(int)", asMETHOD(Input, IsScreenJoystickVisible), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "void set_screenKeyboardVisible(bool)", asMETHOD(Input, SetScreenKeyboardVisible), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_screenKeyboardVisible() const", asMETHOD(Input, IsScreenKeyboardVisible), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_screenKeyboardSupport() const", asMETHOD(Input, GetScreenKeyboardSupport), asCALL_THISCALL);
@@ -546,10 +501,6 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Input", "int get_mouseMoveX() const", asMETHOD(Input, GetMouseMoveX), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveY() const", asMETHOD(Input, GetMouseMoveY), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveWheel() const", asMETHOD(Input, GetMouseMoveWheel), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "uint get_numJoysticks() const", asMETHOD(Input, GetNumJoysticks), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticks(int)", asMETHOD(Input, GetJoystick), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticksByIndex(uint)", asMETHOD(Input, GetJoystickByIndex), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticksByName(const String& in)", asMETHOD(Input, GetJoystickByName), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_focus() const", asMETHOD(Input, HasFocus), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "bool get_minimized() const", asMETHOD(Input, IsMinimized), asCALL_THISCALL);
     engine->RegisterGlobalFunction("Input@+ get_input()", asFUNCTION(GetInput), asCALL_CDECL);
