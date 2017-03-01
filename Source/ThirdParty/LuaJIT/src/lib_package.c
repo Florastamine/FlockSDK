@@ -17,7 +17,8 @@
 #include "lj_err.h"
 #include "lj_lib.h"
 
-/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */ 
+#define DOWNPOUR_PATCH 
 
 /* Error codes for ll_loadfunc. */
 #define PACKAGE_ERR_LIB		1
@@ -30,11 +31,15 @@
 
 /* Symbol name prefixes. */
 #define SYMPREFIX_CF		"luaopen_%s"
-#define SYMPREFIX_BC		"luaJIT_BC_%s"
+#define SYMPREFIX_BC		"luaJIT_BC_%s" 
 
-#if LJ_TARGET_DLOPEN
+#if defined(DOWNPOUR_PATCH) 
+  #include <stdio.h> 
+#endif 
 
-#include <dlfcn.h>
+#if LJ_TARGET_DLOPEN 
+
+#include <dlfcn.h> 
 
 static void ll_unloadlib(void *lib)
 {
@@ -352,38 +357,53 @@ static int lj_cf_package_loader_lua(lua_State *L)
   return 1;  /* library loaded successfully */
 } 
 
-static char *flor_strcut(const char *str) {
-  if(str != NULL) {
-    char *rcut = (char *) malloc(sizeof(char) * (strlen(str) - 3 + 1));
-    memcpy(rcut, &str[0], strlen(str) - 3);
-    rcut[strlen(rcut) - 1] = 0;
+#if defined(DOWNPOUR_PATCH) 
+static char *dp_strcut(const char *str) 
+{
+  if(NULL != str) {
+    char *rcut = (char *) malloc(sizeof(char) * (strlen(str) - 2));
+    memcpy(&rcut[0], &str[0], strlen(str) - 3); 
+    rcut[strlen(rcut) - 1] = 0; 
 
-    return rcut;
-  }
-
-  return NULL;
-}
-
-static char *flor_get_library_without_arch(const char *libname) {
-  if(libname != NULL) {
-    const int llen = strlen(libname);
-    const char a = *(libname + llen - 2), b = *(libname + llen - 1); 
-
-    if((a == '3' && b == '2') || (a == '6' && b == '4')) {
-      return flor_strcut(libname);
-    } 
+    return (char *) rcut; 
   } 
+  return NULL;
+} 
 
-  return libname;
+static char *dp_get_library_without_arch(const char *lib_name) 
+{
+  if(NULL != lib_name) {
+    const int llen = strlen(lib_name);
+    const char a = *(lib_name + llen - 2), b = *(lib_name + llen - 1); 
+
+    if((a == '3' && b == '2') || (a == '6' && b == '4')) 
+      return dp_strcut(lib_name); 
+  }
+  return lib_name;
 }
+#endif 
 
 static int lj_cf_package_loader_c(lua_State *L)
 {
   const char *name = luaL_checkstring(L, 1);
   const char *filename = findfile(L, name, "cpath");
-  if (filename == NULL) return 1;  /* library not found in this path */
-  if (ll_loadfunc(L, filename, flor_get_library_without_arch(name), 0) != 0) 
-    loaderror(L, filename);
+  if (filename == NULL) return 1;  /* library not found in this path */ 
+  #if defined(DOWNPOUR_PATCH) 
+    char *p = dp_get_library_without_arch(name); 
+
+    printf("[DOWNPOUR_PATCH] -- Full library name received through lj_cf_package_loader_c(): %s\n", name);
+    printf("[DOWNPOUR_PATCH] -- Stripped library name: %s\n", p);
+    if (ll_loadfunc(L, filename, p, 0) != 0) { 
+  #endif 
+  #if defined(DOWNPOUR_PATCH) 
+      free(p);
+  #endif 
+      loaderror(L, filename); 
+    }
+  #if defined(DOWNPOUR_PATCH) 
+    free(p); 
+  #endif 
+    
   return 1;  /* library loaded successfully */
 }
 
