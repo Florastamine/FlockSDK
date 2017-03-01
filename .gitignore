@@ -86,3 +86,4 @@ Thumbs.db
 /Build/targets
 /.vscode
 *.user
+Source/ThirdParty/LuaJIT/src/jit/bc/*.lua
