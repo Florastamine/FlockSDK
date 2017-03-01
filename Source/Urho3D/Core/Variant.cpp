@@ -66,7 +66,7 @@ static const char* typeNames[] =
     "StringVector",
     "Rect",
     "Int64",
-	0
+    0
 };
 
 Variant& Variant::operator =(const Variant& rhs)
@@ -147,7 +147,7 @@ bool Variant::operator ==(const Variant& rhs) const
         return value_.int_ == rhs.value_.int_;
 
     case VAR_INT64:
-        return *reinterpret_cast<const long long int*>(&value_.int_) == *reinterpret_cast<const long long int*>(&rhs.value_.int_);
+        return *reinterpret_cast<const long long*>(&value_.int_) == *reinterpret_cast<const long long*>(&rhs.value_.int_);
 
     case VAR_BOOL:
         return value_.bool_ == rhs.value_.bool_;
@@ -400,7 +400,7 @@ String Variant::ToString() const
         return String(value_.int_);
 
     case VAR_INT64:
-        return String(*reinterpret_cast<const long long int*>(&value_.int_));
+        return String(*reinterpret_cast<const long long*>(&value_.int_));
 
     case VAR_BOOL:
         return String(value_.bool_);
@@ -476,7 +476,7 @@ bool Variant::IsZero() const
         return value_.int_ == 0;
 
     case VAR_INT64:
-        return *reinterpret_cast<const long long int*>(&value_.int_) == 0;
+        return *reinterpret_cast<const long long*>(&value_.int_) == 0;
 
     case VAR_BOOL:
         return value_.bool_ == false;
@@ -679,12 +679,12 @@ template <> unsigned Variant::Get<unsigned>() const
     return GetUInt();
 }
 
-template <> long long int Variant::Get<long long int>() const
+template <> long long Variant::Get<long long>() const
 {
     return GetInt64();
 }
 
-template <> unsigned long long int Variant::Get<unsigned long long int>() const
+template <> unsigned long long Variant::Get<unsigned long long>() const
 {
     return GetUInt64();
 }
