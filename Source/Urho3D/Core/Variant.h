@@ -228,6 +228,13 @@ public:
         *this = (int)value;
     }
 
+    /// Construct from unsigned integer.
+    Variant(unsigned long long int value) :
+        type_(VAR_NONE)
+    {
+        *this = (long long int)value;
+    }
+
     /// Construct from a string hash (convert to integer).
     Variant(const StringHash& value) :
         type_(VAR_NONE)
@@ -701,8 +708,14 @@ public:
     /// Test for equality with an integer. To return true, both the type and value must match.
     bool operator ==(int rhs) const { return type_ == VAR_INT ? value_.int_ == rhs : false; }
 
-    /// Test for equality with an unsigned integer. To return true, both the type and value must match.
+    /// Test for equality with an unsigned 64 bit integer. To return true, both the type and value must match.
     bool operator ==(unsigned rhs) const { return type_ == VAR_INT ? value_.int_ == (int)rhs : false; }
+
+    /// Test for equality with an 64 bit integer. To return true, both the type and value must match.
+    bool operator ==(long long int rhs) const { return type_ == VAR_INT64 ? *reinterpret_cast<const long long int*>(&value_.int_) == rhs : false; }
+
+    /// Test for equality with an unsigned integer. To return true, both the type and value must match.
+    bool operator ==(unsigned long long int rhs) const { return type_ == VAR_INT64 ? *reinterpret_cast<const unsigned long long int*>(&value_.int_) == (int)rhs : false; }
 
     /// Test for equality with a bool. To return true, both the type and value must match.
     bool operator ==(bool rhs) const { return type_ == VAR_BOOL ? value_.bool_ == rhs : false; }
@@ -853,6 +866,12 @@ public:
 
     /// Test for inequality with an unsigned integer.
     bool operator !=(unsigned rhs) const { return !(*this == rhs); }
+
+    /// Test for inequality with an 64 bit integer.
+    bool operator !=(long long int rhs) const { return !(*this == rhs); }
+
+    /// Test for inequality with an unsigned 64 bit integer.
+    bool operator !=(unsigned long long int rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with a bool.
     bool operator !=(bool rhs) const { return !(*this == rhs); }
@@ -1203,6 +1222,10 @@ template <> inline VariantType GetVariantType<int>() { return VAR_INT; }
 
 template <> inline VariantType GetVariantType<unsigned>() { return VAR_INT; }
 
+template <> inline VariantType GetVariantType<long long int>() { return VAR_INT64; }
+
+template <> inline VariantType GetVariantType<unsigned long long int>() { return VAR_INT64; }
+
 template <> inline VariantType GetVariantType<bool>() { return VAR_BOOL; }
 
 template <> inline VariantType GetVariantType<float>() { return VAR_FLOAT; }
@@ -1251,6 +1274,10 @@ template <> inline VariantType GetVariantType<Matrix4>() { return VAR_MATRIX4; }
 template <> URHO3D_API int Variant::Get<int>() const;
 
 template <> URHO3D_API unsigned Variant::Get<unsigned>() const;
+
+template <> URHO3D_API long long int Variant::Get<long long int>() const;
+
+template <> URHO3D_API unsigned long long int Variant::Get<unsigned long long int>() const;
 
 template <> URHO3D_API StringHash Variant::Get<StringHash>() const;
 

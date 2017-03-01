@@ -65,7 +65,8 @@ static const char* typeNames[] =
     "Double",
     "StringVector",
     "Rect",
-    0
+    "Int64",
+	0
 };
 
 Variant& Variant::operator =(const Variant& rhs)
@@ -144,6 +145,9 @@ bool Variant::operator ==(const Variant& rhs) const
     {
     case VAR_INT:
         return value_.int_ == rhs.value_.int_;
+
+    case VAR_INT64:
+        return *reinterpret_cast<const long long int*>(&value_.int_) == *reinterpret_cast<const long long int*>(&rhs.value_.int_);
 
     case VAR_BOOL:
         return value_.bool_ == rhs.value_.bool_;
@@ -249,6 +253,10 @@ void Variant::FromString(VariantType type, const char* value)
     {
     case VAR_INT:
         *this = ToInt(value);
+        break;
+
+    case VAR_INT64:
+        *this = ToInt64(value);
         break;
 
     case VAR_BOOL:
@@ -391,6 +399,9 @@ String Variant::ToString() const
     case VAR_INT:
         return String(value_.int_);
 
+    case VAR_INT64:
+        return String(*reinterpret_cast<const long long int*>(&value_.int_));
+
     case VAR_BOOL:
         return String(value_.bool_);
 
@@ -463,6 +474,9 @@ bool Variant::IsZero() const
     {
     case VAR_INT:
         return value_.int_ == 0;
+
+    case VAR_INT64:
+        return *reinterpret_cast<const long long int*>(&value_.int_) == 0;
 
     case VAR_BOOL:
         return value_.bool_ == false;
@@ -663,6 +677,16 @@ template <> int Variant::Get<int>() const
 template <> unsigned Variant::Get<unsigned>() const
 {
     return GetUInt();
+}
+
+template <> long long int Variant::Get<long long int>() const
+{
+    return GetInt64();
+}
+
+template <> unsigned long long int Variant::Get<unsigned long long int>() const
+{
+    return GetUInt64();
 }
 
 template <> StringHash Variant::Get<StringHash>() const
