@@ -360,14 +360,16 @@ static int lj_cf_package_loader_lua(lua_State *L)
 #if defined(DOWNPOUR_PATCH) 
 static char *dp_strcut(const char *str) 
 {
-  if(NULL != str) {
-    char *rcut = (char *) malloc(sizeof(char) * (strlen(str) - 2));
-    memcpy(&rcut[0], &str[0], strlen(str) - 3); 
+  if(NULL != str) { 
+    size_t str_len = strlen(str); 
+    char *rcut = (char *) malloc(sizeof(char) * (str_len - 2));
+    memcpy(&rcut[0], &str[0], str_len - 3); 
     rcut[strlen(rcut) - 1] = 0; 
+    printf("[DOWNPOUR_PATCH] -- dp_strcut(): str = [%s]; strlen(str) = [%i]; rcut = [%s]; strlen(rcut) = [%i]\n", str, strlen(str), rcut, strlen(rcut));
 
     return (char *) rcut; 
   } 
-  return NULL;
+  return str;
 } 
 
 static char *dp_get_library_without_arch(const char *lib_name) 
@@ -403,7 +405,6 @@ static int lj_cf_package_loader_c(lua_State *L)
   #if defined(DOWNPOUR_PATCH) 
     free(p); 
   #endif 
-    
   return 1;  /* library loaded successfully */
 }
 
