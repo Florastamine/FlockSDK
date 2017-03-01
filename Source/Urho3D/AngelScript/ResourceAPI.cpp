@@ -506,6 +506,8 @@ static void RegisterXMLElement(asIScriptEngine* engine)
     engine->RegisterObjectMethod("XMLElement", "double GetDouble(const String&in) const", asMETHOD(XMLElement, GetDouble), asCALL_THISCALL);
     engine->RegisterObjectMethod("XMLElement", "uint GetUInt(const String&in) const", asMETHOD(XMLElement, GetUInt), asCALL_THISCALL);
     engine->RegisterObjectMethod("XMLElement", "int GetInt(const String&in) const", asMETHOD(XMLElement, GetInt), asCALL_THISCALL);
+    engine->RegisterObjectMethod("XMLElement", "uint64 GetUInt64(const String&in) const", asMETHOD(XMLElement, GetUInt64), asCALL_THISCALL);
+    engine->RegisterObjectMethod("XMLElement", "int64 GetInt64(const String&in) const", asMETHOD(XMLElement, GetInt64), asCALL_THISCALL);
     engine->RegisterObjectMethod("XMLElement", "IntRect GetIntRect(const String&in) const", asMETHOD(XMLElement, GetIntRect), asCALL_THISCALL);
     engine->RegisterObjectMethod("XMLElement", "IntVector2 GetIntVector2(const String&in) const", asMETHOD(XMLElement, GetIntVector2), asCALL_THISCALL);
     engine->RegisterObjectMethod("XMLElement", "Quaternion GetQuaternion(const String&in) const", asMETHOD(XMLElement, GetQuaternion), asCALL_THISCALL);
