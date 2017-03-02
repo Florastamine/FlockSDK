@@ -26,8 +26,6 @@
 
 #include <cstdio>
 
-
-
 namespace Urho3D
 {
 
@@ -236,15 +234,16 @@ Matrix3 Quaternion::RotationMatrix() const
     );
 }
 
-Quaternion Quaternion::Slerp(Quaternion rhs, float t) const
+Quaternion Quaternion::Slerp(const Quaternion& rhs, float t) const
 {
     // Favor accuracy for native code builds
     float cosAngle = DotProduct(rhs);
+    float sign = 1.0f;
     // Enable shortest path rotation
     if (cosAngle < 0.0f)
     {
         cosAngle = -cosAngle;
-        rhs = -rhs;
+        sign = -1.0f;
     }
 
     float angle = acosf(cosAngle);
@@ -263,10 +262,10 @@ Quaternion Quaternion::Slerp(Quaternion rhs, float t) const
         t2 = t;
     }
 
-    return *this * t1 + rhs * t2;
+    return *this * t1 + (rhs * sign) * t2;
 }
 
-Quaternion Quaternion::Nlerp(Quaternion rhs, float t, bool shortestPath) const
+Quaternion Quaternion::Nlerp(const Quaternion& rhs, float t, bool shortestPath) const
 {
     Quaternion result;
     float fCos = DotProduct(rhs);
