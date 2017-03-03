@@ -26,8 +26,6 @@
 #include "../IO/IOEvents.h"
 #include "../IO/Log.h"
 
-
-
 namespace Urho3D
 {
 Application::Application(Context* context) :
