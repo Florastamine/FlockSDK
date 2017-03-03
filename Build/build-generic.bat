@@ -99,7 +99,7 @@ rem if %Bool_StripFound% == 0 (
 rem     call :F_PrintText %Color_Default% "%String_StripNotFound%" 
 rem ) 
 
-call ..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_NETWORK=0 -DURHO3D_URHO2D=0 -DURHO3D_TOOLS=1 -DURHO3D_EXTRAS=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
+call ..\cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DURHO3D_SAFE_LUA=1 -DURHO3D_LUA_RAW_SCRIPT_LOADER=1 -DURHO3D_EXTRAS=1 -DURHO3D_PACKAGING=1 -DURHO3D_PROFILING=0 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
 start /wait /b %String_Make% --directory=%BuildTargetFolder% 
 
 rem if %Bool_StripFound% == 1 (
