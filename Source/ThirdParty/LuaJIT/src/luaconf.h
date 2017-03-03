@@ -14,6 +14,8 @@
 #include <limits.h>
 #include <stddef.h>
 
+#define DOWNPOUR_PATCH  
+
 /* Default path for loading Lua and C modules with require(). */
 // Urho3D: add Urho3D-specific directories into search path
 #if defined(_WIN32)

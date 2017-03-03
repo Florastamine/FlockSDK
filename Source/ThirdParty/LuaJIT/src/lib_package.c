@@ -18,7 +18,6 @@
 #include "lj_lib.h"
 
 /* ------------------------------------------------------------------------ */ 
-#define DOWNPOUR_PATCH 
 
 /* Error codes for ll_loadfunc. */
 #define PACKAGE_ERR_LIB		1
