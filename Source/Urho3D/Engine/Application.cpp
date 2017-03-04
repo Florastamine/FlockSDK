@@ -23,6 +23,7 @@
 #include "../Precompiled.h"
 
 #include "../Engine/Application.h"
+#include "../Core/ProcessUtils.h" 
 #include "../IO/IOEvents.h"
 #include "../IO/Log.h"
 
@@ -32,7 +33,7 @@ Application::Application(Context* context) :
     Object(context),
     exitCode_(EXIT_SUCCESS)
 {
-    engineParameters_ = Engine::ParseParameters(GetArguments());
+    engineParameters_ = Engine::ParseParameters(Urho3D::GetArguments());
 
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
     engine_ = new Engine(context);

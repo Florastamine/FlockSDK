@@ -67,9 +67,7 @@ inline void SetFPUState(unsigned control)
 
 #ifndef MINI_URHO
 #include <SDL/SDL.h>
-#endif
-
-
+#endif 
 
 namespace Urho3D
 {
