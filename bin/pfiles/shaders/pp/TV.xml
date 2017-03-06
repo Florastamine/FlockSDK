@@ -1,0 +1,5 @@
+<renderpath>    
+    <command type="quad" tag="TV" vs="TV" psdefines="WITH_FISHEYE" ps="TV" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>

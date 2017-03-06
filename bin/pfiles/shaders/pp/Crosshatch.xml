@@ -1,0 +1,10 @@
+<renderpath>    
+    <command type="quad" tag="Crosshatch" vs="Crosshatch" ps="Crosshatch" output="viewport">
+        <parameter name="HatchYOffset" value="5.0" />    
+        <parameter name="LumThreshold1" value="1.0" />
+        <parameter name="LumThreshold2" value="0.7" />
+        <parameter name="LumThreshold3" value="0.5" />
+        <parameter name="LumThreshold4" value="0.3" />
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>

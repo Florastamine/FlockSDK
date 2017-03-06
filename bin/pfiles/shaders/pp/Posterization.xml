@@ -1,0 +1,7 @@
+<renderpath>    
+    <command type="quad" tag="Posterization" vs="Posterization" ps="Posterization" output="viewport">
+        <parameter name="Gamma" value="0.6" />    
+        <parameter name="NumColors" value="4.0" />
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>

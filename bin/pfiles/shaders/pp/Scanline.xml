@@ -1,0 +1,7 @@
+<renderpath>    
+    <command type="quad" tag="Scanline" vs="Scanline" ps="Scanline" output="viewport">
+        <parameter name="Offset" value="0.0" />
+        <parameter name="Frequency" value="100.0" />
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>

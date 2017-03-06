@@ -1,0 +1,5 @@
+<renderpath>
+    <command type="quad" tag="Infrared" vs="Infrared" ps="Infrared" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>

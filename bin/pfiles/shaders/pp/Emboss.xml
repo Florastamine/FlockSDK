@@ -1,0 +1,7 @@
+<renderpath>    
+    <command type="quad" tag="Emboss" vs="Emboss" ps="Emboss" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="ScreenWidth" value="1920" />
+        <parameter name="ScreenHeight" value="1080" />
+    </command>
+</renderpath>

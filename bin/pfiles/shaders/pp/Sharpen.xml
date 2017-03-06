@@ -1,0 +1,6 @@
+<renderpath>    
+    <command type="quad" tag="Sharpen" vs="Sharpen" ps="Sharpen" output="viewport">
+        <parameter name="SharpenFactor" value="16.0" />
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>
