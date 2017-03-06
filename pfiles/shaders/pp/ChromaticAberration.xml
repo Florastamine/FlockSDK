@@ -1,0 +1,7 @@
+<renderpath>
+    <command type="quad" tag="ChromaticAberration" vs="ChromaticAberration" ps="ChromaticAberration" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="ScreenWidth" value="1920" />
+        <parameter name="ScreenHeight" value="1080" />
+    </command>
+</renderpath>
