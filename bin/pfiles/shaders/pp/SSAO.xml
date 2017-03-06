@@ -3,7 +3,7 @@
     <command type="clear" color="1 1 1 1" depth="1.0" stencil="0" output="depth" />
     <command type="scenepass" pass="depth" output="depth" />
     <command type="quad" tag="ssao" vs="ssao" ps="ssao">
-        <parameter name="ScreenSize" value="1366 768" />
+        <parameter name="ScreenSize" value="1920 1080" />
         <texture unit="diffuse" name="viewport" />
         <texture unit="emissive" name="depth" />
     </command>
