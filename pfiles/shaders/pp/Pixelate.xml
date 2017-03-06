@@ -1,0 +1,10 @@
+<renderpath>    
+    <command type="quad" tag="Pixelate" vs="Pixelate" ps="Pixelate" output="viewport">
+        <parameter name="VXOffset" value="1.0" />
+        <parameter name="PixelWidth" value="4.0" />
+        <parameter name="PixelHeight" value="4.0" />
+        <parameter name="ScreenWidth" value="1920" />
+        <parameter name="ScreenHeight" value="1080" />
+        <texture unit="diffuse" name="viewport" />
+    </command>
+</renderpath>
