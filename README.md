@@ -5,24 +5,24 @@
 This is a fork of the [Urho3D game engine](https://github.com/urho3d/Urho3D) which is being used for the development of my upcoming video game project. It was forked when [Urho3D](https://github.com/urho3d/Urho3D) is `322 commits` ahead of its `1.6` release, and since then the fork has been received patches, modifications, cuts and updates introduced by both the [Urho3D](https://github.com/urho3d/Urho3D) developers and myself. 
 
 A list of modifications, cuts, and updates since the fork was born: 
-* Rest in pieces `ARM`, `PowerPC`, `Raspberry Pi`, `Android`, `iOS`, `OS X`, `tvOS`, `Xcode`, `Haiku` and `Web` targets. This fork puts heavy emphasises on `Windows` and `Linux` targets. 
+* Rest in pieces `ARM`, `PowerPC`, `Raspberry Pi`, `Android`, `iOS`, `OS X`, `tvOS`, `Haiku` and `Web` targets. This fork puts heavy emphasises on `Windows` and `Linux` targets. 
 * Removed `nanodbc`/`ODBC` support in favor of `SQLite`. 
 * Completely removed `Direct3D11`/`Direct3D9` support, leaving only the `OpenGL` renderer across all platforms (`Windows` and `Linux`). 
 * Modifications to the both the game engine and the `AngelScript`-based editor to use a different folder naming and structure. 
 * Moving to `C++11` and thus removed support for non-compliant-`C++11` compilers, for example, `MSVC 9` (`_MSC_VER == 1500`) and `MSVC 10` (`_MSC_VER == 1600`). 
 * A collection of build scripts for compiling the SDK with custom settings related to the game project. 
 * Reworked `Urho3DPlayer`. 
-* Integration with [Herbal](https://github.com/Florastamine/Herbal), a Lua- and GUI-based build target configuration tool.  
 * Forbids generation of documentation files using [Doxygen](http://www.stack.nl/~dimitri/doxygen/).  
-* Freed AssImp from ancient and less known file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, [Blender](https://www.blender.org), [Ogre3D](http://www.ogre3d.org)'s `.xml`, [Terragen](http://planetside.co.uk), `Q3D` and `Q3BSP`. 
+* Freed AssImp from ancient/less known/not widely used file formats. Now you won't be able to read/write files of the following format: `ASSBIN`/`ASSXML`, `B3D`, `CSM`, `HMP`, `IRRMESH`, `MD2`/`MD3`/`MDL`, `MDC`, `NFF`, `NDO`, `OFF`, `MS3D`, `COB`, `IFC`, `XGL`, [Blender](https://www.blender.org), [Ogre3D](http://www.ogre3d.org)'s `.xml`, [Terragen](http://planetside.co.uk), `Q3D` and `Q3BSP`. 
 * Upgrades of several libraries to their newer versions (`SDL`, `AngelScript`, `FreeType`, `SQLite`, `pugixml`, `libcpuid`, `Open Asset Import Library (assimp)`)
+* Integration of various post-processing effects: `Greyscale`, `negative`, `vibrant`, `SSAO`, `crosshatch`, `crossstitch`, `infrared`, `TV/noise`, `emboss`, `sharpen`, `scanline`, `posterization`, `chromatic aberration`, `pixelate`.
 
 The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
 
 ## Prebuilt binaries ([release log](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md))
 These prebuilt binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
 
-Latest **unstable** binaries were built and released on `02.11.2017`, and can be downloaded [here](https://drive.google.com/open?id=0Bx0q4f1kFRaiOWFaUnAtcTZLYms). Old binaries can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md). 
+Latest **unstable** binaries were built and released on `02.21.2017`, and can be downloaded [here](https://drive.google.com/drive/folders/0Bx0q4f1kFRaicmFUaldhNnEtczA?usp=sharing). Older versions can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md). 
 
 ## Building 
 
