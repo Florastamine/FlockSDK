@@ -285,7 +285,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         // The following extra conditional check below is to suppress unnecessary debug log entry under such default situation
         // The cleaner approach is to not enable the autoload by default, i.e. do not use 'Autoload' as default value for 'AutoloadPaths' engine parameter
         // However, doing so will break the existing applications that rely on this
-        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "Autoload"))
+        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "pfiles/early"))
             URHO3D_LOGDEBUGF(
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
                 autoLoadPaths[i].CString());
@@ -388,9 +388,9 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
             IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
-    Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "Data;CoreData").GetString().Split(';');
+    Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "pfiles").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, "ResourcePackages").GetString().Split(';');
-    Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "Autoload").GetString().Split(';');
+    Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "pfiles/early").GetString().Split(';');
 
     for (unsigned i = 0; i < resourcePaths.Size(); ++i)
     {
@@ -508,7 +508,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         // The following extra conditional check below is to suppress unnecessary debug log entry under such default situation
         // The cleaner approach is to not enable the autoload by default, i.e. do not use 'Autoload' as default value for 'AutoloadPaths' engine parameter
         // However, doing so will break the existing applications that rely on this
-        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "Autoload"))
+        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "pfiles/early"))
             URHO3D_LOGDEBUGF(
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
                 autoLoadPaths[i].CString());
