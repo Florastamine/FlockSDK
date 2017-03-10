@@ -331,7 +331,7 @@ public:
         Iterator i = Find(value);
         if (i != End())
         {
-            EraseSwap(i);
+            EraseSwap(i - Begin());
             return true;
         }
         else
@@ -903,7 +903,7 @@ public:
         Iterator i = Find(value);
         if (i != End())
         {
-            EraseSwap(i);
+            EraseSwap(i - Begin());
             return true;
         }
         else
