@@ -27,7 +27,6 @@
 
 namespace Urho3D
 {
-
 /// Two-dimensional vector.
 class URHO3D_API Vector2
 {
