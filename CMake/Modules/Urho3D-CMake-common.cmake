@@ -104,6 +104,7 @@ else ()
 endif ()
 option (URHO3D_PACKAGING "Enable resources packaging support, on Web platform default to 1, on other platforms default to 0" ${WEB})
 option (URHO3D_PROFILING "Enable profiling support" TRUE)
+option (URHO3D_IK "Enable inverse kinematics support" TRUE)
 option (URHO3D_LOGGING "Enable logging support" TRUE)
 
 if (CMAKE_CROSSCOMPILING)

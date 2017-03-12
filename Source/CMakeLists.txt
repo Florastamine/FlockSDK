@@ -43,14 +43,18 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
     if (isSystemDir STREQUAL -1)
         list (APPEND CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/${DEST_LIBRARY_DIR})
     endif ()
-endif ()
+endif () 
 
 # Add targets
 foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 
-add_subdirectory (ThirdParty/Box2D)
+add_subdirectory (ThirdParty/Box2D) 
+
+if (URHO3D_IK)
+    add_subdirectory (ThirdParty/ik/cmake/Urho3D)
+endif ()
 
 add_subdirectory (ThirdParty/GLEW)
 if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
