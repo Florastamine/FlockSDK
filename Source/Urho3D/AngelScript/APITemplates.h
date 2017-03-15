@@ -60,10 +60,10 @@ template <class T, class U> U* RefCast(T* t)
 /// Template function for Vector to array conversion.
 template <class T> CScriptArray* VectorToArray(const Vector<T>& vector, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, vector.Size());
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -78,10 +78,10 @@ template <class T> CScriptArray* VectorToArray(const Vector<T>& vector, const ch
 /// Template function for PODVector to array conversion.
 template <class T> CScriptArray* VectorToArray(const PODVector<T>& vector, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, vector.Size());
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -96,10 +96,10 @@ template <class T> CScriptArray* VectorToArray(const PODVector<T>& vector, const
 /// Template function for data buffer to array conversion.
 template <class T> CScriptArray* BufferToArray(const T* buffer, unsigned size, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, size);
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -114,10 +114,10 @@ template <class T> CScriptArray* BufferToArray(const T* buffer, unsigned size, c
 /// Template function for Vector to handle array conversion.
 template <class T> CScriptArray* VectorToHandleArray(const Vector<T*>& vector, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, vector.Size());
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -138,10 +138,10 @@ template <class T> CScriptArray* VectorToHandleArray(const Vector<T*>& vector, c
 /// Template function for PODVector to handle array conversion.
 template <class T> CScriptArray* VectorToHandleArray(const PODVector<T*>& vector, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, vector.Size());
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -162,10 +162,10 @@ template <class T> CScriptArray* VectorToHandleArray(const PODVector<T*>& vector
 /// Template function for shared pointer Vector to handle array conversion.
 template <class T> CScriptArray* VectorToHandleArray(const Vector<SharedPtr<T> >& vector, const char* arrayName)
 {
-    asIScriptContext* context = asGetActiveContext();
+    Context* context = GetScriptContext();
     if (context)
     {
-        asITypeInfo* type = GetScriptContext()->GetSubsystem<Script>()->GetObjectType(arrayName);
+        asITypeInfo* type = context->GetSubsystem<Script>()->GetObjectType(arrayName);
         CScriptArray* arr = CScriptArray::Create(type, vector.Size());
 
         for (unsigned i = 0; i < arr->GetSize(); ++i)
@@ -410,7 +410,7 @@ static const AttributeInfo& SerializableGetAttributeInfo(unsigned index, Seriali
     const Vector<AttributeInfo>* attributes = ptr->GetAttributes();
     if (!attributes || index >= attributes->Size())
     {
-        asGetActiveContext()->SetException("Index out of bounds");
+        GetActiveASContext()->SetException("Index out of bounds");
         return noAttributeInfo;
     }
     else
@@ -532,7 +532,7 @@ static Component* NodeGetComponent(unsigned index, Node* ptr)
     const Vector<SharedPtr<Component> >& components = ptr->GetComponents();
     if (index >= components.Size())
     {
-        asGetActiveContext()->SetException("Index out of bounds");
+        GetActiveASContext()->SetException("Index out of bounds");
         return 0;
     }
     else
@@ -607,7 +607,7 @@ static Node* NodeGetChild(unsigned index, Node* ptr)
     const Vector<SharedPtr<Node> >& children = ptr->GetChildren();
     if (index >= children.Size())
     {
-        asGetActiveContext()->SetException("Index out of bounds");
+        GetActiveASContext()->SetException("Index out of bounds");
         return 0;
     }
     else
