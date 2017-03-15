@@ -60,7 +60,7 @@ LJLIB_ASM(string_byte)		LJLIB_REC(string_range 0)
   for (i = 0; i < n; i++)
     setintV(L->base + i-1-LJ_FR2, p[i]);
   return FFH_RES(n);
-}
+} 
 
 LJLIB_ASM(string_char)		LJLIB_REC(.)
 {
@@ -82,6 +82,42 @@ LJLIB_ASM(string_sub)		LJLIB_REC(string_range 1)
   lj_lib_checkint(L, 2);
   setintV(L->base+2, lj_lib_optint(L, 3, -1));
   return FFH_RETRY;
+}
+
+/* 
+ * Original function (string_endswith()) from the Premake project (https://premake.github.io), 
+ * modified and adapted into LuaJIT by Florastamine. (https://github.com/Florastamine) 
+ */
+/*
+PREMAKE
+A build configuration tool
+
+ Copyright (C) 2002-2013 by Jason Perkins
+ Distributed under the terms of the BSD License, see LICENSE.txt
+
+ The Lua language and runtime library is (C) TeCGraf, PUC-Rio.
+ See their website at http://www.lua.org/
+
+
+ See the file BUILD.txt for instructions on building Premake.
+
+
+ For questions, comments, or more information, visit the project
+ website at http://industriousone.com/premake
+*/
+LJLIB_CF(string_ends_with) 
+{
+  const char *haystack = luaL_optstring(L, 1, NULL); 
+  const char *needle   = luaL_optstring(L, 2, NULL); 
+
+  if (haystack && needle) {
+    int hlen = strlen(haystack), nlen = strlen(needle); 
+    if (hlen >= nlen) {
+      lua_pushboolean(L, strcasecmp(haystack + hlen - nlen, needle) == 0);
+      return 1;
+    }
+  }
+  return 0;
 }
 
 LJLIB_CF(string_rep)		LJLIB_REC(.)
@@ -118,7 +154,7 @@ static int writer_buf(lua_State *L, const void *p, size_t size, void *sb)
   lj_buf_putmem((SBuf *)sb, p, (MSize)size);
   UNUSED(L);
   return 0;
-}
+} 
 
 LJLIB_CF(string_dump)
 {
