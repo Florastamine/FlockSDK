@@ -351,7 +351,6 @@ class ViewportContext
 Array<ViewportContext@> viewports;
 ViewportContext@ activeViewport;
 
-Text@ editorModeText;
 Text@ renderStatsText;
 Text@ modelInfoText;
 
@@ -1213,8 +1212,6 @@ void UpdateGrid(bool updateGridGeometry = true)
 
 void CreateStatsBar()
 {
-    editorModeText = Text();
-    ui.root.AddChild(editorModeText);
     renderStatsText = Text();
     ui.root.AddChild(renderStatsText);
     modelInfoText = Text();
@@ -1235,14 +1232,6 @@ void SetupStatsBarText(Text@ text, Font@ font, int x, int y, HorizontalAlignment
 void UpdateStats(float timeStep)
 {
     String adding = "";
-    // Todo: add localization
-    editorModeText.text = String(
-        localization.Get("Mode: ") + localization.Get(editModeText[editMode]) +
-        localization.Get("  Axis: ") + localization.Get(axisModeText[axisMode]) +
-        localization.Get("  Pick: ") + localization.Get(pickModeText[pickMode]) +
-        localization.Get("  Fill: ") + localization.Get(fillModeText[fillMode]) +
-        localization.Get("  Updates: ") + (runUpdate ? localization.Get("Running") : localization.Get("Paused") + adding));
-
     renderStatsText.text = String(
         localization.Get("Tris: ") + renderer.numPrimitives +
         localization.Get("  Batches: ") + renderer.numBatches +
@@ -1250,7 +1239,6 @@ void UpdateStats(float timeStep)
         localization.Get("  Shadowmaps: ") + renderer.numShadowMaps[true] +
         localization.Get("  Occluders: ") + renderer.numOccluders[true]);
 
-    editorModeText.size = editorModeText.minSize;
     renderStatsText.size = renderStatsText.minSize;
 
     // Relayout stats bar
@@ -1258,22 +1246,19 @@ void UpdateStats(float timeStep)
 
     if(viewportMode != VIEWPORT_COMPACT)
     {
-        if (graphics.width >= editorModeText.size.x + renderStatsText.size.x + 45)
+        if (graphics.width >= renderStatsText.size.x + 45)
         {
-            SetupStatsBarText(editorModeText, font, 35, 64, HA_LEFT, VA_TOP);
             SetupStatsBarText(renderStatsText, font, -4, 64, HA_RIGHT, VA_TOP);
             SetupStatsBarText(modelInfoText, font, 35, 88, HA_LEFT, VA_TOP);
         }
         else
         {
-            SetupStatsBarText(editorModeText, font, 35, 64, HA_LEFT, VA_TOP);
             SetupStatsBarText(renderStatsText, font, 35, 78, HA_LEFT, VA_TOP);
             SetupStatsBarText(modelInfoText, font, 35, 102, HA_LEFT, VA_TOP);
         }
     }
     else 
     {
-        SetupStatsBarText(editorModeText, font, secondaryToolBar.width + hierarchyWindow.width + 10 , 64, HA_LEFT, VA_TOP);
         SetupStatsBarText(renderStatsText, font, secondaryToolBar.width + hierarchyWindow.width + 10 , 84, HA_LEFT, VA_TOP);
         SetupStatsBarText(modelInfoText, font, secondaryToolBar.width + hierarchyWindow.width + 10, 104, HA_LEFT, VA_TOP);
     }
