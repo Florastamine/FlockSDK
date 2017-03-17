@@ -321,6 +321,8 @@ bool Engine::Initialize(const VariantMap& parameters)
             GetParameter(parameters, "VSync", false).GetBool(),
             GetParameter(parameters, "TripleBuffer", false).GetBool(),
             GetParameter(parameters, "MultiSample", 1).GetInt()
+            GetParameter(parameters, "Monitor", 0).GetInt(),
+            GetParameter(parameters, "RefreshRate", 0).GetInt()
         ))
             return false;
 
@@ -860,6 +862,14 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
             else if (argument == "y" && !value.Empty())
             {
                 ret["WindowHeight"] = ToInt(value);
+                ++i;
+            }
+            else if (argument == "monitor" && !value.Empty()) {
+                ret["Monitor"] = ToInt(value);
+                ++i;
+            }
+            else if (argument == "hz" && !value.Empty()) {
+                ret["RefreshRate"] = ToInt(value);
                 ++i;
             }
             else if (argument == "m" && !value.Empty())
