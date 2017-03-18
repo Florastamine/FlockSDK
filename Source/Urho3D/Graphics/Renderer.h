@@ -237,12 +237,6 @@ public:
     void SetOccluderSizeThreshold(float screenSize);
     /// Set whether to thread occluder rendering. Default false.
     void SetThreadedOcclusion(bool enable);
-    /// Set shadow depth bias multiplier for mobile platforms to counteract possible worse shadow map precision. Default 1.0 (no effect.)
-    void SetMobileShadowBiasMul(float mul);
-    /// Set shadow depth bias addition for mobile platforms to counteract possible worse shadow map precision. Default 0.0 (no effect.)
-    void SetMobileShadowBiasAdd(float add);
-    /// Set shadow normal offset multiplier for mobile platforms to counteract possible worse shadow map precision. Default 1.0 (no effect.)
-    void SetMobileNormalOffsetMul(float mul);
     /// Force reload of shaders.
     void ReloadShaders();
 
@@ -324,15 +318,6 @@ public:
 
     /// Return whether occlusion rendering is threaded.
     bool GetThreadedOcclusion() const { return threadedOcclusion_; }
-
-    /// Return shadow depth bias multiplier for mobile platforms.
-    float GetMobileShadowBiasMul() const { return mobileShadowBiasMul_; }
-
-    /// Return shadow depth bias addition for mobile platforms.
-    float GetMobileShadowBiasAdd() const { return mobileShadowBiasAdd_; }
-
-    /// Return shadow normal offset multiplier for mobile platforms.
-    float GetMobileNormalOffsetMul() const { return mobileNormalOffsetMul_; }
 
     /// Return number of views rendered.
     unsigned GetNumViews() const { return views_.Size(); }
@@ -565,12 +550,6 @@ private:
     int occlusionBufferSize_;
     /// Occluder screen size threshold.
     float occluderSizeThreshold_;
-    /// Mobile platform shadow depth bias multiplier.
-    float mobileShadowBiasMul_;
-    /// Mobile platform shadow depth bias addition.
-    float mobileShadowBiasAdd_;
-    /// Mobile platform shadow normal offset multiplier.
-    float mobileNormalOffsetMul_;
     /// Number of occlusion buffers in use.
     unsigned numOcclusionBuffers_;
     /// Number of temporary shadow cameras in use.

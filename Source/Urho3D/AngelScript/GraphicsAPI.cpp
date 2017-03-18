@@ -2005,12 +2005,6 @@ static void RegisterRenderer(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Renderer", "float get_occluderSizeThreshold() const", asMETHOD(Renderer, GetOccluderSizeThreshold), asCALL_THISCALL);
     engine->RegisterObjectMethod("Renderer", "void set_threadedOcclusion(bool)", asMETHOD(Renderer, SetThreadedOcclusion), asCALL_THISCALL);
     engine->RegisterObjectMethod("Renderer", "bool get_threadedOcclusion() const", asMETHOD(Renderer, GetThreadedOcclusion), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "void set_mobileShadowBiasMul(float)", asMETHOD(Renderer, SetMobileShadowBiasMul), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "float get_mobileShadowBiasMul() const", asMETHOD(Renderer, GetMobileShadowBiasMul), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "void set_mobileShadowBiasAdd(float)", asMETHOD(Renderer, SetMobileShadowBiasAdd), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "float get_mobileShadowBiasAdd() const", asMETHOD(Renderer, GetMobileShadowBiasAdd), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "void set_mobileNormalOffsetMul(float)", asMETHOD(Renderer, SetMobileNormalOffsetMul), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Renderer", "float get_mobileNormalOffsetMul() const", asMETHOD(Renderer, GetMobileNormalOffsetMul), asCALL_THISCALL);
     engine->RegisterObjectMethod("Renderer", "uint get_numPrimitives() const", asMETHOD(Renderer, GetNumPrimitives), asCALL_THISCALL);
     engine->RegisterObjectMethod("Renderer", "uint get_numBatches() const", asMETHOD(Renderer, GetNumBatches), asCALL_THISCALL);
     engine->RegisterObjectMethod("Renderer", "uint get_numViews() const", asMETHOD(Renderer, GetNumViews), asCALL_THISCALL);
