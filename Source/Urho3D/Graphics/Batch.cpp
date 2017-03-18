@@ -495,9 +495,6 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     }
 
                     normalOffsetScale *= light->GetShadowBias().normalOffset_;
-#ifdef GL_ES_VERSION_2_0
-                    normalOffsetScale *= renderer->GetMobileNormalOffsetMul();
-#endif
                     graphics->SetShaderParameter(VSP_NORMALOFFSETSCALE, normalOffsetScale);
                     graphics->SetShaderParameter(PSP_NORMALOFFSETSCALE, normalOffsetScale);
                 }
@@ -556,14 +553,8 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     }
 
     // Set zone texture if necessary
-#ifndef GL_ES_VERSION_2_0
     if (zone_ && graphics->HasTextureUnit(TU_ZONE))
         graphics->SetTexture(TU_ZONE, zone_->GetZoneTexture());
-#else
-    // On OpenGL ES set the zone texture to the environment unit instead
-    if (zone_ && zone_->GetZoneTexture() && graphics->HasTextureUnit(TU_ENVIRONMENT))
-        graphics->SetTexture(TU_ENVIRONMENT, zone_->GetZoneTexture());
-#endif
 
     // Set material-specific shader parameters and textures
     if (material_)
@@ -753,12 +744,6 @@ void BatchQueue::SortFrontToBack()
 
 void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
 {
-    // Mobile devices likely use a tiled deferred approach, with which front-to-back sorting is irrelevant. The 2-pass
-    // method is also time consuming, so just sort with state having priority
-#ifdef GL_ES_VERSION_2_0
-    Sort(batches.Begin(), batches.End(), CompareBatchesState);
-#else
-    // For desktop, first sort by distance and remap shader/material/geometry IDs in the sort key
     Sort(batches.Begin(), batches.End(), CompareBatchesFrontToBack);
 
     unsigned freeShaderID = 0;
@@ -808,7 +793,6 @@ void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
 
     // Finally sort again with the rewritten ID's
     Sort(batches.Begin(), batches.End(), CompareBatchesState);
-#endif
 }
 
 void BatchQueue::SetInstancingData(void* lockedData, unsigned stride, unsigned& freeIndex)

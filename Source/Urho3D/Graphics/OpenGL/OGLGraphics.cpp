@@ -45,13 +45,6 @@
 
 #include <SDL/SDL.h>
 
-
-
-#ifdef GL_ES_VERSION_2_0
-#define GL_DEPTH_COMPONENT24 GL_DEPTH_COMPONENT24_OES
-#define glClearDepth glClearDepthf
-#endif
-
 #ifdef _WIN32
 // Prefer the high-performance GPU on switchable GPU systems
 #include <windows.h>
@@ -115,7 +108,6 @@ static const unsigned glBlendOp[] =
     GL_FUNC_REVERSE_SUBTRACT
 };
 
-#ifndef GL_ES_VERSION_2_0
 static const unsigned glFillMode[] =
 {
     GL_FILL,
@@ -131,7 +123,6 @@ static const unsigned glStencilOps[] =
     GL_INCR_WRAP,
     GL_DECR_WRAP
 };
-#endif
 
 static const unsigned glElementTypes[] =
 {
@@ -154,11 +145,6 @@ static const unsigned glElementComponents[] =
     4,
     4
 };
-
-#ifdef GL_ES_VERSION_2_0
-static unsigned glesDepthStencilFormat = GL_DEPTH_COMPONENT16;
-static unsigned glesReadableDepthFormat = GL_DEPTH_COMPONENT;
-#endif
 
 static String extensions;
 
@@ -246,11 +232,7 @@ Graphics::Graphics(Context* context_) :
     shaderPath_("Shaders/GLSL/"),
     shaderExtension_(".glsl"),
     orientations_("LandscapeLeft LandscapeRight"),
-#ifndef GL_ES_VERSION_2_0
     apiName_("GL2")
-#else
-    apiName_("GLES2")
-#endif
 {
     SetTextureUnitMappings();
     ResetCachedState();
@@ -354,7 +336,6 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-#ifndef GL_ES_VERSION_2_0
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
         SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -379,10 +360,6 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
         }
-#else
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-#endif
 
         if (multiSample > 1)
         {
@@ -570,14 +547,8 @@ bool Graphics::TakeScreenShot(Image& destImage)
 
     ResetRenderTargets();
 
-#ifndef GL_ES_VERSION_2_0
     destImage.SetSize(width_, height_, 3);
     glReadPixels(0, 0, width_, height_, GL_RGB, GL_UNSIGNED_BYTE, destImage.GetData());
-#else
-    // Use RGBA format on OpenGL ES, as otherwise (at least on Android) the produced image is all black
-    destImage.SetSize(width_, height_, 4);
-    glReadPixels(0, 0, width_, height_, GL_RGBA, GL_UNSIGNED_BYTE, destImage.GetData());
-#endif
 
     // On OpenGL we need to flip the image vertically after reading
     destImage.FlipVertical();
@@ -641,10 +612,6 @@ void Graphics::EndFrame()
 void Graphics::Clear(unsigned flags, const Color& color, float depth, unsigned stencil)
 {
     PrepareDraw();
-
-#ifdef GL_ES_VERSION_2_0
-    flags &= ~CLEAR_STENCIL;
-#endif
 
     bool oldColorWrite = colorWrite_;
     bool oldDepthWrite = depthWrite_;
@@ -720,7 +687,6 @@ bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
 
 bool Graphics::ResolveToTexture(Texture2D* texture)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!texture)
         return false;
     RenderSurface* surface = texture->GetRenderSurface();
@@ -766,15 +732,10 @@ bool Graphics::ResolveToTexture(Texture2D* texture)
     // Restore previously bound FBO
     BindFramebuffer(impl_->boundFBO_);
     return true;
-#else
-    // Not supported on GLES
-    return false;
-#endif
 }
 
 bool Graphics::ResolveToTexture(TextureCube* texture)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!texture)
         return false;
 
@@ -836,10 +797,6 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
     // Restore previously bound FBO
     BindFramebuffer(impl_->boundFBO_);
     return true;
-#else
-    // Not supported on GLES
-    return false;
-#endif
 }
 
 void Graphics::Draw(PrimitiveType type, unsigned vertexStart, unsigned vertexCount)
@@ -880,7 +837,6 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 
 void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support || !indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName())
         return;
 
@@ -896,13 +852,11 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 
     numPrimitives_ += primitiveCount;
     ++numBatches_;
-#endif
 }
 
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount,
     unsigned instanceCount)
 {
-#if !defined(GL_ES_VERSION_2_0) 
     if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
         return;
 
@@ -927,13 +881,11 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 
     numPrimitives_ += instanceCount * primitiveCount;
     ++numBatches_;
-#endif
 }
 
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex,
         unsigned vertexCount, unsigned instanceCount)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support || !indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
         return;
 
@@ -951,7 +903,6 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 
     numPrimitives_ += instanceCount * primitiveCount;
     ++numBatches_;
-#endif
 }
 
 void Graphics::SetVertexBuffer(VertexBuffer* buffer)
@@ -1104,7 +1055,6 @@ void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
     }
 
     // Update the clip plane uniform on GL3, and set constant buffers
-#ifndef GL_ES_VERSION_2_0
     if (gl3Support && impl_->shaderProgram_)
     {
         const SharedPtr<ConstantBuffer>* constantBuffers = impl_->shaderProgram_->GetConstantBuffers();
@@ -1124,7 +1074,6 @@ void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
 
         SetShaderParameter(VSP_CLIPPLANE, useClipPlane_ ? clipPlane_ : Vector4(0.0f, 0.0f, 0.0f, 1.0f));
     }
-#endif
 
     // Store shader combination if shader dumping in progress
     if (shaderPrecache_)
@@ -1800,7 +1749,6 @@ void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
 {
     if (constantBias != constantDepthBias_ || slopeScaledBias != slopeScaledDepthBias_)
     {
-#ifndef GL_ES_VERSION_2_0
         if (slopeScaledBias != 0.0f)
         {
             // OpenGL constant bias is unreliable and dependent on depth buffer bitdepth, apply in the projection matrix instead
@@ -1809,7 +1757,6 @@ void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
         }
         else
             glDisable(GL_POLYGON_OFFSET_FILL);
-#endif
 
         constantDepthBias_ = constantBias;
         slopeScaledDepthBias_ = slopeScaledBias;
@@ -1838,18 +1785,15 @@ void Graphics::SetDepthWrite(bool enable)
 
 void Graphics::SetFillMode(FillMode mode)
 {
-#ifndef GL_ES_VERSION_2_0
     if (mode != fillMode_)
     {
         glPolygonMode(GL_FRONT_AND_BACK, glFillMode[mode]);
         fillMode_ = mode;
     }
-#endif
 }
 
 void Graphics::SetLineAntiAlias(bool enable)
 {
-#ifndef GL_ES_VERSION_2_0
     if (enable != lineAntiAlias_)
     {
         if (enable)
@@ -1858,7 +1802,6 @@ void Graphics::SetLineAntiAlias(bool enable)
             glDisable(GL_LINE_SMOOTH);
         lineAntiAlias_ = enable;
     }
-#endif
 }
 
 void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusive)
@@ -1952,7 +1895,6 @@ void Graphics::SetScissorTest(bool enable, const IntRect& rect)
 
 void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4& view, const Matrix4& projection)
 {
-#ifndef GL_ES_VERSION_2_0
     if (enable != useClipPlane_)
     {
         if (enable)
@@ -1979,13 +1921,11 @@ void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4
             glClipPlane(GL_CLIP_PLANE0, &planeData[0]);
         }
     }
-#endif
 }
 
 void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, StencilOp fail, StencilOp zFail, unsigned stencilRef,
     unsigned compareMask, unsigned writeMask)
 {
-#ifndef GL_ES_VERSION_2_0
     if (enable != stencilTest_)
     {
         if (enable)
@@ -2017,7 +1957,6 @@ void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, Ste
             stencilZFail_ = zFail;
         }
     }
-#endif
 }
 
 bool Graphics::IsInitialized() const
@@ -2041,12 +1980,10 @@ PODVector<int> Graphics::GetMultiSampleLevels() const
     // No multisampling always supported
     ret.Push(1);
 
-#ifndef GL_ES_VERSION_2_0
     int maxSamples = 0;
     glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
     for (int i = 2; i <= maxSamples && i <= 16; i *= 2)
         ret.Push(i);
-#endif
     
     return ret;
 }
@@ -2061,29 +1998,11 @@ unsigned Graphics::GetFormat(CompressedFormat format) const
     case CF_DXT1:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT1_EXT : 0;
 
-#if !defined(GL_ES_VERSION_2_0)
     case CF_DXT3:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT3_EXT : 0;
 
     case CF_DXT5:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT5_EXT : 0;
-#endif
-#ifdef GL_ES_VERSION_2_0
-    case CF_ETC1:
-        return etcTextureSupport_ ? GL_ETC1_RGB8_OES : 0;
-
-    case CF_PVRTC_RGB_2BPP:
-        return pvrtcTextureSupport_ ? COMPRESSED_RGB_PVRTC_2BPPV1_IMG : 0;
-
-    case CF_PVRTC_RGB_4BPP:
-        return pvrtcTextureSupport_ ? COMPRESSED_RGB_PVRTC_4BPPV1_IMG : 0;
-
-    case CF_PVRTC_RGBA_2BPP:
-        return pvrtcTextureSupport_ ? COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : 0;
-
-    case CF_PVRTC_RGBA_4BPP:
-        return pvrtcTextureSupport_ ? COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : 0;
-#endif
 
     default:
         return 0;
@@ -2384,7 +2303,6 @@ void Graphics::Restore()
     {
         impl_->context_ = SDL_GL_CreateContext(window_);
 
-#ifndef GL_ES_VERSION_2_0
         // If we're trying to use OpenGL 3, but context creation fails, retry with 2
         if (!forceGL2_ && !impl_->context_)
         {
@@ -2394,7 +2312,6 @@ void Graphics::Restore()
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
             impl_->context_ = SDL_GL_CreateContext(window_);
         }
-#endif
 
         if (!impl_->context_)
         {
@@ -2406,7 +2323,6 @@ void Graphics::Restore()
         extensions.Clear();
 
         // Initialize OpenGL extensions library (desktop only)
-#ifndef GL_ES_VERSION_2_0
         GLenum err = glewInit();
         if (GLEW_OK != err)
         {
@@ -2448,7 +2364,6 @@ void Graphics::Restore()
         // In case of trouble or for wanting maximum compatibility, simply remove the glEnable below.
         if (gl3Support || GLEW_ARB_seamless_cube_map)
             glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-#endif
 
         // Set up texture data read/write alignment. It is important that this is done before uploading any texture data
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
@@ -2483,43 +2398,35 @@ void Graphics::SetVBO(unsigned object)
 
 void Graphics::SetUBO(unsigned object)
 {
-#ifndef GL_ES_VERSION_2_0
     if (impl_->boundUBO_ != object)
     {
         if (object)
             glBindBuffer(GL_UNIFORM_BUFFER, object);
         impl_->boundUBO_ = object;
     }
-#endif
 }
 
 unsigned Graphics::GetAlphaFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     // Alpha format is deprecated on OpenGL 3+
     if (gl3Support)
         return GL_R8;
-#endif
     return GL_ALPHA;
 }
 
 unsigned Graphics::GetLuminanceFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     // Luminance format is deprecated on OpenGL 3+
     if (gl3Support)
         return GL_R8;
-#endif
     return GL_LUMINANCE;
 }
 
 unsigned Graphics::GetLuminanceAlphaFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     // Luminance alpha format is deprecated on OpenGL 3+
     if (gl3Support)
         return GL_RG8;
-#endif
     return GL_LUMINANCE_ALPHA;
 }
 
@@ -2535,83 +2442,49 @@ unsigned Graphics::GetRGBAFormat()
 
 unsigned Graphics::GetRGBA16Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RGBA16;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetRGBAFloat16Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RGBA16F_ARB;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetRGBAFloat32Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RGBA32F_ARB;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetRG16Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RG16;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetRGFloat16Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RG16F;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetRGFloat32Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_RG32F;
-#else
-    return GL_RGBA;
-#endif
 }
 
 unsigned Graphics::GetFloat16Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_R16F;
-#else
-    return GL_LUMINANCE;
-#endif
 }
 
 unsigned Graphics::GetFloat32Format()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_R32F;
-#else
-    return GL_LUMINANCE;
-#endif
 }
 
 unsigned Graphics::GetLinearDepthFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     // OpenGL 3 can use different color attachment formats
     if (gl3Support)
         return GL_R32F;
-#endif
     // OpenGL 2 requires color attachments to have the same format, therefore encode deferred depth to RGBA manually
     // if not using a readable hardware depth texture
     return GL_RGBA;
@@ -2619,20 +2492,12 @@ unsigned Graphics::GetLinearDepthFormat()
 
 unsigned Graphics::GetDepthStencilFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_DEPTH24_STENCIL8_EXT;
-#else
-    return glesDepthStencilFormat;
-#endif
 }
 
 unsigned Graphics::GetReadableDepthFormat()
 {
-#ifndef GL_ES_VERSION_2_0
     return GL_DEPTH_COMPONENT24;
-#else
-    return glesReadableDepthFormat;
-#endif
 }
 
 unsigned Graphics::GetFormat(const String& formatName)
@@ -2681,7 +2546,6 @@ void Graphics::CheckFeatureSupport()
     lightPrepassSupport_ = false;
     deferredSupport_ = false;
 
-#ifndef GL_ES_VERSION_2_0
     int numSupportedRTs = 1;
     if (gl3Support)
     {
@@ -2710,28 +2574,6 @@ void Graphics::CheckFeatureSupport()
         lightPrepassSupport_ = true;
     if (numSupportedRTs >= 4)
         deferredSupport_ = true;
-#else
-    dxtTextureSupport_ = CheckExtension("EXT_texture_compression_dxt1");
-    etcTextureSupport_ = CheckExtension("OES_compressed_ETC1_RGB8_texture");
-    pvrtcTextureSupport_ = CheckExtension("IMG_texture_compression_pvrtc");
-
-    // Check for best supported depth renderbuffer format for GLES2
-    if (CheckExtension("GL_OES_depth24"))
-        glesDepthStencilFormat = GL_DEPTH_COMPONENT24_OES;
-    if (CheckExtension("GL_OES_packed_depth_stencil"))
-        glesDepthStencilFormat = GL_DEPTH24_STENCIL8_OES;
-    if (!CheckExtension("GL_OES_depth_texture"))
-    {
-        shadowMapFormat_ = 0;
-        hiresShadowMapFormat_ = 0;
-        glesReadableDepthFormat = 0;
-    }
-    else
-    {
-        shadowMapFormat_ = GL_DEPTH_COMPONENT;
-        hiresShadowMapFormat_ = 0;
-    }
-#endif
 
     // Consider OpenGL shadows always hardware sampled, if supported at all
     hardwareShadowSupport_ = shadowMapFormat_ != 0;
@@ -2739,14 +2581,12 @@ void Graphics::CheckFeatureSupport()
 
 void Graphics::PrepareDraw()
 {
-#ifndef GL_ES_VERSION_2_0
     if (gl3Support)
     {
         for (PODVector<ConstantBuffer*>::Iterator i = impl_->dirtyConstantBuffers_.Begin(); i != impl_->dirtyConstantBuffers_.End(); ++i)
             (*i)->Apply();
         impl_->dirtyConstantBuffers_.Clear();
     }
-#endif
 
     if (impl_->fboDirty_)
     {
@@ -2774,7 +2614,6 @@ void Graphics::PrepareDraw()
                 impl_->boundFBO_ = impl_->systemFBO_;
             }
 
-#ifndef GL_ES_VERSION_2_0
             // Disable/enable sRGB write
             if (sRGBWriteSupport_)
             {
@@ -2788,7 +2627,6 @@ void Graphics::PrepareDraw()
                     impl_->sRGBWrite_ = sRGBWrite;
                 }
             }
-#endif
 
             return;
         }
@@ -2817,7 +2655,6 @@ void Graphics::PrepareDraw()
             impl_->boundFBO_ = i->second_.fbo_;
         }
 
-#ifndef GL_ES_VERSION_2_0
         // Setup readbuffers & drawbuffers if needed
         if (i->second_.readBuffers_ != GL_NONE)
         {
@@ -2858,7 +2695,6 @@ void Graphics::PrepareDraw()
 
             i->second_.drawBuffers_ = newDrawBuffers;
         }
-#endif
 
         for (unsigned j = 0; j < MAX_RENDERTARGETS; ++j)
         {
@@ -2907,11 +2743,7 @@ void Graphics::PrepareDraw()
         {
             // Bind either a renderbuffer or a depth texture, depending on what is available
             Texture* texture = depthStencil_->GetParentTexture();
-#ifndef GL_ES_VERSION_2_0
             bool hasStencil = texture->GetFormat() == GL_DEPTH24_STENCIL8_EXT;
-#else
-            bool hasStencil = texture->GetFormat() == GL_DEPTH24_STENCIL8_OES;
-#endif
             unsigned renderBufferID = depthStencil_->GetRenderBuffer();
             if (!renderBufferID)
             {
@@ -2950,7 +2782,6 @@ void Graphics::PrepareDraw()
             }
         }
 
-#ifndef GL_ES_VERSION_2_0
         // Disable/enable sRGB write
         if (sRGBWriteSupport_)
         {
@@ -2964,7 +2795,6 @@ void Graphics::PrepareDraw()
                 impl_->sRGBWrite_ = sRGBWrite;
             }
         }
-#endif
     }
 
     if (impl_->vertexBuffersDirty_)
@@ -3157,7 +2987,6 @@ void Graphics::SetTextureUnitMappings()
     textureUnits_["LightSpotMap"] = TU_LIGHTSHAPE;
     textureUnits_["LightCubeMap"] = TU_LIGHTSHAPE;
     textureUnits_["ShadowMap"] = TU_SHADOWMAP;
-#ifndef GL_ES_VERSION_2_0
     textureUnits_["VolumeMap"] = TU_VOLUMEMAP;
     textureUnits_["FaceSelectCubeMap"] = TU_FACESELECT;
     textureUnits_["IndirectionCubeMap"] = TU_INDIRECTION;
@@ -3165,38 +2994,31 @@ void Graphics::SetTextureUnitMappings()
     textureUnits_["LightBuffer"] = TU_LIGHTBUFFER;
     textureUnits_["ZoneCubeMap"] = TU_ZONE;
     textureUnits_["ZoneVolumeMap"] = TU_ZONE;
-#endif
 }
 
 unsigned Graphics::CreateFramebuffer()
 {
     unsigned newFbo = 0;
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
         glGenFramebuffersEXT(1, &newFbo);
     else
-#endif
         glGenFramebuffers(1, &newFbo);
     return newFbo;
 }
 
 void Graphics::DeleteFramebuffer(unsigned fbo)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
         glDeleteFramebuffersEXT(1, &fbo);
     else
-#endif
         glDeleteFramebuffers(1, &fbo);
 }
 
 void Graphics::BindFramebuffer(unsigned fbo)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
     else
-#endif
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
@@ -3205,7 +3027,6 @@ void Graphics::BindColorAttachment(unsigned index, unsigned target, unsigned obj
     if (!object)
         isRenderBuffer = false;
 
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
     {
         if (!isRenderBuffer)
@@ -3214,7 +3035,6 @@ void Graphics::BindColorAttachment(unsigned index, unsigned target, unsigned obj
             glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT + index, GL_RENDERBUFFER_EXT, object);
     }
     else
-#endif
     {
         if (!isRenderBuffer)
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, target, object, 0);
@@ -3228,7 +3048,6 @@ void Graphics::BindDepthAttachment(unsigned object, bool isRenderBuffer)
     if (!object)
         isRenderBuffer = false;
 
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
     {
         if (!isRenderBuffer)
@@ -3237,7 +3056,6 @@ void Graphics::BindDepthAttachment(unsigned object, bool isRenderBuffer)
             glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, object);
     }
     else
-#endif
     {
         if (!isRenderBuffer)
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, object, 0);
@@ -3251,7 +3069,6 @@ void Graphics::BindStencilAttachment(unsigned object, bool isRenderBuffer)
     if (!object)
         isRenderBuffer = false;
 
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
     {
         if (!isRenderBuffer)
@@ -3260,7 +3077,6 @@ void Graphics::BindStencilAttachment(unsigned object, bool isRenderBuffer)
             glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, object);
     }
     else
-#endif
     {
         if (!isRenderBuffer)
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_TEXTURE_2D, object, 0);
@@ -3271,22 +3087,18 @@ void Graphics::BindStencilAttachment(unsigned object, bool isRenderBuffer)
 
 bool Graphics::CheckFramebuffer()
 {
-#ifndef GL_ES_VERSION_2_0
     if (!gl3Support)
         return glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) == GL_FRAMEBUFFER_COMPLETE_EXT;
     else
-#endif
         return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 }
 
 void Graphics::SetVertexAttribDivisor(unsigned location, unsigned divisor)
 {
-#ifndef GL_ES_VERSION_2_0
     if (gl3Support && instancingSupport_)
         glVertexAttribDivisor(location, divisor);
     else if (instancingSupport_)
         glVertexAttribDivisorARB(location, divisor);
-#endif
 }
 
 }

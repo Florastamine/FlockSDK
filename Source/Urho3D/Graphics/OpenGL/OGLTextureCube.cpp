@@ -368,7 +368,6 @@ bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
         return false;
     }
 
-#ifndef GL_ES_VERSION_2_0
     if (!dest)
     {
         URHO3D_LOGERROR("Null destination for getting data");
@@ -405,20 +404,6 @@ bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
 
     graphics_->SetTexture(0, 0);
     return true;
-#else
-    // Special case on GLES: if the texture is a rendertarget, can make it current and use glReadPixels()
-    if (usage_ == TEXTURE_RENDERTARGET)
-    {
-        graphics_->SetRenderTarget(0, renderSurfaces_[face]);
-        // Ensure the FBO is current; this viewport is actually never rendered to
-        graphics_->SetViewport(IntRect(0, 0, width_, height_));
-        glReadPixels(0, 0, width_, height_, GetExternalFormat(format_), GetDataType(format_), dest);
-        return true;
-    }
-
-    URHO3D_LOGERROR("Getting texture data not supported");
-    return false;
-#endif
 }
 
 bool TextureCube::Create()
@@ -434,15 +419,6 @@ bool TextureCube::Create()
         return true;
     }
 
-#ifdef GL_ES_VERSION_2_0
-    if (multiSample_ > 1)
-    {
-        URHO3D_LOGWARNING("Multisampled texture is not supported on OpenGL ES");
-        multiSample_ = 1;
-        autoResolve_ = false;
-    }
-#endif
-    
     glGenTextures(1, &object_.name_);
 
     // Ensure that our texture is bound to OpenGL texture unit 0
@@ -489,10 +465,8 @@ bool TextureCube::Create()
     }
 
     levels_ = CheckMaxLevels(width_, height_, requestedLevels_);
-#ifndef GL_ES_VERSION_2_0
     glTexParameteri(target_, GL_TEXTURE_BASE_LEVEL, 0);
     glTexParameteri(target_, GL_TEXTURE_MAX_LEVEL, levels_ - 1);
-#endif
 
     // Set initial parameters, then unbind the texture
     UpdateParameters();

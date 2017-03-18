@@ -128,7 +128,6 @@ bool Texture3D::SetData(unsigned level, int x, int y, int z, int width, int heig
 
     graphics_->SetTextureForUpdate(this);
 
-#ifndef GL_ES_VERSION_2_0
     bool wholeLevel = x == 0 && y == 0 && z == 0 && width == levelWidth && height == levelHeight && depth == levelDepth;
     unsigned format = GetSRGB() ? GetSRGBFormat(format_) : format_;
 
@@ -147,7 +146,6 @@ bool Texture3D::SetData(unsigned level, int x, int y, int z, int width, int heig
             glCompressedTexSubImage3D(target_, level, x, y, z, width, height, depth, format, GetDataSize(width, height, depth),
                 data);
     }
-#endif
 
     graphics_->SetTexture(0, 0);
     return true;
@@ -294,7 +292,6 @@ bool Texture3D::SetData(Image* image, bool useAlpha)
 
 bool Texture3D::GetData(unsigned level, void* dest) const
 {
-#ifndef GL_ES_VERSION_2_0
     if (!object_.name_ || !graphics_)
     {
         URHO3D_LOGERROR("No texture created, can not get data");
@@ -328,20 +325,12 @@ bool Texture3D::GetData(unsigned level, void* dest) const
 
     graphics_->SetTexture(0, 0);
     return true;
-#else
-    URHO3D_LOGERROR("Getting texture data not supported");
-    return false;
-#endif
 }
 
 bool Texture3D::Create()
 {
     Release();
 
-#ifdef GL_ES_VERSION_2_0
-    URHO3D_LOGERROR("Failed to create 3D texture, currently unsupported on OpenGL ES 2");
-    return false;
-#else
     if (!graphics_ || !width_ || !height_ || !depth_)
         return false;
 
@@ -384,7 +373,6 @@ bool Texture3D::Create()
     graphics_->SetTexture(0, 0);
 
     return success;
-#endif
 }
 
 }

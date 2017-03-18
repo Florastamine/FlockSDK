@@ -142,7 +142,6 @@ bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int w
 
     graphics_->SetTextureForUpdate(this);
 
-#ifndef GL_ES_VERSION_2_0
     bool wholeLevel = x == 0 && y == 0 && width == levelWidth && height == levelHeight && layer == 0;
     unsigned format = GetSRGB() ? GetSRGBFormat(format_) : format_;
 
@@ -162,7 +161,6 @@ bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int w
         glCompressedTexSubImage3D(target_, level, x, y, layer, width, height, 1, format,
             GetDataSize(width, height), data);
     }
-#endif
 
     graphics_->SetTexture(0, 0);
     return true;
@@ -361,7 +359,6 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 
 bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
 {
-#ifndef GL_ES_VERSION_2_0
     if (!object_.name_ || !graphics_)
     {
         URHO3D_LOGERROR("Texture array not created, can not get data");
@@ -401,20 +398,11 @@ bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
 
     graphics_->SetTexture(0, 0);
     return true;
-#else
-    URHO3D_LOGERROR("Getting texture data not supported");
-    return false;
-#endif
 }
 
 bool Texture2DArray::Create()
 {
     Release();
-
-#ifdef GL_ES_VERSION_2_0
-    URHO3D_LOGERROR("Failed to create 2D array texture, currently unsupported on OpenGL ES 2");
-    return false;
-#else
 
     if (!graphics_ || !width_ || !height_ || !layers_)
         return false;
@@ -469,7 +457,6 @@ bool Texture2DArray::Create()
     graphics_->SetTexture(0, 0);
 
     return success;
-#endif
 }
 
 }

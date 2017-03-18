@@ -39,10 +39,8 @@ void ConstantBuffer::Release()
         if (!graphics_)
             return;
 
-#ifndef GL_ES_VERSION_2_0
         graphics_->SetUBO(0);
         glDeleteBuffers(1, &object_.name_);
-#endif
         object_.name_ = 0;
     }
 
@@ -75,12 +73,10 @@ bool ConstantBuffer::SetSize(unsigned size)
 
     if (graphics_)
     {
-#ifndef GL_ES_VERSION_2_0
         if (!object_.name_)
             glGenBuffers(1, &object_.name_);
         graphics_->SetUBO(object_.name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
-#endif
     }
 
     return true;
@@ -90,10 +86,8 @@ void ConstantBuffer::Apply()
 {
     if (dirty_ && object_.name_)
     {
-#ifndef GL_ES_VERSION_2_0
         graphics_->SetUBO(object_.name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
-#endif
         dirty_ = false;
     }
 }

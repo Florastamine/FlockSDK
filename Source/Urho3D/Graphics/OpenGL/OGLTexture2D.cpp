@@ -306,7 +306,6 @@ bool Texture2D::GetData(unsigned level, void* dest) const
         return false;
     }
 
-#ifndef GL_ES_VERSION_2_0
     if (!dest)
     {
         URHO3D_LOGERROR("Null destination for getting data");
@@ -343,20 +342,6 @@ bool Texture2D::GetData(unsigned level, void* dest) const
 
     graphics_->SetTexture(0, 0);
     return true;
-#else
-    // Special case on GLES: if the texture is a rendertarget, can make it current and use glReadPixels()
-    if (usage_ == TEXTURE_RENDERTARGET)
-    {
-        graphics_->SetRenderTarget(0, const_cast<Texture2D*>(this));
-        // Ensure the FBO is current; this viewport is actually never rendered to
-        graphics_->SetViewport(IntRect(0, 0, width_, height_));
-        glReadPixels(0, 0, width_, height_, GetExternalFormat(format_), GetDataType(format_), dest);
-        return true;
-    }
-
-    URHO3D_LOGERROR("Getting texture data not supported");
-    return false;
-#endif
 }
 
 bool Texture2D::Create()
@@ -372,27 +357,13 @@ bool Texture2D::Create()
         return true;
     }
 
-#ifdef GL_ES_VERSION_2_0
-    if (multiSample_ > 1)
-    {
-        URHO3D_LOGWARNING("Multisampled texture is not supported on OpenGL ES");
-        multiSample_ = 1;
-        autoResolve_ = false;
-    }
-#endif
-
     unsigned format = GetSRGB() ? GetSRGBFormat(format_) : format_;
     unsigned externalFormat = GetExternalFormat(format_);
     unsigned dataType = GetDataType(format_);
 
     // Create a renderbuffer instead of a texture if depth texture is not properly supported, or if this will be a packed
     // depth stencil texture
-#ifndef GL_ES_VERSION_2_0
     if (format == Graphics::GetDepthStencilFormat())
-#else
-    if (format == GL_DEPTH_COMPONENT16 || format == GL_DEPTH_COMPONENT24_OES || format == GL_DEPTH24_STENCIL8_OES ||
-        (format == GL_DEPTH_COMPONENT && !graphics_->GetShadowMapFormat()))
-#endif
     {
         if (renderSurface_)
         {
@@ -414,7 +385,6 @@ bool Texture2D::Create()
             else
             {
                 // Multisample without autoresolve: create a texture only
-#ifndef GL_ES_VERSION_2_0
                 if (!Graphics::GetGL3Support() && !GLEW_ARB_texture_multisample)
                 {
                     URHO3D_LOGERROR("Multisampled texture extension not available");
@@ -424,7 +394,6 @@ bool Texture2D::Create()
                 target_ = GL_TEXTURE_2D_MULTISAMPLE;
                 if (renderSurface_)
                     renderSurface_->target_ = GL_TEXTURE_2D_MULTISAMPLE;
-#endif
             }
         }
     }
@@ -440,12 +409,10 @@ bool Texture2D::Create()
     if (!IsCompressed())
     {
         glGetError();
-#ifndef GL_ES_VERSION_2_0
         if (multiSample_ > 1 && !autoResolve_)
             glTexImage2DMultisample(target_, multiSample_, format, width_, height_, GL_TRUE);
         else
-#endif
-        glTexImage2D(target_, 0, format, width_, height_, 0, externalFormat, dataType, 0);
+            glTexImage2D(target_, 0, format, width_, height_, 0, externalFormat, dataType, 0);
         if (glGetError())
         {
             URHO3D_LOGERROR("Failed to create texture");
@@ -468,10 +435,8 @@ bool Texture2D::Create()
     }
 
     levels_ = CheckMaxLevels(width_, height_, requestedLevels_);
-#ifndef GL_ES_VERSION_2_0
     glTexParameteri(target_, GL_TEXTURE_BASE_LEVEL, 0);
     glTexParameteri(target_, GL_TEXTURE_MAX_LEVEL, levels_ - 1);
-#endif
 
     // Set initial parameters, then unbind the texture
     UpdateParameters();

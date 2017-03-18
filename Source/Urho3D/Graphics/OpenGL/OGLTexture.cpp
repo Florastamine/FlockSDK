@@ -40,14 +40,9 @@ static GLenum glWrapModes[] =
     GL_REPEAT,
     GL_MIRRORED_REPEAT,
     GL_CLAMP_TO_EDGE,
-#ifndef GL_ES_VERSION_2_0
     GL_CLAMP
-#else
-    GL_CLAMP_TO_EDGE
-#endif
 };
 
-#ifndef GL_ES_VERSION_2_0
 static GLenum gl3WrapModes[] =
 {
     GL_REPEAT,
@@ -55,15 +50,10 @@ static GLenum gl3WrapModes[] =
     GL_CLAMP_TO_EDGE,
     GL_CLAMP_TO_BORDER
 };
-#endif
 
 static GLenum GetWrapMode(TextureAddressMode mode)
 {
-#ifndef GL_ES_VERSION_2_0
     return Graphics::GetGL3Support() ? gl3WrapModes[mode] : glWrapModes[mode];
-#else
-    return glWrapModes[mode];
-#endif
 }
 
 void Texture::SetSRGB(bool enable)
@@ -90,20 +80,16 @@ void Texture::UpdateParameters()
         return;
 
     // If texture is multisampled, do not attempt to set parameters as it's illegal, just return
-#ifndef GL_ES_VERSION_2_0
     if (target_ == GL_TEXTURE_2D_MULTISAMPLE)
     {
         parametersDirty_ = false;
         return;
     }
-#endif
 
     // Wrapping
     glTexParameteri(target_, GL_TEXTURE_WRAP_S, GetWrapMode(addressMode_[COORD_U]));
     glTexParameteri(target_, GL_TEXTURE_WRAP_T, GetWrapMode(addressMode_[COORD_V]));
-#ifndef GL_ES_VERSION_2_0
     glTexParameteri(target_, GL_TEXTURE_WRAP_R, GetWrapMode(addressMode_[COORD_W]));
-#endif
 
     TextureFilterMode filterMode = filterMode_;
     if (filterMode == FILTER_DEFAULT)
@@ -149,7 +135,6 @@ void Texture::UpdateParameters()
         break;
     }
 
-#ifndef GL_ES_VERSION_2_0
     // Anisotropy
     if (graphics_->GetAnisotropySupport())
     {
@@ -168,7 +153,6 @@ void Texture::UpdateParameters()
         glTexParameteri(target_, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 
     glTexParameterfv(target_, GL_TEXTURE_BORDER_COLOR, borderColor_.Data());
-#endif
 
     parametersDirty_ = false;
 }
@@ -201,15 +185,12 @@ unsigned Texture::GetRowDataSize(int width) const
         return (unsigned)(width * 3);
 
     case GL_RGBA:
-#ifndef GL_ES_VERSION_2_0
     case GL_DEPTH24_STENCIL8_EXT:
     case GL_RG16:
     case GL_RG16F:
     case GL_R32F:
-#endif
         return (unsigned)(width * 4);
 
-#ifndef GL_ES_VERSION_2_0
     case GL_R8:
         return (unsigned)width;
 
@@ -223,7 +204,6 @@ unsigned Texture::GetRowDataSize(int width) const
 
     case GL_RGBA32F_ARB:
         return (unsigned)(width * 16);
-#endif
 
     case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
         return (unsigned)(((width + 3) >> 2) * 8);
@@ -250,7 +230,6 @@ unsigned Texture::GetRowDataSize(int width) const
 
 unsigned Texture::GetExternalFormat(unsigned format)
 {
-#ifndef GL_ES_VERSION_2_0
     if (format == GL_DEPTH_COMPONENT16 || format == GL_DEPTH_COMPONENT24 || format == GL_DEPTH_COMPONENT32)
         return GL_DEPTH_COMPONENT;
     else if (format == GL_DEPTH24_STENCIL8_EXT)
@@ -269,14 +248,10 @@ unsigned Texture::GetExternalFormat(unsigned format)
         return GL_RGB;
     else
         return format;
-#else
-    return format;
-#endif
 }
 
 unsigned Texture::GetDataType(unsigned format)
 {
-#ifndef GL_ES_VERSION_2_0
     if (format == GL_DEPTH24_STENCIL8_EXT)
         return GL_UNSIGNED_INT_24_8_EXT;
     else if (format == GL_RG16 || format == GL_RGBA16)
@@ -287,19 +262,10 @@ unsigned Texture::GetDataType(unsigned format)
         return GL_HALF_FLOAT_ARB;
     else
         return GL_UNSIGNED_BYTE;
-#else
-    if (format == GL_DEPTH_COMPONENT || format == GL_DEPTH_COMPONENT24_OES)
-        return GL_UNSIGNED_INT;
-    else if (format == GL_DEPTH_COMPONENT16)
-        return GL_UNSIGNED_SHORT;
-    else
-        return GL_UNSIGNED_BYTE;
-#endif
 }
 
 unsigned Texture::GetSRGBFormat(unsigned format)
 {
-#ifndef GL_ES_VERSION_2_0
     if (!graphics_ || !graphics_->GetSRGBSupport())
         return format;
 
@@ -322,9 +288,6 @@ unsigned Texture::GetSRGBFormat(unsigned format)
     default:
         return format;
     }
-#else
-    return format;
-#endif
 }
 
 void Texture::RegenerateLevels()
@@ -332,14 +295,10 @@ void Texture::RegenerateLevels()
     if (!object_.name_)
         return;
 
-#ifndef GL_ES_VERSION_2_0
     if (Graphics::GetGL3Support())
         glGenerateMipmap(target_);
     else
         glGenerateMipmapEXT(target_);
-#else
-    glGenerateMipmap(target_);
-#endif
 
     levelsDirty_ = false;
 }
