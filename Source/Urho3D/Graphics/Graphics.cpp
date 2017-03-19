@@ -175,12 +175,12 @@ IntVector2 Graphics::GetWindowPosition() const
 PODVector<IntVector3> Graphics::GetResolutions(int monitor) const
 {
     PODVector<IntVector3> ret;
-    unsigned numModes = (unsigned)SDL_GetNumDisplayModes(0);
+    unsigned numModes = (unsigned)SDL_GetNumDisplayModes(monitor);
 
     for (unsigned i = 0; i < numModes; ++i)
     {
         SDL_DisplayMode mode;
-        SDL_GetDisplayMode(0, i, &mode);
+        SDL_GetDisplayMode(monitor, i, &mode);
         int width = mode.w;
         int height = mode.h;
         int rate = mode.refresh_rate;
@@ -202,11 +202,16 @@ PODVector<IntVector3> Graphics::GetResolutions(int monitor) const
     return ret;
 }
 
-IntVector2 Graphics::GetDesktopResolution() const
+IntVector2 Graphics::GetDesktopResolution(int monitor) const
 {
     SDL_DisplayMode mode;
-    SDL_GetDesktopDisplayMode(0, &mode);
+    SDL_GetDesktopDisplayMode(monitor, &mode);
     return IntVector2(mode.w, mode.h);
+}
+
+int Graphics::GetMonitorCount() const
+{
+    return SDL_GetNumVideoDisplays();
 }
 
 void Graphics::Maximize()
