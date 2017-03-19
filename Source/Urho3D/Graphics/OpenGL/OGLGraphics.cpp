@@ -269,7 +269,7 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 
     // make sure monitor index is not bigger than the currently detected monitors
     int monitors = SDL_GetNumVideoDisplays();
-    if (monitor >= monitors)
+    if (monitor >= monitors || monitor < 0)
         monitor = 0; // this monitor is not present, use first monitor
 
 >>>>>>> f8beaad5c... Fix OpenGL renderer with monitor/refresh rate options
@@ -319,7 +319,7 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 #ifdef DESKTOP_GRAPHICS
     if (fullscreen)
     {
-        PODVector<IntVector3> resolutions = GetResolutions();
+        PODVector<IntVector3> resolutions = GetResolutions(monitor);
         if (resolutions.Size())
         {
             unsigned best = 0;
