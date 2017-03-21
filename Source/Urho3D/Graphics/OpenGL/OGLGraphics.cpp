@@ -229,7 +229,7 @@ Graphics::Graphics(Context* context_) :
     hiresShadowMapFormat_(GL_DEPTH_COMPONENT24),
     defaultTextureFilterMode_(FILTER_TRILINEAR),
     defaultTextureAnisotropy_(4),
-    shaderPath_("Shaders/GLSL/"),
+    shaderPath_("shaders/glsl/"),
     shaderExtension_(".glsl"),
     orientations_("LandscapeLeft LandscapeRight"),
     apiName_("GL2")
@@ -260,19 +260,11 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
 
     bool maximize = false;
 
-<<<<<<< HEAD
-=======
-#if defined(IOS) || defined(TVOS)
-    // iOS and tvOS app always take the fullscreen (and with status bar hidden)
-    fullscreen = true;
-#endif
-
     // make sure monitor index is not bigger than the currently detected monitors
     int monitors = SDL_GetNumVideoDisplays();
     if (monitor >= monitors || monitor < 0)
         monitor = 0; // this monitor is not present, use first monitor
 
->>>>>>> f8beaad5c... Fix OpenGL renderer with monitor/refresh rate options
     // Fullscreen or Borderless can not be resizable
     if (fullscreen || borderless)
         resizable = false;
