@@ -166,7 +166,7 @@ class TerrainEditor
             // Make sure its not null (it may have been deleted since last save)
             if (terrainsEdited[i] !is null)
             {
-                String fileLocation = fileSystem.programDir + "pfiles/" + terrainsEdited[i].GetAttribute("Height Map").GetResourceRef().name;
+                String fileLocation = sceneResourcePath + terrainsEdited[i].GetAttribute("Height Map").GetResourceRef().name;
 
                 Array<String> chunks = fileLocation.Split('/');
                 Array<String> parts = chunks[chunks.length - 1].Split('.');
@@ -293,7 +293,7 @@ class TerrainEditor
     private void CreateTerrain()
     {
         String fileName = "textures/HMap" + time.timeSinceEpoch  + ".png";
-        String fileLocation = fileSystem.programDir + "pfiles/" + fileName;
+        String fileLocation = sceneResourcePath + fileName;
 
         Node@ node = CreateNode(LOCAL);
         node.position = Vector3(0, 0, 0);
@@ -311,7 +311,9 @@ class TerrainEditor
         image.SetSize(length, length, 3);
 
         UpdateTerrainSetConstantHeight(image, 0);
-
+        
+        if (!fileSystem.DirExists(GetPath(fileLocation)))
+            fileSystem.CreateDir(GetPath(fileLocation));
         image.SavePNG(fileLocation);
 
         Terrain@ terrain = node.CreateComponent("Terrain");
@@ -383,7 +385,15 @@ class TerrainEditor
     {
         ListView@ terrainBrushes = window.GetChild("BrushesContainer", true);
 
-        String brushesFileLocation = fileSystem.programDir + "pfiles/textures/SDK/TerrainEditorBrushes";
+        Array<String>@ resourceDirs = cache.resourceDirs;
+        String brushesFileLocation;
+        for (uint i = 0; i < resourceDirs.length; ++i)
+        {
+            brushesFileLocation = fileSystem.programDir + "pfiles/textures/SDK/TerrainEditorBrushes";
+            if (fileSystem.DirExists(brushesFileLocation))
+                break;
+        }
+
         Array<String> files = fileSystem.ScanDir(brushesFileLocation, "*.*", SCAN_FILES, false);
 
         for (uint i = 0; i < files.length; ++i)
