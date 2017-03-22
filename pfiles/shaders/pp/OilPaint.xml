@@ -1,0 +1,8 @@
+<renderpath>
+    <command type="quad" tag="OilPaint" vs="OilPaint" ps="OilPaint" psdefines="COMPILEPS" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="OilRadius" value="5.0" />
+        <parameter name="OilScreenWidth" value="1366.0" />
+        <parameter name="OilScreenHeight" value="768.0" />
+    </command>
+</renderpath>
