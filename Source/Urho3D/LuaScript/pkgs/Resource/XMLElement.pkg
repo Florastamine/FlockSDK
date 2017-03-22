@@ -63,8 +63,6 @@ class XMLElement
     double GetDouble(const String name) const;
     unsigned GetUInt(const String name) const;
     int GetInt(const String name) const;
-    unsigned long long GetUInt64(const String name) const;
-    long long GetInt64(const String name) const;
     IntRect GetIntRect(const String name) const;
     IntVector2 GetIntVector2(const String name) const;
     IntVector3 GetIntVector3(const String name) const;

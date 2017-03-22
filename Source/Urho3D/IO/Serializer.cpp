@@ -256,9 +256,6 @@ bool Serializer::WriteVariantData(const Variant& value)
     case VAR_INT:
         return WriteInt(value.GetInt());
 
-    case VAR_INT64:
-        return WriteInt64(value.GetInt64());
-
     case VAR_BOOL:
         return WriteBool(value.GetBool());
 

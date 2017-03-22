@@ -320,7 +320,7 @@ bool Engine::Initialize(const VariantMap& parameters)
             GetParameter(parameters, "HighDPI", false).GetBool(),
             GetParameter(parameters, "VSync", false).GetBool(),
             GetParameter(parameters, "TripleBuffer", false).GetBool(),
-            GetParameter(parameters, "MultiSample", 1).GetInt()
+            GetParameter(parameters, "MultiSample", 1).GetInt(), 
             GetParameter(parameters, "Monitor", 0).GetInt(),
             GetParameter(parameters, "RefreshRate", 0).GetInt()
         ))
