@@ -146,7 +146,11 @@ if (NEON)
     add_definitions (-DSTBI_NEON)   # Cannot define it directly for Xcode due to universal binary support, we define it in the setup_target() macro instead for Xcode
 elseif (NOT URHO3D_SSE)
     add_definitions (-DSTBI_NO_SIMD)    # GCC/Clang/MinGW will switch this off automatically except MSVC, but no harm to make it explicit for all
-endif ()
+endif () 
+
+if (URHO3D_IK) 
+    add_definitions (-DURHO3D_IK) 
+endif () 
 
 # Enable file watcher support for automatic resource reloads by default.
 if (URHO3D_FILEWATCHER)
