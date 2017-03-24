@@ -51,9 +51,11 @@
 namespace Urho3D
 {
 
+const int SCREEN_JOYSTICK_START_ID = 0x40000000;
 const StringHash VAR_BUTTON_KEY_BINDING("VAR_BUTTON_KEY_BINDING");
 const StringHash VAR_BUTTON_MOUSE_BUTTON_BINDING("VAR_BUTTON_MOUSE_BUTTON_BINDING");
 const StringHash VAR_LAST_KEYSYM("VAR_LAST_KEYSYM");
+const StringHash VAR_SCREEN_JOYSTICK_ID("VAR_SCREEN_JOYSTICK_ID"); 
 
 /// Convert SDL keycode if necessary.
 int ConvertSDLKeyCode(int keySym, int scanCode)
@@ -62,6 +64,29 @@ int ConvertSDLKeyCode(int keySym, int scanCode)
         return KEY_ESCAPE;
     else
         return SDL_tolower(keySym);
+}
+
+void JoystickState::Initialize(unsigned numButtons, unsigned numAxes, unsigned numHats)
+{
+    buttons_.Resize(numButtons);
+    buttonPress_.Resize(numButtons);
+    axes_.Resize(numAxes);
+    hats_.Resize(numHats);
+
+    Reset();
+}
+
+void JoystickState::Reset()
+{
+    for (unsigned i = 0; i < buttons_.Size(); ++i)
+    {
+        buttons_[i] = false;
+        buttonPress_[i] = false;
+    }
+    for (unsigned i = 0; i < axes_.Size(); ++i)
+        axes_[i] = 0.0f;
+    for (unsigned i = 0; i < hats_.Size(); ++i)
+        hats_[i] = HAT_CENTER;
 }
 
 Input::Input(Context* context) :
@@ -86,6 +111,8 @@ Input::Input(Context* context) :
     mouseMoveScaled_(false),
     initialized_(false)
 {
+    context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
+
     SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(Input, HandleScreenMode));
 
     // Try to initialize right now, but skip if screen mode is not yet set
@@ -489,6 +516,196 @@ static void PopulateMouseButtonBindingMap(HashMap<String, int>& mouseButtonBindi
     }
 }
 
+SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
+{
+    static HashMap<String, int> keyBindingMap;
+    static HashMap<String, int> mouseButtonBindingMap;
+
+    if (!graphics_)
+    {
+        URHO3D_LOGWARNING("Cannot add screen joystick in headless mode");
+        return -1;
+    }
+
+    // If layout file is not given, use the default screen joystick layout
+    if (!layoutFile)
+    {
+        ResourceCache* cache = GetSubsystem<ResourceCache>();
+        layoutFile = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+        if (!layoutFile)    // Error is already logged
+            return -1;
+    }
+
+    UI* ui = GetSubsystem<UI>();
+    SharedPtr<UIElement> screenJoystick = ui->LoadLayout(layoutFile, styleFile);
+    if (!screenJoystick)     // Error is already logged
+        return -1;
+
+    screenJoystick->SetSize(ui->GetRoot()->GetSize());
+    ui->GetRoot()->AddChild(screenJoystick);
+
+    // Get an unused ID for the screen joystick
+    /// \todo After a real joystick has been plugged in 1073741824 times, the ranges will overlap
+    SDL_JoystickID joystickID = SCREEN_JOYSTICK_START_ID;
+    while (joysticks_.Contains(joystickID))
+        ++joystickID;
+
+    JoystickState& state = joysticks_[joystickID];
+    state.joystickID_ = joystickID;
+    state.name_ = screenJoystick->GetName();
+    state.screenJoystick_ = screenJoystick;
+
+    unsigned numButtons = 0;
+    unsigned numAxes = 0;
+    unsigned numHats = 0;
+    const Vector<SharedPtr<UIElement> >& children = state.screenJoystick_->GetChildren();
+    for (Vector<SharedPtr<UIElement> >::ConstIterator iter = children.Begin(); iter != children.End(); ++iter)
+    {
+        UIElement* element = iter->Get();
+        String name = element->GetName();
+        if (name.StartsWith("Button"))
+        {
+            ++numButtons;
+
+            // Check whether the button has key binding
+            Text* text = element->GetChildDynamicCast<Text>("KeyBinding", false);
+            if (text)
+            {
+                text->SetVisible(false);
+                const String& key = text->GetText();
+                int keyBinding;
+                if (key.Length() == 1)
+                    keyBinding = key[0];
+                else
+                {
+                    PopulateKeyBindingMap(keyBindingMap);
+
+                    HashMap<String, int>::Iterator i = keyBindingMap.Find(key);
+                    if (i != keyBindingMap.End())
+                        keyBinding = i->second_;
+                    else
+                    {
+                        URHO3D_LOGERRORF("Unsupported key binding: %s", key.CString());
+                        keyBinding = M_MAX_INT;
+                    }
+                }
+
+                if (keyBinding != M_MAX_INT)
+                    element->SetVar(VAR_BUTTON_KEY_BINDING, keyBinding);
+            }
+
+            // Check whether the button has mouse button binding
+            text = element->GetChildDynamicCast<Text>("MouseButtonBinding", false);
+            if (text)
+            {
+                text->SetVisible(false);
+                const String& mouseButton = text->GetText();
+                PopulateMouseButtonBindingMap(mouseButtonBindingMap);
+
+                HashMap<String, int>::Iterator i = mouseButtonBindingMap.Find(mouseButton);
+                if (i != mouseButtonBindingMap.End())
+                    element->SetVar(VAR_BUTTON_MOUSE_BUTTON_BINDING, i->second_);
+                else
+                    URHO3D_LOGERRORF("Unsupported mouse button binding: %s", mouseButton.CString());
+            }
+        }
+        else if (name.StartsWith("Axis"))
+        {
+            ++numAxes;
+
+            ///\todo Axis emulation for screen joystick is not fully supported yet.
+            URHO3D_LOGWARNING("Axis emulation for screen joystick is not fully supported yet");
+        }
+        else if (name.StartsWith("Hat"))
+        {
+            ++numHats;
+
+            Text* text = element->GetChildDynamicCast<Text>("KeyBinding", false);
+            if (text)
+            {
+                text->SetVisible(false);
+                String keyBinding = text->GetText();
+                int mappedKeyBinding[4] = {KEY_W, KEY_S, KEY_A, KEY_D};
+                Vector<String> keyBindings;
+                if (keyBinding.Contains(' '))   // e.g.: "UP DOWN LEFT RIGHT"
+                    keyBindings = keyBinding.Split(' ');    // Attempt to split the text using ' ' as separator
+                else if (keyBinding.Length() == 4)
+                {
+                    keyBindings.Resize(4);      // e.g.: "WSAD"
+                    for (unsigned i = 0; i < 4; ++i)
+                        keyBindings[i] = keyBinding.Substring(i, 1);
+                }
+                if (keyBindings.Size() == 4)
+                {
+                    PopulateKeyBindingMap(keyBindingMap);
+
+                    for (unsigned j = 0; j < 4; ++j)
+                    {
+                        if (keyBindings[j].Length() == 1)
+                            mappedKeyBinding[j] = keyBindings[j][0];
+                        else
+                        {
+                            HashMap<String, int>::Iterator i = keyBindingMap.Find(keyBindings[j]);
+                            if (i != keyBindingMap.End())
+                                mappedKeyBinding[j] = i->second_;
+                            else
+                                URHO3D_LOGERRORF("%s - %s cannot be mapped, fallback to '%c'", name.CString(), keyBindings[j].CString(),
+                                    mappedKeyBinding[j]);
+                        }
+                    }
+                }
+                else
+                    URHO3D_LOGERRORF("%s has invalid key binding %s, fallback to WSAD", name.CString(), keyBinding.CString());
+                element->SetVar(VAR_BUTTON_KEY_BINDING, IntRect(mappedKeyBinding));
+            }
+        }
+
+        element->SetVar(VAR_SCREEN_JOYSTICK_ID, joystickID);
+    }
+
+    // Make sure all the children are non-focusable so they do not mistakenly to be considered as active UI input controls by application
+    PODVector<UIElement*> allChildren;
+    state.screenJoystick_->GetChildren(allChildren, true);
+    for (PODVector<UIElement*>::Iterator iter = allChildren.Begin(); iter != allChildren.End(); ++iter)
+        (*iter)->SetFocusMode(FM_NOTFOCUSABLE);
+
+    state.Initialize(numButtons, numAxes, numHats);
+
+    return joystickID;
+}
+
+bool Input::RemoveScreenJoystick(SDL_JoystickID id)
+{
+    if (!joysticks_.Contains(id))
+    {
+        URHO3D_LOGERRORF("Failed to remove non-existing screen joystick ID #%d", id);
+        return false;
+    }
+
+    JoystickState& state = joysticks_[id];
+    if (!state.screenJoystick_)
+    {
+        URHO3D_LOGERRORF("Failed to remove joystick with ID #%d which is not a screen joystick", id);
+        return false;
+    }
+
+    state.screenJoystick_->Remove();
+    joysticks_.Erase(id);
+
+    return true;
+}
+
+void Input::SetScreenJoystickVisible(SDL_JoystickID id, bool enable)
+{
+    if (joysticks_.Contains(id))
+    {
+        JoystickState& state = joysticks_[id];
+
+        if (state.screenJoystick_)
+            state.screenJoystick_->SetVisible(enable);
+    }
+}
+
 void Input::SetScreenKeyboardVisible(bool enable)
 {
     if (enable != SDL_IsTextInputActive())
@@ -498,6 +715,42 @@ void Input::SetScreenKeyboardVisible(bool enable)
         else
             SDL_StopTextInput();
     }
+}
+
+SDL_JoystickID Input::OpenJoystick(unsigned index)
+{
+    SDL_Joystick* joystick = SDL_JoystickOpen(index);
+    if (!joystick)
+    {
+        URHO3D_LOGERRORF("Cannot open joystick #%d", index);
+        return -1;
+    }
+
+    // Create joystick state for the new joystick
+    int joystickID = SDL_JoystickInstanceID(joystick);
+    JoystickState& state = joysticks_[joystickID];
+    state.joystick_ = joystick;
+    state.joystickID_ = joystickID;
+    state.name_ = SDL_JoystickName(joystick);
+    if (SDL_IsGameController(index))
+        state.controller_ = SDL_GameControllerOpen(index);
+
+    unsigned numButtons = (unsigned)SDL_JoystickNumButtons(joystick);
+    unsigned numAxes = (unsigned)SDL_JoystickNumAxes(joystick);
+    unsigned numHats = (unsigned)SDL_JoystickNumHats(joystick);
+
+    // When the joystick is a controller, make sure there's enough axes & buttons for the standard controller mappings
+    if (state.controller_)
+    {
+        if (numButtons < SDL_CONTROLLER_BUTTON_MAX)
+            numButtons = SDL_CONTROLLER_BUTTON_MAX;
+        if (numAxes < SDL_CONTROLLER_AXIS_MAX)
+            numAxes = SDL_CONTROLLER_AXIS_MAX;
+    }
+
+    state.Initialize(numButtons, numAxes, numHats);
+
+    return joystickID;
 }
 
 int Input::GetKeyFromName(const String& name) const
@@ -635,6 +888,41 @@ int Input::GetMouseMoveY() const
         return 0;
 }
 
+JoystickState* Input::GetJoystickByIndex(unsigned index)
+{
+    unsigned compare = 0;
+    for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
+    {
+        if (compare++ == index)
+            return &(i->second_);
+    }
+
+    return 0;
+}
+
+JoystickState* Input::GetJoystickByName(const String& name)
+{
+    for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
+    {
+        if (i->second_.name_ == name)
+            return &(i->second_);
+    }
+
+    return 0;
+}
+
+JoystickState* Input::GetJoystick(SDL_JoystickID id)
+{
+    HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Find(id);
+    return i != joysticks_.End() ? &(i->second_) : 0;
+}
+
+bool Input::IsScreenJoystickVisible(SDL_JoystickID id) const
+{
+    HashMap<SDL_JoystickID, JoystickState>::ConstIterator i = joysticks_.Find(id);
+    return i != joysticks_.End() && i->second_.screenJoystick_ && i->second_.screenJoystick_->IsVisible();
+}
+
 bool Input::GetScreenKeyboardSupport() const
 {
     return SDL_HasScreenKeyboardSupport();
@@ -675,11 +963,22 @@ void Input::Initialize()
     initialized_ = true;
     GainFocus();
 
+    ResetJoysticks();
     ResetState();
 
     SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(Input, HandleBeginFrame));
 
     URHO3D_LOGINFO("Initialized input");
+}
+
+void Input::ResetJoysticks()
+{
+    joysticks_.Clear();
+
+    // Open each detected joystick automatically on startup
+    unsigned size = static_cast<unsigned>(SDL_NumJoysticks());
+    for (unsigned i = 0; i < size; ++i)
+        OpenJoystick(i);
 }
 
 void Input::ResetInputAccumulation()
@@ -690,6 +989,11 @@ void Input::ResetInputAccumulation()
     mouseButtonPress_ = 0;
     mouseMove_ = IntVector2::ZERO;
     mouseMoveWheel_ = 0;
+    for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
+    {
+        for (unsigned j = 0; j < i->second_.buttonPress_.Size(); ++j)
+            i->second_.buttonPress_[j] = false;
+    }
 }
 
 void Input::GainFocus()
@@ -738,6 +1042,10 @@ void Input::ResetState()
     keyPress_.Clear();
     scancodeDown_.Clear();
     scancodePress_.Clear();
+
+    /// \todo Check if resetting joystick state on input focus loss is even necessary
+    for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
+        i->second_.Reset();
 
     // Use SetMouseButton() to reset the state so that mouse events will be sent properly
     SetMouseButton(MOUSEB_LEFT, false);
@@ -976,6 +1284,186 @@ void Input::HandleSDLEvent(void* sdlEvent)
         SetMouseWheel(evt.wheel.y);
         break;
 
+    case SDL_JOYDEVICEADDED:
+        {
+            using namespace JoystickConnected;
+
+            SDL_JoystickID joystickID = OpenJoystick((unsigned)evt.jdevice.which);
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = joystickID;
+            SendEvent(E_JOYSTICKCONNECTED, eventData);
+        }
+        break;
+
+    case SDL_JOYDEVICEREMOVED:
+        {
+            using namespace JoystickDisconnected;
+
+            joysticks_.Erase(evt.jdevice.which);
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = evt.jdevice.which;
+            SendEvent(E_JOYSTICKDISCONNECTED, eventData);
+        }
+        break;
+
+    case SDL_JOYBUTTONDOWN:
+        {
+            using namespace JoystickButtonDown;
+
+            unsigned button = evt.jbutton.button;
+            SDL_JoystickID joystickID = evt.jbutton.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            // Skip ordinary joystick event for a controller
+            if (!state.controller_)
+            {
+                VariantMap& eventData = GetEventDataMap();
+                eventData[P_JOYSTICKID] = joystickID;
+                eventData[P_BUTTON] = button;
+
+                if (button < state.buttons_.Size())
+                {
+                    state.buttons_[button] = true;
+                    state.buttonPress_[button] = true;
+                    SendEvent(E_JOYSTICKBUTTONDOWN, eventData);
+                }
+            }
+        }
+        break;
+
+    case SDL_JOYBUTTONUP:
+        {
+            using namespace JoystickButtonUp;
+
+            unsigned button = evt.jbutton.button;
+            SDL_JoystickID joystickID = evt.jbutton.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            if (!state.controller_)
+            {
+                VariantMap& eventData = GetEventDataMap();
+                eventData[P_JOYSTICKID] = joystickID;
+                eventData[P_BUTTON] = button;
+
+                if (button < state.buttons_.Size())
+                {
+                    if (!state.controller_)
+                        state.buttons_[button] = false;
+                    SendEvent(E_JOYSTICKBUTTONUP, eventData);
+                }
+            }
+        }
+        break;
+
+    case SDL_JOYAXISMOTION:
+        {
+            using namespace JoystickAxisMove;
+
+            SDL_JoystickID joystickID = evt.jaxis.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            if (!state.controller_)
+            {
+                VariantMap& eventData = GetEventDataMap();
+                eventData[P_JOYSTICKID] = joystickID;
+                eventData[P_AXIS] = evt.jaxis.axis;
+                eventData[P_POSITION] = Clamp((float)evt.jaxis.value / 32767.0f, -1.0f, 1.0f);
+
+                if (evt.jaxis.axis < state.axes_.Size())
+                {
+                    // If the joystick is a controller, only use the controller axis mappings
+                    // (we'll also get the controller event)
+                    if (!state.controller_)
+                        state.axes_[evt.jaxis.axis] = eventData[P_POSITION].GetFloat();
+                    SendEvent(E_JOYSTICKAXISMOVE, eventData);
+                }
+            }
+        }
+        break;
+
+    case SDL_JOYHATMOTION:
+        {
+            using namespace JoystickHatMove;
+
+            SDL_JoystickID joystickID = evt.jaxis.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = joystickID;
+            eventData[P_HAT] = evt.jhat.hat;
+            eventData[P_POSITION] = evt.jhat.value;
+
+            if (evt.jhat.hat < state.hats_.Size())
+            {
+                state.hats_[evt.jhat.hat] = evt.jhat.value;
+                SendEvent(E_JOYSTICKHATMOVE, eventData);
+            }
+        }
+        break;
+
+    case SDL_CONTROLLERBUTTONDOWN:
+        {
+            using namespace JoystickButtonDown;
+
+            unsigned button = evt.cbutton.button;
+            SDL_JoystickID joystickID = evt.cbutton.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = joystickID;
+            eventData[P_BUTTON] = button;
+
+            if (button < state.buttons_.Size())
+            {
+                state.buttons_[button] = true;
+                state.buttonPress_[button] = true;
+                SendEvent(E_JOYSTICKBUTTONDOWN, eventData);
+            }
+        }
+        break;
+
+    case SDL_CONTROLLERBUTTONUP:
+        {
+            using namespace JoystickButtonUp;
+
+            unsigned button = evt.cbutton.button;
+            SDL_JoystickID joystickID = evt.cbutton.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = joystickID;
+            eventData[P_BUTTON] = button;
+
+            if (button < state.buttons_.Size())
+            {
+                state.buttons_[button] = false;
+                SendEvent(E_JOYSTICKBUTTONUP, eventData);
+            }
+        }
+        break;
+
+    case SDL_CONTROLLERAXISMOTION:
+        {
+            using namespace JoystickAxisMove;
+
+            SDL_JoystickID joystickID = evt.caxis.which;
+            JoystickState& state = joysticks_[joystickID];
+
+            VariantMap& eventData = GetEventDataMap();
+            eventData[P_JOYSTICKID] = joystickID;
+            eventData[P_AXIS] = evt.caxis.axis;
+            eventData[P_POSITION] = Clamp((float)evt.caxis.value / 32767.0f, -1.0f, 1.0f);
+
+            if (evt.caxis.axis < state.axes_.Size())
+            {
+                state.axes_[evt.caxis.axis] = eventData[P_POSITION].GetFloat();
+                SendEvent(E_JOYSTICKAXISMOVE, eventData);
+            }
+        }
+        break;
+
     case SDL_WINDOWEVENT:
         {
             switch (evt.window.event)
@@ -1032,6 +1520,14 @@ void Input::HandleScreenMode(StringHash eventType, VariantMap& eventData)
     // mouse move event. Also get new window ID if it changed
     SDL_Window* window = graphics_->GetWindow();
     windowID_ = SDL_GetWindowID(window);
+
+    // Resize screen joysticks to new screen size
+    for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
+    {
+        UIElement* screenjoystick = i->second_.screenJoystick_;
+        if (screenjoystick)
+            screenjoystick->SetSize(graphics_->GetWidth(), graphics_->GetHeight());
+    }
 
     if (graphics_->GetFullscreen() || !mouseVisible_)
         focusedThisFrame_ = true;

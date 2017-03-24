@@ -9,6 +9,27 @@ enum MouseMode
     MM_FREE
 };
 
+struct JoystickState
+{
+    const String name_ @ name;
+    const int joystickID_ @ joystickID;
+
+    bool IsController() const;
+    unsigned GetNumButtons() const;
+    unsigned GetNumAxes() const;
+    unsigned GetNumHats() const;
+
+    bool GetButtonDown(unsigned index) const;
+    bool GetButtonPress(unsigned index) const;
+    float GetAxisPosition(unsigned index) const;
+    int GetHatPosition(unsigned index) const;
+
+    tolua_readonly tolua_property__is_set bool controller;
+    tolua_readonly tolua_property__get_set unsigned numButtons;
+    tolua_readonly tolua_property__get_set unsigned numAxes;
+    tolua_readonly tolua_property__get_set unsigned numHats;
+};
+
 class Input : public Object
 {
     void SetToggleFullscreen(bool enable);
@@ -16,6 +37,9 @@ class Input : public Object
     void SetMouseGrabbed(bool grab, bool suppressEvent = false);
     void SetMouseMode(MouseMode mode, bool suppressEvent = false);
     bool IsMouseLocked();
+    int AddScreenJoystick(XMLFile* layoutFile = 0, XMLFile* styleFile = 0);
+    bool RemoveScreenJoystick(int id);
+    void SetScreenJoystickVisible(int id, bool enable);
     void SetScreenKeyboardVisible(bool enable);
     void SetMousePosition(const IntVector2& position);
     void CenterMousePosition();
@@ -40,8 +64,13 @@ class Input : public Object
     int GetMouseMoveX() const;
     int GetMouseMoveY() const;
     int GetMouseMoveWheel() const;
+    unsigned GetNumJoysticks() const;
+    JoystickState* GetJoystick(int id);
+    JoystickState* GetJoystickByIndex(unsigned index);
+    JoystickState* GetJoystickByName(const String name);
     bool GetToggleFullscreen() const;
     bool GetScreenKeyboardSupport() const;
+    bool IsScreenJoystickVisible(int id) const;
     bool IsScreenKeyboardVisible() const;
     bool IsMouseVisible() const;
     bool IsMouseGrabbed() const;
@@ -55,6 +84,7 @@ class Input : public Object
     tolua_readonly tolua_property__get_set int mouseMoveX;
     tolua_readonly tolua_property__get_set int mouseMoveY;
     tolua_readonly tolua_property__get_set int mouseMoveWheel;
+    tolua_readonly tolua_property__get_set unsigned numJoysticks;
     tolua_readonly tolua_property__get_set bool toggleFullscreen;
     tolua_readonly tolua_property__get_set bool screenKeyboardSupport;
     tolua_property__get_set MouseMode mouseMode;

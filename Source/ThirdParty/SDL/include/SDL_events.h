@@ -33,6 +33,8 @@
 #include "SDL_video.h"
 #include "SDL_keyboard.h"
 #include "SDL_mouse.h"
+#include "SDL_joystick.h"
+#include "SDL_gamecontroller.h"
 #include "SDL_quit.h"
 
 #include "begin_code.h"
@@ -99,6 +101,23 @@ typedef enum
     SDL_MOUSEBUTTONDOWN,        /**< Mouse button pressed */
     SDL_MOUSEBUTTONUP,          /**< Mouse button released */
     SDL_MOUSEWHEEL,             /**< Mouse wheel motion */
+
+    /* Joystick events */
+    SDL_JOYAXISMOTION  = 0x600, /**< Joystick axis motion */
+    SDL_JOYBALLMOTION,          /**< Joystick trackball motion */
+    SDL_JOYHATMOTION,           /**< Joystick hat position change */
+    SDL_JOYBUTTONDOWN,          /**< Joystick button pressed */
+    SDL_JOYBUTTONUP,            /**< Joystick button released */
+    SDL_JOYDEVICEADDED,         /**< A new joystick has been inserted into the system */
+    SDL_JOYDEVICEREMOVED,       /**< An opened joystick has been removed */
+
+    /* Game controller events */
+    SDL_CONTROLLERAXISMOTION  = 0x650, /**< Game controller axis motion */
+    SDL_CONTROLLERBUTTONDOWN,          /**< Game controller button pressed */
+    SDL_CONTROLLERBUTTONUP,            /**< Game controller button released */
+    SDL_CONTROLLERDEVICEADDED,         /**< A new Game controller has been inserted into the system */
+    SDL_CONTROLLERDEVICEREMOVED,       /**< An opened Game controller has been removed */
+    SDL_CONTROLLERDEVICEREMAPPED,      /**< The controller mapping was updated */
 
     /* Clipboard events */
     SDL_CLIPBOARDUPDATE = 0x900, /**< The clipboard changed */
@@ -243,6 +262,125 @@ typedef struct SDL_MouseWheelEvent
 } SDL_MouseWheelEvent;
 
 /**
+ *  \brief Joystick axis motion event structure (event.jaxis.*)
+ */
+typedef struct SDL_JoyAxisEvent
+{
+    Uint32 type;        /**< ::SDL_JOYAXISMOTION */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 axis;         /**< The joystick axis index */
+    Uint8 padding1;
+    Uint8 padding2;
+    Uint8 padding3;
+    Sint16 value;       /**< The axis value (range: -32768 to 32767) */
+    Uint16 padding4;
+} SDL_JoyAxisEvent;
+
+/**
+ *  \brief Joystick trackball motion event structure (event.jball.*)
+ */
+typedef struct SDL_JoyBallEvent
+{
+    Uint32 type;        /**< ::SDL_JOYBALLMOTION */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 ball;         /**< The joystick trackball index */
+    Uint8 padding1;
+    Uint8 padding2;
+    Uint8 padding3;
+    Sint16 xrel;        /**< The relative motion in the X direction */
+    Sint16 yrel;        /**< The relative motion in the Y direction */
+} SDL_JoyBallEvent;
+
+/**
+ *  \brief Joystick hat position change event structure (event.jhat.*)
+ */
+typedef struct SDL_JoyHatEvent
+{
+    Uint32 type;        /**< ::SDL_JOYHATMOTION */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 hat;          /**< The joystick hat index */
+    Uint8 value;        /**< The hat position value.
+                         *   \sa ::SDL_HAT_LEFTUP ::SDL_HAT_UP ::SDL_HAT_RIGHTUP
+                         *   \sa ::SDL_HAT_LEFT ::SDL_HAT_CENTERED ::SDL_HAT_RIGHT
+                         *   \sa ::SDL_HAT_LEFTDOWN ::SDL_HAT_DOWN ::SDL_HAT_RIGHTDOWN
+                         *
+                         *   Note that zero means the POV is centered.
+                         */
+    Uint8 padding1;
+    Uint8 padding2;
+} SDL_JoyHatEvent;
+
+/**
+ *  \brief Joystick button event structure (event.jbutton.*)
+ */
+typedef struct SDL_JoyButtonEvent
+{
+    Uint32 type;        /**< ::SDL_JOYBUTTONDOWN or ::SDL_JOYBUTTONUP */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 button;       /**< The joystick button index */
+    Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+    Uint8 padding1;
+    Uint8 padding2;
+} SDL_JoyButtonEvent;
+
+/**
+ *  \brief Joystick device event structure (event.jdevice.*)
+ */
+typedef struct SDL_JoyDeviceEvent
+{
+    Uint32 type;        /**< ::SDL_JOYDEVICEADDED or ::SDL_JOYDEVICEREMOVED */
+    Uint32 timestamp;
+    Sint32 which;       /**< The joystick device index for the ADDED event, instance id for the REMOVED event */
+} SDL_JoyDeviceEvent;
+
+
+/**
+ *  \brief Game controller axis motion event structure (event.caxis.*)
+ */
+typedef struct SDL_ControllerAxisEvent
+{
+    Uint32 type;        /**< ::SDL_CONTROLLERAXISMOTION */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 axis;         /**< The controller axis (SDL_GameControllerAxis) */
+    Uint8 padding1;
+    Uint8 padding2;
+    Uint8 padding3;
+    Sint16 value;       /**< The axis value (range: -32768 to 32767) */
+    Uint16 padding4;
+} SDL_ControllerAxisEvent;
+
+
+/**
+ *  \brief Game controller button event structure (event.cbutton.*)
+ */
+typedef struct SDL_ControllerButtonEvent
+{
+    Uint32 type;        /**< ::SDL_CONTROLLERBUTTONDOWN or ::SDL_CONTROLLERBUTTONUP */
+    Uint32 timestamp;
+    SDL_JoystickID which; /**< The joystick instance id */
+    Uint8 button;       /**< The controller button (SDL_GameControllerButton) */
+    Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+    Uint8 padding1;
+    Uint8 padding2;
+} SDL_ControllerButtonEvent;
+
+
+/**
+ *  \brief Controller device event structure (event.cdevice.*)
+ */
+typedef struct SDL_ControllerDeviceEvent
+{
+    Uint32 type;        /**< ::SDL_CONTROLLERDEVICEADDED, ::SDL_CONTROLLERDEVICEREMOVED, or ::SDL_CONTROLLERDEVICEREMAPPED */
+    Uint32 timestamp;
+    Sint32 which;       /**< The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
+} SDL_ControllerDeviceEvent;
+
+/**
  *  \brief Audio device event structure (event.adevice.*)
  */
 typedef struct SDL_AudioDeviceEvent
@@ -332,6 +470,14 @@ typedef union SDL_Event
     SDL_MouseMotionEvent motion;    /**< Mouse motion event data */
     SDL_MouseButtonEvent button;    /**< Mouse button event data */
     SDL_MouseWheelEvent wheel;      /**< Mouse wheel event data */
+    SDL_JoyAxisEvent jaxis;         /**< Joystick axis event data */
+    SDL_JoyBallEvent jball;         /**< Joystick ball event data */
+    SDL_JoyHatEvent jhat;           /**< Joystick hat event data */
+    SDL_JoyButtonEvent jbutton;     /**< Joystick button event data */
+    SDL_JoyDeviceEvent jdevice;     /**< Joystick device change event data */
+    SDL_ControllerAxisEvent caxis;      /**< Game Controller axis event data */
+    SDL_ControllerButtonEvent cbutton;  /**< Game Controller button event data */
+    SDL_ControllerDeviceEvent cdevice;  /**< Game Controller device event data */
     SDL_AudioDeviceEvent adevice;   /**< Audio device event data */
     SDL_QuitEvent quit;             /**< Quit request event data */
     SDL_UserEvent user;             /**< Custom event data */

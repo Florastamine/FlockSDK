@@ -28,6 +28,9 @@
 #include "SDL_thread.h"
 #include "SDL_events_c.h"
 #include "../timer/SDL_timer_c.h"
+#if !SDL_JOYSTICK_DISABLED
+#include "../joystick/SDL_joystick_c.h"
+#endif
 #include "../video/SDL_sysvideo.h"
 
 /* An arbitrary limit so we don't have unbounded growth */
@@ -397,6 +400,12 @@ SDL_PumpEvents(void)
     if (_this) {
         _this->PumpEvents(_this);
     }
+#if !SDL_JOYSTICK_DISABLED
+    /* Check for joystick state change */
+    if ((!SDL_disabled_events[SDL_JOYAXISMOTION >> 8] || SDL_JoystickEventState(SDL_QUERY))) {
+        SDL_JoystickUpdate();
+    }
+#endif
 
     SDL_SendPendingQuit();  /* in case we had a signal handler fire, etc. */
 }

@@ -353,6 +353,20 @@ guess_device_class(struct udev_device *dev)
                see https://github.com/systemd/systemd/blob/master/src/udev/udev-builtin-input_id.c */
             devclass |= SDL_UDEV_DEVICE_TOUCHSCREEN; /* ID_INPUT_TOUCHSCREEN */
         }
+
+        if (test_bit(BTN_TRIGGER, bitmask_key) ||
+            test_bit(BTN_A, bitmask_key) ||
+            test_bit(BTN_1, bitmask_key) ||
+            test_bit(ABS_RX, bitmask_abs) ||
+            test_bit(ABS_RY, bitmask_abs) ||
+            test_bit(ABS_RZ, bitmask_abs) ||
+            test_bit(ABS_THROTTLE, bitmask_abs) ||
+            test_bit(ABS_RUDDER, bitmask_abs) ||
+            test_bit(ABS_WHEEL, bitmask_abs) ||
+            test_bit(ABS_GAS, bitmask_abs) ||
+            test_bit(ABS_BRAKE, bitmask_abs)) {
+            devclass |= SDL_UDEV_DEVICE_JOYSTICK; /* ID_INPUT_JOYSTICK */
+        }
     }
 
     if (test_bit(EV_REL, bitmask_ev) &&
@@ -390,6 +404,11 @@ device_event(SDL_UDEV_deviceevent type, struct udev_device *dev)
     } else if (SDL_strcmp(subsystem, "input") == 0) {
         /* udev rules reference: http://cgit.freedesktop.org/systemd/systemd/tree/src/udev/udev-builtin-input_id.c */
         
+        val = _this->udev_device_get_property_value(dev, "ID_INPUT_JOYSTICK");
+        if (val != NULL && SDL_strcmp(val, "1") == 0 ) {
+            devclass |= SDL_UDEV_DEVICE_JOYSTICK;
+        }
+        
         val = _this->udev_device_get_property_value(dev, "ID_INPUT_MOUSE");
         if (val != NULL && SDL_strcmp(val, "1") == 0 ) {
             devclass |= SDL_UDEV_DEVICE_MOUSE;
@@ -415,7 +434,9 @@ device_event(SDL_UDEV_deviceevent type, struct udev_device *dev)
             /* Fall back to old style input classes */
             val = _this->udev_device_get_property_value(dev, "ID_CLASS");
             if (val != NULL) {
-                if (SDL_strcmp(val, "mouse") == 0) {
+                if (SDL_strcmp(val, "joystick") == 0) {
+                    devclass = SDL_UDEV_DEVICE_JOYSTICK;
+                } else if (SDL_strcmp(val, "mouse") == 0) {
                     devclass = SDL_UDEV_DEVICE_MOUSE;
                 } else if (SDL_strcmp(val, "kbd") == 0) {
                     devclass = SDL_UDEV_DEVICE_KEYBOARD;
