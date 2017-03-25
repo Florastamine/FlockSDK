@@ -105,7 +105,8 @@
 // AS_USE_NAMESPACE
 // Adds the AngelScript namespace on the declarations.
 
-
+#define AS_NO_THREADS 
+#define AS_NO_EXCEPTIONS 
 
 //
 // Library usage
