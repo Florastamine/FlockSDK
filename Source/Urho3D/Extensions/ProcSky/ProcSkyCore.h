@@ -23,6 +23,7 @@
 
 // Contains modifications by Florastamine (git@github.com:Florastamine):
 // -- Added a bunch of getters/setters for exposing customizable parameters to the editor. 
+// -- Removed PROCSKY_UI and PROCSKY_TEXTURE_DUMPING as hard-coding debugging utilities into the codebase along with fixed keysets are not necessarily a good idea.
 // -- Fixed coding convention. 
 
 #pragma once
@@ -111,6 +112,7 @@ protected:
   void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
 
 protected:
+  Camera* cam_;
   /// Urho3D Skybox with geometry and main TextureCube.
   SharedPtr<Skybox> skybox_;
   /// Node used for light direction.
@@ -118,6 +120,7 @@ protected:
   SharedPtr<RenderPath> rPath_;
   /// Render size of each face.
   unsigned renderSize_;
+  float renderFOV_;
   /// Fixed rotations for each cube face.
   Matrix3 faceRotations_[MAX_CUBEMAP_FACES];
 

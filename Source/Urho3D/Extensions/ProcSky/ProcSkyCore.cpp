@@ -25,6 +25,7 @@
 // -- Changed GetProjection(false) to GetProjection(). 
 // -- Created a separate component group for ProcSky in the editor, and also exposed various properties to the ProcSky component inside the editor. 
 // -- Removed default camera creation. 
+// -- Removed PROCSKY_UI and PROCSKY_TEXTURE_DUMPING as hard-coding debugging utilities into the codebase along with fixed keysets are not necessarily a good idea.
 // -- Fixed coding convention. 
 
 #include "ProcSkyCore.h"  
@@ -59,10 +60,12 @@ namespace Urho3D {
 ProcSky::ProcSky(Context* context):
   Component(context)
   , renderSize_(256)
+  , renderFOV_(89.5f)
   , updateAuto_(true)
   , updateInterval_(0.0f)
   , updateWait_(0)
   , renderQueued_(true)
+  , cam_(NULL)
   , Kr_(Vector3(0.18867780436772762, 0.4978442963618773, 0.6616065586417131)) 
   , rayleighBrightness_(3.3f)
   , mieBrightness_(0.1f)
@@ -116,7 +119,15 @@ bool ProcSky::Initialize() {
   URHO3D_LOGDEBUG("ProcSky::Initialize()");
   ResourceCache* cache = GetSubsystem<ResourceCache>();
   Renderer* renderer = GetSubsystem<Renderer>();
-  rPath_ = renderer->GetViewport(0)->GetRenderPath();
+  rPath_ = renderer->GetViewport(0)->GetRenderPath(); 
+
+  if (!cam_) { 
+    cam_ = node_->CreateComponent<Camera>();
+    cam_->SetFov(renderFOV_);
+    cam_->SetAspectRatio(1.0f);
+    cam_->SetNearClip(1.0f);
+    cam_->SetFarClip(100.0f);
+  }
 
   // Use first child as light node if it exists; otherwise, create it.
   if (!lightNode_) {
@@ -158,6 +169,7 @@ bool ProcSky::Initialize() {
   atmoParams["MieCollectionPower"] = mieCollectionPower_;
   atmoParams["MieDistribution"] = mieDistribution_;
   atmoParams["LightDir"] = Vector3::DOWN;
+  atmoParams["InvProj"] = cam_->GetProjection().Inverse();
 
   // Add custom quad commands to render path.
   for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i) {
@@ -219,6 +231,7 @@ void ProcSky::Update() {
   rPath_->SetShaderParameter("RayleighCollectionPower", rayleighCollectionPower_);
   rPath_->SetShaderParameter("MieCollectionPower", mieCollectionPower_);
   rPath_->SetShaderParameter("MieDistribution", mieDistribution_);
+  rPath_->SetShaderParameter("InvProj", cam_->GetProjection().Inverse());
   SetRenderQueued(true);
 } 
 
