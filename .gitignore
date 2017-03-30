@@ -87,3 +87,7 @@ Thumbs.db
 /.vscode
 *.user
 Source/ThirdParty/LuaJIT/src/jit/bc/*.lua
+*.mesh.xml
+*.skeleton.xml
+*.fbx 
+
