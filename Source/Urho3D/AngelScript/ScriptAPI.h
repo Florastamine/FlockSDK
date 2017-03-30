@@ -66,6 +66,7 @@ void RegisterScriptInterfaceAPI(asIScriptEngine* engine);
 /// Register the Script library to script.
 void RegisterScriptAPI(asIScriptEngine* engine);
 /// Register the Engine library to script.
-void RegisterEngineAPI(asIScriptEngine* engine);
-
+void RegisterEngineAPI(asIScriptEngine* engine); 
+/// Register ProcSky. 
+void RegisterProcSkyAPI(asIScriptEngine* engine); 
 }

@@ -67,6 +67,7 @@ extern int tolua_SceneLuaAPI_open(lua_State*);
 extern int tolua_UILuaAPI_open(lua_State*);
 extern int tolua_Urho2DLuaAPI_open(lua_State*);
 extern int tolua_LuaScriptLuaAPI_open(lua_State*);
+extern int tolua_ProcSkyLuaAPI_open(lua_State*); 
 
 namespace Urho3D
 {
@@ -111,6 +112,7 @@ LuaScript::LuaScript(Context* context) :
     tolua_UILuaAPI_open(luaState_);
     tolua_Urho2DLuaAPI_open(luaState_);
     tolua_LuaScriptLuaAPI_open(luaState_);
+    tolua_ProcSkyLuaAPI_open(luaState_);
 
     SetContext(luaState_, context_);
 

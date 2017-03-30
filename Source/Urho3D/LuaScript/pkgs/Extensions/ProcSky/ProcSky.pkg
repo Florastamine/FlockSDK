@@ -1,0 +1,16 @@
+$#include "Extensions/ProcSky/ProcSkyCore.h" 
+
+class ProcSky : public Component 
+{
+    void SetUpdateAuto(bool updateAuto); 
+    bool GetUpdateAuto() const; 
+
+    void SetUpdateInterval(float interval); 
+    float GetUpdateInterval() const; 
+
+    bool SetRenderSize(unsigned size);
+    unsigned GetRenderSize() const; 
+
+    bool Initialize();
+    void Update();
+};

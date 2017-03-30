@@ -51,6 +51,7 @@
 #include "../Scene/SceneEvents.h"
 #include "../UI/UI.h"
 #include "../Urho2D/Urho2D.h"
+#include "../Extensions/ProcSky/ProcSky.h" 
 
 namespace Urho3D
 {
@@ -102,6 +103,8 @@ Engine::Engine(Context* context) :
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);
 #endif
+
+    RegisterProcSkyLibrary(context_); 
 
     SubscribeToEvent(E_EXITREQUESTED, URHO3D_HANDLER(Engine, HandleExitRequested));
 }

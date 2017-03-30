@@ -129,6 +129,7 @@ Script::Script(Context* context) :
     RegisterUrho2DAPI(scriptEngine_);
     RegisterScriptAPI(scriptEngine_);
     RegisterEngineAPI(scriptEngine_);
+    RegisterProcSkyAPI(scriptEngine_); 
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
