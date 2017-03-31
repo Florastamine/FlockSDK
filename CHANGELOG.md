@@ -41,3 +41,31 @@ This release does not only moves further into the goal of driving away from the 
 **(.)** The upgrade of [Open Asset Import Library](http://www.assimp.org) from `3.1.1` to `3.3.1` brought to the table the ability to import from [3MF](http://www.3mf.io/what-is-3mf/), [SIB](https://en.wikipedia.org/wiki/Silo_(software)), and [glTF](https://en.wikipedia.org/wiki/GlTF). However, in this release, I've also dropped support for [SMD](https://developer.valvesoftware.com/wiki/Studio_Model_Data), [AC](https://en.wikipedia.org/wiki/AC3D), and Unreal's [.3D](http://paulbourke.net/dataformats/unreal/). 
 
 **(..)** The rationale behind this is, for the parts are not part of the codebase (helper tools, for example) that rarely change, there's no point in keep re-compiling the code that will not (or rarely) change again and again when building the SDK, which would waste a lot of time, and thus these tools were removed from the codebase and are instead provided under the form of 32-bit pre-built binaries. Now the tools will only be provided under binary format, and their separate repository can be found [here](https://github.com/Florastamine/IWBHT_SDK_Tools). 
+
+**`Release 4` is the last major release which still provides partial support for compiling the SDK under MSVC compilers. Starting from the fifth release, users are recommended to switch to [Cygwin](https://www.cygwin.com)/[MinGW-W64](http://mingw-w64.org/doku.php)/[MSYS2](http://www.msys2.org) instead.** 
+
+# Release 5 -- 03.31.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing)) 
+This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Urho3D developers and myself. Enjoy!
+* General bug-fixes and tweaks. 
+* Physics support is now enforced. 
+* Profiling support is now included by default in the build scripts, which can be left out easily. 
+* Now the editor configuration file is located at the same folder as the editor executable and is named `SDKConfig.xml`. 
+* GCC now uses `-O2` instead of `-Ofast` when building the SDK. 
+* The SDK-specific LuaJIT patch is now optional and can be left out to enforce normal LuaJIT behaviour by commenting out `DOWNPOUR_PATCH` inside `[Source/ThirdParty/LuaJIT/src/luaconf.h](https://github.com/Florastamine/IWBHT_SDK/blob/master/Source/ThirdParty/LuaJIT/src/luaconf.h)`. 
+* The SDK now prefers loading pre-compiled Lua scripts instead of raw scripts. 
+
+* Removed testing support. 
+* Removed support for Tundra's `.txml` format. (https://github.com/realXtend/tundra-urho3d)
+* Removed the ability to export the scene to Wavefront **.obj**. 
+* Removed support for `MSVC` compilers. 
+* Removed lots of mobile-specific and `OpenGL ES`-related code and artifacts. 
+* Disabled exception handling and threading support on [AngelScript](http://www.angelcode.com/angelscript/). 
+
+* Integration of various post-processing `GLSL`-based shaders: Negative, chromatic aberration, pixelate, infrared, emboss, scanline, sharpen, crosshatch, crossstitch, TV/noise, posterization, edge detection/sobel, oil paint, SSAO. 
+* Integrated a new water shader, replacing the default one. 
+* Complete [ProcSky](https://github.com/carnalis/ProcSky/) integration into the engine, now with fixes, changes and Lua bindings. 
+* Inverse kinematics integration. 
+* Added LuaJIT's `string.ends_with()`.
+* Added `IntVector2` type. 
+* `64`-bit integer variant type support. 
+* Multi-monitor and refresh rate options for full-screen/borderless. 
