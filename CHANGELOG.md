@@ -51,7 +51,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Profiling support is now included by default in the build scripts, which can be left out easily. 
 * Now the editor configuration file is located at the same folder as the editor executable and is named `SDKConfig.xml`. 
 * GCC now uses `-O2` instead of `-Ofast` when building the SDK. 
-* The SDK-specific LuaJIT patch is now optional and can be left out to enforce normal LuaJIT behaviour by commenting out `DOWNPOUR_PATCH` inside `[Source/ThirdParty/LuaJIT/src/luaconf.h](https://github.com/Florastamine/IWBHT_SDK/blob/master/Source/ThirdParty/LuaJIT/src/luaconf.h)`. 
+* The SDK-specific LuaJIT patch is now optional and can be left out to enforce normal LuaJIT behaviour by commenting out `DOWNPOUR_PATCH` inside [`Source/ThirdParty/LuaJIT/src/luaconf.h`](https://github.com/Florastamine/IWBHT_SDK/blob/master/Source/ThirdParty/LuaJIT/src/luaconf.h). 
 * The SDK now prefers loading pre-compiled Lua scripts instead of raw scripts. 
 
 * Removed testing support. 
