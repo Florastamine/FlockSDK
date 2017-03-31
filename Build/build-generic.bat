@@ -140,7 +140,7 @@ rem exit /b
 if %Debug% == 1 (
     echo. 
     echo [Debug Info] 
-    echo %~*
+    echo %*
     echo.
 )
 exit /b 0 
