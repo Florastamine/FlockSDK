@@ -35,24 +35,20 @@
 namespace Urho3D
 {
 #ifdef _WIN32
-
-DWORD WINAPI ThreadFunctionStatic(void* data)
+static DWORD WINAPI ThreadFunctionStatic(void* data)
 {
     Thread* thread = static_cast<Thread*>(data);
     thread->ThreadFunction();
     return 0;
 }
-
 #else
-
-void* ThreadFunctionStatic(void* data)
+static void* ThreadFunctionStatic(void* data)
 {
     Thread* thread = static_cast<Thread*>(data);
     thread->ThreadFunction();
     pthread_exit((void*)0);
     return 0;
 }
-
 #endif
 
 ThreadID Thread::mainThreadID;
@@ -111,8 +107,7 @@ void Thread::SetPriority(int priority)
 #ifdef _WIN32
     if (handle_)
         SetThreadPriority((HANDLE)handle_, priority);
-#endif
-#if defined(__linux__) 
+#elif defined(__linux__) 
     pthread_t* thread = (pthread_t*)handle_;
     if (thread)
         pthread_setschedprio(*thread, priority);
