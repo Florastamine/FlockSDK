@@ -35,6 +35,21 @@ void VS()
 }
 
 
+#ifdef SHADOW
+    #ifdef VOLUMETRICLIGHT
+        float ComputeScattering(float lightDotView)
+        {
+            const float G_SCATTERING = 0.5;
+            const float PI = 3.14159265358979323846;
+            float result = 1.0 - G_SCATTERING * G_SCATTERING;
+            result /= (4.0 * PI * pow(1.0 + G_SCATTERING * G_SCATTERING - (2.0 * G_SCATTERING) * lightDotView, 1.5));
+            return result;
+        }
+        float rand(highp vec2 co){
+        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    }
+#endif
+#endif
 void PS()
 {
     // If rendering a directional light quad, optimize out the w divide
@@ -65,36 +80,60 @@ void PS()
         vec4 albedoInput = texture2DProj(sAlbedoBuffer, vScreenPos);
         vec4 normalInput = texture2DProj(sNormalBuffer, vScreenPos);
     #endif
-
+    
     // Position acquired via near/far ray is relative to camera. Bring position to world space
-    vec3 eyeVec = -worldPos;
-    worldPos += cCameraPosPS;
-    
-    vec3 normal = normalize(normalInput.rgb * 2.0 - 1.0);
-    vec4 projWorldPos = vec4(worldPos, 1.0);
-    vec3 lightColor;
-    vec3 lightDir;
-    
-    float diff = GetDiffuse(normal, worldPos, lightDir);
+vec3 eyeVec = -worldPos;
+worldPos += cCameraPosPS;
 
-    #ifdef SHADOW
-        diff *= GetShadowDeferred(projWorldPos, normal, depth);
-    #endif
+vec3 normal = normalize(normalInput.rgb * 2.0 - 1.0);
+vec4 projWorldPos = vec4(worldPos, 1.0);
+vec3 lightColor;
+vec3 lightDir;
 
-    #if defined(SPOTLIGHT)
-        vec4 spotPos = projWorldPos * cLightMatricesPS[0];
-        lightColor = spotPos.w > 0.0 ? texture2DProj(sLightSpotMap, spotPos).rgb * cLightColor.rgb : vec3(0.0);
-    #elif defined(CUBEMASK)
-        mat3 lightVecRot = mat3(cLightMatricesPS[0][0].xyz, cLightMatricesPS[0][1].xyz, cLightMatricesPS[0][2].xyz);
-        lightColor = textureCube(sLightCubeMap, (worldPos - cLightPosPS.xyz) * lightVecRot).rgb * cLightColor.rgb;
-    #else
-        lightColor = cLightColor.rgb;
-    #endif
+float diff = GetDiffuse(normal, worldPos, lightDir);
 
-    #ifdef SPECULAR
-        float spec = GetSpecular(normal, eyeVec, lightDir, normalInput.a * 255.0);
-        gl_FragColor = diff * vec4(lightColor * (albedoInput.rgb + spec * cLightColor.a * albedoInput.aaa), 0.0);
-    #else
-        gl_FragColor = diff * vec4(lightColor * albedoInput.rgb, 0.0);
+#ifdef SHADOW
+    diff *= GetShadowDeferred(projWorldPos, normal, depth);
+    #ifdef VOLUMETRICLIGHT
+        highp vec3 rayDirection = normalize(worldPos-cCameraPosPS);
+        float accumFog = 0.0;
+        const int NB_STEPS = 15;
+        #ifdef DIRLIGHT
+            float ditherValue = rand(vScreenPos);
+        #else
+            float ditherValue = rand(vScreenPos.xy/vScreenPos.w);
+        #endif
+        for (int n = 0; n < NB_STEPS; n++) {
+            highp vec4 projWorldPosSpace = vec4(cCameraPosPS+(float(n)+ditherValue)*(worldPos-cCameraPosPS)/float(NB_STEPS), 1.0);
+            accumFog += GetShadowDeferred(projWorldPosSpace, vec3(0.0), float(n)*depth/float(NB_STEPS))*ComputeScattering(dot(rayDirection, lightDir));
+        }
+        accumFog /= float(NB_STEPS);
     #endif
+#endif
+
+#if defined(SPOTLIGHT)
+    vec4 spotPos = projWorldPos * cLightMatricesPS[0];
+    lightColor = spotPos.w > 0.0 ? texture2DProj(sLightSpotMap, spotPos).rgb * cLightColor.rgb : vec3(0.0);
+#elif defined(CUBEMASK)
+    mat3 lightVecRot = mat3(cLightMatricesPS[0][0].xyz, cLightMatricesPS[0][1].xyz, cLightMatricesPS[0][2].xyz);
+    lightColor = textureCube(sLightCubeMap, (worldPos - cLightPosPS.xyz) * lightVecRot).rgb * cLightColor.rgb;
+#else
+    lightColor = cLightColor.rgb;
+#endif
+
+#ifdef SPECULAR
+    float spec = GetSpecular(normal, eyeVec, lightDir, normalInput.a * 255.0);
+    vec3 finalColor = diff * lightColor * (albedoInput.rgb + spec * cLightColor.a * albedoInput.aaa);
+#else
+    vec3 finalColor = diff * lightColor * albedoInput.rgb;
+#endif
+
+float finalAlpha = 0.0;
+#ifdef SHADOW
+    #ifdef VOLUMETRICLIGHT
+        finalAlpha = accumFog;
+    #endif
+#endif
+
+gl_FragColor = vec4(finalColor, finalAlpha);
 }

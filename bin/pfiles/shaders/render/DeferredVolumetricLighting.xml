@@ -1,0 +1,41 @@
+<renderpath>
+    <rendertarget name="albedo" sizedivisor="1 1" format="rgba" />
+    <rendertarget name="normal" sizedivisor="1 1" format="rgba" />
+    <rendertarget name="depth" sizedivisor="1 1" format="lineardepth" />
+    <rendertarget name="fullscreen" sizedivisor="1 1" format="rgba" filter="true" />
+    <command type="clear" color="0 0 0 0" depth="1.0" stencil="0" output="fullscreen" />
+    <command type="scenepass" pass="deferred" vsdefines="VOLUMETRICLIGHT" psdefines="VOLUMETRICLIGHT" marktostencil="true" vertexlights="true" metadata="gbuffer">
+        <output index="0" name="fullscreen" />
+        <output index="1" name="albedo" />
+        <output index="2" name="normal" />
+        <output index="3" name="depth" />
+    </command>
+    <command type="lightvolumes" vs="DeferredLight" ps="DeferredLight" vsdefines="VOLUMETRICLIGHT" psdefines="VOLUMETRICLIGHT" output="fullscreen">
+        <texture unit="albedo" name="albedo" />
+        <texture unit="normal" name="normal" />
+        <texture unit="depth" name="depth" />
+    </command>
+    <rendertarget name="blurv" tag="Bloom" sizedivisor="4 4" format="rgb" filter="true" />
+    <rendertarget name="blurh" tag="Bloom" sizedivisor="4 4" format="rgb" filter="true" />
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BRIGHT VOLUMETRICLIGHT" output="blurv">
+        <parameter name="BloomThreshold" value="0.0" />
+        <texture unit="diffuse" name="fullscreen" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BLURH" output="blurh">
+        <texture unit="diffuse" name="blurv" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BLURV" output="blurv">
+        <texture unit="diffuse" name="blurh" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="COMBINE" output="viewport">
+        <parameter name="BloomMix" value="1.0 1.0" />
+        <texture unit="diffuse" name="fullscreen" />
+        <texture unit="normal" name="blurv" />
+    </command>
+    <command type="scenepass" pass="postopaque" />
+    <command type="scenepass" pass="refract">
+        <texture unit="environment" name="viewport" />
+    </command>
+    <command type="scenepass" pass="alpha" vertexlights="true" sort="backtofront" metadata="alpha" />
+    <command type="scenepass" pass="postalpha" sort="backtofront" />
+</renderpath>

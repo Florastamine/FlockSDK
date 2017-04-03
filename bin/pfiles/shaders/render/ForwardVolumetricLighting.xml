@@ -1,0 +1,29 @@
+<renderpath>
+    <rendertarget name="fullscreen" sizedivisor="1 1" format="rgba" filter="true" />
+    <command type="clear" color="0 0 0 0" depth="1.0" stencil="0" output="fullscreen" />
+    <command type="scenepass" pass="base" vsdefines="VOLUMETRICLIGHT" psdefines="VOLUMETRICLIGHT" vertexlights="true" metadata="base" output="fullscreen" />
+    <command type="forwardlights" pass="light" vsdefines="VOLUMETRICLIGHT" psdefines="VOLUMETRICLIGHT" output="fullscreen" />
+    <rendertarget name="blurv" tag="Bloom" sizedivisor="4 4" format="rgb" filter="true" />
+    <rendertarget name="blurh" tag="Bloom" sizedivisor="4 4" format="rgb" filter="true" />
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BRIGHT VOLUMETRICLIGHT" output="blurv">
+        <parameter name="BloomThreshold" value="0.0" />
+        <texture unit="diffuse" name="fullscreen" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BLURH" output="blurh">
+        <texture unit="diffuse" name="blurv" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="BLURV" output="blurv">
+        <texture unit="diffuse" name="blurh" />
+    </command>
+    <command type="quad" tag="Bloom" vs="Bloom" ps="Bloom" psdefines="COMBINE" output="viewport">
+        <parameter name="BloomMix" value="1.0 1.0" />
+        <texture unit="diffuse" name="fullscreen" />
+        <texture unit="normal" name="blurv" />
+    </command>
+    <command type="scenepass" pass="postopaque" />
+    <command type="scenepass" pass="refract">
+        <texture unit="environment" name="viewport" />
+    </command>
+    <command type="scenepass" pass="alpha" vertexlights="true" sort="backtofront" metadata="alpha" />
+    <command type="scenepass" pass="postalpha" sort="backtofront" />
+</renderpath>
