@@ -1,0 +1,6 @@
+<technique vs="Unlit" ps="Unlit" psdefines="MRT1" vsdefines="NOUV" >
+    <pass name="postopaque" />
+    <pass name="prepass" psdefines="PREPASS" />
+    <pass name="material" />
+    <pass name="deferred" psdefines="DEFERRED" />
+</technique>
