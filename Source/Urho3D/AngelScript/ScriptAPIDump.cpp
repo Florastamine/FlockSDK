@@ -384,11 +384,30 @@ void Script::DumpAPI(DumpMode mode, const String& sourceTree)
             }
             else if (mode == C_HEADER)
             {
-                ///\todo Find a cleaner way to do this instead of hardcoding
-                if (typeName == "Array")
-                    Log::WriteRaw("\ntemplate <class T> class " + typeName + "\n{\n");
-                else
-                    Log::WriteRaw("\nclass " + typeName + "\n{\n");
+                if (type->GetFlags() & asOBJ_TEMPLATE) {
+                    String str = "\ntemplate <";
+                    for (asUINT tt = 0, ttm = type->GetSubTypeCount(); tt < ttm; tt++) {
+                        asITypeInfo* pSubType = type->GetSubType(tt);
+                        str += String("class ") + pSubType->GetName() + (tt < ttm - 1 ? ", " : ">");
+                    }
+                    Log::WriteRaw(str);
+                }
+                Log::WriteRaw("\nclass " + typeName + "\n{\npublic:\n");
+                for (asUINT m = 0, mc = type->GetBehaviourCount(); m < mc; m++) {
+                    asEBehaviours bh;
+                    asIScriptFunction* pM = type->GetBehaviourByIndex(m, &bh);
+                    if (bh == asBEHAVE_CONSTRUCT || bh == asBEHAVE_DESTRUCT)
+                        Log::WriteRaw(String(pM->GetDeclaration(false, false, true)) + ";\n");
+                }
+                for (asUINT m = 0, mc = type->GetFactoryCount(); m < mc; m++) {
+                    asIScriptFunction* pM = type->GetFactoryByIndex(m);
+                    String declaration(pM->GetDeclaration(false, false, true));
+                    declaration = declaration.Substring(declaration.Find(' ') + 1);
+                    declaration.Replace("@", "&");
+                    Log::WriteRaw(declaration + ";\n");
+                }
+                if (typeName == "String")
+                    Log::WriteRaw("String(const char*);\n");
             }
 
             unsigned methods = type->GetMethodCount();
