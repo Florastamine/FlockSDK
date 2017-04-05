@@ -237,6 +237,8 @@ static void RegisterImage(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Image", "Color GetPixelBilinear(float, float) const", asMETHODPR(Image, GetPixelBilinear, (float, float) const, Color), asCALL_THISCALL);
     engine->RegisterObjectMethod("Image", "Color GetPixelTrilinear(float, float, float) const", asMETHODPR(Image, GetPixelTrilinear, (float, float, float) const, Color), asCALL_THISCALL);
     engine->RegisterObjectMethod("Image", "int get_width() const", asMETHOD(Image, GetWidth), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Image", "void SetAlpha(float)", asMETHOD(Image, SetAlpha), asCALL_THISCALL); 
+    engine->RegisterObjectMethod("Image", "float GetAlpha()", asMETHOD(Image, GetAlpha), asCALL_THISCALL); 
     engine->RegisterObjectMethod("Image", "int get_height() const", asMETHOD(Image, GetHeight), asCALL_THISCALL);
     engine->RegisterObjectMethod("Image", "int get_depth() const", asMETHOD(Image, GetDepth), asCALL_THISCALL);
     engine->RegisterObjectMethod("Image", "uint get_components() const", asMETHOD(Image, GetComponents), asCALL_THISCALL);

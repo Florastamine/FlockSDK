@@ -107,6 +107,8 @@ public:
     /// Save the image to a file. Format of the image is determined by file extension. JPG is saved with maximum quality.
     virtual bool SaveFile(const String& fileName) const;
 
+    /// Set alpha. 
+    void SetAlpha(float f); 
     /// Set 2D size and number of color components. Old image data will be destroyed and new data is undefined. Return true if successful.
     bool SetSize(int width, int height, unsigned components);
     /// Set 3D size and number of color components. Old image data will be destroyed and new data is undefined. Return true if successful.
@@ -162,6 +164,9 @@ public:
     Color GetPixelBilinear(float x, float y) const;
     /// Return a trilinearly sampled 3D pixel color. X, Y and Z have the range 0-1.
     Color GetPixelTrilinear(float x, float y, float z) const;
+
+    /// Return alpha. 
+    float GetAlpha() const;
 
     /// Return width.
     int GetWidth() const { return width_; }

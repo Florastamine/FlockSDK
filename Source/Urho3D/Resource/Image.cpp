@@ -2140,4 +2140,30 @@ void Image::FreeImageData(unsigned char* pixelData)
     stbi_image_free(pixelData);
 }
 
+float Image::GetAlpha() const 
+{
+    return components_ == 4 ? GetPixel(0, 0, 0).a_ : 1.0f; 
+}
+
+void Image::SetAlpha(float f) 
+{
+    if (components_ == 4)
+    {
+        int size_x = GetWidth(); 
+        int size_y = GetHeight(); 
+
+        f = Clamp(f, 0.0f, 1.0f); 
+
+        for (int i = 0; i < size_x; ++i) 
+        {
+            for(int j = 0; j < size_y; ++j) 
+            {
+                Color c = GetPixel(i, j, 0); 
+                c.a_ = f; /* e */ 
+                SetPixelInt(i, j, 0, c.ToUInt()); 
+            }
+        }
+    }
+}
+
 }

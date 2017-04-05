@@ -32,6 +32,7 @@ class Image : public Resource
     bool Resize(int width, int height);
     void Clear(const Color& color);
     void ClearInt(unsigned uintColor);
+    void SetAlpha(float f); 
     bool SaveBMP(const String fileName) const;
     bool SavePNG(const String fileName) const;
     bool SaveTGA(const String fileName) const;
@@ -47,6 +48,7 @@ class Image : public Resource
     int GetWidth() const;
     int GetHeight() const;
     int GetDepth() const;
+    float GetAlpha() const; 
     unsigned GetComponents() const;
     bool IsCompressed() const;
     CompressedFormat GetCompressedFormat() const;
