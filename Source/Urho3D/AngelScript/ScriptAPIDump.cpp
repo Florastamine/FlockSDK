@@ -326,7 +326,17 @@ void Script::DumpAPI(DumpMode mode, const String& sourceTree)
                 "#define uint8 unsigned char\n"
                 "#define uint16 unsigned short\n"
                 "#define uint64 unsigned long\n"
-                "#define null 0\n");
+                "#define null 0\n"
+                "#define in\n"
+                "#define out\n"
+                "#define inout\n"
+                "#define is ==\n"
+                "#define interface struct\n"
+                "#define class struct\n"
+                "#define cast reinterpret_cast\n"
+                "#define mixin\n"
+                "#define funcdef\n"
+            );
 
     unsigned types = scriptEngine_->GetObjectTypeCount();
     Vector<Pair<String, unsigned> > sortedTypes;
@@ -424,7 +434,16 @@ void Script::DumpAPI(DumpMode mode, const String& sourceTree)
                     ExtractPropertyInfo(methodName, declaration, propertyInfos);
                 else
                 {
-                    // Sanitate the method name. \todo For now, skip the operators
+                    // Sanitate the method name. For some operators fix name
+                    if (declaration.Contains("::op")) {
+                        declaration.Replace("::opEquals(", "::operator==(");
+                        declaration.Replace("::opAssign(", "::operator=(");
+                        declaration.Replace("::opAddAssign(", "::operator+=(");
+                        declaration.Replace("::opAdd(", "::operator+(");
+                        declaration.Replace("::opCmp(", "::operator<(");
+                        declaration.Replace("::opPreInc(", "::operator++(");
+                        declaration.Replace("::opPostInc()", "::operator++(int)");
+                    }
                     if (!declaration.Contains("::op"))
                     {
                         String prefix(typeName + "::");
