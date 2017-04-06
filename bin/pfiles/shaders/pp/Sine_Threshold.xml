@@ -1,0 +1,7 @@
+<renderpath>
+    <command type="quad" tag="Sine_Threshold" vs="Sine_Threshold" ps="Sine_Threshold" psdefines="COMPILEPS" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="STScreenWidth" value="1366.0" />
+        <parameter name="STScreenHeight" value="768.0" />
+    </command>
+</renderpath>

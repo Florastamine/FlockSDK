@@ -1,0 +1,7 @@
+<renderpath>
+    <command type="quad" tag="C64" vs="C64" ps="C64" psdefines="COMPILEPS" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="C64ScreenWidth" value="1366.0" />
+        <parameter name="C64ScreenHeight" value="768.0" />
+    </command>
+</renderpath>

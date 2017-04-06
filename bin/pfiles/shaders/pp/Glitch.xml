@@ -1,0 +1,8 @@
+<renderpath>
+    <command type="quad" tag="Glitch" vs="Glitch" ps="Glitch" psdefines="COMPILEPS" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <parameter name="GlitchScreenWidth" value="1366.0" />
+        <parameter name="GlitchScreenHeight" value="768.0" />
+        <parameter name="Glitchdt" value="1.0" />
+    </command>
+</renderpath>
