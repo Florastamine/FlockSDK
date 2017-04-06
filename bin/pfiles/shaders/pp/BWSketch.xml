@@ -1,0 +1,9 @@
+<renderpath>
+    <command type="quad" tag="BWSketch" vs="BWSketch" ps="BWSketch" psdefines="COMPILEPS PERFORM_DISTORT PERFORM_INVERT" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <texture unit="normal" name="textures/fx/tex16.png" />
+        <parameter name="BWSketchScreenWidth" value="1366.0" />
+        <parameter name="BWSketchScreenHeight" value="768.0" />
+        <parameter name="BWSketchdt" value="1.0" />
+    </command>
+</renderpath>

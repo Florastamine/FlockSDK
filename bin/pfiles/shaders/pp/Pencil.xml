@@ -1,0 +1,12 @@
+<renderpath>
+    <command type="quad" tag="Pencil" vs="Pencil" ps="Pencil" psdefines="COMPILEPS" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <texture unit="normal" name="textures/fx/tex16.png" />
+        <parameter name="PencilScreenWidth" value="1366.0" />
+        <parameter name="PencilScreenHeight" value="768.0" />
+        <parameter name="Pencildt" value="1.0" />
+        <parameter name="EdgeColor" value="0.25 0.25 0.25 1.0" />
+        <parameter name="BackgroundColor" value="1.0 1.0 1.0 1.0" />
+        <parameter name="NoiseAmount" value="0.005" /> 
+    </command>
+</renderpath>
