@@ -1649,6 +1649,15 @@ bool ColorWheelBuildMenuSelectTypeColor()
         actions.Push(CreateContextMenuItem("Cancel", "HandleColorWheelMenu", "menuCancel"));
 
     }
+    else if (coloringComponent.typeName == "Text3D")
+    {
+        actions.Push(CreateContextMenuItem("Color", "HandleColorWheelMenu", "c"));
+        actions.Push(CreateContextMenuItem("Top left color", "HandleColorWheelMenu", "tl"));
+        actions.Push(CreateContextMenuItem("Top right color", "HandleColorWheelMenu", "tr"));
+        actions.Push(CreateContextMenuItem("Bottom left color", "HandleColorWheelMenu", "bl"));
+        actions.Push(CreateContextMenuItem("Bottom right color", "HandleColorWheelMenu", "br"));
+        actions.Push(CreateContextMenuItem("Cancel", "HandleColorWheelMenu", "menuCancel"));
+    }
     else if (coloringComponent.typeName == "StaticModel")
     {
         actions.Push(CreateContextMenuItem("Diffuse color", "HandleColorWheelMenu", "menuDiffuseColor"));
@@ -1664,6 +1673,24 @@ bool ColorWheelBuildMenuSelectTypeColor()
         actions.Push(CreateContextMenuItem("Fog color", "HandleColorWheelMenu", "menuFogColor"));
 
         actions.Push(CreateContextMenuItem("Cancel", "HandleColorWheelMenu", "menuCancel"));
+    }
+    else if (coloringComponent.typeName == "Text3D") 
+    {
+        Text3D@ txt = cast<Text3D>(coloringComponent);
+        if (txt !is null) 
+        {
+            if (coloringPropertyName == "c")
+                txt.color = c;
+            else if (coloringPropertyName == "tl") 
+                txt.colors[C_TOPLEFT] = c;
+            else if (coloringPropertyName == "tr") 
+                txt.colors[C_TOPRIGHT] = c;
+            else if (coloringPropertyName == "bl") 
+                txt.colors[C_BOTTOMLEFT] = c;
+            else if (coloringPropertyName == "br") 
+                txt.colors[C_BOTTOMRIGHT] = c;
+            attributesDirty = true;
+        }
     }
 
     if (actions.length > 0) {
