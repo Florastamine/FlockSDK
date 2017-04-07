@@ -22,7 +22,7 @@
 
 #pragma once 
 
-#include <Urho3D/Engine/Application.h>
+#include <Urho3D/Engine/Application.h> 
 
 namespace Downpour {
     class DownpourBase : public Urho3D::Application {
@@ -38,7 +38,7 @@ namespace Downpour {
             int argc_;
             Urho3D::String argv_;
             Urho3D::String moduleName_;
-            Urho3D::SharedPtr<Urho3D::ScriptFile> moduleEditorPtr_;
+            Urho3D::SharedPtr<Urho3D::LuaScript> moduleEditorPtr_;
         private:
             void HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
             void HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
@@ -51,7 +51,7 @@ namespace Downpour {
     inline const char *GetEditorBootArg() { return("--run-editor"); }
     inline const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
     inline const char *GetCompiledScriptLocation() { return("pfiles/core-main.dcs"); }
-    inline const char *GetSDKLocation() { return("pfiles/development/SDK_editor.as"); } 
+    inline const char *GetSDKLocation() { return("pfiles/development/SDK_editor.lua"); } 
     inline const char *GetCompiledScriptExtension() { return (".dcs"); } 
     inline const char *GetScriptExtension() { return(".lua"); } 
 };

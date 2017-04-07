@@ -46,7 +46,7 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
 endif () 
 
 # Add targets
-foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
+foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 

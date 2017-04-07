@@ -28,9 +28,6 @@ generated/
 *.vs?
 *.ps?
 
-# Compiled AngelScript
-*.asc
-
 # Eclipse project settings
 /.*project
 /.settings
