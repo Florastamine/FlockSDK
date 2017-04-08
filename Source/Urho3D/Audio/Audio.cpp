@@ -28,7 +28,7 @@
 #include "../Audio/SoundSource3D.h"
 #include "../Core/Context.h"
 #include "../Core/CoreEvents.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../Core/Profiler.h"
 #include "../IO/Log.h"
 

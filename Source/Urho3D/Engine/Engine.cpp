@@ -26,7 +26,7 @@
 #include "../Core/Context.h"
 #include "../Core/CoreEvents.h"
 #include "../Core/EventProfiler.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../Core/WorkQueue.h"
 #include "../Engine/Console.h"
 #include "../Engine/DebugHud.h"

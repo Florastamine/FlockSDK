@@ -22,7 +22,7 @@
 
 #include "../Precompiled.h"
 
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../IO/FileSystem.h"
 
 #include <cstdio>

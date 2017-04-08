@@ -24,7 +24,7 @@
 
 #include "../Core/CoreEvents.h"
 #include "../Core/Context.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../IO/Log.h"
 #include "../IO/MemoryBuffer.h"
 #include "../LuaScript/LuaFile.h"

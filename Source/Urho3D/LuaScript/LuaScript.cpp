@@ -23,7 +23,7 @@
 #include "../Precompiled.h"
 
 #include "../Core/CoreEvents.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../Core/Profiler.h"
 #include "../Engine/EngineEvents.h"
 #include "../IO/File.h"

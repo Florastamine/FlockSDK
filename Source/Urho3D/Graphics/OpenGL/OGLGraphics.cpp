@@ -24,7 +24,7 @@
 
 #include "../../Core/Context.h"
 #include "../../Core/Mutex.h"
-#include "../../Core/ProcessUtils.h"
+#include "../../Core/Platform.h"
 #include "../../Core/Profiler.h"
 #include "../../Graphics/ConstantBuffer.h"
 #include "../../Graphics/Graphics.h"

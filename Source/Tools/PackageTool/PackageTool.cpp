@@ -22,7 +22,7 @@
 
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Container/ArrayPtr.h>
-#include <Urho3D/Core/ProcessUtils.h>
+#include <Urho3D/Core/Platform.h>
 #include <Urho3D/IO/File.h>
 #include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/IO/PackageFile.h>
