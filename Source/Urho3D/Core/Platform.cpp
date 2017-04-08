@@ -29,19 +29,18 @@
 #include <fcntl.h>
 
 #if !defined(__linux__) 
-#include <LibCpuId/libcpuid.h>
+    #include <LibCpuId/libcpuid.h>
 #endif
 
 #ifdef _WIN32
-#include <windows.h>
-#include <io.h>
+    #include <windows.h>
+    #include <io.h>
 #else
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #if defined(__i386__)
 // From http://stereopsis.com/FPU.html
-
 #define FPU_CW_PREC_MASK        0x0300
 #define FPU_CW_PREC_SINGLE      0x0000
 #define FPU_CW_PREC_DOUBLE      0x0200
@@ -66,15 +65,16 @@ inline void SetFPUState(unsigned control)
 #endif
 
 #ifndef MINI_URHO
-#include <SDL/SDL.h>
+    #include <SDL/SDL.h>
 #endif 
 
 namespace Urho3D
 {
 
 #ifdef _WIN32
-static bool consoleOpened = false;
+    static bool consoleOpened = false;
 #endif
+
 static String currentLine;
 static Vector<String> arguments;
 
@@ -120,8 +120,7 @@ static void GetCPUData(struct CpuCoreCount* data)
         }
     }
 }
-
-#elif !defined(__EMSCRIPTEN__)
+#elif defined(_WIN32) 
 static void GetCPUData(struct cpu_id_t* data)
 {
     if (cpu_identify(0, data) < 0)
@@ -161,7 +160,7 @@ void ErrorExit(const String& message, int exitCode)
 
 void OpenConsoleWindow()
 {
-#ifdef _WIN32
+#if defined(_WIN32)
     if (consoleOpened)
         return;
 
@@ -176,7 +175,7 @@ void OpenConsoleWindow()
 
 void PrintUnicode(const String& str, bool error)
 {
-#ifdef _WIN32
+#if defined(_WIN32)
     // If the output stream has been redirected, use fprintf instead of WriteConsoleW,
     // though it means that proper Unicode output will not work
     FILE* out = error ? stderr : stdout;
@@ -191,7 +190,7 @@ void PrintUnicode(const String& str, bool error)
         DWORD charsWritten;
         WriteConsoleW(stream, strW.CString(), strW.Length(), &charsWritten, 0);
     }
-#else
+#elif defined(__linux__)
     fprintf(error ? stderr : stdout, "%s", str.CString());
 #endif
 }
@@ -286,7 +285,7 @@ const Vector<String>& GetArguments()
 String GetConsoleInput()
 {
     String ret;
-#ifdef _WIN32
+#if defined(_WIN32)
     HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
     if (input == INVALID_HANDLE_VALUE || output == INVALID_HANDLE_VALUE)
@@ -335,7 +334,7 @@ String GetConsoleInput()
             }
         }
     }
-#else 
+#elif defined(__linux__)
     int flags = fcntl(STDIN_FILENO, F_GETFL);
     fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
     for (;;)
@@ -368,7 +367,7 @@ unsigned GetNumPhysicalCPUs()
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numPhysicalCores_;
-#else
+#elif defined(_WIN32) 
     struct cpu_id_t data;
     GetCPUData(&data);
     return (unsigned)data.num_cores;
@@ -381,7 +380,7 @@ unsigned GetNumLogicalCPUs()
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numLogicalCores_;
-#else
+#elif defined(_WIN32) 
     struct cpu_id_t data;
     GetCPUData(&data);
     return (unsigned)data.num_logical_cpus;
