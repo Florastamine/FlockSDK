@@ -23,7 +23,7 @@
 #include "../Precompiled.h"
 
 #include "../AngelScript/APITemplates.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../Core/Spline.h"
 
 namespace Urho3D
@@ -798,7 +798,7 @@ static CScriptArray* GetArgumentsToArray()
     return VectorToArray<String>(GetArguments(), "Array<String>");
 }
 
-static void RegisterProcessUtils(asIScriptEngine* engine)
+static void RegisterPlatform(asIScriptEngine* engine)
 {
     engine->RegisterGlobalFunction("void ErrorDialog(const String&in, const String&in)", asFUNCTION(ErrorDialog), asCALL_CDECL);
     engine->RegisterGlobalFunction("void OpenConsoleWindow()", asFUNCTION(OpenConsoleWindow), asCALL_CDECL);
@@ -1019,7 +1019,7 @@ void RegisterCoreAPI(asIScriptEngine* engine)
     RegisterVariant(engine);
     RegisterSpline(engine);
     RegisterStringUtils(engine);
-    RegisterProcessUtils(engine);
+    RegisterPlatform(engine);
     RegisterObject(engine);
     RegisterTimer(engine);
 }
