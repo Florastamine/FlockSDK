@@ -27,7 +27,7 @@
 #include "../IO/FileSystem.h"
 #include "../IO/Log.h"
 #include "../LuaScript/LuaFile.h"
-#include "../Core/ProcessUtils.h"
+#include "../Core/Platform.h"
 #include "../IO/Serializer.h"
 
 extern "C"

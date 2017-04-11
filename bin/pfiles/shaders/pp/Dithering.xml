@@ -1,0 +1,8 @@
+<renderpath>
+    <command type="quad" tag="Dithering" vs="Dithering" ps="Dithering" psdefines="COMPILEPS PERFORM_DISTORT PERFORM_INVERT" output="viewport">
+        <texture unit="diffuse" name="viewport" />
+        <texture unit="normal" name="textures/fx/tex16.png" />
+        <parameter name="DitheringScreenWidth" value="1366.0" />
+        <parameter name="DitheringScreenHeight" value="768.0" />
+    </command>
+</renderpath>
