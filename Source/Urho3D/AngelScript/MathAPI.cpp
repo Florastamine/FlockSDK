@@ -447,8 +447,6 @@ static void RegisterVector3(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("Vector3 VectorFloor(const Vector3&in)", asFUNCTIONPR(VectorFloor, (const Vector3&), Vector3), asCALL_CDECL);
     engine->RegisterGlobalFunction("Vector3 VectorRound(const Vector3&in)", asFUNCTIONPR(VectorFloor, (const Vector3&), Vector3), asCALL_CDECL);
     engine->RegisterGlobalFunction("Vector3 VectorCeil(const Vector3&in)", asFUNCTIONPR(VectorFloor, (const Vector3&), Vector3), asCALL_CDECL);
-<<<<<<< HEAD
-=======
     engine->RegisterGlobalFunction("IntVector3 VectorFloorToInt(const Vector3&in)", asFUNCTIONPR(VectorFloorToInt, (const Vector3&), IntVector3), asCALL_CDECL);
     engine->RegisterGlobalFunction("IntVector3 VectorRoundToInt(const Vector3&in)", asFUNCTIONPR(VectorRoundToInt, (const Vector3&), IntVector3), asCALL_CDECL);
     engine->RegisterGlobalFunction("IntVector3 VectorCeilToInt(const Vector3&in)", asFUNCTIONPR(VectorCeilToInt, (const Vector3&), IntVector3), asCALL_CDECL);
@@ -463,7 +461,6 @@ static void RegisterVector3(asIScriptEngine* engine)
     engine->RegisterGlobalProperty("const Vector3 BACK", (void*)&Vector3::BACK);
     engine->RegisterGlobalProperty("const Vector3 ONE", (void*)&Vector3::ONE);
     engine->SetDefaultNamespace("");
->>>>>>> 150c4fb26... Export some consts to AngelScript
 }
 
 static void ConstructVector4(Vector4* ptr)
