@@ -20,6 +20,8 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
+
 #include "../Precompiled.h"
 
 #include "../AngelScript/APITemplates.h"
@@ -97,3 +99,4 @@ void RegisterIKAPI(asIScriptEngine* engine)
 }
 
 }
+#endif 
