@@ -2079,7 +2079,7 @@ void Node::UpdateWorldTransform() const
 void Node::RemoveChild(Vector<SharedPtr<Node> >::Iterator i)
 {
     // Send change event. Do not send when already being destroyed
-    Node* child = *i;
+    SharedPtr<Node> child(*i);
 
     if (Refs() > 0 && scene_)
     {
