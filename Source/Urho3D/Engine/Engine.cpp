@@ -45,6 +45,11 @@
 #endif
 #include "../Database/Database.h"
 #include "../Physics/PhysicsWorld.h"
+<<<<<<< HEAD
+=======
+#include "../Physics/RaycastVehicle.h"
+#endif
+>>>>>>> c145b3e03... Merge remote-tracking branch 'slapin/raycast-vehicle'
 #include "../Resource/ResourceCache.h"
 #include "../Resource/Localization.h"
 #include "../Scene/Scene.h"
@@ -98,7 +103,9 @@ Engine::Engine(Context* context) :
 #ifdef URHO3D_IK
     RegisterIKLibrary(context_);
 #endif
+    
     RegisterPhysicsLibrary(context_);
+    RegisterRaycastVehicleLibrary(context_);
 
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);
