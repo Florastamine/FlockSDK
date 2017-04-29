@@ -105,7 +105,11 @@ Engine::Engine(Context* context) :
 #endif
     
     RegisterPhysicsLibrary(context_);
+<<<<<<< HEAD
     RegisterRaycastVehicleLibrary(context_);
+=======
+#endif
+>>>>>>> 13cfad66e... RaycastVehicle code / comments formatting and AngelScript fix. RegisterRaycastVehicleLibrary function removed and class registration performed as part of Physics library initialization instead.
 
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);
