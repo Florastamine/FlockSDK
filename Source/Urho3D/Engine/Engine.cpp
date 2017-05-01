@@ -99,9 +99,8 @@ Engine::Engine(Context* context) :
 #ifdef URHO3D_IK
     RegisterIKLibrary(context_);
 #endif
-    
+
     RegisterPhysicsLibrary(context_);
-    RegisterRaycastVehicleLibrary(context_);
 
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);
