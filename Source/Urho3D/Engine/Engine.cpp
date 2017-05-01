@@ -45,11 +45,7 @@
 #endif
 #include "../Database/Database.h"
 #include "../Physics/PhysicsWorld.h"
-<<<<<<< HEAD
-=======
 #include "../Physics/RaycastVehicle.h"
-#endif
->>>>>>> c145b3e03... Merge remote-tracking branch 'slapin/raycast-vehicle'
 #include "../Resource/ResourceCache.h"
 #include "../Resource/Localization.h"
 #include "../Scene/Scene.h"
@@ -105,11 +101,7 @@ Engine::Engine(Context* context) :
 #endif
     
     RegisterPhysicsLibrary(context_);
-<<<<<<< HEAD
     RegisterRaycastVehicleLibrary(context_);
-=======
-#endif
->>>>>>> 13cfad66e... RaycastVehicle code / comments formatting and AngelScript fix. RegisterRaycastVehicleLibrary function removed and class registration performed as part of Physics library initialization instead.
 
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationLibrary(context_);
