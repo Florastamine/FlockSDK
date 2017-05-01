@@ -1030,7 +1030,7 @@ void CreateDebugHud()
 void CenterDialog(UIElement@ element)
 {
     IntVector2 size = element.size;
-    element.SetPosition((graphics.width - size.x) / 2, (graphics.height - size.y) / 2);
+    element.SetPosition((ui.root.width - size.x) / 2, (ui.root.height - size.y) / 2);
 }
 
 void CreateContextMenu()
@@ -1674,24 +1674,6 @@ bool ColorWheelBuildMenuSelectTypeColor()
 
         actions.Push(CreateContextMenuItem("Cancel", "HandleColorWheelMenu", "menuCancel"));
     }
-    else if (coloringComponent.typeName == "Text3D") 
-    {
-        Text3D@ txt = cast<Text3D>(coloringComponent);
-        if (txt !is null) 
-        {
-            if (coloringPropertyName == "c")
-                txt.color = c;
-            else if (coloringPropertyName == "tl") 
-                txt.colors[C_TOPLEFT] = c;
-            else if (coloringPropertyName == "tr") 
-                txt.colors[C_TOPRIGHT] = c;
-            else if (coloringPropertyName == "bl") 
-                txt.colors[C_BOTTOMLEFT] = c;
-            else if (coloringPropertyName == "br") 
-                txt.colors[C_BOTTOMRIGHT] = c;
-            attributesDirty = true;
-        }
-    }
 
     if (actions.length > 0) {
         ActivateContextMenu(actions);
@@ -1825,6 +1807,24 @@ void HandleWheelChangeColor(StringHash eventType, VariantMap& eventData)
                 }
 
                 attributesDirty = true;
+            }
+        }
+        else if (coloringComponent.typeName == "Text3D") 
+        {
+            Text3D@ txt = cast<Text3D>(coloringComponent);
+            if (txt !is null) 
+            {
+            if (coloringPropertyName == "c")
+                txt.color = c;
+            else if (coloringPropertyName == "tl") 
+                txt.colors[C_TOPLEFT] = c;
+            else if (coloringPropertyName == "tr") 
+                txt.colors[C_TOPRIGHT] = c;
+            else if (coloringPropertyName == "bl") 
+                txt.colors[C_BOTTOMLEFT] = c;
+            else if (coloringPropertyName == "br") 
+                txt.colors[C_BOTTOMRIGHT] = c;
+            attributesDirty = true;
             }
         }
     }

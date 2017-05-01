@@ -51,17 +51,18 @@ mat3 GetNormalMatrix(mat4 modelMatrix)
 vec2 GetTexCoord(vec2 texCoord)
 {
     return vec2(dot(texCoord, cUOffset.xy) + cUOffset.w, dot(texCoord, cVOffset.xy) + cVOffset.w);
-}
+} 
 
 vec4 GetClipPos(vec3 worldPos)
 {
     vec4 ret = vec4(worldPos, 1.0) * cViewProj;
     // While getting the clip coordinate, also automatically set gl_ClipVertex for user clip planes
-    #if !defined(GL3)
-        gl_ClipVertex = ret;
-    #elif defined(GL3)
-        gl_ClipDistance[0] = dot(cClipPlane, ret);
-    #endif
+    gl_ClipDistance[0] = dot(cClipPlane, ret);
+
+    #if defined(__COMPILE_FOR_VIEW_RENDERABLES__) 
+        ret.z *= 0.01;
+    #endif 
+
     return ret;
 }
 

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2016 the Urho3D project.
+// Copyright (c) 2008-2017 the Urho3D project.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
 //
 
 #include "../Precompiled.h"
-
 
 #include "../Core/Context.h"
 #include "../Core/Profiler.h"
@@ -72,7 +71,7 @@ struct TileCompressor : public dtTileCacheCompressor
     virtual dtStatus compress(const unsigned char* buffer, const int bufferSize,
         unsigned char* compressed, const int /*maxCompressedSize*/, int* compressedSize)
     {
-        *compressedSize = LZ4_compress((const char*)buffer, (char*)compressed, bufferSize);
+        *compressedSize = LZ4_compress_default((const char*)buffer, (char*)compressed, bufferSize, LZ4_compressBound(bufferSize));
         return DT_SUCCESS;
     }
 
