@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #include "IK.h"
 #include "IKConstraint.h"
 #include "IKEffector.h"
@@ -40,3 +41,4 @@ void RegisterIKLibrary(Context* context)
 }
 
 } // namespace Urho3D
+#endif 

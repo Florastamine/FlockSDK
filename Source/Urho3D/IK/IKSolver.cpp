@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #include "../IK/IKSolver.h"
 #include "../IK/IKConstraint.h"
 #include "../IK/IKEvents.h"
@@ -596,3 +597,4 @@ void IKSolver::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 }
 
 } // namespace Urho3D
+#endif 

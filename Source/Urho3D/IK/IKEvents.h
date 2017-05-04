@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #pragma once
 
 #include "../Core/Object.h"
@@ -34,3 +35,4 @@ URHO3D_EVENT(E_IKEFFECTORTARGETCHANGED, IKEffectorTargetChanged)
 }
 
 }
+#endif 

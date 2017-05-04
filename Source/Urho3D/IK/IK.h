@@ -38,6 +38,7 @@
  *  - Apply bullet constraints to joints.
  */
 
+#ifdef URHO3D_IK
 namespace Urho3D
 {
 class Context;
@@ -46,3 +47,4 @@ class Context;
 void RegisterIKLibrary(Context* context);
 
 } 
+#endif 
