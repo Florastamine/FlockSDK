@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #pragma once
 
 #include "../Scene/Component.h"
@@ -252,3 +253,4 @@ private:
 };
 
 } // namespace Urho3D
+#endif 

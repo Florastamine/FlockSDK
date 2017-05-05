@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #include "../IK/IKConverters.h"
 
 namespace Urho3D {
@@ -58,3 +59,4 @@ Quaternion QuatIK2Urho(const quat_t* ik)
 }
 
 }
+#endif 

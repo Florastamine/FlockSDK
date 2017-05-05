@@ -1246,7 +1246,7 @@ void UpdateStats(float timeStep)
 
     if(viewportMode != VIEWPORT_COMPACT)
     {
-        if (graphics.width >= renderStatsText.size.x + 45)
+        if (ui.root.width >= renderStatsText.size.x + 45)
         {
             SetupStatsBarText(renderStatsText, font, -4, 64, HA_RIGHT, VA_TOP);
             SetupStatsBarText(modelInfoText, font, 35, 88, HA_LEFT, VA_TOP);

@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #include "../IK/IKEffector.h"
 #include "../IK/IKSolver.h"
 #include "../IK/IKConverters.h"
@@ -340,3 +341,4 @@ void IKEffector::SetIKSolver(IKSolver* solver)
 }
 
 } // namespace Urho3D
+#endif 

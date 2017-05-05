@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #pragma once
 
 #include "../Math/Vector3.h"
@@ -39,3 +40,4 @@ quat_t QuatUrho2IK(const Quaternion& urho);
 Quaternion QuatIK2Urho(const quat_t* ik);
 
 }
+#endif 

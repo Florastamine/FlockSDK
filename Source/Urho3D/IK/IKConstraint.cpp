@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 //
 
+#ifdef URHO3D_IK
 #include "../IK/IK.h"
 #include "../IK/IKConstraint.h"
 #include "../Core/Context.h"
@@ -118,3 +119,4 @@ void IKConstraint::SetIKNode(ik_node_t* node)
 }
 
 } // namespace Urho3D
+#endif 
