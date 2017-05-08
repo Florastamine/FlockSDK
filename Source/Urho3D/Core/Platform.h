@@ -66,4 +66,6 @@ URHO3D_API unsigned GetNumPhysicalCPUs();
 /// Return the number of logical CPUs (different from physical if hyperthreading is used.)
 URHO3D_API unsigned GetNumLogicalCPUs();
 
+URHO3D_API unsigned long long GetTotalMemory(); 
+
 }

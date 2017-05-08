@@ -35,8 +35,14 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <io.h>
+
+    #ifdef __MINGW32__ 
+        extern "C"
+        WINBASEAPI BOOL WINAPI GetPhysicallyInstalledSystemMemory(PULONGLONG);
+    #endif 
 #else
     #include <unistd.h>
+    #include <sys/sysinfo.h>
 #endif
 
 #if defined(__i386__)
@@ -385,6 +391,21 @@ unsigned GetNumLogicalCPUs()
     GetCPUData(&data);
     return (unsigned)data.num_logical_cpus;
 #endif
+}
+
+unsigned long long GetTotalMemory()
+{
+#if defined(__linux__)
+    struct sysinfo s;
+    if(sysinfo(&s) != -1)
+        return s.totalram; 
+#elif defined(_WIN32)
+    unsigned long long l; 
+    if(GetPhysicallyInstalledSystemMemory(&l))
+        return l;
+#else 
+#endif 
+    return 0ull;
 }
 
 }
