@@ -35,14 +35,14 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <io.h>
-
-    #ifdef __MINGW32__ 
-        extern "C"
-        WINBASEAPI BOOL WINAPI GetPhysicallyInstalledSystemMemory(PULONGLONG);
-    #endif 
+    #include <Lmcons.h> // For UNLEN. 
 #else
+    #include <pwd.h> 
     #include <unistd.h>
     #include <sys/sysinfo.h>
+    #include <sys/utsname.h>
+
+    #include <limits.h> // For HOST_NAME_MAX. 
 #endif
 
 #if defined(__i386__)
@@ -409,20 +409,87 @@ unsigned long long GetTotalMemory()
     return 0ull;
 }
 
-String GetUserName() 
+String GetLoginName() 
 {
 #if defined(__linux__)
-    char name[33]; 
-    if(getlogin_r(name, 33) == 0) 
-        return name; 
+    struct passwd *p = getpwuid(getuid());
+    if (p) 
+        return p->pw_name;
+    else 
+        return "(?)"; 
 #elif defined(_WIN32)
     char name[UNLEN + 1];
-    DWORD len = UNLEN + 1;
+    DWORD len = UNLEN + 1; 
     if(GetUserName(name, &len)) 
         return name; 
 #else 
 #endif 
     return String::EMPTY;
+}
+
+String GetHostName() 
+{
+#if defined(__linux__)
+    char buffer[HOST_NAME_MAX + 1]; 
+    if(gethostname(buffer, HOST_NAME_MAX + 1) == 0) 
+        return buffer; 
+#elif defined(_WIN32)
+    char buffer[MAX_COMPUTERNAME_LENGTH + 1]; 
+    DWORD len = MAX_COMPUTERNAME_LENGTH + 1; 
+    if(GetComputerName(buffer, &len))
+        return buffer; 
+#else 
+#endif 
+    return String::EMPTY; 
+}
+
+#if defined(_WIN32)
+#define STATUS_SUCCESS (0x00000000)
+typedef NTSTATUS       (WINAPI *RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
+
+static void GetOS(RTL_OSVERSIONINFOW *r)
+{
+    HMODULE m = GetModuleHandle("ntdll.dll");
+    if (m)
+    {
+        RtlGetVersionPtr fPtr = (RtlGetVersionPtr) GetProcAddress(m, "RtlGetVersion");
+        if (r && fPtr && fPtr(r) == STATUS_SUCCESS)
+            r->dwOSVersionInfoSize = sizeof *r; 
+    }
+}
+#endif 
+
+String GetOSVersion() 
+{
+#if defined(__linux__)
+    struct utsname u; 
+    if(uname(&u) == 0)
+        return String(u.sysname) + " " + u.release; 
+#elif defined(_WIN32)
+    RTL_OSVERSIONINFOW r;
+    GetOS(&r); 
+    // https://msdn.microsoft.com/en-us/library/windows/desktop/ms724832(v=vs.85).aspx
+    if(r.dwMajorVersion == 5 && r.dwMinorVersion == 0) 
+        return "Windows 2000"; 
+    else if(r.dwMajorVersion == 5 && r.dwMinorVersion == 1) 
+        return "Windows XP"; 
+    else if(r.dwMajorVersion == 5 && r.dwMinorVersion == 2) 
+        return "Windows XP 64-Bit Edition/Windows Server 2003/Windows Server 2003 R2"; 
+    else if(r.dwMajorVersion == 6 && r.dwMinorVersion == 0) 
+        return "Windows Vista/Windows Server 2008"; 
+    else if(r.dwMajorVersion == 6 && r.dwMinorVersion == 1) 
+        return "Windows 7/Windows Server 2008 R2"; 
+    else if(r.dwMajorVersion == 6 && r.dwMinorVersion == 2) 
+        return "Windows 8/Windows Server 2012";
+    else if(r.dwMajorVersion == 6 && r.dwMinorVersion == 3) 
+        return "Windows 8.1/Windows Server 2012 R2"; 
+    else if(r.dwMajorVersion == 10 && r.dwMinorVersion == 0) 
+        return "Windows 10/Windows Server 2016"; 
+    else 
+        return "Windows Unidentified"; 
+#else 
+#endif 
+    return String::EMPTY; 
 }
 
 }

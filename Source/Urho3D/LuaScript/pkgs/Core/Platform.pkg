@@ -14,4 +14,6 @@ unsigned GetNumPhysicalCPUs();
 unsigned GetNumLogicalCPUs();
 unsigned long long GetTotalMemory(); 
 
-String GetUserName();
+String GetLoginName();
+String GetHostName(); 
+String GetOSVersion(); 

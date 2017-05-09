@@ -68,6 +68,10 @@ URHO3D_API unsigned GetNumLogicalCPUs();
 
 URHO3D_API unsigned long long GetTotalMemory(); 
 
-URHO3D_API String GetUserName();
+URHO3D_API String GetLoginName();
+
+URHO3D_API String GetHostName(); 
+
+URHO3D_API String GetOSVersion(); 
 
 }
