@@ -13,3 +13,5 @@ String GetPlatform();
 unsigned GetNumPhysicalCPUs();
 unsigned GetNumLogicalCPUs();
 unsigned long long GetTotalMemory(); 
+
+String GetUserName();

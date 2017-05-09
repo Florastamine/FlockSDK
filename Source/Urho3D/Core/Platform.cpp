@@ -408,4 +408,20 @@ unsigned long long GetTotalMemory()
     return 0ull;
 }
 
+String GetUserName() 
+{
+#if defined(__linux__)
+    char name[33]; 
+    if(getlogin_r(name, 33) == 0) 
+        return name; 
+#elif defined(_WIN32)
+    char name[UNLEN + 1];
+    DWORD len = UNLEN + 1;
+    if(GetUserName(name, &len)) 
+        return name; 
+#else 
+#endif 
+    return String::EMPTY;
+}
+
 }
