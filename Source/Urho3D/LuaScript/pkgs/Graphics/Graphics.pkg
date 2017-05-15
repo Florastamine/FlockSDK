@@ -84,7 +84,6 @@ class Graphics : public Object
 
     tolua_readonly tolua_property__is_set bool initialized;
     tolua_property__get_set String windowTitle;
-    tolua_readonly tolua_property__get_set String apiName;
     tolua_property__get_set IntVector2 windowPosition;
     tolua_readonly tolua_property__get_set int width;
     tolua_readonly tolua_property__get_set int height;
