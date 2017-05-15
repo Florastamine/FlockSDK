@@ -3120,5 +3120,4 @@ String Graphics::GetAPIVersion() const
 {
     return String("OpenGL ") + (const char *) glGetString(GL_VERSION) + " (GLSL " + (const char *) glGetString(GL_SHADING_LANGUAGE_VERSION) + ")"; 
 }
-
 }

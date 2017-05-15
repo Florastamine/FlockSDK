@@ -270,6 +270,9 @@ public:
     /// Return graphics API version.
     String GetAPIVersion() const; 
 
+    /// Returns the current graphics device running the game. 
+    String GetAdapterName() const; 
+
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 
