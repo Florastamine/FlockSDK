@@ -267,8 +267,8 @@ public:
     /// Return window title.
     const String& GetWindowTitle() const { return windowTitle_; }
 
-    /// Return graphics API name.
-    const String& GetApiName() const { return apiName_; }
+    /// Return graphics API version.
+    String GetAPIVersion() const; 
 
     /// Returns the current graphics device running the game. 
     String GetAdapterName() const; 
@@ -782,8 +782,6 @@ private:
     SharedPtr<ShaderPrecache> shaderPrecache_;
     /// Allowed screen orientations.
     String orientations_;
-    /// Graphics API name.
-    String apiName_;
 
     /// Pixel perfect UV offset.
     static const Vector2 pixelUVOffset;

@@ -231,8 +231,7 @@ Graphics::Graphics(Context* context_) :
     defaultTextureAnisotropy_(4),
     shaderPath_("shaders/glsl/"),
     shaderExtension_(".glsl"),
-    orientations_("LandscapeLeft LandscapeRight"),
-    apiName_("GL2")
+    orientations_("LandscapeLeft LandscapeRight")
 {
     SetTextureUnitMappings();
     ResetCachedState();
@@ -2346,7 +2345,6 @@ void Graphics::Restore()
         if (!forceGL2_ && GLEW_VERSION_3_2)
         {
             gl3Support = true;
-            apiName_ = "GL3";
 
             // Create and bind a vertex array object that will stay in use throughout
             unsigned vertexArrayObject;
@@ -2362,7 +2360,6 @@ void Graphics::Restore()
             }
 
             gl3Support = false;
-            apiName_ = "GL2";
         }
         else
         {
@@ -3117,6 +3114,11 @@ void Graphics::SetVertexAttribDivisor(unsigned location, unsigned divisor)
 String Graphics::GetAdapterName() const 
 {
     return String((const char *) (glGetString(GL_VENDOR))) + " " + (const char *) (glGetString(GL_RENDERER)); 
+}
+
+String Graphics::GetAPIVersion() const 
+{
+    return String("OpenGL ") + (const char *) glGetString(GL_VERSION) + " (GLSL " + (const char *) glGetString(GL_SHADING_LANGUAGE_VERSION) + ")"; 
 }
 
 }

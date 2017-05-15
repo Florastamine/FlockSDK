@@ -173,7 +173,7 @@ void DebugHud::Update()
             shadowQualityTexts[renderer->GetShadowQuality()],
             renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
             renderer->GetDynamicInstancing() ? "On" : "Off",
-            graphics->GetApiName().CString());
+            graphics->GetAPIVersion().CString());
 
         modeText_->SetText(mode);
     }
