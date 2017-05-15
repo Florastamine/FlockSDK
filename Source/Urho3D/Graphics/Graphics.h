@@ -270,6 +270,9 @@ public:
     /// Return graphics API name.
     const String& GetApiName() const { return apiName_; }
 
+    /// Returns the current graphics device running the game. 
+    String GetAdapterName() const; 
+
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 

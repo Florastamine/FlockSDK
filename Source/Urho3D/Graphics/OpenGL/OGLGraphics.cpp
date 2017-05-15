@@ -3114,4 +3114,9 @@ void Graphics::SetVertexAttribDivisor(unsigned location, unsigned divisor)
         glVertexAttribDivisorARB(location, divisor);
 }
 
+String Graphics::GetAdapterName() const 
+{
+    return String((const char *) (glGetString(GL_VENDOR))) + " " + (const char *) (glGetString(GL_RENDERER)); 
+}
+
 }
