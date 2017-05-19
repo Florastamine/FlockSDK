@@ -40,6 +40,7 @@
 #if defined(_WIN32)
     #include <windows.h>
     #include <io.h>
+    #include <shlobj.h>
     #if defined(__MINGW32__)
         #include <lmcons.h>
         #include <ntdef.h> 
@@ -611,6 +612,24 @@ String GetOSVersion()
 
         return version + " (Darwin kernel " + kernel_version[0] + "." + kernel_version[1] + "." + kernel_version[2] + ")"; 
     }
+#endif
+    return String::EMPTY; 
+}
+
+String GetHomePath()
+{
+#if (defined(__linux__) /* || defined(__APPLE__) */) && !defined(__ANDROID__) 
+    const char *c; 
+    if((c == getenv("HOME")) == NULL)
+    {
+        struct passwd *pwd = getpwuid(getuid());
+        c = (pwd != NULL) ? pwd->pw_dir : ""; 
+    }
+    return c; 
+#elif defined(_WIN32)
+    char path[MAX_PATH + 1];
+    if (SHGetSpecialFolderPathA(HWND_DESKTOP, path, CSIDL_DESKTOP, FALSE))
+        return String(path) + "\\"; 
 #endif
     return String::EMPTY; 
 }
