@@ -74,4 +74,6 @@ URHO3D_API String GetHostName();
 
 URHO3D_API String GetOSVersion(); 
 
+URHO3D_API String GetHomePath(); 
+
 }
