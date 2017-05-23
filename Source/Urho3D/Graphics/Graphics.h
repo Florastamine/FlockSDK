@@ -276,6 +276,12 @@ public:
     /// Returns the current graphics device's maximum texture size support. 
     unsigned GetGPUMaxTextureSize() const; 
 
+    /// Returns the number of OpenGL extensions that the current graphics device supports. 
+    unsigned GetNumSupportedExtensions() const; 
+
+    /// Returns a list of current graphics device's supported OpenGL extensions. 
+    String GetSupportedExtensions() const; 
+
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 

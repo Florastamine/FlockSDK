@@ -3129,4 +3129,21 @@ unsigned Graphics::GetGPUMaxTextureSize() const
     return (unsigned) s;
 }
 
+unsigned Graphics::GetNumSupportedExtensions() const
+{
+    GLint n; 
+    glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+    return (unsigned) n; 
+}
+
+String Graphics::GetSupportedExtensions() const
+{
+    auto n = GetNumSupportedExtensions();
+    String s; 
+    for(auto i = 0u; i < n; ++i)
+        s += reinterpret_cast<const char *>(glGetStringi(GL_EXTENSIONS, i)) + (i != n - 1 ? ";" : String::EMPTY); 
+    
+    return s;
+}
+
 }

@@ -63,6 +63,8 @@ class Graphics : public Object
     int GetMonitorCount() const;
     const String GetShaderCacheDir() const;
     unsigned GetGPUMaxTextureSize() const;
+    String GetSupportedExtensions() const;
+    unsigned GetNumSupportedExtensions() const;
 
     static unsigned GetAlphaFormat();
     static unsigned GetLuminanceFormat();
