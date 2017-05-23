@@ -383,7 +383,7 @@ String GetPlatform()
 #elif defined(__linux__)
     return "Linux";
 #else
-    return String::EMPTY;
+    return "(Unknown OS)"; 
 #endif
 }
 
@@ -492,7 +492,7 @@ String GetHostName()
     if (GetComputerName(buffer, &len))
         return buffer;
 #endif
-    return String::EMPTY; 
+    return "(?)"; 
 }
 
 #if defined(_WIN32)
@@ -537,7 +537,7 @@ String GetOSVersion()
     else if (r.dwMajorVersion == 10 && r.dwMinorVersion == 0) 
         return "Windows 10/Windows Server 2016"; 
     else 
-        return "Windows Unidentified";
+        return "Windows (unknown version)"
 #elif defined(__APPLE__)
     char kernel_r[256]; 
     size_t size = sizeof(kernel_r); 
@@ -613,7 +613,7 @@ String GetOSVersion()
         return version + " (Darwin kernel " + kernel_version[0] + "." + kernel_version[1] + "." + kernel_version[2] + ")"; 
     }
 #endif
-    return String::EMPTY; 
+    return "(Unknown OS version)"; 
 }
 
 String GetHomePath()
