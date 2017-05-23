@@ -158,7 +158,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Set amount of worker threads according to the available physical CPU cores. Using also hyperthreaded cores results in
     // unpredictable extra synchronization overhead. Also reserve one core for the main thread
-    unsigned numThreads = GetNumPhysicalCPUs() - 1;
+    unsigned numThreads = GetNumCPUCores() - 1;
     if (numThreads)
     {
         GetSubsystem<WorkQueue>()->CreateThreads(numThreads);

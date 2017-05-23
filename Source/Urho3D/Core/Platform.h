@@ -62,9 +62,9 @@ URHO3D_API String GetConsoleInput();
 /// Return the runtime platform identifier, one of "Windows", "Linux", "Mac OS X", "Android", "iOS", "Web" or "Raspberry Pi".
 URHO3D_API String GetPlatform();
 /// Return the number of physical CPU cores.
-URHO3D_API unsigned GetNumPhysicalCPUs();
-/// Return the number of logical CPUs (different from physical if hyperthreading is used.)
-URHO3D_API unsigned GetNumLogicalCPUs();
+URHO3D_API unsigned GetNumCPUCores();
+/// Return the total number of threads (number of physical CPUs * logical CPUs of each physical one). 
+URHO3D_API unsigned GetNumCPUThreads();
 /// Return the total amount of useable RAM that is available to the OS. (not the amount of physically installed memory!)
 URHO3D_API unsigned long long GetTotalMemory(); 
 /// Return the currently logged in user. 

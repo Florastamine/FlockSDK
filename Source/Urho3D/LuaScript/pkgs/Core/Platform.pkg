@@ -10,8 +10,8 @@ const Vector<String>& GetArguments();
 String GetConsoleInput();
 String GetPlatform();
 
-unsigned GetNumPhysicalCPUs();
-unsigned GetNumLogicalCPUs();
+unsigned GetNumCPUCores();
+unsigned GetNumCPUThreads();
 unsigned long long GetTotalMemory(); 
 
 String GetLoginName();
