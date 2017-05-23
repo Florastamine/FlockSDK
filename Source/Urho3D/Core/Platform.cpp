@@ -387,7 +387,7 @@ String GetPlatform()
 #endif
 }
 
-unsigned GetNumPhysicalCPUs()
+unsigned GetNumCPUCores()
 {
 #if defined(__linux__)
     struct CpuCoreCount data;
@@ -406,7 +406,7 @@ unsigned GetNumPhysicalCPUs()
 #endif
 }
 
-unsigned GetNumLogicalCPUs()
+unsigned GetNumCPUThreads()
 {
 #if defined(__linux__)
     struct CpuCoreCount data;
