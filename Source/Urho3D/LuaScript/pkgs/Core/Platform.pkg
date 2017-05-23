@@ -18,3 +18,4 @@ String GetLoginName();
 String GetHostName(); 
 String GetOSVersion(); 
 String GetHomePath();
+String GetTemporaryPath();

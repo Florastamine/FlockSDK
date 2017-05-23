@@ -634,4 +634,23 @@ String GetHomePath()
     return String::EMPTY; 
 }
 
+String GetTemporaryPath()
+{
+#if defined(__linux__) && !defined(__ANDROID__) 
+    const char *c;
+    if((c == getenv("TMPDIR")) == NULL)
+        return P_tmpdir; 
+    else 
+        return c;
+#elif defined(_WIN32)
+    char buffer[MAX_PATH]; // Actually, GetTempPath() takes a TCHAR[] but I don't care about catering to users with Unicode 
+                           // characters (very unlikely, and that would only complicate the implementation) 
+                           // in their user name so I went straight to char[]. 
+    DWORD r = GetTempPath(MAX_PATH, buffer);
+    if(!(r > MAX_PATH || (r == 0)))
+        return buffer; // GetTempPath() have already filled in the ending '\\', so we just return the buffer. 
+#endif
+    return String::EMPTY; 
+}
+
 }

@@ -76,5 +76,7 @@ URHO3D_API String GetHostName();
 URHO3D_API String GetOSVersion(); 
 /// Return path to the home directory (on Linux) or desktop directory (on Windows).
 URHO3D_API String GetHomePath(); 
+/// Return path to user-specific temporary directory (on Windows) or "/tmp/" (on Linux, most likely). 
+URHO3D_API String GetTemporaryPath(); 
 
 }
