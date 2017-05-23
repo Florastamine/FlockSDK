@@ -620,7 +620,7 @@ String GetHomePath()
 {
 #if (defined(__linux__) /* || defined(__APPLE__) */) && !defined(__ANDROID__) 
     const char *c; 
-    if((c == getenv("HOME")) == NULL)
+    if((c = getenv("HOME")) == NULL)
     {
         struct passwd *pwd = getpwuid(getuid());
         c = (pwd != NULL) ? pwd->pw_dir : ""; 
@@ -638,7 +638,7 @@ String GetTemporaryPath()
 {
 #if defined(__linux__) && !defined(__ANDROID__) 
     const char *c;
-    if((c == getenv("TMPDIR")) == NULL)
+    if((c = getenv("TMPDIR")) == NULL)
         return P_tmpdir; 
     else 
         return c;
