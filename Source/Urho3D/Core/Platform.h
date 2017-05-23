@@ -65,15 +65,16 @@ URHO3D_API String GetPlatform();
 URHO3D_API unsigned GetNumPhysicalCPUs();
 /// Return the number of logical CPUs (different from physical if hyperthreading is used.)
 URHO3D_API unsigned GetNumLogicalCPUs();
-
+/// Return the total amount of useable RAM that is available to the OS. (not the amount of physically installed memory!)
 URHO3D_API unsigned long long GetTotalMemory(); 
-
+/// Return the currently logged in user. 
 URHO3D_API String GetLoginName();
-
+/// Return the machine's name. 
 URHO3D_API String GetHostName(); 
-
+/// Return current OS version. On Windows, only the official (marketed) version is returned and not the "real" version. Linux returns the kernel version and 
+/// on macOS/Mac OS X, the official version number is returned as well as the Darwin kernel version. 
 URHO3D_API String GetOSVersion(); 
-
+/// Return path to the home directory (on Linux) or desktop directory (on Windows).
 URHO3D_API String GetHomePath(); 
 
 }
