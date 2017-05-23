@@ -273,6 +273,9 @@ public:
     /// Returns the current graphics device running the game. 
     String GetAdapterName() const; 
 
+    /// Returns the current graphics device's maximum texture size support. 
+    unsigned GetGPUMaxTextureSize() const; 
+
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 

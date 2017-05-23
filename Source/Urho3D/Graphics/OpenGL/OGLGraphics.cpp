@@ -3120,4 +3120,13 @@ String Graphics::GetAPIVersion() const
 {
     return String("OpenGL ") + (const char *) glGetString(GL_VERSION) + " (GLSL " + (const char *) glGetString(GL_SHADING_LANGUAGE_VERSION) + ")"; 
 }
+
+unsigned Graphics::GetGPUMaxTextureSize() const
+{
+    int s; 
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &s);
+
+    return (unsigned) s;
+}
+
 }

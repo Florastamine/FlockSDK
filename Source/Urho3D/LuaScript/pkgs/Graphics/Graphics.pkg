@@ -62,6 +62,7 @@ class Graphics : public Object
     IntVector2 GetDesktopResolution(int monitor) const;
     int GetMonitorCount() const;
     const String GetShaderCacheDir() const;
+    unsigned GetGPUMaxTextureSize() const;
 
     static unsigned GetAlphaFormat();
     static unsigned GetLuminanceFormat();
