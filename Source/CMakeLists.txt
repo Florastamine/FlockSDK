@@ -57,9 +57,6 @@ if (URHO3D_IK)
 endif ()
 
 add_subdirectory (ThirdParty/GLEW)
-if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-    add_subdirectory (ThirdParty/LibCpuId)
-endif ()
 
 # Urho3D game engine library
 add_subdirectory (Urho3D)
