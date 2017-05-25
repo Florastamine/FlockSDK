@@ -537,7 +537,7 @@ String GetOSVersion()
     else if (r.dwMajorVersion == 10 && r.dwMinorVersion == 0) 
         return "Windows 10/Windows Server 2016"; 
     else 
-        return "Windows (unknown version)"
+        return "Windows (unknown version)";
 #elif defined(__APPLE__)
     char kernel_r[256]; 
     size_t size = sizeof(kernel_r); 
@@ -625,7 +625,7 @@ String GetHomePath()
         struct passwd *pwd = getpwuid(getuid());
         c = (pwd != NULL) ? pwd->pw_dir : ""; 
     }
-    return c; 
+    return String(c) + "/"; 
 #elif defined(_WIN32)
     char path[MAX_PATH + 1];
     if (SHGetSpecialFolderPathA(HWND_DESKTOP, path, CSIDL_DESKTOP, FALSE))
@@ -639,7 +639,7 @@ String GetTemporaryPath()
 #if defined(__linux__) && !defined(__ANDROID__) 
     const char *c;
     if((c = getenv("TMPDIR")) == NULL)
-        return P_tmpdir; 
+        return String(P_tmpdir) + "/"; 
     else 
         return c;
 #elif defined(_WIN32)
