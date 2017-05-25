@@ -33,10 +33,6 @@
     #include "TargetConditionals.h"
 #endif
 
-#if !defined(__linux__) && !defined(__EMSCRIPTEN__)
-    #include <LibCpuId/libcpuid.h>
-#endif
-
 #if defined(_WIN32)
     #include <windows.h>
     #include <io.h>
@@ -45,6 +41,8 @@
         #include <lmcons.h>
         #include <ntdef.h> 
     #endif
+    #include <bitset>
+    #include <vector>
 #elif defined(__linux__) && !defined(__ANDROID__) 
     #include <pwd.h> 
     #include <sys/sysinfo.h>
@@ -58,7 +56,11 @@
 
 #ifndef _WIN32
     #include <unistd.h>
-#endif
+#endif 
+
+#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__))
+    #include <thread> 
+#endif 
 
 #if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
     #include <emscripten/threading.h>
@@ -158,13 +160,13 @@ static bool consoleOpened = false;
 static String currentLine;
 static Vector<String> arguments;
 
-#if defined(__linux__)
 struct CpuCoreCount
 {
     unsigned numPhysicalCores_;
     unsigned numLogicalCores_;
 };
 
+#if defined(__linux__)
 // This function is used by all the target triplets with Linux as the OS, such as Android, RPI, desktop Linux, etc
 static void GetCPUData(struct CpuCoreCount* data)
 {
@@ -201,14 +203,47 @@ static void GetCPUData(struct CpuCoreCount* data)
     }
 }
 
-#elif !defined(__EMSCRIPTEN__)
-static void GetCPUData(struct cpu_id_t* data)
+#elif defined(_WIN32) && !defined(__EMSCRIPTEN__)
+
+static std::vector<SYSTEM_LOGICAL_PROCESSOR_INFORMATION> __CPUInfoBuffer__()
 {
-    if (cpu_identify(0, data) < 0)
+    std::vector<SYSTEM_LOGICAL_PROCESSOR_INFORMATION> buffer;
+
+	DWORD b = 0;
+	GetLogicalProcessorInformation(nullptr, &b);
+
+	buffer.resize(b / sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION));
+	GetLogicalProcessorInformation(buffer.data(), &b);
+
+	return buffer;    
+}
+
+static CpuCoreCount __GetCPUInfo__()
+{
+    CpuCoreCount r{}; 
+    auto b = __CPUInfoBuffer__();
+
+    for(auto &&ca : b)
     {
-        data->num_logical_cpus = 1;
-        data->num_cores = 1;
+        switch(ca.Relationship)
+        {
+            case RelationProcessorCore: 
+            {
+                ++(r.numPhysicalCores_); 
+                r.numLogicalCores_ += static_cast<unsigned>(std::bitset<sizeof(ULONG_PTR) * 8>(ca.ProcessorMask).count());
+                break; 
+            }
+
+            default: ;
+        }
     }
+
+    return r; 
+}
+
+static void GetCPUData(struct CpuCoreCount* data)
+{
+    *data = __GetCPUInfo__();
 }
 #endif
 
@@ -446,40 +481,32 @@ String GetPlatform()
 
 unsigned GetNumCPUCores()
 {
-#if defined(__linux__)
+#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__))
     struct CpuCoreCount data;
     GetCPUData(&data);
     return data.numPhysicalCores_;
 #elif defined(__EMSCRIPTEN__)
-#ifdef __EMSCRIPTEN_PTHREADS__
-    return emscripten_num_logical_cores();
-#else
-    return 1; // Targeting a single-threaded Emscripten build.
-#endif
-#else
-    struct cpu_id_t data;
-    GetCPUData(&data);
-    return (unsigned)data.num_cores;
-#endif
+    #ifdef __EMSCRIPTEN_PTHREADS__
+        return emscripten_num_logical_cores();
+    #else
+        return 1; // Targeting a single-threaded Emscripten build.
+    #endif 
+#endif 
+    return 1;
 }
 
 unsigned GetNumCPUThreads()
 {
-#if defined(__linux__)
-    struct CpuCoreCount data;
-    GetCPUData(&data);
-    return data.numLogicalCores_;
+#if defined(_WIN32) || (defined(__linux__) && !defined(__ANDROID__))
+    return std::thread::hardware_concurrency();
 #elif defined(__EMSCRIPTEN__)
-#ifdef __EMSCRIPTEN_PTHREADS__
-    return emscripten_num_logical_cores();
-#else
-    return 1; // Targeting a single-threaded Emscripten build.
-#endif
-#else
-    struct cpu_id_t data;
-    GetCPUData(&data);
-    return (unsigned)data.num_logical_cpus;
-#endif
+    #ifdef __EMSCRIPTEN_PTHREADS__
+        return emscripten_num_logical_cores();
+    #else
+        return 1; // Targeting a single-threaded Emscripten build.
+    #endif
+#endif 
+    return 1; 
 }
 
 unsigned long long GetTotalMemory()
