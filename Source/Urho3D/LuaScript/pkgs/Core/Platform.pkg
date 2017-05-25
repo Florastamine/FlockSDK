@@ -13,9 +13,13 @@ String GetPlatform();
 unsigned GetNumCPUCores();
 unsigned GetNumCPUThreads();
 unsigned long long GetTotalMemory(); 
-
 String GetLoginName();
 String GetHostName(); 
 String GetOSVersion(); 
 String GetHomePath();
 String GetTemporaryPath();
+String GetCPUArchitecture();
+bool GetCPUBigEndian();
+bool GetCPULittleEndian();
+unsigned long long GetCPUClock();
+String GetCPUExtensions();

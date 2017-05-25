@@ -78,5 +78,15 @@ URHO3D_API String GetOSVersion();
 URHO3D_API String GetHomePath(); 
 /// Return path to user-specific temporary directory (on Windows) or "/tmp/" (on Linux, most likely). 
 URHO3D_API String GetTemporaryPath(); 
+/// Return true if the current machine is operating under big endian mode, and vice versa. 
+URHO3D_API bool GetCPUBigEndian();
+/// Return true if the current machine is operating under little endian mode, and vice versa. 
+URHO3D_API bool GetCPULittleEndian();
+/// Return the CPU frequency/clock/speed. (Note: not the current frequency!) 
+URHO3D_API unsigned long long GetCPUClock();
+/// Return the CPU architecture. 
+URHO3D_API String GetCPUArchitecture();
+/// Return supported extensions of the current CPU. 
+URHO3D_API String GetCPUExtensions(); 
 
 }
