@@ -49,6 +49,8 @@
     #include <pwd.h> 
     #include <sys/sysinfo.h>
     #include <sys/utsname.h>
+    #include <fstream> 
+    #include <string> 
 #elif defined(__APPLE__)
     #include <sys/sysctl.h>
     #include <SystemConfiguration/SystemConfiguration.h> // For the detection functions inside GetLoginName(). 
@@ -86,6 +88,61 @@ inline void SetFPUState(unsigned control)
     __asm__ __volatile__ ("fldcw %0" : : "m" (control));
 }
 #endif
+
+#if defined(_WIN32)
+    #include <intrin.h> 
+
+    static void               __GetCPUID__(int (&out)[4], int x) { __cpuidex(out, x, 0); }
+    static unsigned long long __GetECRInfo__(unsigned x)             { return _xgetbv(x); } // https://software.intel.com/en-us/node/523373 
+#elif defined(__linux__) && !defined(__ANDROID__) 
+    #include <cpuid.h> 
+
+    static void __GetCPUID__(int (&out)[4], int x)
+    {
+        __cpuid_count(x, 0, out[0], out[1], out[2], out[3]); 
+    }
+
+    static unsigned long long __GetECRInfo__(unsigned x)
+    {
+        unsigned eax, edx; 
+        __asm__ __volatile__("xgetbv" : "=a"(eax), "=d"(edx) : "c"(x));
+        return ((unsigned long long) edx << 32) | eax;
+    }
+#endif
+
+#if defined(_WIN32) && defined(_MSC_VER)
+    #define __PLATFORM__XCR_XFEATURE_ENABLED_MASK _XCR_XFEATURE_ENABLED_MASK 
+#else 
+    #define __PLATFORM__XCR_XFEATURE_ENABLED_MASK 0 
+#endif 
+
+static bool __GetAVXSupport__()
+{
+	bool has_avx = false;
+
+	int c[4];
+	__GetCPUID__(c, 1);
+
+	bool osusesxsave_restore = (c[2] & (1 << 27)) != 0;
+	bool cpusupportsavx = (c[2] & (1 << 28)) != 0;
+
+	if (osusesxsave_restore && cpusupportsavx) 
+    {
+		unsigned long long xcrFeatureMask = __GetECRInfo__(__PLATFORM__XCR_XFEATURE_ENABLED_MASK);
+		has_avx = (xcrFeatureMask & 0x6) == 0x6;
+	}
+
+	return has_avx;
+}
+
+static bool __GetAVX512Support__()
+{
+    if(!__GetAVXSupport__()) 
+        return false;
+
+	unsigned long long xcrFeatureMask = __GetECRInfo__(__PLATFORM__XCR_XFEATURE_ENABLED_MASK);
+	return (xcrFeatureMask & 0xe6) == 0xe6;
+}
 
 #ifndef MINI_URHO
 #include <SDL/SDL.h>
@@ -651,6 +708,148 @@ String GetTemporaryPath()
         return buffer; // GetTempPath() have already filled in the ending '\\', so we just return the buffer. 
 #endif
     return String::EMPTY; 
+}
+
+bool GetCPUBigEndian()
+{
+    int n = 1;
+    return (*(char *)&n == 1) ? false : true; 
+}
+
+bool GetCPULittleEndian()
+{
+    return !GetCPUBigEndian(); 
+}
+
+unsigned long long GetCPUClock()
+{
+#if defined(__linux__) && !defined(__ANDROID__)
+    std::ifstream cpuinfo("/proc/cpuinfo"); 
+    if(cpuinfo.is_open())
+    {
+        for(std::string line; std::getline(cpuinfo, line);)
+        {
+            if(0 == line.find("cpu MHz"))
+                return static_cast<unsigned long long>(std::strtod(line.c_str() + line.find_first_of(':') + 1, nullptr)); 
+        }
+    }
+#elif defined(_WIN32)
+    LARGE_INTEGER f; 
+    QueryPerformanceFrequency(&f); 
+    return static_cast<unsigned long long>(f.QuadPart / 1000.0); 
+#endif
+    return 0ull;
+}
+
+String GetCPUArchitecture()
+{
+#if defined(__linux__) && !defined(__ANDROID__) 
+    struct utsname u;
+    if (uname(&u) == 0)
+    {
+        String s(u.machine);
+        if(s.Contains("x86_64", false))
+            return "x86_64"; 
+        else if(s.Contains("IA64", false))
+            return "IA64"; 
+        else if(s.Contains("i686", false))
+            return "x86"; 
+        else if(s.Contains("ARM", false))
+            return "ARM"; 
+    }
+#elif defined(_WIN32)
+    SYSTEM_INFO s;
+    GetNativeSystemInfo(&s); // Because GetSystemInfo() would report incorrect results (x86 instead of x86_64) when running the application under WOW64 
+                             // environment (e.g. running 32-bit software under 64-bit OS). 
+
+    switch(s.wProcessorArchitecture)
+    {
+        case PROCESSOR_ARCHITECTURE_AMD64 : return "x86_64";
+        case PROCESSOR_ARCHITECTURE_IA64  : return "IA64"; 
+        case PROCESSOR_ARCHITECTURE_INTEL : return "x86";
+        case PROCESSOR_ARCHITECTURE_ARM   : return "ARM"; 
+        default: ;
+    }
+#endif
+    return "(Unknown architecture)"; 
+}
+
+String GetCPUExtensions()
+{
+    String s(String::EMPTY); 
+
+	int c[4];
+	__GetCPUID__(c, 0);
+    int id = c[0]; 
+
+    __GetCPUID__(c, 0x80000000); 
+    unsigned ext_id = c[0]; 
+
+    #define ADD_IF(iindex, bindex, str) \
+        if ((c[(iindex)] & ((int)1 << (bindex)) ) != 0) { if(!s.Contains(str)) s = s + str + ";"; }
+    
+	if (id >= 0x00000001)
+    {
+		__GetCPUID__(c, 0x00000001);
+		ADD_IF(3, 22, "Extended MMX");
+		ADD_IF(3, 23, "MMX");
+		ADD_IF(3, 25, "SSE");
+		ADD_IF(3, 26, "SSE2");
+		ADD_IF(2, 0, "SSE3");
+		ADD_IF(2, 9, "SSSE3");
+		ADD_IF(2, 19, "SSE4.1");
+		ADD_IF(2, 20, "SSE4.2");
+		ADD_IF(2, 25, "AES");
+		ADD_IF(2, 28, "FMA3");
+		ADD_IF(2, 12, "RDRAND");
+	}
+	if (id >= 0x00000007)
+    {
+		__GetCPUID__(c, 0x00000007);
+
+        if(__GetAVXSupport__())
+            ADD_IF(1, 5, "AVX2");
+
+		ADD_IF(1, 4, "HLE");
+		ADD_IF(1, 3, "BMI");
+		ADD_IF(1, 8, "BMI2");
+		ADD_IF(1, 19, "ADX");
+		ADD_IF(1, 14, "MPX");
+		ADD_IF(1, 29, "SHA");
+
+		if (__GetAVX512Support__())
+        {
+            s = s + "AVX-512;"; 
+			ADD_IF(1, 16, "AVX-512 F");
+			ADD_IF(1, 28, "AVX-512 CDI");
+			ADD_IF(1, 26, "AVX-512 PFI");
+			ADD_IF(1, 27, "AVX-512 ERI");
+			ADD_IF(1, 31, "AVX-512 VL");
+			ADD_IF(1, 30, "AVX-512 BW");
+			ADD_IF(1, 17, "AVX-512 DQ");
+			ADD_IF(1, 21, "AVX-512 IFMA");
+			ADD_IF(2, 1, "AVX-512 VBMI");
+		}
+
+		ADD_IF(2, 0, "PREFETCHWT1");
+	}
+	if (ext_id >= 0x80000001) 
+    {
+		__GetCPUID__(c, 0x80000001);
+
+		ADD_IF(3, 29, "EM64T");
+		ADD_IF(3, 0, "x87");
+		ADD_IF(3, 30, "3DNow!");
+		ADD_IF(3, 31, "Extended 3DNow!");
+		ADD_IF(2, 5, "BMI");
+		ADD_IF(2, 6, "BMI2");
+		ADD_IF(2, 16, "ADX");
+		ADD_IF(2, 11, "MPX");
+	}
+    #undef ADD_IF 
+
+    s.Erase(s.Length() - 1);
+    return s;
 }
 
 }
