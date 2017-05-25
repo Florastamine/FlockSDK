@@ -65,6 +65,8 @@ class Graphics : public Object
     unsigned GetGPUMaxTextureSize() const;
     String GetSupportedExtensions() const;
     unsigned GetNumSupportedExtensions() const;
+    bool HasExtension(const String &s) const;
+    unsigned GetTotalVideoMemory() const;
 
     static unsigned GetAlphaFormat();
     static unsigned GetLuminanceFormat();

@@ -58,6 +58,8 @@ extern "C"
 namespace Urho3D
 {
 
+static String GLextensionsListCache = String::EMPTY; 
+
 static const unsigned glCmpFunc[] =
 {
     GL_ALWAYS,
@@ -2322,6 +2324,8 @@ void Graphics::Restore()
             return;
         }
 
+        GLextensionsListCache = String::EMPTY; 
+
         // Initialize OpenGL extensions library (desktop only)
         GLenum err = glewInit();
         if (GLEW_OK != err)
@@ -3132,6 +3136,28 @@ String Graphics::GetSupportedExtensions() const
         s += reinterpret_cast<const char *>(glGetStringi(GL_EXTENSIONS, i)) + (i != n - 1 ? ";" : String::EMPTY); 
     
     return s;
+}
+
+bool Graphics::HasExtension(const String &s) const
+{
+    if(GLextensionsListCache == String::EMPTY)
+        GLextensionsListCache = GetSupportedExtensions(); 
+    
+    return GLextensionsListCache.Contains(s); 
+}
+
+unsigned Graphics::GetTotalVideoMemory() const
+{
+    const String GPUName = GetAdapterName();
+    GLuint m = 0u; 
+    if(GPUName.Contains("NVIDIA", false) && HasExtension("GL_NVX_gpu_memory_info"))
+    {
+        #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+        glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, (GLint *) &m);
+        #undef GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 
+    }
+
+    return (unsigned) m; 
 }
 
 }

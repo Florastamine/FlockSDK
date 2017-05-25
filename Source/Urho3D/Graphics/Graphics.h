@@ -282,6 +282,12 @@ public:
     /// Returns a list of current graphics device's supported OpenGL extensions. 
     String GetSupportedExtensions() const; 
 
+    /// Returns true if the given extension is supported by the current graphics device. 
+    bool HasExtension(const String &s) const;
+
+    /// Return the GPU's maximum amount of video memory (VRAM). Due to technical limitations, only NVIDIA cards are supported at the moment.
+    unsigned GetTotalVideoMemory() const;
+
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 
