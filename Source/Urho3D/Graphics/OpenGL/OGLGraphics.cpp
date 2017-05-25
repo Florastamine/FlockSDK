@@ -146,15 +146,6 @@ static const unsigned glElementComponents[] =
     4
 };
 
-static String extensions;
-
-bool CheckExtension(const String& name)
-{
-    if (extensions.Empty())
-        extensions = (const char*)glGetString(GL_EXTENSIONS);
-    return extensions.Contains(name);
-}
-
 static void GetGLPrimitiveType(unsigned elementCount, PrimitiveType type, unsigned& primitiveCount, GLenum& glPrimitiveType)
 {
     switch (type)
@@ -2330,9 +2321,6 @@ void Graphics::Restore()
             URHO3D_LOGERRORF("Could not create OpenGL context, root cause '%s'", SDL_GetError());
             return;
         }
-
-        // Clear cached extensions string from the previous context
-        extensions.Clear();
 
         // Initialize OpenGL extensions library (desktop only)
         GLenum err = glewInit();
