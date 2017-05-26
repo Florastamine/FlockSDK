@@ -801,6 +801,18 @@ String GetCPUArchitecture()
     return "(Unknown architecture)"; 
 }
 
+String GetCPUVendorID()
+{
+    int c[4];
+    __GetCPUID__(c, 0); 
+
+    String s((const char *) &(c[1]), 4);
+    s += String((const char *) &(c[3]), 4);
+    s += String((const char *) &(c[2]), 4); 
+
+    return s;
+}
+
 String GetCPUExtensions()
 {
     String s(String::EMPTY); 
