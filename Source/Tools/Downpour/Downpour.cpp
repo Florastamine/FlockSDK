@@ -23,9 +23,7 @@
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/IO/Log.h>
-
 #include <Urho3D/LuaScript/LuaScript.h>
-
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Resource/ResourceEvents.h>
 
@@ -124,10 +122,10 @@ void DownpourBase::Exit(void)
 
 int main(int argc, char **argv) 
 {
-    Urho3D::Context         *DPContext = new Urho3D::Context();
-    Downpour::DownpourBase  *DPGame    = new Downpour::DownpourBase(DPContext);
-    DPGame->argc_ = argc;
-    DPGame->argv_ = argc > 1 && argv[1] ? argv[1] : Urho3D::String::EMPTY;
+    auto *DPContext = new Urho3D::Context();
+    auto *DPGame    = new Downpour::DownpourBase(DPContext);
+    DPGame->argc_   = argc;
+    DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : Urho3D::String::EMPTY;
 
     return (Urho3D::SharedPtr<Downpour::DownpourBase>(DPGame))->Run();
 } 
