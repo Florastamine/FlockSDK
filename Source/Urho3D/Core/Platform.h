@@ -88,5 +88,7 @@ URHO3D_API unsigned long long GetCPUClock();
 URHO3D_API String GetCPUArchitecture();
 /// Return supported extensions of the current CPU. 
 URHO3D_API String GetCPUExtensions(); 
+/// Return the vendor ID of the current CPU. 
+URHO3D_API String GetCPUVendorID(); 
 
 }
