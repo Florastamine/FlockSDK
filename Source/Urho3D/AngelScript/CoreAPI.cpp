@@ -805,8 +805,6 @@ static void RegisterPlatform(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("String GetConsoleInput()", asFUNCTION(GetConsoleInput), asCALL_CDECL);
     engine->RegisterGlobalFunction("Array<String>@ GetArguments()", asFUNCTION(GetArgumentsToArray), asCALL_CDECL);
     engine->RegisterGlobalFunction("String GetPlatform()", asFUNCTION(GetPlatform), asCALL_CDECL);
-    engine->RegisterGlobalFunction("uint GetNumPhysicalCPUs()", asFUNCTION(GetNumPhysicalCPUs), asCALL_CDECL);
-    engine->RegisterGlobalFunction("uint GetNumLogicalCPUs()", asFUNCTION(GetNumLogicalCPUs), asCALL_CDECL);
 }
 
 static void ConstructAttributeInfo(AttributeInfo* ptr)

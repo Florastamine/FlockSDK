@@ -118,7 +118,6 @@ Script::Script(Context* context) :
     RegisterInputAPI(scriptEngine_);
     RegisterAudioAPI(scriptEngine_);
     RegisterUIAPI(scriptEngine_);
-    RegisterDatabaseAPI(scriptEngine_);
 #ifdef URHO3D_IK
     RegisterIKAPI(scriptEngine_);
 #endif
@@ -126,10 +125,8 @@ Script::Script(Context* context) :
 #ifdef URHO3D_NAVIGATION
     RegisterNavigationAPI(scriptEngine_);
 #endif
-    RegisterUrho2DAPI(scriptEngine_);
     RegisterScriptAPI(scriptEngine_);
     RegisterEngineAPI(scriptEngine_);
-    RegisterProcSkyAPI(scriptEngine_); 
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
