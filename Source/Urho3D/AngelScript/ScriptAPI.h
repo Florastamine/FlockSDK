@@ -47,12 +47,6 @@ void RegisterInputAPI(asIScriptEngine* engine);
 void RegisterAudioAPI(asIScriptEngine* engine);
 /// Register the UI library to script.
 void RegisterUIAPI(asIScriptEngine* engine);
-/// Register the Database library to script.
-void RegisterDatabaseAPI(asIScriptEngine* engine);
-#ifdef URHO3D_IK
-/// Register the inverse kinematics library to script
-void RegisterIKAPI(asIScriptEngine* engine);
-#endif
 /// Register the Physics library to script.
 void RegisterPhysicsAPI(asIScriptEngine* engine);
 /// Register RaycastVehicle component to script.
@@ -61,14 +55,10 @@ void RegisterRaycastVehicleAPI(asIScriptEngine* engine);
 /// Register the Navigation library to script.
 void RegisterNavigationAPI(asIScriptEngine* engine);
 #endif
-/// Register the Urho2D library to script.
-void RegisterUrho2DAPI(asIScriptEngine* engine);
 /// Register the Script interfaces to script.
 void RegisterScriptInterfaceAPI(asIScriptEngine* engine);
 /// Register the Script library to script.
 void RegisterScriptAPI(asIScriptEngine* engine);
 /// Register the Engine library to script.
 void RegisterEngineAPI(asIScriptEngine* engine); 
-/// Register ProcSky. 
-void RegisterProcSkyAPI(asIScriptEngine* engine); 
 }
