@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2016 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,27 @@
 
 #pragma once 
 
-#include <Urho3D/Engine/Application.h>
+#include <Flock/Engine/Application.h> 
 
 namespace Downpour {
-    class DownpourBase : public Urho3D::Application {
-        URHO3D_OBJECT(DownpourBase, Urho3D::Application);
+    class DownpourBase : public FlockSDK::Application {
+        FLOCKSDK_OBJECT(DownpourBase, FlockSDK::Application);
 
         public:
-            DownpourBase(Urho3D::Context *context);
+            DownpourBase(FlockSDK::Context *context);
 
             virtual void Setup();
             virtual void Start();
             virtual void Stop();
 
             int argc_;
-            Urho3D::String argv_;
-            Urho3D::String moduleName_;
-            Urho3D::SharedPtr<Urho3D::ScriptFile> moduleEditorPtr_;
+            FlockSDK::String argv_;
+            FlockSDK::String moduleName_;
+            FlockSDK::SharedPtr<FlockSDK::LuaScript> moduleEditorPtr_;
         private:
-            void HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
-            void HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData);
-            void HandleScriptReloadFailed(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData); 
+            void HandleScriptReloadStarted(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
+            void HandleScriptReloadFinished(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
+            void HandleScriptReloadFailed(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData); 
             void Exit(void);
     };
 };

@@ -16,7 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by 1vanK for Urho3D
+// Modified by 1vanK for Flock
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "Box2D/Dynamics/b2Fixture.h"
@@ -215,7 +215,7 @@ b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float32 density)
 
 void b2Body::DestroyFixture(b2Fixture* fixture)
 {
-	// Urho3D: avoid requirement C++11
+	// Flock: avoid requirement C++11
 	//if (fixture == nullptr)
 	if (!fixture)
 	{

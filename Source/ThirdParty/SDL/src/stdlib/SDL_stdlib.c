@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #if defined(__clang_analyzer__) && !defined(SDL_DISABLE_ANALYZE_MACROS)
 #define SDL_DISABLE_ANALYZE_MACROS 1
@@ -271,7 +271,7 @@ int SDL_tolower(int x) { return ((x) >= 'A') && ((x) <= 'Z') ? ('a'+((x)-'A')) :
 
 
 #ifndef HAVE_LIBC
-// Urho3D: disable MSVC runtime intrinsic replacements
+// Flock: disable MSVC runtime intrinsic replacements
 #endif /* !HAVE_LIBC */
 
 /* vi: set ts=4 sw=4 expandtab: */

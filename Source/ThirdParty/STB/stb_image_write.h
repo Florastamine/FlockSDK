@@ -112,7 +112,7 @@ publish, and distribute this file as you see fit.
 
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #ifndef INCLUDE_STB_IMAGE_WRITE_H
 #define INCLUDE_STB_IMAGE_WRITE_H
@@ -221,11 +221,11 @@ static void stbi__stdio_write(void *context, void *data, int size)
 
 static int stbi__start_write_file(stbi__write_context *s, const char *filename)
 {
-   // Urho3D: proper UTF8 handling for Windows, requires Urho3D WString class
+   // Flock: proper UTF8 handling for Windows, requires Flock WString class
 #ifndef _WIN32
    FILE *f = fopen(filename, "wb");
 #else
-    Urho3D::WString wstr(filename);
+    FlockSDK::WString wstr(filename);
     FILE *f = _wfopen(wstr.CString(), L"wb");
 #endif
    stbi__start_write_callbacks(s, stbi__stdio_write, (void *) f);

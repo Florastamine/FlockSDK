@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -185,5 +185,5 @@ set (INCLUDE_DIRS .)
 # Setup target
 setup_library ()
 
-# Install headers for building and using the Urho3D library (install dependency for Urho3D/Urho2D/PhysicsWorld2D.h and Urho3D/Urho2D/RigidBody2D.h)
+# Install headers for building and using the Flock library (install dependency for Flock/2D/PhysicsWorld2D.h and Flock/2D/RigidBody2D.h)
 install_header_files (DIRECTORY Box2D DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty FILES_MATCHING PATTERN *.h)

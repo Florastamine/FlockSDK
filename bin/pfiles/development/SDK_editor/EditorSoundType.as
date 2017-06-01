@@ -1,4 +1,4 @@
-// Urho3D Sound Type manager
+// Flock Sound Type manager
 
 Window@ soundTypeEditorWindow;
 Dictionary mappings;

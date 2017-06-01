@@ -16,7 +16,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #include <float.h>
 #include <string.h>
@@ -714,7 +714,7 @@ dtStatus dtNavMeshQuery::findNearestPoly(const float* center, const float* exten
 {
 	dtAssert(m_nav);
 
-	// Urho3D: null pointer check
+	// Flock: null pointer check
 	if (nearestRef)
 		*nearestRef = 0;
 	

@@ -149,7 +149,7 @@ LUA_API lua_State *lua_newthread (lua_State *L) {
   return L1;
 }
 
-/* Modified by Aster Jian for Urho3D */
+/* Modified by Aster Jian for Flock */
 LUA_API lua_State *lua_getmainthread (lua_State* L) {
     lua_State* L1;
     lua_lock(L);

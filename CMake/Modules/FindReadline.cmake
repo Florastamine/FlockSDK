@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 #
 
 if (APPLE AND NOT READLINE_INCLUDE_DIRS AND NOT READLINE_LIBRARIES)
-elseif (NATIVE_64BIT AND NOT URHO3D_64BIT)
+elseif (NATIVE_64BIT AND NOT FLOCK_64BIT)
     # To cater for 32-bit build on 64-bit host system using Debian-based distros; no special handling required for Redhat-based distros but no harm done in doing below
     set (LIB_HINTS /usr/lib32)
 endif ()
@@ -37,7 +37,7 @@ if (READLINE_INCLUDE_DIRS AND CMAKE_LIBRARY_ARCHITECTURE)
     list (APPEND READLINE_INCLUDE_DIRS ${READLINE_INCLUDE_DIRS}/${CMAKE_LIBRARY_ARCHITECTURE})
 endif ()
 find_library (READLINE_LIBRARIES NAMES readline HINTS ${LIB_HINTS} DOC "Readline library")
-if (NOT APPLE AND NATIVE_64BIT AND NOT URHO3D_64BIT AND READLINE_LIBRARIES MATCHES 64)
+if (NOT APPLE AND NATIVE_64BIT AND NOT FLOCK_64BIT AND READLINE_LIBRARIES MATCHES 64)
     unset (READLINE_LIBRARIES CACHE)    # Nullify the search result if the ABI is not matched
     unset (READLINE_LIBRARIES)
 endif ()

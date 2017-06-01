@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ if (HAVE_STDINT_H)
 endif ()
 
 # Setup RPATH settings
-if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
+if (FLOCK_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
     # Add RPATH entries when building
     set (CMAKE_SKIP_BUILD_RPATH FALSE)
     # But don't set them yet in the build tree
@@ -46,20 +46,16 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
 endif () 
 
 # Add targets
-foreach (TARGET FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB AngelScript SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
+foreach (TARGET GLEW Box2D FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 
-add_subdirectory (ThirdParty/Box2D) 
-
-if (URHO3D_IK)
-    add_subdirectory (ThirdParty/ik/cmake/Urho3D)
+if (FLOCK_IK)
+    add_subdirectory (ThirdParty/ik/cmake/Flock)
 endif ()
 
-add_subdirectory (ThirdParty/GLEW)
+# Flock game engine library
+add_subdirectory (Flock)
 
-# Urho3D game engine library
-add_subdirectory (Urho3D)
-
-# Urho3D tools
+# Flock tools
 add_subdirectory (Tools)

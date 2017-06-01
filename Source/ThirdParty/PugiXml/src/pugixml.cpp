@@ -11835,7 +11835,7 @@ namespace pugi
 	{
 	}
 
-	// Urho3D - copy constructor from another xpath_node
+	// Flock - copy constructor from another xpath_node
 	PUGI__FN xpath_node::xpath_node(const xpath_node& rhs) : _node(rhs._node), _attribute(rhs._attribute)
 	{
 	}

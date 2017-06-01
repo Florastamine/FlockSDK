@@ -34,9 +34,9 @@
 		THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------*/
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
-// Urho3D: use a namespace to not clash with Urho3D's inbuilt math types
+// Flock: use a namespace to not clash with Flock's inbuilt math types
 namespace StanHull
 {
 

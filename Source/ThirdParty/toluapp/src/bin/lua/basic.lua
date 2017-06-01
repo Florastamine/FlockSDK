@@ -10,7 +10,7 @@
 -- the author has no obligation to provide maintenance, support, updates,
 -- enhancements, or modifications.
 
--- Modified by Yao Wei Tjong for Urho3D
+-- Modified by Yao Wei Tjong for Flock
 
 
 -- Basic C types and their corresponding Lua types
@@ -252,7 +252,7 @@ function concat (t,f,l,jstr)
  return s
 end
 
--- Urho3D: replace deprecated arg usage
+-- Flock: replace deprecated arg usage
 -- concatenate all parameters, following output rules
 function concatparam (line, ...)
  local i=1

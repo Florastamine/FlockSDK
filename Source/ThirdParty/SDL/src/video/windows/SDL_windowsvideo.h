@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "../../SDL_internal.h"
 
@@ -137,7 +137,7 @@ typedef struct SDL_VideoData
     BOOL (WINAPI *GetTouchInputInfo)( HTOUCHINPUT, UINT, PTOUCHINPUT, int );
     BOOL (WINAPI *RegisterTouchWindow)( HWND, ULONG );
 
-    // Urho3D: added
+    // Flock: added
     BOOL (WINAPI *SetProcessDPIAware)();
 
     void* shcoreDLL;

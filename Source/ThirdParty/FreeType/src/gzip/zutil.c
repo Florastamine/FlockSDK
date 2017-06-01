@@ -5,7 +5,7 @@
 
 /* @(#) $Id$ */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #include "zutil.h"
 
@@ -13,7 +13,7 @@
 extern void exit OF((int));
 #endif
 
-// Urho3D: quick fix for debug build
+// Flock: quick fix for debug build
 #ifdef DEBUG
 
 #  ifndef verbose

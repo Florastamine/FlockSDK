@@ -19,7 +19,7 @@
  * 	
  * */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #ifndef JO_INCLUDE_JPEG_H
 #define JO_INCLUDE_JPEG_H

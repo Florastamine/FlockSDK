@@ -1,4 +1,4 @@
-// Urho3D editor view & camera functions
+// Flock editor view & camera functions
 
 WeakHandle previewCamera;
 Node@ cameraNode;

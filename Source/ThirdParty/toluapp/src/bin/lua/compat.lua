@@ -1,4 +1,4 @@
--- Modified by Yao Wei Tjong for Urho3D
+-- Modified by Yao Wei Tjong for Flock
 
 -------------------------------------------------------------------
 -- Real globals
@@ -177,7 +177,7 @@ function appendto (name)
   return f, err, cod
 end
 
--- Urho3D: replace deprecated arg usage
+-- Flock: replace deprecated arg usage
 function read (...)
   local f = _INPUT
   local arg = {...} -- quick and dirty fix for LuaJIT without 5.1 compatibility mode for varargs

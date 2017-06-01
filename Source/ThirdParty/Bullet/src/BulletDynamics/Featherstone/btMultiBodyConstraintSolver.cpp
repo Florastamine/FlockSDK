@@ -13,7 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "btMultiBodyConstraintSolver.h"
 #include "BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
@@ -888,7 +888,7 @@ static void applyJointFeedback(btMultiBodyJacobianData& data, const btMultiBodyS
 }
 #endif
 
-// Urho3D: disable include
+// Flock: disable include
 //#include "Bullet3Common/b3Logging.h"
 void btMultiBodyConstraintSolver::writeBackSolverBodyToMultiBody(btMultiBodySolverConstraint& c, btScalar deltaTime)
 {

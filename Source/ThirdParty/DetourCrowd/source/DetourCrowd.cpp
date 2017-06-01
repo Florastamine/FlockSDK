@@ -16,7 +16,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by Lasse Oorni, Yao Wei Tjong, 1vanK and cosmy1 for Urho3D
+// Modified by Lasse Oorni, Yao Wei Tjong, 1vanK and cosmy1 for Flock
 
 #define _USE_MATH_DEFINES
 #include <string.h>
@@ -332,7 +332,7 @@ Notes:
 */
 
 dtCrowd::dtCrowd() :
-	// Urho3D: Add update callback support
+	// Flock: Add update callback support
 	m_updateCallback(0),
 	m_maxAgents(0),
 	m_agents(0),
@@ -346,7 +346,7 @@ dtCrowd::dtCrowd() :
 	m_velocitySampleCount(0),
 	m_navquery(0)
 {
-	// Urho3D: initialize all class members
+	// Flock: initialize all class members
 	memset(&m_ext, 0, sizeof(m_ext));
 	memset(&m_obstacleQueryParams, 0, sizeof(m_obstacleQueryParams));
 }
@@ -383,7 +383,7 @@ void dtCrowd::purge()
 	m_navquery = 0;
 }
 
-// Urho3D: Add update callback support
+// Flock: Add update callback support
 /// @par
 ///
 /// May be called more than once to purge and re-initialize the crowd.
@@ -571,7 +571,7 @@ int dtCrowd::addAgent(const float* pos, const dtCrowdAgentParams* params)
 	
 	ag->active = true;
 
-    // Urho3D: added to fix illegal memory access when ncorners is queried before the agent has updated
+    // Flock: added to fix illegal memory access when ncorners is queried before the agent has updated
     ag->ncorners = 0;
 
 	return idx;
@@ -1376,7 +1376,7 @@ void dtCrowd::update(const float dt, dtCrowdAgentDebugInfo* debug)
 					pen = (1.0f/dist) * (pen*0.5f) * COLLISION_RESOLVE_FACTOR;
 				}
 				
-				// Urho3D: Avoid tremble when another agent can not move away
+				// Flock: Avoid tremble when another agent can not move away
 				if (ag->params.separationWeight < 0.0001f) 
 					continue;
 				
@@ -1420,7 +1420,7 @@ void dtCrowd::update(const float dt, dtCrowdAgentDebugInfo* debug)
 			ag->partial = false;
 		}
 
-		// Urho3D: Add update callback support
+		// Flock: Add update callback support
 		if (m_updateCallback)
 			(*m_updateCallback)(ag, dt);
 	}

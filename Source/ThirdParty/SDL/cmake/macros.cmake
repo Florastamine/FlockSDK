@@ -19,10 +19,10 @@
 # 3. This notice may not be removed or altered from any source distribution.
 #
 
-# Modified by Yao Wei Tjong for Urho3D, the modified portion is licensed under below license
+# Modified by Yao Wei Tjong for Flock, the modified portion is licensed under below license
 
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ macro(MESSAGE_ERROR _TEXT)
 endmacro()
 
 macro(MESSAGE_BOOL_OPTION _NAME _VALUE)
-  # Urho3D - accept extra paddding argument
+  # Flock - accept extra paddding argument
   if (NOT ${ARGN} STREQUAL \t)
     set(_PAD ${ARGN})
   else ()

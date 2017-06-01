@@ -1,4 +1,4 @@
-// Urho3D editor attribute inspector window handling
+// Flock editor attribute inspector window handling
 #include "development/SDK_editor/AttributeEditor.as"
 
 Window@ attributeInspectorWindow;

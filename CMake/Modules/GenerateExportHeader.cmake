@@ -191,7 +191,7 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-# Modified by Yao Wei Tjong for Urho3D
+# Modified by Yao Wei Tjong for Flock
 
 include(CMakeParseArguments)
 include(CheckCXXCompilerFlag)
@@ -267,7 +267,7 @@ macro(_DO_SET_MACRO_VALUES TARGET_LIBRARY)
     set(DEFINE_DEPRECATED "__declspec(deprecated)")
   endif()
 
-  # Urho3D: always generate header file regardless of target type
+  # Flock: always generate header file regardless of target type
     if(WIN32)
       set(DEFINE_EXPORT "__declspec(dllexport)")
       set(DEFINE_IMPORT "__declspec(dllimport)")
@@ -314,7 +314,7 @@ macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
   if(_GEH_EXPORT_MACRO_NAME)
     set(EXPORT_MACRO_NAME ${_GEH_PREFIX_NAME}${_GEH_EXPORT_MACRO_NAME})
   endif()
-  # Urho3D: CMake version less than 2.8.12 does not have this sub-command yet, so comment it out until the cmake minimum required is 2.8.12
+  # Flock: CMake version less than 2.8.12 does not have this sub-command yet, so comment it out until the cmake minimum required is 2.8.12
   #string(MAKE_C_IDENTIFIER ${EXPORT_MACRO_NAME} EXPORT_MACRO_NAME)
   if(_GEH_EXPORT_FILE_NAME)
     if(IS_ABSOLUTE ${_GEH_EXPORT_FILE_NAME})
@@ -348,7 +348,7 @@ macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
 
   set(INCLUDE_GUARD_NAME "${EXPORT_MACRO_NAME}_H")
 
-  # Urho3D: Our revised version does not depend on the target to be added first, so always derive the variable value from target name instead
+  # Flock: Our revised version does not depend on the target to be added first, so always derive the variable value from target name instead
   set(EXPORT_IMPORT_CONDITION ${TARGET_LIBRARY}_EXPORTS)
   #string(MAKE_C_IDENTIFIER ${EXPORT_IMPORT_CONDITION} EXPORT_IMPORT_CONDITION)
 
@@ -356,7 +356,7 @@ macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
     "${EXPORT_FILE_NAME}" @ONLY)
 endmacro()
 
-# Urho3D: revise to pass the library type by argument so that it does not depend on the target to be added first
+# Flock: revise to pass the library type by argument so that it does not depend on the target to be added first
 function(GENERATE_EXPORT_HEADER TARGET_LIBRARY type)
   if(NOT ${type} MATCHES STATIC|SHARED|OBJECT|MODULE)
     message(WARNING "This macro can only be used with libraries")

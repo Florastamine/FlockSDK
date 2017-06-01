@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -88,9 +88,9 @@ macro (check_extension CPU_INSTRUCTION_EXTENSION)
 endmacro ()
 
 if (MINGW AND COMPILER_VERSION VERSION_LESS 4.9.1)
-    if (NOT DEFINED URHO3D_SSE)     # Only give the warning once during initial configuration
+    if (NOT DEFINED FLOCK_SSE)     # Only give the warning once during initial configuration
         # Certain MinGW versions fail to compile SSE code. This is the initial guess for known "bad" version range, and can be tightened later
-        message (WARNING "Disabling SSE by default due to MinGW version. It is recommended to upgrade to MinGW with GCC >= 4.9.1. You can also try to re-enable SSE with CMake option -DURHO3D_SSE=1, but this may result in compile errors.")
+        message (WARNING "Disabling SSE by default due to MinGW version. It is recommended to upgrade to MinGW with GCC >= 4.9.1. You can also try to re-enable SSE with CMake option -DFLOCK_SSE=1, but this may result in compile errors.")
     endif ()
 elseif (NOT EMSCRIPTEN)     # Emscripten does not support SSE/SSE2 (yet) now but erroneously responding positively to our probe, so skip them for Emscripten for now
     check_extension (sse)

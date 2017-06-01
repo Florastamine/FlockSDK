@@ -1,4 +1,4 @@
-// Urho3D material editor
+// Flock material editor
 
 Window@ particleEffectWindow;
 ParticleEffect@ editParticleEffect;

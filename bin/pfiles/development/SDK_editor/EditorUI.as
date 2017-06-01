@@ -1,4 +1,4 @@
-// Urho3D editor user interface
+// Flock editor user interface
 
 XMLFile@ uiStyle;
 XMLFile@ iconStyle;

@@ -13,7 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "btCollisionWorld.h"
 #include "btCollisionDispatcher.h"
@@ -1232,7 +1232,7 @@ public:
           
           if (m_debugDrawer->getDebugMode() & btIDebugDraw::DBG_DrawNormals )
           {
-		    // Urho3D: calculate center only if needed
+		    // Flock: calculate center only if needed
 		    btVector3 center = (wv0+wv1+wv2)*btScalar(1./3.);
 		    
 		    btVector3 normal = (wv1-wv0).cross(wv2-wv0);
@@ -1249,7 +1249,7 @@ public:
 
 void btCollisionWorld::debugDrawObject(const btTransform& worldTransform, const btCollisionShape* shape, const btVector3& color)
 {
-	// Urho3D: perform AABB visibility test first
+	// Flock: perform AABB visibility test first
 	btVector3 aabbMin, aabbMax;
 	shape->getAabb(worldTransform, aabbMin, aabbMax);
 	if (!getDebugDrawer()->isVisible(aabbMin, aabbMax))
@@ -1261,7 +1261,7 @@ void btCollisionWorld::debugDrawObject(const btTransform& worldTransform, const 
 		getDebugDrawer()->drawTransform(worldTransform,1);
 	}
 
-	// Urho3D: never draw heightfields as they are potentially huge
+	// Flock: never draw heightfields as they are potentially huge
 	if (shape->getShapeType() == TERRAIN_SHAPE_PROXYTYPE)
 		return;
 

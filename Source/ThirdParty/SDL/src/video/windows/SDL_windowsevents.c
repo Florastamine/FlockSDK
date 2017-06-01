@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "../../SDL_internal.h"
 
@@ -350,7 +350,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     SDL_WindowData *data;
     LRESULT returnCode = -1;
 
-    // Urho3D: detect emulated mouse events
+    // Flock: detect emulated mouse events
     // Note: if we move mouse cursor manually (relative mouse motion with hidden cursor) we may get emulated mouse
     // events with zero extra info, so we should only center the cursor when it has actually moved
     BOOL emulatedMouse = (GetMessageExtraInfo() & 0xffffff00) == MOUSEEVENTF_FROMTOUCH;
@@ -463,7 +463,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         {
             SDL_Mouse *mouse = SDL_GetMouse();
-            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Urho3D: detect emulated mouse event
+            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Flock: detect emulated mouse event
                 // SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
                 SDL_SendMouseMotion(data->window, /* mouseID */ 0, 0, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
             }
@@ -484,12 +484,12 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             SDL_Mouse *mouse;
 
-            // Urho3D: in_title_click may be erroneously left on with non-Aero styles, causing the hidden mouse centering to stop working.
+            // Flock: in_title_click may be erroneously left on with non-Aero styles, causing the hidden mouse centering to stop working.
             // To work around, reset whenever a normal mouse button up/down event is received
             data->in_title_click = SDL_FALSE;
 
             mouse = SDL_GetMouse();
-            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Urho3D
+            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Flock
                 // SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
                 WIN_CheckWParamMouseButtons(wParam, data, /* mouseID */ 0);
             }

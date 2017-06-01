@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,10 @@
 #
 
 # Set project name
-project (Urho3D-Tools)
+project (Flock-Tools)
 
-find_package (Urho3D REQUIRED)
-include_directories (${URHO3D_INCLUDE_DIRS}) 
+find_package (Flock REQUIRED)
+include_directories (${FLOCK_INCLUDE_DIRS}) 
 
 add_subdirectory (Downpour) 
 add_subdirectory (PackageTool) 

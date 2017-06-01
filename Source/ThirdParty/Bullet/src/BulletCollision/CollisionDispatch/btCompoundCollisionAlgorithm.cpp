@@ -14,7 +14,7 @@ subject to the following restrictions:
 
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
@@ -223,7 +223,7 @@ void btCompoundCollisionAlgorithm::processCollision (const btCollisionObjectWrap
 	btAssert (colObjWrap->getCollisionShape()->isCompound());
 	const btCompoundShape* compoundShape = static_cast<const btCompoundShape*>(colObjWrap->getCollisionShape());
 
-    // Urho3D: do not go further if compound does not have child shapes, to prevent assert
+    // Flock: do not go further if compound does not have child shapes, to prevent assert
     if (!compoundShape->getNumChildShapes())
         return;
 

@@ -16,7 +16,7 @@
 #define BT_QUICK_PROF_H
 
 //To disable built-in profiling, please comment out next line
-// Urho3D: disable profiling, as Urho has its own hierarchic profiler
+// Flock: disable profiling, as Urho has its own hierarchic profiler
 #define BT_NO_PROFILE 1
 #ifndef BT_NO_PROFILE
 #include <stdio.h>//@todo remove this, backwards compatibility

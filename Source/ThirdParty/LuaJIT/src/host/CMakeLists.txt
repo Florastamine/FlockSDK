@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,8 @@
 # THE SOFTWARE.
 #
 
-if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
-    # Set CMake minimum version and CMake policy required by Urho3D-CMake-common module
+if (NOT CMAKE_PROJECT_NAME STREQUAL Flock)
+    # Set CMake minimum version and CMake policy required by Flock-CMake-common module
     if (WIN32)
         cmake_minimum_required (VERSION 3.2.3)
     else ()
@@ -40,13 +40,13 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
     endif ()
 
     # Set project name
-    project (Urho3D-ExternalProject-buildvm)
+    project (Flock-ExternalProject-buildvm)
 
     # Set CMake modules search path
     set (CMAKE_MODULE_PATH ${BAKED_CMAKE_SOURCE_DIR}/CMake/Modules)
 
-    # Include Urho3D Cmake common module
-    include (Urho3D-CMake-common)
+    # Include Flock Cmake common module
+    include (Flock-CMake-common)
 
     # Unescape the variables
     foreach (ESCAPED_VAR HOST_XCFLAGS TARGET_ARCH DASM_FLAGS DASM_ARCH)

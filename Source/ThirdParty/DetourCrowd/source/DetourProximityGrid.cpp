@@ -16,7 +16,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by cosmy1 for Urho3D
+// Modified by cosmy1 for Flock
 
 #include <string.h>
 #include <new>
@@ -47,7 +47,7 @@ inline int hashPos2(int x, int y, int n)
 	return ((x*73856093) ^ (y*19349663)) & (n-1);
 }
 
-// Urho3D: initialize all class members
+// Flock: initialize all class members
 dtProximityGrid::dtProximityGrid() :
 	m_maxItems(0),
 	m_cellSize(0),
@@ -56,9 +56,9 @@ dtProximityGrid::dtProximityGrid() :
 	m_poolSize(0),
 	m_buckets(0),
 	m_bucketsSize(0),
-	m_invCellSize(0) // Urho3D
+	m_invCellSize(0) // Flock
 {
-	memset(&m_bounds, 0, sizeof(m_bounds));	// Urho3D
+	memset(&m_bounds, 0, sizeof(m_bounds));	// Flock
 }
 
 dtProximityGrid::~dtProximityGrid()

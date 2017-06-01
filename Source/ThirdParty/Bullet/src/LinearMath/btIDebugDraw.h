@@ -13,7 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #ifndef BT_IDEBUG_DRAW__H
 #define BT_IDEBUG_DRAW__H
@@ -79,7 +79,7 @@ class	btIDebugDraw
 	virtual ~btIDebugDraw() {};
 
 	
-	// Urho3D: added function to test visibility of an AABB
+	// Flock: added function to test visibility of an AABB
 	virtual bool    isVisible(const btVector3& aabbMin,const btVector3& aabbMax)=0;
 
 	virtual DefaultColors	getDefaultColors() const	{	DefaultColors colors;	return colors;	}

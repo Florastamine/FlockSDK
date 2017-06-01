@@ -1,4 +1,4 @@
-// Urho3D editor import functions
+// Flock editor import functions
 
 String importOptions = "-t";
 

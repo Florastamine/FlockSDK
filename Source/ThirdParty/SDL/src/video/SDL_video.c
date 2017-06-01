@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni and Yao Wei Tjong for Urho3D
+// Modified by Lasse Oorni and Yao Wei Tjong for Flock
 
 #include "../SDL_internal.h"
 
@@ -154,7 +154,7 @@ typedef struct {
     int bytes_per_pixel;
 } SDL_WindowTextureData;
 
-// Urho3D: check first if renderer is disabled
+// Flock: check first if renderer is disabled
 #if !SDL_RENDER_DISABLED
 static SDL_bool
 ShouldUseTextureFramebuffer()
@@ -521,7 +521,7 @@ SDL_VideoInit(const char *driver_name)
     }
 
     /* Add the renderer framebuffer emulation if desired */
-    // Urho3D: check first if renderer is disabled
+    // Flock: check first if renderer is disabled
 #if !SDL_RENDER_DISABLED
     if (ShouldUseTextureFramebuffer()) {
         _this->CreateWindowFramebuffer = SDL_CreateWindowTexture;
@@ -1465,7 +1465,7 @@ SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint32 flags)
     return window;
 }
 
-// Urho3D: added flags parameter
+// Flock: added flags parameter
 SDL_Window *
 SDL_CreateWindowFrom(const void *data, Uint32 flags)
 {
@@ -1497,7 +1497,7 @@ SDL_CreateWindowFrom(const void *data, Uint32 flags)
     }
     _this->windows = window;
 
-    // Urho3D: load OpenGL if initializing an external OpenGL window
+    // Flock: load OpenGL if initializing an external OpenGL window
     if (flags & SDL_WINDOW_OPENGL) {
         if (!_this->GL_CreateContext) {
             SDL_SetError("No OpenGL support in video driver");
