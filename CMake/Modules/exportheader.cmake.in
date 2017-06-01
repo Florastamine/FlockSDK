@@ -23,9 +23,9 @@
 #ifndef @INCLUDE_GUARD_NAME@
 #define @INCLUDE_GUARD_NAME@
 @PRE_EXPORT_HEADER@
-#cmakedefine URHO3D_STATIC_DEFINE
-#cmakedefine URHO3D_SSE
-#cmakedefine URHO3D_LUAJIT
+#cmakedefine FLOCKSDK_STATIC_DEFINE
+#cmakedefine FLOCKSDK_SSE
+#cmakedefine FLOCKSDK_LUAJIT
 
 #ifdef @STATIC_DEFINE@
 #  define @EXPORT_MACRO_NAME@

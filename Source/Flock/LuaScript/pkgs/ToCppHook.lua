@@ -118,12 +118,12 @@ _push_functions['Resource'] = "ToluaPushObject"
 _push_functions['UIElement'] = "ToluaPushObject"
 
 -- Is Flock Vector type.
-function urho3d_is_vector(t)
+function FLOCKSDK_is_vector(t)
     return t:find("Vector<") ~= nil
 end
 
 -- Is Flock PODVector type.
-function urho3d_is_podvector(t)
+function FLOCKSDK_is_podvector(t)
     return t:find("PODVector<") ~= nil
 end
 
@@ -148,12 +148,12 @@ function overload_if_necessary(t)
 end
 
 function get_push_function(t)
-    if not urho3d_is_vector(t) then
+    if not FLOCKSDK_is_vector(t) then
         return old_get_push_function(t)
     end
 
     local T = t:match("<.*>")
-    if not urho3d_is_podvector(t) then
+    if not FLOCKSDK_is_podvector(t) then
         return "ToluaPushVector" .. T
     else
         return "ToluaPushPODVector" .. T .. overload_if_necessary(T)
@@ -161,12 +161,12 @@ function get_push_function(t)
 end
 
 function get_to_function(t)
-    if not urho3d_is_vector(t) then
+    if not FLOCKSDK_is_vector(t) then
         return old_get_to_function(t)
     end
 
     local T = t:match("<.*>")
-    if not urho3d_is_podvector(t) then
+    if not FLOCKSDK_is_podvector(t) then
         return "ToluaToVector" .. T
     else
         return "ToluaToPODVector" .. T .. overload_if_necessary(T)
@@ -174,12 +174,12 @@ function get_to_function(t)
 end
 
 function get_is_function(t)
-    if not urho3d_is_vector(t) then
+    if not FLOCKSDK_is_vector(t) then
         return old_get_is_function(t)
     end
 
     local T = t:match("<.*>")
-    if not urho3d_is_podvector(t) then
+    if not FLOCKSDK_is_podvector(t) then
         return "ToluaIsVector" .. T
     else
         return "ToluaIsPODVector" .. T .. overload_if_necessary(T)

@@ -22,6 +22,6 @@
 
 #pragma once
 
-@URHO_HEADERS@
+@FLOCK_HEADERS@
 
 using namespace FlockSDK;
