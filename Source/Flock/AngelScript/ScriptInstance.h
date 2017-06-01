@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ class asIScriptFunction;
 class asIScriptObject;
 class asIScriptContext;
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 class Script;
@@ -55,9 +55,9 @@ enum ScriptInstanceMethod
 };
 
 /// %Script object component.
-class URHO3D_API ScriptInstance : public Component, public ScriptEventListener
+class FLOCKSDK_API ScriptInstance : public Component, public ScriptEventListener
 {
-    URHO3D_OBJECT(ScriptInstance, Component);
+    FLOCKSDK_OBJECT(ScriptInstance, Component);
 
 public:
     /// Construct.
@@ -209,18 +209,18 @@ private:
 };
 
 /// Return the active AngelScript context. Provided as a wrapper to the AngelScript API function to avoid undefined symbol error in shared library Urho3D builds.
-URHO3D_API asIScriptContext* GetActiveASContext();
+FLOCKSDK_API asIScriptContext* GetActiveASContext();
 /// Return the Urho3D context of the active AngelScript context.
-URHO3D_API Context* GetScriptContext();
+FLOCKSDK_API Context* GetScriptContext();
 /// Return the ScriptInstance of the active AngelScript context.
-URHO3D_API ScriptInstance* GetScriptContextInstance();
+FLOCKSDK_API ScriptInstance* GetScriptContextInstance();
 /// Return the scene node of the active AngelScript context.
-URHO3D_API Node* GetScriptContextNode();
+FLOCKSDK_API Node* GetScriptContextNode();
 /// Return the scene of the active AngelScript context.
-URHO3D_API Scene* GetScriptContextScene();
+FLOCKSDK_API Scene* GetScriptContextScene();
 /// Return the event listener of the active AngelScript context.
-URHO3D_API ScriptEventListener* GetScriptContextEventListener();
+FLOCKSDK_API ScriptEventListener* GetScriptContextEventListener();
 /// Return the event listener of the active AngelScript context as an Object pointer.
-URHO3D_API Object* GetScriptContextEventListenerObject();
+FLOCKSDK_API Object* GetScriptContextEventListenerObject();
 
 }

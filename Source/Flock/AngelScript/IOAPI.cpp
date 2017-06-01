@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 #include "../IO/NamedPipe.h"
 #include "../IO/PackageFile.h"
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 void FakeAddRef(void* ptr)
@@ -44,7 +44,7 @@ static Log* GetLog()
     return GetScriptContext()->GetSubsystem<Log>();
 }
 
-#ifdef URHO3D_LOGGING
+#ifdef FLOCKSDK_LOGGING
 
 static void Print(const String& value, bool error)
 {

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 class asIScriptEngine;
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 class Context;
@@ -51,7 +51,7 @@ void RegisterUIAPI(asIScriptEngine* engine);
 void RegisterPhysicsAPI(asIScriptEngine* engine);
 /// Register RaycastVehicle component to script.
 void RegisterRaycastVehicleAPI(asIScriptEngine* engine);
-#ifdef URHO3D_NAVIGATION
+#ifdef FLOCKSDK_NAVIGATION
 /// Register the Navigation library to script.
 void RegisterNavigationAPI(asIScriptEngine* engine);
 #endif

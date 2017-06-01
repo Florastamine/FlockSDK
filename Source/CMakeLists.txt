@@ -46,7 +46,8 @@ if (FLOCK_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
 endif () 
 
 # Add targets
-foreach (TARGET GLEW Box2D FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
+# foreach (TARGET STB GLEW JO LZ4 SQLite StanHull Lua LuaJIT toluapp/src/lib PugiXml rapidjson Detour DetourCrowd DetourTileCache Recast FreeType Box2D SDL Bullet AngelScript) 
+foreach (TARGET AngelScript GLEW Box2D FreeType JO LZ4 PugiXml rapidjson SDL StanHull STB SQLite Bullet Detour DetourCrowd DetourTileCache Recast Lua LuaJIT toluapp/src/lib) 
     add_subdirectory (ThirdParty/${TARGET})
 endforeach () 
 

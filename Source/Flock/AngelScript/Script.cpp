@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,12 +34,12 @@
 #include "../Resource/ResourceCache.h"
 #include "../Scene/Scene.h"
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 class ScriptResourceRouter : public ResourceRouter
 {
-    URHO3D_OBJECT(ScriptResourceRouter, ResourceRouter);
+    FLOCKSDK_OBJECT(ScriptResourceRouter, ResourceRouter);
 
     /// Construct.
     ScriptResourceRouter(Context* context) :
@@ -74,7 +74,7 @@ Script::Script(Context* context) :
     scriptEngine_ = asCreateScriptEngine(ANGELSCRIPT_VERSION);
     if (!scriptEngine_)
     {
-        URHO3D_LOGERROR("Could not create AngelScript engine");
+        FLOCKSDK_LOGERROR("Could not create AngelScript engine");
         return;
     }
 
@@ -119,7 +119,7 @@ Script::Script(Context* context) :
     RegisterAudioAPI(scriptEngine_);
     RegisterUIAPI(scriptEngine_);
     RegisterPhysicsAPI(scriptEngine_);
-#ifdef URHO3D_NAVIGATION
+#ifdef FLOCKSDK_NAVIGATION
     RegisterNavigationAPI(scriptEngine_);
 #endif
     RegisterScriptAPI(scriptEngine_);
@@ -162,7 +162,7 @@ Script::~Script()
 bool Script::Execute(const String& line)
 {
     // Note: compiling code each time is slow. Not to be used for performance-critical or repeating activity
-    URHO3D_PROFILE(ExecuteImmediate);
+    FLOCKSDK_PROFILE(ExecuteImmediate);
 
     ClearObjectTypeCache();
 
@@ -211,7 +211,7 @@ void Script::SetExecuteConsoleCommands(bool enable)
 
     executeConsoleCommands_ = enable;
     if (enable)
-        SubscribeToEvent(E_CONSOLECOMMAND, URHO3D_HANDLER(Script, HandleConsoleCommand));
+        SubscribeToEvent(E_CONSOLECOMMAND, FLOCKSDK_HANDLER(Script, HandleConsoleCommand));
     else
         UnsubscribeFromEvent(E_CONSOLECOMMAND);
 }
@@ -224,15 +224,15 @@ void Script::MessageCallback(const asSMessageInfo* msg)
     switch (msg->type)
     {
     case asMSGTYPE_ERROR:
-        URHO3D_LOGERROR(message);
+        FLOCKSDK_LOGERROR(message);
         break;
 
     case asMSGTYPE_WARNING:
-        URHO3D_LOGWARNING(message);
+        FLOCKSDK_LOGWARNING(message);
         break;
 
     default:
-        URHO3D_LOGINFO(message);
+        FLOCKSDK_LOGINFO(message);
         break;
     }
 }

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ class asITypeInfo;
 
 struct asSMessageInfo;
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 extern const char* LOGIC_CATEGORY;
@@ -51,9 +51,9 @@ enum DumpMode
 };
 
 /// Scripting subsystem. Allows execution of AngelScript.
-class URHO3D_API Script : public Object
+class FLOCKSDK_API Script : public Object
 {
-    URHO3D_OBJECT(Script, Object);
+    FLOCKSDK_OBJECT(Script, Object);
 
     friend class ScriptFile;
 
@@ -71,7 +71,7 @@ public:
     void SetDefaultScene(Scene* scene);
     /// Set whether to execute engine console commands as script code.
     void SetExecuteConsoleCommands(bool enable);
-    /// Print the whole script API (all registered classes, methods and properties) to the log. No-ops when URHO3D_LOGGING not defined.
+    /// Print the whole script API (all registered classes, methods and properties) to the log. No-ops when FLOCKSDK_LOGGING not defined.
     void DumpAPI(DumpMode mode = DOXYGEN, const String& sourceTree = String::EMPTY);
     /// Log a message from the script engine.
     void MessageCallback(const asSMessageInfo* msg);
@@ -115,7 +115,7 @@ private:
 
     /// Return a script function/method execution context for the current execution nesting level.
     asIScriptContext* GetScriptFileContext();
-    /// Output a sanitated row of script API. No-ops when URHO3D_LOGGING not defined.
+    /// Output a sanitated row of script API. No-ops when FLOCKSDK_LOGGING not defined.
     void OutputAPIRow(DumpMode mode, const String& row, bool removeReference = false, const String& separator = ";");
     /// Handle a console command event.
     void HandleConsoleCommand(StringHash eventType, VariantMap& eventData);
@@ -143,6 +143,6 @@ private:
 };
 
 /// Register Script library objects.
-void URHO3D_API RegisterScriptLibrary(Context* context);
+void FLOCKSDK_API RegisterScriptLibrary(Context* context);
 
 }

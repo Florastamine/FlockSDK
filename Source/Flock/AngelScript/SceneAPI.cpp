@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@
 #include "../Scene/SplinePath.h"
 #include "../Scene/ValueAnimation.h"
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 static void RegisterSerializable(asIScriptEngine* engine)
@@ -288,7 +288,7 @@ static CScriptArray* GetObjectsByCategory(const String& category)
 
 static CScriptArray* GetObjectAttributeInfos(const String& objectType)
 {
-    const Vector<AttributeInfo>* attributes = GetScriptContext()->GetAttributes(Urho3D::StringHash(objectType));
+    const Vector<AttributeInfo>* attributes = GetScriptContext()->GetAttributes(FlockSDK::StringHash(objectType));
     Vector<AttributeInfo> copiedAttributes;
     if (attributes)
         for (Vector<AttributeInfo>::ConstIterator i = attributes->Begin(); i != attributes->End(); ++i)

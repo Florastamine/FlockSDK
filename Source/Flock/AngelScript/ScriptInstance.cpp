@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2017 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@
 
 #include <AngelScript/angelscript.h>
 
-namespace Urho3D
+namespace FlockSDK
 {
 
 static const char* methodDeclarations[] = {
@@ -75,15 +75,15 @@ void ScriptInstance::RegisterObject(Context* context)
 {
     context->RegisterFactory<ScriptInstance>(LOGIC_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
-    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Delayed Method Calls", GetDelayedCallsAttr, SetDelayedCallsAttr, PODVector<unsigned char>,
+    FLOCKSDK_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, bool, true, AM_DEFAULT);
+    FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Delayed Method Calls", GetDelayedCallsAttr, SetDelayedCallsAttr, PODVector<unsigned char>,
         Variant::emptyBuffer, AM_FILE | AM_NOEDIT);
-    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Script File", GetScriptFileAttr, SetScriptFileAttr, ResourceRef,
+    FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Script File", GetScriptFileAttr, SetScriptFileAttr, ResourceRef,
         ResourceRef(ScriptFile::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Class Name", GetClassName, SetClassName, String, String::EMPTY, AM_DEFAULT);
-    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Script Data", GetScriptDataAttr, SetScriptDataAttr, PODVector<unsigned char>, Variant::emptyBuffer,
+    FLOCKSDK_ACCESSOR_ATTRIBUTE("Class Name", GetClassName, SetClassName, String, String::EMPTY, AM_DEFAULT);
+    FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Script Data", GetScriptDataAttr, SetScriptDataAttr, PODVector<unsigned char>, Variant::emptyBuffer,
         AM_FILE | AM_NOEDIT);
-    URHO3D_MIXED_ACCESSOR_ATTRIBUTE("Script Network Data", GetScriptNetworkDataAttr, SetScriptNetworkDataAttr, PODVector<unsigned char>,
+    FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Script Network Data", GetScriptNetworkDataAttr, SetScriptNetworkDataAttr, PODVector<unsigned char>,
         Variant::emptyBuffer, AM_NET | AM_NOEDIT);
 }
 
@@ -215,8 +215,8 @@ void ScriptInstance::SetScriptFile(ScriptFile* scriptFile)
     }
     if (scriptFile)
     {
-        SubscribeToEvent(scriptFile, E_RELOADSTARTED, URHO3D_HANDLER(ScriptInstance, HandleScriptFileReload));
-        SubscribeToEvent(scriptFile, E_RELOADFINISHED, URHO3D_HANDLER(ScriptInstance, HandleScriptFileReloadFinished));
+        SubscribeToEvent(scriptFile, E_RELOADSTARTED, FLOCKSDK_HANDLER(ScriptInstance, HandleScriptFileReload));
+        SubscribeToEvent(scriptFile, E_RELOADFINISHED, FLOCKSDK_HANDLER(ScriptInstance, HandleScriptFileReloadFinished));
     }
 
     scriptFile_ = scriptFile;
@@ -245,7 +245,7 @@ bool ScriptInstance::Execute(const String& declaration, const VariantVector& par
     asIScriptFunction* method = scriptFile_->GetMethod(scriptObject_, declaration);
     if (!method)
     {
-        URHO3D_LOGERROR("Method " + declaration + " not found in class " + className_);
+        FLOCKSDK_LOGERROR("Method " + declaration + " not found in class " + className_);
         return false;
     }
 
@@ -306,12 +306,12 @@ void ScriptInstance::AddEventHandler(StringHash eventType, const String& handler
         method = scriptFile_->GetMethod(scriptObject_, handlerName);
         if (!method)
         {
-            URHO3D_LOGERROR("Event handler method " + handlerName + " not found in " + scriptFile_->GetName());
+            FLOCKSDK_LOGERROR("Event handler method " + handlerName + " not found in " + scriptFile_->GetName());
             return;
         }
     }
 
-    SubscribeToEvent(eventType, URHO3D_HANDLER_USERDATA(ScriptInstance, HandleScriptEvent, (void*)method));
+    SubscribeToEvent(eventType, FLOCKSDK_HANDLER_USERDATA(ScriptInstance, HandleScriptEvent, (void*)method));
 }
 
 void ScriptInstance::AddEventHandler(Object* sender, StringHash eventType, const String& handlerName)
@@ -321,7 +321,7 @@ void ScriptInstance::AddEventHandler(Object* sender, StringHash eventType, const
 
     if (!sender)
     {
-        URHO3D_LOGERROR("Null event sender for event " + String(eventType) + ", handler " + handlerName);
+        FLOCKSDK_LOGERROR("Null event sender for event " + String(eventType) + ", handler " + handlerName);
         return;
     }
 
@@ -333,12 +333,12 @@ void ScriptInstance::AddEventHandler(Object* sender, StringHash eventType, const
         method = scriptFile_->GetMethod(scriptObject_, handlerName);
         if (!method)
         {
-            URHO3D_LOGERROR("Event handler method " + handlerName + " not found in " + scriptFile_->GetName());
+            FLOCKSDK_LOGERROR("Event handler method " + handlerName + " not found in " + scriptFile_->GetName());
             return;
         }
     }
 
-    SubscribeToEvent(sender, eventType, URHO3D_HANDLER_USERDATA(ScriptInstance, HandleScriptEvent, (void*)method));
+    SubscribeToEvent(sender, eventType, FLOCKSDK_HANDLER_USERDATA(ScriptInstance, HandleScriptEvent, (void*)method));
 }
 
 void ScriptInstance::RemoveEventHandler(StringHash eventType)
@@ -530,7 +530,7 @@ void ScriptInstance::CreateObject()
     if (!scriptFile_ || className_.Empty())
         return;
 
-    URHO3D_PROFILE(CreateScriptObject);
+    FLOCKSDK_PROFILE(CreateScriptObject);
 
     scriptObject_ = scriptFile_->CreateObject(className_);
     if (scriptObject_)
@@ -546,7 +546,7 @@ void ScriptInstance::CreateObject()
             scriptFile_->Execute(scriptObject_, methods_[METHOD_START]);
     }
     else
-        URHO3D_LOGERROR("Failed to create object of class " + className_ + " from " + scriptFile_->GetName());
+        FLOCKSDK_LOGERROR("Failed to create object of class " + className_ + " from " + scriptFile_->GetName());
 }
 
 void ScriptInstance::ReleaseObject()
@@ -717,7 +717,7 @@ void ScriptInstance::UpdateEventSubscription()
     Scene* scene = GetScene();
     if (!scene)
     {
-        URHO3D_LOGWARNING("Node is detached from scene, can not subscribe script object to update events");
+        FLOCKSDK_LOGWARNING("Node is detached from scene, can not subscribe script object to update events");
         return;
     }
 
@@ -727,14 +727,14 @@ void ScriptInstance::UpdateEventSubscription()
     {
         if (!subscribed_ && (methods_[METHOD_UPDATE] || methods_[METHOD_DELAYEDSTART] || delayedCalls_.Size()))
         {
-            SubscribeToEvent(scene, E_SCENEUPDATE, URHO3D_HANDLER(ScriptInstance, HandleSceneUpdate));
+            SubscribeToEvent(scene, E_SCENEUPDATE, FLOCKSDK_HANDLER(ScriptInstance, HandleSceneUpdate));
             subscribed_ = true;
         }
 
         if (!subscribedPostFixed_)
         {
             if (methods_[METHOD_POSTUPDATE])
-                SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(ScriptInstance, HandleScenePostUpdate));
+                SubscribeToEvent(scene, E_SCENEPOSTUPDATE, FLOCKSDK_HANDLER(ScriptInstance, HandleScenePostUpdate));
 
             if (methods_[METHOD_FIXEDUPDATE] || methods_[METHOD_FIXEDPOSTUPDATE])
             {
@@ -743,12 +743,12 @@ void ScriptInstance::UpdateEventSubscription()
                 if (world)
                 {
                     if (methods_[METHOD_FIXEDUPDATE])
-                        SubscribeToEvent(world, E_PHYSICSPRESTEP, URHO3D_HANDLER(ScriptInstance, HandlePhysicsPreStep));
+                        SubscribeToEvent(world, E_PHYSICSPRESTEP, FLOCKSDK_HANDLER(ScriptInstance, HandlePhysicsPreStep));
                     if (methods_[METHOD_FIXEDPOSTUPDATE])
-                        SubscribeToEvent(world, E_PHYSICSPOSTSTEP, URHO3D_HANDLER(ScriptInstance, HandlePhysicsPostStep));
+                        SubscribeToEvent(world, E_PHYSICSPOSTSTEP, FLOCKSDK_HANDLER(ScriptInstance, HandlePhysicsPostStep));
                 }
                 else
-                    URHO3D_LOGERROR("No physics world, can not subscribe script object to fixed update events");
+                    FLOCKSDK_LOGERROR("No physics world, can not subscribe script object to fixed update events");
             }
             subscribedPostFixed_ = true;
         }
