@@ -13,7 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "btDiscreteDynamicsWorld.h"
 
@@ -450,7 +450,7 @@ int	btDiscreteDynamicsWorld::stepSimulation( btScalar timeStep,int maxSubSteps, 
 
 		for (int i=0;i<clampedSimulationSteps;i++)
 		{
-            // Urho3D: apply gravity and clear forces on each substep
+            // Flock: apply gravity and clear forces on each substep
             applyGravity();
 			internalSingleStepSimulation(fixedTimeStep);
 			synchronizeMotionStates();

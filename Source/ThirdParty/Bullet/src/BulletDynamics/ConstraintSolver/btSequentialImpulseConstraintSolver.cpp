@@ -13,7 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 //#define COMPUTE_IMPULSE_DENOM 1
 //#define BT_ADDITIONAL_DEBUG
@@ -608,7 +608,7 @@ void btSequentialImpulseConstraintSolver::setupFrictionConstraint(btSolverConstr
 
 //		btScalar positionalError = 0.f;
 
-        // Urho3D: possible friction fix from https://github.com/bulletphysics/bullet3/commit/907ac49892ede3f4a3295f7cbd96759107e5fc0e
+        // Flock: possible friction fix from https://github.com/bulletphysics/bullet3/commit/907ac49892ede3f4a3295f7cbd96759107e5fc0e
 		btScalar velocityError =  desiredVelocity - rel_vel;
 		btScalar velocityImpulse = velocityError * btScalar(solverConstraint.m_jacDiagABInv);
 		solverConstraint.m_rhs = velocityImpulse;
@@ -690,7 +690,7 @@ void btSequentialImpulseConstraintSolver::setupRollingFrictionConstraint(	btSolv
 
 //		btScalar positionalError = 0.f;
 
-        // Urho3D: possible friction fix from https://github.com/bulletphysics/bullet3/commit/907ac49892ede3f4a3295f7cbd96759107e5fc0e
+        // Flock: possible friction fix from https://github.com/bulletphysics/bullet3/commit/907ac49892ede3f4a3295f7cbd96759107e5fc0e
 		btScalar velocityError =  desiredVelocity - rel_vel;
 		btScalar velocityImpulse = velocityError * btScalar(solverConstraint.m_jacDiagABInv);
 		solverConstraint.m_rhs = velocityImpulse;
@@ -1867,7 +1867,7 @@ btScalar btSequentialImpulseConstraintSolver::solveGroupCacheFriendlyFinish(btCo
 		}
 
 		constr->internalSetAppliedImpulse(solverConstr.m_appliedImpulse);
-		// Urho3D: if constraint has infinity breaking threshold, do not break no matter what
+		// Flock: if constraint has infinity breaking threshold, do not break no matter what
         btScalar breakingThreshold = constr->getBreakingImpulseThreshold();
 		if (breakingThreshold < SIMD_INFINITY && btFabs(solverConstr.m_appliedImpulse)>=breakingThreshold)
 		{

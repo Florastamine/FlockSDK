@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2016 the Flock project.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ if [ "$BUILD" == "." ]; then BUILD=$(pwd); fi
 
 # Detect CMake toolchains directory if it is not provided explicitly
 [ "$TOOLCHAINS" == "" ] && TOOLCHAINS="$SOURCE"/CMake/Toolchains
-[ ! -d "$TOOLCHAINS" -a -d "$URHO3D_HOME"/share/Urho3D/CMake/Toolchains ] && TOOLCHAINS="$URHO3D_HOME"/share/Urho3D/CMake/Toolchains
+[ ! -d "$TOOLCHAINS" -a -d "$FLOCK_HOME"/share/Flock/CMake/Toolchains ] && TOOLCHAINS="$FLOCK_HOME"/share/Flock/CMake/Toolchains
 
 # Default to native generator and toolchain if none is specified explicitly
 IFS=#

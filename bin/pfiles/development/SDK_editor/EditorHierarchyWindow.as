@@ -1,4 +1,4 @@
-// Urho3D editor hierarchy window handling
+// Flock editor hierarchy window handling
 
 const int ITEM_NONE = 0;
 const int ITEM_NODE = 1;

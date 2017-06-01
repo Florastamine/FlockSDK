@@ -1,4 +1,4 @@
-// Urho3D editor preferences dialog
+// Flock editor preferences dialog
 
 bool subscribedToEditorPreferences = false;
 Window@ preferencesDialog;

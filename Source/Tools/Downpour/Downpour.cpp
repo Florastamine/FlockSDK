@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2016 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,22 +20,22 @@
 // THE SOFTWARE.
 // 
 
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/LuaScript/LuaScript.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Resource/ResourceEvents.h>
+#include <Flock/Engine/Engine.h>
+#include <Flock/IO/FileSystem.h>
+#include <Flock/IO/Log.h>
+#include <Flock/LuaScript/LuaScript.h>
+#include <Flock/Resource/ResourceCache.h>
+#include <Flock/Resource/ResourceEvents.h>
 
 #include "Downpour.h"
 
 namespace Downpour {
 
-DownpourBase::DownpourBase(Urho3D::Context* context) : Urho3D::Application(context) {}
+DownpourBase::DownpourBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
 
 void DownpourBase::Setup()
 {
-    auto fsObject = GetSubsystem<Urho3D::FileSystem>();
+    auto fsObject = GetSubsystem<FlockSDK::FileSystem>();
 
     if(fsObject)
     {
@@ -55,17 +55,17 @@ void DownpourBase::Setup()
 
 void DownpourBase::Start()
 {
-    context_->RegisterSubsystem(new Urho3D::LuaScript(context_)); 
-    auto scriptHandle = GetSubsystem<Urho3D::LuaScript>();
+    context_->RegisterSubsystem(new FlockSDK::LuaScript(context_)); 
+    auto scriptHandle = GetSubsystem<FlockSDK::LuaScript>();
 
     if (scriptHandle->ExecuteFile(moduleName_)) 
     {
         scriptHandle->ExecuteFunction("Start"); 
         if (moduleName_.Contains("SDK")) 
         {
-            SubscribeToEvent(moduleEditorPtr_, Urho3D::E_RELOADSTARTED, URHO3D_HANDLER(Downpour::DownpourBase, HandleScriptReloadStarted));
-            SubscribeToEvent(moduleEditorPtr_, Urho3D::E_RELOADFINISHED, URHO3D_HANDLER(Downpour::DownpourBase, HandleScriptReloadFinished));
-            SubscribeToEvent(moduleEditorPtr_, Urho3D::E_RELOADFAILED, URHO3D_HANDLER(Downpour::DownpourBase, HandleScriptReloadFailed));
+            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADSTARTED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadStarted));
+            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADFINISHED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadFinished));
+            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADFAILED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadFailed));
         }
         return; 
     }
@@ -84,19 +84,19 @@ void DownpourBase::Stop()
     }
     else
     {
-        Urho3D::LuaScript* luaScript = GetSubsystem<Urho3D::LuaScript>();
+        FlockSDK::LuaScript* luaScript = GetSubsystem<FlockSDK::LuaScript>();
         if (luaScript && luaScript->GetFunction("Stop", true))
             luaScript->ExecuteFunction("Stop");
     }
 }
 
-void DownpourBase::HandleScriptReloadStarted(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
+void DownpourBase::HandleScriptReloadStarted(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
 {
     if (moduleEditorPtr_->GetFunction("Stop"))
         moduleEditorPtr_->ExecuteFunction("Stop");
 }
 
-void DownpourBase::HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
+void DownpourBase::HandleScriptReloadFinished(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
 {
     // Restart the script application after reload
     if (!moduleEditorPtr_->ExecuteFunction("Start"))
@@ -106,7 +106,7 @@ void DownpourBase::HandleScriptReloadFinished(Urho3D::StringHash eventType, Urho
     }
 }
 
-void DownpourBase::HandleScriptReloadFailed(Urho3D::StringHash eventType, Urho3D::VariantMap& eventData)
+void DownpourBase::HandleScriptReloadFailed(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
 {
     moduleEditorPtr_.Reset();
     ErrorExit();
@@ -122,10 +122,10 @@ void DownpourBase::Exit(void)
 
 int main(int argc, char **argv) 
 {
-    auto *DPContext = new Urho3D::Context();
+    auto *DPContext = new FlockSDK::Context();
     auto *DPGame    = new Downpour::DownpourBase(DPContext);
     DPGame->argc_   = argc;
-    DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : Urho3D::String::EMPTY;
+    DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
 
-    return (Urho3D::SharedPtr<Downpour::DownpourBase>(DPGame))->Run();
+    return (FlockSDK::SharedPtr<Downpour::DownpourBase>(DPGame))->Run();
 } 

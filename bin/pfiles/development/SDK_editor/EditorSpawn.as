@@ -1,4 +1,4 @@
-// Urho3D spawn editor
+// Flock spawn editor
 
 LineEdit@ positionOffsetX;
 LineEdit@ positionOffsetY;

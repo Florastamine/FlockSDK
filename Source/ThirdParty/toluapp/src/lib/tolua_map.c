@@ -12,7 +12,7 @@
 ** enhancements, or modifications.
 */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #include "tolua++.h"
 #include "tolua_event.h"
@@ -27,7 +27,7 @@
 /* Create metatable
 	* Create and register new metatable
 */
-static int tolua_newmetatable (lua_State* L, const char* name)	// Urho3D - const correctness
+static int tolua_newmetatable (lua_State* L, const char* name)	// Flock - const correctness
 {
 	int r = luaL_newmetatable(L,name);
 

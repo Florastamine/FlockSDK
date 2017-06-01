@@ -20,7 +20,7 @@
  
  */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "btMultiBody.h"
 #include "btMultiBodyLink.h"
@@ -28,7 +28,7 @@
 #include "btMultiBodyJointFeedback.h"
 #include "LinearMath/btTransformUtil.h"
 #include "LinearMath/btSerializer.h"
-// Urho3D: disable include
+// Flock: disable include
 //#include "Bullet3Common/b3Logging.h"
 // #define INCLUDE_GYRO_TERM 
 

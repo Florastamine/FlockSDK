@@ -1,4 +1,4 @@
-// Urho3D editor settings dialog
+// Flock editor settings dialog
 bool subscribedToEditorSettings = false;
 Window@ settingsDialog;
 String defaultTags;

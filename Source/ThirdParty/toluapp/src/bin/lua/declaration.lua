@@ -9,7 +9,7 @@
 -- the author has no obligation to provide maintenance, support, updates,
 -- enhancements, or modifications.
 
--- Modified by Yao Wei Tjong for Urho3D
+-- Modified by Yao Wei Tjong for Flock
 
 
 -- Declaration class
@@ -523,7 +523,7 @@ function Declaration (s,kind,is_parameter)
   }
  end
 
- -- Urho3D: comply with stricter escape sequence 
+ -- Flock: comply with stricter escape sequence 
  -- check the form: mod type* name
  local s1 = gsub(s,"(%b\\[\\])",function (n) return gsub(n,'%*','\1') end)
  t = split_c_tokens(s1,'%*')

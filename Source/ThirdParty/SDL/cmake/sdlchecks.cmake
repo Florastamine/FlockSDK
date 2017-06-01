@@ -19,10 +19,10 @@
 # 3. This notice may not be removed or altered from any source distribution.
 #
 
-# Modified by Yao Wei Tjong for Urho3D, the modified portion is licensed under below license
+# Modified by Yao Wei Tjong for Flock, the modified portion is licensed under below license
 
 #
-# Copyright (c) 2008-2016 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@
 # THE SOFTWARE.
 #
 
-# Urho3D - replaced FindLibraryAndSONAME macro with get_soname macro
+# Flock - replaced FindLibraryAndSONAME macro with get_soname macro
 macro (get_soname SONAME LIB)
   if (${LIB})
     get_filename_component (REALPATH ${${LIB}} REALPATH)
@@ -57,12 +57,12 @@ macro (get_soname SONAME LIB)
 endmacro ()
 
 macro(CheckDLOPEN)
-  # Urho3D - bug fix - to be consistent with the rest of the check macros here, only do the check when the feature is actually wanted
+  # Flock - bug fix - to be consistent with the rest of the check macros here, only do the check when the feature is actually wanted
   if (SDL_LOADSO)
-    # Urho3D - bypass the checks for Emscripten as they don't work but assume it is supported (https://github.com/kripken/emscripten/wiki/Linking#dlopen-dynamic-linking)
+    # Flock - bypass the checks for Emscripten as they don't work but assume it is supported (https://github.com/kripken/emscripten/wiki/Linking#dlopen-dynamic-linking)
     if (EMSCRIPTEN)
     else ()
-      # Urho3D - bug fix - use different variables for different checks because of CMake caches the result variable
+      # Flock - bug fix - use different variables for different checks because of CMake caches the result variable
       check_function_exists(dlopen DLOPEN_FOUND)
       if(NOT DLOPEN_FOUND)
         foreach(_LIBNAME dl tdl)
@@ -102,7 +102,7 @@ endmacro()
 # - n/a
 macro(CheckOSS)
   if(OSS)
-    # Urho3D - bug fix - should use different variables for different checks, however, we replace the whole checks with find_package() approach for consistency sake
+    # Flock - bug fix - should use different variables for different checks, however, we replace the whole checks with find_package() approach for consistency sake
     find_package (OSS)
     if(OSS_FOUND)
       include_directories (${OSS_INCLUDE_DIRS})
@@ -130,7 +130,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckALSA)
   if(ALSA)
-    # Urho3D - bug fix - use the more trusted FindALSA module as it has been tested to work for both native and cross-compiling build
+    # Flock - bug fix - use the more trusted FindALSA module as it has been tested to work for both native and cross-compiling build
     find_package (ALSA)
     # todo: remove this fix when the minimum CMake version has been raised to higher than 2.8.7
     # There is a bug in older version of FindALSA.cmake module where it erroneously include 'alsa' directory component into the variable
@@ -167,7 +167,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckPulseAudio)
   if(PULSEAUDIO)
-    # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
+    # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
     find_package (PulseAudio)
     if(PULSEAUDIO_FOUND)
       include_directories (${PULSEAUDIO_INCLUDE_DIRS})
@@ -175,7 +175,7 @@ macro(CheckPulseAudio)
       file(GLOB PULSEAUDIO_SOURCES ${SDL2_SOURCE_DIR}/src/audio/pulseaudio/*.c)
       set(SOURCE_FILES ${SOURCE_FILES} ${PULSEAUDIO_SOURCES})
       set(SDL_AUDIO_DRIVER_PULSEAUDIO 1)
-      # Urho3D - commented out appending EXTRA_CFLAGS for compiling with PulseAudio, there should not be any except "-D_REENTRANT" which is also redundant for our configuration setup as we use '-pthread' compiler flags to do the right things automatically
+      # Flock - commented out appending EXTRA_CFLAGS for compiling with PulseAudio, there should not be any except "-D_REENTRANT" which is also redundant for our configuration setup as we use '-pthread' compiler flags to do the right things automatically
       if(PULSEAUDIO_SHARED)
         if(NOT HAVE_DLOPEN)
           message_warn("You must have SDL_LoadObject() support for dynamic PulseAudio loading")
@@ -199,7 +199,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckSNDIO)
   if(SNDIO)
-    # Urho3D - bug fix - do not use check_include_file() for detection as it only works for host environment and not for rooted environment when cross-compiling
+    # Flock - bug fix - do not use check_include_file() for detection as it only works for host environment and not for rooted environment when cross-compiling
     find_package (RoarAudio)
     if(SNDIO_FOUND)
       include_directories (${SNDIO_INCLUDE_DIRS})
@@ -230,7 +230,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckFusionSound)
   if(FUSIONSOUND)
-    # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
+    # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
     find_package (FusionSound 1.0.0)
     if(FUSIONSOUND_FOUND)
       include_directories (${FUSIONSOUND_INCLUDE_DIRS})
@@ -261,7 +261,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckX11)
   if(VIDEO_X11)
-    # Urho3D - bug fix - in order to make these checks below work on both native and cross-compiling builds we need to add the '-shared' compiler flags to ensure the linker does not attempt to statically link against X11 shared libs which would otherwise fail the test when in cross-compiling mode
+    # Flock - bug fix - in order to make these checks below work on both native and cross-compiling builds we need to add the '-shared' compiler flags to ensure the linker does not attempt to statically link against X11 shared libs which would otherwise fail the test when in cross-compiling mode
     set(CMAKE_REQUIRED_FLAGS "-fPIC -shared ${ORIG_CMAKE_REQUIRED_FLAGS}")
     foreach (NAME X11 Xext Xcursor Xinerama Xi Xrandr Xrender Xss Xxf86vm)
       string (TOUPPER ${NAME} UPCASE_NAME)
@@ -270,8 +270,8 @@ macro(CheckX11)
       get_soname (${UPCASE_NAME}_LIB_SONAME ${UPCASE_NAME}_LIB)
     endforeach ()
 
-    # Urho3D - commented out setting of X_CFLAGS based on the search result for X11/Xlib.h using the default search path (if it is found then it is in default path anyway so no point to add it into compiler header search path again)
-    # Urho3D - add check for Xdbe extension
+    # Flock - commented out setting of X_CFLAGS based on the search result for X11/Xlib.h using the default search path (if it is found then it is in default path anyway so no point to add it into compiler header search path again)
+    # Flock - add check for Xdbe extension
 
     check_include_file(X11/Xcursor/Xcursor.h HAVE_XCURSOR_H)
     check_include_file(X11/extensions/Xinerama.h HAVE_XINERAMA_H)
@@ -302,7 +302,7 @@ macro(CheckX11)
 
       check_function_exists("shmat" HAVE_SHMAT)
       if(NOT HAVE_SHMAT)
-        # Urho3D - bug fix - use different variables for different checks because of CMake caches the result variable
+        # Flock - bug fix - use different variables for different checks because of CMake caches the result variable
         check_library_exists(ipc shmat "" HAVE_SHMAT_IN_IPC)
         if(HAVE_SHMAT_IN_IPC)
           list(APPEND EXTRA_LIBS ipc)
@@ -325,7 +325,7 @@ macro(CheckX11)
           set(SDL_VIDEO_DRIVER_X11_DYNAMIC "\"${X11_LIB_SONAME}\"")
           set(SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT "\"${XEXT_LIB_SONAME}\"")
         else()
-          # Urho3D - bug fix - the EXTRA_LIBS is list of library names (not the fully-qualified path to the library itself)
+          # Flock - bug fix - the EXTRA_LIBS is list of library names (not the fully-qualified path to the library itself)
           list (APPEND EXTRA_LIBS X11 Xext)
         endif()
       endif()
@@ -453,7 +453,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckMir)
     if(VIDEO_MIR)
-        # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
+        # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
         find_package (Mir)
         if (MIR_FOUND)
             include_directories (${MIR_INCLUDE_DIRS})
@@ -510,7 +510,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckWayland)
   if(VIDEO_WAYLAND)
-    # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
+    # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
     find_package (Wayland)
     if(WAYLAND_FOUND)
       include_directories (${WAYLAND_INCLUDE_DIRS})
@@ -559,7 +559,7 @@ macro(CheckWayland)
   endif()
 endmacro()
 
-# Urho3D - commented out CheckCOCOA macro as it does not perform any check at all, moved the code to SDL's CMakeLists.txt
+# Flock - commented out CheckCOCOA macro as it does not perform any check at all, moved the code to SDL's CMakeLists.txt
 
 # Requires:
 # - n/a
@@ -568,7 +568,7 @@ endmacro()
 # - HAVE_DLOPEN opt
 macro(CheckDirectFB)
   if(VIDEO_DIRECTFB)
-    # Urho3D - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
+    # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
     find_package (DirectFB 1.0.0)
     if(DIRECTFB_FOUND)
       include_directories (${DIRECTFB_INCLUDE_DIRS})
@@ -595,10 +595,10 @@ endmacro()
 
 # Requires:
 # - nada
-# Urho3D - rename the macro to be generic OpenGL check and make it also work for OSX platform
+# Flock - rename the macro to be generic OpenGL check and make it also work for OSX platform
 macro(CheckOpenGL)
   if(VIDEO_OPENGL)
-    # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" option or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
+    # Flock - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" option or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
     if (CMAKE_CROSSCOMPILING AND SYSROOT AND NOT CMAKE_REQUIRED_INCLUDES)
       set (CMAKE_REQUIRED_FLAGS "--sysroot=\"${SYSROOT}\" ${ORIG_CMAKE_REQUIRED_FLAGS}")
     endif ()
@@ -632,7 +632,7 @@ endmacro()
 # PTHREAD_LIBS
 macro(CheckPTHREAD)
   if(PTHREADS)
-    # Urho3D - TODO - below hardcoding is ugly and should be refactored/removed, however, we/I don't have all the necessary means to verify the changes
+    # Flock - TODO - below hardcoding is ugly and should be refactored/removed, however, we/I don't have all the necessary means to verify the changes
     if(LINUX)
       set(PTHREAD_CFLAGS "-D_REENTRANT")
       set(PTHREAD_LDFLAGS "-pthread")
@@ -655,7 +655,7 @@ macro(CheckPTHREAD)
 
     # Run some tests
     set(CMAKE_REQUIRED_FLAGS "${PTHREAD_CFLAGS} ${PTHREAD_LDFLAGS} ${ORIG_CMAKE_REQUIRED_FLAGS}")
-    # Urho3D - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" option or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
+    # Flock - bug fix - when cross-compiling the headers are rooted, either use "--sysroot" option or use CMAKE_REQUIRED_INCLUDES (e.g. on RPI) to cater for it
     if(CMAKE_CROSSCOMPILING)
       if (SYSROOT AND NOT CMAKE_REQUIRED_INCLUDES)
         set (CMAKE_REQUIRED_FLAGS "--sysroot=\"${SYSROOT}\" ${ORIG_CMAKE_REQUIRED_FLAGS}")
@@ -678,7 +678,7 @@ macro(CheckPTHREAD)
     endif()
     if(HAVE_PTHREADS)
       set(SDL_THREAD_PTHREAD 1)
-      # Urho3D - we configure to use "-pthread" compiler flags globally (when it is supported) and expect the respective compiler toolchain to do the right things automatically
+      # Flock - we configure to use "-pthread" compiler flags globally (when it is supported) and expect the respective compiler toolchain to do the right things automatically
       set(SDL_CFLAGS "${SDL_CFLAGS} ${PTHREAD_CFLAGS}")
       list(APPEND SDL_LIBS ${PTHREAD_LDFLAGS})
 
@@ -752,7 +752,7 @@ endmacro()
 # USB_LIBS
 # USB_CFLAGS
 macro(CheckUSBHID)
-  # Urho3D - no fix required - all these checks appear to be for BSD only, assume only native build
+  # Flock - no fix required - all these checks appear to be for BSD only, assume only native build
   #          Cannot fix them for X-compiling anyway as we/I don't have the necessary means to verify the changes
   check_library_exists(usbhid hid_init "" LIBUSBHID)
   if(LIBUSBHID)

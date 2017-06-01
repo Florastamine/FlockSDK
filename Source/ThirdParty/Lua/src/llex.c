@@ -4,7 +4,7 @@
 ** See Copyright Notice in lua.h
 */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #include <ctype.h>
 #include <locale.h>
@@ -180,7 +180,7 @@ static void buffreplace (LexState *ls, char from, char to) {
 static void trydecpoint (LexState *ls, SemInfo *seminfo) {
   /* format error: try to update decimal point separator */
   char old = ls->decpoint;
-  // Urho3D: workaround for Android's broken locale.h
+  // Flock: workaround for Android's broken locale.h
   #ifdef __ANDROID__
   ls->decpoint = '.';
   #else

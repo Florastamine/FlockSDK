@@ -1,4 +1,4 @@
-// Urho3D editor node transform gizmo handling
+// Flock editor node transform gizmo handling
 
 Node@ gizmoNode;
 StaticModel@ gizmo;

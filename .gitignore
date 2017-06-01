@@ -11,18 +11,18 @@
 /include/
 /lib*/
 generated/
-/Source/Urho3D/tolua++-prefix/
+/Source/Flock/tolua++-prefix/
 
 # Output files
 /Source/**/*.a
 /Source/ThirdParty/LuaJIT/src/host/buildvm
 /Source/ThirdParty/LuaJIT/src/host/buildvm_arch.h
 /Source/ThirdParty/LuaJIT/src/host/minilua
-/Source/Urho3D/Precompiled.cpp
-/Source/Urho3D/Urho3D.h
-/Source/Urho3D/Urho3D.pc
-/Source/Urho3D/Urho3DAll.h
-/Source/Urho3D/librevision.h
+/Source/Flock/Precompiled.cpp
+/Source/Flock/Flock.h
+/Source/Flock/Flock.pc
+/Source/Flock/FlockAll.h
+/Source/Flock/librevision.h
 
 # Compiled shaders
 *.vs?

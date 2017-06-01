@@ -20,4 +20,4 @@
 
 __f0__=${0##*/}
 
-./build-linux-generic.sh ./${__f0__%.*} -DURHO3D_64BIT=0 
+./build-linux-generic.sh ./${__f0__%.*} -DFLOCK_64BIT=0 

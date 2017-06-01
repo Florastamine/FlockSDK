@@ -2,7 +2,7 @@
 Initial release. 
 
 # Release 2 -- 01.27.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing)) 
-These builds incorporated a few bug-fixes introduced in the main `Urho3D` repository as well as new features and upgrades of existing 3rd party libraries. Most notably: 
+These builds incorporated a few bug-fixes introduced in the main `Flock` repository as well as new features and upgrades of existing 3rd party libraries. Most notably: 
 * Upgraded [AngelScript](http://www.angelcode.com/angelscript/) from `2.30.2` to `2.31.2`. 
 * Completely removed support for touch controls and touch input. (Because `Windows` and `Linux` are the only two target platforms that are officially supported, and touch controls are more popular on mobile devices. Also the code base would be simplified a lot.) 
 * Gotten rid of legacy and/or unpopular file formats to reduce the size of the AssetImporter tool. (around 5 MiB was cut due to the dropping of a lot of file formats) 
@@ -29,7 +29,7 @@ As usual, this release brought in various fixes, tweaks, upgrades, modifications
 This release does not only moves further into the goal of driving away from the original codebase, but also contains various bugfixes and improvements, outlined below. 
 * General bug-fixes and tweaks. 
 * New editor feature: Basic terrain editing within the editor, which includes terrain manipulation/smoothing, different brush size/types, undo/redo support, and heightmap saving/loading.
-* Dropped the switch to enable C++11 (`-DURHO3D_C++11`). This is an old switch that was left from the `Urho3D` codebase and is used to enable C++11 support, but it was dropped and now C++11 is mandatorily required. 
+* Dropped the switch to enable C++11 (`-DURHO3D_C++11`). This is an old switch that was left from the `Flock` codebase and is used to enable C++11 support, but it was dropped and now C++11 is mandatorily required. 
 * The 2D component is now an integral part of the SDK, which adds an additional ~2.0 `MiB` overhead to the built executable. 
 * Upgraded [Open Asset Import Library](http://www.assimp.org) from `3.1.1` to `3.3.1`, **thus effectively rendering pre-C++11 compilers to not be able to compile the SDK**. **(*)** 
 * Upgraded [pugixml](http://pugixml.org) from `1.7` to `1.8`. 
@@ -45,7 +45,7 @@ This release does not only moves further into the goal of driving away from the 
 **`Release 4` is the last major release which still provides partial support for compiling the SDK under MSVC compilers. Starting from the fifth release, users are recommended to switch to [Cygwin](https://www.cygwin.com)/[MinGW-W64](http://mingw-w64.org/doku.php)/[MSYS2](http://www.msys2.org) instead.** 
 
 # Release 5 -- 03.31.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing)) 
-This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Urho3D developers and myself. Enjoy!
+This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Flock developers and myself. Enjoy!
 * General bug-fixes and tweaks. 
 * Physics support is now enforced. 
 * Profiling support is now included by default in the build scripts, which can be left out easily. 

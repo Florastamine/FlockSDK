@@ -9,7 +9,7 @@
 -- the author has no obligation to provide maintenance, support, updates,
 -- enhancements, or modifications.
 
--- Modified by Yao Wei Tjong for Urho3D
+-- Modified by Yao Wei Tjong for Flock
 
 
 -- Feature class
@@ -130,7 +130,7 @@ function classFeature:cfuncname (n)
   n = self.parent:cfuncname(n)
  end
 
- -- Urho3D: comply with stricter escape sequence 
+ -- Flock: comply with stricter escape sequence 
  local fname = self.lname
  if not fname or fname == '' then
  	fname = self.name

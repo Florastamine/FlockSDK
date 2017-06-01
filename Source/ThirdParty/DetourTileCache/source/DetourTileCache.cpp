@@ -1,4 +1,4 @@
-// Modified by Lasse Oorni and cosmy1 for Urho3D
+// Modified by Lasse Oorni and cosmy1 for Flock
 
 #include "DetourTileCache.h"
 #include "DetourTileCacheBuilder.h"
@@ -80,14 +80,14 @@ dtTileCache::dtTileCache() :
 {
 	memset(&m_params, 0, sizeof(m_params));
 
-	// Urho3D: initialize all class members
+	// Flock: initialize all class members
 	memset(&m_reqs, 0, sizeof(m_reqs));
 	memset(&m_update, 0, sizeof(m_update));
 }
 	
 dtTileCache::~dtTileCache()
 {
-	// Urho3D: added null check for tile allocation
+	// Flock: added null check for tile allocation
 	if (m_tiles)
 	{
 		for (int i = 0; i < m_params.maxTiles; ++i)

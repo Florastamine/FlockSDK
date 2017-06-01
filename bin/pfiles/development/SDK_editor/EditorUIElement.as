@@ -1,4 +1,4 @@
-// Urho3D editor UI-element handling
+// Flock editor UI-element handling
 
 UIElement@ editorUIElement;
 XMLFile@ uiElementDefaultStyle;

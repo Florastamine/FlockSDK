@@ -16,7 +16,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by cosmy1 for Urho3D
+// Modified by cosmy1 for Flock
 
 #include "DetourObstacleAvoidance.h"
 #include "DetourCommon.h"
@@ -207,7 +207,7 @@ void dtFreeObstacleAvoidanceQuery(dtObstacleAvoidanceQuery* ptr)
 	dtFree(ptr);
 }
 
-// Urho3D: initialize all class members
+// Flock: initialize all class members
 dtObstacleAvoidanceQuery::dtObstacleAvoidanceQuery() :
 	m_maxCircles(0),
 	m_circles(0),
@@ -215,11 +215,11 @@ dtObstacleAvoidanceQuery::dtObstacleAvoidanceQuery() :
 	m_maxSegments(0),
 	m_segments(0),
 	m_nsegments(0),
-	m_invHorizTime(0), // Urho3D
-	m_vmax(0), // Urho3D
-	m_invVmax(0) // Urho3D
+	m_invHorizTime(0), // Flock
+	m_vmax(0), // Flock
+	m_invVmax(0) // Flock
 {
-	memset(&m_params, 0, sizeof(m_params)); // Urho3D
+	memset(&m_params, 0, sizeof(m_params)); // Flock
 }
 
 dtObstacleAvoidanceQuery::~dtObstacleAvoidanceQuery()

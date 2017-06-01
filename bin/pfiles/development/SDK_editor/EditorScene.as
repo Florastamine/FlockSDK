@@ -1,4 +1,4 @@
-/// Urho3D editor scene handling
+/// Flock editor scene handling
 
 #include "development/SDK_editor/EditorHierarchyWindow.as"
 #include "development/SDK_editor/EditorInspectorWindow.as"

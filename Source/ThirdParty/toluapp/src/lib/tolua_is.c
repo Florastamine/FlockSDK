@@ -12,7 +12,7 @@
 ** enhancements, or modifications.
 */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #include "tolua++.h"
 #include "lauxlib.h"
@@ -118,7 +118,7 @@ TOLUA_API void tolua_error (lua_State* L, const char* msg, tolua_Error* err)
 }
 
 /* the equivalent of lua_is* for usertable */
-// Modified by Aster Jian for Urho3D.
+// Modified by Aster Jian for Flock.
 static  int lua_isusertable (lua_State* L, int lo, const char* type)
 {
 	int r = 0;
@@ -341,7 +341,7 @@ TOLUA_API int tolua_isbooleanarray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
@@ -370,7 +370,7 @@ TOLUA_API int tolua_isnumberarray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
@@ -399,7 +399,7 @@ TOLUA_API int tolua_isstringarray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
@@ -428,7 +428,7 @@ TOLUA_API int tolua_istablearray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
@@ -457,7 +457,7 @@ TOLUA_API int tolua_isuserdataarray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
@@ -486,13 +486,13 @@ TOLUA_API int tolua_isusertypearray
 	else
 	{
 		int i;
-		if (dim == -1)		// Urho3D - auto detect the array size if -1 is given
+		if (dim == -1)		// Flock - auto detect the array size if -1 is given
 			dim = (int)lua_objlen(L, lo);
 		for (i=1; i<=dim; ++i)
 		{
 			lua_pushnumber(L,i);
 			lua_gettable(L,lo);
-	  if (!(lua_isnil(L,-1) || lua_isusertype(L,-1, type)) &&	// Urho3D - bug fix to check user type instead of user data
+	  if (!(lua_isnil(L,-1) || lua_isusertype(L,-1, type)) &&	// Flock - bug fix to check user type instead of user data
 			    !(def && lua_isnil(L,-1))
 						)
 			{

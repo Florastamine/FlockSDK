@@ -1,4 +1,4 @@
-// Urho3D editor layer window
+// Flock editor layer window
 
 enum EditMaskType
 {

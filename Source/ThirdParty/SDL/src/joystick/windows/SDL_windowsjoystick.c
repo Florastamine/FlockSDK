@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include "../../SDL_internal.h"
 
@@ -45,11 +45,11 @@
 #include "SDL_joystick.h"
 #include "../SDL_sysjoystick.h"
 #include "../../thread/SDL_systhread.h"
-// Urho3D: set WINVER if not defined
+// Flock: set WINVER if not defined
 #ifndef WINVER
 #define WINVER 0x0500
 #endif
-// Urho3D: set WINVER if not defined
+// Flock: set WINVER if not defined
 #ifndef WINVER
 #define WINVER 0x0500
 #endif

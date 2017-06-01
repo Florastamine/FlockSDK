@@ -1,5 +1,5 @@
 //  @class ProcSky
-//  @brief Procedural Sky component for Urho3D
+//  @brief Procedural Sky component for Flock
 //  @author carnalis <carnalis.j@gmail.com>
 //  @license MIT License
 //  @copyright

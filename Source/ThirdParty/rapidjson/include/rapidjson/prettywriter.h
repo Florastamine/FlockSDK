@@ -12,7 +12,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-// Modified by Ali Kamarainen for Urho3D
+// Modified by Ali Kamarainen for Flock
 
 #ifndef RAPIDJSON_PRETTYWRITER_H_
 #define RAPIDJSON_PRETTYWRITER_H_
@@ -75,7 +75,7 @@ public:
         \note The default indentation is 4 spaces.
     */
     PrettyWriter& SetIndent(Ch indentChar, unsigned indentCharCount) {
-        // Urho3D: in order to be consistent with the XMLFile API, allow any character.
+        // Flock: in order to be consistent with the XMLFile API, allow any character.
         //RAPIDJSON_ASSERT(indentChar == ' ' || indentChar == '\t' || indentChar == '\n' || indentChar == '\r');
         indentChar_ = indentChar;
         indentCharCount_ = indentCharCount;

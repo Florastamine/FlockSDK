@@ -1,10 +1,10 @@
 ## Welcome! 
 
 **Q: What is this mess?** 
-A: It's a general-purpose game engine written in a mixutre of C and C++, and provides scripting support through Lua/LuaJIT. Originally derived from the [Urho3D game engine](https://github.com/urho3d/Urho3D) when the engine is `322 commits` ahead of its `1.6` release, and since then the fork has been received patches, modifications, cuts and updates introduced by both the [Urho3D](https://github.com/urho3d/Urho3D) developers and myself. It's now being used for my upcoming video game project, and as such, it contains changes and additions that are very specific to meet my goals and thus probably aren't very useful for everyone else. 
+A: It's a general-purpose game engine written in a mixutre of C and C++, and provides scripting support through Lua/LuaJIT. Originally derived from the [Flock game engine](https://github.com/urho3d/Flock) when the engine is `322 commits` ahead of its `1.6` release, and since then the fork has been received patches, modifications, cuts and updates introduced by both the [Flock](https://github.com/urho3d/Flock) developers and myself. It's now being used for my upcoming video game project, and as such, it contains changes and additions that are very specific to meet my goals and thus probably aren't very useful for everyone else. 
 
-**Q: What are the exact differences between Urho3D and Downpour/IWBHT_SDK?** 
-A: In short: Heavy focus on Windows and Linux as both development and target platforms; Integration of various third-party libraries/tools, natively; Upgrades of several dependencies to their newer versions; A growing collection of pre-built, ready-to-use shaders with customizable parameters; C++11 with std-based containers instead of Urho3D-based containers; Bugfixes and upgrades to the core API, as well as a Lua-based standard library to help you in getting started in writing applications and games in Downpour. 
+**Q: What are the exact differences between Flock and Downpour/IWBHT_SDK?** 
+A: In short: Heavy focus on Windows and Linux as both development and target platforms; Integration of various third-party libraries/tools, natively; Upgrades of several dependencies to their newer versions; A growing collection of pre-built, ready-to-use shaders with customizable parameters; C++11 with std-based containers instead of Flock-based containers; Bugfixes and upgrades to the core API, as well as a Lua-based standard library to help you in getting started in writing applications and games in Downpour. 
 
 **Q: Why did you remove support for macOS?** 
 A: Because I don't have a Mac myself for proper testing. If there's enough interest, I will add some sort of CI testing for Mac builds. 
@@ -26,4 +26,4 @@ Latest **unstable** binaries were built and released on `03.31.2017`, and can be
 A: Instructions are provided [here](https://github.com/Florastamine/IWBHT_SDK/blob/master/BUILDING.md). In short, you will need `cmake` and `g++`. `msvc` isn't supported. A `C++11`-conformant compiler is required for the building process. If you're building on Windows, you can use [MinGW-W64](https://sourceforge.net/projects/mingw-w64/) instead. 
 
 **Q: License?** 
-A: The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
+A: The fork follows the same license as [Flock](https://github.com/urho3d/Flock), and there is no intention of keeping it compatible with the original code. 

@@ -1,4 +1,4 @@
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #ifndef BT_CPU_UTILITY_H
 #define BT_CPU_UTILITY_H
@@ -17,7 +17,7 @@
 #define ARM_NEON_GCC_COMPATIBILITY  1
 #include <arm_neon.h>
 #include <sys/types.h>
-// Urho3D - enable NEON on generic ARM
+// Flock - enable NEON on generic ARM
 #ifdef __APPLE__
 #include <sys/sysctl.h> //for sysctlbyname
 #endif //__APPLE__
@@ -46,7 +46,7 @@ public:
 		}
 
 #ifdef BT_USE_NEON
-// Urho3D - enable NEON on generic ARM
+// Flock - enable NEON on generic ARM
 #ifdef __APPLE__
 		{
 			uint32_t hasFeature = 0;

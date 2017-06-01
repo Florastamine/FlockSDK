@@ -16,7 +16,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by Lasse Oorni for Urho3D
+// Modified by Lasse Oorni for Flock
 
 #include <float.h>
 #include <string.h>
@@ -210,7 +210,7 @@ dtNavMesh::dtNavMesh() :
 
 dtNavMesh::~dtNavMesh()
 {
-	// Urho3D: added null check for tile allocation
+	// Flock: added null check for tile allocation
 	if (m_tiles)
 	{
 		for (int i = 0; i < m_maxTiles; ++i)

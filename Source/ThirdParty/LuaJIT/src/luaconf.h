@@ -3,7 +3,7 @@
 ** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 */
 
-// Modified by Yao Wei Tjong for Urho3D
+// Modified by Yao Wei Tjong for Flock
 
 #ifndef luaconf_h
 #define luaconf_h
@@ -17,7 +17,7 @@
 #define DOWNPOUR_PATCH  
 
 /* Default path for loading Lua and C modules with require(). */
-// Urho3D: add Urho3D-specific directories into search path
+// Flock: add Flock-specific directories into search path
 #if defined(_WIN32)
 /*
 ** In Windows, any exclamation mark ('!') in the path is replaced by the

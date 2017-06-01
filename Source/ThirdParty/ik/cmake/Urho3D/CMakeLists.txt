@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2017 the Urho3D project.
+# Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -84,6 +84,6 @@ setup_library ()
 # install targets
 ###############################################################################
 
-# Install headers for building and using the Urho3D library
+# Install headers for building and using the Flock library
 install_header_files (DIRECTORY ../../ik/include/ik/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/ik)
 install_header_files (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../include/ik/gen/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/ik/gen)

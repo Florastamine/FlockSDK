@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2016 the Urho3D project.
+// Copyright (c) 2008-2017 Flock SDK developers & contributors. 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -14,18 +14,18 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIpM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Container/ArrayPtr.h>
-#include <Urho3D/Core/Platform.h>
-#include <Urho3D/IO/File.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/IO/PackageFile.h>
+#include <Flock/Core/Context.h>
+#include <Flock/Container/ArrayPtr.h>
+#include <Flock/Core/Platform.h>
+#include <Flock/IO/File.h>
+#include <Flock/IO/FileSystem.h>
+#include <Flock/IO/PackageFile.h>
 
 #ifdef WIN32
     #define WIN32_LEAN_AND_MEAN 
@@ -36,7 +36,7 @@
 #include <LZ4/lz4.h>
 #include <LZ4/lz4hc.h>
 
-using namespace Urho3D;
+using namespace FlockSDK;
 
 static const unsigned COMPRESSED_BLOCK_SIZE = 32768;
 
