@@ -29,87 +29,42 @@
 
 #include "Downpour.h"
 
-namespace Downpour {
+static inline constexpr const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
+static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/core-main.dcs"); }
 
 DownpourBase::DownpourBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
 
 void DownpourBase::Setup()
 {
-    auto fsObject = GetSubsystem<FlockSDK::FileSystem>();
+    auto *fsObject = GetSubsystem<FlockSDK::FileSystem>();
 
-    if(fsObject)
+    if (fsObject)
     {
-        if (!(argc_ > 1 && argv_ == GetEditorBootArg()))
-        {
-            if(fsObject->FileExists(GetCompiledScriptLocation()))
-                moduleName_ = GetCompiledScriptLocation();
-            else if(fsObject->FileExists(GetRawScriptLocation())) 
-                moduleName_ = GetRawScriptLocation();
-        }
-        else 
-        {
-            moduleName_ = GetSDKLocation();
-        }
+        if (fsObject->FileExists(GetCompiledScriptLocation()))
+            moduleName_ = GetCompiledScriptLocation();
+        else if (fsObject->FileExists(GetRawScriptLocation())) 
+            moduleName_ = GetRawScriptLocation();
     }
 } 
 
 void DownpourBase::Start()
 {
-    context_->RegisterSubsystem(new FlockSDK::LuaScript(context_)); 
-    auto scriptHandle = GetSubsystem<FlockSDK::LuaScript>();
+    auto *luaScript = new FlockSDK::LuaScript(context_);
+    context_->RegisterSubsystem(luaScript);
 
-    if (scriptHandle->ExecuteFile(moduleName_)) 
+    if (luaScript->ExecuteFile(moduleName_))
     {
-        scriptHandle->ExecuteFunction("Start"); 
-        if (moduleName_.Contains("SDK")) 
-        {
-            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADSTARTED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadStarted));
-            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADFINISHED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadFinished));
-            SubscribeToEvent(moduleEditorPtr_, FlockSDK::E_RELOADFAILED, FLOCKSDK_HANDLER(Downpour::DownpourBase, HandleScriptReloadFailed));
-        }
-        return; 
+        luaScript->ExecuteFunction("Start");
+        return;
     }
-
-    // The script was not successfully loaded. Show the last error message and do not run the main loop
     ErrorExit();
 }
 
 void DownpourBase::Stop()
 {
-    if (moduleEditorPtr_)
-    {
-        // Execute the optional stop function
-        if (moduleEditorPtr_->GetFunction("Stop"))
-            moduleEditorPtr_->ExecuteFunction("Stop");
-    }
-    else
-    {
-        FlockSDK::LuaScript* luaScript = GetSubsystem<FlockSDK::LuaScript>();
-        if (luaScript && luaScript->GetFunction("Stop", true))
-            luaScript->ExecuteFunction("Stop");
-    }
-}
-
-void DownpourBase::HandleScriptReloadStarted(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
-{
-    if (moduleEditorPtr_->GetFunction("Stop"))
-        moduleEditorPtr_->ExecuteFunction("Stop");
-}
-
-void DownpourBase::HandleScriptReloadFinished(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
-{
-    // Restart the script application after reload
-    if (!moduleEditorPtr_->ExecuteFunction("Start"))
-    {
-        moduleEditorPtr_.Reset();
-        ErrorExit();
-    }
-}
-
-void DownpourBase::HandleScriptReloadFailed(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData)
-{
-    moduleEditorPtr_.Reset();
-    ErrorExit();
+    auto *luaScript = GetSubsystem<FlockSDK::LuaScript>();
+    if (luaScript && luaScript->GetFunction("Stop", true))
+        luaScript->ExecuteFunction("Stop");
 }
 
 void DownpourBase::Exit(void) 
@@ -118,14 +73,12 @@ void DownpourBase::Exit(void)
     exitCode_ = EXIT_FAILURE;
 }
 
-};
-
 int main(int argc, char **argv) 
 {
     auto *DPContext = new FlockSDK::Context();
-    auto *DPGame    = new Downpour::DownpourBase(DPContext);
+    auto *DPGame    = new DownpourBase(DPContext);
     DPGame->argc_   = argc;
     DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
 
-    return (FlockSDK::SharedPtr<Downpour::DownpourBase>(DPGame))->Run();
+    return (FlockSDK::SharedPtr<DownpourBase>(DPGame))->Run();
 } 

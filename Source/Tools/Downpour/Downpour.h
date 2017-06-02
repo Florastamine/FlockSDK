@@ -24,34 +24,19 @@
 
 #include <Flock/Engine/Application.h> 
 
-namespace Downpour {
-    class DownpourBase : public FlockSDK::Application {
-        FLOCKSDK_OBJECT(DownpourBase, FlockSDK::Application);
+class DownpourBase : public FlockSDK::Application {
+    FLOCKSDK_OBJECT(DownpourBase, FlockSDK::Application);
 
-        public:
-            DownpourBase(FlockSDK::Context *context);
+    public:
+        DownpourBase(FlockSDK::Context *context);
 
-            virtual void Setup();
-            virtual void Start();
-            virtual void Stop();
+        virtual void Setup();
+        virtual void Start();
+        virtual void Stop();
 
-            int argc_;
-            FlockSDK::String argv_;
-            FlockSDK::String moduleName_;
-            FlockSDK::SharedPtr<FlockSDK::LuaScript> moduleEditorPtr_;
-        private:
-            void HandleScriptReloadStarted(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
-            void HandleScriptReloadFinished(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
-            void HandleScriptReloadFailed(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData); 
-            void Exit(void);
-    };
-};
-
-namespace Downpour {
-    inline constexpr const char *GetEditorBootArg() { return("--run-editor"); }
-    inline constexpr const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
-    inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/core-main.dcs"); }
-    inline constexpr const char *GetSDKLocation() { return("pfiles/development/SDK_editor.as"); } 
-    inline constexpr const char *GetCompiledScriptExtension() { return (".dcs"); } 
-    inline constexpr const char *GetScriptExtension() { return(".lua"); } 
+        int argc_;
+        FlockSDK::String argv_;
+        FlockSDK::String moduleName_;
+    private:
+        void Exit(void);
 };
