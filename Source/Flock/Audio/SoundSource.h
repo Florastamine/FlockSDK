@@ -74,6 +74,8 @@ public:
     void SetAutoRemoveMode(AutoRemoveMode mode);
     /// Set new playback position.
     void SetPlayPosition(signed char* pos);
+    /// Seek to time.
+    void Seek(float seekTime);
 
     /// Return sound.
     Sound* GetSound() const { return sound_; }

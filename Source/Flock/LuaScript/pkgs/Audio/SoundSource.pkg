@@ -16,6 +16,7 @@ class SoundSource : public Component
     void SetAttenuation(float attenuation);
     void SetPanning(float panning);
     void SetAutoRemoveMode(AutoRemoveMode mode);
+    void Seek(float seekTime);
 
     Sound* GetSound() const;
     String GetSoundType() const;

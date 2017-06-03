@@ -1260,4 +1260,19 @@ void SoundSource::MixNull(float timeStep)
     }
 }
 
+void SoundSource::Seek(float seekTime)
+{
+    // Ignore buffered sound stream
+    if (!audio_ || !sound_ || (soundStream_ && !sound_->IsCompressed()))
+        return;
+
+    seekTime = Clamp(seekTime, 0.0f, sound_->GetLength());
+
+    if (!soundStream_) // .raw/.wav
+        SetPositionAttr((int)(seekTime * (sound_->GetSampleSize() * sound_->GetFrequency())));
+    else // .ogg 
+        if (soundStream_->Seek((unsigned)(seekTime * soundStream_->GetFrequency())))
+            timePosition_ = seekTime;
+}
+
 }

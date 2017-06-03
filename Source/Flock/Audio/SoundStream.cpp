@@ -61,4 +61,9 @@ unsigned SoundStream::GetSampleSize() const
     return size;
 }
 
+bool SoundStream::Seek(unsigned int sample_number)
+{
+    return false; 
+}
+
 };
