@@ -46,7 +46,7 @@ if (FLOCK_LIB_TYPE STREQUAL SHARED AND NOT WIN32)
 endif () 
 
 # Add targets
-foreach (TARGET STB GLEW JO LZ4 SQLite StanHull Lua LuaJIT toluapp/src/lib PugiXml rapidjson Detour DetourCrowd DetourTileCache Recast FreeType Box2D SDL Bullet AngelScript) 
+foreach (TARGET STB GLEW JO LZ4 SQLite StanHull Lua LuaJIT toluapp/src/lib PugiXml rapidjson Detour DetourCrowd DetourTileCache Recast FreeType Box2D SDL Bullet) 
     IF (EXISTS "${PROJECT_SOURCE_DIR}/Source/ThirdParty/${TARGET}")
         message (STATUS "Found 3rd-party target: " ${TARGET})
         add_subdirectory (ThirdParty/${TARGET})

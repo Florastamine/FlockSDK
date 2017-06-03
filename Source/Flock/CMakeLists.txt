@@ -246,7 +246,7 @@ install_header_files (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ DESTINATION ${DEST_
 # Generate the include-all-headers header file even though we do not encourage Flock library users to use it
 list (SORT FLOCK_HEADERS)
 list (REVERSE FLOCK_HEADERS)
-set (OPTIONAL_SUBS AngelScript IK Database Lua Navigation Network Physics Urho2D)
+set (OPTIONAL_SUBS IK Database Lua Navigation Network Physics Urho2D)
 foreach (SUB ${OPTIONAL_SUBS})
     if (FLOCK_HEADERS MATCHES "(include/Flock/${SUB}[^;]+)")
         list (FIND FLOCK_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
