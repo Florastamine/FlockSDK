@@ -405,11 +405,11 @@ if(LIBC)
     endforeach()
     set(HAVE_SIGNAL_H 1)
     foreach(_FN
-            malloc calloc realloc free qsort abs memset memcpy memmove memcmp
-            strlen _strrev _strupr _strlwr strchr strrchr strstr itoa _ltoa
-            _ultoa strtol strtoul strtoll strtod atoi atof strcmp strncmp
-            _stricmp _strnicmp sscanf atan atan2 acos asin ceil copysign cos
-            cosf fabs floor log pow scalbn sin sinf sqrt sqrtf tan tanf)
+            qsort memset memcpy memmove memcmp
+            _strrev _strupr _strlwr strchr strrchr itoa _ltoa
+            _ultoa strtol strtoul strtoll strtod atoi atof strncmp
+            _stricmp _strnicmp sscanf atan atan2 acos asin ceil copysign
+            cosf fabs floor scalbn sinf sqrtf tanf)
       string(TOUPPER ${_FN} _UPPER)
       set(HAVE_${_UPPER} 1)
     endforeach()
@@ -453,11 +453,11 @@ if(LIBC)
     # Flock - for consistency sake use check_include_file() to check for HAVE_MPROTECT
     check_include_file (sys/mman.h HAVE_MPROTECT)
     foreach(_FN
-            strtod malloc calloc realloc free getenv setenv putenv unsetenv
-            qsort abs bcopy memset memcpy memmove memcmp strlen strlcpy strlcat
-            strdup _strrev _strupr _strlwr strchr strrchr strstr itoa _ltoa
+            strtod getenv setenv putenv unsetenv
+            qsort bcopy memset memcpy memmove memcmp strlcpy strlcat
+            strdup _strrev _strupr _strlwr strchr strrchr itoa _ltoa
             _uitoa _ultoa strtol strtoul _i64toa _ui64toa strtoll strtoull
-            atoi atof strcmp strncmp _stricmp strcasecmp _strnicmp strncasecmp
+            atoi atof strncmp _stricmp strcasecmp _strnicmp strncasecmp
             vsscanf vsnprintf fseeko fseeko64 sigaction setjmp
             nanosleep sysconf sysctlbyname
             )
