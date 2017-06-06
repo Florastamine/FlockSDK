@@ -120,7 +120,7 @@ struct MeshProcess : public dtTileCacheMeshProcess
             {
                 Matrix3x4 inverse = owner_->GetNode()->GetWorldTransform().Inverse();
                 ClearConnectionData();
-                for (unsigned i = 0; i < offMeshConnections.Size(); ++i)
+                for (auto i = 0u; i < offMeshConnections.Size(); ++i)
                 {
                     OffMeshConnection* connection = offMeshConnections[i];
                     Vector3 start = inverse * connection->GetNode()->GetWorldPosition();
@@ -253,7 +253,7 @@ bool DynamicNavigationMesh::Build()
         return true; // Nothing to do
 
     // Build the combined bounding box
-    for (unsigned i = 0; i < geometryList.Size(); ++i)
+    for (auto i = 0u; i < geometryList.Size(); ++i)
         boundingBox_.Merge(geometryList[i].boundingBox_);
 
     // Expand bounding box by padding
@@ -376,7 +376,7 @@ bool DynamicNavigationMesh::Build()
         // Scan for obstacles to insert into us
         PODVector<Node*> obstacles;
         GetScene()->GetChildrenWithComponent<Obstacle>(obstacles, true);
-        for (unsigned i = 0; i < obstacles.Size(); ++i)
+        for (auto i = 0u; i < obstacles.Size(); ++i)
         {
             Obstacle* obs = obstacles[i]->GetComponent<Obstacle>();
             if (obs && obs->IsEnabledEffective())
@@ -480,7 +480,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
                 for (int i = 0; i < tile->header->polyCount; ++i)
                 {
                     dtPoly* poly = tile->polys + i;
-                    for (unsigned j = 0; j < poly->vertCount; ++j)
+                    for (auto j = 0u; j < poly->vertCount; ++j)
                     {
                         debug->AddLine(worldTransform * *reinterpret_cast<const Vector3*>(&tile->verts[poly->verts[j] * 3]),
                             worldTransform * *reinterpret_cast<const Vector3*>(&tile->verts[poly->verts[(j + 1) % poly->vertCount] * 3]),
@@ -499,7 +499,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
         {
             PODVector<Node*> obstacles;
             scene->GetChildrenWithComponent<Obstacle>(obstacles, true);
-            for (unsigned i = 0; i < obstacles.Size(); ++i)
+            for (auto i = 0u; i < obstacles.Size(); ++i)
             {
                 Obstacle* obstacle = obstacles[i]->GetComponent<Obstacle>();
                 if (obstacle && obstacle->IsEnabledEffective())
@@ -512,7 +512,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
         {
             PODVector<Node*> connections;
             scene->GetChildrenWithComponent<OffMeshConnection>(connections, true);
-            for (unsigned i = 0; i < connections.Size(); ++i)
+            for (auto i = 0u; i < connections.Size(); ++i)
             {
                 OffMeshConnection* connection = connections[i]->GetComponent<OffMeshConnection>();
                 if (connection && connection->IsEnabledEffective())
@@ -525,7 +525,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
         {
             PODVector<Node*> areas;
             scene->GetChildrenWithComponent<NavArea>(areas, true);
-            for (unsigned i = 0; i < areas.Size(); ++i)
+            for (auto i = 0u; i < areas.Size(); ++i)
             {
                 NavArea* area = areas[i]->GetComponent<NavArea>();
                 if (area && area->IsEnabledEffective())
@@ -759,7 +759,7 @@ int DynamicNavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryLis
     }
 
     // area volumes
-    for (unsigned i = 0; i < build.navAreas_.Size(); ++i)
+    for (auto i = 0u; i < build.navAreas_.Size(); ++i)
         rcMarkBoxArea(build.ctx_, &build.navAreas_[i].bounds_.min_.x_, &build.navAreas_[i].bounds_.max_.x_,
             build.navAreas_[i].areaID_, *build.compactHeightField_);
 
@@ -853,7 +853,7 @@ PODVector<OffMeshConnection*> DynamicNavigationMesh::CollectOffMeshConnections(c
 {
     PODVector<OffMeshConnection*> connections;
     node_->GetComponents<OffMeshConnection>(connections, true);
-    for (unsigned i = 0; i < connections.Size(); ++i)
+    for (auto i = 0u; i < connections.Size(); ++i)
     {
         OffMeshConnection* connection = connections[i];
         if (!(connection->IsEnabledEffective() && connection->GetEndPoint()))

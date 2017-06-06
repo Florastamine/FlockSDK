@@ -41,7 +41,7 @@ void TextureCube::OnDeviceLost()
 {
     GPUObject::OnDeviceLost();
 
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
     {
         if (renderSurfaces_[i])
             renderSurfaces_[i]->OnDeviceLost();
@@ -76,7 +76,7 @@ void TextureCube::Release()
 
         if (!graphics_->IsDeviceLost())
         {
-            for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+            for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
             {
                 if (graphics_->GetTexture(i) == this)
                     graphics_->SetTexture(i, 0);
@@ -85,7 +85,7 @@ void TextureCube::Release()
             glDeleteTextures(1, &object_.name_);
         }
 
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         {
             if (renderSurfaces_[i])
                 renderSurfaces_[i]->Release();
@@ -218,7 +218,7 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
         }
 
         // Discard unnecessary mip levels
-        for (unsigned i = 0; i < mipsToSkip_[quality]; ++i)
+        for (auto i = 0u; i < mipsToSkip_[quality]; ++i)
         {
             mipImage = image->GetNextLevel(); image = mipImage;
             levelData = image->GetData();
@@ -271,7 +271,7 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
             }
         }
 
-        for (unsigned i = 0; i < levels_; ++i)
+        for (auto i = 0u; i < levels_; ++i)
         {
             SetData(face, i, 0, 0, levelWidth, levelHeight, levelData);
             memoryUse += levelWidth * levelHeight * components;
@@ -333,7 +333,7 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
             }
         }
 
-        for (unsigned i = 0; i < levels_ && i < levels - mipsToSkip; ++i)
+        for (auto i = 0u; i < levels_ && i < levels - mipsToSkip; ++i)
         {
             CompressedLevel level = image->GetCompressedLevel(i + mipsToSkip);
             if (!needDecompress)
@@ -354,7 +354,7 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
 
     faceMemoryUse_[face] = memoryUse;
     unsigned totalMemoryUse = sizeof(TextureCube);
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         totalMemoryUse += faceMemoryUse_[i];
     SetMemoryUse(totalMemoryUse);
     return true;
@@ -432,7 +432,7 @@ bool TextureCube::Create()
     // If multisample, create renderbuffers for each face
     if (multiSample_ > 1)
     {
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
             renderSurfaces_[i]->CreateRenderBuffer(width_, height_, format, multiSample_);
     }
 
@@ -440,7 +440,7 @@ bool TextureCube::Create()
     if (!IsCompressed())
     {
         glGetError();
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width_, height_, 0, externalFormat, dataType, 0);
             if (glGetError())

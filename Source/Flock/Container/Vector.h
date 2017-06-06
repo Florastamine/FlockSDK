@@ -55,7 +55,7 @@ public:
     Vector(unsigned size, const T& value)
     {
         Resize(size);
-        for (unsigned i = 0; i < size; ++i)
+        for (auto i = 0u; i < size; ++i)
             At(i) = value;
     }
 
@@ -135,7 +135,7 @@ public:
 
         T* buffer = Buffer();
         T* rhsBuffer = rhs.Buffer();
-        for (unsigned i = 0; i < size_; ++i)
+        for (auto i = 0u; i < size_; ++i)
         {
             if (buffer[i] != rhsBuffer[i])
                 return false;
@@ -152,7 +152,7 @@ public:
 
         T* buffer = Buffer();
         T* rhsBuffer = rhs.Buffer();
-        for (unsigned i = 0; i < size_; ++i)
+        for (auto i = 0u; i < size_; ++i)
         {
             if (buffer[i] != rhsBuffer[i])
                 return true;
@@ -530,7 +530,7 @@ private:
         }
         if (src > dest)
         {
-            for (unsigned i = 0; i < count; ++i)
+            for (auto i = 0u; i < count; ++i)
                 buffer[dest + i] = buffer[src + i];
         }
     }
@@ -540,12 +540,12 @@ private:
     {
         if (!src)
         {
-            for (unsigned i = 0; i < count; ++i)
+            for (auto i = 0u; i < count; ++i)
                 new(dest + i) T();
         }
         else
         {
-            for (unsigned i = 0; i < count; ++i)
+            for (auto i = 0u; i < count; ++i)
                 new(dest + i) T(*(src + i));
         }
     }
@@ -591,7 +591,7 @@ public:
     PODVector(unsigned size, const T& value)
     {
         Resize(size);
-        for (unsigned i = 0; i < size; ++i)
+        for (auto i = 0u; i < size; ++i)
             At(i) = value;
     }
 
@@ -671,7 +671,7 @@ public:
 
         T* buffer = Buffer();
         T* rhsBuffer = rhs.Buffer();
-        for (unsigned i = 0; i < size_; ++i)
+        for (auto i = 0u; i < size_; ++i)
         {
             if (buffer[i] != rhsBuffer[i])
                 return false;
@@ -688,7 +688,7 @@ public:
 
         T* buffer = Buffer();
         T* rhsBuffer = rhs.Buffer();
-        for (unsigned i = 0; i < size_; ++i)
+        for (auto i = 0u; i < size_; ++i)
         {
             if (buffer[i] != rhsBuffer[i])
                 return true;

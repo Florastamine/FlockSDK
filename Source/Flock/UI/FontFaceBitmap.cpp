@@ -88,7 +88,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
     unsigned totalTextureSize = 0;
 
     XMLElement pageElem = pagesElem.GetChild("page");
-    for (unsigned i = 0; i < pages; ++i)
+    for (auto i = 0u; i < pages; ++i)
     {
         if (pageElem.IsNull())
         {
@@ -217,11 +217,11 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
 
     // Save the existing textures as image resources
     Vector<SharedPtr<Image> > oldImages;
-    for (unsigned i = 0; i < fontFace->textures_.Size(); ++i)
+    for (auto i = 0u; i < fontFace->textures_.Size(); ++i)
         oldImages.Push(SaveFaceTexture(fontFace->textures_[i]));
 
     Vector<SharedPtr<Image> > newImages(numPages);
-    for (unsigned i = 0; i < numPages; ++i)
+    for (auto i = 0u; i < numPages; ++i)
     {
         SharedPtr<Image> image(new Image(font_->GetContext()));
 
@@ -248,7 +248,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     }
 
     textures_.Resize(newImages.Size());
-    for (unsigned i = 0; i < newImages.Size(); ++i)
+    for (auto i = 0u; i < newImages.Size(); ++i)
         textures_[i] = LoadFaceTexture(newImages[i]);
 
     for (HashMap<unsigned, short>::ConstIterator i = fontFace->kerningMapping_.Begin(); i != fontFace->kerningMapping_.End(); ++i)
@@ -293,7 +293,7 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
 
     // Pages
     childElem = rootElem.CreateChild("pages");
-    for (unsigned i = 0; i < pages; ++i)
+    for (auto i = 0u; i < pages; ++i)
     {
         XMLElement pageElem = childElem.CreateChild("page");
         pageElem.SetInt("id", i);

@@ -151,7 +151,7 @@ void Drawable::UpdateBatches(const FrameInfo& frame)
     const Matrix3x4& worldTransform = node_->GetWorldTransform();
     distance_ = frame.camera_->GetDistance(worldBoundingBox.Center());
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         batches_[i].distance_ = distance_;
         batches_[i].worldTransform_ = &worldTransform;
@@ -341,7 +341,7 @@ void Drawable::LimitLights()
 
     // If more lights than allowed, move to vertex lights and cut the list
     const BoundingBox& box = GetWorldBoundingBox();
-    for (unsigned i = 0; i < lights_.Size(); ++i)
+    for (auto i = 0u; i < lights_.Size(); ++i)
         lights_[i]->SetIntensitySortValue(box);
 
     Sort(lights_.Begin(), lights_.End(), CompareDrawables);
@@ -364,7 +364,7 @@ void Drawable::LimitVertexLights(bool removeConvertedLights)
         return;
 
     const BoundingBox& box = GetWorldBoundingBox();
-    for (unsigned i = 0; i < vertexLights_.Size(); ++i)
+    for (auto i = 0u; i < vertexLights_.Size(); ++i)
         vertexLights_[i]->SetIntensitySortValue(box);
 
     Sort(vertexLights_.Begin(), vertexLights_.End(), CompareDrawables);

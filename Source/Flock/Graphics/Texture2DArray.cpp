@@ -103,7 +103,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
     // Precalculate mip levels if async loading
     if (GetAsyncLoadState() == ASYNC_LOADING)
     {
-        for (unsigned i = 0; i < loadImages_.Size(); ++i)
+        for (auto i = 0u; i < loadImages_.Size(); ++i)
         {
             if (loadImages_[i])
                 loadImages_[i]->PrecalculateLevels();
@@ -125,7 +125,7 @@ bool Texture2DArray::EndLoad()
     SetParameters(loadParameters_);
     SetLayers(loadImages_.Size());
 
-    for (unsigned i = 0; i < loadImages_.Size(); ++i)
+    for (auto i = 0u; i < loadImages_.Size(); ++i)
         SetData(i, loadImages_[i]);
 
     loadImages_.Clear();
@@ -180,7 +180,7 @@ bool Texture2DArray::SetSize(unsigned layers, int width, int height, unsigned fo
         layers_ = layers;
 
     layerMemoryUse_.Resize(layers_);
-    for (unsigned i = 0; i < layers_; ++i)
+    for (auto i = 0u; i < layers_; ++i)
         layerMemoryUse_[i] = 0;
 
     return Create();

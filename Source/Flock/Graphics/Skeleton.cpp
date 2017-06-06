@@ -49,7 +49,7 @@ bool Skeleton::Load(Deserializer& source)
     unsigned bones = source.ReadUInt();
     bones_.Reserve(bones);
 
-    for (unsigned i = 0; i < bones; ++i)
+    for (auto i = 0u; i < bones; ++i)
     {
         Bone newBone;
         newBone.name_ = source.ReadString();
@@ -81,7 +81,7 @@ bool Skeleton::Save(Serializer& dest) const
     if (!dest.WriteUInt(bones_.Size()))
         return false;
 
-    for (unsigned i = 0; i < bones_.Size(); ++i)
+    for (auto i = 0u; i < bones_.Size(); ++i)
     {
         const Bone& bone = bones_[i];
         dest.WriteString(bone.name_);

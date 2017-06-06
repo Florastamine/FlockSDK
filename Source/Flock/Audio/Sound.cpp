@@ -206,7 +206,7 @@ bool Sound::LoadWav(Deserializer& source)
     // Convert 8-bit audio to signed
     if (!sixteenBit_)
     {
-        for (unsigned i = 0; i < length; ++i)
+        for (auto i = 0u; i < length; ++i)
             data_[i] -= 128;
     }
 
@@ -300,12 +300,12 @@ void Sound::FixInterpolation()
     // If looped, copy loop start to loop end. If oneshot, insert silence to end
     if (looped_)
     {
-        for (unsigned i = 0; i < IP_SAFETY; ++i)
+        for (auto i = 0u; i < IP_SAFETY; ++i)
             end_[i] = repeat_[i];
     }
     else
     {
-        for (unsigned i = 0; i < IP_SAFETY; ++i)
+        for (auto i = 0u; i < IP_SAFETY; ++i)
             end_[i] = 0;
     }
 }

@@ -78,7 +78,7 @@ Cursor::Cursor(Context* context) :
     osShapeDirty_(false)
 {
     // Define the defaults for system cursor usage.
-    for (unsigned i = 0; i < CS_MAX_SHAPES; i++)
+    for (auto i = 0u; i < CS_MAX_SHAPES; i++)
         shapeInfos_[shapeNames[i]] = CursorShapeInfo(i);
 
     // Subscribe to OS mouse cursor visibility changes to be able to reapply the cursor shape

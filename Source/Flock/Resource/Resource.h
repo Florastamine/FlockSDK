@@ -124,7 +124,7 @@ inline ResourceRef GetResourceRef(Resource* resource, StringHash defaultType)
 template <class T> Vector<String> GetResourceNames(const Vector<SharedPtr<T> >& resources)
 {
     Vector<String> ret(resources.Size());
-    for (unsigned i = 0; i < resources.Size(); ++i)
+    for (auto i = 0u; i < resources.Size(); ++i)
         ret[i] = GetResourceName(resources[i]);
 
     return ret;

@@ -142,7 +142,7 @@ bool Animation::BeginLoad(Deserializer& source)
     memoryUse += tracks * sizeof(AnimationTrack);
 
     // Read tracks
-    for (unsigned i = 0; i < tracks; ++i)
+    for (auto i = 0u; i < tracks; ++i)
     {
         AnimationTrack* newTrack = CreateTrack(source.ReadString());
         newTrack->channelMask_ = source.ReadUByte();
@@ -152,7 +152,7 @@ bool Animation::BeginLoad(Deserializer& source)
         memoryUse += keyFrames * sizeof(AnimationKeyFrame);
 
         // Read keyframes of the track
-        for (unsigned j = 0; j < keyFrames; ++j)
+        for (auto j = 0u; j < keyFrames; ++j)
         {
             AnimationKeyFrame& newKeyFrame = newTrack->keyFrames_[j];
             newKeyFrame.time_ = source.ReadFloat();
@@ -198,7 +198,7 @@ bool Animation::BeginLoad(Deserializer& source)
         const JSONValue& rootVal = jsonFile->GetRoot();
         JSONArray triggerArray = rootVal.Get("triggers").GetArray();
 
-        for (unsigned i = 0; i < triggerArray.Size(); i++)
+        for (auto i = 0u; i < triggerArray.Size(); i++)
         {
             const JSONValue& triggerValue = triggerArray.At(i);
             JSONValue normalizedTimeValue = triggerValue.Get("normalizedTime");
@@ -238,7 +238,7 @@ bool Animation::Save(Serializer& dest) const
         dest.WriteUInt(track.keyFrames_.Size());
 
         // Write keyframes of the track
-        for (unsigned j = 0; j < track.keyFrames_.Size(); ++j)
+        for (auto j = 0u; j < track.keyFrames_.Size(); ++j)
         {
             const AnimationKeyFrame& keyFrame = track.keyFrames_[j];
             dest.WriteFloat(keyFrame.time_);
@@ -262,7 +262,7 @@ bool Animation::Save(Serializer& dest) const
             SharedPtr<XMLFile> xml(new XMLFile(context_));
             XMLElement rootElem = xml->CreateRoot("animation");
 
-            for (unsigned i = 0; i < triggers_.Size(); ++i)
+            for (auto i = 0u; i < triggers_.Size(); ++i)
             {
                 XMLElement triggerElem = rootElem.CreateChild("trigger");
                 triggerElem.SetFloat("time", triggers_[i].time_);

@@ -110,7 +110,7 @@ bool IndexBuffer::GetUsedVertexRange(unsigned start, unsigned count, unsigned& m
     {
         unsigned* indices = ((unsigned*)shadowData_.Get()) + start;
 
-        for (unsigned i = 0; i < count; ++i)
+        for (auto i = 0u; i < count; ++i)
         {
             if (indices[i] < minVertex)
                 minVertex = indices[i];
@@ -122,7 +122,7 @@ bool IndexBuffer::GetUsedVertexRange(unsigned start, unsigned count, unsigned& m
     {
         unsigned short* indices = ((unsigned short*)shadowData_.Get()) + start;
 
-        for (unsigned i = 0; i < count; ++i)
+        for (auto i = 0u; i < count; ++i)
         {
             if (indices[i] < minVertex)
                 minVertex = indices[i];

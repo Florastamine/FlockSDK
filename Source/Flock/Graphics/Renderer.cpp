@@ -254,7 +254,7 @@ inline PODVector<VertexElement> CreateInstancingBufferElements(unsigned numExtra
     static const unsigned FIRST_UNUSED_TEXCOORD = 4;
 
     PODVector<VertexElement> elements;
-    for (unsigned i = 0; i < NUM_INSTANCEMATRIX_ELEMENTS + numExtraElements; ++i)
+    for (auto i = 0u; i < NUM_INSTANCEMATRIX_ELEMENTS + numExtraElements; ++i)
         elements.Push(VertexElement(TYPE_VECTOR4, SEM_TEXCOORD, FIRST_UNUSED_TEXCOORD + i, true));
     return elements;
 }
@@ -569,7 +569,7 @@ unsigned Renderer::GetNumGeometries(bool allViews) const
     unsigned numGeometries = 0;
     unsigned lastView = allViews ? views_.Size() : 1;
 
-    for (unsigned i = 0; i < lastView; ++i)
+    for (auto i = 0u; i < lastView; ++i)
     {
         // Use the source view's statistics if applicable
         View* view = GetActualView(views_[i]);
@@ -587,7 +587,7 @@ unsigned Renderer::GetNumLights(bool allViews) const
     unsigned numLights = 0;
     unsigned lastView = allViews ? views_.Size() : 1;
 
-    for (unsigned i = 0; i < lastView; ++i)
+    for (auto i = 0u; i < lastView; ++i)
     {
         View* view = GetActualView(views_[i]);
         if (!view)
@@ -604,7 +604,7 @@ unsigned Renderer::GetNumShadowMaps(bool allViews) const
     unsigned numShadowMaps = 0;
     unsigned lastView = allViews ? views_.Size() : 1;
 
-    for (unsigned i = 0; i < lastView; ++i)
+    for (auto i = 0u; i < lastView; ++i)
     {
         View* view = GetActualView(views_[i]);
         if (!view)
@@ -626,7 +626,7 @@ unsigned Renderer::GetNumOccluders(bool allViews) const
     unsigned numOccluders = 0;
     unsigned lastView = allViews ? views_.Size() : 1;
 
-    for (unsigned i = 0; i < lastView; ++i)
+    for (auto i = 0u; i < lastView; ++i)
     {
         View* view = GetActualView(views_[i]);
         if (!view)
@@ -669,7 +669,7 @@ void Renderer::Update(float timeStep)
 
     // Update main viewports. This may queue further views
     unsigned numMainViewports = queuedViewports_.Size();
-    for (unsigned i = 0; i < numMainViewports; ++i)
+    for (auto i = 0u; i < numMainViewports; ++i)
         UpdateQueuedViewport(i);
 
     // Gather queued & autoupdated render surfaces
@@ -699,7 +699,7 @@ void Renderer::Render()
 
     // If no views that render to the backbuffer, clear the screen so that e.g. the UI is not rendered on top of previous frame
     bool hasBackbufferViews = false;
-    for (unsigned i = 0; i < views_.Size(); ++i)
+    for (auto i = 0u; i < views_.Size(); ++i)
     {
         if (!views_[i]->GetRenderTarget())
         {
@@ -748,7 +748,7 @@ void Renderer::DrawDebugGeometry(bool depthTest)
     HashSet<Drawable*> processedGeometries;
     HashSet<Light*> processedLights;
 
-    for (unsigned i = 0; i < views_.Size(); ++i)
+    for (auto i = 0u; i < views_.Size(); ++i)
     {
         View* view = views_[i];
         if (!view || !view->GetDrawDebug())
@@ -764,7 +764,7 @@ void Renderer::DrawDebugGeometry(bool depthTest)
         const PODVector<Drawable*>& geometries = view->GetGeometries();
         const PODVector<Light*>& lights = view->GetLights();
 
-        for (unsigned i = 0; i < geometries.Size(); ++i)
+        for (auto i = 0u; i < geometries.Size(); ++i)
         {
             if (!processedGeometries.Contains(geometries[i]))
             {
@@ -772,7 +772,7 @@ void Renderer::DrawDebugGeometry(bool depthTest)
                 processedGeometries.Insert(geometries[i]);
             }
         }
-        for (unsigned i = 0; i < lights.Size(); ++i)
+        for (auto i = 0u; i < lights.Size(); ++i)
         {
             if (!processedLights.Contains(lights[i]))
             {
@@ -789,7 +789,7 @@ void Renderer::QueueRenderSurface(RenderSurface* renderTarget)
     {
         unsigned numViewports = renderTarget->GetNumViewports();
 
-        for (unsigned i = 0; i < numViewports; ++i)
+        for (auto i = 0u; i < numViewports; ++i)
             QueueViewport(renderTarget, renderTarget->GetViewport(i));
     }
 }
@@ -1620,7 +1620,7 @@ void Renderer::LoadShaders()
     // Construct new names for deferred light volume pixel shaders based on rendering options
     deferredLightPSVariations_.Resize(MAX_DEFERRED_LIGHT_PS_VARIATIONS);
     
-    for (unsigned i = 0; i < MAX_DEFERRED_LIGHT_PS_VARIATIONS; ++i)
+    for (auto i = 0u; i < MAX_DEFERRED_LIGHT_PS_VARIATIONS; ++i)
     {
         deferredLightPSVariations_[i] = lightPSVariations[i % DLPS_ORTHO];
         if ((i % DLPS_ORTHO) >= DLPS_SHADOW)
@@ -1675,7 +1675,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation> >& 
         vertexShaders.Resize(MAX_GEOMETRYTYPES * MAX_LIGHT_VS_VARIATIONS);
         pixelShaders.Resize(MAX_LIGHT_PS_VARIATIONS * 2);
 
-        for (unsigned j = 0; j < MAX_GEOMETRYTYPES * MAX_LIGHT_VS_VARIATIONS; ++j)
+        for (auto j = 0u; j < MAX_GEOMETRYTYPES * MAX_LIGHT_VS_VARIATIONS; ++j)
         {
             unsigned g = j / MAX_LIGHT_VS_VARIATIONS;
             unsigned l = j % MAX_LIGHT_VS_VARIATIONS;
@@ -1683,7 +1683,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation> >& 
             vertexShaders[j] = graphics_->GetShader(VS, pass->GetVertexShader(),
                 vsDefines + lightVSVariations[l] + geometryVSVariations[g]);
         }
-        for (unsigned j = 0; j < MAX_LIGHT_PS_VARIATIONS * 2; ++j)
+        for (auto j = 0u; j < MAX_LIGHT_PS_VARIATIONS * 2; ++j)
         {
             unsigned l = j % MAX_LIGHT_PS_VARIATIONS;
             unsigned h = j / MAX_LIGHT_PS_VARIATIONS;
@@ -1705,7 +1705,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation> >& 
         if (pass->GetLightingMode() == LIGHTING_PERVERTEX)
         {
             vertexShaders.Resize(MAX_GEOMETRYTYPES * MAX_VERTEXLIGHT_VS_VARIATIONS);
-            for (unsigned j = 0; j < MAX_GEOMETRYTYPES * MAX_VERTEXLIGHT_VS_VARIATIONS; ++j)
+            for (auto j = 0u; j < MAX_GEOMETRYTYPES * MAX_VERTEXLIGHT_VS_VARIATIONS; ++j)
             {
                 unsigned g = j / MAX_VERTEXLIGHT_VS_VARIATIONS;
                 unsigned l = j % MAX_VERTEXLIGHT_VS_VARIATIONS;
@@ -1716,7 +1716,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation> >& 
         else
         {
             vertexShaders.Resize(MAX_GEOMETRYTYPES);
-            for (unsigned j = 0; j < MAX_GEOMETRYTYPES; ++j)
+            for (auto j = 0u; j < MAX_GEOMETRYTYPES; ++j)
             {
                 vertexShaders[j] = graphics_->GetShader(VS, pass->GetVertexShader(),
                     vsDefines + geometryVSVariations[j]);
@@ -1724,7 +1724,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation> >& 
         }
 
         pixelShaders.Resize(2);
-        for (unsigned j = 0; j < 2; ++j)
+        for (auto j = 0u; j < 2; ++j)
         {
             pixelShaders[j] =
                 graphics_->GetShader(PS, pass->GetPixelShader(), psDefines + heightFogVariations[j]);
@@ -1741,7 +1741,7 @@ void Renderer::ReleaseMaterialShaders()
 
     cache->GetResources<Material>(materials);
 
-    for (unsigned i = 0; i < materials.Size(); ++i)
+    for (auto i = 0u; i < materials.Size(); ++i)
         materials[i]->ReleaseShaders();
 }
 
@@ -1751,11 +1751,11 @@ void Renderer::ReloadTextures()
     PODVector<Resource*> textures;
 
     cache->GetResources(textures, Texture2D::GetTypeStatic());
-    for (unsigned i = 0; i < textures.Size(); ++i)
+    for (auto i = 0u; i < textures.Size(); ++i)
         cache->ReloadResource(textures[i]);
 
     cache->GetResources(textures, TextureCube::GetTypeStatic());
-    for (unsigned i = 0; i < textures.Size(); ++i)
+    for (auto i = 0u; i < textures.Size(); ++i)
         cache->ReloadResource(textures[i]);
 }
 
@@ -1829,7 +1829,7 @@ void Renderer::SetIndirectionTextureData()
 {
     unsigned char data[256 * 256 * 4];
 
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
     {
         unsigned axis = i / 2;
         data[0] = (unsigned char)((axis == 0) ? 255 : 0);
@@ -1839,7 +1839,7 @@ void Renderer::SetIndirectionTextureData()
         faceSelectCubeMap_->SetData((CubeMapFace)i, 0, 0, 0, 1, 1, data);
     }
 
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
     {
         unsigned char faceX = (unsigned char)((i & 1) * 255);
         unsigned char faceY = (unsigned char)((i / 2) * 255 / 3);

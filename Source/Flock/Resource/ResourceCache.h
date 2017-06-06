@@ -291,7 +291,7 @@ template <class T> void ResourceCache::GetResources(PODVector<T*>& result) const
     GetResources(resources, type);
 
     // Perform conversion of the returned pointers
-    for (unsigned i = 0; i < result.Size(); ++i)
+    for (auto i = 0u; i < result.Size(); ++i)
     {
         Resource* resource = resources[i];
         result[i] = static_cast<T*>(resource);

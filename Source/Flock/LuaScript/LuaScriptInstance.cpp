@@ -363,7 +363,7 @@ void LuaScriptInstance::RemoveAllEventHandlers()
 void LuaScriptInstance::RemoveEventHandlersExcept(const Vector<String>& exceptionNames)
 {
     PODVector<StringHash> exceptionTypes(exceptionNames.Size());
-    for (unsigned i = 0; i < exceptionTypes.Size(); ++i)
+    for (auto i = 0u; i < exceptionTypes.Size(); ++i)
         exceptionTypes[i] = StringHash(exceptionNames[i]);
 
     eventInvoker_->UnsubscribeFromAllEventsExcept(exceptionTypes, true);
@@ -551,7 +551,7 @@ void LuaScriptInstance::GetScriptAttributes()
 
     attributeInfos_ = *context_->GetAttributes(GetTypeStatic());
 
-    for (unsigned i = 0; i < names.Size(); ++i)
+    for (auto i = 0u; i < names.Size(); ++i)
     {
         lua_pushstring(luaState_, names[i].CString());
         lua_gettable(luaState_, -2);
@@ -610,7 +610,7 @@ void LuaScriptInstance::GetScriptAttributes()
 
 void LuaScriptInstance::FindScriptObjectMethodRefs()
 {
-    for (unsigned i = 0; i < MAX_LUA_SCRIPT_OBJECT_METHODS; ++i)
+    for (auto i = 0u; i < MAX_LUA_SCRIPT_OBJECT_METHODS; ++i)
         scriptObjectMethods_[i] = GetScriptObjectFunction(scriptObjectMethodNames[i]);
 
     if (IsEnabledEffective())

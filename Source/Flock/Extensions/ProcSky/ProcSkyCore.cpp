@@ -172,7 +172,7 @@ bool ProcSky::Initialize() {
   atmoParams["InvProj"] = cam_->GetProjection().Inverse();
 
   // Add custom quad commands to render path.
-  for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i) {
+  for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i) {
     RenderPathCommand cmd;
     cmd.tag_ = "ProcSky";
     cmd.type_ = CMD_QUAD;

@@ -138,7 +138,7 @@ void Text::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData,
     // If face uses mutable glyphs mechanism, reacquire glyphs before rendering to make sure they are in the texture
     else if (face->HasMutableGlyphs())
     {
-        for (unsigned i = 0; i < printText_.Size(); ++i)
+        for (auto i = 0u; i < printText_.Size(); ++i)
             face->GetGlyph(printText_[i]);
     }
 
@@ -303,7 +303,7 @@ bool Text::SetFontSize(int size)
 void Text::DecodeToUnicode()
 {
     unicodeText_.Clear();
-    for (unsigned i = 0; i < text_.Length();)
+    for (auto i = 0u; i < text_.Length();)
         unicodeText_.Push(text_.NextUTF8Char(i));
 }
 
@@ -534,7 +534,7 @@ void Text::UpdateText(bool onResize)
         {
             printText_ = unicodeText_;
             printToText_.Resize(printText_.Size());
-            for (unsigned i = 0; i < printText_.Size(); ++i)
+            for (auto i = 0u; i < printText_.Size(); ++i)
                 printToText_[i] = i;
         }
         else
@@ -544,7 +544,7 @@ void Text::UpdateText(bool onResize)
             unsigned lineStart = 0;
             printToText_.Clear();
 
-            for (unsigned i = 0; i < unicodeText_.Size(); ++i)
+            for (auto i = 0u; i < unicodeText_.Size(); ++i)
             {
                 unsigned j;
                 unsigned c = unicodeText_[i];
@@ -638,7 +638,7 @@ void Text::UpdateText(bool onResize)
 
         rowWidth = 0;
 
-        for (unsigned i = 0; i < printText_.Size(); ++i)
+        for (auto i = 0u; i < printText_.Size(); ++i)
         {
             unsigned c = printText_[i];
 
@@ -712,7 +712,7 @@ void Text::UpdateCharLocations()
     unsigned numChars = unicodeText_.Size();
     charLocations_.Resize(numChars + 1);
     pageGlyphLocations_.Resize(face->GetTextures().Size());
-    for (unsigned i = 0; i < pageGlyphLocations_.Size(); ++i)
+    for (auto i = 0u; i < pageGlyphLocations_.Size(); ++i)
         pageGlyphLocations_[i].Clear();
 
     IntVector2 offset = font_->GetTotalGlyphOffset(fontSize_);
@@ -722,7 +722,7 @@ void Text::UpdateCharLocations()
     int x = GetRowStartPosition(rowIndex) + offset.x_;
     int y = offset.y_;
 
-    for (unsigned i = 0; i < printText_.Size(); ++i)
+    for (auto i = 0u; i < printText_.Size(); ++i)
     {
         CharLocation loc;
         loc.position_ = IntVector2(x, y);
@@ -816,7 +816,7 @@ void Text::ConstructBatch(UIBatch& pageBatch, const PODVector<GlyphLocation>& pa
     else
         pageBatch.SetColor(*color);
 
-    for (unsigned i = 0; i < pageGlyphLocation.Size(); ++i)
+    for (auto i = 0u; i < pageGlyphLocation.Size(); ++i)
     {
         const GlyphLocation& glyphLocation = pageGlyphLocation[i];
         const FontGlyph& glyph = *glyphLocation.glyph_;

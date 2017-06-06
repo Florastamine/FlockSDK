@@ -311,7 +311,7 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
             unsigned best = 0;
             unsigned bestError = M_MAX_UNSIGNED;
 
-            for (unsigned i = 0; i < resolutions.Size(); ++i)
+            for (auto i = 0u; i < resolutions.Size(); ++i)
             {
                 unsigned error = Abs(resolutions[i].x_ - width) + Abs(resolutions[i].y_ - height);
                 if (error < bestError)
@@ -588,7 +588,7 @@ bool Graphics::BeginFrame()
     ResetRenderTargets();
 
     // Cleanup textures from previous frame
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
         SetTexture(i, 0);
 
     // Enable color and depth write
@@ -760,7 +760,7 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
 
     if (!gl3Support)
     {
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         {
             // Resolve only the surface(s) that were actually rendered to
             RenderSurface* surface = texture->GetRenderSurface((CubeMapFace)i);
@@ -783,7 +783,7 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
     }
     else
     {
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         {
             RenderSurface* surface = texture->GetRenderSurface((CubeMapFace)i);
             if (!surface->IsResolveDirty())
@@ -936,7 +936,7 @@ bool Graphics::SetVertexBuffers(const PODVector<VertexBuffer*>& buffers, unsigne
         impl_->vertexBuffersDirty_ = true;
     }
 
-    for (unsigned i = 0; i < MAX_VERTEX_STREAMS; ++i)
+    for (auto i = 0u; i < MAX_VERTEX_STREAMS; ++i)
     {
         VertexBuffer* buffer = 0;
         if (i < buffers.Size())
@@ -1067,7 +1067,7 @@ void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
     if (gl3Support && impl_->shaderProgram_)
     {
         const SharedPtr<ConstantBuffer>* constantBuffers = impl_->shaderProgram_->GetConstantBuffers();
-        for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS * 2; ++i)
+        for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS * 2; ++i)
         {
             ConstantBuffer* buffer = constantBuffers[i].Get();
             if (buffer != impl_->constantBuffers_[i])
@@ -1566,7 +1566,7 @@ void Graphics::SetTextureParametersDirty()
 
 void Graphics::ResetRenderTargets()
 {
-    for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
+    for (auto i = 0u; i < MAX_RENDERTARGETS; ++i)
         SetRenderTarget(i, (RenderSurface*)0);
     SetDepthStencil((RenderSurface*)0);
     SetViewport(IntRect(0, 0, width_, height_));
@@ -1596,7 +1596,7 @@ void Graphics::SetRenderTarget(unsigned index, RenderSurface* renderTarget)
         {
             Texture* parentTexture = renderTarget->GetParentTexture();
 
-            for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+            for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
             {
                 if (textures_[i] == parentTexture)
                     SetTexture(i, textures_[i]->GetBackupTexture());
@@ -2182,7 +2182,7 @@ void Graphics::CleanupRenderSurface(RenderSurface* surface)
     for (HashMap<unsigned long long, FrameBufferObject>::Iterator i = impl_->frameBuffers_.Begin();
          i != impl_->frameBuffers_.End(); ++i)
     {
-        for (unsigned j = 0; j < MAX_RENDERTARGETS; ++j)
+        for (auto j = 0u; j < MAX_RENDERTARGETS; ++j)
         {
             if (i->second_.colorAttachments_[j] == surface)
             {
@@ -2602,7 +2602,7 @@ void Graphics::PrepareDraw()
         bool noFbo = !depthStencil_;
         if (noFbo)
         {
-            for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
+            for (auto i = 0u; i < MAX_RENDERTARGETS; ++i)
             {
                 if (renderTargets_[i])
                 {
@@ -2670,7 +2670,7 @@ void Graphics::PrepareDraw()
 
         // Calculate the bit combination of non-zero color rendertargets to first check if the combination changed
         unsigned newDrawBuffers = 0;
-        for (unsigned j = 0; j < MAX_RENDERTARGETS; ++j)
+        for (auto j = 0u; j < MAX_RENDERTARGETS; ++j)
         {
             if (renderTargets_[j])
                 newDrawBuffers |= 1 << j;
@@ -2686,7 +2686,7 @@ void Graphics::PrepareDraw()
                 int drawBufferIds[MAX_RENDERTARGETS];
                 unsigned drawBufferCount = 0;
 
-                for (unsigned j = 0; j < MAX_RENDERTARGETS; ++j)
+                for (auto j = 0u; j < MAX_RENDERTARGETS; ++j)
                 {
                     if (renderTargets_[j])
                     {
@@ -2702,7 +2702,7 @@ void Graphics::PrepareDraw()
             i->second_.drawBuffers_ = newDrawBuffers;
         }
 
-        for (unsigned j = 0; j < MAX_RENDERTARGETS; ++j)
+        for (auto j = 0u; j < MAX_RENDERTARGETS; ++j)
         {
             if (renderTargets_[j])
             {
@@ -2915,16 +2915,16 @@ void Graphics::CleanupFramebuffers()
 
 void Graphics::ResetCachedState()
 {
-    for (unsigned i = 0; i < MAX_VERTEX_STREAMS; ++i)
+    for (auto i = 0u; i < MAX_VERTEX_STREAMS; ++i)
         vertexBuffers_[i] = 0;
 
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
     {
         textures_[i] = 0;
         impl_->textureTypes_[i] = 0;
     }
 
-    for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
+    for (auto i = 0u; i < MAX_RENDERTARGETS; ++i)
         renderTargets_[i] = 0;
 
     depthStencil_ = 0;
@@ -2973,7 +2973,7 @@ void Graphics::ResetCachedState()
         SetDepthWrite(true);
     }
 
-    for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS * 2; ++i)
+    for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS * 2; ++i)
         impl_->constantBuffers_[i] = 0;
     impl_->dirtyConstantBuffers_.Clear();
 }

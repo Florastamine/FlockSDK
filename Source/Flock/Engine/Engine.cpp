@@ -174,14 +174,14 @@ bool Engine::Initialize(const VariantMap& parameters)
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
 
     Vector<String> resourcePrefixPaths = GetParameter(parameters, "ResourcePrefixPaths", String::EMPTY).GetString().Split(';', true);
-    for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
+    for (auto i = 0u; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
             IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
     Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "pfiles").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, "ResourcePackages").GetString().Split(';');
     Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "pfiles/early").GetString().Split(';');
 
-    for (unsigned i = 0; i < resourcePaths.Size(); ++i)
+    for (auto i = 0u; i < resourcePaths.Size(); ++i)
     {
         // If path is not absolute, prefer to add it as a package if possible
         if (!IsAbsolutePath(resourcePaths[i]))
@@ -224,7 +224,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     }
 
     // Then add specified packages
-    for (unsigned i = 0; i < resourcePackages.Size(); ++i)
+    for (auto i = 0u; i < resourcePackages.Size(); ++i)
     {
         unsigned j = 0;
         for (; j < resourcePrefixPaths.Size(); ++j)
@@ -248,11 +248,11 @@ bool Engine::Initialize(const VariantMap& parameters)
     }
 
     // Add auto load folders. Prioritize these (if exist) before the default folders
-    for (unsigned i = 0; i < autoLoadPaths.Size(); ++i)
+    for (auto i = 0u; i < autoLoadPaths.Size(); ++i)
     {
         bool autoLoadPathExist = false;
 
-        for (unsigned j = 0; j < resourcePrefixPaths.Size(); ++j)
+        for (auto j = 0u; j < resourcePrefixPaths.Size(); ++j)
         {
             String autoLoadPath(autoLoadPaths[i]);
             if (!IsAbsolutePath(autoLoadPath))
@@ -391,22 +391,22 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     {
         Vector<String> resourceDirs = cache->GetResourceDirs();
         Vector<SharedPtr<PackageFile> > packageFiles = cache->GetPackageFiles();
-        for (unsigned i = 0; i < resourceDirs.Size(); ++i)
+        for (auto i = 0u; i < resourceDirs.Size(); ++i)
             cache->RemoveResourceDir(resourceDirs[i]);
-        for (unsigned i = 0; i < packageFiles.Size(); ++i)
+        for (auto i = 0u; i < packageFiles.Size(); ++i)
             cache->RemovePackageFile(packageFiles[i]);
     }
 
     // Add resource paths
     Vector<String> resourcePrefixPaths = GetParameter(parameters, "ResourcePrefixPaths", String::EMPTY).GetString().Split(';', true);
-    for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
+    for (auto i = 0u; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
             IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
     Vector<String> resourcePaths = GetParameter(parameters, "ResourcePaths", "pfiles").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, "ResourcePackages").GetString().Split(';');
     Vector<String> autoLoadPaths = GetParameter(parameters, "AutoloadPaths", "pfiles/early").GetString().Split(';');
 
-    for (unsigned i = 0; i < resourcePaths.Size(); ++i)
+    for (auto i = 0u; i < resourcePaths.Size(); ++i)
     {
         // If path is not absolute, prefer to add it as a package if possible
         if (!IsAbsolutePath(resourcePaths[i]))
@@ -449,7 +449,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     }
 
     // Then add specified packages
-    for (unsigned i = 0; i < resourcePackages.Size(); ++i)
+    for (auto i = 0u; i < resourcePackages.Size(); ++i)
     {
         unsigned j = 0;
         for (; j < resourcePrefixPaths.Size(); ++j)
@@ -473,11 +473,11 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     }
 
     // Add auto load folders. Prioritize these (if exist) before the default folders
-    for (unsigned i = 0; i < autoLoadPaths.Size(); ++i)
+    for (auto i = 0u; i < autoLoadPaths.Size(); ++i)
     {
         bool autoLoadPathExist = false;
 
-        for (unsigned j = 0; j < resourcePrefixPaths.Size(); ++j)
+        for (auto j = 0u; j < resourcePrefixPaths.Size(); ++j)
         {
             String autoLoadPath(autoLoadPaths[i]);
             if (!IsAbsolutePath(autoLoadPath))
@@ -789,7 +789,7 @@ void Engine::ApplyFrameLimit()
     {
         // If the smoothing configuration was changed, ensure correct amount of samples
         lastTimeSteps_.Erase(0, lastTimeSteps_.Size() - timeStepSmoothing_);
-        for (unsigned i = 0; i < lastTimeSteps_.Size(); ++i)
+        for (auto i = 0u; i < lastTimeSteps_.Size(); ++i)
             timeStep_ += lastTimeSteps_[i];
         timeStep_ /= lastTimeSteps_.Size();
     }
@@ -805,7 +805,7 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
     if (const char* paths = getenv("FLOCKSDK_PREFIX_PATH"))
         ret["ResourcePrefixPaths"] = paths;
 
-    for (unsigned i = 0; i < arguments.Size(); ++i)
+    for (auto i = 0u; i < arguments.Size(); ++i)
     {
         if (arguments[i].Length() > 1 && arguments[i][0] == '-')
         {

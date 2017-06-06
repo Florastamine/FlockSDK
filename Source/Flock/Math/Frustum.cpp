@@ -68,9 +68,9 @@ Frustum::Frustum(const Frustum& frustum)
 
 Frustum& Frustum::operator =(const Frustum& rhs)
 {
-    for (unsigned i = 0; i < NUM_FRUSTUM_PLANES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_PLANES; ++i)
         planes_[i] = rhs.planes_[i];
-    for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_VERTICES; ++i)
         vertices_[i] = rhs.vertices_[i];
 
     return *this;
@@ -176,7 +176,7 @@ void Frustum::DefineSplit(const Matrix4& projection, float near, float far)
 
 void Frustum::Transform(const Matrix3& transform)
 {
-    for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_VERTICES; ++i)
         vertices_[i] = transform * vertices_[i];
 
     UpdatePlanes();
@@ -184,7 +184,7 @@ void Frustum::Transform(const Matrix3& transform)
 
 void Frustum::Transform(const Matrix3x4& transform)
 {
-    for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_VERTICES; ++i)
         vertices_[i] = transform * vertices_[i];
 
     UpdatePlanes();
@@ -193,7 +193,7 @@ void Frustum::Transform(const Matrix3x4& transform)
 Frustum Frustum::Transformed(const Matrix3& transform) const
 {
     Frustum transformed;
-    for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_VERTICES; ++i)
         transformed.vertices_[i] = transform * vertices_[i];
 
     transformed.UpdatePlanes();
@@ -203,7 +203,7 @@ Frustum Frustum::Transformed(const Matrix3& transform) const
 Frustum Frustum::Transformed(const Matrix3x4& transform) const
 {
     Frustum transformed;
-    for (unsigned i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_VERTICES; ++i)
         transformed.vertices_[i] = transform * vertices_[i];
 
     transformed.UpdatePlanes();
@@ -238,7 +238,7 @@ void Frustum::UpdatePlanes()
     // Check if we ended up with inverted planes (reflected transform) and flip in that case
     if (planes_[PLANE_NEAR].Distance(vertices_[5]) < 0.0f)
     {
-        for (unsigned i = 0; i < NUM_FRUSTUM_PLANES; ++i)
+        for (auto i = 0u; i < NUM_FRUSTUM_PLANES; ++i)
         {
             planes_[i].normal_ = -planes_[i].normal_;
             planes_[i].d_ = -planes_[i].d_;

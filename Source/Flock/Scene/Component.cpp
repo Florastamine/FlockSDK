@@ -164,7 +164,7 @@ void Component::PrepareNetworkUpdate()
     unsigned numAttributes = attributes->Size();
 
     // Check for attribute changes
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
 

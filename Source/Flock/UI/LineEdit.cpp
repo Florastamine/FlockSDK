@@ -573,7 +573,7 @@ void LineEdit::UpdateText()
     else
     {
         String echoText;
-        for (unsigned i = 0; i < utf8Length; ++i)
+        for (auto i = 0u; i < utf8Length; ++i)
             echoText.AppendUTF8(echoCharacter_);
         text_->SetText(echoText);
     }

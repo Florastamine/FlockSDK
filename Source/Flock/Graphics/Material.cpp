@@ -362,7 +362,7 @@ bool Material::BeginLoadJSON(Deserializer& source)
             const JSONValue& rootVal = loadJSONFile_->GetRoot();
 
             JSONArray techniqueArray = rootVal.Get("techniques").GetArray();
-            for (unsigned i = 0; i < techniqueArray.Size(); i++)
+            for (auto i = 0u; i < techniqueArray.Size(); i++)
             {
                 const JSONValue& techVal = techniqueArray[i];
                 cache->BackgroundLoadResource<Technique>(techVal.Get("name").GetString(), true, this);
@@ -589,7 +589,7 @@ bool Material::Load(const JSONValue& source)
     techniques_.Clear();
     techniques_.Reserve(techniquesArray.Size());
 
-    for (unsigned i = 0; i < techniquesArray.Size(); i++)
+    for (auto i = 0u; i < techniquesArray.Size(); i++)
     {
         const JSONValue& techVal = techniquesArray[i];
         Technique* tech = cache->GetResource<Technique>(techVal.Get("name").GetString());
@@ -735,7 +735,7 @@ bool Material::Save(XMLElement& dest) const
     }
 
     // Write techniques
-    for (unsigned i = 0; i < techniques_.Size(); ++i)
+    for (auto i = 0u; i < techniques_.Size(); ++i)
     {
         const TechniqueEntry& entry = techniques_[i];
         if (!entry.technique_)
@@ -748,7 +748,7 @@ bool Material::Save(XMLElement& dest) const
     }
 
     // Write texture units
-    for (unsigned j = 0; j < MAX_TEXTURE_UNITS; ++j)
+    for (auto j = 0u; j < MAX_TEXTURE_UNITS; ++j)
     {
         Texture* texture = GetTexture((TextureUnit)j);
         if (texture)
@@ -838,7 +838,7 @@ bool Material::Save(JSONValue& dest) const
     // Write techniques
     JSONArray techniquesArray;
     techniquesArray.Reserve(techniques_.Size());
-    for (unsigned i = 0; i < techniques_.Size(); ++i)
+    for (auto i = 0u; i < techniques_.Size(); ++i)
     {
         const TechniqueEntry& entry = techniques_[i];
         if (!entry.technique_)
@@ -854,7 +854,7 @@ bool Material::Save(JSONValue& dest) const
 
     // Write texture units
     JSONValue texturesValue;
-    for (unsigned j = 0; j < MAX_TEXTURE_UNITS; ++j)
+    for (auto j = 0u; j < MAX_TEXTURE_UNITS; ++j)
     {
         Texture* texture = GetTexture((TextureUnit)j);
         if (texture)
@@ -1155,7 +1155,7 @@ void Material::RemoveShaderParameter(const String& name)
 
 void Material::ReleaseShaders()
 {
-    for (unsigned i = 0; i < techniques_.Size(); ++i)
+    for (auto i = 0u; i < techniques_.Size(); ++i)
     {
         Technique* tech = techniques_[i].technique_;
         if (tech)
@@ -1315,7 +1315,7 @@ void Material::RefreshShaderParameterHash()
     shaderParameterHash_ = 0;
     const unsigned char* data = temp.GetData();
     unsigned dataSize = temp.GetSize();
-    for (unsigned i = 0; i < dataSize; ++i)
+    for (auto i = 0u; i < dataSize; ++i)
         shaderParameterHash_ = SDBMHash(shaderParameterHash_, data[i]);
 }
 
@@ -1379,7 +1379,7 @@ void Material::HandleAttributeAnimationUpdate(StringHash eventType, VariantMap& 
     }
 
     // Remove finished animations
-    for (unsigned i = 0; i < finishedNames.Size(); ++i)
+    for (auto i = 0u; i < finishedNames.Size(); ++i)
         SetShaderParameterAnimation(finishedNames[i], 0);
 }
 
@@ -1387,7 +1387,7 @@ void Material::ApplyShaderDefines(unsigned index)
 {
     if (index == M_MAX_UNSIGNED)
     {
-        for (unsigned i = 0; i < techniques_.Size(); ++i)
+        for (auto i = 0u; i < techniques_.Size(); ++i)
             ApplyShaderDefines(i);
         return;
     }

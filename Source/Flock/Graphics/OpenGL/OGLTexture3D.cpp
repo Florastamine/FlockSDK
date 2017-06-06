@@ -70,7 +70,7 @@ void Texture3D::Release()
         if (!graphics_ || graphics_->IsDeviceLost())
             return;
 
-        for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+        for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
         {
             if (graphics_->GetTexture(i) == this)
                 graphics_->SetTexture(i, 0);
@@ -186,7 +186,7 @@ bool Texture3D::SetData(Image* image, bool useAlpha)
         unsigned format = 0;
 
         // Discard unnecessary mip levels
-        for (unsigned i = 0; i < mipsToSkip_[quality]; ++i)
+        for (auto i = 0u; i < mipsToSkip_[quality]; ++i)
         {
             mipImage = image->GetNextLevel(); image = mipImage;
             levelData = image->GetData();
@@ -225,7 +225,7 @@ bool Texture3D::SetData(Image* image, bool useAlpha)
         if (!object_.name_)
             return false;
 
-        for (unsigned i = 0; i < levels_; ++i)
+        for (auto i = 0u; i < levels_; ++i)
         {
             SetData(i, 0, 0, 0, levelWidth, levelHeight, levelDepth, levelData);
             memoryUse += levelWidth * levelHeight * levelDepth * components;
@@ -267,7 +267,7 @@ bool Texture3D::SetData(Image* image, bool useAlpha)
         SetNumLevels(Max((levels - mipsToSkip), 1U));
         SetSize(width, height, depth, format);
 
-        for (unsigned i = 0; i < levels_ && i < levels - mipsToSkip; ++i)
+        for (auto i = 0u; i < levels_ && i < levels - mipsToSkip; ++i)
         {
             CompressedLevel level = image->GetCompressedLevel(i + mipsToSkip);
             if (!needDecompress)

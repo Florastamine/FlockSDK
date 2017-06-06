@@ -90,7 +90,7 @@ public:
         unsigned numGeometries = model->GetNumGeometries();
         unsigned totalTriangles = 0;
 
-        for (unsigned i = 0; i < numGeometries; ++i)
+        for (auto i = 0u; i < numGeometries; ++i)
         {
             Geometry* geometry = model->GetGeometry(i, lodLevel);
             if (!geometry)
@@ -145,7 +145,7 @@ public:
         unsigned totalVertexCount = 0;
         unsigned totalTriangles = 0;
 
-        for (unsigned i = 0; i < srcVertices.Size(); ++i)
+        for (auto i = 0u; i < srcVertices.Size(); ++i)
             totalVertexCount += srcVertices[i].Size();
 
         if (totalVertexCount)
@@ -160,9 +160,9 @@ public:
             unsigned* destIndex = reinterpret_cast<unsigned*>(&indexData[0]);
             unsigned k = 0;
 
-            for (unsigned i = 0; i < srcVertices.Size(); ++i)
+            for (auto i = 0u; i < srcVertices.Size(); ++i)
             {
-                for (unsigned j = 0; j < srcVertices[i].Size(); ++j)
+                for (auto j = 0u; j < srcVertices[i].Size(); ++j)
                 {
                     *destVertex++ = srcVertices[i][j].position_;
                     *destIndex++ = k++;
@@ -221,7 +221,7 @@ ConvexData::ConvexData(Model* model, unsigned lodLevel)
     PODVector<Vector3> vertices;
     unsigned numGeometries = model->GetNumGeometries();
 
-    for (unsigned i = 0; i < numGeometries; ++i)
+    for (auto i = 0u; i < numGeometries; ++i)
     {
         Geometry* geometry = model->GetGeometry(i, lodLevel);
         if (!geometry)
@@ -247,7 +247,7 @@ ConvexData::ConvexData(Model* model, unsigned lodLevel)
         unsigned vertexCount = geometry->GetVertexCount();
 
         // Copy vertex data
-        for (unsigned j = 0; j < vertexCount; ++j)
+        for (auto j = 0u; j < vertexCount; ++j)
         {
             const Vector3& v = *((const Vector3*)(&vertexData[(vertexStart + j) * vertexSize]));
             vertices.Push(v);
@@ -262,9 +262,9 @@ ConvexData::ConvexData(CustomGeometry* custom)
     const Vector<PODVector<CustomGeometryVertex> >& srcVertices = custom->GetVertices();
     PODVector<Vector3> vertices;
 
-    for (unsigned i = 0; i < srcVertices.Size(); ++i)
+    for (auto i = 0u; i < srcVertices.Size(); ++i)
     {
-        for (unsigned j = 0; j < srcVertices[i].Size(); ++j)
+        for (auto j = 0u; j < srcVertices[i].Size(); ++j)
             vertices.Push(srcVertices[i][j].position_);
     }
 
@@ -325,7 +325,7 @@ HeightfieldData::HeightfieldData(Terrain* terrain, unsigned lodLevel) :
             Vector3 lodSpacing = spacing_;
             unsigned skip = 1;
 
-            for (unsigned i = 0; i < lodLevel; ++i)
+            for (auto i = 0u; i < lodLevel; ++i)
             {
                 skip *= 2;
                 lodSpacing.x_ *= 2.0f;
@@ -356,7 +356,7 @@ HeightfieldData::HeightfieldData(Terrain* terrain, unsigned lodLevel) :
         float* data = heightData_.Get();
 
         minHeight_ = maxHeight_ = data[0];
-        for (unsigned i = 1; i < points; ++i)
+        for (auto i = 1u; i < points; ++i)
         {
             minHeight_ = Min(minHeight_, data[i]);
             maxHeight_ = Max(maxHeight_, data[i]);
@@ -372,13 +372,13 @@ bool HasDynamicBuffers(Model* model, unsigned lodLevel)
 {
     unsigned numGeometries = model->GetNumGeometries();
 
-    for (unsigned i = 0; i < numGeometries; ++i)
+    for (auto i = 0u; i < numGeometries; ++i)
     {
         Geometry* geometry = model->GetGeometry(i, lodLevel);
         if (!geometry)
             continue;
         unsigned numVertexBuffers = geometry->GetNumVertexBuffers();
-        for (unsigned j = 0; j < numVertexBuffers; ++j)
+        for (auto j = 0u; j < numVertexBuffers; ++j)
         {
             VertexBuffer* buffer = geometry->GetVertexBuffer(j);
             if (!buffer)

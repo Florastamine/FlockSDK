@@ -280,7 +280,7 @@ public:
         const float* leftData = Data();
         const float* rightData = rhs.Data();
 
-        for (unsigned i = 0; i < 12; ++i)
+        for (auto i = 0u; i < 12; ++i)
         {
             if (leftData[i] != rightData[i])
                 return false;
@@ -671,7 +671,7 @@ public:
         const float* leftData = Data();
         const float* rightData = rhs.Data();
 
-        for (unsigned i = 0; i < 12; ++i)
+        for (auto i = 0u; i < 12; ++i)
         {
             if (!FlockSDK::Equals(leftData[i], rightData[i]))
                 return false;

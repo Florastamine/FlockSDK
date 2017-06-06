@@ -249,12 +249,12 @@ void DebugRenderer::AddPolyhedron(const Polyhedron& poly, const Color& color, bo
 {
     unsigned uintColor = color.ToUInt();
 
-    for (unsigned i = 0; i < poly.faces_.Size(); ++i)
+    for (auto i = 0u; i < poly.faces_.Size(); ++i)
     {
         const PODVector<Vector3>& face = poly.faces_[i];
         if (face.Size() >= 3)
         {
-            for (unsigned j = 0; j < face.Size(); ++j)
+            for (auto j = 0u; j < face.Size(); ++j)
                 AddLine(face[j], face[(j + 1) % face.Size()], uintColor, depthTest);
         }
     }
@@ -273,9 +273,9 @@ void DebugRenderer::AddSphere(const Sphere& sphere, const Color& color, bool dep
 {
     unsigned uintColor = color.ToUInt();
 
-    for (unsigned j = 0; j < 180; j += 45)
+    for (auto j = 0u; j < 180; j += 45)
     {
-        for (unsigned i = 0; i < 360; i += 45)
+        for (auto i = 0u; i < 360; i += 45)
         {
             Vector3 p1 = PointOnSphere(sphere, i, j);
             Vector3 p2 = PointOnSphere(sphere, i + 45, j);
@@ -296,7 +296,7 @@ void DebugRenderer::AddCylinder(const Vector3& position, float radius, float hei
     Vector3 heightVec(0, height, 0);
     Vector3 offsetXVec(radius, 0, 0);
     Vector3 offsetZVec(0, 0, radius);
-    for (unsigned i = 0; i < 360; i += 45)
+    for (auto i = 0u; i < 360; i += 45)
     {
         Vector3 p1 = PointOnSphere(sphere, i, 90);
         Vector3 p2 = PointOnSphere(sphere, i + 45, 90);
@@ -317,7 +317,7 @@ void DebugRenderer::AddSkeleton(const Skeleton& skeleton, const Color& color, bo
 
     unsigned uintColor = color.ToUInt();
 
-    for (unsigned i = 0; i < bones.Size(); ++i)
+    for (auto i = 0u; i < bones.Size(); ++i)
     {
         // Skip if bone contains no skinned geometry
         if (bones[i].radius_ < M_EPSILON && bones[i].boundingBox_.Size().LengthSquared() < M_EPSILON)
@@ -460,7 +460,7 @@ void DebugRenderer::Render()
     if (!dest)
         return;
 
-    for (unsigned i = 0; i < lines_.Size(); ++i)
+    for (auto i = 0u; i < lines_.Size(); ++i)
     {
         const DebugLine& line = lines_[i];
 
@@ -476,7 +476,7 @@ void DebugRenderer::Render()
         dest += 8;
     }
 
-    for (unsigned i = 0; i < noDepthLines_.Size(); ++i)
+    for (auto i = 0u; i < noDepthLines_.Size(); ++i)
     {
         const DebugLine& line = noDepthLines_[i];
 
@@ -492,7 +492,7 @@ void DebugRenderer::Render()
         dest += 8;
     }
 
-    for (unsigned i = 0; i < triangles_.Size(); ++i)
+    for (auto i = 0u; i < triangles_.Size(); ++i)
     {
         const DebugTriangle& triangle = triangles_[i];
 
@@ -514,7 +514,7 @@ void DebugRenderer::Render()
         dest += 12;
     }
 
-    for (unsigned i = 0; i < noDepthTriangles_.Size(); ++i)
+    for (auto i = 0u; i < noDepthTriangles_.Size(); ++i)
     {
         const DebugTriangle& triangle = noDepthTriangles_[i];
 

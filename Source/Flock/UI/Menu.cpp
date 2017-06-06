@@ -78,7 +78,7 @@ void Menu::Update(float timeStep)
     if (popup_ && showPopup_)
     {
         const Vector<SharedPtr<UIElement> >& children = popup_->GetChildren();
-        for (unsigned i = 0; i < children.Size(); ++i)
+        for (auto i = 0u; i < children.Size(); ++i)
         {
             Menu* menu = dynamic_cast<Menu*>(children[i].Get());
             if (menu && !menu->autoPopup_ && !menu->IsHovering())

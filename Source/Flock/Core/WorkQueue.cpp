@@ -79,7 +79,7 @@ WorkQueue::~WorkQueue()
     shutDown_ = true;
     Resume();
 
-    for (unsigned i = 0; i < threads_.Size(); ++i)
+    for (auto i = 0u; i < threads_.Size(); ++i)
         threads_[i]->Stop();
 }
 
@@ -93,7 +93,7 @@ void WorkQueue::CreateThreads(unsigned numThreads)
     // Start threads in paused mode
     Pause();
 
-    for (unsigned i = 0; i < numThreads; ++i)
+    for (auto i = 0u; i < numThreads; ++i)
     {
         SharedPtr<WorkerThread> thread(new WorkerThread(this, i + 1));
         thread->Run();
@@ -367,7 +367,7 @@ void WorkQueue::PurgePool()
     int difference = lastSize_ - currentSize;
 
     // Difference tolerance, should be fairly significant to reduce the pool size.
-    for (unsigned i = 0; poolItems_.Size() > 0 && difference > tolerance_ && i < (unsigned)difference; i++)
+    for (auto i = 0u; poolItems_.Size() > 0 && difference > tolerance_ && i < (unsigned)difference; i++)
         poolItems_.PopFront();
 
     lastSize_ = currentSize;

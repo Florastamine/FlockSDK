@@ -176,7 +176,7 @@ void AnimatedModel::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQu
     const Vector<Bone>& bones = skeleton_.GetBones();
     Sphere boneSphere;
 
-    for (unsigned i = 0; i < bones.Size(); ++i)
+    for (auto i = 0u; i < bones.Size(); ++i)
     {
         const Bone& bone = bones[i];
         if (!bone.node_)
@@ -269,7 +269,7 @@ void AnimatedModel::UpdateBatches(const FrameInfo& frame)
         batches_[0].distance_ = distance_;
     else
     {
-        for (unsigned i = 0; i < batches_.Size(); ++i)
+        for (auto i = 0u; i < batches_.Size(); ++i)
             batches_[i].distance_ = frame.camera_->GetDistance(worldTransform * geometryData_[i].center_);
     }
 
@@ -355,7 +355,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
         SetNumGeometries(model->GetNumGeometries());
         const Vector<Vector<SharedPtr<Geometry> > >& geometries = model->GetGeometries();
         const PODVector<Vector3>& geometryCenters = model->GetGeometryCenters();
-        for (unsigned i = 0; i < geometries.Size(); ++i)
+        for (auto i = 0u; i < geometries.Size(); ++i)
         {
             geometries_[i] = geometries[i];
             geometryData_[i].center_ = geometryCenters[i];
@@ -365,7 +365,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
         const Vector<PODVector<unsigned> >& geometryBoneMappings = model->GetGeometryBoneMappings();
         geometryBoneMappings_.Clear();
         geometryBoneMappings_.Reserve(geometryBoneMappings.Size());
-        for (unsigned i = 0; i < geometryBoneMappings.Size(); ++i)
+        for (auto i = 0u; i < geometryBoneMappings.Size(); ++i)
             geometryBoneMappings_.Push(geometryBoneMappings[i]);
 
         // Copy morphs. Note: morph vertex buffers will be created later on-demand
@@ -374,7 +374,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
         const Vector<ModelMorph>& morphs = model->GetMorphs();
         morphs_.Reserve(morphs.Size());
         morphElementMask_ = 0;
-        for (unsigned i = 0; i < morphs.Size(); ++i)
+        for (auto i = 0u; i < morphs.Size(); ++i)
         {
             ModelMorph newMorph;
             newMorph.name_ = morphs[i].name_;
@@ -400,7 +400,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
         SetGeometryBoneMappings();
 
         // Enable skinning in batches
-        for (unsigned i = 0; i < batches_.Size(); ++i)
+        for (auto i = 0u; i < batches_.Size(); ++i)
         {
             if (skinMatrices_.Size())
             {
@@ -570,7 +570,7 @@ void AnimatedModel::SetMorphWeight(unsigned index, float weight)
             GetComponents<AnimatedModel>(models);
 
             // Indexing might not be the same, so use the name hash instead
-            for (unsigned i = 1; i < models.Size(); ++i)
+            for (auto i = 1u; i < models.Size(); ++i)
             {
                 if (!models[i]->isMaster_)
                     models[i]->SetMorphWeight(morphs_[index].nameHash_, weight);
@@ -584,7 +584,7 @@ void AnimatedModel::SetMorphWeight(unsigned index, float weight)
 
 void AnimatedModel::SetMorphWeight(const String& name, float weight)
 {
-    for (unsigned i = 0; i < morphs_.Size(); ++i)
+    for (auto i = 0u; i < morphs_.Size(); ++i)
     {
         if (morphs_[i].name_ == name)
         {
@@ -596,7 +596,7 @@ void AnimatedModel::SetMorphWeight(const String& name, float weight)
 
 void AnimatedModel::SetMorphWeight(StringHash nameHash, float weight)
 {
-    for (unsigned i = 0; i < morphs_.Size(); ++i)
+    for (auto i = 0u; i < morphs_.Size(); ++i)
     {
         if (morphs_[i].nameHash_ == nameHash)
         {
@@ -617,7 +617,7 @@ void AnimatedModel::ResetMorphWeights()
         PODVector<AnimatedModel*> models;
         GetComponents<AnimatedModel>(models);
 
-        for (unsigned i = 1; i < models.Size(); ++i)
+        for (auto i = 1u; i < models.Size(); ++i)
         {
             if (!models[i]->isMaster_)
                 models[i]->ResetMorphWeights();
@@ -709,7 +709,7 @@ void AnimatedModel::SetSkeleton(const Skeleton& skeleton, bool createBones)
             const Vector<Bone>& srcBones = skeleton.GetBones();
             bool compatible = true;
 
-            for (unsigned i = 0; i < destBones.Size(); ++i)
+            for (auto i = 0u; i < destBones.Size(); ++i)
             {
                 if (destBones[i].node_ && destBones[i].name_ == srcBones[i].name_ && destBones[i].parentIndex_ ==
                                                                                      srcBones[i].parentIndex_)
@@ -757,7 +757,7 @@ void AnimatedModel::SetSkeleton(const Skeleton& skeleton, bool createBones)
                 i->node_ = boneNode;
             }
 
-            for (unsigned i = 0; i < bones.Size(); ++i)
+            for (auto i = 0u; i < bones.Size(); ++i)
             {
                 unsigned parentIndex = bones[i].parentIndex_;
                 if (parentIndex != i && parentIndex < bones.Size())
@@ -807,7 +807,7 @@ void AnimatedModel::SetModelAttr(const ResourceRef& value)
 void AnimatedModel::SetBonesEnabledAttr(const VariantVector& value)
 {
     Vector<Bone>& bones = skeleton_.GetModifiableBones();
-    for (unsigned i = 0; i < bones.Size() && i < value.Size(); ++i)
+    for (auto i = 0u; i < bones.Size() && i < value.Size(); ++i)
         bones[i].animated_ = value[i].GetBool();
 }
 
@@ -1023,7 +1023,7 @@ void AnimatedModel::FinalizeBoneBoundingBoxes()
         if (model_)
         {
             const Vector<Bone>& modelBones = model_->GetSkeleton().GetBones();
-            for (unsigned i = 0; i < bones.Size() && i < modelBones.Size(); ++i)
+            for (auto i = 0u; i < bones.Size() && i < modelBones.Size(); ++i)
             {
                 bones[i].collisionMask_ = modelBones[i].collisionMask_;
                 bones[i].radius_ = modelBones[i].radius_;
@@ -1109,7 +1109,7 @@ void AnimatedModel::CloneGeometries()
     HashMap<VertexBuffer*, SharedPtr<VertexBuffer> > clonedVertexBuffers;
     morphVertexBuffers_.Resize(originalVertexBuffers.Size());
 
-    for (unsigned i = 0; i < originalVertexBuffers.Size(); ++i)
+    for (auto i = 0u; i < originalVertexBuffers.Size(); ++i)
     {
         VertexBuffer* original = originalVertexBuffers[i];
         if (model_->GetMorphRangeCount(i))
@@ -1131,9 +1131,9 @@ void AnimatedModel::CloneGeometries()
     }
 
     // Geometries will always be cloned fully. They contain only references to buffer, so they are relatively light
-    for (unsigned i = 0; i < geometries_.Size(); ++i)
+    for (auto i = 0u; i < geometries_.Size(); ++i)
     {
-        for (unsigned j = 0; j < geometries_[i].Size(); ++j)
+        for (auto j = 0u; j < geometries_[i].Size(); ++j)
         {
             SharedPtr<Geometry> original = geometries_[i][j];
             SharedPtr<Geometry> clone(new Geometry(context_));
@@ -1231,7 +1231,7 @@ void AnimatedModel::SetGeometryBoneMappings()
 
     // Check if all mappings are empty, then we do not need to use mapped skinning
     bool allEmpty = true;
-    for (unsigned i = 0; i < geometryBoneMappings_.Size(); ++i)
+    for (auto i = 0u; i < geometryBoneMappings_.Size(); ++i)
         if (geometryBoneMappings_[i].Size())
             allEmpty = false;
 
@@ -1240,15 +1240,15 @@ void AnimatedModel::SetGeometryBoneMappings()
 
     // Reserve space for per-geometry skinning matrices
     geometrySkinMatrices_.Resize(geometryBoneMappings_.Size());
-    for (unsigned i = 0; i < geometryBoneMappings_.Size(); ++i)
+    for (auto i = 0u; i < geometryBoneMappings_.Size(); ++i)
         geometrySkinMatrices_[i].Resize(geometryBoneMappings_[i].Size());
 
     // Build original-to-skinindex matrix pointer mapping for fast copying
     // Note: at this point layout of geometrySkinMatrices_ cannot be modified or pointers become invalid
     geometrySkinMatrixPtrs_.Resize(skeleton_.GetNumBones());
-    for (unsigned i = 0; i < geometryBoneMappings_.Size(); ++i)
+    for (auto i = 0u; i < geometryBoneMappings_.Size(); ++i)
     {
-        for (unsigned j = 0; j < geometryBoneMappings_[i].Size(); ++j)
+        for (auto j = 0u; j < geometryBoneMappings_[i].Size(); ++j)
             geometrySkinMatrixPtrs_[geometryBoneMappings_[i][j]].Push(&geometrySkinMatrices_[i][j]);
     }
 }
@@ -1311,7 +1311,7 @@ void AnimatedModel::UpdateSkinning()
     // Skinning with global matrices only
     if (!geometrySkinMatrices_.Size())
     {
-        for (unsigned i = 0; i < bones.Size(); ++i)
+        for (auto i = 0u; i < bones.Size(); ++i)
         {
             const Bone& bone = bones[i];
             if (bone.node_)
@@ -1323,7 +1323,7 @@ void AnimatedModel::UpdateSkinning()
     // Skinning with per-geometry matrices
     else
     {
-        for (unsigned i = 0; i < bones.Size(); ++i)
+        for (auto i = 0u; i < bones.Size(); ++i)
         {
             const Bone& bone = bones[i];
             if (bone.node_)
@@ -1332,7 +1332,7 @@ void AnimatedModel::UpdateSkinning()
                 skinMatrices_[i] = worldTransform;
 
             // Copy the skin matrix to per-geometry matrices as needed
-            for (unsigned j = 0; j < geometrySkinMatrixPtrs_[i].Size(); ++j)
+            for (auto j = 0u; j < geometrySkinMatrixPtrs_[i].Size(); ++j)
                 *geometrySkinMatrixPtrs_[i][j] = skinMatrices_[i];
         }
     }
@@ -1349,7 +1349,7 @@ void AnimatedModel::UpdateMorphs()
     if (morphs_.Size())
     {
         // Reset the morph data range from all morphable vertex buffers, then apply morphs
-        for (unsigned i = 0; i < morphVertexBuffers_.Size(); ++i)
+        for (auto i = 0u; i < morphVertexBuffers_.Size(); ++i)
         {
             VertexBuffer* buffer = morphVertexBuffers_[i];
             if (buffer)
@@ -1365,7 +1365,7 @@ void AnimatedModel::UpdateMorphs()
                     CopyMorphVertices(dest, originalBuffer->GetShadowData() + morphStart * originalBuffer->GetVertexSize(),
                         morphCount, buffer, originalBuffer);
 
-                    for (unsigned j = 0; j < morphs_.Size(); ++j)
+                    for (auto j = 0u; j < morphs_.Size(); ++j)
                     {
                         if (morphs_[j].weight_ != 0.0f)
                         {

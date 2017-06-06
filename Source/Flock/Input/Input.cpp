@@ -78,14 +78,14 @@ void JoystickState::Initialize(unsigned numButtons, unsigned numAxes, unsigned n
 
 void JoystickState::Reset()
 {
-    for (unsigned i = 0; i < buttons_.Size(); ++i)
+    for (auto i = 0u; i < buttons_.Size(); ++i)
     {
         buttons_[i] = false;
         buttonPress_[i] = false;
     }
-    for (unsigned i = 0; i < axes_.Size(); ++i)
+    for (auto i = 0u; i < axes_.Size(); ++i)
         axes_[i] = 0.0f;
-    for (unsigned i = 0; i < hats_.Size(); ++i)
+    for (auto i = 0u; i < hats_.Size(); ++i)
         hats_[i] = HAT_CENTER;
 }
 
@@ -632,14 +632,14 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                 else if (keyBinding.Length() == 4)
                 {
                     keyBindings.Resize(4);      // e.g.: "WSAD"
-                    for (unsigned i = 0; i < 4; ++i)
+                    for (auto i = 0u; i < 4; ++i)
                         keyBindings[i] = keyBinding.Substring(i, 1);
                 }
                 if (keyBindings.Size() == 4)
                 {
                     PopulateKeyBindingMap(keyBindingMap);
 
-                    for (unsigned j = 0; j < 4; ++j)
+                    for (auto j = 0u; j < 4; ++j)
                     {
                         if (keyBindings[j].Length() == 1)
                             mappedKeyBinding[j] = keyBindings[j][0];
@@ -977,7 +977,7 @@ void Input::ResetJoysticks()
 
     // Open each detected joystick automatically on startup
     unsigned size = static_cast<unsigned>(SDL_NumJoysticks());
-    for (unsigned i = 0; i < size; ++i)
+    for (auto i = 0u; i < size; ++i)
         OpenJoystick(i);
 }
 
@@ -991,7 +991,7 @@ void Input::ResetInputAccumulation()
     mouseMoveWheel_ = 0;
     for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
     {
-        for (unsigned j = 0; j < i->second_.buttonPress_.Size(); ++j)
+        for (auto j = 0u; j < i->second_.buttonPress_.Size(); ++j)
             i->second_.buttonPress_[j] = false;
     }
 }

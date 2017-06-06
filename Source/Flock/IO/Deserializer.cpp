@@ -291,7 +291,7 @@ ResourceRefList Deserializer::ReadResourceRefList()
     ResourceRefList ret;
     ret.type_ = ReadStringHash();
     ret.names_.Resize(ReadVLE());
-    for (unsigned i = 0; i < ret.names_.Size(); ++i)
+    for (auto i = 0u; i < ret.names_.Size(); ++i)
         ret.names_[i] = ReadString();
     return ret;
 }
@@ -386,7 +386,7 @@ Variant Deserializer::ReadVariant(VariantType type)
 VariantVector Deserializer::ReadVariantVector()
 {
     VariantVector ret(ReadVLE());
-    for (unsigned i = 0; i < ret.Size(); ++i)
+    for (auto i = 0u; i < ret.Size(); ++i)
         ret[i] = ReadVariant();
     return ret;
 }
@@ -394,7 +394,7 @@ VariantVector Deserializer::ReadVariantVector()
 StringVector Deserializer::ReadStringVector()
 {
     StringVector ret(ReadVLE());
-    for (unsigned i = 0; i < ret.Size(); ++i)
+    for (auto i = 0u; i < ret.Size(); ++i)
         ret[i] = ReadString();
     return ret;
 }
@@ -404,7 +404,7 @@ VariantMap Deserializer::ReadVariantMap()
     VariantMap ret;
     unsigned num = ReadVLE();
 
-    for (unsigned i = 0; i < num; ++i)
+    for (auto i = 0u; i < num; ++i)
     {
         StringHash key = ReadStringHash();
         ret[key] = ReadVariant();

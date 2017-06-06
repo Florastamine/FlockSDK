@@ -130,7 +130,7 @@ bool ValueAnimation::SaveXML(XMLElement& dest) const
     if (interpolationMethod_ == IM_SPLINE)
         dest.SetFloat("splinetension", splineTension_);
 
-    for (unsigned i = 0; i < keyFrames_.Size(); ++i)
+    for (auto i = 0u; i < keyFrames_.Size(); ++i)
     {
         const VAnimKeyFrame& keyFrame = keyFrames_[i];
         XMLElement keyFrameEleme = dest.CreateChild("keyframe");
@@ -138,7 +138,7 @@ bool ValueAnimation::SaveXML(XMLElement& dest) const
         keyFrameEleme.SetVariant(keyFrame.value_);
     }
 
-    for (unsigned i = 0; i < eventFrames_.Size(); ++i)
+    for (auto i = 0u; i < eventFrames_.Size(); ++i)
     {
         const VAnimEventFrame& eventFrame = eventFrames_[i];
         XMLElement eventFrameElem = dest.CreateChild("eventframe");
@@ -164,7 +164,7 @@ bool ValueAnimation::LoadJSON(const JSONValue& source)
 
     // Load keyframes
     JSONArray keyFramesArray = source.Get("keyframes").GetArray();
-    for (unsigned i = 0; i < keyFramesArray.Size(); i++)
+    for (auto i = 0u; i < keyFramesArray.Size(); i++)
     {
         const JSONValue& val = keyFramesArray[i];
         float time = val.Get("time").GetFloat();
@@ -174,7 +174,7 @@ bool ValueAnimation::LoadJSON(const JSONValue& source)
 
     // Load event frames
     JSONArray eventFramesArray = source.Get("eventframes").GetArray();
-    for (unsigned i = 0; i < eventFramesArray.Size(); i++)
+    for (auto i = 0u; i < eventFramesArray.Size(); i++)
     {
         const JSONValue& eventFrameVal = eventFramesArray[i];
         float time = eventFrameVal.Get("time").GetFloat();
@@ -194,7 +194,7 @@ bool ValueAnimation::SaveJSON(JSONValue& dest) const
 
     JSONArray keyFramesArray;
     keyFramesArray.Reserve(keyFrames_.Size());
-    for (unsigned i = 0; i < keyFrames_.Size(); ++i)
+    for (auto i = 0u; i < keyFrames_.Size(); ++i)
     {
         const VAnimKeyFrame& keyFrame = keyFrames_[i];
         JSONValue keyFrameVal;
@@ -208,7 +208,7 @@ bool ValueAnimation::SaveJSON(JSONValue& dest) const
 
     JSONArray eventFramesArray;
     eventFramesArray.Reserve(eventFrames_.Size());
-    for (unsigned i = 0; i < eventFrames_.Size(); ++i)
+    for (auto i = 0u; i < eventFrames_.Size(); ++i)
     {
         const VAnimEventFrame& eventFrame = eventFrames_[i];
         JSONValue eventFrameVal;
@@ -288,7 +288,7 @@ bool ValueAnimation::SetKeyFrame(float time, const Variant& value)
         keyFrames_.Push(keyFrame);
     else
     {
-        for (unsigned i = 0; i < keyFrames_.Size(); ++i)
+        for (auto i = 0u; i < keyFrames_.Size(); ++i)
         {
             // Guard against interpolation error caused by division by error due to 0 delta time between two key frames
             if (time == keyFrames_[i].time_)
@@ -319,7 +319,7 @@ void ValueAnimation::SetEventFrame(float time, const StringHash& eventType, cons
         eventFrames_.Push(eventFrame);
     else
     {
-        for (unsigned i = 0; i < eventFrames_.Size(); ++i)
+        for (auto i = 0u; i < eventFrames_.Size(); ++i)
         {
             if (time < eventFrames_[i].time_)
             {
@@ -362,7 +362,7 @@ Variant ValueAnimation::GetAnimationValue(float scaledTime)
 
 void ValueAnimation::GetEventFrames(float beginTime, float endTime, PODVector<const VAnimEventFrame*>& eventFrames) const
 {
-    for (unsigned i = 0; i < eventFrames_.Size(); ++i)
+    for (auto i = 0u; i < eventFrames_.Size(); ++i)
     {
         const VAnimEventFrame& eventFrame = eventFrames_[i];
         if (eventFrame.time_ > endTime)
@@ -498,7 +498,7 @@ void ValueAnimation::UpdateSplineTangents()
     unsigned size = keyFrames_.Size();
     splineTangents_.Resize(size);
 
-    for (unsigned i = 1; i < size - 1; ++i)
+    for (auto i = 1u; i < size - 1; ++i)
         splineTangents_[i] = SubstractAndMultiply(keyFrames_[i + 1].value_, keyFrames_[i - 1].value_, splineTension_);
 
     // If spline is not closed, make end point's tangent zero

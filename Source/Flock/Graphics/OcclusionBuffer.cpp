@@ -89,7 +89,7 @@ bool OcclusionBuffer::SetSize(int width, int height, bool threaded)
     // Build work buffers for threading
     unsigned numThreadBuffers = threaded ? GetSubsystem<WorkQueue>()->GetNumThreads() + 1 : 1;
     buffers_.Resize(numThreadBuffers);
-    for (unsigned i = 0; i < numThreadBuffers; ++i)
+    for (auto i = 0u; i < numThreadBuffers; ++i)
     {
         // Reserve extra memory in case 3D clipping is not exact
         OcclusionBufferData& buffer = buffers_[i];
@@ -162,7 +162,7 @@ void OcclusionBuffer::Clear()
 
     // Only clear the main thread buffer. Rest are cleared on-demand when drawing the first batch
     ClearBuffer(0);
-    for (unsigned i = 1; i < buffers_.Size(); ++i)
+    for (auto i = 1u; i < buffers_.Size(); ++i)
         buffers_[i].used_ = false;
 
     depthHierarchyDirty_ = true;
@@ -288,7 +288,7 @@ void OcclusionBuffer::BuildDepthHierarchy()
     }
 
     // Build the rest of the mip levels
-    for (unsigned i = 1; i < mipBuffers_.Size(); ++i)
+    for (auto i = 1u; i < mipBuffers_.Size(); ++i)
     {
         int prevWidth = width;
         int prevHeight = height;
@@ -357,7 +357,7 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
     vertices[7] = ModelTransform(viewProj_, worldSpaceBox.max_);
 
     // Apply a far clip relative bias
-    for (unsigned i = 0; i < 8; ++i)
+    for (auto i = 0u; i < 8; ++i)
         vertices[i].z_ -= OCCLUSION_RELATIVE_BIAS;
 
     // Transform to screen space. If any of the corners cross the near plane, assume visible
@@ -372,7 +372,7 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
     minZ = projected.z_;
 
     // Project the rest
-    for (unsigned i = 1; i < 8; ++i)
+    for (auto i = 1u; i < 8; ++i)
     {
         if (vertices[i].z_ <= 0.0f)
             return true;
@@ -604,7 +604,7 @@ void OcclusionBuffer::DrawTriangle(Vector4* vertices, unsigned threadIndex)
     Vector3 projected[3];
 
     // Build the clip plane mask for the triangle
-    for (unsigned i = 0; i < 3; ++i)
+    for (auto i = 0u; i < 3; ++i)
     {
         unsigned vertexClipMask = 0;
 
@@ -669,7 +669,7 @@ void OcclusionBuffer::DrawTriangle(Vector4* vertices, unsigned threadIndex)
             ClipVertices(Vector4(0.0f, 0.0f, 1.0f, 0.0f), vertices, triangles, numTriangles);
 
         // Draw each accepted triangle
-        for (unsigned i = 0; i < numTriangles; ++i)
+        for (auto i = 0u; i < numTriangles; ++i)
         {
             if (triangles[i])
             {
@@ -696,7 +696,7 @@ void OcclusionBuffer::ClipVertices(const Vector4& plane, Vector4* vertices, bool
 {
     unsigned num = numTriangles;
 
-    for (unsigned i = 0; i < num; ++i)
+    for (auto i = 0u; i < num; ++i)
     {
         if (triangles[i])
         {
@@ -998,7 +998,7 @@ void OcclusionBuffer::MergeBuffers()
 {
     FLOCKSDK_PROFILE(MergeBuffers);
 
-    for (unsigned i = 1; i < buffers_.Size(); ++i)
+    for (auto i = 1u; i < buffers_.Size(); ++i)
     {
         if (!buffers_[i].used_)
             continue;

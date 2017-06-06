@@ -167,7 +167,7 @@ Variant Spline::BezierInterpolation(const Vector<Variant>& knots, float t) const
     {
         /// \todo Do not allocate a new vector each time
         Vector<Variant> interpolatedKnots;
-        for (unsigned i = 1; i < knots.Size(); i++)
+        for (auto i = 1u; i < knots.Size(); i++)
         {
             switch (knots[0].GetType())
             {

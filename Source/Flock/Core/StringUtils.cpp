@@ -91,7 +91,7 @@ bool ToBool(const char* source)
 {
     unsigned length = String::CStringLength(source);
 
-    for (unsigned i = 0; i < length; ++i)
+    for (auto i = 0u; i < length; ++i)
     {
         char c = (char)tolower(source[i]);
         if (c == 't' || c == 'y' || c == '1')
@@ -575,7 +575,7 @@ void BufferToString(String& dest, const void* data, unsigned size)
     // Precalculate needed string size
     const unsigned char* bytes = (const unsigned char*)data;
     unsigned length = 0;
-    for (unsigned i = 0; i < size; ++i)
+    for (auto i = 0u; i < size; ++i)
     {
         // Room for separator
         if (i)
@@ -594,7 +594,7 @@ void BufferToString(String& dest, const void* data, unsigned size)
     unsigned index = 0;
 
     // Convert values
-    for (unsigned i = 0; i < size; ++i)
+    for (auto i = 0u; i < size; ++i)
     {
         if (i)
             dest[index++] = ' ';

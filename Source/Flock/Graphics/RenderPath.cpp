@@ -360,13 +360,13 @@ bool RenderPath::Append(XMLFile* file)
 
 void RenderPath::SetEnabled(const String& tag, bool active)
 {
-    for (unsigned i = 0; i < renderTargets_.Size(); ++i)
+    for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
         if (!renderTargets_[i].tag_.Compare(tag, false))
             renderTargets_[i].enabled_ = active;
     }
 
-    for (unsigned i = 0; i < commands_.Size(); ++i)
+    for (auto i = 0u; i < commands_.Size(); ++i)
     {
         if (!commands_[i].tag_.Compare(tag, false))
             commands_[i].enabled_ = active;
@@ -375,13 +375,13 @@ void RenderPath::SetEnabled(const String& tag, bool active)
 
 void RenderPath::ToggleEnabled(const String& tag)
 {
-    for (unsigned i = 0; i < renderTargets_.Size(); ++i)
+    for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
         if (!renderTargets_[i].tag_.Compare(tag, false))
             renderTargets_[i].enabled_ = !renderTargets_[i].enabled_;
     }
 
-    for (unsigned i = 0; i < commands_.Size(); ++i)
+    for (auto i = 0u; i < commands_.Size(); ++i)
     {
         if (!commands_[i].tag_.Compare(tag, false))
             commands_[i].enabled_ = !commands_[i].enabled_;
@@ -408,7 +408,7 @@ void RenderPath::RemoveRenderTarget(unsigned index)
 
 void RenderPath::RemoveRenderTarget(const String& name)
 {
-    for (unsigned i = 0; i < renderTargets_.Size(); ++i)
+    for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
         if (!renderTargets_[i].name_.Compare(name, false))
         {
@@ -463,7 +463,7 @@ void RenderPath::SetShaderParameter(const String& name, const Variant& value)
 {
     StringHash nameHash(name);
 
-    for (unsigned i = 0; i < commands_.Size(); ++i)
+    for (auto i = 0u; i < commands_.Size(); ++i)
     {
         HashMap<StringHash, Variant>::Iterator j = commands_[i].shaderParameters_.Find(nameHash);
         if (j != commands_[i].shaderParameters_.End())
@@ -475,7 +475,7 @@ const Variant& RenderPath::GetShaderParameter(const String& name) const
 {
     StringHash nameHash(name);
 
-    for (unsigned i = 0; i < commands_.Size(); ++i)
+    for (auto i = 0u; i < commands_.Size(); ++i)
     {
         HashMap<StringHash, Variant>::ConstIterator j = commands_[i].shaderParameters_.Find(nameHash);
         if (j != commands_[i].shaderParameters_.End())

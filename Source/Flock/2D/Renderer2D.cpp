@@ -106,7 +106,7 @@ static inline bool CompareRayQueryResults(RayQueryResult& lr, RayQueryResult& rr
 void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQueryResult>& results)
 {
     unsigned resultSize = results.Size();
-    for (unsigned i = 0; i < drawables_.Size(); ++i)
+    for (auto i = 0u; i < drawables_.Size(); ++i)
     {
         if (drawables_[i]->GetViewMask() & query.viewMask_)
             drawables_[i]->ProcessRayQuery(query, results);
@@ -121,7 +121,7 @@ void Renderer2D::UpdateBatches(const FrameInfo& frame)
     unsigned count = batches_.Size();
 
     // Update non-thread critical parts of the source batches
-    for (unsigned i = 0; i < count; ++i)
+    for (auto i = 0u; i < count; ++i)
     {
         batches_[i].distance_ = 10.0f + (count - i) * 0.001f;
         batches_[i].worldTransform_ = &Matrix3x4::IDENTITY;
@@ -150,7 +150,7 @@ void Renderer2D::UpdateGeometry(const FrameInfo& frame)
             if (largeIndices)
             {
                 unsigned* dest = reinterpret_cast<unsigned*>(buffer);
-                for (unsigned i = 0; i < quadCount; ++i)
+                for (auto i = 0u; i < quadCount; ++i)
                 {
                     unsigned base = i * 4;
                     dest[0] = base;
@@ -165,7 +165,7 @@ void Renderer2D::UpdateGeometry(const FrameInfo& frame)
             else
             {
                 unsigned short* dest = reinterpret_cast<unsigned short*>(buffer);
-                for (unsigned i = 0; i < quadCount; ++i)
+                for (auto i = 0u; i < quadCount; ++i)
                 {
                     unsigned base = i * 4;
                     dest[0] = (unsigned short)(base);
@@ -206,7 +206,7 @@ void Renderer2D::UpdateGeometry(const FrameInfo& frame)
                 for (unsigned b = 0; b < sourceBatches.Size(); ++b)
                 {
                     const Vector<Vertex2D>& vertices = sourceBatches[b]->vertices_;
-                    for (unsigned i = 0; i < vertices.Size(); ++i)
+                    for (auto i = 0u; i < vertices.Size(); ++i)
                         dest[i] = vertices[i];
                     dest += vertices.Size();
                 }
@@ -378,7 +378,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
     // its internal data structures, so we can reuse the batches for each view, provided that unique Geometry
     // objects are used for each view to specify the draw ranges
     batches_.Resize(viewBatchInfo.batchCount_);
-    for (unsigned i = 0; i < viewBatchInfo.batchCount_; ++i)
+    for (auto i = 0u; i < viewBatchInfo.batchCount_; ++i)
     {
         batches_[i].distance_ = viewBatchInfo.distances_[i];
         batches_[i].material_ = viewBatchInfo.materials_[i];
@@ -439,7 +439,7 @@ void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* cam
         }
     }
 
-    for (unsigned i = 0; i < sourceBatches.Size(); ++i)
+    for (auto i = 0u; i < sourceBatches.Size(); ++i)
     {
         const SourceBatch2D* sourceBatch = sourceBatches[i];
         Vector3 worldPos = sourceBatch->owner_->GetNode()->GetWorldPosition();

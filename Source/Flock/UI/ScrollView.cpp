@@ -125,7 +125,7 @@ void ScrollView::Update(float timeStep)
     {
         Vector<UIElement*> dragElements = GetSubsystem<UI>()->GetDragElements();
 
-        for (unsigned i = 0; i < dragElements.Size(); i++)
+        for (auto i = 0u; i < dragElements.Size(); i++)
         {
             UIElement* dragElement = dragElements[i];
             int dragButtons = dragElement->GetDragButtonCombo();

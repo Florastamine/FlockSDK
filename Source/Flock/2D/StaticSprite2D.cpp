@@ -276,7 +276,7 @@ void StaticSprite2D::OnWorldBoundingBoxUpdate()
     worldBoundingBox_.Clear();
 
     const Vector<SourceBatch2D>& sourceBatches = GetSourceBatches();
-    for (unsigned i = 0; i < sourceBatches[0].vertices_.Size(); ++i)
+    for (auto i = 0u; i < sourceBatches[0].vertices_.Size(); ++i)
         worldBoundingBox_.Merge(sourceBatches[0].vertices_[i].position_);
 
     boundingBox_ = worldBoundingBox_.Transformed(node_->GetWorldTransform().Inverse());

@@ -230,7 +230,7 @@ bool Serializer::WriteResourceRefList(const ResourceRefList& value)
 
     success &= WriteStringHash(value.type_);
     success &= WriteVLE(value.names_.Size());
-    for (unsigned i = 0; i < value.names_.Size(); ++i)
+    for (auto i = 0u; i < value.names_.Size(); ++i)
         success &= WriteString(value.names_[i]);
 
     return success;

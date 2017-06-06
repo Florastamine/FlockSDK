@@ -76,7 +76,7 @@ void StaticModelGroup::ApplyAttributes()
         return;
 
     // Remove all old instance nodes before searching for new
-    for (unsigned i = 0; i < instanceNodes_.Size(); ++i)
+    for (auto i = 0u; i < instanceNodes_.Size(); ++i)
     {
         Node* node = instanceNodes_[i];
         if (node)
@@ -89,7 +89,7 @@ void StaticModelGroup::ApplyAttributes()
     if (scene)
     {
         // The first index stores the number of IDs redundantly. This is for editing
-        for (unsigned i = 1; i < nodeIDsAttr_.Size(); ++i)
+        for (auto i = 1u; i < nodeIDsAttr_.Size(); ++i)
         {
             Node* node = scene->GetNode(nodeIDsAttr_[i].GetUInt());
             if (node)
@@ -123,7 +123,7 @@ void StaticModelGroup::ProcessRayQuery(const RayOctreeQuery& query, PODVector<Ra
     if (query.ray_.HitDistance(GetWorldBoundingBox()) >= query.maxDistance_)
         return;
 
-    for (unsigned i = 0; i < numWorldTransforms_; ++i)
+    for (auto i = 0u; i < numWorldTransforms_; ++i)
     {
         // Initial test using AABB
         float distance = query.ray_.HitDistance(boundingBox_.Transformed(worldTransforms_[i]));
@@ -140,7 +140,7 @@ void StaticModelGroup::ProcessRayQuery(const RayOctreeQuery& query, PODVector<Ra
             {
                 distance = M_INFINITY;
 
-                for (unsigned j = 0; j < batches_.Size(); ++j)
+                for (auto j = 0u; j < batches_.Size(); ++j)
                 {
                     Geometry* geometry = batches_[j].geometry_;
                     if (geometry)
@@ -180,7 +180,7 @@ void StaticModelGroup::UpdateBatches(const FrameInfo& frame)
 
     if (batches_.Size() > 1)
     {
-        for (unsigned i = 0; i < batches_.Size(); ++i)
+        for (auto i = 0u; i < batches_.Size(); ++i)
         {
             batches_[i].distance_ = frame.camera_->GetDistance(worldTransform * geometryData_[i].center_);
             batches_[i].worldTransform_ = numWorldTransforms_ ? &worldTransforms_[0] : &Matrix3x4::IDENTITY;
@@ -211,7 +211,7 @@ unsigned StaticModelGroup::GetNumOccluderTriangles()
 
     unsigned triangles = 0;
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = GetLodGeometry(i, occlusionLodLevel_);
         if (!geometry)
@@ -233,9 +233,9 @@ bool StaticModelGroup::DrawOcclusion(OcclusionBuffer* buffer)
     // Make sure instance transforms are up-to-date
     GetWorldBoundingBox();
 
-    for (unsigned i = 0; i < numWorldTransforms_; ++i)
+    for (auto i = 0u; i < numWorldTransforms_; ++i)
     {
-        for (unsigned j = 0; j < batches_.Size(); ++j)
+        for (auto j = 0u; j < batches_.Size(); ++j)
         {
             Geometry* geometry = GetLodGeometry(j, occlusionLodLevel_);
             if (!geometry)
@@ -307,7 +307,7 @@ void StaticModelGroup::RemoveInstanceNode(Node* node)
 
 void StaticModelGroup::RemoveAllInstanceNodes()
 {
-    for (unsigned i = 0; i < instanceNodes_.Size(); ++i)
+    for (auto i = 0u; i < instanceNodes_.Size(); ++i)
     {
         Node* node = instanceNodes_[i];
         if (node)
@@ -377,7 +377,7 @@ void StaticModelGroup::OnWorldBoundingBoxUpdate()
 
     BoundingBox worldBox;
 
-    for (unsigned i = 0; i < instanceNodes_.Size(); ++i)
+    for (auto i = 0u; i < instanceNodes_.Size(); ++i)
     {
         Node* node = instanceNodes_[i];
         if (!node || !node->IsEnabled())
@@ -412,7 +412,7 @@ void StaticModelGroup::UpdateNodeIDs() const
     nodeIDsAttr_.Clear();
     nodeIDsAttr_.Push(numInstances);
 
-    for (unsigned i = 0; i < numInstances; ++i)
+    for (auto i = 0u; i < numInstances; ++i)
     {
         Node* node = instanceNodes_[i];
         nodeIDsAttr_.Push(node ? node->GetID() : 0);

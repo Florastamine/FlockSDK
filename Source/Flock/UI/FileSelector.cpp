@@ -169,11 +169,11 @@ void FileSelector::SetDefaultStyle(XMLFile* style)
     cancelButton_->SetStyle("FileSelectorButton");
 
     const Vector<SharedPtr<UIElement> >& filterTexts = filterList_->GetListView()->GetContentElement()->GetChildren();
-    for (unsigned i = 0; i < filterTexts.Size(); ++i)
+    for (auto i = 0u; i < filterTexts.Size(); ++i)
         filterTexts[i]->SetStyle("FileSelectorFilterText");
 
     const Vector<SharedPtr<UIElement> >& listTexts = fileList_->GetContentElement()->GetChildren();
-    for (unsigned i = 0; i < listTexts.Size(); ++i)
+    for (auto i = 0u; i < listTexts.Size(); ++i)
         listTexts[i]->SetStyle("FileSelectorListText");
 
     UpdateElements();
@@ -221,7 +221,7 @@ void FileSelector::SetFilters(const Vector<String>& filters, unsigned defaultInd
 
     filters_ = filters;
     filterList_->RemoveAllItems();
-    for (unsigned i = 0; i < filters_.Size(); ++i)
+    for (auto i = 0u; i < filters_.Size(); ++i)
     {
         Text* filterText = new Text(context_);
         filterList_->AddItem(filterText);
@@ -300,7 +300,7 @@ void FileSelector::RefreshFiles()
 
     fileEntries_.Reserve(directories.Size() + files.Size());
 
-    for (unsigned i = 0; i < directories.Size(); ++i)
+    for (auto i = 0u; i < directories.Size(); ++i)
     {
         FileSelectorEntry newEntry;
         newEntry.name_ = directories[i];
@@ -308,7 +308,7 @@ void FileSelector::RefreshFiles()
         fileEntries_.Push(newEntry);
     }
 
-    for (unsigned i = 0; i < files.Size(); ++i)
+    for (auto i = 0u; i < files.Size(); ++i)
     {
         FileSelectorEntry newEntry;
         newEntry.name_ = files[i];
@@ -321,7 +321,7 @@ void FileSelector::RefreshFiles()
     Sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
     UIElement* listContent = fileList_->GetContentElement();
     listContent->DisableLayoutUpdate();
-    for (unsigned i = 0; i < fileEntries_.Size(); ++i)
+    for (auto i = 0u; i < fileEntries_.Size(); ++i)
     {
         String displayName;
         if (fileEntries_[i].directory_)

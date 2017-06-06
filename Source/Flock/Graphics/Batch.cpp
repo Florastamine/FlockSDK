@@ -318,7 +318,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         Matrix4 shadowMatrices[MAX_CASCADE_SPLITS];
                         unsigned numSplits = Min(MAX_CASCADE_SPLITS, lightQueue_->shadowSplits_.Size());
 
-                        for (unsigned i = 0; i < numSplits; ++i)
+                        for (auto i = 0u; i < numSplits; ++i)
                             CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i, renderer);
 
                         graphics->SetShaderParameter(VSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
@@ -372,7 +372,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         Matrix4 shadowMatrices[MAX_CASCADE_SPLITS];
                         unsigned numSplits = Min(MAX_CASCADE_SPLITS, lightQueue_->shadowSplits_.Size());
 
-                        for (unsigned i = 0; i < numSplits; ++i)
+                        for (auto i = 0u; i < numSplits; ++i)
                             CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i, renderer);
 
                         graphics->SetShaderParameter(PSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
@@ -506,7 +506,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
             Vector4 vertexLights[MAX_VERTEX_LIGHTS * 3];
             const PODVector<Light*>& lights = lightQueue_->vertexLights_;
 
-            for (unsigned i = 0; i < lights.Size(); ++i)
+            for (auto i = 0u; i < lights.Size(); ++i)
             {
                 Light* vertexLight = lights[i];
                 Node* vertexLightNode = vertexLight->GetNode();
@@ -614,7 +614,7 @@ void BatchGroup::SetInstancingData(void* lockedData, unsigned stride, unsigned& 
     startIndex_ = freeIndex;
     unsigned char* buffer = static_cast<unsigned char*>(lockedData) + startIndex_ * stride;
 
-    for (unsigned i = 0; i < instances_.Size(); ++i)
+    for (auto i = 0u; i < instances_.Size(); ++i)
     {
         const InstanceData& instance = instances_[i];
 
@@ -644,7 +644,7 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
             graphics->SetIndexBuffer(geometry_->GetIndexBuffer());
             graphics->SetVertexBuffers(geometry_->GetVertexBuffers());
 
-            for (unsigned i = 0; i < instances_.Size(); ++i)
+            for (auto i = 0u; i < instances_.Size(); ++i)
             {
                 if (graphics->NeedParameterUpdate(SP_OBJECT, instances_[i].worldTransform_))
                     graphics->SetShaderParameter(VSP_MODEL, *instances_[i].worldTransform_);
@@ -692,7 +692,7 @@ void BatchQueue::SortBackToFront()
 {
     sortedBatches_.Resize(batches_.Size());
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         sortedBatches_[i] = &batches_[i];
 
     Sort(sortedBatches_.Begin(), sortedBatches_.End(), CompareBatchesBackToFront);
@@ -710,7 +710,7 @@ void BatchQueue::SortFrontToBack()
 {
     sortedBatches_.Clear();
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         sortedBatches_.Push(&batches_[i]);
 
     SortFrontToBack2Pass(sortedBatches_);

@@ -136,7 +136,7 @@ bool ShaderVariation::Create()
 
     // Prepend the defines to the shader code
     Vector<String> defineVec = defines_.Split(' ');
-    for (unsigned i = 0; i < defineVec.Size(); ++i)
+    for (auto i = 0u; i < defineVec.Size(); ++i)
     {
         // Add extra space for the checking code below
         String defineString = "#define " + defineVec[i].Replaced('=', ' ') + " \n";

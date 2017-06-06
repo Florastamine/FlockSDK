@@ -37,9 +37,9 @@ ShaderVariation::ShaderVariation(Shader* owner, ShaderType type) :
     type_(type),
     elementHash_(0)
 {
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
         useTextureUnit_[i] = false;
-    for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
+    for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
         constantBufferSizes_[i] = 0;
 }
 

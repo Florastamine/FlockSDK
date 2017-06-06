@@ -174,7 +174,7 @@ void ParticleEmitter::Update(const FrameInfo& frame)
     if (scaled_ && !relative_)
         scaleVector = node_->GetWorldScale();
 
-    for (unsigned i = 0; i < particles_.Size(); ++i)
+    for (auto i = 0u; i < particles_.Size(); ++i)
     {
         Particle& particle = particles_[i];
         Billboard& billboard = billboards_[i];
@@ -524,7 +524,7 @@ bool ParticleEmitter::EmitNewParticle()
 
 unsigned ParticleEmitter::GetFreeParticle() const
 {
-    for (unsigned i = 0; i < billboards_.Size(); ++i)
+    for (auto i = 0u; i < billboards_.Size(); ++i)
     {
         if (!billboards_[i].enabled_)
             return i;
@@ -535,7 +535,7 @@ unsigned ParticleEmitter::GetFreeParticle() const
 
 bool ParticleEmitter::CheckActiveParticles() const
 {
-    for (unsigned i = 0; i < billboards_.Size(); ++i)
+    for (auto i = 0u; i < billboards_.Size(); ++i)
     {
         if (billboards_[i].enabled_)
         {

@@ -60,7 +60,7 @@ void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 
     if (objectGroup_)
     {
-        for (unsigned i = 0; i < objectGroup_->GetNumObjects(); ++i)
+        for (auto i = 0u; i < objectGroup_->GetNumObjects(); ++i)
         {
             TileMapObject2D* object = objectGroup_->GetObject(i);
             const Color& color = Color::YELLOW;
@@ -83,7 +83,7 @@ void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
                 {
                     const Vector2 halfSize = object->GetSize() * 0.5f;
                     const Vector2 center = object->GetPosition() + halfSize;
-                    for (unsigned i = 0; i < 360; i += 30)
+                    for (auto i = 0u; i < 360; i += 30)
                     {
                         unsigned j = i + 30;
                         float x1 = halfSize.x_ * Cos((float)i);
@@ -98,7 +98,7 @@ void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
             case OT_POLYGON:
             case OT_POLYLINE:
                 {
-                    for (unsigned j = 0; j < object->GetNumPoints() - 1; ++j)
+                    for (auto j = 0u; j < object->GetNumPoints() - 1; ++j)
                         debug->AddLine(object->GetPoint(j), object->GetPoint(j + 1), color, depthTest);
 
                     if (object->GetObjectType() == OT_POLYGON)
@@ -119,7 +119,7 @@ void TileMapLayer2D::Initialize(TileMap2D* tileMap, const TmxLayer2D* tmxLayer)
 
     if (tmxLayer_)
     {
-        for (unsigned i = 0; i < nodes_.Size(); ++i)
+        for (auto i = 0u; i < nodes_.Size(); ++i)
         {
             if (nodes_[i])
                 nodes_[i]->Remove();
@@ -166,7 +166,7 @@ void TileMapLayer2D::SetDrawOrder(int drawOrder)
 
     drawOrder_ = drawOrder;
 
-    for (unsigned i = 0; i < nodes_.Size(); ++i)
+    for (auto i = 0u; i < nodes_.Size(); ++i)
     {
         if (!nodes_[i])
             continue;
@@ -184,7 +184,7 @@ void TileMapLayer2D::SetVisible(bool visible)
 
     visible_ = visible;
 
-    for (unsigned i = 0; i < nodes_.Size(); ++i)
+    for (auto i = 0u; i < nodes_.Size(); ++i)
     {
         if (nodes_[i])
             nodes_[i]->SetEnabled(visible_);
@@ -320,7 +320,7 @@ void TileMapLayer2D::SetObjectGroup(const TmxObjectGroup2D* objectGroup)
     TmxFile2D* tmxFile = objectGroup->GetTmxFile();
     nodes_.Resize(objectGroup->GetNumObjects());
 
-    for (unsigned i = 0; i < objectGroup->GetNumObjects(); ++i)
+    for (auto i = 0u; i < objectGroup->GetNumObjects(); ++i)
     {
         const TileMapObject2D* object = objectGroup->GetObject(i);
 

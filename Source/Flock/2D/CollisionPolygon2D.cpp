@@ -99,7 +99,7 @@ PODVector<unsigned char> CollisionPolygon2D::GetVerticesAttr() const
 {
     VectorBuffer ret;
 
-    for (unsigned i = 0; i < vertices_.Size(); ++i)
+    for (auto i = 0u; i < vertices_.Size(); ++i)
         ret.WriteVector2(vertices_[i]);
 
     return ret.GetBuffer();
@@ -122,7 +122,7 @@ void CollisionPolygon2D::RecreateFixture()
     b2Vertices.Resize(count);
 
     Vector2 worldScale(cachedWorldScale_.x_, cachedWorldScale_.y_);
-    for (unsigned i = 0; i < count; ++i)
+    for (auto i = 0u; i < count; ++i)
         b2Vertices[i] = ToB2Vec2(vertices_[i] * worldScale);
 
     polygonShape_.Set(&b2Vertices[0], count);

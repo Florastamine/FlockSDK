@@ -84,7 +84,7 @@ public:
         const float* leftData = Data();
         const float* rightData = rhs.Data();
 
-        for (unsigned i = 0; i != 4; ++i)
+        for (auto i = 0u; i != 4; ++i)
         {
             if (leftData[i] != rightData[i])
                 return false;
@@ -200,7 +200,7 @@ public:
         const float* leftData = Data();
         const float* rightData = rhs.Data();
 
-        for (unsigned i = 0; i != 4; ++i)
+        for (auto i = 0u; i != 4; ++i)
         {
             if (!FlockSDK::Equals(leftData[i], rightData[i]))
                 return false;
@@ -226,7 +226,7 @@ public:
     /// Bulk transpose matrices.
     static void BulkTranspose(float* dest, const float* src, unsigned count)
     {
-        for (unsigned i = 0; i < count; ++i)
+        for (auto i = 0u; i < count; ++i)
         {
             dest[0] = src[0];
             dest[1] = src[2];

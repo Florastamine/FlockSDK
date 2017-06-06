@@ -75,7 +75,7 @@ void SplinePath::ApplyAttributes()
 
     // Remove all old instance nodes before searching for new. Can not call RemoveAllInstances() as that would modify
     // the ID list on its own
-    for (unsigned i = 0; i < controlPoints_.Size(); ++i)
+    for (auto i = 0u; i < controlPoints_.Size(); ++i)
     {
         Node* node = controlPoints_[i];
         if (node)
@@ -90,7 +90,7 @@ void SplinePath::ApplyAttributes()
     if (scene)
     {
         // The first index stores the number of IDs redundantly. This is for editing
-        for (unsigned i = 1; i < controlPointIdsAttr_.Size(); ++i)
+        for (auto i = 1u; i < controlPointIdsAttr_.Size(); ++i)
         {
             Node* node = scene->GetNode(controlPointIdsAttr_[i].GetUInt());
             if (node)
@@ -161,7 +161,7 @@ void SplinePath::RemoveControlPoint(Node* point)
 
     point->RemoveListener(this);
 
-    for (unsigned i = 0; i < controlPoints_.Size(); ++i)
+    for (auto i = 0u; i < controlPoints_.Size(); ++i)
     {
         if (controlPoints_[i] == controlPoint)
         {
@@ -177,7 +177,7 @@ void SplinePath::RemoveControlPoint(Node* point)
 
 void SplinePath::ClearControlPoints()
 {
-    for (unsigned i = 0; i < controlPoints_.Size(); ++i)
+    for (auto i = 0u; i < controlPoints_.Size(); ++i)
     {
         Node* node = controlPoints_[i];
         if (node)
@@ -290,7 +290,7 @@ void SplinePath::OnMarkedDirty(Node* point)
 
     WeakPtr<Node> controlPoint(point);
 
-    for (unsigned i = 0; i < controlPoints_.Size(); ++i)
+    for (auto i = 0u; i < controlPoints_.Size(); ++i)
     {
         if (controlPoints_[i] == controlPoint)
         {
@@ -309,7 +309,7 @@ void SplinePath::OnNodeSetEnabled(Node* point)
 
     WeakPtr<Node> controlPoint(point);
 
-    for (unsigned i = 0; i < controlPoints_.Size(); ++i)
+    for (auto i = 0u; i < controlPoints_.Size(); ++i)
     {
         if (controlPoints_[i] == controlPoint)
         {
@@ -332,7 +332,7 @@ void SplinePath::UpdateNodeIds()
     controlPointIdsAttr_.Clear();
     controlPointIdsAttr_.Push(numInstances);
 
-    for (unsigned i = 0; i < numInstances; ++i)
+    for (auto i = 0u; i < numInstances; ++i)
     {
         Node* node = controlPoints_[i];
         controlPointIdsAttr_.Push(node ? node->GetID() : 0);

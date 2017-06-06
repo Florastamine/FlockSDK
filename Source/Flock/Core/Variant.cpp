@@ -322,7 +322,7 @@ void Variant::FromString(VariantType type, const char* value)
             ResourceRefList& refList = *(reinterpret_cast<ResourceRefList*>(&value_));
             refList.type_ = values[0];
             refList.names_.Resize(values.Size() - 1);
-            for (unsigned i = 1; i < values.Size(); ++i)
+            for (auto i = 1u; i < values.Size(); ++i)
                 refList.names_[i - 1] = values[i];
         }
     }

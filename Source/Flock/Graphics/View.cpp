@@ -283,7 +283,7 @@ void SortLightQueueWork(const WorkItem* item, unsigned threadIndex)
 void SortShadowQueueWork(const WorkItem* item, unsigned threadIndex)
 {
     LightBatchQueue* start = reinterpret_cast<LightBatchQueue*>(item->start_);
-    for (unsigned i = 0; i < start->shadowSplits_.Size(); ++i)
+    for (auto i = 0u; i < start->shadowSplits_.Size(); ++i)
         start->shadowSplits_[i].shadowBatches_.SortFrontToBack();
 }
 
@@ -398,7 +398,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     scenePasses_.Clear();
     geometriesUpdated_ = false;
 
-    for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
     {
         const RenderPathCommand& command = renderPath_->commands_[i];
         if (!command.enabled_)
@@ -413,7 +413,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     }
 
     // Make sure that all necessary batch queues exist
-    for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
     {
         RenderPathCommand& command = renderPath_->commands_[i];
         if (!command.enabled_)
@@ -483,7 +483,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     }
 
     // Go through commands to check for deferred rendering and other flags
-    for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
     {
         const RenderPathCommand& command = renderPath_->commands_[i];
         if (!command.enabled_)
@@ -644,7 +644,7 @@ void View::Render()
             }
 
             graphics_->SetRenderTarget(0, currentRenderTarget_);
-            for (unsigned i = 1; i < MAX_RENDERTARGETS; ++i)
+            for (auto i = 1u; i < MAX_RENDERTARGETS; ++i)
                 graphics_->SetRenderTarget(i, (RenderSurface*)0);
             graphics_->SetDepthStencil(GetDepthStencil(currentRenderTarget_));
             IntVector2 rtSizeNow = graphics_->GetRenderTargetDimensions();
@@ -870,7 +870,7 @@ void View::GetDrawables()
 
     // Check drawable occlusion, find zones for moved drawables and collect geometries & lights in worker threads
     {
-        for (unsigned i = 0; i < sceneResults_.Size(); ++i)
+        for (auto i = 0u; i < sceneResults_.Size(); ++i)
         {
             PerThreadSceneResult& result = sceneResults_[i];
 
@@ -914,7 +914,7 @@ void View::GetDrawables()
 
     if (sceneResults_.Size() > 1)
     {
-        for (unsigned i = 0; i < sceneResults_.Size(); ++i)
+        for (auto i = 0u; i < sceneResults_.Size(); ++i)
         {
             PerThreadSceneResult& result = sceneResults_[i];
             geometries_.Push(result.geometries_);
@@ -937,7 +937,7 @@ void View::GetDrawables()
         minZ_ = 0.0f;
 
     // Sort the lights to brightest/closest first, and per-vertex lights first so that per-vertex base pass can be evaluated first
-    for (unsigned i = 0; i < lights_.Size(); ++i)
+    for (auto i = 0u; i < lights_.Size(); ++i)
     {
         Light* light = lights_[i];
         light->SetIntensitySortValue(cullCamera_->GetDistance(light->GetNode()->GetWorldPosition()));
@@ -968,7 +968,7 @@ void View::ProcessLights()
     WorkQueue* queue = GetSubsystem<WorkQueue>();
     lightQueryResults_.Resize(lights_.Size());
 
-    for (unsigned i = 0; i < lightQueryResults_.Size(); ++i)
+    for (auto i = 0u; i < lightQueryResults_.Size(); ++i)
     {
         SharedPtr<WorkItem> item = queue->GetFreeItem();
         item->priority_ = M_MAX_UNSIGNED;
@@ -1053,7 +1053,7 @@ void View::GetLightBatches()
 
                 // Setup shadow batch queues
                 lightQueue.shadowSplits_.Resize(shadowSplits);
-                for (unsigned j = 0; j < shadowSplits; ++j)
+                for (auto j = 0u; j < shadowSplits; ++j)
                 {
                     ShadowBatchQueue& shadowQueue = lightQueue.shadowSplits_[j];
                     Camera* shadowCamera = query.shadowCameras_[j];
@@ -1163,7 +1163,7 @@ void View::GetLightBatches()
             drawable->LimitLights();
             const PODVector<Light*>& lights = drawable->GetLights();
 
-            for (unsigned i = 0; i < lights.Size(); ++i)
+            for (auto i = 0u; i < lights.Size(); ++i)
             {
                 Light* light = lights[i];
                 // Find the correct light queue again
@@ -1191,7 +1191,7 @@ void View::GetBaseBatches()
         const Vector<SourceBatch>& batches = drawable->GetBatches();
         bool vertexLightsProcessed = false;
 
-        for (unsigned j = 0; j < batches.Size(); ++j)
+        for (auto j = 0u; j < batches.Size(); ++j)
         {
             const SourceBatch& srcBatch = batches[j];
 
@@ -1278,7 +1278,7 @@ void View::UpdateGeometries()
 
     // Sort batches
     {
-        for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+        for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
         {
             const RenderPathCommand& command = renderPath_->commands_[i];
             if (!IsNecessary(command))
@@ -1372,7 +1372,7 @@ void View::GetLitBatches(Drawable* drawable, LightBatchQueue& lightQueue, BatchQ
         useLitBase_ && !lightQueue.negative_ && light == drawable->GetFirstLight() && drawable->GetVertexLights().Empty() &&
         !zone->GetAmbientGradient();
 
-    for (unsigned i = 0; i < batches.Size(); ++i)
+    for (auto i = 0u; i < batches.Size(); ++i)
     {
         const SourceBatch& srcBatch = batches[i];
 
@@ -1462,14 +1462,14 @@ void View::ExecuteRenderPathCommands()
         usedResolve_ = false;
 
         unsigned lastCommandIndex = 0;
-        for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+        for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
         {
             RenderPathCommand& command = renderPath_->commands_[i];
             if (actualView->IsNecessary(command))
                 lastCommandIndex = i;
         }
 
-        for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+        for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
         {
             RenderPathCommand& command = renderPath_->commands_[i];
             if (!actualView->IsNecessary(command))
@@ -1666,7 +1666,7 @@ void View::ExecuteRenderPathCommands()
                             passCommand_ = &command;
                         }
 
-                        for (unsigned j = 0; j < i->volumeBatches_.Size(); ++j)
+                        for (auto j = 0u; j < i->volumeBatches_.Size(); ++j)
                         {
                             SetupLightVolumeBatch(i->volumeBatches_[j]);
                             i->volumeBatches_[j].Draw(this, camera_, false);
@@ -1774,7 +1774,7 @@ bool View::SetTextures(RenderPathCommand& command)
 {
     bool allowDepthWrite = true;
 
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
     {
         if (command.textureNames_[i].Empty())
             continue;
@@ -1834,7 +1834,7 @@ void View::RenderQuad(RenderPathCommand& command)
     SetGBufferShaderParameters(viewSize, IntRect(0, 0, viewSize.x_, viewSize.y_));
 
     // Set per-rendertarget inverse size / offset shader parameters as necessary
-    for (unsigned i = 0; i < renderPath_->renderTargets_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->renderTargets_.Size(); ++i)
     {
         const RenderTargetInfo& rtInfo = renderPath_->renderTargets_[i];
         if (!rtInfo.enabled_)
@@ -1877,7 +1877,7 @@ bool View::IsNecessary(const RenderPathCommand& command)
 
 bool View::CheckViewportRead(const RenderPathCommand& command)
 {
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
     {
         if (!command.textureNames_[i].Empty() && !command.textureNames_[i].Compare("viewport", false))
             return true;
@@ -1888,7 +1888,7 @@ bool View::CheckViewportRead(const RenderPathCommand& command)
 
 bool View::CheckViewportWrite(const RenderPathCommand& command)
 {
-    for (unsigned i = 0; i < command.outputs_.Size(); ++i)
+    for (auto i = 0u; i < command.outputs_.Size(); ++i)
     {
         if (!command.outputs_[i].first_.Compare("viewport", false))
             return true;
@@ -1936,7 +1936,7 @@ void View::AllocateScreenBuffers()
 
     // Check for commands with special meaning: has custom depth, renders a scene pass to other than the destination viewport,
     // read the viewport, or pingpong between viewport textures. These may trigger the need to substitute the destination RT
-    for (unsigned i = 0; i < renderPath_->commands_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->commands_.Size(); ++i)
     {
         const RenderPathCommand& command = renderPath_->commands_[i];
         if (!actualView->IsNecessary(command))
@@ -1949,7 +1949,7 @@ void View::AllocateScreenBuffers()
             hasCustomDepth = true;
         if (!hasScenePassToRTs && command.type_ == CMD_SCENEPASS)
         {
-            for (unsigned j = 0; j < command.outputs_.Size(); ++j)
+            for (auto j = 0u; j < command.outputs_.Size(); ++j)
             {
                 if (command.outputs_[j].first_.Compare("viewport", false))
                 {
@@ -2019,7 +2019,7 @@ void View::AllocateScreenBuffers()
     bool autoResolve = renderTarget_ ? renderTarget_->GetAutoResolve() : true;
     substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer_->GetScreenBuffer(viewSize_.x_, viewSize_.y_,
         format, multiSample, autoResolve, false, true, sRGB)) : (RenderSurface*)0;
-    for (unsigned i = 0; i < MAX_VIEWPORT_TEXTURES; ++i)
+    for (auto i = 0u; i < MAX_VIEWPORT_TEXTURES; ++i)
     {
         viewportTextures_[i] = i < numViewportTextures ? renderer_->GetScreenBuffer(viewSize_.x_, viewSize_.y_, format, multiSample,
             autoResolve, false, true, sRGB) : (Texture*)0;
@@ -2029,7 +2029,7 @@ void View::AllocateScreenBuffers()
         viewportTextures_[1] = substituteRenderTarget_->GetParentTexture();
 
     // Allocate extra render targets defined by the render path
-    for (unsigned i = 0; i < renderPath_->renderTargets_.Size(); ++i)
+    for (auto i = 0u; i < renderPath_->renderTargets_.Size(); ++i)
     {
         const RenderTargetInfo& rtInfo = renderPath_->renderTargets_[i];
         if (!rtInfo.enabled_)
@@ -2085,7 +2085,7 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
     graphics_->SetScissorTest(false);
     graphics_->SetStencilTest(false);
     graphics_->SetRenderTarget(0, destination);
-    for (unsigned i = 1; i < MAX_RENDERTARGETS; ++i)
+    for (auto i = 1u; i < MAX_RENDERTARGETS; ++i)
         graphics_->SetRenderTarget(i, (RenderSurface*)0);
     graphics_->SetDepthStencil(GetDepthStencil(destination));
     graphics_->SetViewport(destRect);
@@ -2195,7 +2195,7 @@ void View::DrawOccluders(OcclusionBuffer* buffer, const PODVector<Drawable*>& oc
     if (!buffer->IsThreaded())
     {
         // If not threaded, draw occluders one by one and test the next occluder against already rasterized depth
-        for (unsigned i = 0; i < occluders.Size(); ++i)
+        for (auto i = 0u; i < occluders.Size(); ++i)
         {
             Drawable* occluder = occluders[i];
             if (i > 0)
@@ -2217,7 +2217,7 @@ void View::DrawOccluders(OcclusionBuffer* buffer, const PODVector<Drawable*>& oc
     else
     {
         // In threaded mode submit all triangles first, then render (cannot test in this case)
-        for (unsigned i = 0; i < occluders.Size(); ++i)
+        for (auto i = 0u; i < occluders.Size(); ++i)
         {
             // Check for running out of triangles
             ++activeOccluders_;
@@ -2251,7 +2251,7 @@ void View::ProcessLight(LightQueryResult& query, unsigned threadIndex)
     switch (type)
     {
     case LIGHT_DIRECTIONAL:
-        for (unsigned i = 0; i < geometries_.Size(); ++i)
+        for (auto i = 0u; i < geometries_.Size(); ++i)
         {
             if (GetLightMask(geometries_[i]) & lightMask)
                 query.litGeometries_.Push(geometries_[i]);
@@ -2263,7 +2263,7 @@ void View::ProcessLight(LightQueryResult& query, unsigned threadIndex)
             FrustumOctreeQuery octreeQuery(tempDrawables, light->GetFrustum(), DRAWABLE_GEOMETRY,
                 cullCamera_->GetViewMask());
             octree_->GetDrawables(octreeQuery);
-            for (unsigned i = 0; i < tempDrawables.Size(); ++i)
+            for (auto i = 0u; i < tempDrawables.Size(); ++i)
             {
                 if (tempDrawables[i]->IsInView(frame_) && (GetLightMask(tempDrawables[i]) & lightMask))
                     query.litGeometries_.Push(tempDrawables[i]);
@@ -2276,7 +2276,7 @@ void View::ProcessLight(LightQueryResult& query, unsigned threadIndex)
             SphereOctreeQuery octreeQuery(tempDrawables, Sphere(light->GetNode()->GetWorldPosition(), light->GetRange()),
                 DRAWABLE_GEOMETRY, cullCamera_->GetViewMask());
             octree_->GetDrawables(octreeQuery);
-            for (unsigned i = 0; i < tempDrawables.Size(); ++i)
+            for (auto i = 0u; i < tempDrawables.Size(); ++i)
             {
                 if (tempDrawables[i]->IsInView(frame_) && (GetLightMask(tempDrawables[i]) & lightMask))
                     query.litGeometries_.Push(tempDrawables[i]);
@@ -2297,7 +2297,7 @@ void View::ProcessLight(LightQueryResult& query, unsigned threadIndex)
 
     // Process each split for shadow casters
     query.shadowCasters_.Clear();
-    for (unsigned i = 0; i < query.numSplits_; ++i)
+    for (auto i = 0u; i < query.numSplits_; ++i)
     {
         Camera* shadowCamera = query.shadowCameras_[i];
         const Frustum& shadowCameraFrustum = shadowCamera->GetFrustum();
@@ -2530,7 +2530,7 @@ void View::SetupShadowCameras(LightQueryResult& query)
 
     case LIGHT_POINT:
         {
-            for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+            for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
             {
                 Camera* shadowCamera = renderer_->GetShadowCamera();
                 query.shadowCameras_[i] = shadowCamera;
@@ -2582,7 +2582,7 @@ void View::SetupDirLightShadowCamera(Camera* shadowCamera, Light* light, float n
         BoundingBox litGeometriesBox;
         unsigned lightMask = light->GetLightMask();
 
-        for (unsigned i = 0; i < geometries_.Size(); ++i)
+        for (auto i = 0u; i < geometries_.Size(); ++i)
         {
             Drawable* drawable = geometries_[i];
             if (drawable->GetMinZ() <= farSplit && drawable->GetMaxZ() >= nearSplit &&
@@ -2768,7 +2768,7 @@ Technique* View::GetTechnique(Drawable* drawable, Material* material)
         // Most distant & lowest quality
         // Second most distant & highest quality
         // ...
-        for (unsigned i = 0; i < techniques.Size(); ++i)
+        for (auto i = 0u; i < techniques.Size(); ++i)
         {
             const TechniqueEntry& entry = techniques[i];
             Technique* tech = entry.technique_;
@@ -2804,7 +2804,7 @@ void View::CheckMaterialForAuxView(Material* material)
             else if (texture->GetType() == TextureCube::GetTypeStatic())
             {
                 TextureCube* texCube = static_cast<TextureCube*>(texture);
-                for (unsigned j = 0; j < MAX_CUBEMAP_FACES; ++j)
+                for (auto j = 0u; j < MAX_CUBEMAP_FACES; ++j)
                 {
                     RenderSurface* target = texCube->GetRenderSurface((CubeMapFace)j);
                     if (target && target->GetUpdateMode() == SURFACE_UPDATEVISIBLE)
@@ -2879,7 +2879,7 @@ void View::AddBatchToQueue(BatchQueue& queue, Batch& batch, Technique* tech, boo
         {
             unsigned numTransforms = batch.numWorldTransforms_;
             batch.numWorldTransforms_ = 1;
-            for (unsigned i = 0; i < numTransforms; ++i)
+            for (auto i = 0u; i < numTransforms; ++i)
             {
                 // Move the transform pointer to generate copies of the batch which only refer to 1 world transform
                 queue.batches_.Push(batch);
@@ -2910,7 +2910,7 @@ void View::PrepareInstancingBuffer()
 
     for (Vector<LightBatchQueue>::Iterator i = lightQueues_.Begin(); i != lightQueues_.End(); ++i)
     {
-        for (unsigned j = 0; j < i->shadowSplits_.Size(); ++j)
+        for (auto j = 0u; j < i->shadowSplits_.Size(); ++j)
             totalInstances += i->shadowSplits_[j].shadowBatches_.GetNumInstances();
         totalInstances += i->litBaseBatches_.GetNumInstances();
         totalInstances += i->litBatches_.GetNumInstances();
@@ -2931,7 +2931,7 @@ void View::PrepareInstancingBuffer()
 
     for (Vector<LightBatchQueue>::Iterator i = lightQueues_.Begin(); i != lightQueues_.End(); ++i)
     {
-        for (unsigned j = 0; j < i->shadowSplits_.Size(); ++j)
+        for (auto j = 0u; j < i->shadowSplits_.Size(); ++j)
             i->shadowSplits_[j].shadowBatches_.SetInstancingData(dest, stride, freeIndex);
         i->litBaseBatches_.SetInstancingData(dest, stride, freeIndex);
         i->litBatches_.SetInstancingData(dest, stride, freeIndex);
@@ -3017,7 +3017,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
         graphics_->SetDepthStencil(shadowMap);
         graphics_->SetRenderTarget(0, shadowMap->GetRenderSurface()->GetLinkedRenderTarget());
         // Disable other render targets
-        for (unsigned i = 1; i < MAX_RENDERTARGETS; ++i)
+        for (auto i = 1u; i < MAX_RENDERTARGETS; ++i)
             graphics_->SetRenderTarget(i, (RenderSurface*) 0);
         graphics_->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
         graphics_->Clear(CLEAR_DEPTH);
@@ -3027,7 +3027,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
         graphics_->SetColorWrite(true);
         graphics_->SetRenderTarget(0, shadowMap);
         // Disable other render targets
-        for (unsigned i = 1; i < MAX_RENDERTARGETS; ++i)
+        for (auto i = 1u; i < MAX_RENDERTARGETS; ++i)
             graphics_->SetRenderTarget(i, (RenderSurface*) 0);
         graphics_->SetDepthStencil(renderer_->GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(),
             shadowMap->GetMultiSample(), shadowMap->GetAutoResolve()));
@@ -3038,7 +3038,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
     }
 
     // Render each of the splits
-    for (unsigned i = 0; i < queue.shadowSplits_.Size(); ++i)
+    for (auto i = 0u; i < queue.shadowSplits_.Size(); ++i)
     {
         const ShadowBatchQueue& shadowQueue = queue.shadowSplits_[i];
 

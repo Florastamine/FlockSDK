@@ -206,7 +206,7 @@ void UIElement::ApplyAttributes()
     colorGradient_ = false;
     derivedColorDirty_ = true;
 
-    for (unsigned i = 1; i < MAX_UIELEMENT_CORNERS; ++i)
+    for (auto i = 1u; i < MAX_UIELEMENT_CORNERS; ++i)
     {
         if (color_[i] != color_[0])
             colorGradient_ = true;
@@ -366,7 +366,7 @@ bool UIElement::SaveXML(XMLElement& dest) const
         return false;
 
     // Write child elements
-    for (unsigned i = 0; i < children_.Size(); ++i)
+    for (auto i = 0u; i < children_.Size(); ++i)
     {
         UIElement* element = children_[i];
         if (element->IsTemporary())
@@ -866,7 +866,7 @@ void UIElement::SetClipBorder(const IntRect& rect)
 
 void UIElement::SetColor(const Color& color)
 {
-    for (unsigned i = 0; i < MAX_UIELEMENT_CORNERS; ++i)
+    for (auto i = 0u; i < MAX_UIELEMENT_CORNERS; ++i)
         color_[i] = color;
     colorGradient_ = false;
     derivedColorDirty_ = true;
@@ -878,7 +878,7 @@ void UIElement::SetColor(Corner corner, const Color& color)
     colorGradient_ = false;
     derivedColorDirty_ = true;
 
-    for (unsigned i = 0; i < MAX_UIELEMENT_CORNERS; ++i)
+    for (auto i = 0u; i < MAX_UIELEMENT_CORNERS; ++i)
     {
         if (i != corner && color_[i] != color_[corner])
             colorGradient_ = true;
@@ -1154,7 +1154,7 @@ void UIElement::UpdateLayout()
     {
         int minChildHeight = 0;
 
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             if (!children_[i]->IsVisible())
                 continue;
@@ -1181,7 +1181,7 @@ void UIElement::UpdateLayout()
         height = size_.y_;
 
         unsigned j = 0;
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             if (!children_[i]->IsVisible())
                 continue;
@@ -1194,7 +1194,7 @@ void UIElement::UpdateLayout()
     {
         int minChildWidth = 0;
 
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             if (!children_[i]->IsVisible())
                 continue;
@@ -1219,7 +1219,7 @@ void UIElement::UpdateLayout()
         height = size_.y_;
 
         unsigned j = 0;
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             if (!children_[i]->IsVisible())
                 continue;
@@ -1230,7 +1230,7 @@ void UIElement::UpdateLayout()
     }
     else
     {
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             if (children_[i]->GetEnableAnchor())
                 children_[i]->UpdateAnchoring();
@@ -1520,7 +1520,7 @@ void UIElement::AddTags(const String& tags, char separator)
 
 void UIElement::AddTags(const StringVector& tags)
 {
-    for (unsigned i = 0; i < tags.Size(); ++i)
+    for (auto i = 0u; i < tags.Size(); ++i)
         AddTag(tags[i]);
 }
 
@@ -1923,7 +1923,7 @@ Animatable* UIElement::FindAttributeAnimationTarget(const String& name, String& 
     {
         // Name must in following format: "#0/#1/attribute"
         UIElement* element = this;
-        for (unsigned i = 0; i < names.Size() - 1; ++i)
+        for (auto i = 0u; i < names.Size() - 1; ++i)
         {
             if (names[i].Front() != '#')
             {
@@ -2103,7 +2103,7 @@ int UIElement::CalculateLayoutParentSize(const PODVector<int>& sizes, int begin,
     if (sizes.Empty())
         return width;
 
-    for (unsigned i = 0; i < sizes.Size(); ++i)
+    for (auto i = 0u; i < sizes.Size(); ++i)
     {
         // If calculating maximum size, and the default is specified, do not overflow it
         if (sizes[i] == M_MAX_INT)
@@ -2129,7 +2129,7 @@ void UIElement::CalculateLayout(PODVector<int>& positions, PODVector<int>& sizes
     float acc = 0.0f;
 
     // Initial pass
-    for (unsigned i = 0; i < numChildren; ++i)
+    for (auto i = 0u; i < numChildren; ++i)
     {
         int targetSize = (int)(targetChildSize * flexScales[i]);
         if (remainder)
@@ -2149,7 +2149,7 @@ void UIElement::CalculateLayout(PODVector<int>& positions, PODVector<int>& sizes
     for (;;)
     {
         int actualTotalSize = 0;
-        for (unsigned i = 0; i < numChildren; ++i)
+        for (auto i = 0u; i < numChildren; ++i)
             actualTotalSize += sizes[i];
         int error = targetTotalSize - actualTotalSize;
         // Break if no error
@@ -2158,7 +2158,7 @@ void UIElement::CalculateLayout(PODVector<int>& positions, PODVector<int>& sizes
 
         // Check which of the children can be resized to correct the error. If none, must break
         PODVector<unsigned> resizable;
-        for (unsigned i = 0; i < numChildren; ++i)
+        for (auto i = 0u; i < numChildren; ++i)
         {
             if (error < 0 && sizes[i] > minSizes[i])
                 resizable.Push(i);
@@ -2196,7 +2196,7 @@ void UIElement::CalculateLayout(PODVector<int>& positions, PODVector<int>& sizes
     // Calculate final positions and store the maximum child element size for optimizations
     layoutElementMaxSize_ = 0;
     int position = begin;
-    for (unsigned i = 0; i < numChildren; ++i)
+    for (auto i = 0u; i < numChildren; ++i)
     {
         positions[i] = position;
         position += sizes[i] + spacing;

@@ -118,7 +118,7 @@ bool Node::Save(Serializer& dest) const
 
     // Write components
     dest.WriteVLE(GetNumPersistentComponents());
-    for (unsigned i = 0; i < components_.Size(); ++i)
+    for (auto i = 0u; i < components_.Size(); ++i)
     {
         Component* component = components_[i];
         if (component->IsTemporary())
@@ -134,7 +134,7 @@ bool Node::Save(Serializer& dest) const
 
     // Write child nodes
     dest.WriteVLE(GetNumPersistentChildren());
-    for (unsigned i = 0; i < children_.Size(); ++i)
+    for (auto i = 0u; i < children_.Size(); ++i)
     {
         Node* node = children_[i];
         if (node->IsTemporary())
@@ -196,7 +196,7 @@ bool Node::SaveXML(XMLElement& dest) const
         return false;
 
     // Write components
-    for (unsigned i = 0; i < components_.Size(); ++i)
+    for (auto i = 0u; i < components_.Size(); ++i)
     {
         Component* component = components_[i];
         if (component->IsTemporary())
@@ -208,7 +208,7 @@ bool Node::SaveXML(XMLElement& dest) const
     }
 
     // Write child nodes
-    for (unsigned i = 0; i < children_.Size(); ++i)
+    for (auto i = 0u; i < children_.Size(); ++i)
     {
         Node* node = children_[i];
         if (node->IsTemporary())
@@ -234,7 +234,7 @@ bool Node::SaveJSON(JSONValue& dest) const
     // Write components
     JSONArray componentsArray;
     componentsArray.Reserve(components_.Size());
-    for (unsigned i = 0; i < components_.Size(); ++i)
+    for (auto i = 0u; i < components_.Size(); ++i)
     {
         Component* component = components_[i];
         if (component->IsTemporary())
@@ -250,7 +250,7 @@ bool Node::SaveJSON(JSONValue& dest) const
     // Write child nodes
     JSONArray childrenArray;
     childrenArray.Reserve(children_.Size());
-    for (unsigned i = 0; i < children_.Size(); ++i)
+    for (auto i = 0u; i < children_.Size(); ++i)
     {
         Node* node = children_[i];
         if (node->IsTemporary())
@@ -268,10 +268,10 @@ bool Node::SaveJSON(JSONValue& dest) const
 
 void Node::ApplyAttributes()
 {
-    for (unsigned i = 0; i < components_.Size(); ++i)
+    for (auto i = 0u; i < components_.Size(); ++i)
         components_[i]->ApplyAttributes();
 
-    for (unsigned i = 0; i < children_.Size(); ++i)
+    for (auto i = 0u; i < children_.Size(); ++i)
         children_[i]->ApplyAttributes();
 }
 
@@ -376,7 +376,7 @@ void Node::AddTags(const String& tags, char separator)
 void Node::AddTags(const StringVector& tags)
 {
     // This is OK, as MarkNetworkUpdate() early-outs when called multiple times
-    for (unsigned i = 0; i < tags.Size(); ++i)
+    for (auto i = 0u; i < tags.Size(); ++i)
         AddTag(tags[i]);
 }
 
@@ -411,7 +411,7 @@ void Node::RemoveAllTags()
     // Clear old scene cache
     if (scene_)
     {
-        for (unsigned i = 0; i < impl_->tags_.Size(); ++i)
+        for (auto i = 0u; i < impl_->tags_.Size(); ++i)
         {
             scene_->NodeTagRemoved(this, impl_->tags_[i]);
 
@@ -957,7 +957,7 @@ Component* Node::CloneComponent(Component* component, CreateMode mode, unsigned 
 
     if (compAttributes)
     {
-        for (unsigned i = 0; i < compAttributes->Size() && i < cloneAttributes->Size(); ++i)
+        for (auto i = 0u; i < compAttributes->Size() && i < cloneAttributes->Size(); ++i)
         {
             const AttributeInfo& attr = compAttributes->At(i);
             const AttributeInfo& cloneAttr = cloneAttributes->At(i);
@@ -1532,7 +1532,7 @@ bool Node::Load(Deserializer& source, SceneResolver& resolver, bool readChildren
         return false;
 
     unsigned numComponents = source.ReadVLE();
-    for (unsigned i = 0; i < numComponents; ++i)
+    for (auto i = 0u; i < numComponents; ++i)
     {
         VectorBuffer compBuffer(source, source.ReadVLE());
         StringHash compType = compBuffer.ReadStringHash();
@@ -1552,7 +1552,7 @@ bool Node::Load(Deserializer& source, SceneResolver& resolver, bool readChildren
         return true;
 
     unsigned numChildren = source.ReadVLE();
-    for (unsigned i = 0; i < numChildren; ++i)
+    for (auto i = 0u; i < numChildren; ++i)
     {
         unsigned nodeID = source.ReadUInt();
         Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && nodeID < FIRST_LOCAL_ID) ? REPLICATED :
@@ -1621,7 +1621,7 @@ bool Node::LoadJSON(const JSONValue& source, SceneResolver& resolver, bool readC
 
     const JSONArray& componentsArray = source.Get("components").GetArray();
 
-    for (unsigned i = 0; i < componentsArray.Size(); i++)
+    for (auto i = 0u; i < componentsArray.Size(); i++)
     {
         const JSONValue& compVal = componentsArray.At(i);
         String typeName = compVal.Get("type").GetString();
@@ -1640,7 +1640,7 @@ bool Node::LoadJSON(const JSONValue& source, SceneResolver& resolver, bool readC
         return true;
 
     const JSONArray& childrenArray = source.Get("children").GetArray();
-    for (unsigned i = 0; i < childrenArray.Size(); i++)
+    for (auto i = 0u; i < childrenArray.Size(); i++)
     {
         const JSONValue& childVal = childrenArray.At(i);
 
@@ -1686,7 +1686,7 @@ void Node::PrepareNetworkUpdate()
     unsigned numAttributes = attributes->Size();
 
     // Check for attribute changes
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
 
@@ -2159,7 +2159,7 @@ Node* Node::CloneRecursive(Node* parent, SceneResolver& resolver, CreateMode mod
 
     // Copy attributes
     const Vector<AttributeInfo>* attributes = GetAttributes();
-    for (unsigned j = 0; j < attributes->Size(); ++j)
+    for (auto j = 0u; j < attributes->Size(); ++j)
     {
         const AttributeInfo& attr = attributes->At(j);
         // Do not copy network-only attributes, as they may have unintended side effects

@@ -74,7 +74,7 @@ void BoundingBox::Merge(const Frustum& frustum)
 
 void BoundingBox::Merge(const Polyhedron& poly)
 {
-    for (unsigned i = 0; i < poly.faces_.Size(); ++i)
+    for (auto i = 0u; i < poly.faces_.Size(); ++i)
     {
         const PODVector<Vector3>& face = poly.faces_[i];
         if (!face.Empty())
@@ -187,7 +187,7 @@ Rect BoundingBox::Projected(const Matrix4& projection) const
     vertices[7] = projMax;
 
     Rect rect;
-    for (unsigned i = 0; i < 8; ++i)
+    for (auto i = 0u; i < 8; ++i)
     {
         Vector3 projected = projection * vertices[i];
         rect.Merge(Vector2(projected.x_, projected.y_));

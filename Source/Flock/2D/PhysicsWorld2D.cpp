@@ -84,7 +84,7 @@ PhysicsWorld2D::PhysicsWorld2D(Context* context) :
 
 PhysicsWorld2D::~PhysicsWorld2D()
 {
-    for (unsigned i = 0; i < rigidBodies_.Size(); ++i)
+    for (auto i = 0u; i < rigidBodies_.Size(); ++i)
         if (rigidBodies_[i])
             rigidBodies_[i]->ReleaseBody();
 }
@@ -237,7 +237,7 @@ void PhysicsWorld2D::DrawCircle(const b2Vec2& center, float32 radius, const b2Co
 
     Vector3 p = ToVector3(center);
     Color c = ToColor(color);
-    for (unsigned i = 0; i < 360; i += 30)
+    for (auto i = 0u; i < 360; i += 30)
     {
         unsigned j = i + 30;
         float x1 = radius * Cos((float)i);
@@ -264,7 +264,7 @@ void PhysicsWorld2D::DrawSolidCircle(const b2Vec2& center, float32 radius, const
     Vector3 p = ToVector3(center);
     Color c(color.r, color.g, color.b, 0.5f);
 
-    for (unsigned i = 0; i < 360; i += 30)
+    for (auto i = 0u; i < 360; i += 30)
     {
         unsigned j = i + 30;
         float x1 = radius * Cos((float)i);
@@ -313,7 +313,7 @@ void PhysicsWorld2D::Update(float timeStep)
     physicsStepping_ = false;
 
     // Apply world transforms. Unparented transforms first
-    for (unsigned i = 0; i < rigidBodies_.Size();)
+    for (auto i = 0u; i < rigidBodies_.Size();)
     {
         if (rigidBodies_[i])
         {
@@ -640,7 +640,7 @@ RigidBody2D* PhysicsWorld2D::GetRigidBody(const Vector2& point, unsigned collisi
 RigidBody2D* PhysicsWorld2D::GetRigidBody(int screenX, int screenY, unsigned collisionMask)
 {
     Renderer* renderer = GetSubsystem<Renderer>();
-    for (unsigned i = 0; i < renderer->GetNumViewports(); ++i)
+    for (auto i = 0u; i < renderer->GetNumViewports(); ++i)
     {
         Viewport* viewport = renderer->GetViewport(i);
         // Find a viewport with same scene
@@ -751,7 +751,7 @@ void PhysicsWorld2D::SendBeginContactEvents()
     VariantMap nodeEventData;
     eventData[P_WORLD] = this;
 
-    for (unsigned i = 0; i < beginContactInfos_.Size(); ++i)
+    for (auto i = 0u; i < beginContactInfos_.Size(); ++i)
     {
         ContactInfo& contactInfo = beginContactInfos_[i];
         eventData[P_BODYA] = contactInfo.bodyA_.Get();
@@ -804,7 +804,7 @@ void PhysicsWorld2D::SendEndContactEvents()
     VariantMap nodeEventData;
     eventData[P_WORLD] = this;
 
-    for (unsigned i = 0; i < endContactInfos_.Size(); ++i)
+    for (auto i = 0u; i < endContactInfos_.Size(); ++i)
     {
         ContactInfo& contactInfo = endContactInfos_[i];
         eventData[P_BODYA] = contactInfo.bodyA_.Get();

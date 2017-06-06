@@ -62,7 +62,7 @@ TextureCube::TextureCube(Context* context) :
     addressMode_[COORD_V] = ADDRESS_CLAMP;
     addressMode_[COORD_W] = ADDRESS_CLAMP;
 
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         faceMemoryUse_[i] = 0;
 }
 
@@ -154,7 +154,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
             case CML_HORIZONTALNVIDIA:
                 faceWidth = image->GetWidth() / MAX_CUBEMAP_FACES;
                 faceHeight = image->GetHeight();
-                for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+                for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
                     loadImages_[i] = GetTileImage(image, i, 0, faceWidth, faceHeight);
                 break;
 
@@ -220,7 +220,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
     // Precalculate mip levels if async loading
     if (GetAsyncLoadState() == ASYNC_LOADING)
     {
-        for (unsigned i = 0; i < loadImages_.Size(); ++i)
+        for (auto i = 0u; i < loadImages_.Size(); ++i)
         {
             if (loadImages_[i])
                 loadImages_[i]->PrecalculateLevels();
@@ -241,7 +241,7 @@ bool TextureCube::EndLoad()
 
     SetParameters(loadParameters_);
 
-    for (unsigned i = 0; i < loadImages_.Size() && i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < loadImages_.Size() && i < MAX_CUBEMAP_FACES; ++i)
         SetData((CubeMapFace)i, loadImages_[i]);
 
     loadImages_.Clear();
@@ -271,7 +271,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
     }
 
     // Delete the old rendersurfaces if any
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
     {
         renderSurfaces_[i].Reset();
         faceMemoryUse_[i] = 0;
@@ -281,7 +281,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
 
     if (usage == TEXTURE_RENDERTARGET)
     {
-        for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+        for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
         {
             renderSurfaces_[i] = new RenderSurface(this);
             renderSurfaces_[i]->target_ = GL_TEXTURE_CUBE_MAP_POSITIVE_X + i;
@@ -330,7 +330,7 @@ void TextureCube::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& ev
 {
     Renderer* renderer = GetSubsystem<Renderer>();
 
-    for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
+    for (auto i = 0u; i < MAX_CUBEMAP_FACES; ++i)
     {
         if (renderSurfaces_[i] && (renderSurfaces_[i]->GetUpdateMode() == SURFACE_UPDATEALWAYS || renderSurfaces_[i]->IsUpdateQueued()))
         {

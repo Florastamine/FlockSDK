@@ -653,7 +653,7 @@ UIElement* UI::GetFrontElement() const
     int maxPriority = M_MIN_INT;
     UIElement* front = 0;
 
-    for (unsigned i = 0; i < rootChildren.Size(); ++i)
+    for (auto i = 0u; i < rootChildren.Size(); ++i)
     {
         // Do not take into account input-disabled elements, hidden elements or those that are always in the front
         if (!rootChildren[i]->IsEnabled() || !rootChildren[i]->IsVisible() || !rootChildren[i]->GetBringToBack())
@@ -761,7 +761,7 @@ void UI::Update(float timeStep, UIElement* element)
 
     const Vector<SharedPtr<UIElement> >& children = element->GetChildren();
     // Update of an element may modify its child vector. Use just index-based iteration to be safe
-    for (unsigned i = 0; i < children.Size(); ++i)
+    for (auto i = 0u; i < children.Size(); ++i)
         Update(timeStep, children[i]);
 }
 
@@ -938,7 +938,7 @@ void UI::GetElementAt(UIElement*& result, UIElement* current, const IntVector2& 
     const Vector<SharedPtr<UIElement> >& children = current->GetChildren();
     LayoutMode parentLayoutMode = current->GetLayoutMode();
 
-    for (unsigned i = 0; i < children.Size(); ++i)
+    for (auto i = 0u; i < children.Size(); ++i)
     {
         UIElement* element = children[i];
         bool hasChildren = element->GetNumChildren() > 0;
@@ -1049,7 +1049,7 @@ void UI::ReleaseFontFaces()
     PODVector<Font*> fonts;
     GetSubsystem<ResourceCache>()->GetResources<Font>(fonts);
 
-    for (unsigned i = 0; i < fonts.Size(); ++i)
+    for (auto i = 0u; i < fonts.Size(); ++i)
         fonts[i]->ReleaseFaces();
 }
 
@@ -1601,7 +1601,7 @@ void UI::HandleKeyDown(StringHash eventType, VariantMap& eventData)
                     else
                         ++i;
                 }
-                for (unsigned i = 0; i < tempElements_.Size(); ++i)
+                for (auto i = 0u; i < tempElements_.Size(); ++i)
                 {
                     if (tempElements_[i] == element)
                     {

@@ -105,7 +105,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, unsigned priority)
     String fixedPath = SanitateResourceDirName(pathName);
 
     // Check that the same path does not already exist
-    for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+    for (auto i = 0u; i < resourceDirs_.Size(); ++i)
     {
         if (!resourceDirs_[i].Compare(fixedPath, false))
             return true;
@@ -181,13 +181,13 @@ void ResourceCache::RemoveResourceDir(const String& pathName)
 
     String fixedPath = SanitateResourceDirName(pathName);
 
-    for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+    for (auto i = 0u; i < resourceDirs_.Size(); ++i)
     {
         if (!resourceDirs_[i].Compare(fixedPath, false))
         {
             resourceDirs_.Erase(i);
             // Remove the filewatcher with the matching path
-            for (unsigned j = 0; j < fileWatchers_.Size(); ++j)
+            for (auto j = 0u; j < fileWatchers_.Size(); ++j)
             {
                 if (!fileWatchers_[j]->GetPath().Compare(fixedPath, false))
                 {
@@ -439,7 +439,7 @@ void ResourceCache::SetAutoReloadResources(bool enable)
     {
         if (enable)
         {
-            for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+            for (auto i = 0u; i < resourceDirs_.Size(); ++i)
             {
                 SharedPtr<FileWatcher> watcher(new FileWatcher(context_));
                 watcher->StartWatching(resourceDirs_[i], true);
@@ -456,7 +456,7 @@ void ResourceCache::SetAutoReloadResources(bool enable)
 void ResourceCache::AddResourceRouter(ResourceRouter* router, bool addAsFirst)
 {
     // Check for duplicate
-    for (unsigned i = 0; i < resourceRouters_.Size(); ++i)
+    for (auto i = 0u; i < resourceRouters_.Size(); ++i)
     {
         if (resourceRouters_[i] == router)
             return;
@@ -470,7 +470,7 @@ void ResourceCache::AddResourceRouter(ResourceRouter* router, bool addAsFirst)
 
 void ResourceCache::RemoveResourceRouter(ResourceRouter* router)
 {
-    for (unsigned i = 0; i < resourceRouters_.Size(); ++i)
+    for (auto i = 0u; i < resourceRouters_.Size(); ++i)
     {
         if (resourceRouters_[i] == router)
         {
@@ -488,7 +488,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& nameIn, bool sendEventOnFai
     if (!isRouting_)
     {
         isRouting_ = true;
-        for (unsigned i = 0; i < resourceRouters_.Size(); ++i)
+        for (auto i = 0u; i < resourceRouters_.Size(); ++i)
             resourceRouters_[i]->Route(name, RESOURCE_GETFILE);
         isRouting_ = false;
     }
@@ -721,7 +721,7 @@ bool ResourceCache::Exists(const String& nameIn) const
     if (!isRouting_)
     {
         isRouting_ = true;
-        for (unsigned i = 0; i < resourceRouters_.Size(); ++i)
+        for (auto i = 0u; i < resourceRouters_.Size(); ++i)
             resourceRouters_[i]->Route(name, RESOURCE_CHECKEXISTS);
         isRouting_ = false;
     }
@@ -729,14 +729,14 @@ bool ResourceCache::Exists(const String& nameIn) const
     if (name.Empty())
         return false;
 
-    for (unsigned i = 0; i < packages_.Size(); ++i)
+    for (auto i = 0u; i < packages_.Size(); ++i)
     {
         if (packages_[i]->Exists(name))
             return true;
     }
 
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
-    for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+    for (auto i = 0u; i < resourceDirs_.Size(); ++i)
     {
         if (fileSystem->FileExists(resourceDirs_[i] + name))
             return true;
@@ -769,7 +769,7 @@ unsigned long long ResourceCache::GetTotalMemoryUse() const
 String ResourceCache::GetResourceFileName(const String& name) const
 {
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
-    for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+    for (auto i = 0u; i < resourceDirs_.Size(); ++i)
     {
         if (fileSystem->FileExists(resourceDirs_[i] + name))
             return resourceDirs_[i] + name;
@@ -795,7 +795,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
 
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
 
-    for (unsigned i = 0; checkDirs[i] != 0; ++i)
+    for (auto i = 0u; checkDirs[i] != 0; ++i)
     {
         if (fileSystem->DirExists(fixedPath + checkDirs[i]))
         {
@@ -806,7 +806,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     if (!pathHasKnownDirs)
     {
         String parentPath = GetParentPath(fixedPath);
-        for (unsigned i = 0; checkDirs[i] != 0; ++i)
+        for (auto i = 0u; checkDirs[i] != 0; ++i)
         {
             if (fileSystem->DirExists(parentPath + checkDirs[i]))
             {
@@ -835,7 +835,7 @@ String ResourceCache::SanitateResourceName(const String& nameIn) const
     {
         String namePath = GetPath(name);
         String exePath = fileSystem->GetProgramDir().Replaced("/./", "/");
-        for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+        for (auto i = 0u; i < resourceDirs_.Size(); ++i)
         {
             String relativeResourcePath = resourceDirs_[i];
             if (relativeResourcePath.StartsWith(exePath))
@@ -1056,7 +1056,7 @@ void ResourceCache::UpdateResourceGroup(StringHash type)
 
 void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData)
 {
-    for (unsigned i = 0; i < fileWatchers_.Size(); ++i)
+    for (auto i = 0u; i < fileWatchers_.Size(); ++i)
     {
         String fileName;
         while (fileWatchers_[i]->GetNextChange(fileName))
@@ -1083,7 +1083,7 @@ void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData
 File* ResourceCache::SearchResourceDirs(const String& nameIn)
 {
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
-    for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
+    for (auto i = 0u; i < resourceDirs_.Size(); ++i)
     {
         if (fileSystem->FileExists(resourceDirs_[i] + nameIn))
         {
@@ -1104,7 +1104,7 @@ File* ResourceCache::SearchResourceDirs(const String& nameIn)
 
 File* ResourceCache::SearchPackages(const String& nameIn)
 {
-    for (unsigned i = 0; i < packages_.Size(); ++i)
+    for (auto i = 0u; i < packages_.Size(); ++i)
     {
         if (packages_[i]->Exists(nameIn))
             return new File(context_, packages_[i], nameIn);

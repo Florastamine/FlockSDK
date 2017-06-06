@@ -463,7 +463,7 @@ void JSONValue::SetVariantValue(const Variant& variant, Context* context)
 
             const ResourceRefList& refList = variant.GetResourceRefList();
             String str(context->GetTypeName(refList.type_));
-            for (unsigned i = 0; i < refList.names_.Size(); ++i)
+            for (auto i = 0u; i < refList.names_.Size(); ++i)
             {
                 str += ";";
                 str += refList.names_[i];
@@ -476,7 +476,7 @@ void JSONValue::SetVariantValue(const Variant& variant, Context* context)
         {
             const StringVector& vector = variant.GetStringVector();
             Resize(vector.Size());
-            for (unsigned i = 0; i < vector.Size(); ++i)
+            for (auto i = 0u; i < vector.Size(); ++i)
                 (*this)[i] = vector[i];
         }
         return;
@@ -540,7 +540,7 @@ Variant JSONValue::GetVariantValue(VariantType type) const
             {
                 refList.type_ = values[0];
                 refList.names_.Resize(values.Size() - 1);
-                for (unsigned i = 1; i < values.Size(); ++i)
+                for (auto i = 1u; i < values.Size(); ++i)
                     refList.names_[i - 1] = values[i];
             }
             variant = refList;
@@ -550,7 +550,7 @@ Variant JSONValue::GetVariantValue(VariantType type) const
     case VAR_STRINGVECTOR:
         {
             StringVector vector;
-            for (unsigned i = 0; i < Size(); ++i)
+            for (auto i = 0u; i < Size(); ++i)
                 vector.Push((*this)[i].GetString());
             variant = vector;
         }
@@ -593,7 +593,7 @@ void JSONValue::SetVariantVector(const VariantVector& variantVector, Context* co
 {
     SetType(JSON_ARRAY);
     arrayValue_->Reserve(variantVector.Size());
-    for (unsigned i = 0; i < variantVector.Size(); ++i)
+    for (auto i = 0u; i < variantVector.Size(); ++i)
     {
         JSONValue val;
         val.SetVariant(variantVector[i], context);
@@ -610,7 +610,7 @@ VariantVector JSONValue::GetVariantVector() const
         return variantVector;
     }
 
-    for (unsigned i = 0; i < Size(); ++i)
+    for (auto i = 0u; i < Size(); ++i)
     {
         Variant variant = (*this)[i].GetVariant();
         variantVector.Push(variant);

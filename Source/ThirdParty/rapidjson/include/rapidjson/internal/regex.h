@@ -418,15 +418,15 @@ private:
                 Eval(operandStack, kZeroOrMore);    // a{0,} -> a*
             else {
                 Eval(operandStack, kZeroOrOne);         // a{0,5} -> a?
-                for (unsigned i = 0; i < m - 1; i++)
+                for (auto i = 0u; i < m - 1; i++)
                     CloneTopOperand(operandStack);      // a{0,5} -> a? a? a? a? a?
-                for (unsigned i = 0; i < m - 1; i++)
+                for (auto i = 0u; i < m - 1; i++)
                     Eval(operandStack, kConcatenation); // a{0,5} -> a?a?a?a?a?
             }
             return true;
         }
 
-        for (unsigned i = 0; i < n - 1; i++)        // a{3} -> a a a
+        for (auto i = 0u; i < n - 1; i++)        // a{3} -> a a a
             CloneTopOperand(operandStack);
 
         if (m == kInfinityQuantifier)
@@ -440,7 +440,7 @@ private:
                 Eval(operandStack, kConcatenation); // a{3,5} -> a a aa?a?
         }
 
-        for (unsigned i = 0; i < n - 1; i++)
+        for (auto i = 0u; i < n - 1; i++)
             Eval(operandStack, kConcatenation);     // a{3} -> aaa, a{3,} -> aaa+, a{3.5} -> aaaa?a?
 
         return true;

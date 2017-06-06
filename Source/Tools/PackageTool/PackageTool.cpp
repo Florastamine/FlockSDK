@@ -145,7 +145,7 @@ void Run(const Vector<String>& arguments)
         for (unsigned i = fileNames.Size() - 1; i < fileNames.Size(); --i)
         {
             String extension = GetExtension(fileNames[i]);
-            for (unsigned j = 0; j < ignoreExtensions_[j].Length(); ++j)
+            for (auto j = 0u; j < ignoreExtensions_[j].Length(); ++j)
             {
                 if (extension == ignoreExtensions_[j])
                 {
@@ -155,7 +155,7 @@ void Run(const Vector<String>& arguments)
             }
         }
 
-        for (unsigned i = 0; i < fileNames.Size(); ++i)
+        for (auto i = 0u; i < fileNames.Size(); ++i)
             ProcessFile(fileNames[i], dirName);
 
         WritePackageFile(packageName, dirName);
@@ -232,7 +232,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
     // Write ID, number of files & placeholder for checksum
     WriteHeader(dest);
 
-    for (unsigned i = 0; i < entries_.Size(); ++i)
+    for (auto i = 0u; i < entries_.Size(); ++i)
     {
         // Write entry (correct offset is still unknown, will be filled in later)
         dest.WriteString(basePath_ + entries_[i].name_);
@@ -245,7 +245,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
     unsigned lastOffset;
 
     // Write file data, calculate checksums & correct offsets
-    for (unsigned i = 0; i < entries_.Size(); ++i)
+    for (auto i = 0u; i < entries_.Size(); ++i)
     {
         lastOffset = entries_[i].offset_ = dest.GetSize();
         String fileFullPath = rootDir + "/" + entries_[i].name_;
@@ -262,7 +262,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
             ErrorExit("Could not read file " + fileFullPath);
         srcFile.Close();
 
-        for (unsigned j = 0; j < dataSize; ++j)
+        for (auto j = 0u; j < dataSize; ++j)
         {
             checksum_ = SDBMHash(checksum_, buffer[j]);
             entries_[i].checksum_ = SDBMHash(entries_[i].checksum_, buffer[j]);
@@ -316,7 +316,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
     dest.Seek(0);
     WriteHeader(dest);
 
-    for (unsigned i = 0; i < entries_.Size(); ++i)
+    for (auto i = 0u; i < entries_.Size(); ++i)
     {
         dest.WriteString(basePath_ + entries_[i].name_);
         dest.WriteUInt(entries_[i].offset_);

@@ -70,7 +70,7 @@ bool SpriterInstance::SetEntity(const String& entityName)
     if (!spriterData_)
         return false;
 
-    for (unsigned i = 0; i < spriterData_->entities_.Size(); ++i)
+    for (auto i = 0u; i < spriterData_->entities_.Size(); ++i)
     {
         if (spriterData_->entities_[i]->name_ == entityName)
         {
@@ -101,7 +101,7 @@ bool SpriterInstance::SetAnimation(const String& animationName, LoopMode loopMod
     if (!entity_)
         return false;
 
-    for (unsigned i = 0; i < entity_->animations_.Size(); ++i)
+    for (auto i = 0u; i < entity_->animations_.Size(); ++i)
     {
         if (entity_->animations_[i]->name_ == animationName)
         {
@@ -201,7 +201,7 @@ void SpriterInstance::OnSetAnimation(Animation* animation, LoopMode loopMode)
 
 void SpriterInstance::UpdateTimelineKeys()
 {
-    for (unsigned i = 0; i < mainlineKey_->boneRefs_.Size(); ++i)
+    for (auto i = 0u; i < mainlineKey_->boneRefs_.Size(); ++i)
     {
         Ref* ref = mainlineKey_->boneRefs_[i];
         BoneTimelineKey* timelineKey = (BoneTimelineKey*)GetTimelineKey(ref);
@@ -216,7 +216,7 @@ void SpriterInstance::UpdateTimelineKeys()
         timelineKeys_.Push(timelineKey);
     }
 
-    for (unsigned i = 0; i < mainlineKey_->objectRefs_.Size(); ++i)
+    for (auto i = 0u; i < mainlineKey_->objectRefs_.Size(); ++i)
     {
         Ref* ref = mainlineKey_->objectRefs_[i];
         SpriteTimelineKey* timelineKey = (SpriteTimelineKey*)GetTimelineKey(ref);
@@ -239,7 +239,7 @@ void SpriterInstance::UpdateTimelineKeys()
 void SpriterInstance::UpdateMainlineKey()
 {
     const PODVector<MainlineKey*>& mainlineKeys = animation_->mainlineKeys_;
-    for (unsigned i = 0; i < mainlineKeys.Size(); ++i)
+    for (auto i = 0u; i < mainlineKeys.Size(); ++i)
     {
         if (mainlineKeys[i]->time_ <= currentTime_)
         {
@@ -300,7 +300,7 @@ void SpriterInstance::Clear()
 
     if (!timelineKeys_.Empty())
     {
-        for (unsigned i = 0; i < timelineKeys_.Size(); ++i)
+        for (auto i = 0u; i < timelineKeys_.Size(); ++i)
         {
             delete timelineKeys_[i];
         }

@@ -96,7 +96,7 @@ public:
         // Adjust the container size for child clipping effect
         overlayContainer_->SetSize(GetParent()->GetSize());
 
-        for (unsigned i = 0; i < children_.Size(); ++i)
+        for (auto i = 0u; i < children_.Size(); ++i)
         {
             const IntVector2& position = children_[i]->GetPosition();
             CheckBox* overlay = overlayContainer_->GetChildStaticCast<CheckBox>(i);
@@ -378,7 +378,7 @@ void ListView::InsertItem(unsigned index, UIElement* item, UIElement* parentItem
     // If necessary, shift the following selections
     if (!selections_.Empty())
     {
-        for (unsigned i = 0; i < selections_.Size(); ++i)
+        for (auto i = 0u; i < selections_.Size(); ++i)
         {
             if (selections_[i] >= index)
                 ++selections_[i];
@@ -449,7 +449,7 @@ void ListView::RemoveItem(UIElement* item, unsigned index)
             // If necessary, shift the following selections
             if (!selections_.Empty())
             {
-                for (unsigned j = 0; j < selections_.Size(); ++j)
+                for (auto j = 0u; j < selections_.Size(); ++j)
                 {
                     if (selections_[j] > i)
                         selections_[j] -= removed;
@@ -848,7 +848,7 @@ unsigned ListView::FindItem(UIElement* item) const
     }
 
     // Fallback to linear search in case the coordinates/sizes were not yet initialized
-    for (unsigned i = 0; i < children.Size(); ++i)
+    for (auto i = 0u; i < children.Size(); ++i)
     {
         if (children[i] == item)
             return i;
@@ -957,7 +957,7 @@ void ListView::UpdateSelectionEffect()
     unsigned numItems = GetNumItems();
     bool highlighted = highlightMode_ == HM_ALWAYS || HasFocus();
 
-    for (unsigned i = 0; i < numItems; ++i)
+    for (auto i = 0u; i < numItems; ++i)
     {
         UIElement* item = GetItem(i);
         if (highlightMode_ != HM_NEVER && selections_.Contains(i))

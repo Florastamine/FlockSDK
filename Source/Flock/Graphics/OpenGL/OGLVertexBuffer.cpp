@@ -61,7 +61,7 @@ void VertexBuffer::Release()
 
         if (!graphics_->IsDeviceLost())
         {
-            for (unsigned i = 0; i < MAX_VERTEX_STREAMS; ++i)
+            for (auto i = 0u; i < MAX_VERTEX_STREAMS; ++i)
             {
                 if (graphics_->GetVertexBuffer(i) == this)
                     graphics_->SetVertexBuffer(0);

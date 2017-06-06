@@ -71,7 +71,7 @@ Octant::Octant(const BoundingBox& box, unsigned level, Octant* parent, Octree* r
 {
     Initialize(box);
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
         children_[i] = 0;
 }
 
@@ -90,7 +90,7 @@ Octant::~Octant()
         numDrawables_ = 0;
     }
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
         DeleteChild(i);
 }
 
@@ -195,7 +195,7 @@ void Octant::ResetRoot()
     for (PODVector<Drawable*>::Iterator i = drawables_.Begin(); i != drawables_.End(); ++i)
         (*i)->SetOctant(0);
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
     {
         if (children_[i])
             children_[i]->ResetRoot();
@@ -208,7 +208,7 @@ void Octant::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     {
         debug->AddBoundingBox(worldBoundingBox_, Color(0.25f, 0.25f, 0.25f), depthTest);
 
-        for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+        for (auto i = 0u; i < NUM_OCTANTS; ++i)
         {
             if (children_[i])
                 children_[i]->DrawDebugGeometry(debug, depthTest);
@@ -245,7 +245,7 @@ void Octant::GetDrawablesInternal(OctreeQuery& query, bool inside) const
         query.TestDrawables(start, end, inside);
     }
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
     {
         if (children_[i])
             children_[i]->GetDrawablesInternal(query, inside);
@@ -272,7 +272,7 @@ void Octant::GetDrawablesInternal(RayOctreeQuery& query) const
         }
     }
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
     {
         if (children_[i])
             children_[i]->GetDrawablesInternal(query);
@@ -299,7 +299,7 @@ void Octant::GetDrawablesOnlyInternal(RayOctreeQuery& query, PODVector<Drawable*
         }
     }
 
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
     {
         if (children_[i])
             children_[i]->GetDrawablesOnlyInternal(query, drawables);
@@ -358,7 +358,7 @@ void Octree::SetSize(const BoundingBox& box, unsigned numLevels)
     FLOCKSDK_PROFILE(ResizeOctree);
 
     // If drawables exist, they are temporarily moved to the root
-    for (unsigned i = 0; i < NUM_OCTANTS; ++i)
+    for (auto i = 0u; i < NUM_OCTANTS; ++i)
         DeleteChild(i);
 
     Initialize(box);

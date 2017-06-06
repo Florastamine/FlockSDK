@@ -93,7 +93,7 @@ bool PackageFile::Open(const String& fileName, unsigned startOffset)
     unsigned numFiles = file->ReadUInt();
     checksum_ = file->ReadUInt();
 
-    for (unsigned i = 0; i < numFiles; ++i)
+    for (auto i = 0u; i < numFiles; ++i)
     {
         String entryName = file->ReadString();
         PackageEntry newEntry;

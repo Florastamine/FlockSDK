@@ -756,7 +756,7 @@ void RigidBody::UpdateMass()
     if (numShapes)
     {
         PODVector<float> masses(numShapes);
-        for (unsigned i = 0; i < numShapes; ++i)
+        for (auto i = 0u; i < numShapes; ++i)
         {
             // The actual mass does not matter, divide evenly between child shapes
             masses[i] = 1.0f;
@@ -769,7 +769,7 @@ void RigidBody::UpdateMass()
     // Add child shapes to shifted compound shape with adjusted offset
     while (shiftedCompoundShape_->getNumChildShapes())
         shiftedCompoundShape_->removeChildShapeByIndex(shiftedCompoundShape_->getNumChildShapes() - 1);
-    for (unsigned i = 0; i < numShapes; ++i)
+    for (auto i = 0u; i < numShapes; ++i)
     {
         btTransform adjusted = compoundShape_->getChildTransform(i);
         adjusted.setOrigin(adjusted.getOrigin() - principal.getOrigin());

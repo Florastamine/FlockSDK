@@ -76,7 +76,7 @@ void SceneResolver::Resolve()
             continue;
         }
 
-        for (unsigned j = 0; j < attributes->Size(); ++j)
+        for (auto j = 0u; j < attributes->Size(); ++j)
         {
             const AttributeInfo& info = attributes->At(j);
             if (info.mode_ & AM_NODEID)

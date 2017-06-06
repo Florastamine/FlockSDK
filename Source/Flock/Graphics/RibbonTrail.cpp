@@ -132,7 +132,7 @@ void RibbonTrail::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQuer
         return;
 
     // Approximate the tails as spheres for raycasting
-    for (unsigned i = 0; i < points_.Size() - 1; ++i)
+    for (auto i = 0u; i < points_.Size() - 1; ++i)
     {
         Vector3 center = (points_[i].position_ + points_[i+1].position_) * 0.5f;
         Vector3 scale = width_ * Vector3::ONE;
@@ -213,7 +213,7 @@ void RibbonTrail::UpdateTail()
     if (points_.Size() > 0)
     {
         // No need to update last point
-        for (unsigned i = 0; i < points_.Size() - 1; ++i)
+        for (auto i = 0u; i < points_.Size() - 1; ++i)
         {
             points_[i].lifetime_ += lastTimeStep_;
 
@@ -426,7 +426,7 @@ void RibbonTrail::OnWorldBoundingBoxUpdate()
 {
     BoundingBox worldBox;
 
-    for (unsigned i = 0; i < points_.Size(); ++i)
+    for (auto i = 0u; i < points_.Size(); ++i)
     {
         Vector3 &p = points_[i].position_;
         Vector3 scale = width_ * Vector3::ONE;
@@ -493,7 +493,7 @@ void RibbonTrail::UpdateBufferSize()
         dest += 6;
         vertexIndex += 2;
 
-        for (unsigned i = 0; i < (tailColumn_ - 1); ++i)
+        for (auto i = 0u; i < (tailColumn_ - 1); ++i)
         {
             dest[0] = (unsigned short)vertexIndex;
             dest[1] = (unsigned short)(vertexIndex + 2);
@@ -543,7 +543,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
 
     // Fill sorted points vector
     sortedPoints_.Resize(numPoints_);
-    for (unsigned i = 0; i < numPoints_; ++i)
+    for (auto i = 0u; i < numPoints_; ++i)
     {
         TrailPoint& point = points_[i];
         sortedPoints_[i] = &point;
@@ -577,7 +577,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
     // Generate trail mesh
     if (trailType_ == TT_FACE_CAMERA)
     {
-        for (unsigned i = 0; i < numPoints_; ++i)
+        for (auto i = 0u; i < numPoints_; ++i)
         {
             TrailPoint& point = *sortedPoints_[i];
 
@@ -619,7 +619,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
             dest += 20;
 
             // Middle rows
-            for (unsigned j = 0; j < (tailColumn_ - 1); ++j)
+            for (auto j = 0u; j < (tailColumn_ - 1); ++j)
             {
                 float elapsed = 1.0f / tailColumn_ * (j + 1);
                 float midWidth = width - elapsed * 2.0f * width;
@@ -678,7 +678,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
     }
     else if (trailType_ == TT_BONE)
     {
-        for (unsigned i = 0; i < numPoints_; ++i)
+        for (auto i = 0u; i < numPoints_; ++i)
         {
             TrailPoint& point = *sortedPoints_[i];
 
@@ -732,7 +732,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
             dest += 26;
 
             // Middle row
-            for (unsigned j = 0; j < (tailColumn_ - 1); ++j)
+            for (auto j = 0u; j < (tailColumn_ - 1); ++j)
             {
                 float elapsed = 1.0f / tailColumn_ * (j + 1);
 

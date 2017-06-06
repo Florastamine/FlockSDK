@@ -953,7 +953,7 @@ void Scene::NodeAdded(Node* node)
     if (!node->GetTags().Empty())
     {
         const StringVector& tags = node->GetTags();
-        for (unsigned i = 0; i < tags.Size(); ++i)
+        for (auto i = 0u; i < tags.Size(); ++i)
             taggedNodes_[tags[i]].Push(node);
     }
 
@@ -996,7 +996,7 @@ void Scene::NodeRemoved(Node* node)
     if (!node->GetTags().Empty())
     {
         const StringVector& tags = node->GetTags();
-        for (unsigned i = 0; i < tags.Size(); ++i)
+        for (auto i = 0u; i < tags.Size(); ++i)
             taggedNodes_[tags[i]].Remove(node);
     }
 
@@ -1301,7 +1301,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
     const Vector<AttributeInfo>* attributes = context_->GetAttributes(isSceneFile ? Scene::GetTypeStatic() : Node::GetTypeStatic());
     assert(attributes);
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!(attr.mode_ & AM_FILE))
@@ -1311,7 +1311,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
 
     // Read component attributes
     unsigned numComponents = file->ReadVLE();
-    for (unsigned i = 0; i < numComponents; ++i)
+    for (auto i = 0u; i < numComponents; ++i)
     {
         VectorBuffer compBuffer(*file, file->ReadVLE());
         StringHash compType = compBuffer.ReadStringHash();
@@ -1321,7 +1321,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
         attributes = context_->GetAttributes(compType);
         if (attributes)
         {
-            for (unsigned j = 0; j < attributes->Size(); ++j)
+            for (auto j = 0u; j < attributes->Size(); ++j)
             {
                 const AttributeInfo& attr = attributes->At(j);
                 if (!(attr.mode_ & AM_FILE))
@@ -1359,7 +1359,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
 
     // Read child nodes
     unsigned numChildren = file->ReadVLE();
-    for (unsigned i = 0; i < numChildren; ++i)
+    for (auto i = 0u; i < numChildren; ++i)
         PreloadResources(file, false);
 }
 
@@ -1449,7 +1449,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
     // Node or Scene attributes do not include any resources; therefore skip to the components
     JSONArray componentArray = value.Get("components").GetArray();
 
-    for (unsigned i = 0; i < componentArray.Size(); i++)
+    for (auto i = 0u; i < componentArray.Size(); i++)
     {
         const JSONValue& compValue = componentArray.At(i);
         String typeName = compValue.Get("type").GetString();
@@ -1461,7 +1461,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 
             unsigned startIndex = 0;
 
-            for (unsigned j = 0; j < attributesArray.Size(); j++)
+            for (auto j = 0u; j < attributesArray.Size(); j++)
             {
                 const JSONValue& attrVal = attributesArray.At(j);
                 String name = attrVal.Get("name").GetString();
@@ -1515,7 +1515,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
     }
 
     JSONArray childrenArray = value.Get("children").GetArray();
-    for (unsigned i = 0; i < childrenArray.Size(); i++)
+    for (auto i = 0u; i < childrenArray.Size(); i++)
     {
         const JSONValue& childVal = childrenArray.At(i);
         PreloadResourcesJSON(childVal);

@@ -473,7 +473,7 @@ public:
         Node** ptrs = new Node* [numKeys];
         Node* ptr = Head();
 
-        for (unsigned i = 0; i < numKeys; ++i)
+        for (auto i = 0u; i < numKeys; ++i)
         {
             ptrs[i] = ptr;
             ptr = ptr->Next();
@@ -483,7 +483,7 @@ public:
 
         head_ = ptrs[0];
         ptrs[0]->prev_ = 0;
-        for (unsigned i = 1; i < numKeys; ++i)
+        for (auto i = 1u; i < numKeys; ++i)
         {
             ptrs[i - 1]->next_ = ptrs[i];
             ptrs[i]->prev_ = ptrs[i - 1];

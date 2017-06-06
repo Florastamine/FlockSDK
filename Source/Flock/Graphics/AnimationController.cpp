@@ -90,7 +90,7 @@ void AnimationController::OnSetEnabled()
 void AnimationController::Update(float timeStep)
 {
     // Loop through animations
-    for (unsigned i = 0; i < animations_.Size();)
+    for (auto i = 0u; i < animations_.Size();)
     {
         AnimationControl& ctrl = animations_[i];
         AnimationState* state = GetAnimationState(ctrl.hash_);
@@ -279,7 +279,7 @@ bool AnimationController::FadeOthers(const String& name, float targetWeight, flo
     unsigned char layer = state->GetLayer();
 
     bool needUpdate = false;
-    for (unsigned i = 0; i < animations_.Size(); ++i)
+    for (auto i = 0u; i < animations_.Size(); ++i)
     {
         if (i != index)
         {
@@ -900,7 +900,7 @@ void AnimationController::FindAnimation(const String& name, unsigned& index, Ani
 
     // Find the internal control structure
     index = M_MAX_UNSIGNED;
-    for (unsigned i = 0; i < animations_.Size(); ++i)
+    for (auto i = 0u; i < animations_.Size(); ++i)
     {
         if (animations_[i].hash_ == nameHash)
         {

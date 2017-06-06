@@ -67,7 +67,7 @@ static DecalVertex ClipEdge(const DecalVertex& v0, const DecalVertex& v1, float 
         {
             // Blend weights and indices: if indices are different, choose the vertex nearer to the split plane
             const DecalVertex& src = Abs(d0) < Abs(d1) ? v0 : v1;
-            for (unsigned i = 0; i < 4; ++i)
+            for (auto i = 0u; i < 4; ++i)
             {
                 ret.blendWeights_[i] = src.blendWeights_[i];
                 ret.blendIndices_[i] = src.blendIndices_[i];
@@ -76,7 +76,7 @@ static DecalVertex ClipEdge(const DecalVertex& v0, const DecalVertex& v1, float 
         else
         {
             // If indices are same, can interpolate the weights
-            for (unsigned i = 0; i < 4; ++i)
+            for (auto i = 0u; i < 4; ++i)
             {
                 ret.blendWeights_[i] = v0.blendWeights_[i] + t * (v1.blendWeights_[i] - v0.blendWeights_[i]);
                 ret.blendIndices_[i] = v0.blendIndices_[i];
@@ -96,7 +96,7 @@ static void ClipPolygon(PODVector<DecalVertex>& dest, const PODVector<DecalVerte
     if (src.Empty())
         return;
 
-    for (unsigned i = 0; i < src.Size(); ++i)
+    for (auto i = 0u; i < src.Size(); ++i)
     {
         float distance = plane.Distance(src[i].position_);
         if (distance >= 0.0f)
@@ -124,7 +124,7 @@ static void ClipPolygon(PODVector<DecalVertex>& dest, const PODVector<DecalVerte
 
 void Decal::AddVertex(const DecalVertex& vertex)
 {
-    for (unsigned i = 0; i < vertices_.Size(); ++i)
+    for (auto i = 0u; i < vertices_.Size(); ++i)
     {
         if (vertex.position_.Equals(vertices_[i].position_) && vertex.normal_.Equals(vertices_[i].normal_))
         {
@@ -141,7 +141,7 @@ void Decal::AddVertex(const DecalVertex& vertex)
 void Decal::CalculateBoundingBox()
 {
     boundingBox_.Clear();
-    for (unsigned i = 0; i < vertices_.Size(); ++i)
+    for (auto i = 0u; i < vertices_.Size(); ++i)
         boundingBox_.Merge(vertices_[i].position_);
 }
 
@@ -333,7 +333,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
         Bone* bestBone = 0;
         float bestSize = 0.0f;
 
-        for (unsigned i = 0; i < numBones; ++i)
+        for (auto i = 0u; i < numBones; ++i)
         {
             Bone* bone = skeleton.GetBone(i);
             if (!bone->node_ || !bone->collisionMask_)
@@ -389,14 +389,14 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
         GetFaces(faces, target, subGeometry, decalFrustum, decalNormal, normalCutoff);
     else
     {
-        for (unsigned i = 0; i < numBatches; ++i)
+        for (auto i = 0u; i < numBatches; ++i)
             GetFaces(faces, target, i, decalFrustum, decalNormal, normalCutoff);
     }
 
     // Clip the acquired faces against all frustum planes
-    for (unsigned i = 0; i < NUM_FRUSTUM_PLANES; ++i)
+    for (auto i = 0u; i < NUM_FRUSTUM_PLANES; ++i)
     {
-        for (unsigned j = 0; j < faces.Size(); ++j)
+        for (auto j = 0u; j < faces.Size(); ++j)
         {
             PODVector<DecalVertex>& face = faces[j];
             if (face.Empty())
@@ -408,7 +408,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
     }
 
     // Now triangulate the resulting faces into decal vertices
-    for (unsigned i = 0; i < faces.Size(); ++i)
+    for (auto i = 0u; i < faces.Size(); ++i)
     {
         PODVector<DecalVertex>& face = faces[i];
         if (face.Size() < 3)
@@ -547,9 +547,9 @@ void DecalSet::SetDecalsAttr(const PODVector<unsigned char>& value)
             i->tangent_ = buffer.ReadVector4();
             if (skinned_)
             {
-                for (unsigned j = 0; j < 4; ++j)
+                for (auto j = 0u; j < 4; ++j)
                     i->blendWeights_[j] = buffer.ReadFloat();
-                for (unsigned j = 0; j < 4; ++j)
+                for (auto j = 0u; j < 4; ++j)
                     i->blendIndices_[j] = buffer.ReadUByte();
             }
         }
@@ -568,7 +568,7 @@ void DecalSet::SetDecalsAttr(const PODVector<unsigned char>& value)
         skinMatrices_.Resize(numBones);
         bones_.Resize(numBones);
 
-        for (unsigned i = 0; i < numBones; ++i)
+        for (auto i = 0u; i < numBones; ++i)
         {
             Bone& newBone = bones_[i];
 
@@ -715,7 +715,7 @@ void DecalSet::GetFaces(Vector<PODVector<DecalVertex> >& faces, Drawable* target
     }
 
     // For morphed models positions, normals and skinning may be in different buffers
-    for (unsigned i = 0; i < geometry->GetNumVertexBuffers(); ++i)
+    for (auto i = 0u; i < geometry->GetNumVertexBuffers(); ++i)
     {
         VertexBuffer* vb = geometry->GetVertexBuffer(i);
         if (!vb)
@@ -888,7 +888,7 @@ bool DecalSet::GetBones(Drawable* target, unsigned batchIndex, const float* blen
     const Vector<PODVector<Matrix3x4> >& geometrySkinMatrices = animatedModel->GetGeometrySkinMatrices();
     const Vector<PODVector<unsigned> >& geometryBoneMappings = animatedModel->GetGeometryBoneMappings();
 
-    for (unsigned i = 0; i < 4; ++i)
+    for (auto i = 0u; i < 4; ++i)
     {
         if (blendWeights[i] > 0.0f)
         {
@@ -1026,7 +1026,7 @@ void DecalSet::UpdateBuffers()
 
         for (List<Decal>::ConstIterator i = decals_.Begin(); i != decals_.End(); ++i)
         {
-            for (unsigned j = 0; j < i->vertices_.Size(); ++j)
+            for (auto j = 0u; j < i->vertices_.Size(); ++j)
             {
                 const DecalVertex& vertex = i->vertices_[j];
                 *vertices++ = vertex.position_.x_;
@@ -1051,7 +1051,7 @@ void DecalSet::UpdateBuffers()
                 }
             }
 
-            for (unsigned j = 0; j < i->indices_.Size(); ++j)
+            for (auto j = 0u; j < i->indices_.Size(); ++j)
                 *indices++ = i->indices_[j] + indexStart;
 
             indexStart += i->vertices_.Size();
@@ -1070,7 +1070,7 @@ void DecalSet::UpdateSkinning()
     // Use model's world transform in case a bone is missing
     const Matrix3x4& worldTransform = node_->GetWorldTransform();
 
-    for (unsigned i = 0; i < bones_.Size(); ++i)
+    for (auto i = 0u; i < bones_.Size(); ++i)
     {
         const Bone& bone = bones_[i];
         if (bone.node_)

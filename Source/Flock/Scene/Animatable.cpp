@@ -533,7 +533,7 @@ void Animatable::UpdateAttributeAnimations(float timeStep)
             finishedNames.Push(i->second_->GetAttributeInfo().name_);
     }
 
-    for (unsigned i = 0; i < finishedNames.Size(); ++i)
+    for (auto i = 0u; i < finishedNames.Size(); ++i)
         SetAttributeAnimation(finishedNames[i], 0);
 }
 

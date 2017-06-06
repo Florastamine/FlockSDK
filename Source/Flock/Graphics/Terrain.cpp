@@ -189,7 +189,7 @@ void Terrain::OnSetEnabled()
 {
     bool enabled = IsEnabledEffective();
 
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetEnabled(enabled);
@@ -268,7 +268,7 @@ bool Terrain::SetHeightMap(Image* image)
 void Terrain::SetMaterial(Material* material)
 {
     material_ = material;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetMaterial(material);
@@ -396,7 +396,7 @@ void Terrain::SetNeighbors(Terrain* north, Terrain* south, Terrain* west, Terrai
 void Terrain::SetDrawDistance(float distance)
 {
     drawDistance_ = distance;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetDrawDistance(distance);
@@ -408,7 +408,7 @@ void Terrain::SetDrawDistance(float distance)
 void Terrain::SetShadowDistance(float distance)
 {
     shadowDistance_ = distance;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetShadowDistance(distance);
@@ -420,7 +420,7 @@ void Terrain::SetShadowDistance(float distance)
 void Terrain::SetLodBias(float bias)
 {
     lodBias_ = bias;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetLodBias(bias);
@@ -432,7 +432,7 @@ void Terrain::SetLodBias(float bias)
 void Terrain::SetViewMask(unsigned mask)
 {
     viewMask_ = mask;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetViewMask(mask);
@@ -444,7 +444,7 @@ void Terrain::SetViewMask(unsigned mask)
 void Terrain::SetLightMask(unsigned mask)
 {
     lightMask_ = mask;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetLightMask(mask);
@@ -456,7 +456,7 @@ void Terrain::SetLightMask(unsigned mask)
 void Terrain::SetShadowMask(unsigned mask)
 {
     shadowMask_ = mask;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetShadowMask(mask);
@@ -468,7 +468,7 @@ void Terrain::SetShadowMask(unsigned mask)
 void Terrain::SetZoneMask(unsigned mask)
 {
     zoneMask_ = mask;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetZoneMask(mask);
@@ -480,7 +480,7 @@ void Terrain::SetZoneMask(unsigned mask)
 void Terrain::SetMaxLights(unsigned num)
 {
     maxLights_ = num;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetMaxLights(num);
@@ -492,7 +492,7 @@ void Terrain::SetMaxLights(unsigned num)
 void Terrain::SetCastShadows(bool enable)
 {
     castShadows_ = enable;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetCastShadows(enable);
@@ -504,7 +504,7 @@ void Terrain::SetCastShadows(bool enable)
 void Terrain::SetOccluder(bool enable)
 {
     occluder_ = enable;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetOccluder(enable);
@@ -516,7 +516,7 @@ void Terrain::SetOccluder(bool enable)
 void Terrain::SetOccludee(bool enable)
 {
     occludee_ = enable;
-    for (unsigned i = 0; i < patches_.Size(); ++i)
+    for (auto i = 0u; i < patches_.Size(); ++i)
     {
         if (patches_[i])
             patches_[i]->SetOccludee(enable);
@@ -932,7 +932,7 @@ void Terrain::CreateGeometry()
 
     // Keep track of which patches actually need an update
     PODVector<bool> dirtyPatches((unsigned)(numPatches_.x_ * numPatches_.y_));
-    for (unsigned i = 0; i < dirtyPatches.Size(); ++i)
+    for (auto i = 0u; i < dirtyPatches.Size(); ++i)
         dirtyPatches[i] = updateAll;
 
     patches_.Clear();
@@ -1082,7 +1082,7 @@ void Terrain::CreateGeometry()
         {
             FLOCKSDK_PROFILE(UpdateSmoothing);
 
-            for (unsigned i = 0; i < patches_.Size(); ++i)
+            for (auto i = 0u; i < patches_.Size(); ++i)
             {
                 if (dirtyPatches[i])
                 {
@@ -1110,7 +1110,7 @@ void Terrain::CreateGeometry()
             }
         }
 
-        for (unsigned i = 0; i < patches_.Size(); ++i)
+        for (auto i = 0u; i < patches_.Size(); ++i)
         {
             TerrainPatch* patch = patches_[i];
 
@@ -1154,12 +1154,12 @@ void Terrain::CreateIndexData()
        |   \|   \|      |   \ /   |
        +----+----+      +----+----+
     */
-    for (unsigned i = 0; i < numLodLevels_; ++i)
+    for (auto i = 0u; i < numLodLevels_; ++i)
     {
         unsigned combinations = (i < numLodLevels_ - 1) ? 16 : 1;
         int skip = 1 << i;
 
-        for (unsigned j = 0; j < combinations; ++j)
+        for (auto j = 0u; j < combinations; ++j)
         {
             unsigned indexStart = indices.Size();
 
@@ -1378,7 +1378,7 @@ void Terrain::CalculateLodErrors(TerrainPatch* patch)
     int xEnd = xStart + patchSize_;
     int zEnd = zStart + patchSize_;
 
-    for (unsigned i = 0; i < numLodLevels_; ++i)
+    for (auto i = 0u; i < numLodLevels_; ++i)
     {
         float maxError = 0.0f;
         int divisor = 1 << i;

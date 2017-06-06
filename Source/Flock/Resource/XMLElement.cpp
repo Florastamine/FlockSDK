@@ -441,7 +441,7 @@ bool XMLElement::SetResourceRefList(const ResourceRefList& value)
     Context* context = file_->GetContext();
 
     String str(context->GetTypeName(value.type_));
-    for (unsigned i = 0; i < value.names_.Size(); ++i)
+    for (auto i = 0u; i < value.names_.Size(); ++i)
     {
         str += ";";
         str += value.names_[i];
@@ -759,7 +759,7 @@ bool XMLElement::GetBuffer(const String& name, void* dest, unsigned size) const
         return false;
 
     unsigned char* destBytes = (unsigned char*)dest;
-    for (unsigned i = 0; i < bytes.Size(); ++i)
+    for (auto i = 0u; i < bytes.Size(); ++i)
         destBytes[i] = (unsigned char)ToInt(bytes[i]);
     return true;
 }
@@ -873,7 +873,7 @@ ResourceRefList XMLElement::GetResourceRefList() const
     {
         ret.type_ = values[0];
         ret.names_.Resize(values.Size() - 1);
-        for (unsigned i = 1; i < values.Size(); ++i)
+        for (auto i = 1u; i < values.Size(); ++i)
             ret.names_[i - 1] = values[i];
     }
 

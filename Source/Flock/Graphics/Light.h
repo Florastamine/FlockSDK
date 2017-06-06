@@ -103,7 +103,7 @@ struct FLOCKSDK_API CascadeParameters
     float GetShadowRange() const
     {
         float ret = 0.0f;
-        for (unsigned i = 0; i < MAX_CASCADE_SPLITS; ++i)
+        for (auto i = 0u; i < MAX_CASCADE_SPLITS; ++i)
             ret = Max(ret, splits_[i]);
 
         return ret;

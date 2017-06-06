@@ -164,7 +164,7 @@ struct BatchGroup : public Batch
         newInstance.distance_ = batch.distance_;
         newInstance.instancingData_ = batch.instancingData_;
 
-        for (unsigned i = 0; i < batch.numWorldTransforms_; ++i)
+        for (auto i = 0u; i < batch.numWorldTransforms_; ++i)
         {
             newInstance.worldTransform_ = &batch.worldTransform_[i];
             instances_.Push(newInstance);

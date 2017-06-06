@@ -84,7 +84,7 @@ DbResult DbConnection::Execute(const String& sql, bool useCursorEvent)
 
     unsigned numCols = (unsigned)sqlite3_column_count(pStmt);
     result.columns_.Resize(numCols);
-    for (unsigned i = 0; i < numCols; ++i)
+    for (auto i = 0u; i < numCols; ++i)
         result.columns_[i] = sqlite3_column_name(pStmt, i);
 
     bool filtered = false;
@@ -96,7 +96,7 @@ DbResult DbConnection::Execute(const String& sql, bool useCursorEvent)
         if (rc == SQLITE_ROW)
         {
             VariantVector colValues(numCols);
-            for (unsigned i = 0; i < numCols; ++i)
+            for (auto i = 0u; i < numCols; ++i)
             {
                 int type = sqlite3_column_type(pStmt, i);
                 if (type != SQLITE_NULL)

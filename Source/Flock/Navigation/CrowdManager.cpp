@@ -87,7 +87,7 @@ CrowdManager::CrowdManager(Context* context) :
 {
     // The actual buffer is allocated inside dtCrowd, we only track the number of "slots" being configured explicitly
     numAreas_.Reserve(DT_CROWD_MAX_QUERY_FILTER_TYPE);
-    for (unsigned i = 0; i < DT_CROWD_MAX_QUERY_FILTER_TYPE; ++i)
+    for (auto i = 0u; i < DT_CROWD_MAX_QUERY_FILTER_TYPE; ++i)
         numAreas_.Push(0);
 }
 
@@ -198,7 +198,7 @@ void CrowdManager::SetCrowdTarget(const Vector3& position, Node* node)
 
     PODVector<CrowdAgent*> agents = GetAgents(node, false);     // Get all crowd agent components
     Vector3 moveTarget(position);
-    for (unsigned i = 0; i < agents.Size(); ++i)
+    for (auto i = 0u; i < agents.Size(); ++i)
     {
         // Give application a chance to determine the desired crowd formation when they reach the target position
         CrowdAgent* agent = agents[i];
@@ -225,7 +225,7 @@ void CrowdManager::SetCrowdVelocity(const Vector3& velocity, Node* node)
         return;
 
     PODVector<CrowdAgent*> agents = GetAgents(node, true);      // Get only crowd agent components already in the crowd
-    for (unsigned i = 0; i < agents.Size(); ++i)
+    for (auto i = 0u; i < agents.Size(); ++i)
         agents[i]->SetTargetVelocity(velocity);
 }
 
@@ -235,7 +235,7 @@ void CrowdManager::ResetCrowdTarget(Node* node)
         return;
 
     PODVector<CrowdAgent*> agents = GetAgents(node, true);
-    for (unsigned i = 0; i < agents.Size(); ++i)
+    for (auto i = 0u; i < agents.Size(); ++i)
         agents[i]->ResetTarget();
 }
 
@@ -306,7 +306,7 @@ void CrowdManager::SetQueryFilterTypesAttr(const VariantVector& value)
             // Must loop through based on previous number of areas, the new area cost (if any) can only be set in the next attribute get/set iteration
             if (index + prevNumAreas <= value.Size())
             {
-                for (unsigned i = 0; i < prevNumAreas; ++i)
+                for (auto i = 0u; i < prevNumAreas; ++i)
                     filter->setAreaCost(i, value[index++].GetFloat());
             }
         }
@@ -462,13 +462,13 @@ VariantVector CrowdManager::GetQueryFilterTypesAttr() const
     if (crowd_)
     {
         unsigned totalNumAreas = 0;
-        for (unsigned i = 0; i < numQueryFilterTypes_; ++i)
+        for (auto i = 0u; i < numQueryFilterTypes_; ++i)
             totalNumAreas += numAreas_[i];
 
         ret.Reserve(numQueryFilterTypes_ * 3 + totalNumAreas + 1);
         ret.Push(numQueryFilterTypes_);
 
-        for (unsigned i = 0; i < numQueryFilterTypes_; ++i)
+        for (auto i = 0u; i < numQueryFilterTypes_; ++i)
         {
             const dtQueryFilter* filter = crowd_->getFilter(i);
             assert(filter);
@@ -476,7 +476,7 @@ VariantVector CrowdManager::GetQueryFilterTypesAttr() const
             ret.Push(filter->getExcludeFlags());
             ret.Push(numAreas_[i]);
 
-            for (unsigned j = 0; j < numAreas_[i]; ++j)
+            for (auto j = 0u; j < numAreas_[i]; ++j)
                 ret.Push(filter->getAreaCost(j));
         }
     }
@@ -522,7 +522,7 @@ VariantVector CrowdManager::GetObstacleAvoidanceTypesAttr() const
         ret.Reserve(numObstacleAvoidanceTypes_ * 10 + 1);
         ret.Push(numObstacleAvoidanceTypes_);
 
-        for (unsigned i = 0; i < numObstacleAvoidanceTypes_; ++i)
+        for (auto i = 0u; i < numObstacleAvoidanceTypes_; ++i)
         {
             const dtObstacleAvoidanceParams* params = crowd_->getObstacleAvoidanceParams(i);
             assert(params);
@@ -604,7 +604,7 @@ bool CrowdManager::CreateCrowd()
 
         // Re-add the existing crowd agents
         PODVector<CrowdAgent*> agents = GetAgents();
-        for (unsigned i = 0; i < agents.Size(); ++i)
+        for (auto i = 0u; i < agents.Size(); ++i)
         {
             // Keep adding until the crowd cannot take it anymore
             if (agents[i]->AddAgentToCrowd(true) == -1)

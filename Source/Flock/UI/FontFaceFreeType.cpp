@@ -141,7 +141,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     FLOCKSDK_LOGDEBUGF("Font face %s (%dpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
 
     PODVector<unsigned> charCodes(numGlyphs);
-    for (unsigned i = 0; i < numGlyphs; ++i)
+    for (auto i = 0u; i < numGlyphs; ++i)
         charCodes[i] = 0;
 
     FT_UInt glyphIndex;
@@ -187,7 +187,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     // In some fonts (Consola) it is missing
     LoadCharGlyph(32, image);
 
-    for (unsigned i = 0; i < numGlyphs; ++i)
+    for (auto i = 0u; i < numGlyphs; ++i)
     {
         unsigned charCode = charCodes[i];
         if (charCode == 0)
@@ -230,7 +230,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         }
 
         // Convert big endian to little endian
-        for (unsigned i = 0; i < kerningTableSize; i += 2)
+        for (auto i = 0u; i < kerningTableSize; i += 2)
             Swap(kerningTable[i], kerningTable[i + 1]);
         MemoryBuffer deserializer(kerningTable, (unsigned)kerningTableSize);
 
@@ -238,7 +238,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         if (version == 0)
         {
             unsigned numKerningTables = deserializer.ReadUShort();
-            for (unsigned i = 0; i < numKerningTables; ++i)
+            for (auto i = 0u; i < numKerningTables; ++i)
             {
                 unsigned short version = deserializer.ReadUShort();
                 unsigned short length = deserializer.ReadUShort();
@@ -250,7 +250,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
                     // Skip searchRange, entrySelector and rangeShift
                     deserializer.Seek((unsigned)(deserializer.GetPosition() + 3 * sizeof(unsigned short)));
 
-                    for (unsigned j = 0; j < numKerningPairs; ++j)
+                    for (auto j = 0u; j < numKerningPairs; ++j)
                     {
                         unsigned leftIndex = deserializer.ReadUShort();
                         unsigned rightIndex = deserializer.ReadUShort();
@@ -319,7 +319,7 @@ bool FontFaceFreeType::CanLoadAllGlyphs(const PODVector<unsigned>& charCodes, in
     AreaAllocator allocator(FONT_TEXTURE_MIN_SIZE, FONT_TEXTURE_MIN_SIZE, textureWidth, textureHeight);
 
     unsigned numGlyphs = charCodes.Size();
-    for (unsigned i = 0; i < numGlyphs; ++i)
+    for (auto i = 0u; i < numGlyphs; ++i)
     {
         unsigned charCode = charCodes[i];
         if (charCode == 0)

@@ -75,7 +75,7 @@ template <> void* ToluaToVector<String>(lua_State* L, int narg, void* /*def*/)
     static Vector<String> result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
-    for (unsigned i = 0; i < result.Size(); ++i)
+    for (auto i = 0u; i < result.Size(); ++i)
     {
         lua_rawgeti(L, narg, i + 1);
         result[i] = tolua_tourho3dstring(L, -1, "");
@@ -88,7 +88,7 @@ template <> int ToluaPushVector<String>(lua_State* L, void* data, const char* /*
 {
     lua_newtable(L);
     const Vector<String>& vector = *static_cast<const Vector<String>*>(data);
-    for (unsigned i = 0; i < vector.Size(); ++i)
+    for (auto i = 0u; i < vector.Size(); ++i)
     {
         tolua_pushurho3dstring(L, vector[i]);
         lua_rawseti(L, -2, i + 1);
@@ -110,7 +110,7 @@ template <> void* ToluaToPODVector<bool>(double /*overload*/, lua_State* L, int 
     static PODVector<bool> result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
-    for (unsigned i = 0; i < result.Size(); ++i)
+    for (auto i = 0u; i < result.Size(); ++i)
     {
         lua_rawgeti(L, narg, i + 1);
         result[i] = (bool)tolua_toboolean(L, -1, 0);
@@ -123,7 +123,7 @@ template <> int ToluaPushPODVector<bool>(double /*overload*/, lua_State* L, void
 {
     lua_newtable(L);
     const PODVector<bool>& vector = *static_cast<const PODVector<bool>*>(data);
-    for (unsigned i = 0; i < vector.Size(); ++i)
+    for (auto i = 0u; i < vector.Size(); ++i)
     {
         lua_pushboolean(L, vector[i]);
         lua_rawseti(L, -2, i + 1);
@@ -140,7 +140,7 @@ template <> void* ToluaToVector<SharedPtr<IndexBuffer> >(lua_State* L, int narg,
     static Vector<SharedPtr<IndexBuffer> > result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
-    for (unsigned i = 0; i < result.Size(); ++i)
+    for (auto i = 0u; i < result.Size(); ++i)
     {
         lua_rawgeti(L, narg, i + 1);    // Lua index starts from 1
         result[i] = SharedPtr<IndexBuffer>(static_cast<IndexBuffer*>(tolua_tousertype(L, -1, def)));
@@ -156,7 +156,7 @@ template <> void* ToluaToVector<SharedPtr<VertexBuffer> >(lua_State* L, int narg
     static Vector<SharedPtr<VertexBuffer> > result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
-    for (unsigned i = 0; i < result.Size(); ++i)
+    for (auto i = 0u; i < result.Size(); ++i)
     {
         lua_rawgeti(L, narg, i + 1);    // Lua index starts from 1
         result[i] = SharedPtr<VertexBuffer>(static_cast<VertexBuffer*>(tolua_tousertype(L, -1, def)));

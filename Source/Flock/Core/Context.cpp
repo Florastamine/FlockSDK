@@ -320,7 +320,7 @@ void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)
     const Vector<AttributeInfo>* baseAttributes = GetAttributes(baseType);
     if (baseAttributes)
     {
-        for (unsigned i = 0; i < baseAttributes->Size(); ++i)
+        for (auto i = 0u; i < baseAttributes->Size(); ++i)
         {
             const AttributeInfo& attr = baseAttributes->At(i);
             attributes_[derivedType].Push(attr);

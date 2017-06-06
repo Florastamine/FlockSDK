@@ -202,7 +202,7 @@ void LuaScript::RemoveAllEventHandlers()
 void LuaScript::RemoveEventHandlersExcept(const Vector<String>& exceptionNames)
 {
     PODVector<StringHash> exceptionTypes(exceptionNames.Size());
-    for (unsigned i = 0; i < exceptionTypes.Size(); ++i)
+    for (auto i = 0u; i < exceptionTypes.Size(); ++i)
         exceptionTypes[i] = StringHash(exceptionNames[i]);
 
     eventInvoker_->UnsubscribeFromAllEventsExcept(exceptionTypes, true);
@@ -480,7 +480,7 @@ bool LuaScript::PushLuaFunction(lua_State* L, const String& functionName)
 
     if (splitNames.Size() > 1)
     {
-        for (unsigned i = 0; i < splitNames.Size() - 1; ++i)
+        for (auto i = 0u; i < splitNames.Size() - 1; ++i)
         {
             if (i)
             {

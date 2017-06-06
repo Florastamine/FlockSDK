@@ -53,7 +53,7 @@ struct DecalVertex
         position_(position),
         normal_(normal)
     {
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             blendWeights_[i] = blendWeights[i];
             blendIndices_[i] = blendIndices[i];

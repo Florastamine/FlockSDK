@@ -179,7 +179,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
                 for (int i = 0; i < tile->header->polyCount; ++i)
                 {
                     dtPoly* poly = tile->polys + i;
-                    for (unsigned j = 0; j < poly->vertCount; ++j)
+                    for (auto j = 0u; j < poly->vertCount; ++j)
                     {
                         debug->AddLine(
                             worldTransform * *reinterpret_cast<const Vector3*>(&tile->verts[poly->verts[j] * 3]),
@@ -201,7 +201,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
         {
             PODVector<Node*> connections;
             scene->GetChildrenWithComponent<OffMeshConnection>(connections, true);
-            for (unsigned i = 0; i < connections.Size(); ++i)
+            for (auto i = 0u; i < connections.Size(); ++i)
             {
                 OffMeshConnection* connection = connections[i]->GetComponent<OffMeshConnection>();
                 if (connection && connection->IsEnabledEffective())
@@ -212,7 +212,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
         // Draw NavArea components
         if (drawNavAreas_)
         {
-            for (unsigned i = 0; i < areas_.Size(); ++i)
+            for (auto i = 0u; i < areas_.Size(); ++i)
             {
                 NavArea* area = areas_[i];
                 if (area && area->IsEnabledEffective())
@@ -345,7 +345,7 @@ bool NavigationMesh::Build()
         return true; // Nothing to do
 
     // Build the combined bounding box
-    for (unsigned i = 0; i < geometryList.Size(); ++i)
+    for (auto i = 0u; i < geometryList.Size(); ++i)
         boundingBox_.Merge(geometryList[i].boundingBox_);
 
     // Expand bounding box by padding
@@ -518,7 +518,7 @@ void NavigationMesh::FindPath(PODVector<Vector3>& dest, const Vector3& start, co
     FindPath(navPathPoints, start, end, extents, filter);
 
     dest.Clear();
-    for (unsigned i = 0; i < navPathPoints.Size(); ++i)
+    for (auto i = 0u; i < navPathPoints.Size(); ++i)
         dest.Push(navPathPoints[i].position_);
 }
 
@@ -574,7 +574,7 @@ void NavigationMesh::FindPath(PODVector<NavigationPathPoint>& dest, const Vector
         // Walk through all NavAreas and find nearest
         unsigned nearestNavAreaID = 0;       // 0 is the default nav area ID
         float nearestDistance = M_LARGE_VALUE;
-        for (unsigned j = 0; j < areas_.Size(); j++)
+        for (auto j = 0u; j < areas_.Size(); j++)
         {
             NavArea* area = areas_[j].Get();
             if (area && area->IsEnabledEffective())
@@ -849,7 +849,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     node_->GetComponents<Navigable>(navigables, true);
 
     HashSet<Node*> processedNodes;
-    for (unsigned i = 0; i < navigables.Size(); ++i)
+    for (auto i = 0u; i < navigables.Size(); ++i)
     {
         if (navigables[i]->IsEnabledEffective())
             CollectGeometries(geometryList, navigables[i]->GetNode(), processedNodes, navigables[i]->IsRecursive());
@@ -860,7 +860,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     PODVector<OffMeshConnection*> connections;
     node_->GetComponents<OffMeshConnection>(connections, true);
 
-    for (unsigned i = 0; i < connections.Size(); ++i)
+    for (auto i = 0u; i < connections.Size(); ++i)
     {
         OffMeshConnection* connection = connections[i];
         if (connection->IsEnabledEffective() && connection->GetEndPoint())
@@ -879,7 +879,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     PODVector<NavArea*> navAreas;
     node_->GetComponents<NavArea>(navAreas, true);
     areas_.Clear();
-    for (unsigned i = 0; i < navAreas.Size(); ++i)
+    for (auto i = 0u; i < navAreas.Size(); ++i)
     {
         NavArea* area = navAreas[i];
         if (area->IsEnabledEffective())
@@ -912,7 +912,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     node->GetComponents<CollisionShape>(collisionShapes);
     bool collisionShapeFound = false;
 
-    for (unsigned i = 0; i < collisionShapes.Size(); ++i)
+    for (auto i = 0u; i < collisionShapes.Size(); ++i)
     {
         CollisionShape* shape = collisionShapes[i];
         if (!shape->IsEnabledEffective())
@@ -937,7 +937,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
         PODVector<Drawable*> drawables;
         node->GetDerivedComponents<Drawable>(drawables);
 
-        for (unsigned i = 0; i < drawables.Size(); ++i)
+        for (auto i = 0u; i < drawables.Size(); ++i)
         {
             /// \todo Evaluate whether should handle other types. Now StaticModel & TerrainPatch are supported, others skipped
             Drawable* drawable = drawables[i];
@@ -964,7 +964,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     if (recursive)
     {
         const Vector<SharedPtr<Node> >& children = node->GetChildren();
-        for (unsigned i = 0; i < children.Size(); ++i)
+        for (auto i = 0u; i < children.Size(); ++i)
             CollectGeometries(geometryList, children[i], processedNodes, recursive);
     }
 }
@@ -973,7 +973,7 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
 {
     Matrix3x4 inverse = node_->GetWorldTransform().Inverse();
 
-    for (unsigned i = 0; i < geometryList.Size(); ++i)
+    for (auto i = 0u; i < geometryList.Size(); ++i)
     {
         if (box.IsInsideFast(geometryList[i].boundingBox_) != OUTSIDE)
         {
@@ -1015,7 +1015,7 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
                             continue;
 
                         unsigned lodLevel = shape->GetLodLevel();
-                        for (unsigned j = 0; j < model->GetNumGeometries(); ++j)
+                        for (auto j = 0u; j < model->GetNumGeometries(); ++j)
                             AddTriMeshGeometry(build, model->GetGeometry(j, lodLevel), transform);
                     }
                     break;
@@ -1030,10 +1030,10 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
                         unsigned numIndices = data->indexCount_;
                         unsigned destVertexStart = build->vertices_.Size();
 
-                        for (unsigned j = 0; j < numVertices; ++j)
+                        for (auto j = 0u; j < numVertices; ++j)
                             build->vertices_.Push(transform * data->vertexData_[j]);
 
-                        for (unsigned j = 0; j < numIndices; ++j)
+                        for (auto j = 0u; j < numIndices; ++j)
                             build->indices_.Push(data->indexData_[j] + destVertexStart);
                     }
                     break;
@@ -1056,7 +1056,7 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
                             4, 0, 3, 4, 3, 7, 1, 0, 4, 1, 4, 5
                         };
 
-                        for (unsigned j = 0; j < 36; ++j)
+                        for (auto j = 0u; j < 36; ++j)
                             build->indices_.Push(indices[j] + destVertexStart);
                     }
                     break;
@@ -1072,7 +1072,7 @@ void NavigationMesh::GetTileGeometry(NavBuildData* build, Vector<NavigationGeome
             {
                 const Vector<SourceBatch>& batches = drawable->GetBatches();
 
-                for (unsigned j = 0; j < batches.Size(); ++j)
+                for (auto j = 0u; j < batches.Size(); ++j)
                     AddTriMeshGeometry(build, drawable->GetLodGeometry(j, geometryList[i].lodLevel_), transform);
             }
         }
@@ -1236,7 +1236,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     }
 
     // Mark area volumes
-    for (unsigned i = 0; i < build.navAreas_.Size(); ++i)
+    for (auto i = 0u; i < build.navAreas_.Size(); ++i)
         rcMarkBoxArea(build.ctx_, &build.navAreas_[i].bounds_.min_.x_, &build.navAreas_[i].bounds_.max_.x_,
             build.navAreas_[i].areaID_, *build.compactHeightField_);
 

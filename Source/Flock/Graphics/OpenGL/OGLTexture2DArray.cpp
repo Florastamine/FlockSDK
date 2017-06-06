@@ -73,7 +73,7 @@ void Texture2DArray::Release()
 
         if (!graphics_->IsDeviceLost())
         {
-            for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+            for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
             {
                 if (graphics_->GetTexture(i) == this)
                     graphics_->SetTexture(i, 0);
@@ -219,7 +219,7 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
         unsigned format = 0;
 
         // Discard unnecessary mip levels
-        for (unsigned i = 0; i < mipsToSkip_[quality]; ++i)
+        for (auto i = 0u; i < mipsToSkip_[quality]; ++i)
         {
             mipImage = image->GetNextLevel(); image = mipImage;
             levelData = image->GetData();
@@ -273,7 +273,7 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
             }
         }
 
-        for (unsigned i = 0; i < levels_; ++i)
+        for (auto i = 0u; i < levels_; ++i)
         {
             SetData(layer, i, 0, 0, levelWidth, levelHeight, levelData);
             memoryUse += levelWidth * levelHeight * components;
@@ -329,7 +329,7 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
             }
         }
 
-        for (unsigned i = 0; i < levels_ && i < levels - mipsToSkip; ++i)
+        for (auto i = 0u; i < levels_ && i < levels - mipsToSkip; ++i)
         {
             CompressedLevel level = image->GetCompressedLevel(i + mipsToSkip);
             if (!needDecompress)
@@ -350,7 +350,7 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 
     layerMemoryUse_[layer] = memoryUse;
     unsigned totalMemoryUse = sizeof(Texture2DArray) + layerMemoryUse_.Capacity() * sizeof(unsigned);
-    for (unsigned i = 0; i < layers_; ++i)
+    for (auto i = 0u; i < layers_; ++i)
         totalMemoryUse += layerMemoryUse_[i];
     SetMemoryUse(totalMemoryUse);
 

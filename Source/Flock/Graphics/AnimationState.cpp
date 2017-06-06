@@ -226,7 +226,7 @@ void AnimationState::SetBoneWeight(unsigned index, float weight, bool recursive)
         if (boneNode)
         {
             const Vector<SharedPtr<Node> >& children = boneNode->GetChildren();
-            for (unsigned i = 0; i < children.Size(); ++i)
+            for (auto i = 0u; i < children.Size(); ++i)
             {
                 unsigned childTrackIndex = GetTrackIndex(children[i]);
                 if (childTrackIndex != M_MAX_UNSIGNED)
@@ -407,7 +407,7 @@ float AnimationState::GetBoneWeight(StringHash nameHash) const
 
 unsigned AnimationState::GetTrackIndex(const String& name) const
 {
-    for (unsigned i = 0; i < stateTracks_.Size(); ++i)
+    for (auto i = 0u; i < stateTracks_.Size(); ++i)
     {
         Node* node = stateTracks_[i].node_;
         if (node && node->GetName() == name)
@@ -419,7 +419,7 @@ unsigned AnimationState::GetTrackIndex(const String& name) const
 
 unsigned AnimationState::GetTrackIndex(Node* node) const
 {
-    for (unsigned i = 0; i < stateTracks_.Size(); ++i)
+    for (auto i = 0u; i < stateTracks_.Size(); ++i)
     {
         if (stateTracks_[i].node_ == node)
             return i;
@@ -430,7 +430,7 @@ unsigned AnimationState::GetTrackIndex(Node* node) const
 
 unsigned AnimationState::GetTrackIndex(StringHash nameHash) const
 {
-    for (unsigned i = 0; i < stateTracks_.Size(); ++i)
+    for (auto i = 0u; i < stateTracks_.Size(); ++i)
     {
         Node* node = stateTracks_[i].node_;
         if (node && node->GetNameHash() == nameHash)

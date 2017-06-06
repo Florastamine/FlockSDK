@@ -953,12 +953,12 @@ void FlipBlockVertical(unsigned char* dest, unsigned char* src, CompressedFormat
     switch (format)
     {
     case CF_RGBA:
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
             dest[i] = src[i];
         break;
 
     case CF_DXT1:
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i] = src[i];
             dest[i + 4] = src[7 - i];
@@ -966,12 +966,12 @@ void FlipBlockVertical(unsigned char* dest, unsigned char* src, CompressedFormat
         break;
 
     case CF_DXT3:
-        for (unsigned i = 0; i < 8; i += 2)
+        for (auto i = 0u; i < 8; i += 2)
         {
             dest[i] = src[6 - i];
             dest[i + 1] = src[6 - i + 1];
         }
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i + 8] = src[i + 8];
             dest[i + 12] = src[15 - i];
@@ -993,7 +993,7 @@ void FlipBlockVertical(unsigned char* dest, unsigned char* src, CompressedFormat
             dest[6] = (unsigned char)((b1 >> 8) & 0xff);
             dest[7] = (unsigned char)((b1 >> 16) & 0xff);
         }
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i + 8] = src[i + 8];
             dest[i + 12] = src[15 - i];
@@ -1023,7 +1023,7 @@ void FlipBlockHorizontal(unsigned char* dest, unsigned char* src, CompressedForm
     switch (format)
     {
     case CF_DXT1:
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i] = src[i];
             dest[i + 4] = FlipDXT1Horizontal(src[i + 4]);
@@ -1031,12 +1031,12 @@ void FlipBlockHorizontal(unsigned char* dest, unsigned char* src, CompressedForm
         break;
 
     case CF_DXT3:
-        for (unsigned i = 0; i < 8; i += 2)
+        for (auto i = 0u; i < 8; i += 2)
         {
             dest[i] = (unsigned char)(((src[i + 1] & 0xf0) >> 4) | ((src[i + 1] & 0xf) << 4));
             dest[i + 1] = (unsigned char)(((src[i] & 0xf0) >> 4) | ((src[i] & 0xf) << 4));
         }
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i + 8] = src[i + 8];
             dest[i + 12] = FlipDXT1Horizontal(src[i + 12]);
@@ -1058,7 +1058,7 @@ void FlipBlockHorizontal(unsigned char* dest, unsigned char* src, CompressedForm
             dest[6] = (unsigned char)((b2 >> 8) & 0xff);
             dest[7] = (unsigned char)((b2 >> 16) & 0xff);
         }
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             dest[i + 8] = src[i + 8];
             dest[i + 12] = FlipDXT1Horizontal(src[i + 12]);

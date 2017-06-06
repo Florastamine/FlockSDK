@@ -169,7 +169,7 @@ String::String(char value, unsigned length) :
     buffer_(&endZero)
 {
     Resize(length);
-    for (unsigned i = 0; i < length; ++i)
+    for (auto i = 0u; i < length; ++i)
         buffer_[i] = value;
 }
 
@@ -227,7 +227,7 @@ void String::Replace(char replaceThis, char replaceWith, bool caseSensitive)
 {
     if (caseSensitive)
     {
-        for (unsigned i = 0; i < length_; ++i)
+        for (auto i = 0u; i < length_; ++i)
         {
             if (buffer_[i] == replaceThis)
                 buffer_[i] = replaceWith;
@@ -236,7 +236,7 @@ void String::Replace(char replaceThis, char replaceWith, bool caseSensitive)
     else
     {
         replaceThis = (char)tolower(replaceThis);
-        for (unsigned i = 0; i < length_; ++i)
+        for (auto i = 0u; i < length_; ++i)
         {
             if (tolower(buffer_[i]) == replaceThis)
                 buffer_[i] = replaceWith;
@@ -539,7 +539,7 @@ String String::Trimmed() const
 String String::ToLower() const
 {
     String ret(*this);
-    for (unsigned i = 0; i < ret.length_; ++i)
+    for (auto i = 0u; i < ret.length_; ++i)
         ret[i] = (char)tolower(buffer_[i]);
 
     return ret;
@@ -548,7 +548,7 @@ String String::ToLower() const
 String String::ToUpper() const
 {
     String ret(*this);
-    for (unsigned i = 0; i < ret.length_; ++i)
+    for (auto i = 0u; i < ret.length_; ++i)
         ret[i] = (char)toupper(buffer_[i]);
 
     return ret;
@@ -1065,7 +1065,7 @@ String String::Joined(const Vector<String>& subStrings, const String& glue)
         return String();
 
     String joinedString(subStrings[0]);
-    for (unsigned i = 1; i < subStrings.Size(); ++i)
+    for (auto i = 1u; i < subStrings.Size(); ++i)
         joinedString.Append(glue).Append(subStrings[i]);
 
     return joinedString;

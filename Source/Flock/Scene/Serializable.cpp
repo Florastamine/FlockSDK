@@ -42,7 +42,7 @@ static unsigned RemapAttributeIndex(const Vector<AttributeInfo>* attributes, con
     if (!attributes)
         return netAttrIndex; // Could not remap
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         // Compare either the accessor or offset to avoid name string compare
@@ -285,7 +285,7 @@ bool Serializable::Load(Deserializer& source, bool setInstanceDefault)
     if (!attributes)
         return true;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!(attr.mode_ & AM_FILE))
@@ -315,7 +315,7 @@ bool Serializable::Save(Serializer& dest) const
 
     Variant value;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!(attr.mode_ & AM_FILE) || (attr.mode_ & AM_FILEREADONLY) == AM_FILEREADONLY)
@@ -520,7 +520,7 @@ bool Serializable::SaveXML(XMLElement& dest) const
 
     Variant value;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!(attr.mode_ & AM_FILE) || (attr.mode_ & AM_FILEREADONLY) == AM_FILEREADONLY)
@@ -557,7 +557,7 @@ bool Serializable::SaveJSON(JSONValue& dest) const
     Variant value;
     JSONValue attributesValue;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!(attr.mode_ & AM_FILE) || (attr.mode_ & AM_FILEREADONLY) == AM_FILEREADONLY)
@@ -655,7 +655,7 @@ void Serializable::ResetToDefault()
     if (!attributes)
         return;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (attr.mode_ & (AM_NOEDIT | AM_NODEID | AM_COMPONENTID | AM_NODEIDVECTOR))
@@ -697,7 +697,7 @@ void Serializable::SetInterceptNetworkUpdate(const String& attributeName, bool e
     if (!attributes)
         return;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!attr.name_.Compare(attributeName, true))
@@ -731,7 +731,7 @@ void Serializable::AllocateNetworkState()
         networkState_->previousValues_.Resize(numAttributes);
 
         // Copy the default attribute values to the previous state as a starting point
-        for (unsigned i = 0; i < numAttributes; ++i)
+        for (auto i = 0u; i < numAttributes; ++i)
             networkState_->previousValues_[i] = networkAttributes->At(i).defaultValue_;
     }
 }
@@ -752,7 +752,7 @@ void Serializable::WriteInitialDeltaUpdate(Serializer& dest, unsigned char timeS
     DirtyBits attributeBits;
 
     // Compare against defaults
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (networkState_->currentValues_[i] != attr.defaultValue_)
@@ -763,7 +763,7 @@ void Serializable::WriteInitialDeltaUpdate(Serializer& dest, unsigned char timeS
     dest.WriteUByte(timeStamp);
     dest.Write(attributeBits.data_, (numAttributes + 7) >> 3);
 
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         if (attributeBits.IsSet(i))
             dest.WriteVariantData(networkState_->currentValues_[i]);
@@ -789,7 +789,7 @@ void Serializable::WriteDeltaUpdate(Serializer& dest, const DirtyBits& attribute
     dest.WriteUByte(timeStamp);
     dest.Write(attributeBits.data_, (numAttributes + 7) >> 3);
 
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         if (attributeBits.IsSet(i))
             dest.WriteVariantData(networkState_->currentValues_[i]);
@@ -812,7 +812,7 @@ void Serializable::WriteLatestDataUpdate(Serializer& dest, unsigned char timeSta
 
     dest.WriteUByte(timeStamp);
 
-    for (unsigned i = 0; i < numAttributes; ++i)
+    for (auto i = 0u; i < numAttributes; ++i)
     {
         if (attributes->At(i).mode_ & AM_LATESTDATA)
             dest.WriteVariantData(networkState_->currentValues_[i]);
@@ -833,7 +833,7 @@ bool Serializable::ReadDeltaUpdate(Deserializer& source)
     unsigned char timeStamp = source.ReadUByte();
     source.Read(attributeBits.data_, (numAttributes + 7) >> 3);
 
-    for (unsigned i = 0; i < numAttributes && !source.IsEof(); ++i)
+    for (auto i = 0u; i < numAttributes && !source.IsEof(); ++i)
     {
         if (attributeBits.IsSet(i))
         {
@@ -873,7 +873,7 @@ bool Serializable::ReadLatestDataUpdate(Deserializer& source)
     unsigned long long interceptMask = networkState_ ? networkState_->interceptMask_ : 0;
     unsigned char timeStamp = source.ReadUByte();
 
-    for (unsigned i = 0; i < numAttributes && !source.IsEof(); ++i)
+    for (auto i = 0u; i < numAttributes && !source.IsEof(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (attr.mode_ & AM_LATESTDATA)
@@ -1008,7 +1008,7 @@ bool Serializable::GetInterceptNetworkUpdate(const String& attributeName) const
 
     unsigned long long interceptMask = networkState_ ? networkState_->interceptMask_ : 0;
 
-    for (unsigned i = 0; i < attributes->Size(); ++i)
+    for (auto i = 0u; i < attributes->Size(); ++i)
     {
         const AttributeInfo& attr = attributes->At(i);
         if (!attr.name_.Compare(attributeName, true))

@@ -104,7 +104,7 @@ bool ValueAnimationInfo::SetTime(float time)
             // member variable cannot be accessed
             WeakPtr<Object> targetWeak(target_);
 
-            for (unsigned i = 0; i < eventFrames.Size(); ++i)
+            for (auto i = 0u; i < eventFrames.Size(); ++i)
                 target_->SendEvent(eventFrames[i]->eventType_, const_cast<VariantMap&>(eventFrames[i]->eventData_));
 
             // Break immediately if target expired due to event

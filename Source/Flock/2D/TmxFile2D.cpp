@@ -215,7 +215,7 @@ bool TmxObjectGroup2D::Load(const XMLElement& element, const TileMapInfo2D& info
 
                 object->points_.Resize(points.Size());
 
-                for (unsigned i = 0; i < points.Size(); ++i)
+                for (auto i = 0u; i < points.Size(); ++i)
                 {
                     points[i].Replace(',', ' ');
                     Vector2 point = position + ToVector2(points[i]);
@@ -298,7 +298,7 @@ TmxFile2D::TmxFile2D(Context* context) :
 
 TmxFile2D::~TmxFile2D()
 {
-    for (unsigned i = 0; i < layers_.Size(); ++i)
+    for (auto i = 0u; i < layers_.Size(); ++i)
         delete layers_[i];
 }
 
@@ -398,7 +398,7 @@ bool TmxFile2D::EndLoad()
     info_.tileWidth_ = rootElem.GetFloat("tilewidth") * PIXEL_SIZE;
     info_.tileHeight_ = rootElem.GetFloat("tileheight") * PIXEL_SIZE;
 
-    for (unsigned i = 0; i < layers_.Size(); ++i)
+    for (auto i = 0u; i < layers_.Size(); ++i)
         delete layers_[i];
     layers_.Clear();
 

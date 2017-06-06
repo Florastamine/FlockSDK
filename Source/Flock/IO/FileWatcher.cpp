@@ -124,7 +124,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
             Vector<String> subDirs;
             fileSystem_->ScanDir(subDirs, pathName, "*", SCAN_DIRS, true);
 
-            for (unsigned i = 0; i < subDirs.Size(); ++i)
+            for (auto i = 0u; i < subDirs.Size(); ++i)
             {
                 String subDirFullPath = AddTrailingSlash(path_ + subDirs[i]);
 

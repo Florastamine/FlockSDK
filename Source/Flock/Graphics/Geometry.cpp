@@ -199,7 +199,7 @@ unsigned short Geometry::GetBufferHash() const
 {
     unsigned short hash = 0;
 
-    for (unsigned i = 0; i < vertexBuffers_.Size(); ++i)
+    for (auto i = 0u; i < vertexBuffers_.Size(); ++i)
     {
         VertexBuffer* vBuf = vertexBuffers_[i];
         hash += *((unsigned short*)&vBuf);

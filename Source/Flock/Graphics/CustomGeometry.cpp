@@ -101,7 +101,7 @@ void CustomGeometry::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQ
             {
                 distance = M_INFINITY;
 
-                for (unsigned i = 0; i < batches_.Size(); ++i)
+                for (auto i = 0u; i < batches_.Size(); ++i)
                 {
                     Geometry* geometry = batches_[i].geometry_;
                     if (geometry)
@@ -146,7 +146,7 @@ unsigned CustomGeometry::GetNumOccluderTriangles()
 {
     unsigned triangles = 0;
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = GetLodGeometry(i, 0);
         if (!geometry)
@@ -167,7 +167,7 @@ bool CustomGeometry::DrawOcclusion(OcclusionBuffer* buffer)
 {
     bool success = true;
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = GetLodGeometry(i, 0);
         if (!geometry)
@@ -222,7 +222,7 @@ void CustomGeometry::SetNumGeometries(unsigned num)
     primitiveTypes_.Resize(num);
     vertices_.Resize(num);
 
-    for (unsigned i = 0; i < geometries_.Size(); ++i)
+    for (auto i = 0u; i < geometries_.Size(); ++i)
     {
         if (!geometries_[i])
             geometries_[i] = new Geometry(context_);
@@ -333,11 +333,11 @@ void CustomGeometry::Commit()
     unsigned totalVertices = 0;
     boundingBox_.Clear();
 
-    for (unsigned i = 0; i < vertices_.Size(); ++i)
+    for (auto i = 0u; i < vertices_.Size(); ++i)
     {
         totalVertices += vertices_[i].Size();
 
-        for (unsigned j = 0; j < vertices_[i].Size(); ++j)
+        for (auto j = 0u; j < vertices_[i].Size(); ++j)
             boundingBox_.Merge(vertices_[i][j].position_);
     }
 
@@ -356,11 +356,11 @@ void CustomGeometry::Commit()
         {
             unsigned vertexStart = 0;
 
-            for (unsigned i = 0; i < vertices_.Size(); ++i)
+            for (auto i = 0u; i < vertices_.Size(); ++i)
             {
                 unsigned vertexCount = 0;
 
-                for (unsigned j = 0; j < vertices_[i].Size(); ++j)
+                for (auto j = 0u; j < vertices_[i].Size(); ++j)
                 {
                     *((Vector3*)dest) = vertices_[i][j].position_;
                     dest += sizeof(Vector3);
@@ -401,7 +401,7 @@ void CustomGeometry::Commit()
     }
     else
     {
-        for (unsigned i = 0; i < geometries_.Size(); ++i)
+        for (auto i = 0u; i < geometries_.Size(); ++i)
         {
             geometries_[i]->SetVertexBuffer(0, vertexBuffer_);
             geometries_[i]->SetDrawRange(primitiveTypes_[i], 0, 0, 0, 0);
@@ -413,7 +413,7 @@ void CustomGeometry::Commit()
 
 void CustomGeometry::SetMaterial(Material* material)
 {
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         batches_[i].material_ = material;
 
     MarkNetworkUpdate();
@@ -458,13 +458,13 @@ void CustomGeometry::SetGeometryDataAttr(const PODVector<unsigned char>& value)
     SetNumGeometries(buffer.ReadVLE());
     elementMask_ = buffer.ReadUInt();
 
-    for (unsigned i = 0; i < geometries_.Size(); ++i)
+    for (auto i = 0u; i < geometries_.Size(); ++i)
     {
         unsigned numVertices = buffer.ReadVLE();
         vertices_[i].Resize(numVertices);
         primitiveTypes_[i] = (PrimitiveType)buffer.ReadUByte();
 
-        for (unsigned j = 0; j < numVertices; ++j)
+        for (auto j = 0u; j < numVertices; ++j)
         {
             if (elementMask_ & MASK_POSITION)
                 vertices_[i][j].position_ = buffer.ReadVector3();
@@ -485,7 +485,7 @@ void CustomGeometry::SetGeometryDataAttr(const PODVector<unsigned char>& value)
 void CustomGeometry::SetMaterialsAttr(const ResourceRefList& value)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
-    for (unsigned i = 0; i < value.names_.Size(); ++i)
+    for (auto i = 0u; i < value.names_.Size(); ++i)
         SetMaterial(i, cache->GetResource<Material>(value.names_[i]));
 }
 
@@ -496,13 +496,13 @@ PODVector<unsigned char> CustomGeometry::GetGeometryDataAttr() const
     ret.WriteVLE(geometries_.Size());
     ret.WriteUInt(elementMask_);
 
-    for (unsigned i = 0; i < geometries_.Size(); ++i)
+    for (auto i = 0u; i < geometries_.Size(); ++i)
     {
         unsigned numVertices = vertices_[i].Size();
         ret.WriteVLE(numVertices);
         ret.WriteUByte(primitiveTypes_[i]);
 
-        for (unsigned j = 0; j < numVertices; ++j)
+        for (auto j = 0u; j < numVertices; ++j)
         {
             if (elementMask_ & MASK_POSITION)
                 ret.WriteVector3(vertices_[i][j].position_);
@@ -523,7 +523,7 @@ PODVector<unsigned char> CustomGeometry::GetGeometryDataAttr() const
 const ResourceRefList& CustomGeometry::GetMaterialsAttr() const
 {
     materialsAttr_.names_.Resize(batches_.Size());
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         materialsAttr_.names_[i] = GetResourceName(batches_[i].material_);
 
     return materialsAttr_;

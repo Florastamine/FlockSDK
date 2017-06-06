@@ -451,7 +451,7 @@ void AnimatedSprite2D::UpdateSourceBatchesSpriter()
     Vertex2D vertex3;
 
     const PODVector<Spriter::SpatialTimelineKey*>& timelineKeys = spriterInstance_->GetTimelineKeys();
-    for (unsigned i = 0; i < timelineKeys.Size(); ++i)
+    for (auto i = 0u; i < timelineKeys.Size(); ++i)
     {
         if (timelineKeys[i]->GetObjectType() != Spriter::SPRITE)
             continue;

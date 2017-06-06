@@ -147,7 +147,7 @@ bool AreaAllocator::Allocate(int width, int height, int& x, int& y)
     else
     {
         // Remove the reserved area from all free areas
-        for (unsigned i = 0; i < freeAreas_.Size();)
+        for (auto i = 0u; i < freeAreas_.Size();)
         {
             if (SplitRect(i, reserved))
                 freeAreas_.Erase(i);
@@ -207,7 +207,7 @@ bool AreaAllocator::SplitRect(unsigned freeAreaIndex, const IntRect& reserve)
 void AreaAllocator::Cleanup()
 {
     // Remove rects which are contained within another rect
-    for (unsigned i = 0; i < freeAreas_.Size();)
+    for (auto i = 0u; i < freeAreas_.Size();)
     {
         bool erased = false;
         for (unsigned j = i + 1; j < freeAreas_.Size();)

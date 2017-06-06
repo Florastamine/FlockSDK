@@ -79,7 +79,7 @@ void RenderSurface::OnDeviceLost()
     if (!graphics)
         return;
 
-    for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
+    for (auto i = 0u; i < MAX_RENDERTARGETS; ++i)
     {
         if (graphics->GetRenderTarget(i) == this)
             graphics->ResetRenderTarget(i);
@@ -102,7 +102,7 @@ void RenderSurface::Release()
 
     if (!graphics->IsDeviceLost())
     {
-        for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
+        for (auto i = 0u; i < MAX_RENDERTARGETS; ++i)
         {
             if (graphics->GetRenderTarget(i) == this)
                 graphics->ResetRenderTarget(i);

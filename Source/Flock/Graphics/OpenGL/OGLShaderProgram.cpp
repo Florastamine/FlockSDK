@@ -46,7 +46,7 @@ static const char* shaderParameterGroups[] = {
 
 static unsigned NumberPostfix(const String& str)
 {
-    for (unsigned i = 0; i < str.Length(); ++i)
+    for (auto i = 0u; i < str.Length(); ++i)
     {
         if (IsDigit(str[i]))
             return ToUInt(str.CString() + i);
@@ -65,9 +65,9 @@ ShaderProgram::ShaderProgram(Graphics* graphics, ShaderVariation* vertexShader, 
     usedVertexAttributes_(0),
     frameNumber_(0)
 {
-    for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+    for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
         useTextureUnit_[i] = false;
-    for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
+    for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
         parameterSources_[i] = (const void*)M_MAX_UNSIGNED;
 }
 
@@ -107,9 +107,9 @@ void ShaderProgram::Release()
         vertexAttributes_.Clear();
         usedVertexAttributes_ = 0;
 
-        for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
+        for (auto i = 0u; i < MAX_TEXTURE_UNITS; ++i)
             useTextureUnit_[i] = false;
-        for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
+        for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
             constantBuffers_[i].Reset();
     }
 }
@@ -209,7 +209,7 @@ bool ShaderProgram::Link()
             unsigned group = M_MAX_UNSIGNED;
 
             // Try to recognize the use of the buffer from its name
-            for (unsigned j = 0; j < MAX_SHADER_PARAMETER_GROUPS; ++j)
+            for (auto j = 0u; j < MAX_SHADER_PARAMETER_GROUPS; ++j)
             {
                 if (name.Contains(shaderParameterGroups[j], false))
                 {
@@ -349,7 +349,7 @@ bool ShaderProgram::NeedParameterUpdate(ShaderParameterGroup group, const void* 
     // If global framenumber has changed, invalidate all per-program parameter sources now
     if (globalFrameNumber != frameNumber_)
     {
-        for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
+        for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
             parameterSources_[i] = (const void*)M_MAX_UNSIGNED;
         frameNumber_ = globalFrameNumber;
     }
@@ -392,7 +392,7 @@ void ShaderProgram::ClearParameterSources()
     if (!globalFrameNumber)
         ++globalFrameNumber;
 
-    for (unsigned i = 0; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
+    for (auto i = 0u; i < MAX_SHADER_PARAMETER_GROUPS; ++i)
         globalParameterSources[i] = (const void*)M_MAX_UNSIGNED;
 }
 

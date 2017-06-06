@@ -119,7 +119,7 @@ int DoSystemRun(const String& fileName, const Vector<String>& arguments)
         fixedFileName += ".exe";
 
     String commandLine = "\"" + fixedFileName + "\"";
-    for (unsigned i = 0; i < arguments.Size(); ++i)
+    for (auto i = 0u; i < arguments.Size(); ++i)
         commandLine += " " + arguments[i];
 
     STARTUPINFOW startupInfo;
@@ -145,7 +145,7 @@ int DoSystemRun(const String& fileName, const Vector<String>& arguments)
     {
         PODVector<const char*> argPtrs;
         argPtrs.Push(fixedFileName.CString());
-        for (unsigned i = 0; i < arguments.Size(); ++i)
+        for (auto i = 0u; i < arguments.Size(); ++i)
             argPtrs.Push(arguments[i].CString());
         argPtrs.Push(0);
 

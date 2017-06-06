@@ -90,7 +90,7 @@ static void ToJSONValue(JSONValue& jsonValue, const rapidjson::Value& rapidjsonV
     case kArrayType:
         {
             jsonValue.Resize(rapidjsonValue.Size());
-            for (unsigned i = 0; i < rapidjsonValue.Size(); ++i)
+            for (auto i = 0u; i < rapidjsonValue.Size(); ++i)
             {
                 ToJSONValue(jsonValue[i], rapidjsonValue[i]);
             }
@@ -183,7 +183,7 @@ static void ToRapidjsonValue(rapidjson::Value& rapidjsonValue, const JSONValue& 
             rapidjsonValue.SetArray();
             rapidjsonValue.Reserve(jsonArray.Size(), allocator);
 
-            for (unsigned i = 0; i < jsonArray.Size(); ++i)
+            for (auto i = 0u; i < jsonArray.Size(); ++i)
             {
                 rapidjson::Value value;
                 ToRapidjsonValue(value, jsonArray[i], allocator);

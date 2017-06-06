@@ -95,7 +95,7 @@ void Sphere::Merge(const Frustum& frustum)
 
 void Sphere::Merge(const Polyhedron& poly)
 {
-    for (unsigned i = 0; i < poly.faces_.Size(); ++i)
+    for (auto i = 0u; i < poly.faces_.Size(); ++i)
     {
         const PODVector<Vector3>& face = poly.faces_[i];
         if (!face.Empty())

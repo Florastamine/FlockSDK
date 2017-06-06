@@ -49,7 +49,7 @@ void HashBase::ResetPtrs()
 
     unsigned numBuckets = NumBuckets();
     HashNodeBase** ptrs = Ptrs();
-    for (unsigned i = 0; i < numBuckets; ++i)
+    for (auto i = 0u; i < numBuckets; ++i)
         ptrs[i] = 0;
 }
 

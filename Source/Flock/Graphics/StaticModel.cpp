@@ -97,7 +97,7 @@ void StaticModel::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQuer
         {
             distance = M_INFINITY;
 
-            for (unsigned i = 0; i < batches_.Size(); ++i)
+            for (auto i = 0u; i < batches_.Size(); ++i)
             {
                 Geometry* geometry = batches_[i].geometry_;
                 if (geometry)
@@ -141,7 +141,7 @@ void StaticModel::UpdateBatches(const FrameInfo& frame)
     else
     {
         const Matrix3x4& worldTransform = node_->GetWorldTransform();
-        for (unsigned i = 0; i < batches_.Size(); ++i)
+        for (auto i = 0u; i < batches_.Size(); ++i)
             batches_[i].distance_ = frame.camera_->GetDistance(worldTransform * geometryData_[i].center_);
     }
 
@@ -171,7 +171,7 @@ unsigned StaticModel::GetNumOccluderTriangles()
 {
     unsigned triangles = 0;
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = GetLodGeometry(i, occlusionLodLevel_);
         if (!geometry)
@@ -190,7 +190,7 @@ unsigned StaticModel::GetNumOccluderTriangles()
 
 bool StaticModel::DrawOcclusion(OcclusionBuffer* buffer)
 {
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = GetLodGeometry(i, occlusionLodLevel_);
         if (!geometry)
@@ -255,7 +255,7 @@ void StaticModel::SetModel(Model* model)
         const Vector<Vector<SharedPtr<Geometry> > >& geometries = model->GetGeometries();
         const PODVector<Vector3>& geometryCenters = model->GetGeometryCenters();
         const Matrix3x4* worldTransform = node_ ? &node_->GetWorldTransform() : (const Matrix3x4*)0;
-        for (unsigned i = 0; i < geometries.Size(); ++i)
+        for (auto i = 0u; i < geometries.Size(); ++i)
         {
             batches_[i].worldTransform_ = worldTransform;
             geometries_[i] = geometries[i];
@@ -276,7 +276,7 @@ void StaticModel::SetModel(Model* model)
 
 void StaticModel::SetMaterial(Material* material)
 {
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         batches_[i].material_ = material;
 
     MarkNetworkUpdate();
@@ -345,7 +345,7 @@ bool StaticModel::IsInsideLocal(const Vector3& point) const
 
     Ray localRay(point, Vector3(1.0f, -1.0f, 1.0f));
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         Geometry* geometry = batches_[i].geometry_;
         if (geometry)
@@ -381,7 +381,7 @@ void StaticModel::SetModelAttr(const ResourceRef& value)
 void StaticModel::SetMaterialsAttr(const ResourceRefList& value)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
-    for (unsigned i = 0; i < value.names_.Size(); ++i)
+    for (auto i = 0u; i < value.names_.Size(); ++i)
         SetMaterial(i, cache->GetResource<Material>(value.names_[i]));
 }
 
@@ -393,7 +393,7 @@ ResourceRef StaticModel::GetModelAttr() const
 const ResourceRefList& StaticModel::GetMaterialsAttr() const
 {
     materialsAttr_.names_.Resize(batches_.Size());
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
         materialsAttr_.names_[i] = GetResourceName(GetMaterial(i));
 
     return materialsAttr_;
@@ -407,7 +407,7 @@ void StaticModel::OnWorldBoundingBoxUpdate()
 void StaticModel::ResetLodLevels()
 {
     // Ensure that each subgeometry has at least one LOD level, and reset the current LOD level
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         if (!geometries_[i].Size())
             geometries_[i].Resize(1);
@@ -421,7 +421,7 @@ void StaticModel::ResetLodLevels()
 
 void StaticModel::CalculateLodLevels()
 {
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         const Vector<SharedPtr<Geometry> >& batchGeometries = geometries_[i];
         // If only one LOD geometry, no reason to go through the LOD calculation

@@ -153,7 +153,7 @@ void BillboardSet::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQue
     Matrix3x4 billboardTransform = relative_ ? worldTransform : Matrix3x4::IDENTITY;
     Vector3 billboardScale = scaled_ ? worldTransform.Scale() : Vector3::ONE;
 
-    for (unsigned i = 0; i < billboards_.Size(); ++i)
+    for (auto i = 0u; i < billboards_.Size(); ++i)
     {
         if (!billboards_[i].enabled_)
             continue;
@@ -480,7 +480,7 @@ void BillboardSet::OnWorldBoundingBoxUpdate()
     Vector3 billboardScale = scaled_ ? worldTransform.Scale() : Vector3::ONE;
     BoundingBox worldBox;
 
-    for (unsigned i = 0; i < billboards_.Size(); ++i)
+    for (auto i = 0u; i < billboards_.Size(); ++i)
     {
         if (!billboards_[i].enabled_)
             continue;
@@ -601,7 +601,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
     Vector3 billboardScale = scaled_ ? worldTransform.Scale() : Vector3::ONE;
 
     // First check number of enabled billboards
-    for (unsigned i = 0; i < numBillboards; ++i)
+    for (auto i = 0u; i < numBillboards; ++i)
     {
         if (billboards_[i].enabled_)
             ++enabledBillboards;
@@ -611,7 +611,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
     unsigned index = 0;
 
     // Then set initial sort order and distances
-    for (unsigned i = 0; i < numBillboards; ++i)
+    for (auto i = 0u; i < numBillboards; ++i)
     {
         Billboard& billboard = billboards_[i];
         if (billboard.enabled_)
@@ -643,7 +643,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
 
     if (faceCameraMode_ != FC_DIRECTION)
     {
-        for (unsigned i = 0; i < enabledBillboards; ++i)
+        for (auto i = 0u; i < enabledBillboards; ++i)
         {
             Billboard& billboard = *sortedBillboards_[i];
 
@@ -698,7 +698,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
     }
     else
     {
-        for (unsigned i = 0; i < enabledBillboards; ++i)
+        for (auto i = 0u; i < enabledBillboards; ++i)
         {
             Billboard& billboard = *sortedBillboards_[i];
 
@@ -786,7 +786,7 @@ void BillboardSet::CalculateFixedScreenSize(const FrameInfo& frame)
         const Matrix3x4& worldTransform = node_->GetWorldTransform();
         Matrix3x4 billboardTransform = relative_ ? worldTransform : Matrix3x4::IDENTITY;
 
-        for (unsigned i = 0; i < billboards_.Size(); ++i)
+        for (auto i = 0u; i < billboards_.Size(); ++i)
         {
             Vector4 projPos(viewProj * Vector4(billboardTransform * billboards_[i].position_, 1.0f));
             float newScaleFactor = invViewHeight * halfViewWorldSize * projPos.w_;
@@ -799,7 +799,7 @@ void BillboardSet::CalculateFixedScreenSize(const FrameInfo& frame)
     }
     else
     {
-        for (unsigned i = 0; i < billboards_.Size(); ++i)
+        for (auto i = 0u; i < billboards_.Size(); ++i)
         {
             float newScaleFactor = invViewHeight * halfViewWorldSize;
             if (newScaleFactor != billboards_[i].screenScaleFactor_)

@@ -51,7 +51,7 @@ AllocatorBlock* AllocatorReserveBlock(AllocatorBlock* allocator, unsigned nodeSi
     unsigned char* nodePtr = blockPtr + sizeof(AllocatorBlock);
     AllocatorNode* firstNewNode = reinterpret_cast<AllocatorNode*>(nodePtr);
 
-    for (unsigned i = 0; i < capacity - 1; ++i)
+    for (auto i = 0u; i < capacity - 1; ++i)
     {
         AllocatorNode* newNode = reinterpret_cast<AllocatorNode*>(nodePtr);
         newNode->next_ = reinterpret_cast<AllocatorNode*>(nodePtr + sizeof(AllocatorNode) + nodeSize);

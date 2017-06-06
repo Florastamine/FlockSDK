@@ -121,13 +121,13 @@ void Text3D::UpdateBatches(const FrameInfo& frame)
     if (faceCameraMode_ != FC_NONE || fixedScreenSize_)
         CalculateFixedScreenSize(frame);
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         batches_[i].distance_ = distance_;
         batches_[i].worldTransform_ = faceCameraMode_ != FC_NONE ? &customWorldTransform_ : &node_->GetWorldTransform();
     }
 
-    for (unsigned i = 0; i < uiBatches_.Size(); ++i)
+    for (auto i = 0u; i < uiBatches_.Size(); ++i)
     {
         if (uiBatches_[i].texture_ && uiBatches_[i].texture_->IsDataLost())
         {
@@ -153,7 +153,7 @@ void Text3D::UpdateGeometry(const FrameInfo& frame)
 
     if (geometryDirty_)
     {
-        for (unsigned i = 0; i < batches_.Size() && i < uiBatches_.Size(); ++i)
+        for (auto i = 0u; i < batches_.Size() && i < uiBatches_.Size(); ++i)
         {
             Geometry* geometry = geometries_[i];
             geometry->SetDrawRange(TRIANGLE_LIST, 0, 0, uiBatches_[i].vertexStart_ / UI_VERTEX_SIZE,
@@ -611,7 +611,7 @@ void Text3D::UpdateTextBatches()
     {
         boundingBox_.Clear();
 
-        for (unsigned i = 0; i < uiVertexData_.Size(); i += UI_VERTEX_SIZE)
+        for (auto i = 0u; i < uiVertexData_.Size(); i += UI_VERTEX_SIZE)
         {
             Vector3& position = *(reinterpret_cast<Vector3*>(&uiVertexData_[i]));
             position += offset;
@@ -635,7 +635,7 @@ void Text3D::UpdateTextMaterials(bool forceUpdate)
     batches_.Resize(uiBatches_.Size());
     geometries_.Resize(uiBatches_.Size());
 
-    for (unsigned i = 0; i < batches_.Size(); ++i)
+    for (auto i = 0u; i < batches_.Size(); ++i)
     {
         if (!geometries_[i])
         {

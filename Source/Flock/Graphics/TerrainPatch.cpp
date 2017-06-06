@@ -129,7 +129,7 @@ void TerrainPatch::UpdateBatches(const FrameInfo& frame)
     batches_[0].worldTransform_ = &worldTransform;
 
     unsigned newLodLevel = 0;
-    for (unsigned i = 0; i < lodErrors_.Size(); ++i)
+    for (auto i = 0u; i < lodErrors_.Size(); ++i)
     {
         if (lodErrors_[i] / lodDistance_ > LOD_CONSTANT)
             break;

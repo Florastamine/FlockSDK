@@ -197,7 +197,7 @@ bool AnimationSet2D::HasAnimation(const String& animationName) const
     if (spriterData_ && !spriterData_->entities_.Empty())
     {
         const PODVector<Spriter::Animation*>& animations = spriterData_->entities_[0]->animations_;
-        for (unsigned i = 0; i < animations.Size(); ++i)
+        for (auto i = 0u; i < animations.Size(); ++i)
         {
             if (animationName == animations[i]->name_)
                 return true;
@@ -321,10 +321,10 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
             cache->BackgroundLoadResource<SpriteSheet2D>(spriteSheetFilePath_, true, this);
         else
         {
-            for (unsigned i = 0; i < spriterData_->folders_.Size(); ++i)
+            for (auto i = 0u; i < spriterData_->folders_.Size(); ++i)
             {
                 Spriter::Folder* folder = spriterData_->folders_[i];
-                for (unsigned j = 0; j < folder->files_.Size(); ++j)
+                for (auto j = 0u; j < folder->files_.Size(); ++j)
                 {
                     Spriter::File* file = folder->files_[j];
                     String imagePath = parentPath + file->name_;
@@ -360,10 +360,10 @@ bool AnimationSet2D::EndLoadSpriter()
         if (!spriteSheet_)
             return false;
 
-        for (unsigned i = 0; i < spriterData_->folders_.Size(); ++i)
+        for (auto i = 0u; i < spriterData_->folders_.Size(); ++i)
         {
             Spriter::Folder* folder = spriterData_->folders_[i];
-            for (unsigned j = 0; j < folder->files_.Size(); ++j)
+            for (auto j = 0u; j < folder->files_.Size(); ++j)
             {
                 Spriter::File* file = folder->files_[j];
                 SharedPtr<Sprite2D> sprite(spriteSheet_->GetSprite(GetFileName(file->name_)));
@@ -402,10 +402,10 @@ bool AnimationSet2D::EndLoadSpriter()
         Vector<SpriteInfo> spriteInfos;
         String parentPath = GetParentPath(GetName());
 
-        for (unsigned i = 0; i < spriterData_->folders_.Size(); ++i)
+        for (auto i = 0u; i < spriterData_->folders_.Size(); ++i)
         {
             Spriter::Folder* folder = spriterData_->folders_[i];
-            for (unsigned j = 0; j < folder->files_.Size(); ++j)
+            for (auto j = 0u; j < folder->files_.Size(); ++j)
             {
                 Spriter::File* file = folder->files_[j];
                 String imagePath = parentPath + file->name_;
@@ -441,7 +441,7 @@ bool AnimationSet2D::EndLoadSpriter()
         if (spriteInfos.Size() > 1)
         {
             AreaAllocator allocator(128, 128, 2048, 2048);
-            for (unsigned i = 0; i < spriteInfos.Size(); ++i)
+            for (auto i = 0u; i < spriteInfos.Size(); ++i)
             {
                 SpriteInfo& info = spriteInfos[i];
                 Image* image = info.image_;
@@ -464,7 +464,7 @@ bool AnimationSet2D::EndLoadSpriter()
             sprite_ = new Sprite2D(context_);
             sprite_->SetTexture(texture);
 
-            for (unsigned i = 0; i < spriteInfos.Size(); ++i)
+            for (auto i = 0u; i < spriteInfos.Size(); ++i)
             {
                 SpriteInfo& info = spriteInfos[i];
                 Image* image = info.image_;

@@ -624,7 +624,7 @@ bool Image::BeginLoad(Deserializer& source)
         numCompressedLevels_ = mipmaps;
 
         unsigned dataOffset = 0;
-        for (unsigned i = 0; i < mipmaps; ++i)
+        for (auto i = 0u; i < mipmaps; ++i)
         {
             unsigned levelSize = source.ReadUInt();
             if (levelSize + dataOffset > dataSize)
@@ -966,7 +966,7 @@ bool Image::FlipHorizontal()
         SharedArrayPtr<unsigned char> newData(new unsigned char[GetMemoryUse()]);
         unsigned dataOffset = 0;
 
-        for (unsigned i = 0; i < numCompressedLevels_; ++i)
+        for (auto i = 0u; i < numCompressedLevels_; ++i)
         {
             CompressedLevel level = GetCompressedLevel(i);
             if (!level.data_)
@@ -1027,7 +1027,7 @@ bool Image::FlipVertical()
         SharedArrayPtr<unsigned char> newData(new unsigned char[GetMemoryUse()]);
         unsigned dataOffset = 0;
 
-        for (unsigned i = 0; i < numCompressedLevels_; ++i)
+        for (auto i = 0u; i < numCompressedLevels_; ++i)
         {
             CompressedLevel level = GetCompressedLevel(i);
             if (!level.data_)
@@ -1140,7 +1140,7 @@ void Image::ClearInt(unsigned uintColor)
     else
     {
         unsigned char* src = (unsigned char*)&uintColor;
-        for (unsigned i = 0; i < width_ * height_ * depth_ * components_; ++i)
+        for (auto i = 0u; i < width_ * height_ * depth_ * components_; ++i)
             data_[i] = src[i % components_];
     }
 }
@@ -1271,7 +1271,7 @@ bool Image::SaveDDS(const String& fileName) const
     ddsd.ddpfPixelFormat_.dwRGBAlphaBitMask_ = 0xff000000;
 
     outFile.Write(&ddsd, sizeof(ddsd));
-    for (unsigned i = 0; i < levels.Size(); ++i)
+    for (auto i = 0u; i < levels.Size(); ++i)
         outFile.Write(levels[i]->GetData(), levels[i]->GetWidth() * levels[i]->GetHeight() * 4);
 
     return true;
@@ -1725,7 +1725,7 @@ SharedPtr<Image> Image::ConvertToRGBA() const
     switch (components_)
     {
     case 1:
-        for (unsigned i = 0; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
+        for (auto i = 0u; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
         {
             unsigned char pixel = *src++;
             *dest++ = pixel;
@@ -1736,7 +1736,7 @@ SharedPtr<Image> Image::ConvertToRGBA() const
         break;
 
     case 2:
-        for (unsigned i = 0; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
+        for (auto i = 0u; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
         {
             unsigned char pixel = *src++;
             *dest++ = pixel;
@@ -1747,7 +1747,7 @@ SharedPtr<Image> Image::ConvertToRGBA() const
         break;
 
     case 3:
-        for (unsigned i = 0; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
+        for (auto i = 0u; i < static_cast<unsigned>(width_ * height_ * depth_); ++i)
         {
             *dest++ = *src++;
             *dest++ = *src++;
@@ -1951,7 +1951,7 @@ Image* Image::GetSubimage(const IntRect& rect) const
         unsigned subimageLevels = 0;
 
         // Save as many mips as possible until the next mip would cross a block boundary
-        for (unsigned i = 0; i < numCompressedLevels_; ++i)
+        for (auto i = 0u; i < numCompressedLevels_; ++i)
         {
             CompressedLevel level = GetCompressedLevel(i);
             if (!level.data_)

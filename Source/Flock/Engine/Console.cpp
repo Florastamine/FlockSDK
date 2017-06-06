@@ -123,10 +123,10 @@ void Console::SetDefaultStyle(XMLFile* style)
     background_->SetDefaultStyle(style);
     background_->SetStyle("ConsoleBackground");
     rowContainer_->SetStyleAuto();
-    for (unsigned i = 0; i < rowContainer_->GetNumItems(); ++i)
+    for (auto i = 0u; i < rowContainer_->GetNumItems(); ++i)
         rowContainer_->GetItem(i)->SetStyle("ConsoleText");
     interpreters_->SetStyleAuto();
-    for (unsigned i = 0; i < interpreters_->GetNumItems(); ++i)
+    for (auto i = 0u; i < interpreters_->GetNumItems(); ++i)
         interpreters_->GetItem(i)->SetStyle("ConsoleText");
     lineEdit_->SetStyle("ConsoleLineEdit");
 
@@ -314,7 +314,7 @@ bool Console::PopulateInterpreter()
         return false;
 
     Vector<String> names;
-    for (unsigned i = 0; i < group->receivers_.Size(); ++i)
+    for (auto i = 0u; i < group->receivers_.Size(); ++i)
     {
         Object* receiver = group->receivers_[i];
         if (receiver)
@@ -323,7 +323,7 @@ bool Console::PopulateInterpreter()
     Sort(names.Begin(), names.End());
 
     unsigned selection = M_MAX_UNSIGNED;
-    for (unsigned i = 0; i < names.Size(); ++i)
+    for (auto i = 0u; i < names.Size(); ++i)
     {
         const String& name = names[i];
         if (name == commandInterpreter_)
@@ -535,7 +535,7 @@ void Console::HandleLogMessage(StringHash eventType, VariantMap& eventData)
     // The message may be multi-line, so split to rows in that case
     Vector<String> rows = eventData[P_MESSAGE].GetString().Split('\n');
 
-    for (unsigned i = 0; i < rows.Size(); ++i)
+    for (auto i = 0u; i < rows.Size(); ++i)
         pendingRows_.Push(MakePair(level, rows[i]));
 
     if (autoVisibleOnError_ && level == LOG_ERROR && !IsVisible())
@@ -560,7 +560,7 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     rowContainer_->DisableLayoutUpdate();
 
     Text* text = 0;
-    for (unsigned i = 0; i < pendingRows_.Size(); ++i)
+    for (auto i = 0u; i < pendingRows_.Size(); ++i)
     {
         rowContainer_->RemoveItem((unsigned)0);
         text = new Text(context_);

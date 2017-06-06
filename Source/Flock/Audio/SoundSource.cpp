@@ -166,7 +166,7 @@ void SoundSource::Play(Sound* sound)
     // the sound correctly on network clients even after the initial playback
     if (networkState_ && networkState_->attributes_ && networkState_->previousValues_.Size())
     {
-        for (unsigned i = 1; i < networkState_->previousValues_.Size(); ++i)
+        for (auto i = 1u; i < networkState_->previousValues_.Size(); ++i)
         {
             // The indexing is different for SoundSource & SoundSource3D, as SoundSource3D removes two attributes,
             // so go by attribute types

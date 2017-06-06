@@ -177,7 +177,7 @@ PODVector<IntVector3> Graphics::GetResolutions(int monitor) const
     PODVector<IntVector3> ret;
     unsigned numModes = (unsigned)SDL_GetNumDisplayModes(monitor);
 
-    for (unsigned i = 0; i < numModes; ++i)
+    for (auto i = 0u; i < numModes; ++i)
     {
         SDL_DisplayMode mode;
         SDL_GetDisplayMode(monitor, i, &mode);
@@ -187,7 +187,7 @@ PODVector<IntVector3> Graphics::GetResolutions(int monitor) const
 
         // Store mode if unique
         bool unique = true;
-        for (unsigned j = 0; j < ret.Size(); ++j)
+        for (auto j = 0u; j < ret.Size(); ++j)
         {
             if (ret[j].x_ == width && ret[j].y_ == height && ret[j].z_ == rate)
             {

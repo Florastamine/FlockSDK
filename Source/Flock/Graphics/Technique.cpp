@@ -191,7 +191,7 @@ String Pass::GetEffectiveVertexShaderDefines() const
 
     Vector<String> vsDefines = vertexShaderDefines_.Split(' ');
     Vector<String> vsExcludes = vertexShaderDefineExcludes_.Split(' ');
-    for (unsigned i = 0; i < vsExcludes.Size(); ++i)
+    for (auto i = 0u; i < vsExcludes.Size(); ++i)
         vsDefines.Remove(vsExcludes[i]);
 
     return String::Joined(vsDefines, " ");
@@ -205,7 +205,7 @@ String Pass::GetEffectivePixelShaderDefines() const
 
     Vector<String> psDefines = pixelShaderDefines_.Split(' ');
     Vector<String> psExcludes = pixelShaderDefineExcludes_.Split(' ');
-    for (unsigned i = 0; i < psExcludes.Size(); ++i)
+    for (auto i = 0u; i < psExcludes.Size(); ++i)
         psDefines.Remove(psExcludes[i]);
 
     return String::Joined(psDefines, " ");

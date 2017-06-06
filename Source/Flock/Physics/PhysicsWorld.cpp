@@ -656,7 +656,7 @@ void PhysicsWorld::GetRigidBodies(PODVector<RigidBody*>& result, const RigidBody
     world_->contactTest(body->GetBody(), callback);
     
     // Remove the body itself from the returned list
-    for (unsigned i = 0; i < result.Size(); i++)
+    for (auto i = 0u; i < result.Size(); i++)
     {
         if (result[i] == body)
         {

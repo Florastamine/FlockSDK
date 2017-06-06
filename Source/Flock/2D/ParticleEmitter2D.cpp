@@ -229,7 +229,7 @@ void ParticleEmitter2D::UpdateSourceBatches()
     vertex2.uv_ = textureRect.max_;
     vertex3.uv_ = Vector2(textureRect.max_.x_, textureRect.min_.y_);
 
-    for (unsigned i = 0; i < numParticles_; ++i)
+    for (auto i = 0u; i < numParticles_; ++i)
     {
         Particle2D& p = particles_[i];
 

@@ -50,11 +50,11 @@ static String GenerateNameFromType(StringHash typeHash)
     unsigned combinations = numLetters;
     bool found = false;
 
-    for (unsigned i = 1; i < 6; ++i)
+    for (auto i = 1u; i < 6; ++i)
     {
         test.Resize(i);
 
-        for (unsigned j = 0; j < combinations; ++j)
+        for (auto j = 0u; j < combinations; ++j)
         {
             unsigned current = j;
 
@@ -131,7 +131,7 @@ bool UnknownComponent::LoadXML(const XMLElement& source, bool setInstanceDefault
     }
 
     // Fix up pointers to the attributes after all have been read
-    for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
+    for (auto i = 0u; i < xmlAttributeInfos_.Size(); ++i)
         xmlAttributeInfos_[i].ptr_ = &xmlAttributes_[i];
 
     return true;
@@ -146,7 +146,7 @@ bool UnknownComponent::LoadJSON(const JSONValue& source, bool setInstanceDefault
     binaryAttributes_.Clear();
 
     JSONArray attributesArray = source.Get("attributes").GetArray();
-    for (unsigned i = 0; i < attributesArray.Size(); i++)
+    for (auto i = 0u; i < attributesArray.Size(); i++)
     {
         const JSONValue& attrVal = attributesArray.At(i);
 
@@ -165,7 +165,7 @@ bool UnknownComponent::LoadJSON(const JSONValue& source, bool setInstanceDefault
     }
 
     // Fix up pointers to the attributes after all have been read
-    for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
+    for (auto i = 0u; i < xmlAttributeInfos_.Size(); ++i)
         xmlAttributeInfos_[i].ptr_ = &xmlAttributes_[i];
 
     return true;
@@ -206,7 +206,7 @@ bool UnknownComponent::SaveXML(XMLElement& dest) const
     if (!dest.SetInt("id", id_))
         return false;
 
-    for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
+    for (auto i = 0u; i < xmlAttributeInfos_.Size(); ++i)
     {
         XMLElement attrElem = dest.CreateChild("attribute");
         attrElem.SetAttribute("name", xmlAttributeInfos_[i].name_);
@@ -227,7 +227,7 @@ bool UnknownComponent::SaveJSON(JSONValue& dest) const
 
     JSONArray attributesArray;
     attributesArray.Reserve(xmlAttributeInfos_.Size());
-    for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
+    for (auto i = 0u; i < xmlAttributeInfos_.Size(); ++i)
     {
         JSONValue attrVal;
         attrVal.Set("name", xmlAttributeInfos_[i].name_);
