@@ -149,22 +149,22 @@ elseif (NOT FLOCK_SSE)
 endif () 
 
 if (FLOCK_IK) 
-    add_definitions (-DFLOCK_IK) 
+    add_definitions (-DFLOCKSDK_IK) 
 endif () 
 
 # Enable file watcher support for automatic resource reloads by default.
 if (FLOCK_FILEWATCHER)
-    add_definitions (-DFLOCK_FILEWATCHER)
+    add_definitions (-DFLOCKSDK_FILEWATCHER)
 endif ()
 
 # Enable profiling by default. If disabled, autoprofileblocks become no-ops and the Profiler subsystem is not instantiated.
 if (FLOCK_PROFILING)
-    add_definitions (-DFLOCK_PROFILING)
+    add_definitions (-DFLOCKSDK_PROFILING)
 endif ()
 
 # Enable logging by default. If disabled, LOGXXXX macros become no-ops and the Log subsystem is not instantiated.
 if (FLOCK_LOGGING)
-    add_definitions (-DFLOCK_LOGGING)
+    add_definitions (-DFLOCKSDK_LOGGING)
 endif ()
 
 # Add definitions for GLEW
@@ -186,19 +186,19 @@ if (FLOCK_LUAJIT)
     set (FLOCK_LUA 1)
 endif ()
 if (FLOCK_LUA)
-    add_definitions (-DFLOCK_LUA)
+    add_definitions (-DFLOCKSDK_LUA)
     # Optionally enable Lua / C++ wrapper safety checks
     if (NOT FLOCK_SAFE_LUA)
         add_definitions (-DTOLUA_RELEASE)
     endif ()
 endif ()
 if (FLOCK_LUA_RAW_SCRIPT_LOADER)
-    add_definitions (-DFLOCK_LUA_RAW_SCRIPT_LOADER)
+    add_definitions (-DFLOCKSDK_LUA_RAW_SCRIPT_LOADER)
 endif ()
 
 # Add definition for Navigation
 if (FLOCK_NAVIGATION)
-    add_definitions (-DFLOCK_NAVIGATION)
+    add_definitions (-DFLOCKSDK_NAVIGATION)
 endif ()
 
 # TODO: The logic below is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling, until then ensure the DirectX package is not being searched again in external projects such as when building LuaJIT library
