@@ -222,7 +222,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     }
 }
 
-void NavigationMesh::SetMeshName(const String& newName)
+void NavigationMesh::SetMeshName(const String &newName)
 {
     meshName_ = newName;
 }
@@ -318,7 +318,7 @@ void NavigationMesh::SetDetailSampleMaxError(float error)
     MarkNetworkUpdate();
 }
 
-void NavigationMesh::SetPadding(const Vector3& padding)
+void NavigationMesh::SetPadding(const Vector3 &padding)
 {
     padding_ = padding;
 
@@ -465,7 +465,7 @@ bool NavigationMesh::Build(const BoundingBox& boundingBox)
     return true;
 }
 
-Vector3 NavigationMesh::FindNearestPoint(const Vector3& point, const Vector3& extents, const dtQueryFilter* filter,
+Vector3 NavigationMesh::FindNearestPoint(const Vector3 &point, const Vector3 &extents, const dtQueryFilter* filter,
     dtPolyRef* nearestRef)
 {
     if (!InitializeQuery())
@@ -484,7 +484,7 @@ Vector3 NavigationMesh::FindNearestPoint(const Vector3& point, const Vector3& ex
     return *nearestRef ? transform * nearestPoint : point;
 }
 
-Vector3 NavigationMesh::MoveAlongSurface(const Vector3& start, const Vector3& end, const Vector3& extents, int maxVisited,
+Vector3 NavigationMesh::MoveAlongSurface(const Vector3 &start, const Vector3 &end, const Vector3 &extents, int maxVisited,
     const dtQueryFilter* filter)
 {
     if (!InitializeQuery())
@@ -511,7 +511,7 @@ Vector3 NavigationMesh::MoveAlongSurface(const Vector3& start, const Vector3& en
     return transform * resultPos;
 }
 
-void NavigationMesh::FindPath(PODVector<Vector3>& dest, const Vector3& start, const Vector3& end, const Vector3& extents,
+void NavigationMesh::FindPath(PODVector<Vector3>& dest, const Vector3 &start, const Vector3 &end, const Vector3 &extents,
     const dtQueryFilter* filter)
 {
     PODVector<NavigationPathPoint> navPathPoints;
@@ -522,8 +522,8 @@ void NavigationMesh::FindPath(PODVector<Vector3>& dest, const Vector3& start, co
         dest.Push(navPathPoints[i].position_);
 }
 
-void NavigationMesh::FindPath(PODVector<NavigationPathPoint>& dest, const Vector3& start, const Vector3& end,
-    const Vector3& extents, const dtQueryFilter* filter)
+void NavigationMesh::FindPath(PODVector<NavigationPathPoint>& dest, const Vector3 &start, const Vector3 &end,
+    const Vector3 &extents, const dtQueryFilter* filter)
 {
     FLOCKSDK_PROFILE(FindPath);
     dest.Clear();
@@ -611,7 +611,7 @@ Vector3 NavigationMesh::GetRandomPoint(const dtQueryFilter* filter, dtPolyRef* r
     return node_->GetWorldTransform() * point;
 }
 
-Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3& center, float radius, const Vector3& extents,
+Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3 &center, float radius, const Vector3 &extents,
     const dtQueryFilter* filter, dtPolyRef* randomRef)
 {
     if (randomRef)
@@ -640,7 +640,7 @@ Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3& center, float radi
     return transform * point;
 }
 
-float NavigationMesh::GetDistanceToWall(const Vector3& point, float radius, const Vector3& extents, const dtQueryFilter* filter,
+float NavigationMesh::GetDistanceToWall(const Vector3 &point, float radius, const Vector3 &extents, const dtQueryFilter* filter,
     Vector3* hitPos, Vector3* hitNormal)
 {
     if (hitPos)
@@ -673,7 +673,7 @@ float NavigationMesh::GetDistanceToWall(const Vector3& point, float radius, cons
     return hitDist;
 }
 
-Vector3 NavigationMesh::Raycast(const Vector3& start, const Vector3& end, const Vector3& extents, const dtQueryFilter* filter,
+Vector3 NavigationMesh::Raycast(const Vector3 &start, const Vector3 &end, const Vector3 &extents, const dtQueryFilter* filter,
     Vector3* hitNormal)
 {
     if (hitNormal)

@@ -45,7 +45,7 @@ public:
     /// Set position from the beginning of the stream.
     virtual unsigned Seek(unsigned position) = 0;
     /// Return name of the stream.
-    virtual const String& GetName() const;
+    virtual const String &GetName() const;
     /// Return a checksum if applicable.
     virtual unsigned GetChecksum();
     /// Return whether the end of stream has been reached.

@@ -58,11 +58,11 @@ public:
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     virtual bool BeginLoad(Deserializer& source);
     /// Save resource as a new bitmap font type in XML format. Return true if successful.
-    bool SaveXML(Serializer& dest, int pointSize, bool usedGlyphs = false, const String& indentation = "\t");
+    bool SaveXML(Serializer& dest, int pointSize, bool usedGlyphs = false, const String &indentation = "\t");
     /// Set absolute (in pixels) position adjustment for glyphs.
-    void SetAbsoluteGlyphOffset(const IntVector2& offset);
+    void SetAbsoluteGlyphOffset(const IntVector2 &offset);
     /// Set point size scaled position adjustment for glyphs.
-    void SetScaledGlyphOffset(const Vector2& offset);
+    void SetScaledGlyphOffset(const Vector2 &offset);
 
     /// Return font face. Pack and render to a texture if not rendered yet. Return null on error.
     FontFace* GetFace(int pointSize);
@@ -74,10 +74,10 @@ public:
     bool IsSDFFont() const { return sdfFont_; }
 
     /// Return absolute position adjustment for glyphs.
-    const IntVector2& GetAbsoluteGlyphOffset() const { return absoluteOffset_; }
+    const IntVector2 &GetAbsoluteGlyphOffset() const { return absoluteOffset_; }
 
     /// Return point size scaled position adjustment for glyphs.
-    const Vector2& GetScaledGlyphOffset() const { return scaledOffset_; }
+    const Vector2 &GetScaledGlyphOffset() const { return scaledOffset_; }
 
     /// Return the total effective offset for a point size.
     IntVector2 GetTotalGlyphOffset(int pointSize) const;

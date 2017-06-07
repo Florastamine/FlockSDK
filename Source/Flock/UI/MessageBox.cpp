@@ -36,7 +36,7 @@
 namespace FlockSDK
 {
 
-MessageBox::MessageBox(Context* context, const String& messageString, const String& titleString, XMLFile* layoutFile,
+MessageBox::MessageBox(Context* context, const String &messageString, const String &titleString, XMLFile* layoutFile,
     XMLFile* styleFile) :
     Object(context),
     window_(0),
@@ -75,7 +75,7 @@ MessageBox::MessageBox(Context* context, const String& messageString, const Stri
     Window* window = dynamic_cast<Window*>(window_);
     if (window)
     {
-        const IntVector2& size = window->GetSize();
+        const IntVector2 &size = window->GetSize();
         window->SetPosition((root->GetWidth() - size.x_) / 2, (root->GetHeight() - size.y_) / 2);
         window->SetModal(true);
         SubscribeToEvent(window, E_MODALCHANGED, FLOCKSDK_HANDLER(MessageBox, HandleMessageAcknowledged));
@@ -111,24 +111,24 @@ void MessageBox::RegisterObject(Context* context)
     context->RegisterFactory<MessageBox>();
 }
 
-void MessageBox::SetTitle(const String& text)
+void MessageBox::SetTitle(const String &text)
 {
     if (titleText_)
         titleText_->SetText(text);
 }
 
-void MessageBox::SetMessage(const String& text)
+void MessageBox::SetMessage(const String &text)
 {
     if (messageText_)
         messageText_->SetText(text);
 }
 
-const String& MessageBox::GetTitle() const
+const String &MessageBox::GetTitle() const
 {
     return titleText_ ? titleText_->GetText() : String::EMPTY;
 }
 
-const String& MessageBox::GetMessage() const
+const String &MessageBox::GetMessage() const
 {
     return messageText_ ? messageText_->GetText() : String::EMPTY;
 }

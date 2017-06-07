@@ -26,7 +26,7 @@
 namespace FlockSDK {
 
 // ----------------------------------------------------------------------------
-vec3_t Vec3Urho2IK(const Vector3& urho)
+vec3_t Vec3Urho2IK(const Vector3 &urho)
 {
     vec3_t ret;
     ret.v.x = urho.x_;

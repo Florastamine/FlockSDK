@@ -65,7 +65,7 @@ Serializable::~Serializable()
 {
 }
 
-void Serializable::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Serializable::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     // Check for accessor function mode
     if (attr.accessor_)
@@ -169,7 +169,7 @@ void Serializable::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
         MarkNetworkUpdate();
 }
 
-void Serializable::OnGetAttribute(const AttributeInfo& attr, Variant& dest) const
+void Serializable::OnGetAttribute(const AttributeInfo& attr, Variant &dest) const
 {
     // Check for accessor function mode
     if (attr.accessor_)
@@ -587,7 +587,7 @@ bool Serializable::SaveJSON(JSONValue& dest) const
     return true;
 }
 
-bool Serializable::SetAttribute(unsigned index, const Variant& value)
+bool Serializable::SetAttribute(unsigned index, const Variant &value)
 {
     const Vector<AttributeInfo>* attributes = GetAttributes();
     if (!attributes)
@@ -617,7 +617,7 @@ bool Serializable::SetAttribute(unsigned index, const Variant& value)
     }
 }
 
-bool Serializable::SetAttribute(const String& name, const Variant& value)
+bool Serializable::SetAttribute(const String &name, const Variant &value)
 {
     const Vector<AttributeInfo>* attributes = GetAttributes();
     if (!attributes)
@@ -689,7 +689,7 @@ void Serializable::SetTemporary(bool enable)
     }
 }
 
-void Serializable::SetInterceptNetworkUpdate(const String& attributeName, bool enable)
+void Serializable::SetInterceptNetworkUpdate(const String &attributeName, bool enable)
 {
     AllocateNetworkState();
 
@@ -921,7 +921,7 @@ Variant Serializable::GetAttribute(unsigned index) const
     return ret;
 }
 
-Variant Serializable::GetAttribute(const String& name) const
+Variant Serializable::GetAttribute(const String &name) const
 {
     Variant ret;
 
@@ -964,7 +964,7 @@ Variant Serializable::GetAttributeDefault(unsigned index) const
     return defaultValue.IsEmpty() ? attr.defaultValue_ : defaultValue;
 }
 
-Variant Serializable::GetAttributeDefault(const String& name) const
+Variant Serializable::GetAttributeDefault(const String &name) const
 {
     Variant defaultValue = GetInstanceDefault(name);
     if (!defaultValue.IsEmpty())
@@ -1000,7 +1000,7 @@ unsigned Serializable::GetNumNetworkAttributes() const
     return attributes ? attributes->Size() : 0;
 }
 
-bool Serializable::GetInterceptNetworkUpdate(const String& attributeName) const
+bool Serializable::GetInterceptNetworkUpdate(const String &attributeName) const
 {
     const Vector<AttributeInfo>* attributes = GetNetworkAttributes();
     if (!attributes)
@@ -1018,7 +1018,7 @@ bool Serializable::GetInterceptNetworkUpdate(const String& attributeName) const
     return false;
 }
 
-void Serializable::SetInstanceDefault(const String& name, const Variant& defaultValue)
+void Serializable::SetInstanceDefault(const String &name, const Variant &defaultValue)
 {
     // Allocate the instance level default value
     if (!instanceDefaultValues_)
@@ -1026,7 +1026,7 @@ void Serializable::SetInstanceDefault(const String& name, const Variant& default
     instanceDefaultValues_->operator [](name) = defaultValue;
 }
 
-Variant Serializable::GetInstanceDefault(const String& name) const
+Variant Serializable::GetInstanceDefault(const String &name) const
 {
     if (instanceDefaultValues_)
     {

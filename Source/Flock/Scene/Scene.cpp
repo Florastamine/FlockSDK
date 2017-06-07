@@ -260,7 +260,7 @@ bool Scene::LoadJSON(Deserializer& source)
         return false;
 }
 
-bool Scene::SaveXML(Serializer& dest, const String& indentation) const
+bool Scene::SaveXML(Serializer& dest, const String &indentation) const
 {
     FLOCKSDK_PROFILE(SaveSceneXML);
 
@@ -282,7 +282,7 @@ bool Scene::SaveXML(Serializer& dest, const String& indentation) const
         return false;
 }
 
-bool Scene::SaveJSON(Serializer& dest, const String& indentation) const
+bool Scene::SaveJSON(Serializer& dest, const String &indentation) const
 {
     FLOCKSDK_PROFILE(SaveSceneJSON);
 
@@ -525,7 +525,7 @@ void Scene::StopAsyncLoading()
     resolver_.Reset();
 }
 
-Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::Instantiate(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(Instantiate);
 
@@ -548,7 +548,7 @@ Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Qu
     }
 }
 
-Node* Scene::InstantiateXML(const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateXML(const XMLElement& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(InstantiateXML);
 
@@ -571,7 +571,7 @@ Node* Scene::InstantiateXML(const XMLElement& source, const Vector3& position, c
     }
 }
 
-Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(InstantiateJSON);
 
@@ -594,7 +594,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
     }
 }
 
-Node* Scene::InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
 {
     SharedPtr<XMLFile> xml(new XMLFile(context_));
     if (!xml->Load(source))
@@ -603,7 +603,7 @@ Node* Scene::InstantiateXML(Deserializer& source, const Vector3& position, const
     return InstantiateXML(xml->GetRoot(), position, rotation, mode);
 }
 
-Node* Scene::InstantiateJSON(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
 {
     SharedPtr<JSONFile> json(new JSONFile(context_));
     if (!json->Load(source))
@@ -688,12 +688,12 @@ void Scene::ClearRequiredPackageFiles()
     requiredPackageFiles_.Clear();
 }
 
-void Scene::RegisterVar(const String& name)
+void Scene::RegisterVar(const String &name)
 {
     varNames_[name] = name;
 }
 
-void Scene::UnregisterVar(const String& name)
+void Scene::UnregisterVar(const String &name)
 {
     varNames_.Erase(name);
 }
@@ -717,7 +717,7 @@ Node* Scene::GetNode(unsigned id) const
     }
 }
 
-bool Scene::GetNodesWithTag(PODVector<Node*>& dest, const String& tag) const
+bool Scene::GetNodesWithTag(PODVector<Node*>& dest, const String &tag) const
 {
     dest.Clear();
     HashMap<StringHash, PODVector<Node*> >::ConstIterator it = taggedNodes_.Find(tag);
@@ -751,7 +751,7 @@ float Scene::GetAsyncProgress() const
         (float)(asyncProgress_.totalNodes_ + asyncProgress_.totalResources_);
 }
 
-const String& Scene::GetVarName(StringHash hash) const
+const String &Scene::GetVarName(StringHash hash) const
 {
     HashMap<StringHash, String>::ConstIterator i = varNames_.Find(hash);
     return i != varNames_.End() ? i->second_ : String::EMPTY;
@@ -952,7 +952,7 @@ void Scene::NodeAdded(Node* node)
     // Cache tag if already tagged.
     if (!node->GetTags().Empty())
     {
-        const StringVector& tags = node->GetTags();
+        const StringVector &tags = node->GetTags();
         for (auto i = 0u; i < tags.Size(); ++i)
             taggedNodes_[tags[i]].Push(node);
     }
@@ -966,12 +966,12 @@ void Scene::NodeAdded(Node* node)
         NodeAdded(*i);
 }
 
-void Scene::NodeTagAdded(Node* node, const String& tag)
+void Scene::NodeTagAdded(Node* node, const String &tag)
 {
     taggedNodes_[tag].Push(node);
 }
 
-void Scene::NodeTagRemoved(Node* node, const String& tag)
+void Scene::NodeTagRemoved(Node* node, const String &tag)
 {
     taggedNodes_[tag].Remove(node);
 }
@@ -995,7 +995,7 @@ void Scene::NodeRemoved(Node* node)
     // Remove node from tag cache
     if (!node->GetTags().Empty())
     {
-        const StringVector& tags = node->GetTags();
+        const StringVector &tags = node->GetTags();
         for (auto i = 0u; i < tags.Size(); ++i)
             taggedNodes_[tags[i]].Remove(node);
     }
@@ -1064,7 +1064,7 @@ void Scene::ComponentRemoved(Component* component)
     component->OnSceneSet(0);
 }
 
-void Scene::SetVarNamesAttr(const String& value)
+void Scene::SetVarNamesAttr(const String &value)
 {
     Vector<String> varNames = value.Split(';');
 

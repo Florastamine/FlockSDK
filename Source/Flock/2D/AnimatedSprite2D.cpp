@@ -151,7 +151,7 @@ void AnimatedSprite2D::SetAnimationSet(AnimationSet2D* animationSet)
     loopMode_ = LM_DEFAULT;
 }
 
-void AnimatedSprite2D::SetEntity(const String& entity)
+void AnimatedSprite2D::SetEntity(const String &entity)
 {
     if (entity == entity_)
         return;
@@ -166,7 +166,7 @@ void AnimatedSprite2D::SetEntity(const String& entity)
         spriterInstance_->SetEntity(entity_.CString());
 }
 
-void AnimatedSprite2D::SetAnimation(const String& name, LoopMode2D loopMode)
+void AnimatedSprite2D::SetAnimation(const String &name, LoopMode2D loopMode)
 {
     animationName_ = name;
     loopMode_ = loopMode;
@@ -224,7 +224,7 @@ void AnimatedSprite2D::OnSceneSet(Scene* scene)
         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
 }
 
-void AnimatedSprite2D::SetAnimationAttr(const String& name)
+void AnimatedSprite2D::SetAnimationAttr(const String &name)
 {
     animationName_ = name;
     SetAnimation(animationName_, loopMode_);

@@ -797,7 +797,7 @@ void Engine::ApplyFrameLimit()
         timeStep_ = lastTimeSteps_.Back();
 }
 
-VariantMap Engine::ParseParameters(const Vector<String>& arguments)
+VariantMap Engine::ParseParameters(const Vector<String> &arguments)
 {
     VariantMap ret;
 
@@ -951,13 +951,13 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
     return ret;
 }
 
-bool Engine::HasParameter(const VariantMap& parameters, const String& parameter)
+bool Engine::HasParameter(const VariantMap& parameters, const String &parameter)
 {
     StringHash nameHash(parameter);
     return parameters.Find(nameHash) != parameters.End();
 }
 
-const Variant& Engine::GetParameter(const VariantMap& parameters, const String& parameter, const Variant& defaultValue)
+const Variant &Engine::GetParameter(const VariantMap& parameters, const String &parameter, const Variant &defaultValue)
 {
     StringHash nameHash(parameter);
     VariantMap::ConstIterator i = parameters.Find(nameHash);

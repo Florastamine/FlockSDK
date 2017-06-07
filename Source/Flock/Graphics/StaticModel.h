@@ -71,7 +71,7 @@ public:
     /// Set occlusion LOD level. By default (M_MAX_UNSIGNED) same as visible.
     void SetOcclusionLodLevel(unsigned level);
     /// Apply default materials from a material list file. If filename is empty (default), the model's resource name with extension .txt will be used.
-    void ApplyMaterialList(const String& fileName = String::EMPTY);
+    void ApplyMaterialList(const String &fileName = String::EMPTY);
 
     /// Return model.
     Model* GetModel() const { return model_; }
@@ -86,9 +86,9 @@ public:
     unsigned GetOcclusionLodLevel() const { return occlusionLodLevel_; }
 
     /// Determines if the given world space point is within the model geometry.
-    bool IsInside(const Vector3& point) const;
+    bool IsInside(const Vector3 &point) const;
     /// Determines if the given local space point is within the model geometry.
-    bool IsInsideLocal(const Vector3& point) const;
+    bool IsInsideLocal(const Vector3 &point) const;
 
     /// Set model attribute.
     void SetModelAttr(const ResourceRef& value);

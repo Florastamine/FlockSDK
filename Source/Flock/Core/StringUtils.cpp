@@ -82,7 +82,7 @@ unsigned CountElements(const char* buffer, char separator)
     return ret;
 }
 
-bool ToBool(const String& source)
+bool ToBool(const String &source)
 {
     return ToBool(source.CString());
 }
@@ -103,7 +103,7 @@ bool ToBool(const char* source)
     return false;
 }
 
-int ToInt(const String& source, int base)
+int ToInt(const String &source, int base)
 {
     return ToInt(source.CString(), base);
 }
@@ -132,12 +132,12 @@ long long ToInt64(const char* source, int base)
     return strtoll(source, 0, base);
 }
 
-long long ToInt64(const String& source, int base)
+long long ToInt64(const String &source, int base)
 {
     return ToInt64(source.CString(), base);
 }
 
-unsigned ToUInt(const String& source, int base)
+unsigned ToUInt(const String &source, int base)
 {
     return ToUInt(source.CString(), base);
 }
@@ -154,7 +154,7 @@ unsigned long long ToUInt64(const char* source, int base)
     return strtoull(source, 0, base);
 }
 
-unsigned long long ToUInt64(const String& source, int base)
+unsigned long long ToUInt64(const String &source, int base)
 {
     return ToUInt64(source.CString(), base);
 }
@@ -170,7 +170,7 @@ unsigned ToUInt(const char* source, int base)
     return (unsigned)strtoul(source, 0, base);
 }
 
-float ToFloat(const String& source)
+float ToFloat(const String &source)
 {
     return ToFloat(source.CString());
 }
@@ -183,7 +183,7 @@ float ToFloat(const char* source)
     return (float)strtod(source, 0);
 }
 
-double ToDouble(const String& source)
+double ToDouble(const String &source)
 {
     return ToDouble(source.CString());
 }
@@ -196,7 +196,7 @@ double ToDouble(const char* source)
     return strtod(source, 0);
 }
 
-Color ToColor(const String& source)
+Color ToColor(const String &source)
 {
     return ToColor(source.CString());
 }
@@ -219,7 +219,7 @@ Color ToColor(const char* source)
     return ret;
 }
 
-IntRect ToIntRect(const String& source)
+IntRect ToIntRect(const String &source)
 {
     return ToIntRect(source.CString());
 }
@@ -241,7 +241,7 @@ IntRect ToIntRect(const char* source)
     return ret;
 }
 
-IntVector2 ToIntVector2(const String& source)
+IntVector2 ToIntVector2(const String &source)
 {
     return ToIntVector2(source.CString());
 }
@@ -261,7 +261,7 @@ IntVector2 ToIntVector2(const char* source)
     return ret;
 }
 
-IntVector3 ToIntVector3(const String& source)
+IntVector3 ToIntVector3(const String &source)
 {
     return ToIntVector3(source.CString());
 }
@@ -282,7 +282,7 @@ IntVector3 ToIntVector3(const char* source)
     return ret;
 }
 
-Rect ToRect(const String& source)
+Rect ToRect(const String &source)
 {
     return ToRect(source.CString());
 }
@@ -304,7 +304,7 @@ Rect ToRect(const char* source)
     return ret;
 }
 
-Quaternion ToQuaternion(const String& source)
+Quaternion ToQuaternion(const String &source)
 {
     return ToQuaternion(source.CString());
 }
@@ -339,7 +339,7 @@ Quaternion ToQuaternion(const char* source)
     }
 }
 
-Vector2 ToVector2(const String& source)
+Vector2 ToVector2(const String &source)
 {
     return ToVector2(source.CString());
 }
@@ -359,7 +359,7 @@ Vector2 ToVector2(const char* source)
     return ret;
 }
 
-Vector3 ToVector3(const String& source)
+Vector3 ToVector3(const String &source)
 {
     return ToVector3(source.CString());
 }
@@ -380,7 +380,7 @@ Vector3 ToVector3(const char* source)
     return ret;
 }
 
-Vector4 ToVector4(const String& source, bool allowMissingCoords)
+Vector4 ToVector4(const String &source, bool allowMissingCoords)
 {
     return ToVector4(source.CString(), allowMissingCoords);
 }
@@ -419,7 +419,7 @@ Vector4 ToVector4(const char* source, bool allowMissingCoords)
     }
 }
 
-Variant ToVectorVariant(const String& source)
+Variant ToVectorVariant(const String &source)
 {
     return ToVectorVariant(source.CString());
 }
@@ -467,7 +467,7 @@ Variant ToVectorVariant(const char* source)
     return ret;
 }
 
-Matrix3 ToMatrix3(const String& source)
+Matrix3 ToMatrix3(const String &source)
 {
     return ToMatrix3(source.CString());
 }
@@ -494,7 +494,7 @@ Matrix3 ToMatrix3(const char* source)
     return ret;
 }
 
-Matrix3x4 ToMatrix3x4(const String& source)
+Matrix3x4 ToMatrix3x4(const String &source)
 {
     return ToMatrix3x4(source.CString());
 }
@@ -524,7 +524,7 @@ Matrix3x4 ToMatrix3x4(const char* source)
     return ret;
 }
 
-Matrix4 ToMatrix4(const String& source)
+Matrix4 ToMatrix4(const String &source)
 {
     return ToMatrix4(source.CString());
 }
@@ -570,7 +570,7 @@ String ToStringHex(unsigned value)
     return String(tempBuffer);
 }
 
-void BufferToString(String& dest, const void* data, unsigned size)
+void BufferToString(String &dest, const void* data, unsigned size)
 {
     // Precalculate needed string size
     const unsigned char* bytes = (const unsigned char*)data;
@@ -617,7 +617,7 @@ void BufferToString(String& dest, const void* data, unsigned size)
     }
 }
 
-void StringToBuffer(PODVector<unsigned char>& dest, const String& source)
+void StringToBuffer(PODVector<unsigned char>& dest, const String &source)
 {
     StringToBuffer(dest, source.CString());
 }
@@ -665,7 +665,7 @@ void StringToBuffer(PODVector<unsigned char>& dest, const char* source)
         dest[index] = (unsigned char)value;
 }
 
-unsigned GetStringListIndex(const String& value, const String* strings, unsigned defaultIndex, bool caseSensitive)
+unsigned GetStringListIndex(const String &value, const String* strings, unsigned defaultIndex, bool caseSensitive)
 {
     return GetStringListIndex(value.CString(), strings, defaultIndex, caseSensitive);
 }

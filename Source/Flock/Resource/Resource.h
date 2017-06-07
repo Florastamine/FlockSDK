@@ -65,12 +65,12 @@ public:
     virtual bool Save(Serializer& dest) const;
 
     /// Load resource from file.
-    bool LoadFile(const String& fileName);
+    bool LoadFile(const String &fileName);
     /// Save resource to file.
-    virtual bool SaveFile(const String& fileName) const;
+    virtual bool SaveFile(const String &fileName) const;
 
     /// Set name.
-    void SetName(const String& name);
+    void SetName(const String &name);
     /// Set memory use in bytes, possibly approximate.
     void SetMemoryUse(unsigned size);
     /// Reset last used timer.
@@ -79,7 +79,7 @@ public:
     void SetAsyncLoadState(AsyncLoadState newState);
 
     /// Return name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return name hash.
     StringHash GetNameHash() const { return nameHash_; }
@@ -106,7 +106,7 @@ private:
     AsyncLoadState asyncLoadState_;
 };
 
-inline const String& GetResourceName(Resource* resource)
+inline const String &GetResourceName(Resource* resource)
 {
     return resource ? resource->GetName() : String::EMPTY;
 }

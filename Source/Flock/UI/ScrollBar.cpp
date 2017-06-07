@@ -112,7 +112,7 @@ void ScrollBar::ApplyAttributes()
     }
 }
 
-void ScrollBar::OnResize(const IntVector2& newSize, const IntVector2& delta)
+void ScrollBar::OnResize(const IntVector2 &newSize, const IntVector2 &delta)
 {
     if (slider_->GetOrientation() == O_HORIZONTAL)
     {
@@ -251,7 +251,7 @@ bool ScrollBar::FilterImplicitAttributes(XMLElement& dest) const
 
 }
 
-bool ScrollBar::FilterButtonImplicitAttributes(XMLElement& dest, const String& name) const
+bool ScrollBar::FilterButtonImplicitAttributes(XMLElement& dest, const String &name) const
 {
     if (!dest)
         return false;

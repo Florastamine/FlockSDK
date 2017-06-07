@@ -61,7 +61,7 @@ public:
     /// Set sprite.
     void SetSprite(Sprite2D* sprite);
     /// Set source position variance.
-    void SetSourcePositionVariance(const Vector2& sourcePositionVariance);
+    void SetSourcePositionVariance(const Vector2 &sourcePositionVariance);
     /// Set speed.
     void SetSpeed(float speed);
     /// Set speed variance.
@@ -75,7 +75,7 @@ public:
     /// Set angle variance.
     void SetAngleVariance(float angleVariance);
     /// Set gravity.
-    void SetGravity(const Vector2& gravity);
+    void SetGravity(const Vector2 &gravity);
     /// Set radial acceleration.
     void SetRadialAcceleration(float radialAcceleration);
     /// Set tangential acceleration.
@@ -129,13 +129,13 @@ public:
     /// Set rotation end variance.
     void SetRotationEndVariance(float rotationEndVariance);
     /// Clone the 2D particle effect.
-    SharedPtr<ParticleEffect2D> Clone(const String& cloneName = String::EMPTY) const;
+    SharedPtr<ParticleEffect2D> Clone(const String &cloneName = String::EMPTY) const;
 
     /// Return sprite.
     Sprite2D* GetSprite() const { return sprite_; }
 
     /// Return source position variance.
-    const Vector2& GetSourcePositionVariance() const { return sourcePositionVariance_; }
+    const Vector2 &GetSourcePositionVariance() const { return sourcePositionVariance_; }
 
     /// Return speed.
     float GetSpeed() const { return speed_; }
@@ -156,7 +156,7 @@ public:
     float GetAngleVariance() const { return angleVariance_; }
 
     /// Return gravity.
-    const Vector2& GetGravity() const { return gravity_; }
+    const Vector2 &GetGravity() const { return gravity_; }
 
     /// Return radial acceleration.
     float GetRadialAcceleration() const { return radialAcceleration_; }
@@ -238,21 +238,21 @@ public:
 
 private:
     /// Read integer.
-    int ReadInt(const XMLElement& element, const String& name) const;
+    int ReadInt(const XMLElement& element, const String &name) const;
     /// Read float.
-    float ReadFloat(const XMLElement& element, const String& name) const;
+    float ReadFloat(const XMLElement& element, const String &name) const;
     /// Read Color.
-    Color ReadColor(const XMLElement& element, const String& name) const;
+    Color ReadColor(const XMLElement& element, const String &name) const;
     /// Read Vector2.
-    Vector2 ReadVector2(const XMLElement& element, const String& name) const;
+    Vector2 ReadVector2(const XMLElement& element, const String &name) const;
     /// Write integer.
-    void WriteInt(XMLElement& element, const String& name, int value) const;
+    void WriteInt(XMLElement& element, const String &name, int value) const;
     /// Write float.
-    void WriteFloat(XMLElement& element, const String& name, float value) const;
+    void WriteFloat(XMLElement& element, const String &name, float value) const;
     /// Write Color.
-    void WriteColor(XMLElement& element, const String& name, const Color& color) const;
+    void WriteColor(XMLElement& element, const String &name, const Color& color) const;
     /// Write Vector2.
-    void WriteVector2(XMLElement& element, const String& name, const Vector2& value) const;
+    void WriteVector2(XMLElement& element, const String &name, const Vector2 &value) const;
 
     /// Sprite.
     SharedPtr<Sprite2D> sprite_;

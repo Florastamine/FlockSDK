@@ -96,7 +96,7 @@ JSONValue& JSONValue::operator =(double rhs)
     return *this;
 }
 
-JSONValue& JSONValue::operator =(const String& rhs)
+JSONValue& JSONValue::operator =(const String &rhs)
 {
     SetType(JSON_STRING);
     *stringValue_ = rhs;
@@ -249,7 +249,7 @@ unsigned JSONValue::Size() const
     return 0;
 }
 
-JSONValue& JSONValue::operator [](const String& key)
+JSONValue& JSONValue::operator [](const String &key)
 {
     // Convert to object type
     SetType(JSON_OBJECT);
@@ -257,7 +257,7 @@ JSONValue& JSONValue::operator [](const String& key)
     return (*objectValue_)[key];
 }
 
-const JSONValue& JSONValue::operator [](const String& key) const
+const JSONValue& JSONValue::operator [](const String &key) const
 {
     if (GetValueType() != JSON_OBJECT)
         return EMPTY;
@@ -265,7 +265,7 @@ const JSONValue& JSONValue::operator [](const String& key) const
     return (*objectValue_)[key];
 }
 
-void JSONValue::Set(const String& key, const JSONValue& value)
+void JSONValue::Set(const String &key, const JSONValue& value)
 {
     // Convert to object type
     SetType(JSON_OBJECT);
@@ -273,7 +273,7 @@ void JSONValue::Set(const String& key, const JSONValue& value)
     (*objectValue_)[key] = value;
 }
 
-const JSONValue& JSONValue::Get(const String& key) const
+const JSONValue& JSONValue::Get(const String &key) const
 {
     if (GetValueType() != JSON_OBJECT)
         return EMPTY;
@@ -285,7 +285,7 @@ const JSONValue& JSONValue::Get(const String& key) const
     return i->second_;
 }
 
-bool JSONValue::Erase(const String& key)
+bool JSONValue::Erase(const String &key)
 {
     if (GetValueType() != JSON_OBJECT)
         return false;
@@ -293,7 +293,7 @@ bool JSONValue::Erase(const String& key)
     return objectValue_->Erase(key);
 }
 
-bool JSONValue::Contains(const String& key) const
+bool JSONValue::Contains(const String &key) const
 {
     if  (GetValueType() != JSON_OBJECT)
         return false;
@@ -386,7 +386,7 @@ void JSONValue::SetType(JSONValueType valueType, JSONNumberType numberType)
     }
 }
 
-void JSONValue::SetVariant(const Variant& variant, Context* context)
+void JSONValue::SetVariant(const Variant &variant, Context* context)
 {
     if (!IsNull())
     {
@@ -403,7 +403,7 @@ Variant JSONValue::GetVariant() const
     return (*this)["value"].GetVariantValue(type);
 }
 
-void JSONValue::SetVariantValue(const Variant& variant, Context* context)
+void JSONValue::SetVariantValue(const Variant &variant, Context* context)
 {
     if (!IsNull())
     {
@@ -474,7 +474,7 @@ void JSONValue::SetVariantValue(const Variant& variant, Context* context)
 
     case VAR_STRINGVECTOR:
         {
-            const StringVector& vector = variant.GetStringVector();
+            const StringVector &vector = variant.GetStringVector();
             Resize(vector.Size());
             for (auto i = 0u; i < vector.Size(); ++i)
                 (*this)[i] = vector[i];
@@ -589,7 +589,7 @@ VariantMap JSONValue::GetVariantMap() const
     return variantMap;
 }
 
-void JSONValue::SetVariantVector(const VariantVector& variantVector, Context* context)
+void JSONValue::SetVariantVector(const VariantVector &variantVector, Context* context)
 {
     SetType(JSON_ARRAY);
     arrayValue_->Reserve(variantVector.Size());
@@ -629,7 +629,7 @@ String JSONValue::GetNumberTypeName(JSONNumberType type)
     return numberTypeNames[type];
 }
 
-JSONValueType JSONValue::GetValueTypeFromName(const String& typeName)
+JSONValueType JSONValue::GetValueTypeFromName(const String &typeName)
 {
     return GetValueTypeFromName(typeName.CString());
 }
@@ -639,7 +639,7 @@ JSONValueType JSONValue::GetValueTypeFromName(const char* typeName)
     return (JSONValueType)GetStringListIndex(typeName, valueTypeNames, JSON_NULL);
 }
 
-JSONNumberType JSONValue::GetNumberTypeFromName(const String& typeName)
+JSONNumberType JSONValue::GetNumberTypeFromName(const String &typeName)
 {
     return GetNumberTypeFromName(typeName.CString());
 }

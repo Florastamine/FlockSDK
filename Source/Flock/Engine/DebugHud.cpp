@@ -277,12 +277,12 @@ float DebugHud::GetProfilerInterval() const
     return (float)profilerInterval_ / 1000.0f;
 }
 
-void DebugHud::SetAppStats(const String& label, const Variant& stats)
+void DebugHud::SetAppStats(const String &label, const Variant &stats)
 {
     SetAppStats(label, stats.ToString());
 }
 
-void DebugHud::SetAppStats(const String& label, const String& stats)
+void DebugHud::SetAppStats(const String &label, const String &stats)
 {
     bool newLabel = !appStats_.Contains(label);
     appStats_[label] = stats;
@@ -290,7 +290,7 @@ void DebugHud::SetAppStats(const String& label, const String& stats)
         appStats_.Sort();
 }
 
-bool DebugHud::ResetAppStats(const String& label)
+bool DebugHud::ResetAppStats(const String &label)
 {
     return appStats_.Erase(label);
 }

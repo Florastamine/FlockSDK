@@ -248,7 +248,7 @@ void Console::SetFocusOnShow(bool enable)
     focusOnShow_ = enable;
 }
 
-void Console::AddAutoComplete(const String& option)
+void Console::AddAutoComplete(const String &option)
 {
     // Sorted insertion
     Vector<String>::Iterator iter = UpperBound(autoComplete_.Begin(), autoComplete_.End(), option);
@@ -259,7 +259,7 @@ void Console::AddAutoComplete(const String& option)
         autoComplete_.Insert(iter, option);
 }
 
-void Console::RemoveAutoComplete(const String& option)
+void Console::RemoveAutoComplete(const String &option)
 {
     // Erase and keep ordered
     autoComplete_.Erase(LowerBound(autoComplete_.Begin(), autoComplete_.End(), option));
@@ -300,7 +300,7 @@ void Console::CopySelectedRows() const
     rowContainer_->CopySelectedItemsToClipboard();
 }
 
-const String& Console::GetHistoryRow(unsigned index) const
+const String &Console::GetHistoryRow(unsigned index) const
 {
     return index < history_.Size() ? history_[index] : String::EMPTY;
 }
@@ -325,7 +325,7 @@ bool Console::PopulateInterpreter()
     unsigned selection = M_MAX_UNSIGNED;
     for (auto i = 0u; i < names.Size(); ++i)
     {
-        const String& name = names[i];
+        const String &name = names[i];
         if (name == commandInterpreter_)
             selection = i;
         Text* text = new Text(context_);
@@ -415,7 +415,7 @@ void Console::HandleLineEditKey(StringHash eventType, VariantMap& eventData)
             // Search for auto completion that contains the contents of the line
             for (--autoCompletePosition_; autoCompletePosition_ != M_MAX_UNSIGNED; --autoCompletePosition_)
             {
-                const String& current = autoComplete_[autoCompletePosition_];
+                const String &current = autoComplete_[autoCompletePosition_];
                 if (current.StartsWith(autoCompleteLine_))
                 {
                     historyOrAutoCompleteChange_ = true;
@@ -467,7 +467,7 @@ void Console::HandleLineEditKey(StringHash eventType, VariantMap& eventData)
             // Search for auto completion that contains the contents of the line
             for (; autoCompletePosition_ < autoComplete_.Size(); ++autoCompletePosition_)
             {
-                const String& current = autoComplete_[autoCompletePosition_];
+                const String &current = autoComplete_[autoCompletePosition_];
                 if (current.StartsWith(autoCompleteLine_))
                 {
                     historyOrAutoCompleteChange_ = true;
@@ -481,7 +481,7 @@ void Console::HandleLineEditKey(StringHash eventType, VariantMap& eventData)
             {
                 for (autoCompletePosition_ = 0; autoCompletePosition_ != startPosition; ++autoCompletePosition_)
                 {
-                    const String& current = autoComplete_[autoCompletePosition_];
+                    const String &current = autoComplete_[autoCompletePosition_];
                     if (current.StartsWith(autoCompleteLine_))
                     {
                         historyOrAutoCompleteChange_ = true;

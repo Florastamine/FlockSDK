@@ -54,14 +54,14 @@ TmxFile2D* TmxLayer2D::GetTmxFile() const
     return tmxFile_;
 }
 
-bool TmxLayer2D::HasProperty(const String& name) const
+bool TmxLayer2D::HasProperty(const String &name) const
 {
     if (!propertySet_)
         return false;
     return propertySet_->HasProperty(name);
 }
 
-const String& TmxLayer2D::GetProperty(const String& name) const
+const String &TmxLayer2D::GetProperty(const String &name) const
 {
     if (!propertySet_)
         return String::EMPTY;
@@ -494,7 +494,7 @@ const TmxLayer2D* TmxFile2D::GetLayer(unsigned index) const
     return layers_[index];
 }
 
-SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String& source)
+SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String &source)
 {
     String tsxFilePath = GetParentPath(GetName()) + source;
     SharedPtr<File> tsxFile = GetSubsystem<ResourceCache>()->GetFile(tsxFilePath);

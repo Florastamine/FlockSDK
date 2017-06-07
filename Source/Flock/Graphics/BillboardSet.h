@@ -136,7 +136,7 @@ public:
     /// Set material attribute.
     void SetMaterialAttr(const ResourceRef& value);
     /// Set billboards attribute.
-    void SetBillboardsAttr(const VariantVector& value);
+    void SetBillboardsAttr(const VariantVector &value);
     /// Set billboards attribute for network replication.
     void SetNetBillboardsAttr(const PODVector<unsigned char>& value);
     /// Return material attribute.

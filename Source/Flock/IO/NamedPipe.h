@@ -38,7 +38,7 @@ public:
     /// Construct.
     NamedPipe(Context* context);
     /// Construct and open in either server or client mode.
-    NamedPipe(Context* context, const String& pipeName, bool isServer);
+    NamedPipe(Context* context, const String &pipeName, bool isServer);
     /// Destruct and close.
     virtual ~NamedPipe();
 
@@ -51,10 +51,10 @@ public:
     /// Return whether pipe has no data available.
     virtual bool IsEof() const;
     /// Return the pipe name.
-    virtual const String& GetName() const { return pipeName_; }
+    virtual const String &GetName() const { return pipeName_; }
 
     /// Open the pipe in either server or client mode. If already open, the existing pipe is closed. For a client end to open successfully the server end must already to be open. Return true if successful.
-    bool Open(const String& pipeName, bool isServer);
+    bool Open(const String &pipeName, bool isServer);
     /// Close the pipe. Note that once a client has disconnected, the server needs to close and reopen the pipe so that another client can connect. At least on Windows this is not possible to detect automatically, so the communication protocol should include a "bye" message to handle this situation.
     void Close();
 

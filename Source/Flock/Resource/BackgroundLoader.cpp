@@ -107,7 +107,7 @@ void BackgroundLoader::ThreadFunction()
     }
 }
 
-bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool sendEventOnFailure, Resource* caller)
+bool BackgroundLoader::QueueResource(StringHash type, const String &name, bool sendEventOnFailure, Resource* caller)
 {
     StringHash nameHash(name);
     Pair<StringHash, StringHash> key = MakePair(type, nameHash);

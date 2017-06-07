@@ -245,7 +245,7 @@ void SoundSource::Stop()
     MarkNetworkUpdate();
 }
 
-void SoundSource::SetSoundType(const String& type)
+void SoundSource::SetSoundType(const String &type)
 {
     if (type == SOUND_MASTER)
         return;

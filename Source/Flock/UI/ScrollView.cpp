@@ -258,7 +258,7 @@ void ScrollView::OnKey(int key, int buttons, int qualifiers)
     }
 }
 
-void ScrollView::OnResize(const IntVector2& newSize, const IntVector2& delta)
+void ScrollView::OnResize(const IntVector2 &newSize, const IntVector2 &delta)
 {
     UpdatePanelSize();
     UpdateViewSize();
@@ -296,7 +296,7 @@ void ScrollView::SetContentElement(UIElement* element)
     OnResize(GetSize(), IntVector2::ZERO);
 }
 
-void ScrollView::SetViewPosition(const IntVector2& position)
+void ScrollView::SetViewPosition(const IntVector2 &position)
 {
     UpdateView(position);
     UpdateScrollBars();
@@ -346,7 +346,7 @@ float ScrollView::GetScrollStep() const
     return horizontalScrollBar_->GetScrollStep();
 }
 
-void ScrollView::SetViewPositionAttr(const IntVector2& value)
+void ScrollView::SetViewPositionAttr(const IntVector2 &value)
 {
     viewPositionAttr_ = value;
     SetViewPosition(value);
@@ -384,7 +384,7 @@ bool ScrollView::FilterImplicitAttributes(XMLElement& dest) const
     return true;
 }
 
-bool ScrollView::FilterScrollBarImplicitAttributes(XMLElement& dest, const String& name) const
+bool ScrollView::FilterScrollBarImplicitAttributes(XMLElement& dest, const String &name) const
 {
     if (!dest)
         return false;
@@ -472,7 +472,7 @@ void ScrollView::UpdateScrollBars()
     ignoreEvents_ = false;
 }
 
-void ScrollView::UpdateView(const IntVector2& position)
+void ScrollView::UpdateView(const IntVector2 &position)
 {
     IntVector2 oldPosition = viewPosition_;
     IntRect panelBorder = scrollPanel_->GetClipBorder();

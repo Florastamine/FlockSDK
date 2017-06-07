@@ -41,9 +41,9 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    void SetAnchor(const Vector2& anchor);
+    void SetAnchor(const Vector2 &anchor);
     /// Set axis.
-    void SetAxis(const Vector2& axis);
+    void SetAxis(const Vector2 &axis);
     /// Set enable limit.
     void SetEnableLimit(bool enableLimit);
     /// Set lower translation.
@@ -58,10 +58,10 @@ public:
     void SetMotorSpeed(float motorSpeed);
 
     /// Return anchor.
-    const Vector2& GetAnchor() const { return anchor_; }
+    const Vector2 &GetAnchor() const { return anchor_; }
 
     /// Return axis.
-    const Vector2& GetAxis() const { return axis_; }
+    const Vector2 &GetAxis() const { return axis_; }
 
     /// Return enable limit.
     bool GetEnableLimit() const { return jointDef_.enableLimit; }

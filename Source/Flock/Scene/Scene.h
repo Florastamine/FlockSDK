@@ -116,9 +116,9 @@ public:
     /// Load from a JSON file. Return true if successful.
     bool LoadJSON(Deserializer& source);
     /// Save to an XML file. Return true if successful.
-    bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
+    bool SaveXML(Serializer& dest, const String &indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.
-    bool SaveJSON(Serializer& dest, const String& indentation = "\t") const;
+    bool SaveJSON(Serializer& dest, const String &indentation = "\t") const;
     /// Load from a binary file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
     bool LoadAsync(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
     /// Load from an XML file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
@@ -128,17 +128,17 @@ public:
     /// Stop asynchronous loading.
     void StopAsyncLoading();
     /// Instantiate scene content from binary data. Return root node if successful.
-    Node* Instantiate(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* Instantiate(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML
-        (const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+        (const XMLElement& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
-    Node* InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
     Node* InstantiateJSON
-        (const JSONValue& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+        (const JSONValue& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
-    Node* InstantiateJSON(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
 
     /// Clear scene completely of either replicated, local or all nodes and components.
     void Clear(bool clearReplicated = true, bool clearLocal = true);
@@ -159,9 +159,9 @@ public:
     /// Clear required package files.
     void ClearRequiredPackageFiles();
     /// Register a node user variable hash reverse mapping (for editing.)
-    void RegisterVar(const String& name);
+    void RegisterVar(const String &name);
     /// Unregister a node user variable hash reverse mapping.
-    void UnregisterVar(const String& name);
+    void UnregisterVar(const String &name);
     /// Clear all registered node user variable hash reverse mappings.
     void UnregisterAllVars();
 
@@ -170,7 +170,7 @@ public:
     /// Return component from the whole scene by ID, or null if not found.
     Component* GetComponent(unsigned id) const;
     /// Get nodes with specific tag from the whole scene, return false if empty.
-    bool GetNodesWithTag(PODVector<Node*>& dest, const String& tag)  const;
+    bool GetNodesWithTag(PODVector<Node*>& dest, const String &tag)  const;
 
     /// Return whether updates are enabled.
     bool IsUpdateEnabled() const { return updateEnabled_; }
@@ -185,7 +185,7 @@ public:
     LoadMode GetAsyncLoadMode() const { return asyncProgress_.mode_; }
 
     /// Return source file name.
-    const String& GetFileName() const { return fileName_; }
+    const String &GetFileName() const { return fileName_; }
 
     /// Return source file checksum.
     unsigned GetChecksum() const { return checksum_; }
@@ -209,7 +209,7 @@ public:
     const Vector<SharedPtr<PackageFile> >& GetRequiredPackageFiles() const { return requiredPackageFiles_; }
 
     /// Return a node user variable name, or empty if not registered.
-    const String& GetVarName(StringHash hash) const;
+    const String &GetVarName(StringHash hash) const;
 
     /// Update scene. Called by HandleUpdate.
     void Update(float timeStep);
@@ -229,9 +229,9 @@ public:
     unsigned GetFreeComponentID(CreateMode mode);
 
     /// Cache node by tag if tag not zero, no checking if already added. Used internaly in Node::AddTag.
-    void NodeTagAdded(Node* node, const String& tag);
+    void NodeTagAdded(Node* node, const String &tag);
     /// Cache node by tag if tag not zero.
-    void NodeTagRemoved(Node* node, const String& tag);
+    void NodeTagRemoved(Node* node, const String &tag);
 
     /// Node added. Assign scene pointer and add to ID map.
     void NodeAdded(Node* node);
@@ -242,7 +242,7 @@ public:
     /// Component removed. Remove from ID map.
     void ComponentRemoved(Component* component);
     /// Set node user variable reverse mappings.
-    void SetVarNamesAttr(const String& value);
+    void SetVarNamesAttr(const String &value);
     /// Return node user variable reverse mappings.
     String GetVarNamesAttr() const;
     /// Prepare network update by comparing attributes and marking replication states dirty as necessary.

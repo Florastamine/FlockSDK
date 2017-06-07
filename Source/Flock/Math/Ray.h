@@ -43,7 +43,7 @@ public:
     }
 
     /// Construct from origin and direction. The direction will be normalized.
-    Ray(const Vector3& origin, const Vector3& direction)
+    Ray(const Vector3 &origin, const Vector3 &direction)
     {
         Define(origin, direction);
     }
@@ -70,21 +70,21 @@ public:
     bool operator !=(const Ray& rhs) const { return origin_ != rhs.origin_ || direction_ != rhs.direction_; }
 
     /// Define from origin and direction. The direction will be normalized.
-    void Define(const Vector3& origin, const Vector3& direction)
+    void Define(const Vector3 &origin, const Vector3 &direction)
     {
         origin_ = origin;
         direction_ = direction.Normalized();
     }
 
     /// Project a point on the ray.
-    Vector3 Project(const Vector3& point) const
+    Vector3 Project(const Vector3 &point) const
     {
         Vector3 offset = point - origin_;
         return origin_ + offset.DotProduct(direction_) * direction_;
     }
 
     /// Return distance of a point from the ray.
-    float Distance(const Vector3& point) const
+    float Distance(const Vector3 &point) const
     {
         Vector3 projected = Project(point);
         return (point - projected).Length();
@@ -101,7 +101,7 @@ public:
     /// Return hit distance to a sphere, or infinity if no hit.
     float HitDistance(const Sphere& sphere) const;
     /// Return hit distance to a triangle, or infinity if no hit. Optionally return hit normal and hit barycentric coordinate at intersect point.
-    float HitDistance(const Vector3& v0, const Vector3& v1, const Vector3& v2, Vector3* outNormal = 0, Vector3* outBary = 0) const;
+    float HitDistance(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, Vector3* outNormal = 0, Vector3* outBary = 0) const;
     /// Return hit distance to non-indexed geometry data, or infinity if no hit. Optionally return hit normal and hit uv coordinates at intersect point.
     float HitDistance
         (const void* vertexData, unsigned vertexStride, unsigned vertexStart, unsigned vertexCount, Vector3* outNormal = 0,

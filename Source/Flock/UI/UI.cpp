@@ -143,8 +143,8 @@ void UI::SetCursor(Cursor* cursor)
         cursor_ = cursor;
 
         IntVector2 pos = cursor_->GetPosition();
-        const IntVector2& rootSize = rootElement_->GetSize();
-        const IntVector2& rootPos = rootElement_->GetPosition();
+        const IntVector2 &rootSize = rootElement_->GetSize();
+        const IntVector2 &rootPos = rootElement_->GetPosition();
         pos.x_ = Clamp(pos.x_, rootPos.x_, rootPos.x_ + rootSize.x_ - 1);
         pos.y_ = Clamp(pos.y_, rootPos.y_, rootPos.y_ + rootSize.y_ - 1);
         cursor_->SetPosition(pos);
@@ -385,8 +385,8 @@ void UI::RenderUpdate()
     // Get rendering batches from the non-modal UI elements
     batches_.Clear();
     vertexData_.Clear();
-    const IntVector2& rootSize = rootElement_->GetSize();
-    const IntVector2& rootPos = rootElement_->GetPosition();
+    const IntVector2 &rootSize = rootElement_->GetSize();
+    const IntVector2 &rootPos = rootElement_->GetPosition();
     // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
     IntRect currentScissor = IntRect(rootPos.x_, rootPos.y_, rootPos.x_ + rootSize.x_, rootPos.y_ + rootSize.y_);
     if (rootElement_->IsVisible())
@@ -441,8 +441,8 @@ void UI::DebugDraw(UIElement* element)
 {
     if (element)
     {
-        const IntVector2& rootSize = rootElement_->GetSize();
-        const IntVector2& rootPos = rootElement_->GetPosition();
+        const IntVector2 &rootSize = rootElement_->GetSize();
+        const IntVector2 &rootPos = rootElement_->GetPosition();
         element->GetDebugDrawBatches(debugDrawBatches_, debugVertexData_, IntRect(rootPos.x_, rootPos.y_,
                                                                                   rootPos.x_ + rootSize.x_,
                                                                                   rootPos.y_ + rootSize.y_));
@@ -508,7 +508,7 @@ bool UI::SaveLayout(Serializer& dest, UIElement* element)
     return element && element->SaveXML(dest);
 }
 
-void UI::SetClipboardText(const String& text)
+void UI::SetClipboardText(const String &text)
 {
     clipBoard_ = text;
     if (useSystemClipboard_)
@@ -598,7 +598,7 @@ void UI::SetHeight(float height)
     SetScale((float)size.y_ / height);
 }
 
-void UI::SetCustomSize(const IntVector2& size)
+void UI::SetCustomSize(const IntVector2 &size)
 {
     customSize_ = IntVector2(Max(0, size.x_), Max(0, size.y_));
     ResizeRootElement();
@@ -615,11 +615,11 @@ IntVector2 UI::GetCursorPosition() const
     return cursor_ ? cursor_->GetPosition() : GetSubsystem<Input>()->GetMousePosition();
 }
 
-UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly)
+UIElement* UI::GetElementAt(const IntVector2 &position, bool enabledOnly)
 {
     IntVector2 positionCopy(position);
-    const IntVector2& rootSize = rootElement_->GetSize();
-    const IntVector2& rootPos = rootElement_->GetPosition();
+    const IntVector2 &rootSize = rootElement_->GetSize();
+    const IntVector2 &rootPos = rootElement_->GetPosition();
 
     // If position is out of bounds of root element return null.
     if (position.x_ < rootPos.x_ || position.x_ > rootPos.x_ + rootSize.x_)
@@ -705,7 +705,7 @@ UIElement* UI::GetDragElement(unsigned index)
     return dragElementsConfirmed_[index];
 }
 
-const String& UI::GetClipboardText() const
+const String &UI::GetClipboardText() const
 {
     if (useSystemClipboard_)
     {
@@ -929,7 +929,7 @@ void UI::GetBatches(UIElement* element, IntRect currentScissor)
     }
 }
 
-void UI::GetElementAt(UIElement*& result, UIElement* current, const IntVector2& position, bool enabledOnly)
+void UI::GetElementAt(UIElement*& result, UIElement* current, const IntVector2 &position, bool enabledOnly)
 {
     if (!current)
         return;
@@ -1012,7 +1012,7 @@ UIElement* UI::GetFocusableElement(UIElement* element)
     return element;
 }
 
-void UI::GetCursorPositionAndVisible(IntVector2& pos, bool& visible)
+void UI::GetCursorPositionAndVisible(IntVector2 &pos, bool& visible)
 {
     // Prefer software cursor then OS-specific cursor
     if (cursor_ && cursor_->IsVisible())
@@ -1053,7 +1053,7 @@ void UI::ReleaseFontFaces()
         fonts[i]->ReleaseFaces();
 }
 
-void UI::ProcessHover(const IntVector2& cursorPos, int buttons, int qualifiers, Cursor* cursor)
+void UI::ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, Cursor* cursor)
 {
     WeakPtr<UIElement> element(GetElementAt(cursorPos));
 
@@ -1141,7 +1141,7 @@ void UI::ProcessHover(const IntVector2& cursorPos, int buttons, int qualifiers, 
     }
 }
 
-void UI::ProcessClickBegin(const IntVector2& cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
+void UI::ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
 {
     if (cursorVisible)
     {
@@ -1217,7 +1217,7 @@ void UI::ProcessClickBegin(const IntVector2& cursorPos, int button, int buttons,
     }
 }
 
-void UI::ProcessClickEnd(const IntVector2& cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
+void UI::ProcessClickEnd(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
 {
     WeakPtr<UIElement> element;
     if (cursorVisible)
@@ -1282,7 +1282,7 @@ void UI::ProcessClickEnd(const IntVector2& cursorPos, int button, int buttons, i
     }
 }
 
-void UI::ProcessMove(const IntVector2& cursorPos, const IntVector2& cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
+void UI::ProcessMove(const IntVector2 &cursorPos, const IntVector2 &cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
     bool cursorVisible)
 {
     if (cursorVisible && dragElementsCount_ > 0 && buttons)
@@ -1351,7 +1351,7 @@ void UI::ProcessMove(const IntVector2& cursorPos, const IntVector2& cursorDeltaP
     }
 }
 
-void UI::SendDragOrHoverEvent(StringHash eventType, UIElement* element, const IntVector2& screenPos, const IntVector2& deltaPos,
+void UI::SendDragOrHoverEvent(StringHash eventType, UIElement* element, const IntVector2 &screenPos, const IntVector2 &deltaPos,
     UI::DragData* dragData)
 {
     if (!element)
@@ -1383,7 +1383,7 @@ void UI::SendDragOrHoverEvent(StringHash eventType, UIElement* element, const In
     element->SendEvent(eventType, eventData);
 }
 
-void UI::SendClickEvent(StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2& pos, int button,
+void UI::SendClickEvent(StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2 &pos, int button,
     int buttons, int qualifiers)
 {
     VariantMap& eventData = GetEventDataMap();
@@ -1465,8 +1465,8 @@ void UI::HandleMouseMove(StringHash eventType, VariantMap& eventData)
     qualifiers_ = eventData[P_QUALIFIERS].GetInt();
 
     Input* input = GetSubsystem<Input>();
-    const IntVector2& rootSize = rootElement_->GetSize();
-    const IntVector2& rootPos = rootElement_->GetPosition();
+    const IntVector2 &rootSize = rootElement_->GetSize();
+    const IntVector2 &rootPos = rootElement_->GetPosition();
 
     IntVector2 DeltaP = IntVector2(eventData[P_DX].GetInt(), eventData[P_DY].GetInt());
 

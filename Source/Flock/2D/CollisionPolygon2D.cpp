@@ -59,7 +59,7 @@ void CollisionPolygon2D::SetVertexCount(unsigned count)
     vertices_.Resize(count);
 }
 
-void CollisionPolygon2D::SetVertex(unsigned index, const Vector2& vertex)
+void CollisionPolygon2D::SetVertex(unsigned index, const Vector2 &vertex)
 {
     if (index >= vertices_.Size())
         return;

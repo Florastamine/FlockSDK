@@ -27,7 +27,7 @@
 namespace FlockSDK
 {
 
-template <> void Swap<String>(String& first, String& second)
+template <> void Swap<String>(String &first, String &second)
 {
     first.Swap(second);
 }

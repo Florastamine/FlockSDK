@@ -73,7 +73,7 @@ static const char* lightingModeNames[] =
     0
 };
 
-Pass::Pass(const String& name) :
+Pass::Pass(const String &name) :
     blendMode_(BLEND_REPLACE),
     cullMode_(MAX_CULLMODES),
     depthTestMode_(CMP_LESSEQUAL),
@@ -134,37 +134,37 @@ void Pass::SetIsDesktop(bool enable)
     isDesktop_ = enable;
 }
 
-void Pass::SetVertexShader(const String& name)
+void Pass::SetVertexShader(const String &name)
 {
     vertexShaderName_ = name;
     ReleaseShaders();
 }
 
-void Pass::SetPixelShader(const String& name)
+void Pass::SetPixelShader(const String &name)
 {
     pixelShaderName_ = name;
     ReleaseShaders();
 }
 
-void Pass::SetVertexShaderDefines(const String& defines)
+void Pass::SetVertexShaderDefines(const String &defines)
 {
     vertexShaderDefines_ = defines;
     ReleaseShaders();
 }
 
-void Pass::SetPixelShaderDefines(const String& defines)
+void Pass::SetPixelShaderDefines(const String &defines)
 {
     pixelShaderDefines_ = defines;
     ReleaseShaders();
 }
 
-void Pass::SetVertexShaderDefineExcludes(const String& excludes)
+void Pass::SetVertexShaderDefineExcludes(const String &excludes)
 {
     vertexShaderDefineExcludes_ = excludes;
     ReleaseShaders();
 }
 
-void Pass::SetPixelShaderDefineExcludes(const String& excludes)
+void Pass::SetPixelShaderDefineExcludes(const String &excludes)
 {
     pixelShaderDefineExcludes_ = excludes;
     ReleaseShaders();
@@ -377,7 +377,7 @@ void Technique::ReleaseShaders()
     }
 }
 
-SharedPtr<Technique> Technique::Clone(const String& cloneName) const
+SharedPtr<Technique> Technique::Clone(const String &cloneName) const
 {
     SharedPtr<Technique> ret(new Technique(context_));
     ret->SetIsDesktop(isDesktop_);
@@ -408,7 +408,7 @@ SharedPtr<Technique> Technique::Clone(const String& cloneName) const
     return ret;
 }
 
-Pass* Technique::CreatePass(const String& name)
+Pass* Technique::CreatePass(const String &name)
 {
     Pass* oldPass = GetPass(name);
     if (oldPass)
@@ -426,7 +426,7 @@ Pass* Technique::CreatePass(const String& name)
     return newPass;
 }
 
-void Technique::RemovePass(const String& name)
+void Technique::RemovePass(const String &name)
 {
     HashMap<String, unsigned>::ConstIterator i = passIndices.Find(name.ToLower());
     if (i == passIndices.End())
@@ -438,19 +438,19 @@ void Technique::RemovePass(const String& name)
     }
 }
 
-bool Technique::HasPass(const String& name) const
+bool Technique::HasPass(const String &name) const
 {
     HashMap<String, unsigned>::ConstIterator i = passIndices.Find(name.ToLower());
     return i != passIndices.End() ? HasPass(i->second_) : false;
 }
 
-Pass* Technique::GetPass(const String& name) const
+Pass* Technique::GetPass(const String &name) const
 {
     HashMap<String, unsigned>::ConstIterator i = passIndices.Find(name.ToLower());
     return i != passIndices.End() ? GetPass(i->second_) : 0;
 }
 
-Pass* Technique::GetSupportedPass(const String& name) const
+Pass* Technique::GetSupportedPass(const String &name) const
 {
     HashMap<String, unsigned>::ConstIterator i = passIndices.Find(name.ToLower());
     return i != passIndices.End() ? GetSupportedPass(i->second_) : 0;
@@ -497,7 +497,7 @@ PODVector<Pass*> Technique::GetPasses() const
     return ret;
 }
 
-SharedPtr<Technique> Technique::CloneWithDefines(const String& vsDefines, const String& psDefines)
+SharedPtr<Technique> Technique::CloneWithDefines(const String &vsDefines, const String &psDefines)
 {
     // Return self if no actual defines
     if (vsDefines.Empty() && psDefines.Empty())
@@ -529,7 +529,7 @@ SharedPtr<Technique> Technique::CloneWithDefines(const String& vsDefines, const 
     return i->second_;
 }
 
-unsigned Technique::GetPassIndex(const String& passName)
+unsigned Technique::GetPassIndex(const String &passName)
 {
     // Initialize built-in pass indices on first call
     if (passIndices.Empty())

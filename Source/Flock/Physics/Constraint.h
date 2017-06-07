@@ -58,7 +58,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Handle attribute write access.
-    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant& src);
+    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant &src);
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     virtual void ApplyAttributes();
     /// Handle enabled/disabled state change.
@@ -73,23 +73,23 @@ public:
     /// Set other body to connect to. Set to null to connect to the static world.
     void SetOtherBody(RigidBody* body);
     /// Set constraint position relative to own body.
-    void SetPosition(const Vector3& position);
+    void SetPosition(const Vector3 &position);
     /// Set constraint rotation relative to own body.
     void SetRotation(const Quaternion& rotation);
     /// Set constraint rotation relative to own body by specifying the axis.
-    void SetAxis(const Vector3& axis);
+    void SetAxis(const Vector3 &axis);
     /// Set constraint position relative to the other body. If connected to the static world, is a world space position.
-    void SetOtherPosition(const Vector3& position);
+    void SetOtherPosition(const Vector3 &position);
     /// Set constraint rotation relative to the other body. If connected to the static world, is a world space rotation.
     void SetOtherRotation(const Quaternion& rotation);
     /// Set constraint rotation relative to the other body by specifying the axis.
-    void SetOtherAxis(const Vector3& axis);
+    void SetOtherAxis(const Vector3 &axis);
     /// Set constraint world space position. Resets both own and other body relative position, ie. zeroes the constraint error.
-    void SetWorldPosition(const Vector3& position);
+    void SetWorldPosition(const Vector3 &position);
     /// Set high limit. Interpretation is constraint type specific.
-    void SetHighLimit(const Vector2& limit);
+    void SetHighLimit(const Vector2 &limit);
     /// Set low limit. Interpretation is constraint type specific.
-    void SetLowLimit(const Vector2& limit);
+    void SetLowLimit(const Vector2 &limit);
     /// Set constraint error reduction parameter. Zero = leave to default.
     void SetERP(float erp);
     /// Set constraint force mixing parameter. Zero = leave to default.
@@ -113,13 +113,13 @@ public:
     RigidBody* GetOtherBody() const { return otherBody_; }
 
     /// Return constraint position relative to own body.
-    const Vector3& GetPosition() const { return position_; }
+    const Vector3 &GetPosition() const { return position_; }
 
     /// Return constraint rotation relative to own body.
     const Quaternion& GetRotation() const { return rotation_; }
 
     /// Return constraint position relative to other body.
-    const Vector3& GetOtherPosition() const { return otherPosition_; }
+    const Vector3 &GetOtherPosition() const { return otherPosition_; }
 
     /// Return constraint rotation relative to other body.
     const Quaternion& GetOtherRotation() const { return otherRotation_; }
@@ -128,10 +128,10 @@ public:
     Vector3 GetWorldPosition() const;
 
     /// Return high limit.
-    const Vector2& GetHighLimit() const { return highLimit_; }
+    const Vector2 &GetHighLimit() const { return highLimit_; }
 
     /// Return low limit.
-    const Vector2& GetLowLimit() const { return lowLimit_; }
+    const Vector2 &GetLowLimit() const { return lowLimit_; }
 
     /// Return constraint error reduction parameter.
     float GetERP() const { return erp_; }

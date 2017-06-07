@@ -56,9 +56,9 @@ class FLOCKSDK_API AttributeAccessor : public RefCounted
 {
 public:
     /// Get the attribute.
-    virtual void Get(const Serializable* ptr, Variant& dest) const = 0;
+    virtual void Get(const Serializable* ptr, Variant &dest) const = 0;
     /// Set the attribute.
-    virtual void Set(Serializable* ptr, const Variant& src) = 0;
+    virtual void Set(Serializable* ptr, const Variant &src) = 0;
 };
 
 /// Description of an automatically serializable variable.
@@ -76,7 +76,7 @@ struct AttributeInfo
     }
 
     /// Construct offset attribute.
-    AttributeInfo(VariantType type, const char* name, size_t offset, const Variant& defaultValue, unsigned mode) :
+    AttributeInfo(VariantType type, const char* name, size_t offset, const Variant &defaultValue, unsigned mode) :
         type_(type),
         name_(name),
         offset_((unsigned)offset),
@@ -89,7 +89,7 @@ struct AttributeInfo
     }
 
     /// Construct offset enum attribute.
-    AttributeInfo(const char* name, size_t offset, const char** enumNames, const Variant& defaultValue, unsigned mode) :
+    AttributeInfo(const char* name, size_t offset, const char** enumNames, const Variant &defaultValue, unsigned mode) :
         type_(VAR_INT),
         name_(name),
         offset_((unsigned)offset),
@@ -102,7 +102,7 @@ struct AttributeInfo
     }
 
     /// Construct accessor attribute.
-    AttributeInfo(VariantType type, const char* name, AttributeAccessor* accessor, const Variant& defaultValue, unsigned mode) :
+    AttributeInfo(VariantType type, const char* name, AttributeAccessor* accessor, const Variant &defaultValue, unsigned mode) :
         type_(type),
         name_(name),
         offset_(0),
@@ -116,7 +116,7 @@ struct AttributeInfo
     }
 
     /// Construct accessor enum attribute.
-    AttributeInfo(const char* name, AttributeAccessor* accessor, const char** enumNames, const Variant& defaultValue,
+    AttributeInfo(const char* name, AttributeAccessor* accessor, const char** enumNames, const Variant &defaultValue,
         unsigned mode) :
         type_(VAR_INT),
         name_(name),
@@ -131,7 +131,7 @@ struct AttributeInfo
     }
 
     /// Construct variant structure (structure, which packed to VariantVector) attribute.
-    AttributeInfo(VariantType type, const char* name, AttributeAccessor* accessor, const Variant& defaultValue, const char** variantStructureElementNames, unsigned mode) :
+    AttributeInfo(VariantType type, const char* name, AttributeAccessor* accessor, const Variant &defaultValue, const char** variantStructureElementNames, unsigned mode) :
         type_(type),
         name_(name),
         offset_(0),

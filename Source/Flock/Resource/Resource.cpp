@@ -83,19 +83,19 @@ bool Resource::Save(Serializer& dest) const
     return false;
 }
 
-bool Resource::LoadFile(const String& fileName)
+bool Resource::LoadFile(const String &fileName)
 {
     File file(context_);
     return file.Open(fileName, FILE_READ) && Load(file);
 }
 
-bool Resource::SaveFile(const String& fileName) const
+bool Resource::SaveFile(const String &fileName) const
 {
     File file(context_);
     return file.Open(fileName, FILE_WRITE) && Save(file);
 }
 
-void Resource::SetName(const String& name)
+void Resource::SetName(const String &name)
 {
     name_ = name;
     nameHash_ = name;

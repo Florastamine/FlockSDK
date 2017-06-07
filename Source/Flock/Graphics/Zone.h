@@ -43,7 +43,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Handle attribute write access.
-    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant& src);
+    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant &src);
     /// Visualize the component as debug geometry.
     virtual void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
 
@@ -114,7 +114,7 @@ public:
     Texture* GetZoneTexture() const { return zoneTexture_; }
 
     /// Check whether a point is inside.
-    bool IsInside(const Vector3& point) const;
+    bool IsInside(const Vector3 &point) const;
     /// Set zone texture attribute.
     void SetZoneTextureAttr(const ResourceRef& value);
     /// Return zone texture attribute.

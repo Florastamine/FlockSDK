@@ -146,7 +146,7 @@ void Camera::SetOrthoSize(float orthoSize)
     MarkNetworkUpdate();
 }
 
-void Camera::SetOrthoSize(const Vector2& orthoSize)
+void Camera::SetOrthoSize(const Vector2 &orthoSize)
 {
     autoAspectRatio_ = false;
     orthoSize_ = orthoSize.y_;
@@ -208,7 +208,7 @@ void Camera::SetAutoAspectRatio(bool enable)
     MarkNetworkUpdate();
 }
 
-void Camera::SetProjectionOffset(const Vector2& offset)
+void Camera::SetProjectionOffset(const Vector2 &offset)
 {
     projectionOffset_ = offset;
     projectionDirty_ = true;
@@ -409,7 +409,7 @@ Ray Camera::GetScreenRay(float x, float y) const
     return ret;
 }
 
-Vector2 Camera::WorldToScreenPoint(const Vector3& worldPos) const
+Vector2 Camera::WorldToScreenPoint(const Vector3 &worldPos) const
 {
     Vector3 eyeSpacePos = GetView() * worldPos;
     Vector2 ret;
@@ -431,7 +431,7 @@ Vector2 Camera::WorldToScreenPoint(const Vector3& worldPos) const
     return ret;
 }
 
-Vector3 Camera::ScreenToWorldPoint(const Vector3& screenPos) const
+Vector3 Camera::ScreenToWorldPoint(const Vector3 &screenPos) const
 {
     Ray ray = GetScreenRay(screenPos.x_, screenPos.y_);
     Vector3 viewSpaceDir = (GetView() * Vector4(ray.direction_, 0.0f));
@@ -460,7 +460,7 @@ Matrix4 Camera::GetGPUProjection() const
     return ret;
 }
 
-void Camera::GetFrustumSize(Vector3& near, Vector3& far) const
+void Camera::GetFrustumSize(Vector3 &near, Vector3 &far) const
 {
     Frustum viewSpaceFrustum = GetViewSpaceFrustum();
     near = viewSpaceFrustum.vertices_[0];
@@ -482,22 +482,22 @@ float Camera::GetHalfViewSize() const
         return orthoSize_ * 0.5f / zoom_;
 }
 
-float Camera::GetDistance(const Vector3& worldPos) const
+float Camera::GetDistance(const Vector3 &worldPos) const
 {
     if (!orthographic_)
     {
-        const Vector3& cameraPos = node_ ? node_->GetWorldPosition() : Vector3::ZERO;
+        const Vector3 &cameraPos = node_ ? node_->GetWorldPosition() : Vector3::ZERO;
         return (worldPos - cameraPos).Length();
     }
     else
         return Abs((GetView() * worldPos).z_);
 }
 
-float Camera::GetDistanceSquared(const Vector3& worldPos) const
+float Camera::GetDistanceSquared(const Vector3 &worldPos) const
 {
     if (!orthographic_)
     {
-        const Vector3& cameraPos = node_ ? node_->GetWorldPosition() : Vector3::ZERO;
+        const Vector3 &cameraPos = node_ ? node_->GetWorldPosition() : Vector3::ZERO;
         return (worldPos - cameraPos).LengthSquared();
     }
     else
@@ -516,7 +516,7 @@ float Camera::GetLodDistance(float distance, float scale, float bias) const
         return orthoSize_ / d;
 }
 
-Quaternion Camera::GetFaceCameraRotation(const Vector3& position, const Quaternion& rotation, FaceCameraMode mode, float minAngle)
+Quaternion Camera::GetFaceCameraRotation(const Vector3 &position, const Quaternion& rotation, FaceCameraMode mode, float minAngle)
 {
     if (!node_)
         return rotation;
@@ -611,12 +611,12 @@ void Camera::SetOrthoSizeAttr(float orthoSize)
     MarkNetworkUpdate();
 }
 
-void Camera::SetReflectionPlaneAttr(const Vector4& value)
+void Camera::SetReflectionPlaneAttr(const Vector4 &value)
 {
     SetReflectionPlane(Plane(value));
 }
 
-void Camera::SetClipPlaneAttr(const Vector4& value)
+void Camera::SetClipPlaneAttr(const Vector4 &value)
 {
     SetClipPlane(Plane(value));
 }

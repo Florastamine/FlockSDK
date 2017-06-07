@@ -99,10 +99,10 @@ public:
     bool IsFinished() const { return traveled_ >= 1.0f; }
 
     /// Set Control Point Node IDs attribute.
-    void SetControlPointIdsAttr(const VariantVector& value);
+    void SetControlPointIdsAttr(const VariantVector &value);
 
     /// Return Control Point Node IDs attribute.
-    const VariantVector& GetControlPointIdsAttr() const { return controlPointIdsAttr_; }
+    const VariantVector &GetControlPointIdsAttr() const { return controlPointIdsAttr_; }
 
     /// Set Controlled Node ID attribute.
     void SetControlledIdAttr(unsigned value);

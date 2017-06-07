@@ -75,15 +75,15 @@ public:
     /// Begin defining a geometry. Clears existing vertices in that index.
     void BeginGeometry(unsigned index, PrimitiveType type);
     /// Define a vertex position. This begins a new vertex.
-    void DefineVertex(const Vector3& position);
+    void DefineVertex(const Vector3 &position);
     /// Define a vertex normal.
-    void DefineNormal(const Vector3& normal);
+    void DefineNormal(const Vector3 &normal);
     /// Define a vertex color.
     void DefineColor(const Color& color);
     /// Define a vertex UV coordinate.
-    void DefineTexCoord(const Vector2& texCoord);
+    void DefineTexCoord(const Vector2 &texCoord);
     /// Define a vertex tangent.
-    void DefineTangent(const Vector4& tangent);
+    void DefineTangent(const Vector4 &tangent);
     /// Set the primitive type, number of vertices and elements in a geometry, after which the vertices can be edited with GetVertex(). An alternative to BeginGeometry() / DefineVertex().
     void DefineGeometry
         (unsigned index, PrimitiveType type, unsigned numVertices, bool hasNormals, bool hasColors, bool hasTexCoords,

@@ -81,9 +81,9 @@ public:
     /// Define from a frustum.
     void Define(const Frustum& frustum);
     /// Add a triangle face.
-    void AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2);
+    void AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2);
     /// Add a quadrilateral face.
-    void AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3);
+    void AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, const Vector3 &v3);
     /// Add an arbitrary face.
     void AddFace(const PODVector<Vector3>& face);
     /// Clip with a plane.
@@ -112,9 +112,9 @@ public:
 
 private:
     /// Set a triangle face by index.
-    void SetFace(unsigned index, const Vector3& v0, const Vector3& v1, const Vector3& v2);
+    void SetFace(unsigned index, const Vector3 &v0, const Vector3 &v1, const Vector3 &v2);
     /// Set a quadrilateral face by index.
-    void SetFace(unsigned index, const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3);
+    void SetFace(unsigned index, const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, const Vector3 &v3);
     /// Internal vector for clipped vertices.
     PODVector<Vector3> clippedVertices_;
     /// Internal vector for the new face being constructed.

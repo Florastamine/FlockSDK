@@ -50,16 +50,16 @@ public:
     /// Update smoothing.
     void Update(float constant, float squaredSnapThreshold);
     /// Set target position in parent space.
-    void SetTargetPosition(const Vector3& position);
+    void SetTargetPosition(const Vector3 &position);
     /// Set target rotation in parent space.
     void SetTargetRotation(const Quaternion& rotation);
     /// Set target position in world space.
-    void SetTargetWorldPosition(const Vector3& position);
+    void SetTargetWorldPosition(const Vector3 &position);
     /// Set target rotation in world space.
     void SetTargetWorldRotation(const Quaternion& rotation);
 
     /// Return target position in parent space.
-    const Vector3& GetTargetPosition() const { return targetPosition_; }
+    const Vector3 &GetTargetPosition() const { return targetPosition_; }
 
     /// Return target rotation in parent space.
     const Quaternion& GetTargetRotation() const { return targetRotation_; }

@@ -44,7 +44,7 @@ public:
     /// Set vertex count.
     void SetVertexCount(unsigned count);
     /// Set vertex.
-    void SetVertex(unsigned index, const Vector2& vertex);
+    void SetVertex(unsigned index, const Vector2 &vertex);
     /// Set vertices.
     void SetVertices(const PODVector<Vector2>& vertices);
     /// Set vertices attribute.
@@ -57,7 +57,7 @@ public:
     unsigned GetVertexCount() const { return vertices_.Size(); }
 
     /// Return vertex.
-    const Vector2& GetVertex(unsigned index) const { return (index < vertices_.Size()) ? vertices_[index] : Vector2::ZERO; }
+    const Vector2 &GetVertex(unsigned index) const { return (index < vertices_.Size()) ? vertices_[index] : Vector2::ZERO; }
 
     /// Return vertices.
     const PODVector<Vector2>& GetVertices() const { return vertices_; }

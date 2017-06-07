@@ -46,19 +46,19 @@ public:
     }
 
     /// Construct from 3 vertices.
-    Plane(const Vector3& v0, const Vector3& v1, const Vector3& v2)
+    Plane(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2)
     {
         Define(v0, v1, v2);
     }
 
     /// Construct from a normal vector and a point on the plane.
-    Plane(const Vector3& normal, const Vector3& point)
+    Plane(const Vector3 &normal, const Vector3 &point)
     {
         Define(normal, point);
     }
 
     /// Construct from a 4-dimensional vector, where the w coordinate is the plane parameter.
-    Plane(const Vector4& plane)
+    Plane(const Vector4 &plane)
     {
         Define(plane);
     }
@@ -73,7 +73,7 @@ public:
     }
 
     /// Define from 3 vertices.
-    void Define(const Vector3& v0, const Vector3& v1, const Vector3& v2)
+    void Define(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2)
     {
         Vector3 dist1 = v1 - v0;
         Vector3 dist2 = v2 - v0;
@@ -82,7 +82,7 @@ public:
     }
 
     /// Define from a normal vector and a point on the plane.
-    void Define(const Vector3& normal, const Vector3& point)
+    void Define(const Vector3 &normal, const Vector3 &point)
     {
         normal_ = normal.Normalized();
         absNormal_ = normal_.Abs();
@@ -90,7 +90,7 @@ public:
     }
 
     /// Define from a 4-dimensional vector, where the w coordinate is the plane parameter.
-    void Define(const Vector4& plane)
+    void Define(const Vector4 &plane)
     {
         normal_ = Vector3(plane.x_, plane.y_, plane.z_);
         absNormal_ = normal_.Abs();
@@ -105,13 +105,13 @@ public:
     void Transform(const Matrix4& transform);
 
     /// Project a point on the plane.
-    Vector3 Project(const Vector3& point) const { return point - normal_ * (normal_.DotProduct(point) + d_); }
+    Vector3 Project(const Vector3 &point) const { return point - normal_ * (normal_.DotProduct(point) + d_); }
 
     /// Return signed distance to a point.
-    float Distance(const Vector3& point) const { return normal_.DotProduct(point) + d_; }
+    float Distance(const Vector3 &point) const { return normal_.DotProduct(point) + d_; }
 
     /// Reflect a normalized direction vector.
-    Vector3 Reflect(const Vector3& direction) const { return direction - (2.0f * normal_.DotProduct(direction) * normal_); }
+    Vector3 Reflect(const Vector3 &direction) const { return direction - (2.0f * normal_.DotProduct(direction) * normal_); }
 
     /// Return a reflection matrix.
     Matrix3x4 ReflectionMatrix() const;

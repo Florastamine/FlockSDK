@@ -41,9 +41,9 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    void SetAnchor(const Vector2& anchor);
+    void SetAnchor(const Vector2 &anchor);
     /// Set axis.
-    void SetAxis(const Vector2& axis);
+    void SetAxis(const Vector2 &axis);
     /// Set enable motor.
     void SetEnableMotor(bool enableMotor);
     /// Set max motor torque.
@@ -56,10 +56,10 @@ public:
     void SetDampingRatio(float dampingRatio);
 
     /// Return anchor.
-    const Vector2& GetAnchor() const { return anchor_; }
+    const Vector2 &GetAnchor() const { return anchor_; }
 
     /// Return axis.
-    const Vector2& GetAxis() const { return axis_; }
+    const Vector2 &GetAxis() const { return axis_; }
 
     /// Return enable motor.
     bool GetEnableMotor() const { return jointDef_.enableMotor; }

@@ -227,18 +227,18 @@ void RenderPathCommand::Load(const XMLElement& element)
     }
 }
 
-void RenderPathCommand::SetTextureName(TextureUnit unit, const String& name)
+void RenderPathCommand::SetTextureName(TextureUnit unit, const String &name)
 {
     if (unit < MAX_TEXTURE_UNITS)
         textureNames_[unit] = name;
 }
 
-void RenderPathCommand::SetShaderParameter(const String& name, const Variant& value)
+void RenderPathCommand::SetShaderParameter(const String &name, const Variant &value)
 {
     shaderParameters_[name] = value;
 }
 
-void RenderPathCommand::RemoveShaderParameter(const String& name)
+void RenderPathCommand::RemoveShaderParameter(const String &name)
 {
     shaderParameters_.Erase(name);
 }
@@ -249,7 +249,7 @@ void RenderPathCommand::SetNumOutputs(unsigned num)
     outputs_.Resize(num);
 }
 
-void RenderPathCommand::SetOutput(unsigned index, const String& name, CubeMapFace face)
+void RenderPathCommand::SetOutput(unsigned index, const String &name, CubeMapFace face)
 {
     if (index < outputs_.Size())
         outputs_[index] = MakePair(name, face);
@@ -257,7 +257,7 @@ void RenderPathCommand::SetOutput(unsigned index, const String& name, CubeMapFac
         outputs_.Push(MakePair(name, face));
 }
 
-void RenderPathCommand::SetOutputName(unsigned index, const String& name)
+void RenderPathCommand::SetOutputName(unsigned index, const String &name)
 {
     if (index < outputs_.Size())
         outputs_[index].first_ = name;
@@ -274,23 +274,23 @@ void RenderPathCommand::SetOutputFace(unsigned index, CubeMapFace face)
 }
 
 
-void RenderPathCommand::SetDepthStencilName(const String& name)
+void RenderPathCommand::SetDepthStencilName(const String &name)
 {
     depthStencilName_ = name;
 }
 
-const String& RenderPathCommand::GetTextureName(TextureUnit unit) const
+const String &RenderPathCommand::GetTextureName(TextureUnit unit) const
 {
     return unit < MAX_TEXTURE_UNITS ? textureNames_[unit] : String::EMPTY;
 }
 
-const Variant& RenderPathCommand::GetShaderParameter(const String& name) const
+const Variant &RenderPathCommand::GetShaderParameter(const String &name) const
 {
     HashMap<StringHash, Variant>::ConstIterator i = shaderParameters_.Find(name);
     return i != shaderParameters_.End() ? i->second_ : Variant::EMPTY;
 }
 
-const String& RenderPathCommand::GetOutputName(unsigned index) const
+const String &RenderPathCommand::GetOutputName(unsigned index) const
 {
     return index < outputs_.Size() ? outputs_[index].first_ : String::EMPTY;
 }
@@ -358,7 +358,7 @@ bool RenderPath::Append(XMLFile* file)
     return true;
 }
 
-void RenderPath::SetEnabled(const String& tag, bool active)
+void RenderPath::SetEnabled(const String &tag, bool active)
 {
     for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
@@ -373,7 +373,7 @@ void RenderPath::SetEnabled(const String& tag, bool active)
     }
 }
 
-void RenderPath::ToggleEnabled(const String& tag)
+void RenderPath::ToggleEnabled(const String &tag)
 {
     for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
@@ -406,7 +406,7 @@ void RenderPath::RemoveRenderTarget(unsigned index)
     renderTargets_.Erase(index);
 }
 
-void RenderPath::RemoveRenderTarget(const String& name)
+void RenderPath::RemoveRenderTarget(const String &name)
 {
     for (auto i = 0u; i < renderTargets_.Size(); ++i)
     {
@@ -418,7 +418,7 @@ void RenderPath::RemoveRenderTarget(const String& name)
     }
 }
 
-void RenderPath::RemoveRenderTargets(const String& tag)
+void RenderPath::RemoveRenderTargets(const String &tag)
 {
     for (unsigned i = renderTargets_.Size() - 1; i < renderTargets_.Size(); --i)
     {
@@ -450,7 +450,7 @@ void RenderPath::RemoveCommand(unsigned index)
     commands_.Erase(index);
 }
 
-void RenderPath::RemoveCommands(const String& tag)
+void RenderPath::RemoveCommands(const String &tag)
 {
     for (unsigned i = commands_.Size() - 1; i < commands_.Size(); --i)
     {
@@ -459,7 +459,7 @@ void RenderPath::RemoveCommands(const String& tag)
     }
 }
 
-void RenderPath::SetShaderParameter(const String& name, const Variant& value)
+void RenderPath::SetShaderParameter(const String &name, const Variant &value)
 {
     StringHash nameHash(name);
 
@@ -471,7 +471,7 @@ void RenderPath::SetShaderParameter(const String& name, const Variant& value)
     }
 }
 
-const Variant& RenderPath::GetShaderParameter(const String& name) const
+const Variant &RenderPath::GetShaderParameter(const String &name) const
 {
     StringHash nameHash(name);
 

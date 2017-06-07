@@ -38,7 +38,7 @@ PackageFile::PackageFile(Context* context) :
 {
 }
 
-PackageFile::PackageFile(Context* context, const String& fileName, unsigned startOffset) :
+PackageFile::PackageFile(Context* context, const String &fileName, unsigned startOffset) :
     Object(context),
     totalSize_(0),
     totalDataSize_(0),
@@ -52,7 +52,7 @@ PackageFile::~PackageFile()
 {
 }
 
-bool PackageFile::Open(const String& fileName, unsigned startOffset)
+bool PackageFile::Open(const String &fileName, unsigned startOffset)
 {
     SharedPtr<File> file(new File(context_, fileName));
     if (!file->IsOpen())
@@ -112,7 +112,7 @@ bool PackageFile::Open(const String& fileName, unsigned startOffset)
     return true;
 }
 
-bool PackageFile::Exists(const String& fileName) const
+bool PackageFile::Exists(const String &fileName) const
 {
     bool found = entries_.Find(fileName) != entries_.End();
 
@@ -134,7 +134,7 @@ bool PackageFile::Exists(const String& fileName) const
     return found;
 }
 
-const PackageEntry* PackageFile::GetEntry(const String& fileName) const
+const PackageEntry* PackageFile::GetEntry(const String &fileName) const
 {
     HashMap<String, PackageEntry>::ConstIterator i = entries_.Find(fileName);
     if (i != entries_.End())

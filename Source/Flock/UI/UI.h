@@ -74,7 +74,7 @@ public:
     /// Save a UI layout to an XML file. Return true if successful.
     bool SaveLayout(Serializer& dest, UIElement* element);
     /// Set clipboard text.
-    void SetClipboardText(const String& text);
+    void SetClipboardText(const String &text);
     /// Set UI element double click interval in seconds.
     void SetDoubleClickInterval(float interval);
     /// Set UI drag event start interval in seconds.
@@ -102,7 +102,7 @@ public:
     /// Scale %UI to the specified height in pixels.
     void SetHeight(float height);
     /// Set custom size of the root element. This disables automatic resizing of the root element according to window size. Set custom size 0,0 to return to automatic resizing.
-    void SetCustomSize(const IntVector2& size);
+    void SetCustomSize(const IntVector2 &size);
     /// Set custom size of the root element.
     void SetCustomSize(int width, int height);
 
@@ -118,7 +118,7 @@ public:
     /// Return cursor position.
     IntVector2 GetCursorPosition() const;
     /// Return UI element at screen coordinates. By default returns only input-enabled elements.
-    UIElement* GetElementAt(const IntVector2& position, bool enabledOnly = true);
+    UIElement* GetElementAt(const IntVector2 &position, bool enabledOnly = true);
     /// Return UI element at screen coordinates. By default returns only input-enabled elements.
     UIElement* GetElementAt(int x, int y, bool enabledOnly = true);
 
@@ -136,7 +136,7 @@ public:
     /// Return the drag element at index.
     UIElement* GetDragElement(unsigned index);
     /// Return clipboard text.
-    const String& GetClipboardText() const;
+    const String &GetClipboardText() const;
 
     /// Return UI element double click interval in seconds.
     float GetDoubleClickInterval() const { return doubleClickInterval_; }
@@ -178,7 +178,7 @@ public:
     float GetScale() const { return uiScale_; }
 
     /// Return root element custom size. Returns 0,0 when custom size is not being used and automatic resizing according to window size is in use instead (default.)
-    const IntVector2& GetCustomSize() const { return customSize_; }
+    const IntVector2 &GetCustomSize() const { return customSize_; }
 
     /// Data structure used to represent the drag data associated to a UIElement.
     struct DragData
@@ -210,31 +210,31 @@ private:
     /// Generate batches from an UI element recursively. Skip the cursor element.
     void GetBatches(UIElement* element, IntRect currentScissor);
     /// Return UI element at screen position recursively.
-    void GetElementAt(UIElement*& result, UIElement* current, const IntVector2& position, bool enabledOnly);
+    void GetElementAt(UIElement*& result, UIElement* current, const IntVector2 &position, bool enabledOnly);
     /// Return the first element in hierarchy that can alter focus.
     UIElement* GetFocusableElement(UIElement* element);
     /// Return cursor position and visibility either from the cursor element, or the Input subsystem.
-    void GetCursorPositionAndVisible(IntVector2& pos, bool& visible);
+    void GetCursorPositionAndVisible(IntVector2 &pos, bool& visible);
     /// Set active cursor's shape.
     void SetCursorShape(CursorShape shape);
     /// Force release of font faces when global font properties change.
     void ReleaseFontFaces();
     /// Handle button or touch hover.
-    void ProcessHover(const IntVector2& cursorPos, int buttons, int qualifiers, Cursor* cursor);
+    void ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, Cursor* cursor);
     /// Handle button or touch begin.
     void
-        ProcessClickBegin(const IntVector2& cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
+        ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
     /// Handle button or touch end.
-    void ProcessClickEnd(const IntVector2& cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
+    void ProcessClickEnd(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
     /// Handle mouse or touch move.
-    void ProcessMove(const IntVector2& cursorPos, const IntVector2& cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
+    void ProcessMove(const IntVector2 &cursorPos, const IntVector2 &cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
         bool cursorVisible);
     /// Send a UI element drag or hover begin event.
     void SendDragOrHoverEvent
-        (StringHash eventType, UIElement* element, const IntVector2& screenPos, const IntVector2& deltaPos, UI::DragData* dragData);
+        (StringHash eventType, UIElement* element, const IntVector2 &screenPos, const IntVector2 &deltaPos, UI::DragData* dragData);
     /// Send a UI click or double click event.
     void SendClickEvent
-        (StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2& pos, int button, int buttons,
+        (StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2 &pos, int button, int buttons,
             int qualifiers);
     /// Handle screen mode event.
     void HandleScreenMode(StringHash eventType, VariantMap& eventData);

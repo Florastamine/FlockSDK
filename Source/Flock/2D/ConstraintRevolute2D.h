@@ -41,7 +41,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    void SetAnchor(const Vector2& anchor);
+    void SetAnchor(const Vector2 &anchor);
     /// Set enable limit.
     void SetEnableLimit(bool enableLimit);
     /// Set lower angle.
@@ -56,7 +56,7 @@ public:
     void SetMaxMotorTorque(float maxMotorTorque);
 
     /// Return anchor.
-    const Vector2& GetAnchor() const { return anchor_; }
+    const Vector2 &GetAnchor() const { return anchor_; }
 
     /// Return enable limit.
     bool GetEnableLimit() const { return jointDef_.enableLimit; }

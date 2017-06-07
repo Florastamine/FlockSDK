@@ -97,7 +97,7 @@ void Constraint::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Disable Collision", bool, disableCollision_, false, AM_DEFAULT);
 }
 
-void Constraint::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Constraint::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -199,7 +199,7 @@ void Constraint::SetOtherBody(RigidBody* body)
     }
 }
 
-void Constraint::SetPosition(const Vector3& position)
+void Constraint::SetPosition(const Vector3 &position)
 {
     if (position != position_)
     {
@@ -219,7 +219,7 @@ void Constraint::SetRotation(const Quaternion& rotation)
     }
 }
 
-void Constraint::SetAxis(const Vector3& axis)
+void Constraint::SetAxis(const Vector3 &axis)
 {
     switch (constraintType_)
     {
@@ -241,7 +241,7 @@ void Constraint::SetAxis(const Vector3& axis)
     MarkNetworkUpdate();
 }
 
-void Constraint::SetOtherPosition(const Vector3& position)
+void Constraint::SetOtherPosition(const Vector3 &position)
 {
     if (position != otherPosition_)
     {
@@ -261,7 +261,7 @@ void Constraint::SetOtherRotation(const Quaternion& rotation)
     }
 }
 
-void Constraint::SetOtherAxis(const Vector3& axis)
+void Constraint::SetOtherAxis(const Vector3 &axis)
 {
     switch (constraintType_)
     {
@@ -283,7 +283,7 @@ void Constraint::SetOtherAxis(const Vector3& axis)
     MarkNetworkUpdate();
 }
 
-void Constraint::SetWorldPosition(const Vector3& position)
+void Constraint::SetWorldPosition(const Vector3 &position)
 {
     if (constraint_)
     {
@@ -304,7 +304,7 @@ void Constraint::SetWorldPosition(const Vector3& position)
         FLOCKSDK_LOGWARNING("Constraint not created, world position could not be stored");
 }
 
-void Constraint::SetHighLimit(const Vector2& limit)
+void Constraint::SetHighLimit(const Vector2 &limit)
 {
     if (limit != highLimit_)
     {
@@ -314,7 +314,7 @@ void Constraint::SetHighLimit(const Vector2& limit)
     }
 }
 
-void Constraint::SetLowLimit(const Vector2& limit)
+void Constraint::SetLowLimit(const Vector2 &limit)
 {
     if (limit != lowLimit_)
     {

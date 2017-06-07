@@ -68,7 +68,7 @@ void Polyhedron::Define(const Frustum& frustum)
     SetFace(5, vertices[3], vertices[0], vertices[1], vertices[2]);
 }
 
-void Polyhedron::AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2)
+void Polyhedron::AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2)
 {
     faces_.Resize(faces_.Size() + 1);
     PODVector<Vector3>& face = faces_[faces_.Size() - 1];
@@ -78,7 +78,7 @@ void Polyhedron::AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2
     face[2] = v2;
 }
 
-void Polyhedron::AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3)
+void Polyhedron::AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, const Vector3 &v3)
 {
     faces_.Resize(faces_.Size() + 1);
     PODVector<Vector3>& face = faces_[faces_.Size() - 1];
@@ -181,7 +181,7 @@ void Polyhedron::Clip(const Plane& plane)
         while (!clippedVertices_.Empty())
         {
             // Then add the vertex which is closest to the last added
-            const Vector3& lastAdded = outFace_.Back();
+            const Vector3 &lastAdded = outFace_.Back();
             float bestDistance = M_INFINITY;
             unsigned bestIndex = 0;
 
@@ -290,7 +290,7 @@ Polyhedron Polyhedron::Transformed(const Matrix3x4& transform) const
     return ret;
 }
 
-void Polyhedron::SetFace(unsigned index, const Vector3& v0, const Vector3& v1, const Vector3& v2)
+void Polyhedron::SetFace(unsigned index, const Vector3 &v0, const Vector3 &v1, const Vector3 &v2)
 {
     PODVector<Vector3>& face = faces_[index];
     face.Resize(3);
@@ -299,7 +299,7 @@ void Polyhedron::SetFace(unsigned index, const Vector3& v0, const Vector3& v1, c
     face[2] = v2;
 }
 
-void Polyhedron::SetFace(unsigned index, const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3)
+void Polyhedron::SetFace(unsigned index, const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, const Vector3 &v3)
 {
     PODVector<Vector3>& face = faces_[index];
     face.Resize(4);

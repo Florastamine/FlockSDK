@@ -73,13 +73,13 @@ void GenerateTangents(void* vertexData, unsigned vertexSize, const void* indexDa
         unsigned i2 = GetIndex(indexPointer, indexSize);
         unsigned i3 = GetIndex(indexPointer, indexSize);
 
-        const Vector3& v1 = *((Vector3*)(vertices + i1 * vertexSize));
-        const Vector3& v2 = *((Vector3*)(vertices + i2 * vertexSize));
-        const Vector3& v3 = *((Vector3*)(vertices + i3 * vertexSize));
+        const Vector3 &v1 = *((Vector3*)(vertices + i1 * vertexSize));
+        const Vector3 &v2 = *((Vector3*)(vertices + i2 * vertexSize));
+        const Vector3 &v3 = *((Vector3*)(vertices + i3 * vertexSize));
 
-        const Vector2& w1 = *((Vector2*)(vertices + i1 * vertexSize + texCoordOffset));
-        const Vector2& w2 = *((Vector2*)(vertices + i2 * vertexSize + texCoordOffset));
-        const Vector2& w3 = *((Vector2*)(vertices + i3 * vertexSize + texCoordOffset));
+        const Vector2 &w1 = *((Vector2*)(vertices + i1 * vertexSize + texCoordOffset));
+        const Vector2 &w2 = *((Vector2*)(vertices + i2 * vertexSize + texCoordOffset));
+        const Vector2 &w3 = *((Vector2*)(vertices + i3 * vertexSize + texCoordOffset));
 
         float x1 = v2.x_ - v1.x_;
         float x2 = v3.x_ - v1.x_;
@@ -108,8 +108,8 @@ void GenerateTangents(void* vertexData, unsigned vertexSize, const void* indexDa
 
     for (unsigned i = minVertex; i <= maxVertex; i++)
     {
-        const Vector3& n = *((Vector3*)(vertices + i * vertexSize + normalOffset));
-        const Vector3& t = tan1[i];
+        const Vector3 &n = *((Vector3*)(vertices + i * vertexSize + normalOffset));
+        const Vector3 &t = tan1[i];
         Vector3 xyz;
         float w;
 
@@ -119,7 +119,7 @@ void GenerateTangents(void* vertexData, unsigned vertexSize, const void* indexDa
         // Calculate handedness
         w = n.CrossProduct(t).DotProduct(tan2[i]) < 0.0f ? -1.0f : 1.0f;
 
-        Vector4& tangent = *((Vector4*)(vertices + i * vertexSize + tangentOffset));
+        Vector4 &tangent = *((Vector4*)(vertices + i * vertexSize + tangentOffset));
         tangent = Vector4(xyz, w);
     }
 

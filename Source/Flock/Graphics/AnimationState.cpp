@@ -236,7 +236,7 @@ void AnimationState::SetBoneWeight(unsigned index, float weight, bool recursive)
     }
 }
 
-void AnimationState::SetBoneWeight(const String& name, float weight, bool recursive)
+void AnimationState::SetBoneWeight(const String &name, float weight, bool recursive)
 {
     SetBoneWeight(GetTrackIndex(name), weight, recursive);
 }
@@ -395,7 +395,7 @@ float AnimationState::GetBoneWeight(unsigned index) const
     return index < stateTracks_.Size() ? stateTracks_[index].weight_ : 0.0f;
 }
 
-float AnimationState::GetBoneWeight(const String& name) const
+float AnimationState::GetBoneWeight(const String &name) const
 {
     return GetBoneWeight(GetTrackIndex(name));
 }
@@ -405,7 +405,7 @@ float AnimationState::GetBoneWeight(StringHash nameHash) const
     return GetBoneWeight(GetTrackIndex(nameHash));
 }
 
-unsigned AnimationState::GetTrackIndex(const String& name) const
+unsigned AnimationState::GetTrackIndex(const String &name) const
 {
     for (auto i = 0u; i < stateTracks_.Size(); ++i)
     {

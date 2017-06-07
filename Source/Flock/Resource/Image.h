@@ -105,7 +105,7 @@ public:
     /// Save the image to a stream. Regardless of original format, the image is saved as png. Compressed image data is not supported. Return true if successful.
     virtual bool Save(Serializer& dest) const;
     /// Save the image to a file. Format of the image is determined by file extension. JPG is saved with maximum quality.
-    virtual bool SaveFile(const String& fileName) const;
+    virtual bool SaveFile(const String &fileName) const;
 
     /// Set alpha. 
     void SetAlpha(float f); 
@@ -136,15 +136,15 @@ public:
     /// Clear the image with an integer color. R component is in the 8 lowest bits.
     void ClearInt(unsigned uintColor);
     /// Save in BMP format. Return true if successful.
-    bool SaveBMP(const String& fileName) const;
+    bool SaveBMP(const String &fileName) const;
     /// Save in PNG format. Return true if successful.
-    bool SavePNG(const String& fileName) const;
+    bool SavePNG(const String &fileName) const;
     /// Save in TGA format. Return true if successful.
-    bool SaveTGA(const String& fileName) const;
+    bool SaveTGA(const String &fileName) const;
     /// Save in JPG format with compression quality. Return true if successful.
-    bool SaveJPG(const String& fileName, int quality) const;
+    bool SaveJPG(const String &fileName, int quality) const;
     /// Save in DDS format. Only uncompressed RGBA images are supported. Return true if successful.
-    bool SaveDDS(const String& fileName) const;
+    bool SaveDDS(const String &fileName) const;
     /// Whether this texture is detected as a cubemap, only relevant for DDS.
     bool IsCubemap() const { return cubemap_; }
     /// Whether this texture has been detected as a volume, only relevant for DDS.

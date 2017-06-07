@@ -52,7 +52,7 @@ public:
     /// Construct from a C string case-insensitively.
     StringHash(const char* str);
     /// Construct from a string case-insensitively.
-    StringHash(const String& str);
+    StringHash(const String &str);
 
     /// Assign from another hash.
     StringHash& operator =(const StringHash& rhs)

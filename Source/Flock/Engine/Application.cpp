@@ -77,7 +77,7 @@ int Application::Run()
     }
 }
 
-void Application::ErrorExit(const String& message)
+void Application::ErrorExit(const String &message)
 {
     engine_->Exit(); // Close the rendering window
     exitCode_ = EXIT_FAILURE;

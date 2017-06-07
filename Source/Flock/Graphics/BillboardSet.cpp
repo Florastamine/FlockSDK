@@ -369,7 +369,7 @@ void BillboardSet::SetMaterialAttr(const ResourceRef& value)
     SetMaterial(cache->GetResource<Material>(value.name_));
 }
 
-void BillboardSet::SetBillboardsAttr(const VariantVector& value)
+void BillboardSet::SetBillboardsAttr(const VariantVector &value)
 {
     unsigned index = 0;
     unsigned numBillboards = index < value.Size() ? value[index++].GetUInt() : 0;

@@ -37,7 +37,7 @@ const char* tolua_tourho3dstring(lua_State* L, int narg, const char* str)
     return tolua_tostring(L, narg, str);
 }
 
-const char* tolua_tourho3dstring(lua_State* L, int narg, const String& str)
+const char* tolua_tourho3dstring(lua_State* L, int narg, const String &str)
 {
     return tolua_tourho3dstring(L, narg, str.CString());
 }
@@ -87,7 +87,7 @@ template <> void* ToluaToVector<String>(lua_State* L, int narg, void* /*def*/)
 template <> int ToluaPushVector<String>(lua_State* L, void* data, const char* /*type*/)
 {
     lua_newtable(L);
-    const Vector<String>& vector = *static_cast<const Vector<String>*>(data);
+    const Vector<String> &vector = *static_cast<const Vector<String>*>(data);
     for (auto i = 0u; i < vector.Size(); ++i)
     {
         tolua_pushurho3dstring(L, vector[i]);
@@ -175,7 +175,7 @@ template <> const VariantValue* Variant::Get<const VariantValue*>() const
 
 }
 
-void ToluaToVariant(lua_State* L, int narg, void* def, Variant& variant)
+void ToluaToVariant(lua_State* L, int narg, void* def, Variant &variant)
 {
     switch (lua_type(L, narg))   // Use the type of lua object to determine the final variant type
     {

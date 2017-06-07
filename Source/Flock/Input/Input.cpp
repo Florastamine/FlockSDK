@@ -572,7 +572,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
             if (text)
             {
                 text->SetVisible(false);
-                const String& key = text->GetText();
+                const String &key = text->GetText();
                 int keyBinding;
                 if (key.Length() == 1)
                     keyBinding = key[0];
@@ -599,7 +599,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
             if (text)
             {
                 text->SetVisible(false);
-                const String& mouseButton = text->GetText();
+                const String &mouseButton = text->GetText();
                 PopulateMouseButtonBindingMap(mouseButtonBindingMap);
 
                 HashMap<String, int>::Iterator i = mouseButtonBindingMap.Find(mouseButton);
@@ -753,7 +753,7 @@ SDL_JoystickID Input::OpenJoystick(unsigned index)
     return joystickID;
 }
 
-int Input::GetKeyFromName(const String& name) const
+int Input::GetKeyFromName(const String &name) const
 {
     return SDL_GetKeyFromName(name.CString());
 }
@@ -773,7 +773,7 @@ int Input::GetScancodeFromKey(int key) const
     return SDL_GetScancodeFromKey(key);
 }
 
-int Input::GetScancodeFromName(const String& name) const
+int Input::GetScancodeFromName(const String &name) const
 {
     return SDL_GetScancodeFromName(name.CString());
 }
@@ -900,7 +900,7 @@ JoystickState* Input::GetJoystickByIndex(unsigned index)
     return 0;
 }
 
-JoystickState* Input::GetJoystickByName(const String& name)
+JoystickState* Input::GetJoystickByName(const String &name)
 {
     for (HashMap<SDL_JoystickID, JoystickState>::Iterator i = joysticks_.Begin(); i != joysticks_.End(); ++i)
     {
@@ -1150,7 +1150,7 @@ void Input::SetMouseWheel(int delta)
     }
 }
 
-void Input::SetMousePosition(const IntVector2& position)
+void Input::SetMousePosition(const IntVector2 &position)
 {
     if (!graphics_)
         return;

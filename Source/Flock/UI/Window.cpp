@@ -91,7 +91,7 @@ void Window::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
         if (modalShadeColor_ != Color::TRANSPARENT)
         {
             UIElement* rootElement = GetRoot();
-            const IntVector2& rootSize = rootElement->GetSize();
+            const IntVector2 &rootSize = rootElement->GetSize();
             UIBatch batch(rootElement, BLEND_ALPHA, IntRect(0, 0, rootSize.x_, rootSize.y_), 0, &vertexData);
             batch.SetColor(modalShadeColor_);
             batch.AddQuad(0, 0, rootSize.x_, rootSize.y_, 0, 0);
@@ -115,7 +115,7 @@ void Window::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     BorderImage::GetBatches(batches, vertexData, currentScissor);
 }
 
-void Window::OnHover(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor)
+void Window::OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor)
 {
     UIElement::OnHover(position, screenPosition, buttons, qualifiers, cursor);
 
@@ -128,7 +128,7 @@ void Window::OnHover(const IntVector2& position, const IntVector2& screenPositio
         SetCursorShape(dragMode_, cursor);
 }
 
-void Window::OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor)
+void Window::OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor)
 {
     UIElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
 
@@ -145,7 +145,7 @@ void Window::OnDragBegin(const IntVector2& position, const IntVector2& screenPos
     SetCursorShape(dragMode_, cursor);
 }
 
-void Window::OnDragMove(const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons,
+void Window::OnDragMove(const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons,
     int qualifiers, Cursor* cursor)
 {
     if (dragMode_ == DRAG_NONE)
@@ -155,10 +155,10 @@ void Window::OnDragMove(const IntVector2& position, const IntVector2& screenPosi
     IntVector2 dragSize;
     IntVector2 resizeBorderSize(resizeBorder_.left_ + resizeBorder_.right_, resizeBorder_.top_ + resizeBorder_.bottom_);
 
-    const IntVector2& position_ = GetPosition();
-    const IntVector2& size_ = GetSize();
-    const IntVector2& minSize_ = GetMinSize();
-    const IntVector2& maxSize_ = GetMaxSize();
+    const IntVector2 &position_ = GetPosition();
+    const IntVector2 &size_ = GetSize();
+    const IntVector2 &minSize_ = GetMinSize();
+    const IntVector2 &maxSize_ = GetMaxSize();
 
     switch (dragMode_)
     {
@@ -230,14 +230,14 @@ void Window::OnDragMove(const IntVector2& position, const IntVector2& screenPosi
     SetCursorShape(dragMode_, cursor);
 }
 
-void Window::OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int buttons, Cursor* cursor)
+void Window::OnDragEnd(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int buttons, Cursor* cursor)
 {
     UIElement::OnDragEnd(position, screenPosition, dragButtons, buttons, cursor);
 
     dragMode_ = DRAG_NONE;
 }
 
-void Window::OnDragCancel(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int buttons,
+void Window::OnDragCancel(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int buttons,
     Cursor* cursor)
 {
     UIElement::OnDragCancel(position, screenPosition, dragButtons, buttons, cursor);
@@ -308,7 +308,7 @@ void Window::SetModalFrameColor(const Color& color)
     modalFrameColor_ = color;
 }
 
-void Window::SetModalFrameSize(const IntVector2& size)
+void Window::SetModalFrameSize(const IntVector2 &size)
 {
     modalFrameSize_ = size;
 }
@@ -318,7 +318,7 @@ void Window::SetModalAutoDismiss(bool enable)
     modalAutoDismiss_ = enable;
 }
 
-WindowDragMode Window::GetDragMode(const IntVector2& position) const
+WindowDragMode Window::GetDragMode(const IntVector2 &position) const
 {
     WindowDragMode mode = DRAG_NONE;
 
@@ -407,7 +407,7 @@ void Window::ValidatePosition()
     if (!parent_)
         return;
 
-    const IntVector2& parentSize = parent_->GetSize();
+    const IntVector2 &parentSize = parent_->GetSize();
     IntVector2 position = GetPosition();
     IntVector2 halfSize = GetSize() / 2;
 

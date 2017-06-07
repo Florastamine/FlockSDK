@@ -107,7 +107,7 @@ public:
     /// Set particles effect attribute.
     ResourceRef GetEffectAttr() const;
     /// Set particles attribute.
-    void SetParticlesAttr(const VariantVector& value);
+    void SetParticlesAttr(const VariantVector &value);
     /// Return particles attribute. Returns particle amount only if particles are not to be serialized.
     VariantVector GetParticlesAttr() const;
     /// Return billboards attribute. Returns billboard amount only if particles are not to be serialized.

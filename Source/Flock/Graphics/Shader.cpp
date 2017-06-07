@@ -36,7 +36,7 @@
 namespace FlockSDK
 {
 
-void CommentOutFunction(String& code, const String& signature)
+void CommentOutFunction(String &code, const String &signature)
 {
     unsigned startPos = code.Find(signature);
     unsigned braceLevel = 0;
@@ -118,7 +118,7 @@ bool Shader::EndLoad()
     return true;
 }
 
-ShaderVariation* Shader::GetVariation(ShaderType type, const String& defines)
+ShaderVariation* Shader::GetVariation(ShaderType type, const String &defines)
 {
     return GetVariation(type, defines.CString());
 }
@@ -155,7 +155,7 @@ ShaderVariation* Shader::GetVariation(ShaderType type, const char* defines)
     return i->second_;
 }
 
-bool Shader::ProcessSource(String& code, Deserializer& source)
+bool Shader::ProcessSource(String &code, Deserializer& source)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
@@ -203,7 +203,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
     return true;
 }
 
-String Shader::NormalizeDefines(const String& defines)
+String Shader::NormalizeDefines(const String &defines)
 {
     Vector<String> definesVec = defines.ToUpper().Split(' ');
     Sort(definesVec.Begin(), definesVec.End());

@@ -35,7 +35,7 @@
 namespace FlockSDK
 {
 
-ShaderPrecache::ShaderPrecache(Context* context, const String& fileName) :
+ShaderPrecache::ShaderPrecache(Context* context, const String &fileName) :
     Object(context),
     fileName_(fileName),
     xmlFile_(context)
@@ -88,8 +88,8 @@ void ShaderPrecache::StoreShaders(ShaderVariation* vs, ShaderVariation* ps)
 
     String vsName = vs->GetName();
     String psName = ps->GetName();
-    const String& vsDefines = vs->GetDefines();
-    const String& psDefines = ps->GetDefines();
+    const String &vsDefines = vs->GetDefines();
+    const String &psDefines = ps->GetDefines();
 
     // Check for duplicate using strings (needed for combinations loaded from existing file)
     String newCombination = vsName + " " + vsDefines + " " + psName + " " + psDefines;

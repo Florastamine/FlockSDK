@@ -62,11 +62,11 @@ struct FLOCKSDK_API TileMapInfo2D
     /// return map height.
     float GetMapHeight() const;
     /// Convert tmx position to Urho position.
-    Vector2 ConvertPosition(const Vector2& position) const;
+    Vector2 ConvertPosition(const Vector2 &position) const;
     /// Convert tile index to position.
     Vector2 TileIndexToPosition(int x, int y) const;
     /// Convert position to tile index, if out of map return false.
-    bool PositionToTileIndex(int& x, int& y, const Vector2& position) const;
+    bool PositionToTileIndex(int& x, int& y, const Vector2 &position) const;
 };
 
 /// Tile map layer type.
@@ -109,9 +109,9 @@ public:
     /// Load from XML element.
     void Load(const XMLElement& element);
     /// Return has property.
-    bool HasProperty(const String& name) const;
+    bool HasProperty(const String &name) const;
     /// Return property value.
-    const String& GetProperty(const String& name) const;
+    const String &GetProperty(const String &name) const;
 
 protected:
     /// Property name to property value mapping.
@@ -131,9 +131,9 @@ public:
     /// Return sprite.
     Sprite2D* GetSprite() const;
     /// Return has property.
-    bool HasProperty(const String& name) const;
+    bool HasProperty(const String &name) const;
     /// Return property.
-    const String& GetProperty(const String& name) const;
+    const String &GetProperty(const String &name) const;
 
 private:
     friend class TmxTileLayer2D;
@@ -156,21 +156,21 @@ public:
     TileMapObjectType2D GetObjectType() const { return objectType_; }
 
     /// Return name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return type.
-    const String& GetType() const { return type_; }
+    const String &GetType() const { return type_; }
 
     /// Return position.
-    const Vector2& GetPosition() const { return position_; }
+    const Vector2 &GetPosition() const { return position_; }
 
     /// Return size (for rectangle and ellipse).
-    const Vector2& GetSize() const { return size_; }
+    const Vector2 &GetSize() const { return size_; }
 
     /// Return number of points (use for script).
     unsigned GetNumPoints() const;
     /// Return point at index (use for script).
-    const Vector2& GetPoint(unsigned index) const;
+    const Vector2 &GetPoint(unsigned index) const;
 
     /// Return tile Gid.
     int GetTileGid() const { return gid_; }
@@ -178,9 +178,9 @@ public:
     /// Return tile sprite.
     Sprite2D* GetTileSprite() const;
     /// Return has property.
-    bool HasProperty(const String& name) const;
+    bool HasProperty(const String &name) const;
     /// Return property value.
-    const String& GetProperty(const String& name) const;
+    const String &GetProperty(const String &name) const;
 
 private:
     friend class TmxObjectGroup2D;

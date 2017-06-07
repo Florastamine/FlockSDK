@@ -52,7 +52,7 @@ public:
     }
 
     /// Construct from another string.
-    String(const String& str) :
+    String(const String &str) :
         length_(0),
         capacity_(0),
         buffer_(&endZero)
@@ -107,7 +107,7 @@ public:
     }
 
     /// Construct from a wide character string.
-    String(const WString& str);
+    String(const WString &str);
 
     /// Construct from an integer.
     explicit String(int value);
@@ -153,7 +153,7 @@ public:
     }
 
     /// Assign a string.
-    String& operator =(const String& rhs)
+    String &operator =(const String &rhs)
     {
         Resize(rhs.length_);
         CopyChars(buffer_, rhs.buffer_, rhs.length_);
@@ -162,7 +162,7 @@ public:
     }
 
     /// Assign a C string.
-    String& operator =(const char* rhs)
+    String &operator =(const char* rhs)
     {
         unsigned rhsLength = CStringLength(rhs);
         Resize(rhsLength);
@@ -172,7 +172,7 @@ public:
     }
 
     /// Add-assign a string.
-    String& operator +=(const String& rhs)
+    String &operator +=(const String &rhs)
     {
         unsigned oldLength = length_;
         Resize(length_ + rhs.length_);
@@ -182,7 +182,7 @@ public:
     }
 
     /// Add-assign a C string.
-    String& operator +=(const char* rhs)
+    String &operator +=(const char* rhs)
     {
         unsigned rhsLength = CStringLength(rhs);
         unsigned oldLength = length_;
@@ -193,7 +193,7 @@ public:
     }
 
     /// Add-assign a character.
-    String& operator +=(char rhs)
+    String &operator +=(char rhs)
     {
         unsigned oldLength = length_;
         Resize(length_ + 1);
@@ -203,31 +203,31 @@ public:
     }
 
     /// Add-assign (concatenate as string) an integer.
-    String& operator +=(int rhs);
+    String &operator +=(int rhs);
     /// Add-assign (concatenate as string) a short integer.
-    String& operator +=(short rhs);
+    String &operator +=(short rhs);
     /// Add-assign (concatenate as string) a long integer.
-    String& operator +=(long rhs);
+    String &operator +=(long rhs);
     /// Add-assign (concatenate as string) a long long integer.
-    String& operator +=(long long rhs);
+    String &operator +=(long long rhs);
     /// Add-assign (concatenate as string) an unsigned integer.
-    String& operator +=(unsigned rhs);
+    String &operator +=(unsigned rhs);
     /// Add-assign (concatenate as string) a short unsigned integer.
-    String& operator +=(unsigned short rhs);
+    String &operator +=(unsigned short rhs);
     /// Add-assign (concatenate as string) a long unsigned integer.
-    String& operator +=(unsigned long rhs);
+    String &operator +=(unsigned long rhs);
     /// Add-assign (concatenate as string) a long long unsigned integer.
-    String& operator +=(unsigned long long rhs);
+    String &operator +=(unsigned long long rhs);
     /// Add-assign (concatenate as string) a float.
-    String& operator +=(float rhs);
+    String &operator +=(float rhs);
     /// Add-assign (concatenate as string) a bool.
-    String& operator +=(bool rhs);
+    String &operator +=(bool rhs);
 
     /// Add-assign (concatenate as string) an arbitrary type.
     template <class T> String operator +=(const T& rhs) { return *this += rhs.ToString(); }
 
     /// Add a string.
-    String operator +(const String& rhs) const
+    String operator +(const String &rhs) const
     {
         String ret;
         ret.Resize(length_ + rhs.length_);
@@ -250,16 +250,16 @@ public:
     }
 
     /// Test for equality with another string.
-    bool operator ==(const String& rhs) const { return strcmp(CString(), rhs.CString()) == 0; }
+    bool operator ==(const String &rhs) const { return strcmp(CString(), rhs.CString()) == 0; }
 
     /// Test for inequality with another string.
-    bool operator !=(const String& rhs) const { return strcmp(CString(), rhs.CString()) != 0; }
+    bool operator !=(const String &rhs) const { return strcmp(CString(), rhs.CString()) != 0; }
 
     /// Test if string is less than another string.
-    bool operator <(const String& rhs) const { return strcmp(CString(), rhs.CString()) < 0; }
+    bool operator <(const String &rhs) const { return strcmp(CString(), rhs.CString()) < 0; }
 
     /// Test if string is greater than another string.
-    bool operator >(const String& rhs) const { return strcmp(CString(), rhs.CString()) > 0; }
+    bool operator >(const String &rhs) const { return strcmp(CString(), rhs.CString()) > 0; }
 
     /// Test for equality with a C string.
     bool operator ==(const char* rhs) const { return strcmp(CString(), rhs) == 0; }
@@ -304,31 +304,31 @@ public:
     /// Replace all occurrences of a character.
     void Replace(char replaceThis, char replaceWith, bool caseSensitive = true);
     /// Replace all occurrences of a string.
-    void Replace(const String& replaceThis, const String& replaceWith, bool caseSensitive = true);
+    void Replace(const String &replaceThis, const String &replaceWith, bool caseSensitive = true);
     /// Replace a substring.
-    void Replace(unsigned pos, unsigned length, const String& replaceWith);
+    void Replace(unsigned pos, unsigned length, const String &replaceWith);
     /// Replace a substring with a C string.
     void Replace(unsigned pos, unsigned length, const char* replaceWith);
     /// Replace a substring by iterators.
-    Iterator Replace(const Iterator& start, const Iterator& end, const String& replaceWith);
+    Iterator Replace(const Iterator& start, const Iterator& end, const String &replaceWith);
     /// Return a string with all occurrences of a character replaced.
     String Replaced(char replaceThis, char replaceWith, bool caseSensitive = true) const;
     /// Return a string with all occurrences of a string replaced.
-    String Replaced(const String& replaceThis, const String& replaceWith, bool caseSensitive = true) const;
+    String Replaced(const String &replaceThis, const String &replaceWith, bool caseSensitive = true) const;
     /// Append a string.
-    String& Append(const String& str);
+    String &Append(const String &str);
     /// Append a C string.
-    String& Append(const char* str);
+    String &Append(const char* str);
     /// Append a character.
-    String& Append(char c);
+    String &Append(char c);
     /// Append characters.
-    String& Append(const char* str, unsigned length);
+    String &Append(const char* str, unsigned length);
     /// Insert a string.
-    void Insert(unsigned pos, const String& str);
+    void Insert(unsigned pos, const String &str);
     /// Insert a character.
     void Insert(unsigned pos, char c);
     /// Insert a string by iterator.
-    Iterator Insert(const Iterator& dest, const String& str);
+    Iterator Insert(const Iterator& dest, const String &str);
     /// Insert a string partially by iterators.
     Iterator Insert(const Iterator& dest, const Iterator& start, const Iterator& end);
     /// Insert a character by iterator.
@@ -348,7 +348,7 @@ public:
     /// Clear the string.
     void Clear();
     /// Swap with another string.
-    void Swap(String& str);
+    void Swap(String &str);
 
     /// Return iterator to the beginning.
     Iterator Begin() { return Iterator(buffer_); }
@@ -381,19 +381,19 @@ public:
     /// Return substrings split by a separator char. By default don't return empty strings.
     Vector<String> Split(char separator, bool keepEmptyStrings = false) const;
     /// Join substrings with a 'glue' string.
-    void Join(const Vector<String>& subStrings, const String& glue);
+    void Join(const Vector<String> &subStrings, const String &glue);
     /// Return index to the first occurrence of a string, or NPOS if not found.
-    unsigned Find(const String& str, unsigned startPos = 0, bool caseSensitive = true) const;
+    unsigned Find(const String &str, unsigned startPos = 0, bool caseSensitive = true) const;
     /// Return index to the first occurrence of a character, or NPOS if not found.
     unsigned Find(char c, unsigned startPos = 0, bool caseSensitive = true) const;
     /// Return index to the last occurrence of a string, or NPOS if not found.
-    unsigned FindLast(const String& str, unsigned startPos = NPOS, bool caseSensitive = true) const;
+    unsigned FindLast(const String &str, unsigned startPos = NPOS, bool caseSensitive = true) const;
     /// Return index to the last occurrence of a character, or NPOS if not found.
     unsigned FindLast(char c, unsigned startPos = NPOS, bool caseSensitive = true) const;
     /// Return whether starts with a string.
-    bool StartsWith(const String& str, bool caseSensitive = true) const;
+    bool StartsWith(const String &str, bool caseSensitive = true) const;
     /// Return whether ends with a string.
-    bool EndsWith(const String& str, bool caseSensitive = true) const;
+    bool EndsWith(const String &str, bool caseSensitive = true) const;
 
     /// Return the C string.
     const char* CString() const { return buffer_; }
@@ -408,12 +408,12 @@ public:
     bool Empty() const { return length_ == 0; }
 
     /// Return comparison result with a string.
-    int Compare(const String& str, bool caseSensitive = true) const;
+    int Compare(const String &str, bool caseSensitive = true) const;
     /// Return comparison result with a C string.
     int Compare(const char* str, bool caseSensitive = true) const;
 
     /// Return whether contains a specific occurrence of a string.
-    bool Contains(const String& str, bool caseSensitive = true) const { return Find(str, 0, caseSensitive) != NPOS; }
+    bool Contains(const String &str, bool caseSensitive = true) const { return Find(str, 0, caseSensitive) != NPOS; }
 
     /// Return whether contains a specific character.
     bool Contains(char c, bool caseSensitive = true) const { return Find(c, 0, caseSensitive) != NPOS; }
@@ -433,7 +433,7 @@ public:
     /// Replace Unicode character at index from UTF8 content.
     void ReplaceUTF8(unsigned index, unsigned unicodeChar);
     /// Append Unicode character at the end as UTF8.
-    String& AppendUTF8(unsigned unicodeChar);
+    String &AppendUTF8(unsigned unicodeChar);
     /// Return a UTF8 substring from position to end.
     String SubstringUTF8(unsigned pos) const;
     /// Return a UTF8 substring with length from position.
@@ -456,7 +456,7 @@ public:
     /// Return substrings split by a separator char. By default don't return empty strings.
     static Vector<String> Split(const char* str, char separator, bool keepEmptyStrings = false);
     /// Return a string by joining substrings with a 'glue' string.
-    static String Joined(const Vector<String>& subStrings, const String& glue);
+    static String Joined(const Vector<String> &subStrings, const String &glue);
     /// Encode Unicode character to UTF8. Pointer will be incremented.
     static void EncodeUTF8(char*& dest, unsigned unicodeChar);
     /// Decode Unicode character from UTF8. Pointer will be incremented.
@@ -472,9 +472,9 @@ public:
     static unsigned CStringLength(const char* str) { return str ? (unsigned)strlen(str) : 0; }
 
     /// Append to string using formatting.
-    String& AppendWithFormat(const char* formatString, ...);
+    String &AppendWithFormat(const char* formatString, ...);
     /// Append to string using variable arguments.
-    String& AppendWithFormatArgs(const char* formatString, va_list args);
+    String &AppendWithFormatArgs(const char* formatString, va_list args);
 
     /// Compare two C strings.
     static int Compare(const char* str1, const char* str2, bool caseSensitive);
@@ -521,7 +521,7 @@ private:
 };
 
 /// Add a string to a C string.
-inline String operator +(const char* lhs, const String& rhs)
+inline String operator +(const char* lhs, const String &rhs)
 {
     String ret(lhs);
     ret += rhs;
@@ -529,7 +529,7 @@ inline String operator +(const char* lhs, const String& rhs)
 }
 
 /// Add a string to a wide char C string.
-inline String operator +(const wchar_t* lhs, const String& rhs)
+inline String operator +(const wchar_t* lhs, const String &rhs)
 {
     String ret(lhs);
     ret += rhs;
@@ -543,7 +543,7 @@ public:
     /// Construct empty.
     WString();
     /// Construct from a string.
-    WString(const String& str);
+    WString(const String &str);
     /// Destruct.
     ~WString();
 

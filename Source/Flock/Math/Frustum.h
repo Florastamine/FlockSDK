@@ -61,7 +61,7 @@ public:
     void
         Define(float fov, float aspectRatio, float zoom, float nearZ, float farZ, const Matrix3x4& transform = Matrix3x4::IDENTITY);
     /// Define with near and far dimension vectors and a transform matrix.
-    void Define(const Vector3& near, const Vector3& far, const Matrix3x4& transform = Matrix3x4::IDENTITY);
+    void Define(const Vector3 &near, const Vector3 &far, const Matrix3x4& transform = Matrix3x4::IDENTITY);
     /// Define with a bounding box and a transform matrix.
     void Define(const BoundingBox& box, const Matrix3x4& transform = Matrix3x4::IDENTITY);
     /// Define from a projection or view-projection matrix.
@@ -77,7 +77,7 @@ public:
     void Transform(const Matrix3x4& transform);
 
     /// Test if a point is inside or outside.
-    Intersection IsInside(const Vector3& point) const
+    Intersection IsInside(const Vector3 &point) const
     {
         for (auto i = 0u; i < NUM_FRUSTUM_PLANES; ++i)
         {
@@ -158,7 +158,7 @@ public:
     }
 
     /// Return distance of a point to the frustum, or 0 if inside.
-    float Distance(const Vector3& point) const
+    float Distance(const Vector3 &point) const
     {
         float distance = 0.0f;
         for (auto i = 0u; i < NUM_FRUSTUM_PLANES; ++i)

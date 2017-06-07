@@ -28,7 +28,7 @@
 namespace FlockSDK
 {
 
-DbConnection::DbConnection(Context* context, const String& connectionString) :
+DbConnection::DbConnection(Context* context, const String &connectionString) :
     Object(context),
     connectionString_(connectionString),
     connectionImpl_(0)
@@ -58,7 +58,7 @@ void DbConnection::Finalize()
     // TODO
 }
 
-DbResult DbConnection::Execute(const String& sql, bool useCursorEvent)
+DbResult DbConnection::Execute(const String &sql, bool useCursorEvent)
 {
     DbResult result;
     const char* zLeftover = 0;

@@ -131,7 +131,7 @@ public:
     /// Set detail sampling maximum error.
     void SetDetailSampleMaxError(float error);
     /// Set padding of the navigation mesh bounding box. Having enough padding allows to add geometry on the extremities of the navigation mesh when doing partial rebuilds.
-    void SetPadding(const Vector3& padding);
+    void SetPadding(const Vector3 &padding);
     /// Set the cost of an area.
     void SetAreaCost(unsigned areaID, float cost);
     /// Rebuild the navigation mesh. Return true if successful.
@@ -140,30 +140,30 @@ public:
     virtual bool Build(const BoundingBox& boundingBox);
     /// Find the nearest point on the navigation mesh to a given point. Extents specifies how far out from the specified point to check along each axis.
     Vector3 FindNearestPoint
-        (const Vector3& point, const Vector3& extents = Vector3::ONE, const dtQueryFilter* filter = 0, dtPolyRef* nearestRef = 0);
+        (const Vector3 &point, const Vector3 &extents = Vector3::ONE, const dtQueryFilter* filter = 0, dtPolyRef* nearestRef = 0);
     /// Try to move along the surface from one point to another.
-    Vector3 MoveAlongSurface(const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE, int maxVisited = 3,
+    Vector3 MoveAlongSurface(const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE, int maxVisited = 3,
         const dtQueryFilter* filter = 0);
     /// Find a path between world space points. Return non-empty list of points if successful. Extents specifies how far off the navigation mesh the points can be.
-    void FindPath(PODVector<Vector3>& dest, const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE,
+    void FindPath(PODVector<Vector3>& dest, const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE,
         const dtQueryFilter* filter = 0);
     /// Find a path between world space points. Return non-empty list of navigation path points if successful. Extents specifies how far off the navigation mesh the points can be.
     void FindPath
-        (PODVector<NavigationPathPoint>& dest, const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE,
+        (PODVector<NavigationPathPoint>& dest, const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE,
             const dtQueryFilter* filter = 0);
     /// Return a random point on the navigation mesh.
     Vector3 GetRandomPoint(const dtQueryFilter* filter = 0, dtPolyRef* randomRef = 0);
     /// Return a random point on the navigation mesh within a circle. The circle radius is only a guideline and in practice the returned point may be further away.
     Vector3 GetRandomPointInCircle
-        (const Vector3& center, float radius, const Vector3& extents = Vector3::ONE, const dtQueryFilter* filter = 0,
+        (const Vector3 &center, float radius, const Vector3 &extents = Vector3::ONE, const dtQueryFilter* filter = 0,
             dtPolyRef* randomRef = 0);
     /// Return distance to wall from a point. Maximum search radius must be specified.
     float GetDistanceToWall
-        (const Vector3& point, float radius, const Vector3& extents = Vector3::ONE, const dtQueryFilter* filter = 0,
+        (const Vector3 &point, float radius, const Vector3 &extents = Vector3::ONE, const dtQueryFilter* filter = 0,
             Vector3* hitPos = 0, Vector3* hitNormal = 0);
     /// Perform a walkability raycast on the navigation mesh between start and end and return the point where a wall was hit, or the end point if no walls.
     Vector3 Raycast
-        (const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE, const dtQueryFilter* filter = 0,
+        (const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE, const dtQueryFilter* filter = 0,
             Vector3* hitNormal = 0);
     /// Add debug geometry to the debug renderer.
     void DrawDebugGeometry(bool depthTest);
@@ -172,7 +172,7 @@ public:
     String GetMeshName() const { return meshName_; }
 
     /// Set the name of this navigation mesh.
-    void SetMeshName(const String& newName);
+    void SetMeshName(const String &newName);
 
     /// Return tile size.
     int GetTileSize() const { return tileSize_; }
@@ -214,7 +214,7 @@ public:
     float GetDetailSampleMaxError() const { return detailSampleMaxError_; }
 
     /// Return navigation mesh bounding box padding.
-    const Vector3& GetPadding() const { return padding_; }
+    const Vector3 &GetPadding() const { return padding_; }
 
     /// Get the current cost of an area
     float GetAreaCost(unsigned areaID) const;

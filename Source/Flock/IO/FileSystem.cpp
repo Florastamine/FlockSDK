@@ -60,7 +60,7 @@
 namespace FlockSDK
 {
 
-int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* context)
+int DoSystemCommand(const String &commandLine, bool redirectToLog, Context* context)
 {
 #if !defined(NO_POPEN) && !defined(MINI_URHO)
     if (!redirectToLog)
@@ -109,7 +109,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* cont
 #endif
 }
 
-int DoSystemRun(const String& fileName, const Vector<String>& arguments)
+int DoSystemRun(const String &fileName, const Vector<String> &arguments)
 {
     String fixedFileName = GetNativePath(fileName);
 
@@ -201,7 +201,7 @@ class AsyncSystemCommand : public AsyncExecRequest
 {
 public:
     /// Construct and run.
-    AsyncSystemCommand(unsigned requestID, const String& commandLine) :
+    AsyncSystemCommand(unsigned requestID, const String &commandLine) :
         AsyncExecRequest(requestID),
         commandLine_(commandLine)
     {
@@ -225,7 +225,7 @@ class AsyncSystemRun : public AsyncExecRequest
 {
 public:
     /// Construct and run.
-    AsyncSystemRun(unsigned requestID, const String& fileName, const Vector<String>& arguments) :
+    AsyncSystemRun(unsigned requestID, const String &fileName, const Vector<String> &arguments) :
         AsyncExecRequest(requestID),
         fileName_(fileName),
         arguments_(arguments)
@@ -244,7 +244,7 @@ private:
     /// File to run.
     String fileName_;
     /// Command line split in arguments.
-    const Vector<String>& arguments_;
+    const Vector<String> &arguments_;
 };
 
 FileSystem::FileSystem(Context* context) :
@@ -270,7 +270,7 @@ FileSystem::~FileSystem()
     }
 }
 
-bool FileSystem::SetCurrentDir(const String& pathName)
+bool FileSystem::SetCurrentDir(const String &pathName)
 {
     if (!CheckAccess(pathName))
     {
@@ -294,7 +294,7 @@ bool FileSystem::SetCurrentDir(const String& pathName)
     return true;
 }
 
-bool FileSystem::CreateDir(const String& pathName)
+bool FileSystem::CreateDir(const String &pathName)
 {
     if (!CheckAccess(pathName))
     {
@@ -337,7 +337,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
         UnsubscribeFromEvent(E_CONSOLECOMMAND);
 }
 
-int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLog)
+int FileSystem::SystemCommand(const String &commandLine, bool redirectStdOutToLog)
 {
     if (allowedPaths_.Empty())
         return DoSystemCommand(commandLine, redirectStdOutToLog, context_);
@@ -348,7 +348,7 @@ int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLo
     }
 }
 
-int FileSystem::SystemRun(const String& fileName, const Vector<String>& arguments)
+int FileSystem::SystemRun(const String &fileName, const Vector<String> &arguments)
 {
     if (allowedPaths_.Empty())
         return DoSystemRun(fileName, arguments);
@@ -359,7 +359,7 @@ int FileSystem::SystemRun(const String& fileName, const Vector<String>& argument
     }
 }
 
-unsigned FileSystem::SystemCommandAsync(const String& commandLine)
+unsigned FileSystem::SystemCommandAsync(const String &commandLine)
 {
     if (allowedPaths_.Empty())
     {
@@ -375,7 +375,7 @@ unsigned FileSystem::SystemCommandAsync(const String& commandLine)
     }
 }
 
-unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>& arguments)
+unsigned FileSystem::SystemRunAsync(const String &fileName, const Vector<String> &arguments)
 {
     if (allowedPaths_.Empty())
     {
@@ -391,7 +391,7 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
     }
 }
 
-bool FileSystem::SystemOpen(const String& fileName, const String& mode)
+bool FileSystem::SystemOpen(const String &fileName, const String &mode)
 {
     if (allowedPaths_.Empty())
     {
@@ -420,7 +420,7 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
     }
 }
 
-bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
+bool FileSystem::Copy(const String &srcFileName, const String &destFileName)
 {
     if (!CheckAccess(GetPath(srcFileName)))
     {
@@ -448,7 +448,7 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
     return bytesRead == fileSize && bytesWritten == fileSize;
 }
 
-bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
+bool FileSystem::Rename(const String &srcFileName, const String &destFileName)
 {
     if (!CheckAccess(GetPath(srcFileName)))
     {
@@ -468,7 +468,7 @@ bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 #endif
 }
 
-bool FileSystem::Delete(const String& fileName)
+bool FileSystem::Delete(const String &fileName)
 {
     if (!CheckAccess(GetPath(fileName)))
     {
@@ -498,7 +498,7 @@ String FileSystem::GetCurrentDir() const
 #endif
 }
 
-bool FileSystem::CheckAccess(const String& pathName) const
+bool FileSystem::CheckAccess(const String &pathName) const
 {
     String fixedPath = AddTrailingSlash(pathName);
 
@@ -521,7 +521,7 @@ bool FileSystem::CheckAccess(const String& pathName) const
     return false;
 }
 
-unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
+unsigned FileSystem::GetLastModifiedTime(const String &fileName) const
 {
     if (fileName.Empty() || !CheckAccess(fileName))
         return 0;
@@ -541,7 +541,7 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 #endif
 }
 
-bool FileSystem::FileExists(const String& fileName) const
+bool FileSystem::FileExists(const String &fileName) const
 {
     if (!CheckAccess(GetPath(fileName)))
         return false;
@@ -561,7 +561,7 @@ bool FileSystem::FileExists(const String& fileName) const
     return true;
 }
 
-bool FileSystem::DirExists(const String& pathName) const
+bool FileSystem::DirExists(const String &pathName) const
 {
     if (!CheckAccess(pathName))
         return false;
@@ -587,7 +587,7 @@ bool FileSystem::DirExists(const String& pathName) const
     return true;
 }
 
-void FileSystem::ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const
+void FileSystem::ScanDir(Vector<String> &result, const String &pathName, const String &filter, unsigned flags, bool recursive) const
 {
     result.Clear();
 
@@ -639,7 +639,7 @@ String FileSystem::GetUserDocumentsDir() const
 #endif
 }
 
-String FileSystem::GetAppPreferencesDir(const String& org, const String& app) const
+String FileSystem::GetAppPreferencesDir(const String &org, const String &app) const
 {
     String dir;
 #ifndef MINI_URHO
@@ -656,7 +656,7 @@ String FileSystem::GetAppPreferencesDir(const String& org, const String& app) co
     return dir;
 }
 
-void FileSystem::RegisterPath(const String& pathName)
+void FileSystem::RegisterPath(const String &pathName)
 {
     if (pathName.Empty())
         return;
@@ -664,7 +664,7 @@ void FileSystem::RegisterPath(const String& pathName)
     allowedPaths_.Insert(AddTrailingSlash(pathName));
 }
 
-bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
+bool FileSystem::SetLastModifiedTime(const String &fileName, unsigned newTime)
 {
     if (fileName.Empty() || !CheckAccess(fileName))
         return false;
@@ -688,8 +688,8 @@ bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
 #endif
 }
 
-void FileSystem::ScanDirInternal(Vector<String>& result, String path, const String& startPath,
-    const String& filter, unsigned flags, bool recursive) const
+void FileSystem::ScanDirInternal(Vector<String> &result, String path, const String &startPath,
+    const String &filter, unsigned flags, bool recursive) const
 {
     path = AddTrailingSlash(path);
     String deltaPath;
@@ -796,7 +796,7 @@ void FileSystem::HandleConsoleCommand(StringHash eventType, VariantMap& eventDat
         SystemCommand(eventData[P_COMMAND].GetString(), true);
 }
 
-void SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension)
+void SplitPath(const String &fullPath, String &pathName, String &fileName, String &extension, bool lowercaseExtension)
 {
     String fullPathCopy = GetInternalPath(fullPath);
 
@@ -826,42 +826,42 @@ void SplitPath(const String& fullPath, String& pathName, String& fileName, Strin
     }
 }
 
-String GetPath(const String& fullPath)
+String GetPath(const String &fullPath)
 {
     String path, file, extension;
     SplitPath(fullPath, path, file, extension);
     return path;
 }
 
-String GetFileName(const String& fullPath)
+String GetFileName(const String &fullPath)
 {
     String path, file, extension;
     SplitPath(fullPath, path, file, extension);
     return file;
 }
 
-String GetExtension(const String& fullPath, bool lowercaseExtension)
+String GetExtension(const String &fullPath, bool lowercaseExtension)
 {
     String path, file, extension;
     SplitPath(fullPath, path, file, extension, lowercaseExtension);
     return extension;
 }
 
-String GetFileNameAndExtension(const String& fileName, bool lowercaseExtension)
+String GetFileNameAndExtension(const String &fileName, bool lowercaseExtension)
 {
     String path, file, extension;
     SplitPath(fileName, path, file, extension, lowercaseExtension);
     return file + extension;
 }
 
-String ReplaceExtension(const String& fullPath, const String& newExtension)
+String ReplaceExtension(const String &fullPath, const String &newExtension)
 {
     String path, file, extension;
     SplitPath(fullPath, path, file, extension);
     return path + file + newExtension;
 }
 
-String AddTrailingSlash(const String& pathName)
+String AddTrailingSlash(const String &pathName)
 {
     String ret = pathName.Trimmed();
     ret.Replace('\\', '/');
@@ -870,7 +870,7 @@ String AddTrailingSlash(const String& pathName)
     return ret;
 }
 
-String RemoveTrailingSlash(const String& pathName)
+String RemoveTrailingSlash(const String &pathName)
 {
     String ret = pathName.Trimmed();
     ret.Replace('\\', '/');
@@ -879,7 +879,7 @@ String RemoveTrailingSlash(const String& pathName)
     return ret;
 }
 
-String GetParentPath(const String& path)
+String GetParentPath(const String &path)
 {
     unsigned pos = RemoveTrailingSlash(path).FindLast('/');
     if (pos != String::NPOS)
@@ -888,12 +888,12 @@ String GetParentPath(const String& path)
         return String();
 }
 
-String GetInternalPath(const String& pathName)
+String GetInternalPath(const String &pathName)
 {
     return pathName.Replaced('\\', '/');
 }
 
-String GetNativePath(const String& pathName)
+String GetNativePath(const String &pathName)
 {
 #ifdef _WIN32
     return pathName.Replaced('/', '\\');
@@ -902,7 +902,7 @@ String GetNativePath(const String& pathName)
 #endif
 }
 
-WString GetWideNativePath(const String& pathName)
+WString GetWideNativePath(const String &pathName)
 {
 #ifdef _WIN32
     return WString(pathName.Replaced('/', '\\'));
@@ -911,7 +911,7 @@ WString GetWideNativePath(const String& pathName)
 #endif
 }
 
-bool IsAbsolutePath(const String& pathName)
+bool IsAbsolutePath(const String &pathName)
 {
     if (pathName.Empty())
         return false;

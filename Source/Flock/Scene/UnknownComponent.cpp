@@ -239,7 +239,7 @@ bool UnknownComponent::SaveJSON(JSONValue& dest) const
     return true;
 }
 
-void UnknownComponent::SetTypeName(const String& typeName)
+void UnknownComponent::SetTypeName(const String &typeName)
 {
     typeName_ = typeName;
     typeHash_ = typeName;

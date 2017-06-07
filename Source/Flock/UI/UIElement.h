@@ -139,36 +139,36 @@ public:
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
     virtual bool IsWithinScissor(const IntRect& currentScissor);
     /// Update and return screen position.
-    virtual const IntVector2& GetScreenPosition() const;
+    virtual const IntVector2 &GetScreenPosition() const;
     /// Return UI rendering batches.
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
     /// Return UI rendering batches for debug draw.
     virtual void GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
     /// React to mouse hover.
-    virtual void OnHover(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+    virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse click begin.
     virtual void OnClickBegin
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor) { }
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor) { }
     /// React to mouse click end.
     virtual void OnClickEnd
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
             UIElement* beginElement) { }
     /// React to double mouse click.
     virtual void OnDoubleClick
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor) { }
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor) { }
     /// React to mouse drag begin.
     virtual void
-        OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+        OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag motion.
     virtual void OnDragMove
-        (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons, int qualifiers,
+        (const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons, int qualifiers,
             Cursor* cursor);
     /// React to mouse drag end.
     virtual void
-        OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int releaseButton, Cursor* cursor);
+        OnDragEnd(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int releaseButton, Cursor* cursor);
     /// React to a mouse drag cancel event (ie, when an extra button is pressed)
     virtual void OnDragCancel
-        (const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int cancelButton, Cursor* cursor);
+        (const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int cancelButton, Cursor* cursor);
     /// React to drag and drop test. Return true to signal that the drop is acceptable.
     virtual bool OnDragDropTest(UIElement* source);
     /// React to drag and drop finish. Return true to signal that the drop was accepted.
@@ -178,13 +178,13 @@ public:
     /// React to a key press.
     virtual void OnKey(int key, int buttons, int qualifiers) { }
     /// React to text input event.
-    virtual void OnTextInput(const String& text) { }
+    virtual void OnTextInput(const String &text) { }
 
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta) { }
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta) { }
 
     /// React to position change.
-    virtual void OnPositionSet(const IntVector2& newPosition) { }
+    virtual void OnPositionSet(const IntVector2 &newPosition) { }
 
     /// React to editable status change.
     virtual void OnSetEditable() { }
@@ -193,25 +193,25 @@ public:
     virtual void OnIndentSet() { }
 
     /// Convert screen coordinates to element coordinates.
-    virtual IntVector2 ScreenToElement(const IntVector2& screenPosition);
+    virtual IntVector2 ScreenToElement(const IntVector2 &screenPosition);
     /// Convert element coordinates to screen coordinates.
-    virtual IntVector2 ElementToScreen(const IntVector2& position);
+    virtual IntVector2 ElementToScreen(const IntVector2 &position);
 
     /// Load from an XML file. Return true if successful.
     bool LoadXML(Deserializer& source);
     /// Save to an XML file. Return true if successful.
-    bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
+    bool SaveXML(Serializer& dest, const String &indentation = "\t") const;
     /// Filter attributes in serialization process.
     bool FilterAttributes(XMLElement& dest) const;
 
     /// Set name.
-    void SetName(const String& name);
+    void SetName(const String &name);
     /// Set position.
-    void SetPosition(const IntVector2& position);
+    void SetPosition(const IntVector2 &position);
     /// Set position.
     void SetPosition(int x, int y);
     /// Set size.
-    void SetSize(const IntVector2& size);
+    void SetSize(const IntVector2 &size);
     /// Set size.
     void SetSize(int width, int height);
     /// Set width only.
@@ -219,7 +219,7 @@ public:
     /// Set height only.
     void SetHeight(int height);
     /// Set minimum size.
-    void SetMinSize(const IntVector2& minSize);
+    void SetMinSize(const IntVector2 &minSize);
     /// Set minimum size.
     void SetMinSize(int width, int height);
     /// Set minimum width.
@@ -227,7 +227,7 @@ public:
     /// Set minimum height.
     void SetMinHeight(int height);
     /// Set maximum size.
-    void SetMaxSize(const IntVector2& maxSize);
+    void SetMaxSize(const IntVector2 &maxSize);
     /// Set maximum size.
     void SetMaxSize(int width, int height);
     /// Set maximum width.
@@ -235,7 +235,7 @@ public:
     /// Set maximum height.
     void SetMaxHeight(int height);
     /// Set fixed size.
-    void SetFixedSize(const IntVector2& size);
+    void SetFixedSize(const IntVector2 &size);
     /// Set fixed size.
     void SetFixedSize(int width, int height);
     /// Set fixed width.
@@ -251,19 +251,19 @@ public:
     /// Enable automatic positioning & sizing of the element relative to its parent using min/max anchor and min/max offset. Default false.
     void SetEnableAnchor(bool enable);
     /// Set minimum (top left) anchor in relation to the parent element (from 0 to 1.) No effect when anchor is not enabled.
-    void SetMinAnchor(const Vector2& anchor);
+    void SetMinAnchor(const Vector2 &anchor);
     /// Set minimum anchor.
     void SetMinAnchor(float x, float y);
     /// Set maximum (bottom right) anchor in relation to the parent element (from 0 to 1.) No effect when anchor is not enabled.
-    void SetMaxAnchor(const Vector2& anchor);
+    void SetMaxAnchor(const Vector2 &anchor);
     /// Set maximum anchor.
     void SetMaxAnchor(float x, float y);
     /// Set offset of element's top left from the minimum anchor in pixels. No effect when anchor is not enabled.
-    void SetMinOffset(const IntVector2& offset);
+    void SetMinOffset(const IntVector2 &offset);
     /// Set offset of element's bottom right from the maximum anchor in pixels. No effect when anchor is not enabled.
-    void SetMaxOffset(const IntVector2& offset);
+    void SetMaxOffset(const IntVector2 &offset);
     /// Set pivot relative to element's size (from 0 to 1, where 0.5 is center.) Overrides horizontal & vertical alignment.
-    void SetPivot(const Vector2& pivot);
+    void SetPivot(const Vector2 &pivot);
     /// Set pivot relative to element's size (from 0 to 1, where 0.5 is center.) Overrides horizontal & vertical alignment.
     void SetPivot(float x, float y);
     /// Set child element clipping border.
@@ -307,7 +307,7 @@ public:
     /// Set drag and drop flags.
     void SetDragDropMode(unsigned mode);
     /// Set style from an XML file. Find the style element by name. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully.
-    bool SetStyle(const String& styleName, XMLFile* file = 0);
+    bool SetStyle(const String &styleName, XMLFile* file = 0);
     /// Set style from an XML element. Return true if the style is applied successfully.
     bool SetStyle(const XMLElement& element);
     /// Set style from an XML file. Find the style element automatically by using the element's typename. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully.
@@ -323,7 +323,7 @@ public:
     /// Set layout border.
     void SetLayoutBorder(const IntRect& border);
     /// Set layout flex scale.
-    void SetLayoutFlexScale(const Vector2& scale);
+    void SetLayoutFlexScale(const Vector2 &scale);
     /// Set horizontal indentation.
     void SetIndent(int indent);
     /// Set indent spacing (number of pixels per indentation level).
@@ -337,7 +337,7 @@ public:
     /// Bring UI element to front.
     void BringToFront();
     /// Create and add a child element and return it.
-    UIElement* CreateChild(StringHash type, const String& name = String::EMPTY, unsigned index = M_MAX_UNSIGNED);
+    UIElement* CreateChild(StringHash type, const String &name = String::EMPTY, unsigned index = M_MAX_UNSIGNED);
     /// Add a child element.
     void AddChild(UIElement* element);
     /// Insert a child element into a specific position in the child list.
@@ -355,7 +355,7 @@ public:
     /// Set parent element. Same as parent->InsertChild(index, this).
     void SetParent(UIElement* parent, unsigned index = M_MAX_UNSIGNED);
     /// Set a user variable.
-    void SetVar(StringHash key, const Variant& value);
+    void SetVar(StringHash key, const Variant &value);
     /// Mark as internally (programmatically) created. Used when an element composes itself out of child elements.
     void SetInternal(bool enable);
     /// Set traversal mode for rendering. The default traversal mode is TM_BREADTH_FIRST for non-root element. Root element should be set to TM_DEPTH_FIRST to avoid artifacts during rendering.
@@ -364,41 +364,41 @@ public:
     void SetElementEventSender(bool flag);
 
     /// Set tags. Old tags are overwritten.
-    void SetTags(const StringVector& tags);
+    void SetTags(const StringVector &tags);
     /// Add a tag.
-    void AddTag(const String& tag);
+    void AddTag(const String &tag);
     /// Add tags with the specified separator, by default ;
-    void AddTags(const String& tags, char separator = ';');
+    void AddTags(const String &tags, char separator = ';');
     /// Add tags.
-    void AddTags(const StringVector& tags);
+    void AddTags(const StringVector &tags);
     /// Remove specific tag. Return true if existed.
-    bool RemoveTag(const String& tag);
+    bool RemoveTag(const String &tag);
     /// Remove all tags.
     void RemoveAllTags();
 
     /// Template version of creating a child element.
-    template <class T> T* CreateChild(const String& name = String::EMPTY, unsigned index = M_MAX_UNSIGNED);
+    template <class T> T* CreateChild(const String &name = String::EMPTY, unsigned index = M_MAX_UNSIGNED);
     /// Template version of returning child element by index using static cast.
     template <class T> T* GetChildStaticCast(unsigned index) const;
     /// Template version of returning child element by name using static cast.
-    template <class T> T* GetChildStaticCast(const String& name, bool recursive = false) const;
+    template <class T> T* GetChildStaticCast(const String &name, bool recursive = false) const;
     /// Template version of returning child element by variable using static cast. If only key is provided, return the first child having the matching variable key. If value is also provided then the actual variable value would also be checked against.
-    template <class T> T* GetChildStaticCast(const StringHash& key, const Variant& value = Variant::EMPTY, bool recursive = false) const;
+    template <class T> T* GetChildStaticCast(const StringHash& key, const Variant &value = Variant::EMPTY, bool recursive = false) const;
     /// Template version of returning child element by index using dynamic cast. May return 0 when casting failed.
     template <class T> T* GetChildDynamicCast(unsigned index) const;
     /// Template version of returning child element by name using dynamic cast. May return 0 when casting failed.
-    template <class T> T* GetChildDynamicCast(const String& name, bool recursive = false) const;
+    template <class T> T* GetChildDynamicCast(const String &name, bool recursive = false) const;
     /// Template version of returning child element by variable. If only key is provided, return the first child having the matching variable key. If value is also provided then the actual variable value would also be checked against using dynamic cast. May return 0 when casting failed.
-    template <class T> T* GetChildDynamicCast(const StringHash& key, const Variant& value = Variant::EMPTY, bool recursive = false) const;
+    template <class T> T* GetChildDynamicCast(const StringHash& key, const Variant &value = Variant::EMPTY, bool recursive = false) const;
 
     /// Return name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return position.
-    const IntVector2& GetPosition() const { return position_; }
+    const IntVector2 &GetPosition() const { return position_; }
 
     /// Return size.
-    const IntVector2& GetSize() const { return size_; }
+    const IntVector2 &GetSize() const { return size_; }
 
     /// Return width.
     int GetWidth() const { return size_.x_; }
@@ -407,7 +407,7 @@ public:
     int GetHeight() const { return size_.y_; }
 
     /// Return minimum size.
-    const IntVector2& GetMinSize() const { return minSize_; }
+    const IntVector2 &GetMinSize() const { return minSize_; }
 
     /// Return minimum width.
     int GetMinWidth() const { return minSize_.x_; }
@@ -416,7 +416,7 @@ public:
     int GetMinHeight() const { return minSize_.y_; }
 
     /// Return maximum size.
-    const IntVector2& GetMaxSize() const { return maxSize_; }
+    const IntVector2 &GetMaxSize() const { return maxSize_; }
 
     /// Return minimum width.
     int GetMaxWidth() const { return maxSize_.x_; }
@@ -434,7 +434,7 @@ public:
     bool IsFixedHeight() const { return minSize_.y_ == maxSize_.y_; }
 
     /// Return child element offset.
-    const IntVector2& GetChildOffset() const { return childOffset_; }
+    const IntVector2 &GetChildOffset() const { return childOffset_; }
 
     /// Return horizontal alignment. If pivot has been adjusted to a custom horizontal setting, returns HA_CUSTOM.
     HorizontalAlignment GetHorizontalAlignment() const;
@@ -446,19 +446,19 @@ public:
     bool GetEnableAnchor() const { return enableAnchor_; }
 
     /// Return minimum anchor.
-    const Vector2& GetMinAnchor() const { return anchorMin_; }
+    const Vector2 &GetMinAnchor() const { return anchorMin_; }
 
     /// Return maximum anchor.
-    const Vector2& GetMaxAnchor() const { return anchorMax_; }
+    const Vector2 &GetMaxAnchor() const { return anchorMax_; }
 
     // Return minimum offset.
-    const IntVector2& GetMinOffset() const { return minOffset_; }
+    const IntVector2 &GetMinOffset() const { return minOffset_; }
 
     // Return maximum offset.
-    const IntVector2& GetMaxOffset() const { return maxOffset_; }
+    const IntVector2 &GetMaxOffset() const { return maxOffset_; }
 
     /// Return pivot.
-    const Vector2& GetPivot() const { return pivot_; }
+    const Vector2 &GetPivot() const { return pivot_; }
 
     /// Return child element clipping border.
     const IntRect& GetClipBorder() const { return clipBorder_; }
@@ -527,7 +527,7 @@ public:
     unsigned GetDragDropMode() const { return dragDropMode_; }
 
     /// Return applied style name. Return an empty string when the applied style is an 'auto' style (i.e. style derived from instance's type).
-    const String& GetAppliedStyle() const;
+    const String &GetAppliedStyle() const;
     /// Return default style.
     XMLFile* GetDefaultStyle(bool recursiveUp = true) const;
 
@@ -541,16 +541,16 @@ public:
     const IntRect& GetLayoutBorder() const { return layoutBorder_; }
 
     /// Return layout flex scale.
-    const Vector2& GetLayoutFlexScale() const { return layoutFlexScale_; }
+    const Vector2 &GetLayoutFlexScale() const { return layoutFlexScale_; }
 
     /// Return number of child elements.
     unsigned GetNumChildren(bool recursive = false) const;
     /// Return child element by index.
     UIElement* GetChild(unsigned index) const;
     /// Return child element by name.
-    UIElement* GetChild(const String& name, bool recursive = false) const;
+    UIElement* GetChild(const String &name, bool recursive = false) const;
     /// Return child element by variable. If only key is provided, return the first child having the matching variable key. If value is also provided then the actual variable value would also be checked against.
-    UIElement* GetChild(const StringHash& key, const Variant& value = Variant::EMPTY, bool recursive = false) const;
+    UIElement* GetChild(const StringHash& key, const Variant &value = Variant::EMPTY, bool recursive = false) const;
 
     /// Return immediate child elements.
     const Vector<SharedPtr<UIElement> >& GetChildren() const { return children_; }
@@ -566,22 +566,22 @@ public:
     /// Return derived color. Only valid when no gradient.
     const Color& GetDerivedColor() const;
     /// Return a user variable.
-    const Variant& GetVar(const StringHash& key) const;
+    const Variant &GetVar(const StringHash& key) const;
 
     /// Return all user variables.
     const VariantMap& GetVars() const { return vars_; }
 
     /// Return whether element is tagged by a specific tag.
-    bool HasTag(const String& tag) const;
+    bool HasTag(const String &tag) const;
 
     /// Return all tags.
-    const StringVector& GetTags() const { return tags_; }
+    const StringVector &GetTags() const { return tags_; }
 
     /// Return child elements with a specific tag either recursively or non-recursively.
-    void GetChildrenWithTag(PODVector<UIElement*>& dest, const String& tag, bool recursive = false) const;
+    void GetChildrenWithTag(PODVector<UIElement*>& dest, const String &tag, bool recursive = false) const;
 
     /// Return child elements with a specific tag either recursively or non-recursively.
-    PODVector<UIElement*> GetChildrenWithTag(const String& tag, bool recursive = false) const;
+    PODVector<UIElement*> GetChildrenWithTag(const String &tag, bool recursive = false) const;
 
     /// Return the drag button combo if this element is being dragged.
     int GetDragButtonCombo() const { return dragButtonCombo_; }
@@ -611,13 +611,13 @@ public:
     int GetIndentWidth() const { return indent_ * indentSpacing_; }
 
     /// Set child offset.
-    void SetChildOffset(const IntVector2& offset);
+    void SetChildOffset(const IntVector2 &offset);
     /// Set hovering state.
     void SetHovering(bool enable);
     /// Adjust scissor for rendering.
     void AdjustScissor(IntRect& currentScissor);
     /// Get UI rendering batches with a specified offset. Also recurse to child elements.
-    void GetBatchesWithOffset(IntVector2& offset, PODVector<UIBatch>& batches, PODVector<float>& vertexData, IntRect currentScissor);
+    void GetBatchesWithOffset(IntVector2 &offset, PODVector<UIBatch>& batches, PODVector<float>& vertexData, IntRect currentScissor);
 
     /// Return color attribute. Uses just the top-left color.
     const Color& GetColorAttr() const { return color_[0]; }
@@ -640,13 +640,13 @@ protected:
     /// Handle attribute animation removed.
     virtual void OnAttributeAnimationRemoved();
     /// Find target of an attribute animation from object hierarchy by name.
-    virtual Animatable* FindAttributeAnimationTarget(const String& name, String& outName);
+    virtual Animatable* FindAttributeAnimationTarget(const String &name, String &outName);
     /// Mark screen position as needing an update.
     void MarkDirty();
     /// Remove child XML element by matching attribute name.
-    bool RemoveChildXML(XMLElement& parent, const String& name) const;
+    bool RemoveChildXML(XMLElement& parent, const String &name) const;
     /// Remove child XML element by matching attribute name and value.
-    bool RemoveChildXML(XMLElement& parent, const String& name, const String& value) const;
+    bool RemoveChildXML(XMLElement& parent, const String &name, const String &value) const;
     /// Filter UI-style attributes in serialization process.
     bool FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styleElem) const;
     /// Filter implicit attributes in serialization process.
@@ -731,7 +731,7 @@ private:
     /// Return child elements recursively.
     void GetChildrenRecursive(PODVector<UIElement*>& dest) const;
     /// Return child elements with a specific tag recursively.
-    void GetChildrenWithTagRecursive(PODVector<UIElement*>& dest, const String& tag) const;
+    void GetChildrenWithTagRecursive(PODVector<UIElement*>& dest, const String &tag) const;
     /// Recursively apply style to a child element hierarchy when adding to an element.
     void ApplyStyleRecursive(UIElement* element);
     /// Calculate layout width for resizing the parent element.
@@ -801,7 +801,7 @@ private:
     StringVector tags_;
 };
 
-template <class T> T* UIElement::CreateChild(const String& name, unsigned index)
+template <class T> T* UIElement::CreateChild(const String &name, unsigned index)
 {
     return static_cast<T*>(CreateChild(T::GetTypeStatic(), name, index));
 }
@@ -811,12 +811,12 @@ template <class T> T* UIElement::GetChildStaticCast(unsigned index) const
     return static_cast<T*>(GetChild(index));
 }
 
-template <class T> T* UIElement::GetChildStaticCast(const String& name, bool recursive) const
+template <class T> T* UIElement::GetChildStaticCast(const String &name, bool recursive) const
 {
     return static_cast<T*>(GetChild(name, recursive));
 }
 
-template <class T> T* UIElement::GetChildStaticCast(const StringHash& key, const Variant& value, bool recursive) const
+template <class T> T* UIElement::GetChildStaticCast(const StringHash& key, const Variant &value, bool recursive) const
 {
     return static_cast<T*>(GetChild(key, value, recursive));
 }
@@ -826,12 +826,12 @@ template <class T> T* UIElement::GetChildDynamicCast(unsigned index) const
     return dynamic_cast<T*>(GetChild(index));
 }
 
-template <class T> T* UIElement::GetChildDynamicCast(const String& name, bool recursive) const
+template <class T> T* UIElement::GetChildDynamicCast(const String &name, bool recursive) const
 {
     return dynamic_cast<T*>(GetChild(name, recursive));
 }
 
-template <class T> T* UIElement::GetChildDynamicCast(const StringHash& key, const Variant& value, bool recursive) const
+template <class T> T* UIElement::GetChildDynamicCast(const StringHash& key, const Variant &value, bool recursive) const
 {
     return dynamic_cast<T*>(GetChild(key, value, recursive));
 }

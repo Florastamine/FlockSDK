@@ -58,7 +58,7 @@ void Constraint2D::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Other Body NodeID", unsigned, otherBodyNodeID_, 0, AM_DEFAULT | AM_NODEID);
 }
 
-void Constraint2D::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Constraint2D::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 

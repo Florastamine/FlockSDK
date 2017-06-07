@@ -321,7 +321,7 @@ void CrowdAgent::RemoveAgentFromCrowd()
     }
 }
 
-void CrowdAgent::SetTargetPosition(const Vector3& position)
+void CrowdAgent::SetTargetPosition(const Vector3 &position)
 {
     if (position != targetPosition_ || CA_REQUESTEDTARGET_POSITION != requestedTargetType_)
     {
@@ -340,7 +340,7 @@ void CrowdAgent::SetTargetPosition(const Vector3& position)
     }
 }
 
-void CrowdAgent::SetTargetVelocity(const Vector3& velocity)
+void CrowdAgent::SetTargetVelocity(const Vector3 &velocity)
 {
     if (velocity != targetVelocity_ || CA_REQUESTEDTARGET_VELOCITY != requestedTargetType_)
     {
@@ -624,7 +624,7 @@ void CrowdAgent::OnMarkedDirty(Node* node)
         dtCrowdAgent* agent = const_cast<dtCrowdAgent*>(GetDetourCrowdAgent());
         if (agent)
         {
-            Vector3& agentPos = reinterpret_cast<Vector3&>(agent->npos);
+            Vector3 &agentPos = reinterpret_cast<Vector3&>(agent->npos);
             Vector3 nodePos = node->GetWorldPosition();
             
             // Only reset position / state if actually changed

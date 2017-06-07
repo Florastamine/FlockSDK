@@ -44,7 +44,7 @@ static const char* shaderParameterGroups[] = {
     "custom"
 };
 
-static unsigned NumberPostfix(const String& str)
+static unsigned NumberPostfix(const String &str)
 {
     for (auto i = 0u; i < str.Length(); ++i)
     {

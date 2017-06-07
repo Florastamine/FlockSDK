@@ -41,7 +41,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set linear offset.
-    void SetLinearOffset(const Vector2& linearOffset);
+    void SetLinearOffset(const Vector2 &linearOffset);
     /// Set angular offset.
     void SetAngularOffset(float angularOffset);
     /// Set max force.
@@ -52,7 +52,7 @@ public:
     void SetCorrectionFactor(float correctionFactor);
 
     /// Return linear offset.
-    const Vector2& GetLinearOffset() const { return linearOffset_; }
+    const Vector2 &GetLinearOffset() const { return linearOffset_; }
 
     /// Return angular offset.
     float GetAngularOffset() const { return jointDef_.angularOffset; }

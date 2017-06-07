@@ -119,7 +119,7 @@ void SceneResolver::Resolve()
             {
                 hasIDAttributes = true;
                 Variant attrValue = component->GetAttribute(j);
-                const VariantVector& oldNodeIDs = attrValue.GetVariantVector();
+                const VariantVector &oldNodeIDs = attrValue.GetVariantVector();
 
                 if (oldNodeIDs.Size())
                 {

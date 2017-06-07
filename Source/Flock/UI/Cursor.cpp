@@ -110,7 +110,7 @@ void Cursor::RegisterObject(Context* context)
 void Cursor::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
 {
     unsigned initialSize = vertexData.Size();
-    const IntVector2& offset = shapeInfos_[shape_].hotSpot_;
+    const IntVector2 &offset = shapeInfos_[shape_].hotSpot_;
     Vector2 floatOffset(-(float)offset.x_, -(float)offset.y_);
 
     BorderImage::GetBatches(batches, vertexData, currentScissor);
@@ -121,7 +121,7 @@ void Cursor::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     }
 }
 
-void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot)
+void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot)
 {
     if (shape < CS_NORMAL || shape >= CS_MAX_SHAPES)
     {
@@ -132,7 +132,7 @@ void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRe
     DefineShape(shapeNames[shape], image, imageRect, hotSpot);
 }
 
-void Cursor::DefineShape(const String& shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot)
+void Cursor::DefineShape(const String &shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot)
 {
     if (!image)
         return;
@@ -173,7 +173,7 @@ void Cursor::DefineShape(const String& shape, Image* image, const IntRect& image
 }
 
 
-void Cursor::SetShape(const String& shape)
+void Cursor::SetShape(const String &shape)
 {
     if (shape == String::EMPTY || shape.Empty() || shape_ == shape || !shapeInfos_.Contains(shape))
         return;
@@ -210,7 +210,7 @@ void Cursor::SetUseSystemShapes(bool enable)
     }
 }
 
-void Cursor::SetShapesAttr(const VariantVector& value)
+void Cursor::SetShapesAttr(const VariantVector &value)
 {
     if (!value.Size())
         return;

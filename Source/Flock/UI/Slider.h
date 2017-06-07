@@ -43,26 +43,26 @@ public:
     /// Perform UI element update.
     virtual void Update(float timeStep);
     /// React to mouse hover.
-    virtual void OnHover(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+    virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse click begin.
     virtual void OnClickBegin
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse click end.
     virtual void OnClickEnd
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
             UIElement* beginElement);
     /// React to mouse drag begin.
     virtual void
-        OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+        OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag motion.
     virtual void OnDragMove
-        (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons, int qualifiers,
+        (const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons, int qualifiers,
             Cursor* cursor);
     /// React to mouse drag end.
     virtual void
-        OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int buttons, Cursor* cursor);
+        OnDragEnd(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int buttons, Cursor* cursor);
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
 
     /// Set orientation type.
     void SetOrientation(Orientation orientation);
@@ -96,7 +96,7 @@ protected:
     /// Update slider knob position & size.
     void UpdateSlider();
     /// Send slider page event.
-    void Page(const IntVector2& position, bool pressed);
+    void Page(const IntVector2 &position, bool pressed);
 
     /// Slider knob.
     SharedPtr<BorderImage> knob_;

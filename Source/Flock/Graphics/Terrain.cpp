@@ -150,7 +150,7 @@ void Terrain::RegisterObject(Context* context)
     FLOCKSDK_ACCESSOR_ATTRIBUTE("Occlusion LOD level", GetOcclusionLodLevel, SetOcclusionLodLevelAttr, unsigned, M_MAX_UNSIGNED, AM_DEFAULT);
 }
 
-void Terrain::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Terrain::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -210,7 +210,7 @@ void Terrain::SetPatchSize(int size)
     }
 }
 
-void Terrain::SetSpacing(const Vector3& spacing)
+void Terrain::SetSpacing(const Vector3 &spacing)
 {
     if (spacing != spacing_)
     {
@@ -568,7 +568,7 @@ TerrainPatch* Terrain::GetNeighborPatch(int x, int z) const
         return GetPatch(x, z);
 }
 
-float Terrain::GetHeight(const Vector3& worldPosition) const
+float Terrain::GetHeight(const Vector3 &worldPosition) const
 {
     if (node_)
     {
@@ -602,7 +602,7 @@ float Terrain::GetHeight(const Vector3& worldPosition) const
         return 0.0f;
 }
 
-Vector3 Terrain::GetNormal(const Vector3& worldPosition) const
+Vector3 Terrain::GetNormal(const Vector3 &worldPosition) const
 {
     if (node_)
     {
@@ -635,7 +635,7 @@ Vector3 Terrain::GetNormal(const Vector3& worldPosition) const
         return Vector3::UP;
 }
 
-IntVector2 Terrain::WorldToHeightMap(const Vector3& worldPosition) const
+IntVector2 Terrain::WorldToHeightMap(const Vector3 &worldPosition) const
 {
     if (!node_)
         return IntVector2::ZERO;
@@ -676,7 +676,7 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
 
     if (vertexData)
     {
-        const IntVector2& coords = patch->GetCoordinates();
+        const IntVector2 &coords = patch->GetCoordinates();
         int lodExpand = (1 << (occlusionLevel)) - 1;
         int halfLodExpand = (1 << (occlusionLevel)) / 2;
 
@@ -1087,7 +1087,7 @@ void Terrain::CreateGeometry()
                 if (dirtyPatches[i])
                 {
                     TerrainPatch* patch = patches_[i];
-                    const IntVector2& coords = patch->GetCoordinates();
+                    const IntVector2 &coords = patch->GetCoordinates();
                     int startX = coords.x_ * patchSize_;
                     int endX = startX + patchSize_;
                     int startZ = coords.y_ * patchSize_;
@@ -1368,7 +1368,7 @@ void Terrain::CalculateLodErrors(TerrainPatch* patch)
 {
     FLOCKSDK_PROFILE(CalculateLodErrors);
 
-    const IntVector2& coords = patch->GetCoordinates();
+    const IntVector2 &coords = patch->GetCoordinates();
     PODVector<float>& lodErrors = patch->GetLodErrors();
     lodErrors.Clear();
     lodErrors.Reserve(numLodLevels_);
@@ -1410,7 +1410,7 @@ void Terrain::SetPatchNeighbors(TerrainPatch* patch)
     if (!patch)
         return;
 
-    const IntVector2& coords = patch->GetCoordinates();
+    const IntVector2 &coords = patch->GetCoordinates();
     patch->SetNeighbors(GetNeighborPatch(coords.x_, coords.y_ + 1), GetNeighborPatch(coords.x_, coords.y_ - 1),
         GetNeighborPatch(coords.x_ - 1, coords.y_), GetNeighborPatch(coords.x_ + 1, coords.y_));
 }

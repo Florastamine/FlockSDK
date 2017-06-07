@@ -69,7 +69,7 @@ public:
      * @brief Retrieves the name of the target node. The node doesn't
      * necessarily have to exist in the scene graph.
      */
-    const String& GetTargetName() const;
+    const String &GetTargetName() const;
 
     /*!
      * @brief Sets the name of the target node. The node doesn't necessarily
@@ -77,12 +77,12 @@ public:
      * this name, it is selected as the target.
      * @note This clears the existing target node.
      */
-    void SetTargetName(const String& nodeName);
+    void SetTargetName(const String &nodeName);
 
     /// Returns the current target position in world space.
-    const Vector3& GetTargetPosition() const;
+    const Vector3 &GetTargetPosition() const;
     /// Sets the current target position. If the effector has a target node then this will have no effect.
-    void SetTargetPosition(const Vector3& targetPosition);
+    void SetTargetPosition(const Vector3 &targetPosition);
 
     /// Gets the current target rotation in world space.
     const Quaternion& GetTargetRotation() const;
@@ -92,7 +92,7 @@ public:
     /// Required for the editor, get the target rotation in euler angles
     Vector3 GetTargetRotationEuler() const;
     /// Required for the editor, sets the target rotation in euler angles
-    void SetTargetRotationEuler(const Vector3& targetRotation);
+    void SetTargetRotationEuler(const Vector3 &targetRotation);
 
     /// Returns the number of segments that will be affected by this effector. 0 Means all nodes between this effector and the next IKSolver.
     unsigned GetChainLength() const;

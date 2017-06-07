@@ -426,7 +426,7 @@ void PhysicsWorld2D::SetSubStepping(bool enable)
     world_->SetSubStepping(enable);
 }
 
-void PhysicsWorld2D::SetGravity(const Vector2& gravity)
+void PhysicsWorld2D::SetGravity(const Vector2 &gravity)
 {
     gravity_ = gravity;
 
@@ -479,7 +479,7 @@ class RayCastCallback : public b2RayCastCallback
 {
 public:
     // Construct.
-    RayCastCallback(PODVector<PhysicsRaycastResult2D>& results, const Vector2& startPoint, unsigned collisionMask) :
+    RayCastCallback(PODVector<PhysicsRaycastResult2D>& results, const Vector2 &startPoint, unsigned collisionMask) :
         results_(results),
         startPoint_(startPoint),
         collisionMask_(collisionMask)
@@ -515,7 +515,7 @@ protected:
     unsigned collisionMask_;
 };
 
-void PhysicsWorld2D::Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2& startPoint, const Vector2& endPoint,
+void PhysicsWorld2D::Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2 &startPoint, const Vector2 &endPoint,
     unsigned collisionMask)
 {
     results.Clear();
@@ -529,7 +529,7 @@ class SingleRayCastCallback : public b2RayCastCallback
 {
 public:
     // Construct.
-    SingleRayCastCallback(PhysicsRaycastResult2D& result, const Vector2& startPoint, unsigned collisionMask) :
+    SingleRayCastCallback(PhysicsRaycastResult2D& result, const Vector2 &startPoint, unsigned collisionMask) :
         result_(result),
         startPoint_(startPoint),
         collisionMask_(collisionMask),
@@ -572,7 +572,7 @@ private:
     float minDistance_;
 };
 
-void PhysicsWorld2D::RaycastSingle(PhysicsRaycastResult2D& result, const Vector2& startPoint, const Vector2& endPoint,
+void PhysicsWorld2D::RaycastSingle(PhysicsRaycastResult2D& result, const Vector2 &startPoint, const Vector2 &endPoint,
     unsigned collisionMask)
 {
     result.body_ = 0;
@@ -624,7 +624,7 @@ private:
     RigidBody2D* rigidBody_;
 };
 
-RigidBody2D* PhysicsWorld2D::GetRigidBody(const Vector2& point, unsigned collisionMask)
+RigidBody2D* PhysicsWorld2D::GetRigidBody(const Vector2 &point, unsigned collisionMask)
 {
     PointQueryCallback callback(ToB2Vec2(point), collisionMask);
 

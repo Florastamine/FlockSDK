@@ -51,7 +51,7 @@ public:
     long GetNumAffectedRows() const { return numAffectedRows_; }
 
     /// Return the column headers string collection.
-    const StringVector& GetColumns() const { return columns_; }
+    const StringVector &GetColumns() const { return columns_; }
 
     /// Return fetched rows collection. Filtered rows are not included in the collection.
     const Vector<VariantVector>& GetRows() const { return rows_; }

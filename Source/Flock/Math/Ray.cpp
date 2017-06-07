@@ -203,7 +203,7 @@ float Ray::HitDistance(const Sphere& sphere) const
         return (-b + dSqrt) / (2.0f * a);
 }
 
-float Ray::HitDistance(const Vector3& v0, const Vector3& v1, const Vector3& v2, Vector3* outNormal, Vector3* outBary) const
+float Ray::HitDistance(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, Vector3* outNormal, Vector3* outBary) const
 {
     // Based on Fast, Minimum Storage Ray/Triangle Intersection by Möller & Trumbore
     // http://www.graphics.cornell.edu/pubs/1997/MT97.pdf
@@ -255,9 +255,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, unsigned v
 
     while (index + 2 < vertexCount)
     {
-        const Vector3& v0 = *((const Vector3*)(&vertices[index * vertexStride]));
-        const Vector3& v1 = *((const Vector3*)(&vertices[(index + 1) * vertexStride]));
-        const Vector3& v2 = *((const Vector3*)(&vertices[(index + 2) * vertexStride]));
+        const Vector3 &v0 = *((const Vector3*)(&vertices[index * vertexStride]));
+        const Vector3 &v1 = *((const Vector3*)(&vertices[(index + 1) * vertexStride]));
+        const Vector3 &v2 = *((const Vector3*)(&vertices[(index + 2) * vertexStride]));
         float distance = HitDistance(v0, v1, v2, outNormal, outBary);
         if (distance < nearest)
         {
@@ -274,9 +274,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, unsigned v
         else
         {
             // Interpolate the UV coordinate using barycentric coordinate
-            const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIdx * vertexStride]));
-            const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 1) * vertexStride]));
-            const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 2) * vertexStride]));
+            const Vector2 &uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIdx * vertexStride]));
+            const Vector2 &uv1 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 1) * vertexStride]));
+            const Vector2 &uv2 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 2) * vertexStride]));
             *outUV = Vector2(uv0.x_ * barycentric.x_ + uv1.x_ * barycentric.y_ + uv2.x_ * barycentric.z_,
                 uv0.y_ * barycentric.x_ + uv1.y_ * barycentric.y_ + uv2.y_ * barycentric.z_);
         }
@@ -302,9 +302,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, const void
 
         while (indices < indicesEnd)
         {
-            const Vector3& v0 = *((const Vector3*)(&vertices[indices[0] * vertexStride]));
-            const Vector3& v1 = *((const Vector3*)(&vertices[indices[1] * vertexStride]));
-            const Vector3& v2 = *((const Vector3*)(&vertices[indices[2] * vertexStride]));
+            const Vector3 &v0 = *((const Vector3*)(&vertices[indices[0] * vertexStride]));
+            const Vector3 &v1 = *((const Vector3*)(&vertices[indices[1] * vertexStride]));
+            const Vector3 &v2 = *((const Vector3*)(&vertices[indices[2] * vertexStride]));
             float distance = HitDistance(v0, v1, v2, outNormal, outBary);
             if (distance < nearest)
             {
@@ -321,9 +321,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, const void
             else
             {
                 // Interpolate the UV coordinate using barycentric coordinate
-                const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
-                const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
-                const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
+                const Vector2 &uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
+                const Vector2 &uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
+                const Vector2 &uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
                 *outUV = Vector2(uv0.x_ * barycentric.x_ + uv1.x_ * barycentric.y_ + uv2.x_ * barycentric.z_,
                     uv0.y_ * barycentric.x_ + uv1.y_ * barycentric.y_ + uv2.y_ * barycentric.z_);
             }
@@ -338,9 +338,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, const void
 
         while (indices < indicesEnd)
         {
-            const Vector3& v0 = *((const Vector3*)(&vertices[indices[0] * vertexStride]));
-            const Vector3& v1 = *((const Vector3*)(&vertices[indices[1] * vertexStride]));
-            const Vector3& v2 = *((const Vector3*)(&vertices[indices[2] * vertexStride]));
+            const Vector3 &v0 = *((const Vector3*)(&vertices[indices[0] * vertexStride]));
+            const Vector3 &v1 = *((const Vector3*)(&vertices[indices[1] * vertexStride]));
+            const Vector3 &v2 = *((const Vector3*)(&vertices[indices[2] * vertexStride]));
             float distance = HitDistance(v0, v1, v2, outNormal, outBary);
             if (distance < nearest)
             {
@@ -357,9 +357,9 @@ float Ray::HitDistance(const void* vertexData, unsigned vertexStride, const void
             else
             {
                 // Interpolate the UV coordinate using barycentric coordinate
-                const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
-                const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
-                const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
+                const Vector2 &uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
+                const Vector2 &uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
+                const Vector2 &uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
                 *outUV = Vector2(uv0.x_ * barycentric.x_ + uv1.x_ * barycentric.y_ + uv2.x_ * barycentric.z_,
                     uv0.y_ * barycentric.x_ + uv1.y_ * barycentric.y_ + uv2.y_ * barycentric.z_);
             }
@@ -378,9 +378,9 @@ bool Ray::InsideGeometry(const void* vertexData, unsigned vertexSize, unsigned v
 
     while (index + 2 < vertexCount)
     {
-        const Vector3& v0 = *((const Vector3*)(&vertices[index * vertexSize]));
-        const Vector3& v1 = *((const Vector3*)(&vertices[(index + 1) * vertexSize]));
-        const Vector3& v2 = *((const Vector3*)(&vertices[(index + 2) * vertexSize]));
+        const Vector3 &v0 = *((const Vector3*)(&vertices[index * vertexSize]));
+        const Vector3 &v1 = *((const Vector3*)(&vertices[(index + 1) * vertexSize]));
+        const Vector3 &v2 = *((const Vector3*)(&vertices[(index + 2) * vertexSize]));
         float frontFaceDistance = HitDistance(v0, v1, v2);
         float backFaceDistance = HitDistance(v2, v1, v0);
         currentFrontFace = Min(frontFaceDistance > 0.0f ? frontFaceDistance : M_INFINITY, currentFrontFace);
@@ -416,9 +416,9 @@ bool Ray::InsideGeometry(const void* vertexData, unsigned vertexSize, const void
 
         while (indices < indicesEnd)
         {
-            const Vector3& v0 = *((const Vector3*)(&vertices[indices[0] * vertexSize]));
-            const Vector3& v1 = *((const Vector3*)(&vertices[indices[1] * vertexSize]));
-            const Vector3& v2 = *((const Vector3*)(&vertices[indices[2] * vertexSize]));
+            const Vector3 &v0 = *((const Vector3*)(&vertices[indices[0] * vertexSize]));
+            const Vector3 &v1 = *((const Vector3*)(&vertices[indices[1] * vertexSize]));
+            const Vector3 &v2 = *((const Vector3*)(&vertices[indices[2] * vertexSize]));
             float frontFaceDistance = HitDistance(v0, v1, v2);
             float backFaceDistance = HitDistance(v2, v1, v0);
             currentFrontFace = Min(frontFaceDistance > 0.0f ? frontFaceDistance : M_INFINITY, currentFrontFace);
@@ -436,9 +436,9 @@ bool Ray::InsideGeometry(const void* vertexData, unsigned vertexSize, const void
 
         while (indices < indicesEnd)
         {
-            const Vector3& v0 = *((const Vector3*)(&vertices[indices[0] * vertexSize]));
-            const Vector3& v1 = *((const Vector3*)(&vertices[indices[1] * vertexSize]));
-            const Vector3& v2 = *((const Vector3*)(&vertices[indices[2] * vertexSize]));
+            const Vector3 &v0 = *((const Vector3*)(&vertices[indices[0] * vertexSize]));
+            const Vector3 &v1 = *((const Vector3*)(&vertices[indices[1] * vertexSize]));
+            const Vector3 &v2 = *((const Vector3*)(&vertices[indices[2] * vertexSize]));
             float frontFaceDistance = HitDistance(v0, v1, v2);
             float backFaceDistance = HitDistance(v2, v1, v0);
             currentFrontFace = Min(frontFaceDistance > 0.0f ? frontFaceDistance : M_INFINITY, currentFrontFace);

@@ -156,7 +156,7 @@ public:
     /// Get wheel data attribute for serialization.
     VariantVector GetWheelDataAttr() const;
     /// Set wheel data attribute during loading.
-    void SetWheelDataAttr(const VariantVector& value);
+    void SetWheelDataAttr(const VariantVector &value);
 
 private:
     /// If the RigidBody should be activated.

@@ -39,7 +39,7 @@ DBAPI Database::GetAPI()
     return DBAPI_SQLITE;
 }
 
-DbConnection* Database::Connect(const String& connectionString)
+DbConnection* Database::Connect(const String &connectionString)
 {
     FLOCKSDK_PROFILE(DatabaseConnect);
 

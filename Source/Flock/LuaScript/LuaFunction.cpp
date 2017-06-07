@@ -127,7 +127,7 @@ void LuaFunction::PushDouble(double value)
     lua_pushnumber(luaState_, value);
 }
 
-void LuaFunction::PushString(const String& string)
+void LuaFunction::PushString(const String &string)
 {
     assert(numArguments_ >= 0);
     ++numArguments_;
@@ -141,7 +141,7 @@ void LuaFunction::PushUserType(void* userType, const char* typeName)
     tolua_pushusertype(luaState_, userType, typeName);
 }
 
-void LuaFunction::PushVariant(const Variant& variant, const char* asType)
+void LuaFunction::PushVariant(const Variant &variant, const char* asType)
 {
     assert(numArguments_ >= 0);
     ++numArguments_;

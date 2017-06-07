@@ -48,18 +48,18 @@ public:
     virtual void ThreadFunction();
 
     /// Start watching a directory. Return true if successful.
-    bool StartWatching(const String& pathName, bool watchSubDirs);
+    bool StartWatching(const String &pathName, bool watchSubDirs);
     /// Stop watching the directory.
     void StopWatching();
     /// Set the delay in seconds before file changes are notified. This (hopefully) avoids notifying when a file save is still in progress. Default 1 second.
     void SetDelay(float interval);
     /// Add a file change into the changes queue.
-    void AddChange(const String& fileName);
+    void AddChange(const String &fileName);
     /// Return a file change (true if was found, false if not.)
-    bool GetNextChange(String& dest);
+    bool GetNextChange(String &dest);
 
     /// Return the path being watched, or empty if not watching.
-    const String& GetPath() const { return path_; }
+    const String &GetPath() const { return path_; }
 
     /// Return the delay in seconds for notifying file changes.
     float GetDelay() const { return delay_; }

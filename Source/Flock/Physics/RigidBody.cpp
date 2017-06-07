@@ -128,7 +128,7 @@ void RigidBody::RegisterObject(Context* context)
     FLOCKSDK_ACCESSOR_ATTRIBUTE("Gravity Override", GetGravityOverride, SetGravityOverride, Vector3, Vector3::ZERO, AM_DEFAULT);
 }
 
-void RigidBody::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void RigidBody::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -229,7 +229,7 @@ void RigidBody::SetMass(float mass)
     }
 }
 
-void RigidBody::SetPosition(const Vector3& position)
+void RigidBody::SetPosition(const Vector3 &position)
 {
     if (body_)
     {
@@ -278,7 +278,7 @@ void RigidBody::SetRotation(const Quaternion& rotation)
     }
 }
 
-void RigidBody::SetTransform(const Vector3& position, const Quaternion& rotation)
+void RigidBody::SetTransform(const Vector3 &position, const Quaternion& rotation)
 {
     if (body_)
     {
@@ -301,7 +301,7 @@ void RigidBody::SetTransform(const Vector3& position, const Quaternion& rotation
     }
 }
 
-void RigidBody::SetLinearVelocity(const Vector3& velocity)
+void RigidBody::SetLinearVelocity(const Vector3 &velocity)
 {
     if (body_)
     {
@@ -312,7 +312,7 @@ void RigidBody::SetLinearVelocity(const Vector3& velocity)
     }
 }
 
-void RigidBody::SetLinearFactor(const Vector3& factor)
+void RigidBody::SetLinearFactor(const Vector3 &factor)
 {
     if (body_)
     {
@@ -339,7 +339,7 @@ void RigidBody::SetLinearDamping(float damping)
     }
 }
 
-void RigidBody::SetAngularVelocity(const Vector3& velocity)
+void RigidBody::SetAngularVelocity(const Vector3 &velocity)
 {
     if (body_)
     {
@@ -350,7 +350,7 @@ void RigidBody::SetAngularVelocity(const Vector3& velocity)
     }
 }
 
-void RigidBody::SetAngularFactor(const Vector3& factor)
+void RigidBody::SetAngularFactor(const Vector3 &factor)
 {
     if (body_)
     {
@@ -386,7 +386,7 @@ void RigidBody::SetFriction(float friction)
     }
 }
 
-void RigidBody::SetAnisotropicFriction(const Vector3& friction)
+void RigidBody::SetAnisotropicFriction(const Vector3 &friction)
 {
     if (body_)
     {
@@ -452,7 +452,7 @@ void RigidBody::SetUseGravity(bool enable)
     }
 }
 
-void RigidBody::SetGravityOverride(const Vector3& gravity)
+void RigidBody::SetGravityOverride(const Vector3 &gravity)
 {
     if (gravity != gravityOverride_)
     {
@@ -519,7 +519,7 @@ void RigidBody::SetCollisionEventMode(CollisionEventMode mode)
     MarkNetworkUpdate();
 }
 
-void RigidBody::ApplyForce(const Vector3& force)
+void RigidBody::ApplyForce(const Vector3 &force)
 {
     if (body_ && force != Vector3::ZERO)
     {
@@ -528,7 +528,7 @@ void RigidBody::ApplyForce(const Vector3& force)
     }
 }
 
-void RigidBody::ApplyForce(const Vector3& force, const Vector3& position)
+void RigidBody::ApplyForce(const Vector3 &force, const Vector3 &position)
 {
     if (body_ && force != Vector3::ZERO)
     {
@@ -537,7 +537,7 @@ void RigidBody::ApplyForce(const Vector3& force, const Vector3& position)
     }
 }
 
-void RigidBody::ApplyTorque(const Vector3& torque)
+void RigidBody::ApplyTorque(const Vector3 &torque)
 {
     if (body_ && torque != Vector3::ZERO)
     {
@@ -546,7 +546,7 @@ void RigidBody::ApplyTorque(const Vector3& torque)
     }
 }
 
-void RigidBody::ApplyImpulse(const Vector3& impulse)
+void RigidBody::ApplyImpulse(const Vector3 &impulse)
 {
     if (body_ && impulse != Vector3::ZERO)
     {
@@ -555,7 +555,7 @@ void RigidBody::ApplyImpulse(const Vector3& impulse)
     }
 }
 
-void RigidBody::ApplyImpulse(const Vector3& impulse, const Vector3& position)
+void RigidBody::ApplyImpulse(const Vector3 &impulse, const Vector3 &position)
 {
     if (body_ && impulse != Vector3::ZERO)
     {
@@ -564,7 +564,7 @@ void RigidBody::ApplyImpulse(const Vector3& impulse, const Vector3& position)
     }
 }
 
-void RigidBody::ApplyTorqueImpulse(const Vector3& torque)
+void RigidBody::ApplyTorqueImpulse(const Vector3 &torque)
 {
     if (body_ && torque != Vector3::ZERO)
     {
@@ -631,7 +631,7 @@ Vector3 RigidBody::GetLinearFactor() const
     return body_ ? ToVector3(body_->getLinearFactor()) : Vector3::ZERO;
 }
 
-Vector3 RigidBody::GetVelocityAtPoint(const Vector3& position) const
+Vector3 RigidBody::GetVelocityAtPoint(const Vector3 &position) const
 {
     return body_ ? ToVector3(body_->getVelocityInLocalPoint(ToBtVector3(position - centerOfMass_))) : Vector3::ZERO;
 }
@@ -714,7 +714,7 @@ void RigidBody::GetCollidingBodies(PODVector<RigidBody*>& result) const
         result.Clear();
 }
 
-void RigidBody::ApplyWorldTransform(const Vector3& newWorldPosition, const Quaternion& newWorldRotation)
+void RigidBody::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation)
 {
     // In case of holding an extra reference to the RigidBody, this could be called in a situation
     // where node is already null

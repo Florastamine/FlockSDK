@@ -54,7 +54,7 @@ void BoundingBox::Define(const Polyhedron& poly)
 
 void BoundingBox::Define(const Sphere& sphere)
 {
-    const Vector3& center = sphere.center_;
+    const Vector3 &center = sphere.center_;
     float radius = sphere.radius_;
 
     min_ = center + Vector3(-radius, -radius, -radius);
@@ -84,7 +84,7 @@ void BoundingBox::Merge(const Polyhedron& poly)
 
 void BoundingBox::Merge(const Sphere& sphere)
 {
-    const Vector3& center = sphere.center_;
+    const Vector3 &center = sphere.center_;
     float radius = sphere.radius_;
 
     Merge(center + Vector3(radius, radius, radius));
@@ -200,7 +200,7 @@ Intersection BoundingBox::IsInside(const Sphere& sphere) const
 {
     float distSquared = 0;
     float temp;
-    const Vector3& center = sphere.center_;
+    const Vector3 &center = sphere.center_;
 
     if (center.x_ < min_.x_)
     {
@@ -247,7 +247,7 @@ Intersection BoundingBox::IsInsideFast(const Sphere& sphere) const
 {
     float distSquared = 0;
     float temp;
-    const Vector3& center = sphere.center_;
+    const Vector3 &center = sphere.center_;
 
     if (center.x_ < min_.x_)
     {

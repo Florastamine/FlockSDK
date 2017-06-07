@@ -123,7 +123,7 @@ Object* ValueAnimationInfo::GetTarget() const
     return target_;
 }
 
-void ValueAnimationInfo::ApplyValue(const Variant& newValue)
+void ValueAnimationInfo::ApplyValue(const Variant &newValue)
 {
 }
 

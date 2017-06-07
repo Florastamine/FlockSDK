@@ -98,7 +98,7 @@ public:
 
         for (auto i = 0u; i < children_.Size(); ++i)
         {
-            const IntVector2& position = children_[i]->GetPosition();
+            const IntVector2 &position = children_[i]->GetPosition();
             CheckBox* overlay = overlayContainer_->GetChildStaticCast<CheckBox>(i);
             bool visible = children_[i]->IsVisible() && GetItemHierarchyParent(children_[i]);
             overlay->SetVisible(visible);
@@ -314,7 +314,7 @@ void ListView::OnKey(int key, int buttons, int qualifiers)
     SendEvent(E_UNHANDLEDKEY, eventData);
 }
 
-void ListView::OnResize(const IntVector2& newSize, const IntVector2& delta)
+void ListView::OnResize(const IntVector2 &newSize, const IntVector2 &delta)
 {
     ScrollView::OnResize(newSize, delta);
 

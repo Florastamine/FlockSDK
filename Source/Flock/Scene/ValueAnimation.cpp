@@ -273,7 +273,7 @@ void ValueAnimation::SetSplineTension(float tension)
     splineTangentsDirty_ = true;
 }
 
-bool ValueAnimation::SetKeyFrame(float time, const Variant& value)
+bool ValueAnimation::SetKeyFrame(float time, const Variant &value)
 {
     if (valueType_ == VAR_NONE)
         SetValueType(value.GetType());
@@ -379,8 +379,8 @@ Variant ValueAnimation::LinearInterpolation(unsigned index1, unsigned index2, fl
     const VAnimKeyFrame& keyFrame2 = keyFrames_[index2];
 
     float t = (scaledTime - keyFrame1.time_) / (keyFrame2.time_ - keyFrame1.time_);
-    const Variant& value1 = keyFrame1.value_;
-    const Variant& value2 = keyFrame2.value_;
+    const Variant &value1 = keyFrame1.value_;
+    const Variant &value2 = keyFrame2.value_;
 
     switch (valueType_)
     {
@@ -414,16 +414,16 @@ Variant ValueAnimation::LinearInterpolation(unsigned index1, unsigned index2, fl
     case VAR_INTVECTOR2:
         {
             float s = 1.0f - t;
-            const IntVector2& v1 = value1.GetIntVector2();
-            const IntVector2& v2 = value2.GetIntVector2();
+            const IntVector2 &v1 = value1.GetIntVector2();
+            const IntVector2 &v2 = value2.GetIntVector2();
             return IntVector2((int)(v1.x_ * s + v2.x_ * t), (int)(v1.y_ * s + v2.y_ * t));
         }
 
     case VAR_INTVECTOR3:
         {
             float s = 1.0f - t;
-            const IntVector3& v1 = value1.GetIntVector3();
-            const IntVector3& v2 = value2.GetIntVector3();
+            const IntVector3 &v1 = value1.GetIntVector3();
+            const IntVector3 &v2 = value2.GetIntVector3();
             return IntVector3((int)(v1.x_ * s + v2.x_ * t), (int)(v1.y_ * s + v2.y_ * t), (int)(v1.z_ * s + v2.z_ * t));
         }
 
@@ -454,10 +454,10 @@ Variant ValueAnimation::SplineInterpolation(unsigned index1, unsigned index2, fl
     float h3 = ttt - 2.0f * tt + t;
     float h4 = ttt - tt;
 
-    const Variant& v1 = keyFrame1.value_;
-    const Variant& v2 = keyFrame2.value_;
-    const Variant& t1 = splineTangents_[index1];
-    const Variant& t2 = splineTangents_[index2];
+    const Variant &v1 = keyFrame1.value_;
+    const Variant &v2 = keyFrame2.value_;
+    const Variant &t1 = splineTangents_[index1];
+    const Variant &t2 = splineTangents_[index2];
 
     switch (valueType_)
     {
@@ -512,7 +512,7 @@ void ValueAnimation::UpdateSplineTangents()
     splineTangentsDirty_ = false;
 }
 
-Variant ValueAnimation::SubstractAndMultiply(const Variant& value1, const Variant& value2, float t) const
+Variant ValueAnimation::SubstractAndMultiply(const Variant &value1, const Variant &value2, float t) const
 {
     switch (valueType_)
     {

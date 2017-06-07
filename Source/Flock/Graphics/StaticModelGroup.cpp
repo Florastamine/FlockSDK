@@ -323,7 +323,7 @@ Node* StaticModelGroup::GetInstanceNode(unsigned index) const
     return index < instanceNodes_.Size() ? instanceNodes_[index] : (Node*)0;
 }
 
-void StaticModelGroup::SetNodeIDsAttr(const VariantVector& value)
+void StaticModelGroup::SetNodeIDsAttr(const VariantVector &value)
 {
     // Just remember the node IDs. They need to go through the SceneResolver, and we actually find the nodes during
     // ApplyAttributes()
@@ -357,7 +357,7 @@ void StaticModelGroup::SetNodeIDsAttr(const VariantVector& value)
     nodeIDsDirty_ = false;
 }
 
-const VariantVector& StaticModelGroup::GetNodeIDsAttr() const
+const VariantVector &StaticModelGroup::GetNodeIDsAttr() const
 {
     if (nodeIDsDirty_)
         UpdateNodeIDs();

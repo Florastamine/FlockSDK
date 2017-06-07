@@ -49,21 +49,21 @@ public:
     virtual bool EndLoad();
 
     /// Return a variation with defines. Separate multiple defines with spaces.
-    ShaderVariation* GetVariation(ShaderType type, const String& defines);
+    ShaderVariation* GetVariation(ShaderType type, const String &defines);
     /// Return a variation with defines. Separate multiple defines with spaces.
     ShaderVariation* GetVariation(ShaderType type, const char* defines);
 
     /// Return either vertex or pixel shader source code.
-    const String& GetSourceCode(ShaderType type) const { return type == VS ? vsSourceCode_ : psSourceCode_; }
+    const String &GetSourceCode(ShaderType type) const { return type == VS ? vsSourceCode_ : psSourceCode_; }
 
     /// Return the latest timestamp of the shader code and its includes.
     unsigned GetTimeStamp() const { return timeStamp_; }
 
 private:
     /// Process source code and include files. Return true if successful.
-    bool ProcessSource(String& code, Deserializer& file);
+    bool ProcessSource(String &code, Deserializer& file);
     /// Sort the defines and strip extra spaces to prevent creation of unnecessary duplicate shader variations.
-    String NormalizeDefines(const String& defines);
+    String NormalizeDefines(const String &defines);
     /// Recalculate the memory used by the shader.
     void RefreshMemoryUse();
 

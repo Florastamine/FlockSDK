@@ -72,7 +72,7 @@ void CollisionChain2D::SetVertexCount(unsigned count)
     vertices_.Resize(count);
 }
 
-void CollisionChain2D::SetVertex(unsigned index, const Vector2& vertex)
+void CollisionChain2D::SetVertex(unsigned index, const Vector2 &vertex)
 {
     if (index >= vertices_.Size())
         return;

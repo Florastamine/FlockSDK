@@ -60,17 +60,17 @@ void CollisionEdge2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(CollisionShape2D);
 }
 
-void CollisionEdge2D::SetVertex1(const Vector2& vertex)
+void CollisionEdge2D::SetVertex1(const Vector2 &vertex)
 {
     SetVertices(vertex, vertex2_);
 }
 
-void CollisionEdge2D::SetVertex2(const Vector2& vertex)
+void CollisionEdge2D::SetVertex2(const Vector2 &vertex)
 {
     SetVertices(vertex1_, vertex);
 }
 
-void CollisionEdge2D::SetVertices(const Vector2& vertex1, const Vector2& vertex2)
+void CollisionEdge2D::SetVertices(const Vector2 &vertex1, const Vector2 &vertex2)
 {
     if (vertex1 == vertex1_ && vertex2 == vertex2_)
         return;

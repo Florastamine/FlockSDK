@@ -61,30 +61,30 @@ public:
 
     /// Add attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/@component#1/attribute.
     void AddAttributeAnimation
-        (const String& name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f);
+        (const String &name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f);
     /// Remove attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/@component#1/attribute.
-    void RemoveAttributeAnimation(const String& name);
+    void RemoveAttributeAnimation(const String &name);
     /// Remove attribute animation.
     void RemoveAttributeAnimation(ValueAnimation* attributeAnimation);
 
     /// Return attribute animation by name.
-    ValueAnimation* GetAttributeAnimation(const String& name) const;
+    ValueAnimation* GetAttributeAnimation(const String &name) const;
     /// Return attribute animation wrap mode by name.
-    WrapMode GetAttributeAnimationWrapMode(const String& name) const;
+    WrapMode GetAttributeAnimationWrapMode(const String &name) const;
     /// Return attribute animation speed by name.
-    float GetAttributeAnimationSpeed(const String& name) const;
+    float GetAttributeAnimationSpeed(const String &name) const;
 
     /// Return all attribute animations infos.
     const HashMap<String, SharedPtr<ValueAnimationInfo> >& GetAttributeAnimationInfos() const { return attributeAnimationInfos_; }
 
     /// Return attribute animation info by name.
-    ValueAnimationInfo* GetAttributeAnimationInfo(const String& name) const;
+    ValueAnimationInfo* GetAttributeAnimationInfo(const String &name) const;
 
 private:
     /// Send attribute animation added event.
-    void SendAttributeAnimationAddedEvent(const String& name);
+    void SendAttributeAnimationAddedEvent(const String &name);
     /// Send attribute animation remove event.
-    void SendAttributeAnimationRemovedEvent(const String& name);
+    void SendAttributeAnimationRemovedEvent(const String &name);
 
     /// Name to attribute animation info mapping.
     HashMap<String, SharedPtr<ValueAnimationInfo> > attributeAnimationInfos_;

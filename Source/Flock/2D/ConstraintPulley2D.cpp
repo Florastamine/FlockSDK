@@ -63,7 +63,7 @@ void ConstraintPulley2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintPulley2D::SetOwnerBodyGroundAnchor(const Vector2& groundAnchor)
+void ConstraintPulley2D::SetOwnerBodyGroundAnchor(const Vector2 &groundAnchor)
 {
     if (groundAnchor == ownerBodyGroundAnchor_)
         return;
@@ -74,7 +74,7 @@ void ConstraintPulley2D::SetOwnerBodyGroundAnchor(const Vector2& groundAnchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintPulley2D::SetOtherBodyGroundAnchor(const Vector2& groundAnchor)
+void ConstraintPulley2D::SetOtherBodyGroundAnchor(const Vector2 &groundAnchor)
 {
     if (groundAnchor == otherBodyGroundAnchor_)
         return;
@@ -85,7 +85,7 @@ void ConstraintPulley2D::SetOtherBodyGroundAnchor(const Vector2& groundAnchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintPulley2D::SetOwnerBodyAnchor(const Vector2& anchor)
+void ConstraintPulley2D::SetOwnerBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == ownerBodyAnchor_)
         return;
@@ -96,7 +96,7 @@ void ConstraintPulley2D::SetOwnerBodyAnchor(const Vector2& anchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintPulley2D::SetOtherBodyAnchor(const Vector2& anchor)
+void ConstraintPulley2D::SetOtherBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == otherBodyAnchor_)
         return;

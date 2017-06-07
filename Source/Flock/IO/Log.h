@@ -54,7 +54,7 @@ struct StoredLogMessage
     }
 
     /// Construct with parameters.
-    StoredLogMessage(const String& message, int level, bool error) :
+    StoredLogMessage(const String &message, int level, bool error) :
         message_(message),
         level_(level),
         error_(error)
@@ -81,7 +81,7 @@ public:
     virtual ~Log();
 
     /// Open the log file.
-    void Open(const String& fileName);
+    void Open(const String &fileName);
     /// Close the log file.
     void Close();
     /// Set logging level.
@@ -104,9 +104,9 @@ public:
     bool IsQuiet() const { return quiet_; }
 
     /// Write to the log. If logging level is higher than the level of the message, the message is ignored.
-    static void Write(int level, const String& message);
+    static void Write(int level, const String &message);
     /// Write raw output to the log.
-    static void WriteRaw(const String& message, bool error = false);
+    static void WriteRaw(const String &message, bool error = false);
 
 private:
     /// Handle end of frame. Process the threaded log messages.

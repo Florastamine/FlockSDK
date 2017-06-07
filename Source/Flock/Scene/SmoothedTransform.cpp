@@ -98,7 +98,7 @@ void SmoothedTransform::Update(float constant, float squaredSnapThreshold)
     }
 }
 
-void SmoothedTransform::SetTargetPosition(const Vector3& position)
+void SmoothedTransform::SetTargetPosition(const Vector3 &position)
 {
     targetPosition_ = position;
     smoothingMask_ |= SMOOTH_POSITION;
@@ -127,7 +127,7 @@ void SmoothedTransform::SetTargetRotation(const Quaternion& rotation)
     SendEvent(E_TARGETROTATION);
 }
 
-void SmoothedTransform::SetTargetWorldPosition(const Vector3& position)
+void SmoothedTransform::SetTargetWorldPosition(const Vector3 &position)
 {
     if (node_ && node_->GetParent())
         SetTargetPosition(node_->GetParent()->GetWorldTransform().Inverse() * position);

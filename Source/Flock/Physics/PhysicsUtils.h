@@ -31,7 +31,7 @@
 namespace FlockSDK
 {
 
-inline btVector3 ToBtVector3(const Vector3& vector)
+inline btVector3 ToBtVector3(const Vector3 &vector)
 {
     return btVector3(vector.x_, vector.y_, vector.z_);
 }
@@ -51,7 +51,7 @@ inline Quaternion ToQuaternion(const btQuaternion& quaternion)
     return Quaternion(quaternion.w(), quaternion.x(), quaternion.y(), quaternion.z());
 }
 
-inline bool HasWorldScaleChanged(const Vector3& oldWorldScale, const Vector3& newWorldScale)
+inline bool HasWorldScaleChanged(const Vector3 &oldWorldScale, const Vector3 &newWorldScale)
 {
     Vector3 delta = newWorldScale - oldWorldScale;
     float dot = delta.DotProduct(delta);

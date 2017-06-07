@@ -41,14 +41,14 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    void SetAnchor(const Vector2& anchor);
+    void SetAnchor(const Vector2 &anchor);
     /// Set frequency Hz.
     void SetFrequencyHz(float frequencyHz);
     /// Set damping ratio.
     void SetDampingRatio(float dampingRatio);
 
     /// Return anchor.
-    const Vector2& GetAnchor() const { return anchor_; }
+    const Vector2 &GetAnchor() const { return anchor_; }
 
     /// Return frequency Hz.
     float GetFrequencyHz() const { return jointDef_.frequencyHz; }

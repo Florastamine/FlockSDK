@@ -54,8 +54,8 @@ public:
     float GetStretchiness() const;
     void SetStretchiness(float stretchiness);
 
-    const Vector2& GetLengthConstraints() const;
-    void SetLengthConstraints(const Vector2& lengthConstraints);
+    const Vector2 &GetLengthConstraints() const;
+    void SetLengthConstraints(const Vector2 &lengthConstraints);
 
 private:
     friend class IKSolver;

@@ -255,7 +255,7 @@ void CustomGeometry::BeginGeometry(unsigned index, PrimitiveType type)
         elementMask_ = MASK_POSITION;
 }
 
-void CustomGeometry::DefineVertex(const Vector3& position)
+void CustomGeometry::DefineVertex(const Vector3 &position)
 {
     if (vertices_.Size() < geometryIndex_)
         return;
@@ -264,7 +264,7 @@ void CustomGeometry::DefineVertex(const Vector3& position)
     vertices_[geometryIndex_].Back().position_ = position;
 }
 
-void CustomGeometry::DefineNormal(const Vector3& normal)
+void CustomGeometry::DefineNormal(const Vector3 &normal)
 {
     if (vertices_.Size() < geometryIndex_ || vertices_[geometryIndex_].Empty())
         return;
@@ -282,7 +282,7 @@ void CustomGeometry::DefineColor(const Color& color)
     elementMask_ |= MASK_COLOR;
 }
 
-void CustomGeometry::DefineTexCoord(const Vector2& texCoord)
+void CustomGeometry::DefineTexCoord(const Vector2 &texCoord)
 {
     if (vertices_.Size() < geometryIndex_ || vertices_[geometryIndex_].Empty())
         return;
@@ -291,7 +291,7 @@ void CustomGeometry::DefineTexCoord(const Vector2& texCoord)
     elementMask_ |= MASK_TEXCOORD1;
 }
 
-void CustomGeometry::DefineTangent(const Vector4& tangent)
+void CustomGeometry::DefineTangent(const Vector4 &tangent)
 {
     if (vertices_.Size() < geometryIndex_ || vertices_[geometryIndex_].Empty())
         return;

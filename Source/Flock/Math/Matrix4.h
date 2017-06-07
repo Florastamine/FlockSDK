@@ -255,7 +255,7 @@ public:
     bool operator !=(const Matrix4& rhs) const { return !(*this == rhs); }
 
     /// Multiply a Vector3 which is assumed to represent position.
-    Vector3 operator *(const Vector3& rhs) const
+    Vector3 operator *(const Vector3 &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 vec = _mm_set_ps(1.f, rhs.z_, rhs.y_, rhs.x_);
@@ -287,7 +287,7 @@ public:
     }
 
     /// Multiply a Vector4.
-    Vector4 operator *(const Vector4& rhs) const
+    Vector4 operator *(const Vector4 &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 vec = _mm_loadu_ps(&rhs.x_);
@@ -479,7 +479,7 @@ public:
     Matrix4 operator *(const Matrix3x4& rhs) const;
 
     /// Set translation elements.
-    void SetTranslation(const Vector3& translation)
+    void SetTranslation(const Vector3 &translation)
     {
         m03_ = translation.x_;
         m13_ = translation.y_;
@@ -501,7 +501,7 @@ public:
     }
 
     /// Set scaling elements.
-    void SetScale(const Vector3& scale)
+    void SetScale(const Vector3 &scale)
     {
         m00_ = scale.x_;
         m11_ = scale.y_;
@@ -620,7 +620,7 @@ public:
     }
 
     /// Return decomposition to translation, rotation and scale.
-    void Decompose(Vector3& translation, Quaternion& rotation, Vector3& scale) const;
+    void Decompose(Vector3 &translation, Quaternion& rotation, Vector3 &scale) const;
     /// Return inverse.
     Matrix4 Inverse() const;
 

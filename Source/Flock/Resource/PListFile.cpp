@@ -60,7 +60,7 @@ PListValue::PListValue(float value) :
     SetFloat(value);
 }
 
-PListValue::PListValue(const String& value) :
+PListValue::PListValue(const String &value) :
     type_(PLVT_NONE)
 {
     SetString(value);
@@ -72,7 +72,7 @@ PListValue::PListValue(PListValueMap& valueMap) :
     SetValueMap(valueMap);
 }
 
-PListValue::PListValue(PListValueVector& valueVector) :
+PListValue::PListValue(PListValueVector &valueVector) :
     type_(PLVT_NONE)
 {
     SetValueVector(valueVector);
@@ -151,7 +151,7 @@ void PListValue::SetFloat(float value)
     float_ = value;
 }
 
-void PListValue::SetString(const String& value)
+void PListValue::SetString(const String &value)
 {
     if (type_ != PLVT_STRING)
     {
@@ -175,7 +175,7 @@ void PListValue::SetValueMap(const PListValueMap& valueMap)
     *valueMap_ = valueMap;
 }
 
-void PListValue::SetValueVector(const PListValueVector& valueVector)
+void PListValue::SetValueVector(const PListValueVector &valueVector)
 {
     if (type_ != PLVT_VALUEVECTOR)
     {
@@ -202,7 +202,7 @@ float PListValue::GetFloat() const
     return type_ == PLVT_FLOAT ? float_ : 0.0f;
 }
 
-const String& PListValue::GetString() const
+const String &PListValue::GetString() const
 {
     return type_ == PLVT_STRING ? *string_ : String::EMPTY;
 }
@@ -242,7 +242,7 @@ const PListValueMap& PListValue::GetValueMap() const
     return type_ == PLVT_VALUEMAP ? *valueMap_ : EMPTY_VALUEMAP;
 }
 
-const PListValueVector& PListValue::GetValueVector() const
+const PListValueVector &PListValue::GetValueVector() const
 {
     return type_ == PLVT_VALUEVECTOR ? *valueVector_ : EMPTY_VALUEVECTOR;
 }
@@ -259,7 +259,7 @@ PListValueMap& PListValue::ConvertToValueMap()
     return *valueMap_;
 }
 
-PListValueVector& PListValue::ConvertToValueVector()
+PListValueVector &PListValue::ConvertToValueVector()
 {
     if (type_ != PLVT_VALUEVECTOR)
     {
@@ -363,7 +363,7 @@ bool PListFile::LoadDict(PListValueMap& dict, const XMLElement& dictElem)
     return true;
 }
 
-bool PListFile::LoadArray(PListValueVector& array, const XMLElement& arrayElem)
+bool PListFile::LoadArray(PListValueVector &array, const XMLElement& arrayElem)
 {
     if (!arrayElem)
         return false;

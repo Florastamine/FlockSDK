@@ -237,7 +237,7 @@ void TerrainPatch::SetBoundingBox(const BoundingBox& box)
     OnMarkedDirty(node_);
 }
 
-void TerrainPatch::SetCoordinates(const IntVector2& coordinates)
+void TerrainPatch::SetCoordinates(const IntVector2 &coordinates)
 {
     coordinates_ = coordinates;
 }

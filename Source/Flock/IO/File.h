@@ -47,9 +47,9 @@ public:
     /// Construct.
     File(Context* context);
     /// Construct and open a filesystem file.
-    File(Context* context, const String& fileName, FileMode mode = FILE_READ);
+    File(Context* context, const String &fileName, FileMode mode = FILE_READ);
     /// Construct and open from a package file.
-    File(Context* context, PackageFile* package, const String& fileName);
+    File(Context* context, PackageFile* package, const String &fileName);
     /// Destruct. Close the file if open.
     virtual ~File();
 
@@ -61,21 +61,21 @@ public:
     virtual unsigned Write(const void* data, unsigned size);
 
     /// Return the file name.
-    virtual const String& GetName() const { return fileName_; }
+    virtual const String &GetName() const { return fileName_; }
 
     /// Return a checksum of the file contents using the SDBM hash algorithm.
     virtual unsigned GetChecksum();
 
     /// Open a filesystem file. Return true if successful.
-    bool Open(const String& fileName, FileMode mode = FILE_READ);
+    bool Open(const String &fileName, FileMode mode = FILE_READ);
     /// Open from within a package file. Return true if successful.
-    bool Open(PackageFile* package, const String& fileName);
+    bool Open(PackageFile* package, const String &fileName);
     /// Close the file.
     void Close();
     /// Flush any buffered output to the file.
     void Flush();
     /// Change the file name. Used by the resource system.
-    void SetName(const String& name);
+    void SetName(const String &name);
 
     /// Return the open mode.
     FileMode GetMode() const { return mode_; }
@@ -91,7 +91,7 @@ public:
 
 private:
     /// Open file internally using either C standard IO functions or SDL RWops for Android asset files. Return true if successful.
-    bool OpenInternal(const String& fileName, FileMode mode, bool fromPackage = false);
+    bool OpenInternal(const String &fileName, FileMode mode, bool fromPackage = false);
     /// Perform the file read internally using either C standard IO functions or SDL RWops for Android asset files. Return true if successful. This does not handle compressed package file reading.
     bool ReadInternal(void* dest, unsigned size);
     /// Seek in file internally using either C standard IO functions or SDL RWops for Android asset files.

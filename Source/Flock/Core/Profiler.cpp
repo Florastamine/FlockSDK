@@ -69,7 +69,7 @@ void Profiler::BeginInterval()
     intervalFrames_ = 0;
 }
 
-const String& Profiler::PrintData(bool showUnused, bool showTotal, unsigned maxDepth) const
+const String &Profiler::PrintData(bool showUnused, bool showTotal, unsigned maxDepth) const
 {
     static String output;
 
@@ -89,7 +89,7 @@ const String& Profiler::PrintData(bool showUnused, bool showTotal, unsigned maxD
     return output;
 }
 
-void Profiler::PrintData(ProfilerBlock* block, String& output, unsigned depth, unsigned maxDepth, bool showUnused,
+void Profiler::PrintData(ProfilerBlock* block, String &output, unsigned depth, unsigned maxDepth, bool showUnused,
     bool showTotal) const
 {
     static const int LINE_MAX_LENGTH = 256;

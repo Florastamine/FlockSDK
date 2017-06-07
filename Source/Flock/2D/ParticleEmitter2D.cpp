@@ -349,7 +349,7 @@ void ParticleEmitter2D::Update(float timeStep)
     OnMarkedDirty(node_);
 }
 
-bool ParticleEmitter2D::EmitParticle(const Vector3& worldPosition, float worldAngle, float worldScale)
+bool ParticleEmitter2D::EmitParticle(const Vector3 &worldPosition, float worldAngle, float worldScale)
 {
     if (numParticles_ >= (unsigned)effect_->GetMaxParticles() || numParticles_ >= particles_.Size())
         return false;
@@ -403,7 +403,7 @@ bool ParticleEmitter2D::EmitParticle(const Vector3& worldPosition, float worldAn
     return true;
 }
 
-void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, const Vector3& worldPosition, float worldScale)
+void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, const Vector3 &worldPosition, float worldScale)
 {
     if (timeStep > particle.timeToLive_)
         timeStep = particle.timeToLive_;

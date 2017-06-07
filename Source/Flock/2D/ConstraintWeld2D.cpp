@@ -55,7 +55,7 @@ void ConstraintWeld2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintWeld2D::SetAnchor(const Vector2& anchor)
+void ConstraintWeld2D::SetAnchor(const Vector2 &anchor)
 {
     if (anchor == anchor_)
         return;

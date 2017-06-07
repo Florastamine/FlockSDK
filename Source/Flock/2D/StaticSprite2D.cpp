@@ -201,7 +201,7 @@ void StaticSprite2D::SetUseTextureRect(bool useTextureRect)
     MarkNetworkUpdate();
 }
 
-void StaticSprite2D::SetHotSpot(const Vector2& hotspot)
+void StaticSprite2D::SetHotSpot(const Vector2 &hotspot)
 {
     if (hotspot == hotSpot_)
         return;

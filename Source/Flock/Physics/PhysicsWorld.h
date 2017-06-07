@@ -170,7 +170,7 @@ public:
     /// Set simulation substeps per second.
     void SetFps(int fps);
     /// Set gravity.
-    void SetGravity(const Vector3& gravity);
+    void SetGravity(const Vector3 &gravity);
     /// Set maximum number of physics substeps per frame. 0 (default) is unlimited. Positive values cap the amount. Use a negative value to enable an adaptive timestep. This may cause inconsistent physics behavior.
     void SetMaxSubSteps(int num);
     /// Set number of constraint solver iterations.
@@ -196,11 +196,11 @@ public:
     void SphereCast
         (PhysicsRaycastResult& result, const Ray& ray, float radius, float maxDistance, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world swept convex test using a user-supplied collision shape and return the first hit.
-    void ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3& startPos, const Quaternion& startRot,
-        const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
+    void ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3 &startPos, const Quaternion& startRot,
+        const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world swept convex test using a user-supplied Bullet collision shape and return the first hit.
-    void ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3& startPos, const Quaternion& startRot,
-        const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
+    void ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3 &startPos, const Quaternion& startRot,
+        const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Invalidate cached collision geometry for a model.
     void RemoveCachedGeometry(Model* model);
     /// Return rigid bodies by a sphere query.

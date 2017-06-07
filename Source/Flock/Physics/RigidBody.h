@@ -60,7 +60,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Handle attribute write access.
-    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant& src);
+    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant &src);
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     virtual void ApplyAttributes();
     /// Handle enabled/disabled state change.
@@ -75,23 +75,23 @@ public:
     /// Set mass. Zero mass makes the body static.
     void SetMass(float mass);
     /// Set rigid body position in world space.
-    void SetPosition(const Vector3& position);
+    void SetPosition(const Vector3 &position);
     /// Set rigid body rotation in world space.
     void SetRotation(const Quaternion& rotation);
     /// Set rigid body position and rotation in world space as an atomic operation.
-    void SetTransform(const Vector3& position, const Quaternion& rotation);
+    void SetTransform(const Vector3 &position, const Quaternion& rotation);
     /// Set linear velocity.
-    void SetLinearVelocity(const Vector3& velocity);
+    void SetLinearVelocity(const Vector3 &velocity);
     /// Set linear degrees of freedom. Use 1 to enable an axis or 0 to disable. Default is all axes enabled (1, 1, 1).
-    void SetLinearFactor(const Vector3& factor);
+    void SetLinearFactor(const Vector3 &factor);
     /// Set linear velocity deactivation threshold.
     void SetLinearRestThreshold(float threshold);
     /// Set linear velocity damping factor.
     void SetLinearDamping(float damping);
     /// Set angular velocity.
-    void SetAngularVelocity(const Vector3& angularVelocity);
+    void SetAngularVelocity(const Vector3 &angularVelocity);
     /// Set angular degrees of freedom. Use 1 to enable an axis or 0 to disable. Default is all axes enabled (1, 1, 1).
-    void SetAngularFactor(const Vector3& factor);
+    void SetAngularFactor(const Vector3 &factor);
     /// Set angular velocity deactivation threshold.
     void SetAngularRestThreshold(float threshold);
     /// Set angular velocity damping factor.
@@ -99,7 +99,7 @@ public:
     /// Set friction coefficient.
     void SetFriction(float friction);
     /// Set anisotropic friction.
-    void SetAnisotropicFriction(const Vector3& friction);
+    void SetAnisotropicFriction(const Vector3 &friction);
     /// Set rolling friction coefficient.
     void SetRollingFriction(float friction);
     /// Set restitution coefficient.
@@ -113,7 +113,7 @@ public:
     /// Set whether gravity is applied to rigid body.
     void SetUseGravity(bool enable);
     /// Set gravity override. If zero, uses physics world's gravity.
-    void SetGravityOverride(const Vector3& gravity);
+    void SetGravityOverride(const Vector3 &gravity);
     /// Set rigid body kinematic mode. In kinematic mode forces are not applied to the rigid body.
     void SetKinematic(bool enable);
     /// Set rigid body trigger mode. In trigger mode collisions are reported but do not apply forces.
@@ -127,17 +127,17 @@ public:
     /// Set collision event signaling mode. Default is to signal when rigid bodies are active.
     void SetCollisionEventMode(CollisionEventMode mode);
     /// Apply force to center of mass.
-    void ApplyForce(const Vector3& force);
+    void ApplyForce(const Vector3 &force);
     /// Apply force at local position.
-    void ApplyForce(const Vector3& force, const Vector3& position);
+    void ApplyForce(const Vector3 &force, const Vector3 &position);
     /// Apply torque.
-    void ApplyTorque(const Vector3& torque);
+    void ApplyTorque(const Vector3 &torque);
     /// Apply impulse to center of mass.
-    void ApplyImpulse(const Vector3& impulse);
+    void ApplyImpulse(const Vector3 &impulse);
     /// Apply impulse at local position.
-    void ApplyImpulse(const Vector3& impulse, const Vector3& position);
+    void ApplyImpulse(const Vector3 &impulse, const Vector3 &position);
     /// Apply torque impulse.
-    void ApplyTorqueImpulse(const Vector3& torque);
+    void ApplyTorqueImpulse(const Vector3 &torque);
     /// Reset accumulated forces.
     void ResetForces();
     /// Activate rigid body if it was resting.
@@ -170,7 +170,7 @@ public:
     /// Return linear degrees of freedom.
     Vector3 GetLinearFactor() const;
     /// Return linear velocity at local point.
-    Vector3 GetVelocityAtPoint(const Vector3& position) const;
+    Vector3 GetVelocityAtPoint(const Vector3 &position) const;
     /// Return linear velocity deactivation threshold.
     float GetLinearRestThreshold() const;
     /// Return linear velocity damping factor.
@@ -202,10 +202,10 @@ public:
     bool GetUseGravity() const { return useGravity_; }
 
     /// Return gravity override. If zero (default), uses the physics world's gravity.
-    const Vector3& GetGravityOverride() const { return gravityOverride_; }
+    const Vector3 &GetGravityOverride() const { return gravityOverride_; }
 
     /// Return center of mass offset.
-    const Vector3& GetCenterOfMass() const { return centerOfMass_; }
+    const Vector3 &GetCenterOfMass() const { return centerOfMass_; }
 
     /// Return kinematic mode flag.
     bool IsKinematic() const { return kinematic_; }
@@ -229,7 +229,7 @@ public:
     void GetCollidingBodies(PODVector<RigidBody*>& result) const;
 
     /// Apply new world transform after a simulation step. Called internally.
-    void ApplyWorldTransform(const Vector3& newWorldPosition, const Quaternion& newWorldRotation);
+    void ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation);
     /// Update mass and inertia to the Bullet rigid body.
     void UpdateMass();
     /// Update gravity parameters to the Bullet rigid body.

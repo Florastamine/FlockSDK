@@ -47,7 +47,7 @@ float TileMapInfo2D::GetMapHeight() const
         return height_ * tileHeight_;
 }
 
-Vector2 TileMapInfo2D::ConvertPosition(const Vector2& position) const
+Vector2 TileMapInfo2D::ConvertPosition(const Vector2 &position) const
 {
     switch (orientation_)
     {
@@ -97,7 +97,7 @@ Vector2 TileMapInfo2D::TileIndexToPosition(int x, int y) const
     return Vector2::ZERO;
 }
 
-bool TileMapInfo2D::PositionToTileIndex(int& x, int& y, const Vector2& position) const
+bool TileMapInfo2D::PositionToTileIndex(int& x, int& y, const Vector2 &position) const
 {
     switch (orientation_)
     {
@@ -154,12 +154,12 @@ void PropertySet2D::Load(const XMLElement& element)
         nameToValueMapping_[propertyElem.GetAttribute("name")] = propertyElem.GetAttribute("value");
 }
 
-bool PropertySet2D::HasProperty(const String& name) const
+bool PropertySet2D::HasProperty(const String &name) const
 {
     return nameToValueMapping_.Find(name) != nameToValueMapping_.End();
 }
 
-const String& PropertySet2D::GetProperty(const String& name) const
+const String &PropertySet2D::GetProperty(const String &name) const
 {
     HashMap<String, String>::ConstIterator i = nameToValueMapping_.Find(name);
     if (i == nameToValueMapping_.End())
@@ -178,14 +178,14 @@ Sprite2D* Tile2D::GetSprite() const
     return sprite_;
 }
 
-bool Tile2D::HasProperty(const String& name) const
+bool Tile2D::HasProperty(const String &name) const
 {
     if (!propertySet_)
         return false;
     return propertySet_->HasProperty(name);
 }
 
-const String& Tile2D::GetProperty(const String& name) const
+const String &Tile2D::GetProperty(const String &name) const
 {
     if (!propertySet_)
         return String::EMPTY;
@@ -202,7 +202,7 @@ unsigned TileMapObject2D::GetNumPoints() const
     return points_.Size();
 }
 
-const Vector2& TileMapObject2D::GetPoint(unsigned index) const
+const Vector2 &TileMapObject2D::GetPoint(unsigned index) const
 {
     if (index >= points_.Size())
         return Vector2::ZERO;
@@ -215,14 +215,14 @@ Sprite2D* TileMapObject2D::GetTileSprite() const
     return sprite_;
 }
 
-bool TileMapObject2D::HasProperty(const String& name) const
+bool TileMapObject2D::HasProperty(const String &name) const
 {
     if (!propertySet_)
         return false;
     return propertySet_->HasProperty(name);
 }
 
-const String& TileMapObject2D::GetProperty(const String& name) const
+const String &TileMapObject2D::GetProperty(const String &name) const
 {
     if (!propertySet_)
         return String::EMPTY;

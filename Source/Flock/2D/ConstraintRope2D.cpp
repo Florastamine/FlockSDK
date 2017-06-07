@@ -57,7 +57,7 @@ void ConstraintRope2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintRope2D::SetOwnerBodyAnchor(const Vector2& anchor)
+void ConstraintRope2D::SetOwnerBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == ownerBodyAnchor_)
         return;
@@ -68,7 +68,7 @@ void ConstraintRope2D::SetOwnerBodyAnchor(const Vector2& anchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintRope2D::SetOtherBodyAnchor(const Vector2& anchor)
+void ConstraintRope2D::SetOtherBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == otherBodyAnchor_)
         return;

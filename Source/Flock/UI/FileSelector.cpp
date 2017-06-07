@@ -179,18 +179,18 @@ void FileSelector::SetDefaultStyle(XMLFile* style)
     UpdateElements();
 }
 
-void FileSelector::SetTitle(const String& text)
+void FileSelector::SetTitle(const String &text)
 {
     titleText_->SetText(text);
 }
 
-void FileSelector::SetButtonTexts(const String& okText, const String& cancelText)
+void FileSelector::SetButtonTexts(const String &okText, const String &cancelText)
 {
     okButtonText_->SetText(okText);
     cancelButtonText_->SetText(cancelText);
 }
 
-void FileSelector::SetPath(const String& path)
+void FileSelector::SetPath(const String &path)
 {
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
     if (fileSystem->DirExists(path))
@@ -207,12 +207,12 @@ void FileSelector::SetPath(const String& path)
     }
 }
 
-void FileSelector::SetFileName(const String& fileName)
+void FileSelector::SetFileName(const String &fileName)
 {
     SetLineEditText(fileNameEdit_, fileName);
 }
 
-void FileSelector::SetFilters(const Vector<String>& filters, unsigned defaultIndex)
+void FileSelector::SetFilters(const Vector<String> &filters, unsigned defaultIndex)
 {
     if (filters.Empty())
         return;
@@ -253,17 +253,17 @@ XMLFile* FileSelector::GetDefaultStyle() const
     return window_->GetDefaultStyle(false);
 }
 
-const String& FileSelector::GetTitle() const
+const String &FileSelector::GetTitle() const
 {
     return titleText_->GetText();
 }
 
-const String& FileSelector::GetFileName() const
+const String &FileSelector::GetFileName() const
 {
     return fileNameEdit_->GetText();
 }
 
-const String& FileSelector::GetFilter() const
+const String &FileSelector::GetFilter() const
 {
     Text* selectedFilter = static_cast<Text*>(filterList_->GetSelectedItem());
     if (selectedFilter)
@@ -277,7 +277,7 @@ unsigned FileSelector::GetFilterIndex() const
     return filterList_->GetSelection();
 }
 
-void FileSelector::SetLineEditText(LineEdit* edit, const String& text)
+void FileSelector::SetLineEditText(LineEdit* edit, const String &text)
 {
     ignoreEvents_ = true;
     edit->SetText(text);
@@ -353,7 +353,7 @@ bool FileSelector::EnterFile()
     if (fileEntries_[index].directory_)
     {
         // If a directory double clicked, enter it. Recognize . and .. as a special case
-        const String& newPath = fileEntries_[index].name_;
+        const String &newPath = fileEntries_[index].name_;
         if ((newPath != ".") && (newPath != ".."))
             SetPath(path_ + newPath);
         else if (newPath == "..")
@@ -444,7 +444,7 @@ void FileSelector::HandleOKPressed(StringHash eventType, VariantMap& eventData)
     if (ignoreEvents_)
         return;
 
-    const String& fileName = GetFileName();
+    const String &fileName = GetFileName();
 
     if (!directoryMode_)
     {

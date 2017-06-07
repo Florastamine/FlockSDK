@@ -64,7 +64,7 @@ public:
     /// Set inertia.
     void SetInertia(float inertia);
     /// Set mass center.
-    void SetMassCenter(const Vector2& center);
+    void SetMassCenter(const Vector2 &center);
     /// Set whether to automatically calculate mass and inertia from collision shapes. Default true.
     void SetUseFixtureMass(bool useFixtureMass);
     /// Set linear damping.
@@ -82,19 +82,19 @@ public:
     /// Set awake.
     void SetAwake(bool awake);
     /// Set linear velocity.
-    void SetLinearVelocity(const Vector2& linearVelocity);
+    void SetLinearVelocity(const Vector2 &linearVelocity);
     /// Set angular velocity.
     void SetAngularVelocity(float angularVelocity);
     /// Apply force.
-    void ApplyForce(const Vector2& force, const Vector2& point, bool wake);
+    void ApplyForce(const Vector2 &force, const Vector2 &point, bool wake);
     /// Apply force to center.
-    void ApplyForceToCenter(const Vector2& force, bool wake);
+    void ApplyForceToCenter(const Vector2 &force, bool wake);
     /// Apply Torque.
     void ApplyTorque(float torque, bool wake);
     /// Apply linear impulse.
-    void ApplyLinearImpulse(const Vector2& impulse, const Vector2& point, bool wake);
+    void ApplyLinearImpulse(const Vector2 &impulse, const Vector2 &point, bool wake);
     /// Apply linear impulse to center.
-    void ApplyLinearImpulseToCenter(const Vector2& impulse, bool wake);
+    void ApplyLinearImpulseToCenter(const Vector2 &impulse, bool wake);
     /// Apply angular impulse.
     void ApplyAngularImpulse(float impulse, bool wake);
 
@@ -106,7 +106,7 @@ public:
     /// Apply world transform from the Box2D body. Called by PhysicsWorld2D.
     void ApplyWorldTransform();
     /// Apply specified world position & rotation. Called by PhysicsWorld2D.
-    void ApplyWorldTransform(const Vector3& newWorldPosition, const Quaternion& newWorldRotation);
+    void ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation);
     /// Add collision shape.
     void AddCollisionShape2D(CollisionShape2D* collisionShape);
     /// Remove collision shape.

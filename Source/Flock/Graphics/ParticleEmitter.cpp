@@ -192,7 +192,7 @@ void ParticleEmitter::Update(const FrameInfo& frame)
             particle.timer_ += lastTimeStep_;
 
             // Velocity & position
-            const Vector3& constantForce = effect_->GetConstantForce();
+            const Vector3 &constantForce = effect_->GetConstantForce();
             if (constantForce != Vector3::ZERO)
             {
                 if (relative_)
@@ -368,7 +368,7 @@ ResourceRef ParticleEmitter::GetEffectAttr() const
     return GetResourceRef(effect_, ParticleEffect::GetTypeStatic());
 }
 
-void ParticleEmitter::SetParticlesAttr(const VariantVector& value)
+void ParticleEmitter::SetParticlesAttr(const VariantVector &value)
 {
     unsigned index = 0;
     SetNumParticles(index < value.Size() ? value[index++].GetUInt() : 0);
@@ -478,7 +478,7 @@ bool ParticleEmitter::EmitNewParticle()
 
     case EMITTER_BOX:
         {
-            const Vector3& emitterSize = effect_->GetEmitterSize();
+            const Vector3 &emitterSize = effect_->GetEmitterSize();
             startPos = Vector3(
                 Random(emitterSize.x_) - emitterSize.x_ * 0.5f,
                 Random(emitterSize.y_) - emitterSize.y_ * 0.5f,

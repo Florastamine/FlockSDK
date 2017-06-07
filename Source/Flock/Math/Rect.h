@@ -39,7 +39,7 @@ public:
     }
 
     /// Construct from minimum and maximum vectors.
-    Rect(const Vector2& min, const Vector2& max) :
+    Rect(const Vector2 &min, const Vector2 &max) :
         min_(min),
         max_(max)
     {
@@ -53,7 +53,7 @@ public:
     }
 
     /// Construct from a Vector4.
-    Rect(const Vector4& vector) :
+    Rect(const Vector4 &vector) :
         min_(vector.x_, vector.y_),
         max_(vector.z_, vector.w_)
     {
@@ -95,20 +95,20 @@ public:
     }
 
     /// Define from minimum and maximum vectors.
-    void Define(const Vector2& min, const Vector2& max)
+    void Define(const Vector2 &min, const Vector2 &max)
     {
         min_ = min;
         max_ = max;
     }
 
     /// Define from a point.
-    void Define(const Vector2& point)
+    void Define(const Vector2 &point)
     {
         min_ = max_ = point;
     }
 
     /// Merge a point.
-    void Merge(const Vector2& point)
+    void Merge(const Vector2 &point)
     {
         if (point.x_ < min_.x_)
             min_.x_ = point.x_;
@@ -162,7 +162,7 @@ public:
     bool Equals(const Rect& rhs) const { return min_.Equals(rhs.min_) && max_.Equals(rhs.max_); }
 
     /// Test whether a point is inside.
-    Intersection IsInside(const Vector2& point) const
+    Intersection IsInside(const Vector2 &point) const
     {
         if (point.x_ < min_.x_ || point.y_ < min_.y_ || point.x_ > max_.x_ || point.y_ > max_.y_)
             return OUTSIDE;
@@ -256,7 +256,7 @@ public:
     int Height() const { return bottom_ - top_; }
 
     /// Test whether a point is inside.
-    Intersection IsInside(const IntVector2& point) const
+    Intersection IsInside(const IntVector2 &point) const
     {
         if (point.x_ < left_ || point.y_ < top_ || point.x_ >= right_ || point.y_ >= bottom_)
             return OUTSIDE;

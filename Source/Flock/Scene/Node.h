@@ -108,30 +108,30 @@ public:
     virtual void AddReplicationState(NodeReplicationState* state);
 
     /// Save to an XML file. Return true if successful.
-    bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
+    bool SaveXML(Serializer& dest, const String &indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.
-    bool SaveJSON(Serializer& dest, const String& indentation = "\t") const;
+    bool SaveJSON(Serializer& dest, const String &indentation = "\t") const;
     /// Set name of the scene node. Names are not required to be unique.
-    void SetName(const String& name);
+    void SetName(const String &name);
 
     /// Set tags. Old tags are overwritten.
-    void SetTags(const StringVector& tags);
+    void SetTags(const StringVector &tags);
     /// Add a tag.
-    void AddTag(const String& tag);
+    void AddTag(const String &tag);
     /// Add tags with the specified separator, by default ;
-    void AddTags(const String& tags, char separator = ';');
+    void AddTags(const String &tags, char separator = ';');
     /// Add tags.
-    void AddTags(const StringVector& tags);
+    void AddTags(const StringVector &tags);
     /// Remove tag. Return true if existed.
-    bool RemoveTag(const String& tag);
+    bool RemoveTag(const String &tag);
     /// Remove all tags.
     void RemoveAllTags();
 
     /// Set position in parent space. If the scene node is on the root level (is child of the scene itself), this is same as world space.
-    void SetPosition(const Vector3& position);
+    void SetPosition(const Vector3 &position);
 
     /// Set position in parent space (for Urho2D).
-    void SetPosition2D(const Vector2& position) { SetPosition(Vector3(position)); }
+    void SetPosition2D(const Vector2 &position) { SetPosition(Vector3(position)); }
 
     /// Set position in parent space (for Urho2D).
     void SetPosition2D(float x, float y) { SetPosition(Vector3(x, y, 0.0f)); }
@@ -143,47 +143,47 @@ public:
     void SetRotation2D(float rotation) { SetRotation(Quaternion(rotation)); }
 
     /// Set forward direction in parent space. Positive Z axis equals identity rotation.
-    void SetDirection(const Vector3& direction);
+    void SetDirection(const Vector3 &direction);
     /// Set uniform scale in parent space.
     void SetScale(float scale);
     /// Set scale in parent space.
-    void SetScale(const Vector3& scale);
+    void SetScale(const Vector3 &scale);
 
     /// Set scale in parent space (for Urho2D).
-    void SetScale2D(const Vector2& scale) { SetScale(Vector3(scale, 1.0f)); }
+    void SetScale2D(const Vector2 &scale) { SetScale(Vector3(scale, 1.0f)); }
 
     /// Set scale in parent space (for Urho2D).
     void SetScale2D(float x, float y) { SetScale(Vector3(x, y, 1.0f)); }
 
     /// Set both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.
-    void SetTransform(const Vector3& position, const Quaternion& rotation);
+    void SetTransform(const Vector3 &position, const Quaternion& rotation);
     /// Set both position, rotation and uniform scale in parent space as an atomic operation.
-    void SetTransform(const Vector3& position, const Quaternion& rotation, float scale);
+    void SetTransform(const Vector3 &position, const Quaternion& rotation, float scale);
     /// Set both position, rotation and scale in parent space as an atomic operation.
-    void SetTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale);
+    void SetTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
     /// Set node transformation in parent space as an atomic operation.
     void SetTransform(const Matrix3x4& matrix);
 
     /// Set both position and rotation in parent space as an atomic operation (for Urho2D).
-    void SetTransform2D(const Vector2& position, float rotation) { SetTransform(Vector3(position), Quaternion(rotation)); }
+    void SetTransform2D(const Vector2 &position, float rotation) { SetTransform(Vector3(position), Quaternion(rotation)); }
 
     /// Set both position, rotation and uniform scale in parent space as an atomic operation (for Urho2D).
-    void SetTransform2D(const Vector2& position, float rotation, float scale)
+    void SetTransform2D(const Vector2 &position, float rotation, float scale)
     {
         SetTransform(Vector3(position), Quaternion(rotation), scale);
     }
 
     /// Set both position, rotation and scale in parent space as an atomic operation (for Urho2D).
-    void SetTransform2D(const Vector2& position, float rotation, const Vector2& scale)
+    void SetTransform2D(const Vector2 &position, float rotation, const Vector2 &scale)
     {
         SetTransform(Vector3(position), Quaternion(rotation), Vector3(scale, 1.0f));
     }
 
     /// Set position in world space.
-    void SetWorldPosition(const Vector3& position);
+    void SetWorldPosition(const Vector3 &position);
 
     /// Set position in world space (for Urho2D).
-    void SetWorldPosition2D(const Vector2& position) { SetWorldPosition(Vector3(position)); }
+    void SetWorldPosition2D(const Vector2 &position) { SetWorldPosition(Vector3(position)); }
 
     /// Set position in world space (for Urho2D).
     void SetWorldPosition2D(float x, float y) { SetWorldPosition(Vector3(x, y, 0.0f)); }
@@ -195,48 +195,48 @@ public:
     void SetWorldRotation2D(float rotation) { SetWorldRotation(Quaternion(rotation)); }
 
     /// Set forward direction in world space.
-    void SetWorldDirection(const Vector3& direction);
+    void SetWorldDirection(const Vector3 &direction);
     /// Set uniform scale in world space.
     void SetWorldScale(float scale);
     /// Set scale in world space.
-    void SetWorldScale(const Vector3& scale);
+    void SetWorldScale(const Vector3 &scale);
 
     /// Set scale in world space (for Urho2D).
-    void SetWorldScale2D(const Vector2& scale) { SetWorldScale(Vector3(scale, 1.0f)); }
+    void SetWorldScale2D(const Vector2 &scale) { SetWorldScale(Vector3(scale, 1.0f)); }
 
     /// Set scale in world space (for Urho2D).
     void SetWorldScale2D(float x, float y) { SetWorldScale(Vector3(x, y, 1.0f)); }
 
     /// Set both position and rotation in world space as an atomic operation.
-    void SetWorldTransform(const Vector3& position, const Quaternion& rotation);
+    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation);
     /// Set both position, rotation and uniform scale in world space as an atomic operation.
-    void SetWorldTransform(const Vector3& position, const Quaternion& rotation, float scale);
+    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation, float scale);
     /// Set both position, rotation and scale in world space as an atomic opration.
-    void SetWorldTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale);
+    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
 
     /// Set both position and rotation in world space as an atomic operation (for Urho2D).
-    void SetWorldTransform2D(const Vector2& position, float rotation)
+    void SetWorldTransform2D(const Vector2 &position, float rotation)
     {
         SetWorldTransform(Vector3(position), Quaternion(rotation));
     }
 
     /// Set both position, rotation and uniform scale in world space as an atomic operation (for Urho2D).
-    void SetWorldTransform2D(const Vector2& position, float rotation, float scale)
+    void SetWorldTransform2D(const Vector2 &position, float rotation, float scale)
     {
         SetWorldTransform(Vector3(position), Quaternion(rotation), scale);
     }
 
     /// Set both position, rotation and scale in world space as an atomic opration (for Urho2D).
-    void SetWorldTransform2D(const Vector2& position, float rotation, const Vector2& scale)
+    void SetWorldTransform2D(const Vector2 &position, float rotation, const Vector2 &scale)
     {
         SetWorldTransform(Vector3(position), Quaternion(rotation), Vector3(scale, 1.0f));
     }
 
     /// Move the scene node in the chosen transform space.
-    void Translate(const Vector3& delta, TransformSpace space = TS_LOCAL);
+    void Translate(const Vector3 &delta, TransformSpace space = TS_LOCAL);
 
     /// Move the scene node in the chosen transform space (for Urho2D).
-    void Translate2D(const Vector2& delta, TransformSpace space = TS_LOCAL) { Translate(Vector3(delta), space); }
+    void Translate2D(const Vector2 &delta, TransformSpace space = TS_LOCAL) { Translate(Vector3(delta), space); }
 
     /// Rotate the scene node in the chosen transform space.
     void Rotate(const Quaternion& delta, TransformSpace space = TS_LOCAL);
@@ -245,10 +245,10 @@ public:
     void Rotate2D(float delta, TransformSpace space = TS_LOCAL) { Rotate(Quaternion(delta), space); }
 
     /// Rotate around a point in the chosen transform space.
-    void RotateAround(const Vector3& point, const Quaternion& delta, TransformSpace space = TS_LOCAL);
+    void RotateAround(const Vector3 &point, const Quaternion& delta, TransformSpace space = TS_LOCAL);
 
     /// Rotate around a point in the chosen transform space (for Urho2D).
-    void RotateAround2D(const Vector2& point, float delta, TransformSpace space = TS_LOCAL)
+    void RotateAround2D(const Vector2 &point, float delta, TransformSpace space = TS_LOCAL)
     {
         RotateAround(Vector3(point), Quaternion(delta), space);
     }
@@ -260,14 +260,14 @@ public:
     /// Rotate around the Z axis.
     void Roll(float angle, TransformSpace space = TS_LOCAL);
     /// Look at a target position in the chosen transform space. Note that the up vector is always specified in world space. Return true if successful, or false if resulted in an illegal rotation, in which case the current rotation remains.
-    bool LookAt(const Vector3& target, const Vector3& up = Vector3::UP, TransformSpace space = TS_WORLD);
+    bool LookAt(const Vector3 &target, const Vector3 &up = Vector3::UP, TransformSpace space = TS_WORLD);
     /// Modify scale in parent space uniformly.
     void Scale(float scale);
     /// Modify scale in parent space.
-    void Scale(const Vector3& scale);
+    void Scale(const Vector3 &scale);
 
     /// Modify scale in parent space (for Urho2D).
-    void Scale2D(const Vector2& scale) { Scale(Vector3(scale, 1.0f)); }
+    void Scale2D(const Vector2 &scale) { Scale(Vector3(scale, 1.0f)); }
 
     /// Set enabled/disabled state without recursion. Components in a disabled node become effectively disabled regardless of their own enable/disable state.
     void SetEnabled(bool enable);
@@ -282,9 +282,9 @@ public:
     /// Mark node and child nodes to need world transform recalculation. Notify listener components.
     void MarkDirty();
     /// Create a child scene node (with specified ID if provided).
-    Node* CreateChild(const String& name = String::EMPTY, CreateMode mode = REPLICATED, unsigned id = 0, bool temporary = false);
+    Node* CreateChild(const String &name = String::EMPTY, CreateMode mode = REPLICATED, unsigned id = 0, bool temporary = false);
     /// Create a temporary child scene node (with specified ID if provided).
-    Node* CreateTemporaryChild(const String& name = String::EMPTY, CreateMode mode = REPLICATED, unsigned id = 0);
+    Node* CreateTemporaryChild(const String &name = String::EMPTY, CreateMode mode = REPLICATED, unsigned id = 0);
     /// Add a child scene node at a specific index. If index is not explicitly specified or is greater than current children size, append the new child at the end.
     void AddChild(Node* node, unsigned index = M_MAX_UNSIGNED);
     /// Remove a child scene node.
@@ -320,7 +320,7 @@ public:
     /// Assign to a new parent scene node. Retains the world transform.
     void SetParent(Node* parent);
     /// Set a user variable.
-    void SetVar(StringHash key, const Variant& value);
+    void SetVar(StringHash key, const Variant &value);
     /// Add listener component that is notified of node being dirtied. Can either be in the same node or another.
     void AddListener(Component* component);
     /// Remove listener component.
@@ -338,16 +338,16 @@ public:
     unsigned GetID() const { return id_; }
 
     /// Return name.
-    const String& GetName() const { return impl_->name_; }
+    const String &GetName() const { return impl_->name_; }
 
     /// Return name hash.
     StringHash GetNameHash() const { return impl_->nameHash_; }
 
     /// Return all tags.
-    const StringVector& GetTags() const { return impl_->tags_; }
+    const StringVector &GetTags() const { return impl_->tags_; }
 
     /// Return whether has a specific tag.
-    bool HasTag(const String& tag) const;
+    bool HasTag(const String &tag) const;
 
     /// Return parent scene node.
     Node* GetParent() const { return parent_; }
@@ -368,7 +368,7 @@ public:
     Connection* GetOwner() const { return impl_->owner_; }
 
     /// Return position in parent space.
-    const Vector3& GetPosition() const { return position_; }
+    const Vector3 &GetPosition() const { return position_; }
 
     /// Return position in parent space (for Urho2D).
     Vector2 GetPosition2D() const { return Vector2(position_.x_, position_.y_); }
@@ -389,7 +389,7 @@ public:
     Vector3 GetRight() const { return rotation_ * Vector3::RIGHT; }
 
     /// Return scale in parent space.
-    const Vector3& GetScale() const { return scale_; }
+    const Vector3 &GetScale() const { return scale_; }
 
     /// Return scale in parent space (for Urho2D).
     Vector2 GetScale2D() const { return Vector2(scale_.x_, scale_.y_); }
@@ -481,17 +481,17 @@ public:
     }
 
     /// Convert a local space position to world space.
-    Vector3 LocalToWorld(const Vector3& position) const;
+    Vector3 LocalToWorld(const Vector3 &position) const;
     /// Convert a local space position or rotation to world space.
-    Vector3 LocalToWorld(const Vector4& vector) const;
+    Vector3 LocalToWorld(const Vector4 &vector) const;
     /// Convert a local space position or rotation to world space (for Urho2D).
-    Vector2 LocalToWorld2D(const Vector2& vector) const;
+    Vector2 LocalToWorld2D(const Vector2 &vector) const;
     /// Convert a world space position to local space.
-    Vector3 WorldToLocal(const Vector3& position) const;
+    Vector3 WorldToLocal(const Vector3 &position) const;
     /// Convert a world space position or rotation to local space.
-    Vector3 WorldToLocal(const Vector4& vector) const;
+    Vector3 WorldToLocal(const Vector4 &vector) const;
     /// Convert a world space position or rotation to local space (for Urho2D).
-    Vector2 WorldToLocal2D(const Vector2& vector) const;
+    Vector2 WorldToLocal2D(const Vector2 &vector) const;
 
     /// Return whether transform has changed and world transform needs recalculation.
     bool IsDirty() const { return dirty_; }
@@ -511,14 +511,14 @@ public:
     /// Return child scene nodes with a specific component.
     PODVector<Node*> GetChildrenWithComponent(StringHash type, bool recursive = false) const;
     /// Return child scene nodes with a specific tag.
-    void GetChildrenWithTag(PODVector<Node*>& dest, const String& tag, bool recursive = false) const;
+    void GetChildrenWithTag(PODVector<Node*>& dest, const String &tag, bool recursive = false) const;
     /// Return child scene nodes with a specific tag.
-    PODVector<Node*> GetChildrenWithTag(const String& tag, bool recursive = false) const;
+    PODVector<Node*> GetChildrenWithTag(const String &tag, bool recursive = false) const;
 
     /// Return child scene node by index.
     Node* GetChild(unsigned index) const;
     /// Return child scene node by name.
-    Node* GetChild(const String& name, bool recursive = false) const;
+    Node* GetChild(const String &name, bool recursive = false) const;
     /// Return child scene node by name.
     Node* GetChild(const char* name, bool recursive = false) const;
     /// Return child scene node by name hash.
@@ -545,7 +545,7 @@ public:
     const Vector<WeakPtr<Component> > GetListeners() const { return listeners_; }
 
     /// Return a user variable.
-    const Variant& GetVar(StringHash key) const;
+    const Variant &GetVar(StringHash key) const;
 
     /// Return all user variables.
     const VariantMap& GetVars() const { return vars_; }
@@ -574,13 +574,13 @@ public:
     /// Reset scene, ID and owner. Called by Scene.
     void ResetScene();
     /// Set network position attribute.
-    void SetNetPositionAttr(const Vector3& value);
+    void SetNetPositionAttr(const Vector3 &value);
     /// Set network rotation attribute.
     void SetNetRotationAttr(const PODVector<unsigned char>& value);
     /// Set network parent attribute.
     void SetNetParentAttr(const PODVector<unsigned char>& value);
     /// Return network position attribute.
-    const Vector3& GetNetPositionAttr() const;
+    const Vector3 &GetNetPositionAttr() const;
     /// Return network rotation attribute.
     const PODVector<unsigned char>& GetNetRotationAttr() const;
     /// Return network parent attribute.
@@ -613,16 +613,16 @@ public:
     unsigned GetNumPersistentComponents() const;
 
     /// Set position in parent space silently without marking the node & child nodes dirty. Used by animation code.
-    void SetPositionSilent(const Vector3& position) { position_ = position; }
+    void SetPositionSilent(const Vector3 &position) { position_ = position; }
 
     /// Set position in parent space silently without marking the node & child nodes dirty. Used by animation code.
     void SetRotationSilent(const Quaternion& rotation) { rotation_ = rotation; }
 
     /// Set scale in parent space silently without marking the node & child nodes dirty. Used by animation code.
-    void SetScaleSilent(const Vector3& scale) { scale_ = scale; }
+    void SetScaleSilent(const Vector3 &scale) { scale_ = scale; }
 
     /// Set local transform silently without marking the node & child nodes dirty. Used by animation code.
-    void SetTransformSilent(const Vector3& position, const Quaternion& rotation, const Vector3& scale);
+    void SetTransformSilent(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
 
 protected:
     /// Handle attribute animation added.
@@ -630,13 +630,13 @@ protected:
     /// Handle attribute animation removed.
     virtual void OnAttributeAnimationRemoved();
     /// Find target of an attribute animation from object hierarchy by name.
-    virtual Animatable* FindAttributeAnimationTarget(const String& name, String& outName);
+    virtual Animatable* FindAttributeAnimationTarget(const String &name, String &outName);
 
 private:
     /// Set enabled/disabled state with optional recursion. Optionally affect the remembered enable state.
     void SetEnabled(bool enable, bool recursive, bool storeSelf);
     /// Create component, allowing UnknownComponent if actual type is not supported. Leave typeName empty if not known.
-    Component* SafeCreateComponent(const String& typeName, StringHash type, CreateMode mode, unsigned id);
+    Component* SafeCreateComponent(const String &typeName, StringHash type, CreateMode mode, unsigned id);
     /// Recalculate the world transform.
     void UpdateWorldTransform() const;
     /// Remove child node by iterator.
@@ -646,7 +646,7 @@ private:
     /// Return child nodes with a specific component recursively.
     void GetChildrenWithComponentRecursive(PODVector<Node*>& dest, StringHash type) const;
     /// Return child nodes with a specific tag recursively.
-    void GetChildrenWithTagRecursive(PODVector<Node*>& dest, const String& tag) const;
+    void GetChildrenWithTagRecursive(PODVector<Node*>& dest, const String &tag) const;
     /// Return specific components recursively.
     void GetComponentsRecursive(PODVector<Component*>& dest, StringHash type) const;
     /// Clone node recursively.

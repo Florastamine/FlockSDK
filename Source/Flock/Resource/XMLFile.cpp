@@ -136,21 +136,21 @@ bool XMLFile::Save(Serializer& dest) const
     return Save(dest, "\t");
 }
 
-bool XMLFile::Save(Serializer& dest, const String& indentation) const
+bool XMLFile::Save(Serializer& dest, const String &indentation) const
 {
     XMLWriter writer(dest);
     document_->save(writer, indentation.CString());
     return writer.success_;
 }
 
-XMLElement XMLFile::CreateRoot(const String& name)
+XMLElement XMLFile::CreateRoot(const String &name)
 {
     document_->reset();
     pugi::xml_node root = document_->append_child(name.CString());
     return XMLElement(this, root.internal_object());
 }
 
-XMLElement XMLFile::GetOrCreateRoot(const String& name)
+XMLElement XMLFile::GetOrCreateRoot(const String &name)
 {
     XMLElement root = GetRoot(name);
     if (root.NotNull())
@@ -161,7 +161,7 @@ XMLElement XMLFile::GetOrCreateRoot(const String& name)
     return CreateRoot(name);
 }
 
-bool XMLFile::FromString(const String& source)
+bool XMLFile::FromString(const String &source)
 {
     if (source.Empty())
         return false;
@@ -170,7 +170,7 @@ bool XMLFile::FromString(const String& source)
     return Load(buffer);
 }
 
-XMLElement XMLFile::GetRoot(const String& name)
+XMLElement XMLFile::GetRoot(const String &name)
 {
     pugi::xml_node root = document_->first_child();
     if (root.empty())
@@ -182,7 +182,7 @@ XMLElement XMLFile::GetRoot(const String& name)
         return XMLElement(this, root.internal_object());
 }
 
-String XMLFile::ToString(const String& indentation) const
+String XMLFile::ToString(const String &indentation) const
 {
     VectorBuffer dest;
     XMLWriter writer(dest);

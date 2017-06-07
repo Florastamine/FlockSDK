@@ -299,7 +299,7 @@ void PhysicsWorld::SetFps(int fps)
     MarkNetworkUpdate();
 }
 
-void PhysicsWorld::SetGravity(const Vector3& gravity)
+void PhysicsWorld::SetGravity(const Vector3 &gravity)
 {
     world_->setGravity(ToBtVector3(gravity));
 
@@ -494,8 +494,8 @@ void PhysicsWorld::SphereCast(PhysicsRaycastResult& result, const Ray& ray, floa
     }
 }
 
-void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3& startPos,
-    const Quaternion& startRot, const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask)
+void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3 &startPos,
+    const Quaternion& startRot, const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask)
 {
     if (!shape || !shape->GetCollisionShape())
     {
@@ -535,8 +535,8 @@ void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, CollisionShape* shap
         proxy->m_collisionFilterGroup = group;
 }
 
-void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3& startPos,
-    const Quaternion& startRot, const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask)
+void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3 &startPos,
+    const Quaternion& startRot, const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask)
 {
     if (!shape)
     {

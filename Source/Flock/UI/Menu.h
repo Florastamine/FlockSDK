@@ -50,7 +50,7 @@ public:
     /// Perform UI element update.
     virtual void Update(float timeStep);
     /// React to mouse hover.
-    virtual void OnHover(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+    virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to the popup being shown.
     virtual void OnShowPopup();
 
@@ -60,7 +60,7 @@ public:
     /// Set popup element to show on selection.
     void SetPopup(UIElement* element);
     /// Set popup element offset.
-    void SetPopupOffset(const IntVector2& offset);
+    void SetPopupOffset(const IntVector2 &offset);
     /// Set popup element offset.
     void SetPopupOffset(int x, int y);
     /// Force the popup to show or hide.
@@ -72,7 +72,7 @@ public:
     UIElement* GetPopup() const { return popup_; }
 
     /// Return popup element offset.
-    const IntVector2& GetPopupOffset() const { return popupOffset_; }
+    const IntVector2 &GetPopupOffset() const { return popupOffset_; }
 
     /// Return whether popup is open.
     bool GetShowPopup() const { return showPopup_; }

@@ -143,7 +143,7 @@ void RaycastVehicle::ApplyAttributes()
     hullBody_ = node_->GetOrCreateComponent<RigidBody>();
     Scene* scene = GetScene();
     vehicleData_->Init(scene, hullBody_);
-    VariantVector& value = loadedWheelData_;
+    VariantVector &value = loadedWheelData_;
     int numObjects = value[index++].GetInt();
     int wheelIndex = 0;
     origRotation_.Clear();
@@ -672,7 +672,7 @@ VariantVector RaycastVehicle::GetWheelDataAttr() const
     return ret;
 }
 
-void RaycastVehicle::SetWheelDataAttr(const VariantVector& value)
+void RaycastVehicle::SetWheelDataAttr(const VariantVector &value)
 {
     if (!vehicleData_)
     {

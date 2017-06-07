@@ -210,7 +210,7 @@ void Context::RemoveAttribute(StringHash objectType, const char* name)
     RemoveNamedAttribute(networkAttributes_, objectType, name);
 }
 
-void Context::UpdateAttributeDefaultValue(StringHash objectType, const char* name, const Variant& defaultValue)
+void Context::UpdateAttributeDefaultValue(StringHash objectType, const char* name, const Variant &defaultValue)
 {
     AttributeInfo* info = GetAttribute(objectType, name);
     if (info)
@@ -339,13 +339,13 @@ Object* Context::GetSubsystem(StringHash type) const
         return 0;
 }
 
-const Variant& Context::GetGlobalVar(StringHash key) const
+const Variant &Context::GetGlobalVar(StringHash key) const
 {
     VariantMap::ConstIterator i = globalVars_.Find(key);
     return i != globalVars_.End() ? i->second_ : Variant::EMPTY;
 }
 
-void Context::SetGlobalVar(StringHash key, const Variant& value)
+void Context::SetGlobalVar(StringHash key, const Variant &value)
 {
     globalVars_[key] = value;
 }
@@ -358,7 +358,7 @@ Object* Context::GetEventSender() const
         return 0;
 }
 
-const String& Context::GetTypeName(StringHash objectType) const
+const String &Context::GetTypeName(StringHash objectType) const
 {
     // Search factories to find the hash-to-name mapping
     HashMap<StringHash, SharedPtr<ObjectFactory> >::ConstIterator i = factories_.Find(objectType);

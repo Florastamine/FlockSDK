@@ -50,31 +50,31 @@ public:
     ~FileSystem();
 
     /// Set the current working directory.
-    bool SetCurrentDir(const String& pathName);
+    bool SetCurrentDir(const String &pathName);
     /// Create a directory.
-    bool CreateDir(const String& pathName);
+    bool CreateDir(const String &pathName);
     /// Set whether to execute engine console commands as OS-specific system command.
     void SetExecuteConsoleCommands(bool enable);
     /// Run a program using the command interpreter, block until it exits and return the exit code. Will fail if any allowed paths are defined.
-    int SystemCommand(const String& commandLine, bool redirectStdOutToLog = false);
+    int SystemCommand(const String &commandLine, bool redirectStdOutToLog = false);
     /// Run a specific program, block until it exits and return the exit code. Will fail if any allowed paths are defined.
-    int SystemRun(const String& fileName, const Vector<String>& arguments);
+    int SystemRun(const String &fileName, const Vector<String> &arguments);
     /// Run a program using the command interpreter asynchronously. Return a request ID or M_MAX_UNSIGNED if failed. The exit code will be posted together with the request ID in an AsyncExecFinished event. Will fail if any allowed paths are defined.
-    unsigned SystemCommandAsync(const String& commandLine);
+    unsigned SystemCommandAsync(const String &commandLine);
     /// Run a specific program asynchronously. Return a request ID or M_MAX_UNSIGNED if failed. The exit code will be posted together with the request ID in an AsyncExecFinished event. Will fail if any allowed paths are defined.
-    unsigned SystemRunAsync(const String& fileName, const Vector<String>& arguments);
+    unsigned SystemRunAsync(const String &fileName, const Vector<String> &arguments);
     /// Open a file in an external program, with mode such as "edit" optionally specified. Will fail if any allowed paths are defined.
-    bool SystemOpen(const String& fileName, const String& mode = String::EMPTY);
+    bool SystemOpen(const String &fileName, const String &mode = String::EMPTY);
     /// Copy a file. Return true if successful.
-    bool Copy(const String& srcFileName, const String& destFileName);
+    bool Copy(const String &srcFileName, const String &destFileName);
     /// Rename a file. Return true if successful.
-    bool Rename(const String& srcFileName, const String& destFileName);
+    bool Rename(const String &srcFileName, const String &destFileName);
     /// Delete a file. Return true if successful.
-    bool Delete(const String& fileName);
+    bool Delete(const String &fileName);
     /// Register a path as allowed to access. If no paths are registered, all are allowed. Registering allowed paths is considered securing the Flock execution environment: running programs and opening files externally through the system will fail afterward.
-    void RegisterPath(const String& pathName);
+    void RegisterPath(const String &pathName);
     /// Set a file's last modified time as seconds since 1.1.1970. Return true on success.
-    bool SetLastModifiedTime(const String& fileName, unsigned newTime);
+    bool SetLastModifiedTime(const String &fileName, unsigned newTime);
 
     /// Return the absolute current working directory.
     String GetCurrentDir() const;
@@ -86,26 +86,26 @@ public:
     bool HasRegisteredPaths() const { return allowedPaths_.Size() > 0; }
 
     /// Check if a path is allowed to be accessed. If no paths are registered, all are allowed.
-    bool CheckAccess(const String& pathName) const;
+    bool CheckAccess(const String &pathName) const;
     /// Returns the file's last modified time as seconds since 1.1.1970, or 0 if can not be accessed.
-    unsigned GetLastModifiedTime(const String& fileName) const;
+    unsigned GetLastModifiedTime(const String &fileName) const;
     /// Check if a file exists.
-    bool FileExists(const String& fileName) const;
+    bool FileExists(const String &fileName) const;
     /// Check if a directory exists.
-    bool DirExists(const String& pathName) const;
+    bool DirExists(const String &pathName) const;
     /// Scan a directory for specified files.
-    void ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const;
+    void ScanDir(Vector<String> &result, const String &pathName, const String &filter, unsigned flags, bool recursive) const;
     /// Return the program's directory. If it does not contain the Flock default CoreData and Data directories, and the current working directory does, return the working directory instead.
     String GetProgramDir() const;
     /// Return the user documents directory.
     String GetUserDocumentsDir() const;
     /// Return the application preferences directory.
-    String GetAppPreferencesDir(const String& org, const String& app) const;
+    String GetAppPreferencesDir(const String &org, const String &app) const;
 
 private:
     /// Scan directory, called internally.
     void ScanDirInternal
-        (Vector<String>& result, String path, const String& startPath, const String& filter, unsigned flags, bool recursive) const;
+        (Vector<String> &result, String path, const String &startPath, const String &filter, unsigned flags, bool recursive) const;
     /// Handle begin frame event to check for completed async executions.
     void HandleBeginFrame(StringHash eventType, VariantMap& eventData);
     /// Handle a console command event.
@@ -125,30 +125,30 @@ private:
 
 /// Split a full path to path, filename and extension. The extension will be converted to lowercase by default.
 FLOCKSDK_API void
-    SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);
+    SplitPath(const String &fullPath, String &pathName, String &fileName, String &extension, bool lowercaseExtension = true);
 /// Return the path from a full path.
-FLOCKSDK_API String GetPath(const String& fullPath);
+FLOCKSDK_API String GetPath(const String &fullPath);
 /// Return the filename from a full path.
-FLOCKSDK_API String GetFileName(const String& fullPath);
+FLOCKSDK_API String GetFileName(const String &fullPath);
 /// Return the extension from a full path, converted to lowercase by default.
-FLOCKSDK_API String GetExtension(const String& fullPath, bool lowercaseExtension = true);
+FLOCKSDK_API String GetExtension(const String &fullPath, bool lowercaseExtension = true);
 /// Return the filename and extension from a full path. The case of the extension is preserved by default, so that the file can be opened in case-sensitive operating systems.
-FLOCKSDK_API String GetFileNameAndExtension(const String& fullPath, bool lowercaseExtension = false);
+FLOCKSDK_API String GetFileNameAndExtension(const String &fullPath, bool lowercaseExtension = false);
 /// Replace the extension of a file name with another.
-FLOCKSDK_API String ReplaceExtension(const String& fullPath, const String& newExtension);
+FLOCKSDK_API String ReplaceExtension(const String &fullPath, const String &newExtension);
 /// Add a slash at the end of the path if missing and convert to internal format (use slashes.)
-FLOCKSDK_API String AddTrailingSlash(const String& pathName);
+FLOCKSDK_API String AddTrailingSlash(const String &pathName);
 /// Remove the slash from the end of a path if exists and convert to internal format (use slashes.)
-FLOCKSDK_API String RemoveTrailingSlash(const String& pathName);
+FLOCKSDK_API String RemoveTrailingSlash(const String &pathName);
 /// Return the parent path, or the path itself if not available.
-FLOCKSDK_API String GetParentPath(const String& pathName);
+FLOCKSDK_API String GetParentPath(const String &pathName);
 /// Convert a path to internal format (use slashes.)
-FLOCKSDK_API String GetInternalPath(const String& pathName);
+FLOCKSDK_API String GetInternalPath(const String &pathName);
 /// Convert a path to the format required by the operating system.
-FLOCKSDK_API String GetNativePath(const String& pathName);
+FLOCKSDK_API String GetNativePath(const String &pathName);
 /// Convert a path to the format required by the operating system in wide characters.
-FLOCKSDK_API WString GetWideNativePath(const String& pathName);
+FLOCKSDK_API WString GetWideNativePath(const String &pathName);
 /// Return whether a path is absolute.
-FLOCKSDK_API bool IsAbsolutePath(const String& pathName);
+FLOCKSDK_API bool IsAbsolutePath(const String &pathName);
 
 }

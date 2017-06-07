@@ -49,16 +49,16 @@ public:
     virtual void Update(float timeStep);
     /// React to mouse click begin.
     virtual void OnClickBegin
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse doubleclick.
     virtual void OnDoubleClick
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag begin.
     virtual void
-        OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+        OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag motion.
     virtual void OnDragMove
-        (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons, int qualifiers,
+        (const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons, int qualifiers,
             Cursor* cursor);
     /// React to drag and drop test. Return true to signal that the drop is acceptable.
     virtual bool OnDragDropTest(UIElement* source);
@@ -67,10 +67,10 @@ public:
     /// React to a key press.
     virtual void OnKey(int key, int buttons, int qualifiers);
     /// React to text input event.
-    virtual void OnTextInput(const String& text);
+    virtual void OnTextInput(const String &text);
 
     /// Set text.
-    void SetText(const String& text);
+    void SetText(const String &text);
     /// Set cursor position.
     void SetCursorPosition(unsigned position);
     /// Set cursor blink rate. 0 disables blinking.
@@ -87,7 +87,7 @@ public:
     void SetTextCopyable(bool enable);
 
     /// Return text.
-    const String& GetText() const { return line_; }
+    const String &GetText() const { return line_; }
 
     /// Return cursor position.
     unsigned GetCursorPosition() const { return cursorPosition_; }
@@ -124,7 +124,7 @@ protected:
     /// Update cursor position and restart cursor blinking.
     void UpdateCursor();
     /// Return char index corresponding to position within element, or M_MAX_UNSIGNED if not found.
-    unsigned GetCharIndex(const IntVector2& position);
+    unsigned GetCharIndex(const IntVector2 &position);
 
     /// Text element.
     SharedPtr<Text> text_;

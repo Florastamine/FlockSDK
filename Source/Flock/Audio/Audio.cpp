@@ -155,7 +155,7 @@ void Audio::Stop()
     playing_ = false;
 }
 
-void Audio::SetMasterGain(const String& type, float gain)
+void Audio::SetMasterGain(const String &type, float gain)
 {
     masterGain_[type] = Clamp(gain, 0.0f, 1.0f);
 
@@ -163,12 +163,12 @@ void Audio::SetMasterGain(const String& type, float gain)
         (*i)->UpdateMasterGain();
 }
 
-void Audio::PauseSoundType(const String& type)
+void Audio::PauseSoundType(const String &type)
 {
     pausedSoundTypes_.Insert(type);
 }
 
-void Audio::ResumeSoundType(const String& type)
+void Audio::ResumeSoundType(const String &type)
 {
     MutexLock lock(audioMutex_);
     pausedSoundTypes_.Erase(type);
@@ -198,7 +198,7 @@ void Audio::StopSound(Sound* soundClip)
     }
 }
 
-float Audio::GetMasterGain(const String& type) const
+float Audio::GetMasterGain(const String &type) const
 {
     // By definition previously unknown types return full volume
     HashMap<StringHash, Variant>::ConstIterator findIt = masterGain_.Find(type);
@@ -208,7 +208,7 @@ float Audio::GetMasterGain(const String& type) const
     return findIt->second_.GetFloat();
 }
 
-bool Audio::IsSoundTypePaused(const String& type) const
+bool Audio::IsSoundTypePaused(const String &type) const
 {
     return pausedSoundTypes_.Contains(type);
 }

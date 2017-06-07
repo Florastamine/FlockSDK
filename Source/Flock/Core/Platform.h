@@ -34,29 +34,29 @@ class Mutex;
 /// Initialize the FPU to round-to-nearest, single precision mode.
 FLOCKSDK_API void InitFPU();
 /// Display an error dialog with the specified title and message.
-FLOCKSDK_API void ErrorDialog(const String& title, const String& message);
+FLOCKSDK_API void ErrorDialog(const String &title, const String &message);
 /// Exit the application with an error message to the console.
-FLOCKSDK_API void ErrorExit(const String& message = String::EMPTY, int exitCode = EXIT_FAILURE);
+FLOCKSDK_API void ErrorExit(const String &message = String::EMPTY, int exitCode = EXIT_FAILURE);
 /// Open a console window.
 FLOCKSDK_API void OpenConsoleWindow();
 /// Print Unicode text to the console. Will not be printed to the MSVC output window.
-FLOCKSDK_API void PrintUnicode(const String& str, bool error = false);
+FLOCKSDK_API void PrintUnicode(const String &str, bool error = false);
 /// Print Unicode text to the console with a newline appended. Will not be printed to the MSVC output window.
-FLOCKSDK_API void PrintUnicodeLine(const String& str, bool error = false);
+FLOCKSDK_API void PrintUnicodeLine(const String &str, bool error = false);
 /// Print ASCII text to the console with a newline appended. Uses printf() to allow printing into the MSVC output window.
-FLOCKSDK_API void PrintLine(const String& str, bool error = false);
+FLOCKSDK_API void PrintLine(const String &str, bool error = false);
 /// Parse arguments from the command line. First argument is by default assumed to be the executable name and is skipped.
-FLOCKSDK_API const Vector<String>& ParseArguments(const String& cmdLine, bool skipFirstArgument = true);
+FLOCKSDK_API const Vector<String> &ParseArguments(const String &cmdLine, bool skipFirstArgument = true);
 /// Parse arguments from the command line.
-FLOCKSDK_API const Vector<String>& ParseArguments(const char* cmdLine);
+FLOCKSDK_API const Vector<String> &ParseArguments(const char* cmdLine);
 /// Parse arguments from a wide char command line.
-FLOCKSDK_API const Vector<String>& ParseArguments(const WString& cmdLine);
+FLOCKSDK_API const Vector<String> &ParseArguments(const WString &cmdLine);
 /// Parse arguments from a wide char command line.
-FLOCKSDK_API const Vector<String>& ParseArguments(const wchar_t* cmdLine);
+FLOCKSDK_API const Vector<String> &ParseArguments(const wchar_t* cmdLine);
 /// Parse arguments from argc & argv.
-FLOCKSDK_API const Vector<String>& ParseArguments(int argc, char** argv);
+FLOCKSDK_API const Vector<String> &ParseArguments(int argc, char** argv);
 /// Return previously parsed arguments.
-FLOCKSDK_API const Vector<String>& GetArguments();
+FLOCKSDK_API const Vector<String> &GetArguments();
 /// Read input from the console window. Return empty if no input.
 FLOCKSDK_API String GetConsoleInput();
 /// Return the runtime platform identifier, one of "Windows", "Linux", "Mac OS X", "Android", "iOS", "Web" or "Raspberry Pi".

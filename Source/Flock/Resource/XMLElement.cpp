@@ -91,7 +91,7 @@ XMLElement& XMLElement::operator =(const XMLElement& rhs)
     return *this;
 }
 
-XMLElement XMLElement::CreateChild(const String& name)
+XMLElement XMLElement::CreateChild(const String &name)
 {
     return CreateChild(name.CString());
 }
@@ -106,7 +106,7 @@ XMLElement XMLElement::CreateChild(const char* name)
     return XMLElement(file_, child.internal_object());
 }
 
-XMLElement XMLElement::GetOrCreateChild(const String& name)
+XMLElement XMLElement::GetOrCreateChild(const String &name)
 {
     XMLElement child = GetChild(name);
     if (child.NotNull())
@@ -134,7 +134,7 @@ bool XMLElement::RemoveChild(const XMLElement& element)
     return const_cast<pugi::xml_node&>(node).remove_child(child);
 }
 
-bool XMLElement::RemoveChild(const String& name)
+bool XMLElement::RemoveChild(const String &name)
 {
     return RemoveChild(name.CString());
 }
@@ -148,7 +148,7 @@ bool XMLElement::RemoveChild(const char* name)
     return const_cast<pugi::xml_node&>(node).remove_child(name);
 }
 
-bool XMLElement::RemoveChildren(const String& name)
+bool XMLElement::RemoveChildren(const String &name)
 {
     return RemoveChildren(name.CString());
 }
@@ -183,7 +183,7 @@ bool XMLElement::RemoveChildren(const char* name)
     return true;
 }
 
-bool XMLElement::RemoveAttribute(const String& name)
+bool XMLElement::RemoveAttribute(const String &name)
 {
     return RemoveAttribute(name.CString());
 }
@@ -202,7 +202,7 @@ bool XMLElement::RemoveAttribute(const char* name)
     return const_cast<pugi::xml_node&>(node).remove_attribute(node.attribute(name));
 }
 
-XMLElement XMLElement::SelectSingle(const String& query, pugi::xpath_variable_set* variables) const
+XMLElement XMLElement::SelectSingle(const String &query, pugi::xpath_variable_set* variables) const
 {
     if (!file_ || (!node_ && !xpathNode_))
         return XMLElement();
@@ -222,7 +222,7 @@ XMLElement XMLElement::SelectSinglePrepared(const XPathQuery& query) const
     return XMLElement(file_, 0, &result, 0);
 }
 
-XPathResultSet XMLElement::Select(const String& query, pugi::xpath_variable_set* variables) const
+XPathResultSet XMLElement::Select(const String &query, pugi::xpath_variable_set* variables) const
 {
     if (!file_ || (!node_ && !xpathNode_))
         return XPathResultSet();
@@ -242,7 +242,7 @@ XPathResultSet XMLElement::SelectPrepared(const XPathQuery& query) const
     return XPathResultSet(file_, &result);
 }
 
-bool XMLElement::SetValue(const String& value)
+bool XMLElement::SetValue(const String &value)
 {
     return SetValue(value.CString());
 }
@@ -265,7 +265,7 @@ bool XMLElement::SetValue(const char* value)
     return const_cast<pugi::xml_node&>(node).append_child(pugi::node_pcdata).set_value(value);
 }
 
-bool XMLElement::SetAttribute(const String& name, const String& value)
+bool XMLElement::SetAttribute(const String &name, const String &value)
 {
     return SetAttribute(name.CString(), value.CString());
 }
@@ -286,7 +286,7 @@ bool XMLElement::SetAttribute(const char* name, const char* value)
     return attr.set_value(value);
 }
 
-bool XMLElement::SetAttribute(const String& value)
+bool XMLElement::SetAttribute(const String &value)
 {
     return SetAttribute(value.CString());
 }
@@ -297,7 +297,7 @@ bool XMLElement::SetAttribute(const char* value)
     return xpathNode_ && xpathNode_->attribute() && xpathNode_->attribute().set_value(value);
 }
 
-bool XMLElement::SetBool(const String& name, bool value)
+bool XMLElement::SetBool(const String &name, bool value)
 {
     return SetAttribute(name, String(value));
 }
@@ -309,14 +309,14 @@ bool XMLElement::SetBoundingBox(const BoundingBox& value)
     return SetVector3("max", value.max_);
 }
 
-bool XMLElement::SetBuffer(const String& name, const void* data, unsigned size)
+bool XMLElement::SetBuffer(const String &name, const void* data, unsigned size)
 {
     String dataStr;
     BufferToString(dataStr, data, size);
     return SetAttribute(name, dataStr);
 }
 
-bool XMLElement::SetBuffer(const String& name, const PODVector<unsigned char>& value)
+bool XMLElement::SetBuffer(const String &name, const PODVector<unsigned char>& value)
 {
     if (!value.Size())
         return SetAttribute(name, String::EMPTY);
@@ -324,72 +324,72 @@ bool XMLElement::SetBuffer(const String& name, const PODVector<unsigned char>& v
         return SetBuffer(name, &value[0], value.Size());
 }
 
-bool XMLElement::SetColor(const String& name, const Color& value)
+bool XMLElement::SetColor(const String &name, const Color& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetFloat(const String& name, float value)
+bool XMLElement::SetFloat(const String &name, float value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetDouble(const String& name, double value)
+bool XMLElement::SetDouble(const String &name, double value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetUInt(const String& name, unsigned value)
+bool XMLElement::SetUInt(const String &name, unsigned value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetInt(const String& name, int value)
+bool XMLElement::SetInt(const String &name, int value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetUInt64(const String& name, unsigned long long value)
+bool XMLElement::SetUInt64(const String &name, unsigned long long value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetInt64(const String& name, long long value)
+bool XMLElement::SetInt64(const String &name, long long value)
 {
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetIntRect(const String& name, const IntRect& value)
+bool XMLElement::SetIntRect(const String &name, const IntRect& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetIntVector2(const String& name, const IntVector2& value)
+bool XMLElement::SetIntVector2(const String &name, const IntVector2 &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetIntVector3(const String& name, const IntVector3& value)
+bool XMLElement::SetIntVector3(const String &name, const IntVector3 &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetRect(const String& name, const Rect& value)
+bool XMLElement::SetRect(const String &name, const Rect& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetQuaternion(const String& name, const Quaternion& value)
+bool XMLElement::SetQuaternion(const String &name, const Quaternion& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetString(const String& name, const String& value)
+bool XMLElement::SetString(const String &name, const String &value)
 {
     return SetAttribute(name, value);
 }
 
-bool XMLElement::SetVariant(const Variant& value)
+bool XMLElement::SetVariant(const Variant &value)
 {
     if (!SetAttribute("type", value.GetTypeName()))
         return false;
@@ -397,7 +397,7 @@ bool XMLElement::SetVariant(const Variant& value)
     return SetVariantValue(value);
 }
 
-bool XMLElement::SetVariantValue(const Variant& value)
+bool XMLElement::SetVariantValue(const Variant &value)
 {
     switch (value.GetType())
     {
@@ -450,7 +450,7 @@ bool XMLElement::SetResourceRefList(const ResourceRefList& value)
     return SetAttribute("value", str.CString());
 }
 
-bool XMLElement::SetVariantVector(const VariantVector& value)
+bool XMLElement::SetVariantVector(const VariantVector &value)
 {
     // Must remove all existing variant child elements (if they exist) to not cause confusion
     if (!RemoveChildren("variant"))
@@ -467,7 +467,7 @@ bool XMLElement::SetVariantVector(const VariantVector& value)
     return true;
 }
 
-bool XMLElement::SetStringVector(const StringVector& value)
+bool XMLElement::SetStringVector(const StringVector &value)
 {
     if (!RemoveChildren("string"))
         return false;
@@ -500,22 +500,22 @@ bool XMLElement::SetVariantMap(const VariantMap& value)
     return true;
 }
 
-bool XMLElement::SetVector2(const String& name, const Vector2& value)
+bool XMLElement::SetVector2(const String &name, const Vector2 &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetVector3(const String& name, const Vector3& value)
+bool XMLElement::SetVector3(const String &name, const Vector3 &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetVector4(const String& name, const Vector4& value)
+bool XMLElement::SetVector4(const String &name, const Vector4 &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetVectorVariant(const String& name, const Variant& value)
+bool XMLElement::SetVectorVariant(const String &name, const Variant &value)
 {
     VariantType type = value.GetType();
     if (type == VAR_FLOAT || type == VAR_VECTOR2 || type == VAR_VECTOR3 || type == VAR_VECTOR4 || type == VAR_MATRIX3 ||
@@ -525,17 +525,17 @@ bool XMLElement::SetVectorVariant(const String& name, const Variant& value)
         return false;
 }
 
-bool XMLElement::SetMatrix3(const String& name, const Matrix3& value)
+bool XMLElement::SetMatrix3(const String &name, const Matrix3& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetMatrix3x4(const String& name, const Matrix3x4& value)
+bool XMLElement::SetMatrix3x4(const String &name, const Matrix3x4& value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetMatrix4(const String& name, const Matrix4& value)
+bool XMLElement::SetMatrix4(const String &name, const Matrix4& value)
 {
     return SetAttribute(name, value.ToString());
 }
@@ -568,7 +568,7 @@ String XMLElement::GetName() const
     return String(node.name());
 }
 
-bool XMLElement::HasChild(const String& name) const
+bool XMLElement::HasChild(const String &name) const
 {
     return HasChild(name.CString());
 }
@@ -582,7 +582,7 @@ bool XMLElement::HasChild(const char* name) const
     return !node.child(name).empty();
 }
 
-XMLElement XMLElement::GetChild(const String& name) const
+XMLElement XMLElement::GetChild(const String &name) const
 {
     return GetChild(name.CString());
 }
@@ -599,7 +599,7 @@ XMLElement XMLElement::GetChild(const char* name) const
         return XMLElement(file_, node.child(name).internal_object());
 }
 
-XMLElement XMLElement::GetNext(const String& name) const
+XMLElement XMLElement::GetNext(const String &name) const
 {
     return GetNext(name.CString());
 }
@@ -643,7 +643,7 @@ unsigned XMLElement::GetNumAttributes() const
     return ret;
 }
 
-bool XMLElement::HasAttribute(const String& name) const
+bool XMLElement::HasAttribute(const String &name) const
 {
     return HasAttribute(name.CString());
 }
@@ -670,7 +670,7 @@ String XMLElement::GetValue() const
     return String(node.child_value());
 }
 
-String XMLElement::GetAttribute(const String& name) const
+String XMLElement::GetAttribute(const String &name) const
 {
     return String(GetAttributeCString(name.CString()));
 }
@@ -693,7 +693,7 @@ const char* XMLElement::GetAttributeCString(const char* name) const
     return node.attribute(name).value();
 }
 
-String XMLElement::GetAttributeLower(const String& name) const
+String XMLElement::GetAttributeLower(const String &name) const
 {
     return GetAttribute(name).ToLower();
 }
@@ -703,7 +703,7 @@ String XMLElement::GetAttributeLower(const char* name) const
     return String(GetAttribute(name)).ToLower();
 }
 
-String XMLElement::GetAttributeUpper(const String& name) const
+String XMLElement::GetAttributeUpper(const String &name) const
 {
     return GetAttribute(name).ToUpper();
 }
@@ -731,7 +731,7 @@ Vector<String> XMLElement::GetAttributeNames() const
     return ret;
 }
 
-bool XMLElement::GetBool(const String& name) const
+bool XMLElement::GetBool(const String &name) const
 {
     return ToBool(GetAttribute(name));
 }
@@ -745,14 +745,14 @@ BoundingBox XMLElement::GetBoundingBox() const
     return ret;
 }
 
-PODVector<unsigned char> XMLElement::GetBuffer(const String& name) const
+PODVector<unsigned char> XMLElement::GetBuffer(const String &name) const
 {
     PODVector<unsigned char> ret;
     StringToBuffer(ret, GetAttribute(name));
     return ret;
 }
 
-bool XMLElement::GetBuffer(const String& name, void* dest, unsigned size) const
+bool XMLElement::GetBuffer(const String &name, void* dest, unsigned size) const
 {
     Vector<String> bytes = GetAttribute(name).Split(' ');
     if (size < bytes.Size())
@@ -764,62 +764,62 @@ bool XMLElement::GetBuffer(const String& name, void* dest, unsigned size) const
     return true;
 }
 
-Color XMLElement::GetColor(const String& name) const
+Color XMLElement::GetColor(const String &name) const
 {
     return ToColor(GetAttribute(name));
 }
 
-float XMLElement::GetFloat(const String& name) const
+float XMLElement::GetFloat(const String &name) const
 {
     return ToFloat(GetAttribute(name));
 }
 
-double XMLElement::GetDouble(const String& name) const
+double XMLElement::GetDouble(const String &name) const
 {
     return ToDouble(GetAttribute(name));
 }
 
-unsigned XMLElement::GetUInt(const String& name) const
+unsigned XMLElement::GetUInt(const String &name) const
 {
     return ToUInt(GetAttribute(name));
 }
 
-int XMLElement::GetInt(const String& name) const
+int XMLElement::GetInt(const String &name) const
 {
     return ToInt(GetAttribute(name));
 }
 
-unsigned long long XMLElement::GetUInt64(const String& name) const
+unsigned long long XMLElement::GetUInt64(const String &name) const
 {
     return ToUInt64(GetAttribute(name));
 }
 
-long long XMLElement::GetInt64(const String& name) const
+long long XMLElement::GetInt64(const String &name) const
 {
     return ToInt64(GetAttribute(name));
 }
 
-IntRect XMLElement::GetIntRect(const String& name) const
+IntRect XMLElement::GetIntRect(const String &name) const
 {
     return ToIntRect(GetAttribute(name));
 }
 
-IntVector2 XMLElement::GetIntVector2(const String& name) const
+IntVector2 XMLElement::GetIntVector2(const String &name) const
 {
     return ToIntVector2(GetAttribute(name));
 }
 
-IntVector3 XMLElement::GetIntVector3(const String& name) const
+IntVector3 XMLElement::GetIntVector3(const String &name) const
 {
     return ToIntVector3(GetAttribute(name));
 }
 
-Quaternion XMLElement::GetQuaternion(const String& name) const
+Quaternion XMLElement::GetQuaternion(const String &name) const
 {
     return ToQuaternion(GetAttribute(name));
 }
 
-Rect XMLElement::GetRect(const String& name) const
+Rect XMLElement::GetRect(const String &name) const
 {
     return ToRect(GetAttribute(name));
 }
@@ -927,42 +927,42 @@ VariantMap XMLElement::GetVariantMap() const
     return ret;
 }
 
-Vector2 XMLElement::GetVector2(const String& name) const
+Vector2 XMLElement::GetVector2(const String &name) const
 {
     return ToVector2(GetAttribute(name));
 }
 
-Vector3 XMLElement::GetVector3(const String& name) const
+Vector3 XMLElement::GetVector3(const String &name) const
 {
     return ToVector3(GetAttribute(name));
 }
 
-Vector4 XMLElement::GetVector4(const String& name) const
+Vector4 XMLElement::GetVector4(const String &name) const
 {
     return ToVector4(GetAttribute(name));
 }
 
-Vector4 XMLElement::GetVector(const String& name) const
+Vector4 XMLElement::GetVector(const String &name) const
 {
     return ToVector4(GetAttribute(name), true);
 }
 
-Variant XMLElement::GetVectorVariant(const String& name) const
+Variant XMLElement::GetVectorVariant(const String &name) const
 {
     return ToVectorVariant(GetAttribute(name));
 }
 
-Matrix3 XMLElement::GetMatrix3(const String& name) const
+Matrix3 XMLElement::GetMatrix3(const String &name) const
 {
     return ToMatrix3(GetAttribute(name));
 }
 
-Matrix3x4 XMLElement::GetMatrix3x4(const String& name) const
+Matrix3x4 XMLElement::GetMatrix3x4(const String &name) const
 {
     return ToMatrix3x4(GetAttribute(name));
 }
 
-Matrix4 XMLElement::GetMatrix4(const String& name) const
+Matrix4 XMLElement::GetMatrix4(const String &name) const
 {
     return ToMatrix4(GetAttribute(name));
 }
@@ -1042,7 +1042,7 @@ XPathQuery::XPathQuery()
 {
 }
 
-XPathQuery::XPathQuery(const String& queryString, const String& variableString)
+XPathQuery::XPathQuery(const String &queryString, const String &variableString)
 {
     SetQuery(queryString, variableString);
 }
@@ -1057,21 +1057,21 @@ void XPathQuery::Bind()
     query_ = new pugi::xpath_query(queryString_.CString(), variables_.Get());
 }
 
-bool XPathQuery::SetVariable(const String& name, bool value)
+bool XPathQuery::SetVariable(const String &name, bool value)
 {
     if (!variables_)
         variables_ = new pugi::xpath_variable_set();
     return variables_->set(name.CString(), value);
 }
 
-bool XPathQuery::SetVariable(const String& name, float value)
+bool XPathQuery::SetVariable(const String &name, float value)
 {
     if (!variables_)
         variables_ = new pugi::xpath_variable_set();
     return variables_->set(name.CString(), value);
 }
 
-bool XPathQuery::SetVariable(const String& name, const String& value)
+bool XPathQuery::SetVariable(const String &name, const String &value)
 {
     return SetVariable(name.CString(), value.CString());
 }
@@ -1083,7 +1083,7 @@ bool XPathQuery::SetVariable(const char* name, const char* value)
     return variables_->set(name, value);
 }
 
-bool XPathQuery::SetVariable(const String& name, const XPathResultSet& value)
+bool XPathQuery::SetVariable(const String &name, const XPathResultSet& value)
 {
     if (!variables_)
         variables_ = new pugi::xpath_variable_set();
@@ -1095,7 +1095,7 @@ bool XPathQuery::SetVariable(const String& name, const XPathResultSet& value)
     return variables_->set(name.CString(), *nodeSet);
 }
 
-bool XPathQuery::SetQuery(const String& queryString, const String& variableString, bool bind)
+bool XPathQuery::SetQuery(const String &queryString, const String &variableString, bool bind)
 {
     if (!variableString.Empty())
     {

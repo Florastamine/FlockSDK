@@ -182,7 +182,7 @@ String AnimationSet2D::GetAnimation(unsigned index) const
     return String::EMPTY;
 }
 
-bool AnimationSet2D::HasAnimation(const String& animationName) const
+bool AnimationSet2D::HasAnimation(const String &animationName) const
 {
 #ifdef FLOCKSDK_SPINE
     if (skeletonData_)
@@ -376,7 +376,7 @@ bool AnimationSet2D::EndLoadSpriter()
                 Vector2 hotSpot(file->pivotX_, file->pivotY_);
 
                 // If sprite is trimmed, recalculate hot spot
-                const IntVector2& offset = sprite->GetOffset();
+                const IntVector2 &offset = sprite->GetOffset();
                 if (offset != IntVector2::ZERO)
                 {
                     float pivotX = file->width_ * hotSpot.x_;

@@ -65,7 +65,7 @@ FileWatcher::~FileWatcher()
 #endif
 }
 
-bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
+bool FileWatcher::StartWatching(const String &pathName, bool watchSubDirs)
 {
     if (!fileSystem_)
     {
@@ -269,7 +269,7 @@ void FileWatcher::ThreadFunction()
 #endif
 }
 
-void FileWatcher::AddChange(const String& fileName)
+void FileWatcher::AddChange(const String &fileName)
 {
     MutexLock lock(changesMutex_);
 
@@ -277,7 +277,7 @@ void FileWatcher::AddChange(const String& fileName)
     changes_[fileName].Reset();
 }
 
-bool FileWatcher::GetNextChange(String& dest)
+bool FileWatcher::GetNextChange(String &dest)
 {
     MutexLock lock(changesMutex_);
 

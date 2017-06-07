@@ -166,7 +166,7 @@ void Light::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Light Mask", int, lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
 }
 
-void Light::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Light::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -572,7 +572,7 @@ void Light::OnWorldBoundingBoxUpdate()
 
     case LIGHT_POINT:
         {
-            const Vector3& center = node_->GetWorldPosition();
+            const Vector3 &center = node_->GetWorldPosition();
             Vector3 edge(range_, range_, range_);
             worldBoundingBox_.Define(center - edge, center + edge);
         }

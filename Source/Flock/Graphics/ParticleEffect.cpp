@@ -481,22 +481,22 @@ void ParticleEffect::SetEmitterType(EmitterType type)
     emitterType_ = type;
 }
 
-void ParticleEffect::SetEmitterSize(const Vector3& size)
+void ParticleEffect::SetEmitterSize(const Vector3 &size)
 {
     emitterSize_ = size;
 }
 
-void ParticleEffect::SetMinDirection(const Vector3& direction)
+void ParticleEffect::SetMinDirection(const Vector3 &direction)
 {
     directionMin_ = direction;
 }
 
-void ParticleEffect::SetMaxDirection(const Vector3& direction)
+void ParticleEffect::SetMaxDirection(const Vector3 &direction)
 {
     directionMax_ = direction;
 }
 
-void ParticleEffect::SetConstantForce(const Vector3& force)
+void ParticleEffect::SetConstantForce(const Vector3 &force)
 {
     constantForce_ = force;
 }
@@ -526,12 +526,12 @@ void ParticleEffect::SetMaxEmissionRate(float rate)
     emissionRateMax_ = Max(rate, MIN_EMISSION_RATE);
 }
 
-void ParticleEffect::SetMinParticleSize(const Vector2& size)
+void ParticleEffect::SetMinParticleSize(const Vector2 &size)
 {
     sizeMin_ = size;
 }
 
-void ParticleEffect::SetMaxParticleSize(const Vector2& size)
+void ParticleEffect::SetMaxParticleSize(const Vector2 &size)
 {
     sizeMax_ = size;
 }
@@ -732,7 +732,7 @@ void ParticleEffect::SortTextureFrames()
         AddTextureFrame(tf[i]);
 }
 
-SharedPtr<ParticleEffect> ParticleEffect::Clone(const String& cloneName) const
+SharedPtr<ParticleEffect> ParticleEffect::Clone(const String &cloneName) const
 {
     SharedPtr<ParticleEffect> ret(new ParticleEffect(context_));
 
@@ -832,7 +832,7 @@ void ParticleEffect::GetFloatMinMax(const XMLElement& element, float& minValue, 
     }
 }
 
-void ParticleEffect::GetVector2MinMax(const XMLElement& element, Vector2& minValue, Vector2& maxValue)
+void ParticleEffect::GetVector2MinMax(const XMLElement& element, Vector2 &minValue, Vector2 &maxValue)
 {
     if (element.IsNull())
         return;
@@ -847,7 +847,7 @@ void ParticleEffect::GetVector2MinMax(const XMLElement& element, Vector2& minVal
     }
 }
 
-void ParticleEffect::GetVector3MinMax(const XMLElement& element, Vector3& minValue, Vector3& maxValue)
+void ParticleEffect::GetVector3MinMax(const XMLElement& element, Vector3 &minValue, Vector3 &maxValue)
 {
     if (element.IsNull())
         return;

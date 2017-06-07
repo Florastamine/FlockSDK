@@ -98,7 +98,7 @@ void Button::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     BorderImage::GetBatches(batches, vertexData, currentScissor, offset);
 }
 
-void Button::OnClickBegin(const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers,
+void Button::OnClickBegin(const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers,
     Cursor* cursor)
 {
     if (button == MOUSEB_LEFT)
@@ -115,7 +115,7 @@ void Button::OnClickBegin(const IntVector2& position, const IntVector2& screenPo
     }
 }
 
-void Button::OnClickEnd(const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers,
+void Button::OnClickEnd(const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers,
     Cursor* cursor, UIElement* beginElement)
 {
     if (pressed_ && button == MOUSEB_LEFT)
@@ -133,7 +133,7 @@ void Button::OnClickEnd(const IntVector2& position, const IntVector2& screenPosi
     }
 }
 
-void Button::OnDragMove(const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons,
+void Button::OnDragMove(const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons,
     int qualifiers, Cursor* cursor)
 {
     SetPressed(true);
@@ -149,7 +149,7 @@ void Button::OnKey(int key, int buttons, int qualifiers)
     }
 }
 
-void Button::SetPressedOffset(const IntVector2& offset)
+void Button::SetPressedOffset(const IntVector2 &offset)
 {
     pressedOffset_ = offset;
 }
@@ -159,7 +159,7 @@ void Button::SetPressedOffset(int x, int y)
     pressedOffset_ = IntVector2(x, y);
 }
 
-void Button::SetPressedChildOffset(const IntVector2& offset)
+void Button::SetPressedChildOffset(const IntVector2 &offset)
 {
     pressedChildOffset_ = offset;
 }

@@ -65,7 +65,7 @@ void OffMeshConnection::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Area Type", unsigned, areaId_, DEFAULT_AREA, AM_DEFAULT);
 }
 
-void OffMeshConnection::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void OffMeshConnection::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 

@@ -48,7 +48,7 @@ ShaderVariation::~ShaderVariation()
     Release();
 }
 
-void ShaderVariation::SetName(const String& name)
+void ShaderVariation::SetName(const String &name)
 {
     name_ = name;
 }

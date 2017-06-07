@@ -108,7 +108,7 @@ public:
         *this = value;
     }
     /// Construct with a string.
-    JSONValue(const String& value) :
+    JSONValue(const String &value) :
         type_(0)
     {
         *this = value;
@@ -154,7 +154,7 @@ public:
     /// Assign from a double.
     JSONValue& operator =(double rhs);
     /// Assign from a string.
-    JSONValue& operator =(const String& rhs);
+    JSONValue& operator =(const String &rhs);
     /// Assign from a C string.
     JSONValue& operator =(const char* rhs);
     /// Assign from a JSON array.
@@ -197,7 +197,7 @@ public:
     /// Return double value.
     double GetDouble() const { return IsNumber() ? numberValue_ : 0.0; }
     /// Return string value.
-    const String& GetString() const { return IsString() ? *stringValue_ : String::EMPTY;}
+    const String &GetString() const { return IsString() ? *stringValue_ : String::EMPTY;}
     /// Return C string value.
     const char* GetCString() const { return IsString() ? stringValue_->CString() : 0;}
     /// Return JSON array value.
@@ -225,17 +225,17 @@ public:
 
     // JSON object functions
     /// Return JSON value with key.
-    JSONValue& operator [](const String& key);
+    JSONValue& operator [](const String &key);
     /// Return JSON value with key.
-    const JSONValue& operator [](const String& key) const;
+    const JSONValue& operator [](const String &key) const;
     /// Set JSON value with key.
-    void Set(const String& key, const JSONValue& value);
+    void Set(const String &key, const JSONValue& value);
     /// Return JSON value with key.
-    const JSONValue& Get(const String& key) const;
+    const JSONValue& Get(const String &key) const;
     /// Erase a pair by key.
-    bool Erase(const String& key);
+    bool Erase(const String &key);
     /// Return whether contains a pair with key.
-    bool Contains(const String& key) const;
+    bool Contains(const String &key) const;
     /// Return iterator to the beginning.
     JSONObjectIterator Begin();
     /// Return iterator to the beginning.
@@ -252,11 +252,11 @@ public:
     void SetType(JSONValueType valueType, JSONNumberType numberType = JSONNT_NAN);
 
     /// Set variant, context must provide for resource ref.
-    void SetVariant(const Variant& variant, Context* context = 0);
+    void SetVariant(const Variant &variant, Context* context = 0);
     /// Return a variant.
     Variant GetVariant() const;
     /// Set variant value, context must provide for resource ref.
-    void SetVariantValue(const Variant& variant, Context* context = 0);
+    void SetVariantValue(const Variant &variant, Context* context = 0);
     /// Return a variant with type.
     Variant GetVariantValue(VariantType type) const;
     /// Set variant map, context must provide for resource ref.
@@ -264,7 +264,7 @@ public:
     /// Return a variant map.
     VariantMap GetVariantMap() const;
     /// Set variant vector, context must provide for resource ref.
-    void SetVariantVector(const VariantVector& variantVector, Context* context = 0);
+    void SetVariantVector(const VariantVector &variantVector, Context* context = 0);
     /// Return a variant vector.
     VariantVector GetVariantVector() const;
 
@@ -280,11 +280,11 @@ public:
     /// Return name corresponding to a number type.
     static String GetNumberTypeName(JSONNumberType type);
     /// Return a value type from name; null if unrecognized.
-    static JSONValueType GetValueTypeFromName(const String& typeName);
+    static JSONValueType GetValueTypeFromName(const String &typeName);
     /// Return a value type from name; null if unrecognized.
     static JSONValueType GetValueTypeFromName(const char* typeName);
     /// Return a number type from name; NaN if unrecognized.
-    static JSONNumberType GetNumberTypeFromName(const String& typeName);
+    static JSONNumberType GetNumberTypeFromName(const String &typeName);
     /// Return a value type from name; NaN if unrecognized.
     static JSONNumberType GetNumberTypeFromName(const char* typeName);
 

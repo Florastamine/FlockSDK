@@ -142,13 +142,13 @@ public:
     /// Set emitter type.
     void SetEmitterType(EmitterType type);
     /// Set emitter size.
-    void SetEmitterSize(const Vector3& size);
+    void SetEmitterSize(const Vector3 &size);
     /// Set negative direction limit.
-    void SetMinDirection(const Vector3& direction);
+    void SetMinDirection(const Vector3 &direction);
     /// Set positive direction limit.
-    void SetMaxDirection(const Vector3& direction);
+    void SetMaxDirection(const Vector3 &direction);
     /// Set constant force acting on particles.
-    void SetConstantForce(const Vector3& force);
+    void SetConstantForce(const Vector3 &force);
     /// Set particle velocity damping force.
     void SetDampingForce(float force);
     /// Set emission active period length (0 = infinite.)
@@ -160,9 +160,9 @@ public:
     /// Set maximum emission rate.
     void SetMaxEmissionRate(float rate);
     /// Set particle minimum size.
-    void SetMinParticleSize(const Vector2& size);
+    void SetMinParticleSize(const Vector2 &size);
     /// Set particle maximum size.
-    void SetMaxParticleSize(const Vector2& size);
+    void SetMaxParticleSize(const Vector2 &size);
     /// Set particle minimum time to live.
     void SetMinTimeToLive(float time);
     /// Set particle maximum time to live.
@@ -216,7 +216,7 @@ public:
     /// Sort the list of texture frames based on time.
     void SortTextureFrames();
     /// Clone the particle effect.
-    SharedPtr<ParticleEffect> Clone(const String& cloneName = String::EMPTY) const;
+    SharedPtr<ParticleEffect> Clone(const String &cloneName = String::EMPTY) const;
 
     /// Return material.
     Material* GetMaterial() const { return material_; }
@@ -246,16 +246,16 @@ public:
     EmitterType GetEmitterType() const { return emitterType_; }
 
     /// Return emitter size.
-    const Vector3& GetEmitterSize() const { return emitterSize_; }
+    const Vector3 &GetEmitterSize() const { return emitterSize_; }
 
     /// Return negative direction limit.
-    const Vector3& GetMinDirection() const { return directionMin_; }
+    const Vector3 &GetMinDirection() const { return directionMin_; }
 
     /// Return positive direction limit.
-    const Vector3& GetMaxDirection() const { return directionMax_; }
+    const Vector3 &GetMaxDirection() const { return directionMax_; }
 
     /// Return constant force acting on particles.
-    const Vector3& GetConstantForce() const { return constantForce_; }
+    const Vector3 &GetConstantForce() const { return constantForce_; }
 
     /// Return particle velocity damping force.
     float GetDampingForce() const { return dampingForce_; }
@@ -273,10 +273,10 @@ public:
     float GetMaxEmissionRate() const { return emissionRateMax_; }
 
     /// Return particle minimum size.
-    const Vector2& GetMinParticleSize() const { return sizeMin_; }
+    const Vector2 &GetMinParticleSize() const { return sizeMin_; }
 
     /// Return particle maximum size.
-    const Vector2& GetMaxParticleSize() const { return sizeMax_; }
+    const Vector2 &GetMaxParticleSize() const { return sizeMax_; }
 
     /// Return particle minimum time to live.
     float GetMinTimeToLive() const { return timeToLiveMin_; }
@@ -346,9 +346,9 @@ private:
     /// Read a float range from an XML element.
     void GetFloatMinMax(const XMLElement& element, float& minValue, float& maxValue);
     /// Read a Vector2 range from an XML element.
-    void GetVector2MinMax(const XMLElement& element, Vector2& minValue, Vector2& maxValue);
+    void GetVector2MinMax(const XMLElement& element, Vector2 &minValue, Vector2 &maxValue);
     /// Read a Vector3 from an XML element.
-    void GetVector3MinMax(const XMLElement& element, Vector3& minValue, Vector3& maxValue);
+    void GetVector3MinMax(const XMLElement& element, Vector3 &minValue, Vector3 &maxValue);
 
     /// Material.
     SharedPtr<Material> material_;

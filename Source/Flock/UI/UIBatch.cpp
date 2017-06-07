@@ -105,7 +105,7 @@ void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int t
         bottomRightColor = GetInterpolatedColor(x + width, y + height);
     }
 
-    const IntVector2& screenPos = element_->GetScreenPosition();
+    const IntVector2 &screenPos = element_->GetScreenPosition();
 
     float left = (float)(x + screenPos.x_) - posAdjust.x_;
     float right = left + (float)width;
@@ -281,8 +281,8 @@ void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int t
     }
 }
 
-void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
-    const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD)
+void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2 &a, const IntVector2 &b, const IntVector2 &c, const IntVector2 &d,
+    const IntVector2 &texA, const IntVector2 &texB, const IntVector2 &texC, const IntVector2 &texD)
 {
     Vector3 v1 = (transform * Vector3((float)a.x_, (float)a.y_, 0.0f)) - posAdjust;
     Vector3 v2 = (transform * Vector3((float)b.x_, (float)b.y_, 0.0f)) - posAdjust;
@@ -342,8 +342,8 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
     dest[35] = uv4.y_;
 }
 
-void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
-    const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD, const Color& colA,
+void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2 &a, const IntVector2 &b, const IntVector2 &c, const IntVector2 &d,
+    const IntVector2 &texA, const IntVector2 &texB, const IntVector2 &texC, const IntVector2 &texD, const Color& colA,
     const Color& colB, const Color& colC, const Color& colD)
 {
     Vector3 v1 = (transform * Vector3((float)a.x_, (float)a.y_, 0.0f)) - posAdjust;
@@ -424,7 +424,7 @@ bool UIBatch::Merge(const UIBatch& batch)
 
 unsigned UIBatch::GetInterpolatedColor(int x, int y)
 {
-    const IntVector2& size = element_->GetSize();
+    const IntVector2 &size = element_->GetSize();
 
     if (size.x_ && size.y_)
     {

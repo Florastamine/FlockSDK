@@ -55,7 +55,7 @@ public:
     virtual UpdateGeometryType GetUpdateGeometryType();
 
     /// Set font by looking from resource cache by name and font size. Return true if successful.
-    bool SetFont(const String& fontName, int size = DEFAULT_FONT_SIZE);
+    bool SetFont(const String &fontName, int size = DEFAULT_FONT_SIZE);
     /// Set font and font size. Return true if successful.
     bool SetFont(Font* font, int size = DEFAULT_FONT_SIZE);
     /// Set font size only while retaining the existing font. Return true if successful.
@@ -63,7 +63,7 @@ public:
     /// Set material.
     void SetMaterial(Material* material);
     /// Set text. Text is assumed to be either ASCII or UTF8-encoded.
-    void SetText(const String& text);
+    void SetText(const String &text);
     /// Set horizontal and vertical alignment.
     void SetAlignment(HorizontalAlignment hAlign, VerticalAlignment vAlign);
     /// Set horizontal alignment.
@@ -79,7 +79,7 @@ public:
     /// Set text effect.
     void SetTextEffect(TextEffect textEffect);
     /// Set shadow offset.
-    void SetEffectShadowOffset(const IntVector2& offset);
+    void SetEffectShadowOffset(const IntVector2 &offset);
     /// Set stroke thickness.
     void SetEffectStrokeThickness(int thickness);
     /// Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
@@ -108,7 +108,7 @@ public:
     /// Return material.
     Material* GetMaterial() const;
     /// Return text.
-    const String& GetText() const;
+    const String &GetText() const;
     /// Return row alignment.
     HorizontalAlignment GetTextAlignment() const;
     /// Return horizontal alignment.
@@ -122,7 +122,7 @@ public:
     /// Return text effect.
     TextEffect GetTextEffect() const;
     /// Return effect shadow offset.
-    const IntVector2& GetEffectShadowOffset() const;
+    const IntVector2 &GetEffectShadowOffset() const;
     /// Return effect stroke thickness.
     int GetEffectStrokeThickness() const;
     /// Return effect round stroke.
@@ -165,7 +165,7 @@ public:
     /// Return material attribute.
     ResourceRef GetMaterialAttr() const;
     /// Set text attribute.
-    void SetTextAttr(const String& value);
+    void SetTextAttr(const String &value);
     /// Return text attribute.
     String GetTextAttr() const;
 

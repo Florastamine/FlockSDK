@@ -192,7 +192,7 @@ bool ObjectAnimation::SaveJSON(JSONValue& dest) const
     return true;
 }
 
-void ObjectAnimation::AddAttributeAnimation(const String& name, ValueAnimation* attributeAnimation, WrapMode wrapMode, float speed)
+void ObjectAnimation::AddAttributeAnimation(const String &name, ValueAnimation* attributeAnimation, WrapMode wrapMode, float speed)
 {
     if (!attributeAnimation)
         return;
@@ -203,7 +203,7 @@ void ObjectAnimation::AddAttributeAnimation(const String& name, ValueAnimation* 
     SendAttributeAnimationAddedEvent(name);
 }
 
-void ObjectAnimation::RemoveAttributeAnimation(const String& name)
+void ObjectAnimation::RemoveAttributeAnimation(const String &name)
 {
     HashMap<String, SharedPtr<ValueAnimationInfo> >::Iterator i = attributeAnimationInfos_.Find(name);
     if (i != attributeAnimationInfos_.End())
@@ -234,25 +234,25 @@ void ObjectAnimation::RemoveAttributeAnimation(ValueAnimation* attributeAnimatio
     }
 }
 
-ValueAnimation* ObjectAnimation::GetAttributeAnimation(const String& name) const
+ValueAnimation* ObjectAnimation::GetAttributeAnimation(const String &name) const
 {
     ValueAnimationInfo* info = GetAttributeAnimationInfo(name);
     return info ? info->GetAnimation() : 0;
 }
 
-WrapMode ObjectAnimation::GetAttributeAnimationWrapMode(const String& name) const
+WrapMode ObjectAnimation::GetAttributeAnimationWrapMode(const String &name) const
 {
     ValueAnimationInfo* info = GetAttributeAnimationInfo(name);
     return info ? info->GetWrapMode() : WM_LOOP;
 }
 
-float ObjectAnimation::GetAttributeAnimationSpeed(const String& name) const
+float ObjectAnimation::GetAttributeAnimationSpeed(const String &name) const
 {
     ValueAnimationInfo* info = GetAttributeAnimationInfo(name);
     return info ? info->GetSpeed() : 1.0f;
 }
 
-ValueAnimationInfo* ObjectAnimation::GetAttributeAnimationInfo(const String& name) const
+ValueAnimationInfo* ObjectAnimation::GetAttributeAnimationInfo(const String &name) const
 {
     HashMap<String, SharedPtr<ValueAnimationInfo> >::ConstIterator i = attributeAnimationInfos_.Find(name);
     if (i != attributeAnimationInfos_.End())
@@ -260,7 +260,7 @@ ValueAnimationInfo* ObjectAnimation::GetAttributeAnimationInfo(const String& nam
     return 0;
 }
 
-void ObjectAnimation::SendAttributeAnimationAddedEvent(const String& name)
+void ObjectAnimation::SendAttributeAnimationAddedEvent(const String &name)
 {
     using namespace AttributeAnimationAdded;
     VariantMap& eventData = GetEventDataMap();
@@ -269,7 +269,7 @@ void ObjectAnimation::SendAttributeAnimationAddedEvent(const String& name)
     SendEvent(E_ATTRIBUTEANIMATIONADDED, eventData);
 }
 
-void ObjectAnimation::SendAttributeAnimationRemovedEvent(const String& name)
+void ObjectAnimation::SendAttributeAnimationRemovedEvent(const String &name)
 {
     using namespace AttributeAnimationRemoved;
     VariantMap& eventData = GetEventDataMap();

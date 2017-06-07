@@ -58,7 +58,7 @@ void ConstraintMotor2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintMotor2D::SetLinearOffset(const Vector2& linearOffset)
+void ConstraintMotor2D::SetLinearOffset(const Vector2 &linearOffset)
 {
     if (linearOffset == linearOffset_)
         return;

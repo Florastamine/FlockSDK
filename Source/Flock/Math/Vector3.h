@@ -56,7 +56,7 @@ public:
     }
 
     /// Copy-construct from another vector.
-    IntVector3(const IntVector3& rhs) :
+    IntVector3(const IntVector3 &rhs) :
         x_(rhs.x_),
         y_(rhs.y_),
         z_(rhs.z_)
@@ -64,7 +64,7 @@ public:
     }
 
     /// Assign from another vector.
-    IntVector3& operator =(const IntVector3& rhs)
+    IntVector3 &operator =(const IntVector3 &rhs)
     {
         x_ = rhs.x_;
         y_ = rhs.y_;
@@ -73,19 +73,19 @@ public:
     }
 
     /// Test for equality with another vector.
-    bool operator ==(const IntVector3& rhs) const { return x_ == rhs.x_ && y_ == rhs.y_ && z_ == rhs.z_; }
+    bool operator ==(const IntVector3 &rhs) const { return x_ == rhs.x_ && y_ == rhs.y_ && z_ == rhs.z_; }
 
     /// Test for inequality with another vector.
-    bool operator !=(const IntVector3& rhs) const { return x_ != rhs.x_ || y_ != rhs.y_ || z_ != rhs.z_; }
+    bool operator !=(const IntVector3 &rhs) const { return x_ != rhs.x_ || y_ != rhs.y_ || z_ != rhs.z_; }
 
     /// Add a vector.
-    IntVector3 operator +(const IntVector3& rhs) const { return IntVector3(x_ + rhs.x_, y_ + rhs.y_, z_ + rhs.z_); }
+    IntVector3 operator +(const IntVector3 &rhs) const { return IntVector3(x_ + rhs.x_, y_ + rhs.y_, z_ + rhs.z_); }
 
     /// Return negation.
     IntVector3 operator -() const { return IntVector3(-x_, -y_, -z_); }
 
     /// Subtract a vector.
-    IntVector3 operator -(const IntVector3& rhs) const { return IntVector3(x_ - rhs.x_, y_ - rhs.y_, z_ - rhs.z_); }
+    IntVector3 operator -(const IntVector3 &rhs) const { return IntVector3(x_ - rhs.x_, y_ - rhs.y_, z_ - rhs.z_); }
 
     /// Multiply with a scalar.
     IntVector3 operator *(int rhs) const { return IntVector3(x_ * rhs, y_ * rhs, z_ * rhs); }
@@ -94,7 +94,7 @@ public:
     IntVector3 operator /(int rhs) const { return IntVector3(x_ / rhs, y_ / rhs, z_ / rhs); }
 
     /// Add-assign a vector.
-    IntVector3& operator +=(const IntVector3& rhs)
+    IntVector3 &operator +=(const IntVector3 &rhs)
     {
         x_ += rhs.x_;
         y_ += rhs.y_;
@@ -103,7 +103,7 @@ public:
     }
 
     /// Subtract-assign a vector.
-    IntVector3& operator -=(const IntVector3& rhs)
+    IntVector3 &operator -=(const IntVector3 &rhs)
     {
         x_ -= rhs.x_;
         y_ -= rhs.y_;
@@ -112,7 +112,7 @@ public:
     }
 
     /// Multiply-assign a scalar.
-    IntVector3& operator *=(int rhs)
+    IntVector3 &operator *=(int rhs)
     {
         x_ *= rhs;
         y_ *= rhs;
@@ -121,7 +121,7 @@ public:
     }
 
     /// Divide-assign a scalar.
-    IntVector3& operator /=(int rhs)
+    IntVector3 &operator /=(int rhs)
     {
         x_ /= rhs;
         y_ /= rhs;
@@ -179,7 +179,7 @@ public:
     }
 
     /// Copy-construct from another vector.
-    Vector3(const Vector3& vector) :
+    Vector3(const Vector3 &vector) :
         x_(vector.x_),
         y_(vector.y_),
         z_(vector.z_)
@@ -187,7 +187,7 @@ public:
     }
 
     /// Construct from a two-dimensional vector and the Z coordinate.
-    Vector3(const Vector2& vector, float z) :
+    Vector3(const Vector2 &vector, float z) :
         x_(vector.x_),
         y_(vector.y_),
         z_(z)
@@ -195,7 +195,7 @@ public:
     }
 
     /// Construct from a two-dimensional vector (for Urho2D).
-    Vector3(const Vector2& vector) :
+    Vector3(const Vector2 &vector) :
         x_(vector.x_),
         y_(vector.y_),
         z_(0.0f)
@@ -203,7 +203,7 @@ public:
     }
 
     /// Construct from an IntVector3.
-    explicit Vector3(const IntVector3& vector) :
+    explicit Vector3(const IntVector3 &vector) :
         x_((float)vector.x_),
         y_((float)vector.y_),
         z_((float)vector.z_)
@@ -235,7 +235,7 @@ public:
     }
 
     /// Assign from another vector.
-    Vector3& operator =(const Vector3& rhs)
+    Vector3 &operator =(const Vector3 &rhs)
     {
         x_ = rhs.x_;
         y_ = rhs.y_;
@@ -244,34 +244,34 @@ public:
     }
 
     /// Test for equality with another vector without epsilon.
-    bool operator ==(const Vector3& rhs) const { return x_ == rhs.x_ && y_ == rhs.y_ && z_ == rhs.z_; }
+    bool operator ==(const Vector3 &rhs) const { return x_ == rhs.x_ && y_ == rhs.y_ && z_ == rhs.z_; }
 
     /// Test for inequality with another vector without epsilon.
-    bool operator !=(const Vector3& rhs) const { return x_ != rhs.x_ || y_ != rhs.y_ || z_ != rhs.z_; }
+    bool operator !=(const Vector3 &rhs) const { return x_ != rhs.x_ || y_ != rhs.y_ || z_ != rhs.z_; }
 
     /// Add a vector.
-    Vector3 operator +(const Vector3& rhs) const { return Vector3(x_ + rhs.x_, y_ + rhs.y_, z_ + rhs.z_); }
+    Vector3 operator +(const Vector3 &rhs) const { return Vector3(x_ + rhs.x_, y_ + rhs.y_, z_ + rhs.z_); }
 
     /// Return negation.
     Vector3 operator -() const { return Vector3(-x_, -y_, -z_); }
 
     /// Subtract a vector.
-    Vector3 operator -(const Vector3& rhs) const { return Vector3(x_ - rhs.x_, y_ - rhs.y_, z_ - rhs.z_); }
+    Vector3 operator -(const Vector3 &rhs) const { return Vector3(x_ - rhs.x_, y_ - rhs.y_, z_ - rhs.z_); }
 
     /// Multiply with a scalar.
     Vector3 operator *(float rhs) const { return Vector3(x_ * rhs, y_ * rhs, z_ * rhs); }
 
     /// Multiply with a vector.
-    Vector3 operator *(const Vector3& rhs) const { return Vector3(x_ * rhs.x_, y_ * rhs.y_, z_ * rhs.z_); }
+    Vector3 operator *(const Vector3 &rhs) const { return Vector3(x_ * rhs.x_, y_ * rhs.y_, z_ * rhs.z_); }
 
     /// Divide by a scalar.
     Vector3 operator /(float rhs) const { return Vector3(x_ / rhs, y_ / rhs, z_ / rhs); }
 
     /// Divide by a vector.
-    Vector3 operator /(const Vector3& rhs) const { return Vector3(x_ / rhs.x_, y_ / rhs.y_, z_ / rhs.z_); }
+    Vector3 operator /(const Vector3 &rhs) const { return Vector3(x_ / rhs.x_, y_ / rhs.y_, z_ / rhs.z_); }
 
     /// Add-assign a vector.
-    Vector3& operator +=(const Vector3& rhs)
+    Vector3 &operator +=(const Vector3 &rhs)
     {
         x_ += rhs.x_;
         y_ += rhs.y_;
@@ -280,7 +280,7 @@ public:
     }
 
     /// Subtract-assign a vector.
-    Vector3& operator -=(const Vector3& rhs)
+    Vector3 &operator -=(const Vector3 &rhs)
     {
         x_ -= rhs.x_;
         y_ -= rhs.y_;
@@ -289,7 +289,7 @@ public:
     }
 
     /// Multiply-assign a scalar.
-    Vector3& operator *=(float rhs)
+    Vector3 &operator *=(float rhs)
     {
         x_ *= rhs;
         y_ *= rhs;
@@ -298,7 +298,7 @@ public:
     }
 
     /// Multiply-assign a vector.
-    Vector3& operator *=(const Vector3& rhs)
+    Vector3 &operator *=(const Vector3 &rhs)
     {
         x_ *= rhs.x_;
         y_ *= rhs.y_;
@@ -307,7 +307,7 @@ public:
     }
 
     /// Divide-assign a scalar.
-    Vector3& operator /=(float rhs)
+    Vector3 &operator /=(float rhs)
     {
         float invRhs = 1.0f / rhs;
         x_ *= invRhs;
@@ -317,7 +317,7 @@ public:
     }
 
     /// Divide-assign a vector.
-    Vector3& operator /=(const Vector3& rhs)
+    Vector3 &operator /=(const Vector3 &rhs)
     {
         x_ /= rhs.x_;
         y_ /= rhs.y_;
@@ -345,19 +345,19 @@ public:
     float LengthSquared() const { return x_ * x_ + y_ * y_ + z_ * z_; }
 
     /// Calculate dot product.
-    float DotProduct(const Vector3& rhs) const { return x_ * rhs.x_ + y_ * rhs.y_ + z_ * rhs.z_; }
+    float DotProduct(const Vector3 &rhs) const { return x_ * rhs.x_ + y_ * rhs.y_ + z_ * rhs.z_; }
 
     /// Calculate absolute dot product.
-    float AbsDotProduct(const Vector3& rhs) const
+    float AbsDotProduct(const Vector3 &rhs) const
     {
         return FlockSDK::Abs(x_ * rhs.x_) + FlockSDK::Abs(y_ * rhs.y_) + FlockSDK::Abs(z_ * rhs.z_);
     }
 
     /// Project vector onto axis.
-    float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(axis.Normalized()); }
+    float ProjectOntoAxis(const Vector3 &axis) const { return DotProduct(axis.Normalized()); }
 
     /// Calculate cross product.
-    Vector3 CrossProduct(const Vector3& rhs) const
+    Vector3 CrossProduct(const Vector3 &rhs) const
     {
         return Vector3(
             y_ * rhs.z_ - z_ * rhs.y_,
@@ -370,16 +370,16 @@ public:
     Vector3 Abs() const { return Vector3(FlockSDK::Abs(x_), FlockSDK::Abs(y_), FlockSDK::Abs(z_)); }
 
     /// Linear interpolation with another vector.
-    Vector3 Lerp(const Vector3& rhs, float t) const { return *this * (1.0f - t) + rhs * t; }
+    Vector3 Lerp(const Vector3 &rhs, float t) const { return *this * (1.0f - t) + rhs * t; }
 
     /// Test for equality with another vector with epsilon.
-    bool Equals(const Vector3& rhs) const
+    bool Equals(const Vector3 &rhs) const
     {
         return FlockSDK::Equals(x_, rhs.x_) && FlockSDK::Equals(y_, rhs.y_) && FlockSDK::Equals(z_, rhs.z_);
     }
 
     /// Returns the angle between this vector and another vector in degrees.
-    float Angle(const Vector3& rhs) const { return FlockSDK::Acos(DotProduct(rhs) / (Length() * rhs.Length())); }
+    float Angle(const Vector3 &rhs) const { return FlockSDK::Acos(DotProduct(rhs) / (Length() * rhs.Length())); }
 
     /// Return whether is NaN.
     bool IsNaN() const { return FlockSDK::IsNaN(x_) || FlockSDK::IsNaN(y_) || FlockSDK::IsNaN(z_); }
@@ -429,45 +429,45 @@ public:
 };
 
 /// Multiply Vector3 with a scalar.
-inline Vector3 operator *(float lhs, const Vector3& rhs) { return rhs * lhs; }
+inline Vector3 operator *(float lhs, const Vector3 &rhs) { return rhs * lhs; }
 
 /// Multiply IntVector3 with a scalar.
-inline IntVector3 operator *(int lhs, const IntVector3& rhs) { return rhs * lhs; }
+inline IntVector3 operator *(int lhs, const IntVector3 &rhs) { return rhs * lhs; }
 
 /// Per-component linear interpolation between two 3-vectors.
-inline Vector3 VectorLerp(const Vector3& lhs, const Vector3& rhs, const Vector3& t) { return lhs + (rhs - lhs) * t; }
+inline Vector3 VectorLerp(const Vector3 &lhs, const Vector3 &rhs, const Vector3 &t) { return lhs + (rhs - lhs) * t; }
 
 /// Per-component min of two 3-vectors.
-inline Vector3 VectorMin(const Vector3& lhs, const Vector3& rhs) { return Vector3(Min(lhs.x_, rhs.x_), Min(lhs.y_, rhs.y_), Min(lhs.z_, rhs.z_)); }
+inline Vector3 VectorMin(const Vector3 &lhs, const Vector3 &rhs) { return Vector3(Min(lhs.x_, rhs.x_), Min(lhs.y_, rhs.y_), Min(lhs.z_, rhs.z_)); }
 
 /// Per-component max of two 3-vectors.
-inline Vector3 VectorMax(const Vector3& lhs, const Vector3& rhs) { return Vector3(Max(lhs.x_, rhs.x_), Max(lhs.y_, rhs.y_), Max(lhs.z_, rhs.z_)); }
+inline Vector3 VectorMax(const Vector3 &lhs, const Vector3 &rhs) { return Vector3(Max(lhs.x_, rhs.x_), Max(lhs.y_, rhs.y_), Max(lhs.z_, rhs.z_)); }
 
 /// Per-component floor of 3-vector.
-inline Vector3 VectorFloor(const Vector3& vec) { return Vector3(Floor(vec.x_), Floor(vec.y_), Floor(vec.z_)); }
+inline Vector3 VectorFloor(const Vector3 &vec) { return Vector3(Floor(vec.x_), Floor(vec.y_), Floor(vec.z_)); }
 
 /// Per-component round of 3-vector.
-inline Vector3 VectorRound(const Vector3& vec) { return Vector3(Round(vec.x_), Round(vec.y_), Round(vec.z_)); }
+inline Vector3 VectorRound(const Vector3 &vec) { return Vector3(Round(vec.x_), Round(vec.y_), Round(vec.z_)); }
 
 /// Per-component ceil of 3-vector.
-inline Vector3 VectorCeil(const Vector3& vec) { return Vector3(Ceil(vec.x_), Ceil(vec.y_), Ceil(vec.z_)); }
+inline Vector3 VectorCeil(const Vector3 &vec) { return Vector3(Ceil(vec.x_), Ceil(vec.y_), Ceil(vec.z_)); }
 
 /// Per-component floor of 3-vector. Returns IntVector3.
-inline IntVector3 VectorFloorToInt(const Vector3& vec) { return IntVector3(FloorToInt(vec.x_), FloorToInt(vec.y_), FloorToInt(vec.z_)); }
+inline IntVector3 VectorFloorToInt(const Vector3 &vec) { return IntVector3(FloorToInt(vec.x_), FloorToInt(vec.y_), FloorToInt(vec.z_)); }
 
 /// Per-component round of 3-vector. Returns IntVector3.
-inline IntVector3 VectorRoundToInt(const Vector3& vec) { return IntVector3(RoundToInt(vec.x_), RoundToInt(vec.y_), RoundToInt(vec.z_)); }
+inline IntVector3 VectorRoundToInt(const Vector3 &vec) { return IntVector3(RoundToInt(vec.x_), RoundToInt(vec.y_), RoundToInt(vec.z_)); }
 
 /// Per-component ceil of 3-vector. Returns IntVector3.
-inline IntVector3 VectorCeilToInt(const Vector3& vec) { return IntVector3(CeilToInt(vec.x_), CeilToInt(vec.y_), CeilToInt(vec.z_)); }
+inline IntVector3 VectorCeilToInt(const Vector3 &vec) { return IntVector3(CeilToInt(vec.x_), CeilToInt(vec.y_), CeilToInt(vec.z_)); }
 
 /// Per-component min of two 3-vectors.
-inline IntVector3 VectorMin(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Min(lhs.x_, rhs.x_), Min(lhs.y_, rhs.y_), Min(lhs.z_, rhs.z_)); }
+inline IntVector3 VectorMin(const IntVector3 &lhs, const IntVector3 &rhs) { return IntVector3(Min(lhs.x_, rhs.x_), Min(lhs.y_, rhs.y_), Min(lhs.z_, rhs.z_)); }
 
 /// Per-component max of two 3-vectors.
-inline IntVector3 VectorMax(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Max(lhs.x_, rhs.x_), Max(lhs.y_, rhs.y_), Max(lhs.z_, rhs.z_)); }
+inline IntVector3 VectorMax(const IntVector3 &lhs, const IntVector3 &rhs) { return IntVector3(Max(lhs.x_, rhs.x_), Max(lhs.y_, rhs.y_), Max(lhs.z_, rhs.z_)); }
 
 /// Return a random value from [0, 1) from 3-vector seed.
-inline float StableRandom(const Vector3& seed) { return StableRandom(Vector2(StableRandom(Vector2(seed.x_, seed.y_)), seed.z_)); }
+inline float StableRandom(const Vector3 &seed) { return StableRandom(Vector2(StableRandom(Vector2(seed.x_, seed.y_)), seed.z_)); }
 
 }

@@ -52,12 +52,12 @@ public:
     /// React to a key press.
     virtual void OnKey(int key, int buttons, int qualifiers);
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
 
     /// Set content element.
     void SetContentElement(UIElement* element);
     /// Set view offset from the top-left corner.
-    void SetViewPosition(const IntVector2& position);
+    void SetViewPosition(const IntVector2 &position);
     /// Set view offset from the top-left corner.
     void SetViewPosition(int x, int y);
     /// Set scrollbars' visibility manually. Disables scrollbar autoshow/hide.
@@ -82,7 +82,7 @@ public:
     void SetAutoDisableThreshold(float amount) { autoDisableThreshold_ = amount; };
 
     /// Return view offset from the top-left corner.
-    const IntVector2& GetViewPosition() const { return viewPosition_; }
+    const IntVector2 &GetViewPosition() const { return viewPosition_; }
 
     /// Return content element.
     UIElement* GetContentElement() const { return contentElement_; }
@@ -118,13 +118,13 @@ public:
     float GetAutoDisableThreshold() const { return autoDisableThreshold_; }
 
     /// Set view position attribute.
-    void SetViewPositionAttr(const IntVector2& value);
+    void SetViewPositionAttr(const IntVector2 &value);
 
 protected:
     /// Filter implicit attributes in serialization process.
     virtual bool FilterImplicitAttributes(XMLElement& dest) const;
     /// Filter implicit attributes in serialization process for internal scroll bar.
-    bool FilterScrollBarImplicitAttributes(XMLElement& dest, const String& name) const;
+    bool FilterScrollBarImplicitAttributes(XMLElement& dest, const String &name) const;
     /// Resize panel based on scrollbar visibility.
     void UpdatePanelSize();
     /// Recalculate view size, validate view position and update scrollbars.
@@ -132,7 +132,7 @@ protected:
     /// Update the scrollbars' ranges and positions.
     void UpdateScrollBars();
     /// Limit and update the view with a new position.
-    void UpdateView(const IntVector2& position);
+    void UpdateView(const IntVector2 &position);
 
     /// Content element.
     SharedPtr<UIElement> contentElement_;

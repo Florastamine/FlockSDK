@@ -167,7 +167,7 @@ Vector2 TileMap2D::TileIndexToPosition(int x, int y) const
     return info_.TileIndexToPosition(x, y);
 }
 
-bool TileMap2D::PositionToTileIndex(int& x, int& y, const Vector2& position) const
+bool TileMap2D::PositionToTileIndex(int& x, int& y, const Vector2 &position) const
 {
     return info_.PositionToTileIndex(x, y, position);
 }

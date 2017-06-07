@@ -65,7 +65,7 @@ public:
     const ShaderParameter* GetParameter(StringHash param) const;
 
     /// Return linker output.
-    const String& GetLinkerOutput() const { return linkerOutput_; }
+    const String &GetLinkerOutput() const { return linkerOutput_; }
 
     /// Return semantic to vertex attributes location mappings used by the shader.
     const HashMap<Pair<unsigned char, unsigned char>, unsigned>& GetVertexAttributes() const { return vertexAttributes_; }

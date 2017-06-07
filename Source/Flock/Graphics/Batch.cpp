@@ -109,7 +109,7 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, unsigned split
     );
 
     // Add pixel-perfect offset if needed by the graphics API
-    const Vector2& pixelUVOffset = Graphics::GetPixelUVOffset();
+    const Vector2 &pixelUVOffset = Graphics::GetPixelUVOffset();
     offset.x_ += scale.x_ + pixelUVOffset.x_ / width;
     offset.y_ += scale.y_ + pixelUVOffset.y_ / height;
 

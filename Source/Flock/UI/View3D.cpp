@@ -72,7 +72,7 @@ void View3D::RegisterObject(Context* context)
     FLOCKSDK_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
 }
 
-void View3D::OnResize(const IntVector2& newSize, const IntVector2& delta)
+void View3D::OnResize(const IntVector2 &newSize, const IntVector2 &delta)
 {
     int width = newSize.x_;
     int height = newSize.y_;

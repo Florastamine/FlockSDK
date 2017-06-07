@@ -758,7 +758,7 @@ void View::SetCommandShaderParameters(const RenderPathCommand& command)
         graphics_->SetShaderParameter(k->first_, k->second_);
 }
 
-void View::SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& viewRect)
+void View::SetGBufferShaderParameters(const IntVector2 &texSize, const IntRect& viewRect)
 {
     float texWidth = (float)texSize.x_;
     float texHeight = (float)texSize.y_;
@@ -1849,7 +1849,7 @@ void View::RenderQuad(RenderPathCommand& command)
         float width = (float)renderTargets_[nameHash]->GetWidth();
         float height = (float)renderTargets_[nameHash]->GetHeight();
 
-        const Vector2& pixelUVOffset = Graphics::GetPixelUVOffset();
+        const Vector2 &pixelUVOffset = Graphics::GetPixelUVOffset();
         graphics_->SetShaderParameter(invSizeName, Vector2(1.0f / width, 1.0f / height));
         graphics_->SetShaderParameter(offsetsName, Vector2(pixelUVOffset.x_ / width, pixelUVOffset.y_ / height));
     }
@@ -2156,7 +2156,7 @@ void View::UpdateOccluders(PODVector<Drawable*>& occluders, Camera* camera)
                 compare = diagonal * halfViewSize / (occluder->GetDistance() * cameraMaxDistanceFraction);
 
                 // Give higher priority to occluders which the camera is inside their AABB
-                const Vector3& cameraPos = camera->GetNode() ? camera->GetNode()->GetWorldPosition() : Vector3::ZERO;
+                const Vector3 &cameraPos = camera->GetNode() ? camera->GetNode()->GetWorldPosition() : Vector3::ZERO;
                 if (box.IsInside(cameraPos))
                     compare *= diagonal;    // size^2
             }
@@ -3114,7 +3114,7 @@ void View::SendViewEvent(StringHash eventType)
     renderer_->SendEvent(eventType, eventData);
 }
 
-Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool isVolumeMap)
+Texture* View::FindNamedTexture(const String &name, bool isRenderTarget, bool isVolumeMap)
 {
     // Check rendertargets first
     StringHash nameHash(name);

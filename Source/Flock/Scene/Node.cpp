@@ -292,7 +292,7 @@ void Node::AddReplicationState(NodeReplicationState* state)
     networkState_->replicationStates_.Push(state);
 }
 
-bool Node::SaveXML(Serializer& dest, const String& indentation) const
+bool Node::SaveXML(Serializer& dest, const String &indentation) const
 {
     SharedPtr<XMLFile> xml(new XMLFile(context_));
     XMLElement rootElem = xml->CreateRoot("node");
@@ -302,7 +302,7 @@ bool Node::SaveXML(Serializer& dest, const String& indentation) const
     return xml->Save(dest, indentation);
 }
 
-bool Node::SaveJSON(Serializer& dest, const String& indentation) const
+bool Node::SaveJSON(Serializer& dest, const String &indentation) const
 {
     SharedPtr<JSONFile> json(new JSONFile(context_));
     JSONValue& rootElem = json->GetRoot();
@@ -313,7 +313,7 @@ bool Node::SaveJSON(Serializer& dest, const String& indentation) const
     return json->Save(dest, indentation);
 }
 
-void Node::SetName(const String& name)
+void Node::SetName(const String &name)
 {
     if (name != impl_->name_)
     {
@@ -336,14 +336,14 @@ void Node::SetName(const String& name)
     }
 }
 
-void Node::SetTags(const StringVector& tags)
+void Node::SetTags(const StringVector &tags)
 {
     RemoveAllTags();
     AddTags(tags);
     // MarkNetworkUpdate() already called in RemoveAllTags() / AddTags()
 }
 
-void Node::AddTag(const String& tag)
+void Node::AddTag(const String &tag)
 {
     // Check if tag empty or already added
     if (tag.Empty() || HasTag(tag))
@@ -367,20 +367,20 @@ void Node::AddTag(const String& tag)
     MarkNetworkUpdate();
 }
 
-void Node::AddTags(const String& tags, char separator)
+void Node::AddTags(const String &tags, char separator)
 {
     StringVector tagVector = tags.Split(separator);
     AddTags(tagVector);
 }
 
-void Node::AddTags(const StringVector& tags)
+void Node::AddTags(const StringVector &tags)
 {
     // This is OK, as MarkNetworkUpdate() early-outs when called multiple times
     for (auto i = 0u; i < tags.Size(); ++i)
         AddTag(tags[i]);
 }
 
-bool Node::RemoveTag(const String& tag)
+bool Node::RemoveTag(const String &tag)
 {
     bool removed = impl_->tags_.Remove(tag);
 
@@ -431,7 +431,7 @@ void Node::RemoveAllTags()
     MarkNetworkUpdate();
 }
 
-void Node::SetPosition(const Vector3& position)
+void Node::SetPosition(const Vector3 &position)
 {
     position_ = position;
     MarkDirty();
@@ -447,7 +447,7 @@ void Node::SetRotation(const Quaternion& rotation)
     MarkNetworkUpdate();
 }
 
-void Node::SetDirection(const Vector3& direction)
+void Node::SetDirection(const Vector3 &direction)
 {
     SetRotation(Quaternion(Vector3::FORWARD, direction));
 }
@@ -457,7 +457,7 @@ void Node::SetScale(float scale)
     SetScale(Vector3(scale, scale, scale));
 }
 
-void Node::SetScale(const Vector3& scale)
+void Node::SetScale(const Vector3 &scale)
 {
     scale_ = scale;
     // Prevent exact zero scale e.g. from momentary edits as this may cause division by zero
@@ -473,7 +473,7 @@ void Node::SetScale(const Vector3& scale)
     MarkNetworkUpdate();
 }
 
-void Node::SetTransform(const Vector3& position, const Quaternion& rotation)
+void Node::SetTransform(const Vector3 &position, const Quaternion& rotation)
 {
     position_ = position;
     rotation_ = rotation;
@@ -482,12 +482,12 @@ void Node::SetTransform(const Vector3& position, const Quaternion& rotation)
     MarkNetworkUpdate();
 }
 
-void Node::SetTransform(const Vector3& position, const Quaternion& rotation, float scale)
+void Node::SetTransform(const Vector3 &position, const Quaternion& rotation, float scale)
 {
     SetTransform(position, rotation, Vector3(scale, scale, scale));
 }
 
-void Node::SetTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale)
+void Node::SetTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
 {
     position_ = position;
     rotation_ = rotation;
@@ -502,7 +502,7 @@ void Node::SetTransform(const Matrix3x4& matrix)
     SetTransform(matrix.Translation(), matrix.Rotation(), matrix.Scale());
 }
 
-void Node::SetWorldPosition(const Vector3& position)
+void Node::SetWorldPosition(const Vector3 &position)
 {
     SetPosition((parent_ == scene_ || !parent_) ? position : parent_->GetWorldTransform().Inverse() * position);
 }
@@ -512,7 +512,7 @@ void Node::SetWorldRotation(const Quaternion& rotation)
     SetRotation((parent_ == scene_ || !parent_) ? rotation : parent_->GetWorldRotation().Inverse() * rotation);
 }
 
-void Node::SetWorldDirection(const Vector3& direction)
+void Node::SetWorldDirection(const Vector3 &direction)
 {
     Vector3 localDirection = (parent_ == scene_ || !parent_) ? direction : parent_->GetWorldRotation().Inverse() * direction;
     SetRotation(Quaternion(Vector3::FORWARD, localDirection));
@@ -523,32 +523,32 @@ void Node::SetWorldScale(float scale)
     SetWorldScale(Vector3(scale, scale, scale));
 }
 
-void Node::SetWorldScale(const Vector3& scale)
+void Node::SetWorldScale(const Vector3 &scale)
 {
     SetScale((parent_ == scene_ || !parent_) ? scale : scale / parent_->GetWorldScale());
 }
 
-void Node::SetWorldTransform(const Vector3& position, const Quaternion& rotation)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation)
 {
     SetWorldPosition(position);
     SetWorldRotation(rotation);
 }
 
-void Node::SetWorldTransform(const Vector3& position, const Quaternion& rotation, float scale)
-{
-    SetWorldPosition(position);
-    SetWorldRotation(rotation);
-    SetWorldScale(scale);
-}
-
-void Node::SetWorldTransform(const Vector3& position, const Quaternion& rotation, const Vector3& scale)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation, float scale)
 {
     SetWorldPosition(position);
     SetWorldRotation(rotation);
     SetWorldScale(scale);
 }
 
-void Node::Translate(const Vector3& delta, TransformSpace space)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
+{
+    SetWorldPosition(position);
+    SetWorldRotation(rotation);
+    SetWorldScale(scale);
+}
+
+void Node::Translate(const Vector3 &delta, TransformSpace space)
 {
     switch (space)
     {
@@ -599,7 +599,7 @@ void Node::Rotate(const Quaternion& delta, TransformSpace space)
     MarkNetworkUpdate();
 }
 
-void Node::RotateAround(const Vector3& point, const Quaternion& delta, TransformSpace space)
+void Node::RotateAround(const Vector3 &point, const Quaternion& delta, TransformSpace space)
 {
     Vector3 parentSpacePoint;
     Quaternion oldRotation = rotation_;
@@ -654,7 +654,7 @@ void Node::Roll(float angle, TransformSpace space)
     Rotate(Quaternion(angle, Vector3::FORWARD), space);
 }
 
-bool Node::LookAt(const Vector3& target, const Vector3& up, TransformSpace space)
+bool Node::LookAt(const Vector3 &target, const Vector3 &up, TransformSpace space)
 {
     Vector3 worldSpaceTarget;
 
@@ -691,7 +691,7 @@ void Node::Scale(float scale)
     Scale(Vector3(scale, scale, scale));
 }
 
-void Node::Scale(const Vector3& scale)
+void Node::Scale(const Vector3 &scale)
 {
     scale_ *= scale;
     MarkDirty();
@@ -776,14 +776,14 @@ void Node::MarkDirty()
     }
 }
 
-Node* Node::CreateChild(const String& name, CreateMode mode, unsigned id, bool temporary)
+Node* Node::CreateChild(const String &name, CreateMode mode, unsigned id, bool temporary)
 {
     Node* newNode = CreateChild(id, mode, temporary);
     newNode->SetName(name);
     return newNode;
 }
 
-Node* Node::CreateTemporaryChild(const String& name, CreateMode mode, unsigned id)
+Node* Node::CreateTemporaryChild(const String &name, CreateMode mode, unsigned id)
 {
     return CreateChild(name, mode, id, true);
 }
@@ -1129,7 +1129,7 @@ void Node::SetParent(Node* parent)
     }
 }
 
-void Node::SetVar(StringHash key, const Variant& value)
+void Node::SetVar(StringHash key, const Variant &value)
 {
     vars_[key] = value;
     MarkNetworkUpdate();
@@ -1165,33 +1165,33 @@ void Node::RemoveListener(Component* component)
     }
 }
 
-Vector3 Node::LocalToWorld(const Vector3& position) const
+Vector3 Node::LocalToWorld(const Vector3 &position) const
 {
     return GetWorldTransform() * position;
 }
 
-Vector3 Node::LocalToWorld(const Vector4& vector) const
+Vector3 Node::LocalToWorld(const Vector4 &vector) const
 {
     return GetWorldTransform() * vector;
 }
 
-Vector2 Node::LocalToWorld2D(const Vector2& vector) const
+Vector2 Node::LocalToWorld2D(const Vector2 &vector) const
 {
     Vector3 result = LocalToWorld(Vector3(vector));
     return Vector2(result.x_, result.y_);
 }
 
-Vector3 Node::WorldToLocal(const Vector3& position) const
+Vector3 Node::WorldToLocal(const Vector3 &position) const
 {
     return GetWorldTransform().Inverse() * position;
 }
 
-Vector3 Node::WorldToLocal(const Vector4& vector) const
+Vector3 Node::WorldToLocal(const Vector4 &vector) const
 {
     return GetWorldTransform().Inverse() * vector;
 }
 
-Vector2 Node::WorldToLocal2D(const Vector2& vector) const
+Vector2 Node::WorldToLocal2D(const Vector2 &vector) const
 {
     Vector3 result = WorldToLocal(Vector3(vector));
     return Vector2(result.x_, result.y_);
@@ -1254,7 +1254,7 @@ PODVector<Node*> Node::GetChildrenWithComponent(StringHash type, bool recursive)
     return dest;
 }
 
-void Node::GetChildrenWithTag(PODVector<Node*>& dest, const String& tag, bool recursive /*= true*/) const
+void Node::GetChildrenWithTag(PODVector<Node*>& dest, const String &tag, bool recursive /*= true*/) const
 {
     dest.Clear();
 
@@ -1270,7 +1270,7 @@ void Node::GetChildrenWithTag(PODVector<Node*>& dest, const String& tag, bool re
         GetChildrenWithTagRecursive(dest, tag);
 }
 
-PODVector<Node*> Node::GetChildrenWithTag(const String& tag, bool recursive) const
+PODVector<Node*> Node::GetChildrenWithTag(const String &tag, bool recursive) const
 {
     PODVector<Node*> dest;
     GetChildrenWithTag(dest, tag, recursive);
@@ -1282,7 +1282,7 @@ Node* Node::GetChild(unsigned index) const
     return index < children_.Size() ? children_[index].Get() : 0;
 }
 
-Node* Node::GetChild(const String& name, bool recursive) const
+Node* Node::GetChild(const String &name, bool recursive) const
 {
     return GetChild(StringHash(name), recursive);
 }
@@ -1348,7 +1348,7 @@ bool Node::HasComponent(StringHash type) const
     return false;
 }
 
-bool Node::HasTag(const String& tag) const
+bool Node::HasTag(const String &tag) const
 {
     return impl_->tags_.Contains(tag);
 }
@@ -1365,7 +1365,7 @@ bool Node::IsChildOf(Node* node) const
     return false;
 }
 
-const Variant& Node::GetVar(StringHash key) const
+const Variant &Node::GetVar(StringHash key) const
 {
     VariantMap::ConstIterator i = vars_.Find(key);
     return i != vars_.End() ? i->second_ : Variant::EMPTY;
@@ -1426,7 +1426,7 @@ void Node::ResetScene()
     SetOwner(0);
 }
 
-void Node::SetNetPositionAttr(const Vector3& value)
+void Node::SetNetPositionAttr(const Vector3 &value)
 {
     SmoothedTransform* transform = GetComponent<SmoothedTransform>();
     if (transform)
@@ -1482,7 +1482,7 @@ void Node::SetNetParentAttr(const PODVector<unsigned char>& value)
     }
 }
 
-const Vector3& Node::GetNetPositionAttr() const
+const Vector3 &Node::GetNetPositionAttr() const
 {
     return position_;
 }
@@ -1864,7 +1864,7 @@ unsigned Node::GetNumPersistentComponents() const
     return ret;
 }
 
-void Node::SetTransformSilent(const Vector3& position, const Quaternion& rotation, const Vector3& scale)
+void Node::SetTransformSilent(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
 {
     position_ = position;
     rotation_ = rotation;
@@ -1883,7 +1883,7 @@ void Node::OnAttributeAnimationRemoved()
         UnsubscribeFromEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE);
 }
 
-Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outName)
+Animatable* Node::FindAttributeAnimationTarget(const String &name, String &outName)
 {
     Vector<String> names = name.Split('/');
     // Only attribute name
@@ -2032,7 +2032,7 @@ void Node::SetEnabled(bool enable, bool recursive, bool storeSelf)
     }
 }
 
-Component* Node::SafeCreateComponent(const String& typeName, StringHash type, CreateMode mode, unsigned id)
+Component* Node::SafeCreateComponent(const String &typeName, StringHash type, CreateMode mode, unsigned id)
 {
     // Do not attempt to create replicated components to local nodes, as that may lead to component ID overwrite
     // as replicated components are synced over
@@ -2139,7 +2139,7 @@ void Node::GetComponentsRecursive(PODVector<Component*>& dest, StringHash type) 
         (*i)->GetComponentsRecursive(dest, type);
 }
 
-void Node::GetChildrenWithTagRecursive(PODVector<Node*>& dest, const String& tag) const
+void Node::GetChildrenWithTagRecursive(PODVector<Node*>& dest, const String &tag) const
 {
     for (Vector<SharedPtr<Node> >::ConstIterator i = children_.Begin(); i != children_.End(); ++i)
     {

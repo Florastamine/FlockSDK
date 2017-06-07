@@ -157,7 +157,7 @@ Bone* Skeleton::GetBone(unsigned index)
     return index < bones_.Size() ? &bones_[index] : (Bone*)0;
 }
 
-Bone* Skeleton::GetBone(const String& name)
+Bone* Skeleton::GetBone(const String &name)
 {
     return GetBone(StringHash(name));
 }

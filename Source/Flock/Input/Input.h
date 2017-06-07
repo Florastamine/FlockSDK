@@ -171,12 +171,12 @@ public:
     /// Show or hide on-screen keyboard on platforms that support it. When shown, keypresses from it are delivered as key events.
     void SetScreenKeyboardVisible(bool enable);
     /// Set the mouse cursor position. Uses the backbuffer (Graphics width/height) coordinates.
-    void SetMousePosition(const IntVector2& position);
+    void SetMousePosition(const IntVector2 &position);
     /// Center the mouse position.
     void CenterMousePosition();
 
     /// Return keycode from key name.
-    int GetKeyFromName(const String& name) const;
+    int GetKeyFromName(const String &name) const;
     /// Return keycode from scancode.
     int GetKeyFromScancode(int scancode) const;
     /// Return name of key from keycode.
@@ -184,7 +184,7 @@ public:
     /// Return scancode from keycode.
     int GetScancodeFromKey(int key) const;
     /// Return scancode from key name.
-    int GetScancodeFromName(const String& name) const;
+    int GetScancodeFromName(const String &name) const;
     /// Return name of key from scancode.
     String GetScancodeName(int scancode) const;
     /// Check if a key is held down.
@@ -223,7 +223,7 @@ public:
     /// Return joystick state by index, or null if does not exist. 0 = first connected joystick.
     JoystickState* GetJoystickByIndex(unsigned index);
     /// Return joystick state by name, or null if does not exist.
-    JoystickState* GetJoystickByName(const String& name);
+    JoystickState* GetJoystickByName(const String &name);
 
     /// Return whether fullscreen toggle is enabled.
     bool GetToggleFullscreen() const { return toggleFullscreen_; }

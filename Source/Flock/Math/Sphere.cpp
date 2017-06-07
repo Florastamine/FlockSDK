@@ -41,8 +41,8 @@ void Sphere::Define(const Vector3* vertices, unsigned count)
 
 void Sphere::Define(const BoundingBox& box)
 {
-    const Vector3& min = box.min_;
-    const Vector3& max = box.max_;
+    const Vector3 &min = box.min_;
+    const Vector3 &max = box.max_;
 
     Clear();
     Merge(min);
@@ -74,8 +74,8 @@ void Sphere::Merge(const Vector3* vertices, unsigned count)
 
 void Sphere::Merge(const BoundingBox& box)
 {
-    const Vector3& min = box.min_;
-    const Vector3& max = box.max_;
+    const Vector3 &min = box.min_;
+    const Vector3 &max = box.max_;
 
     Merge(min);
     Merge(Vector3(max.x_, min.y_, min.z_));

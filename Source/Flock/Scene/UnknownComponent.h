@@ -41,7 +41,7 @@ public:
     virtual StringHash GetType() const { return typeHash_; }
 
     /// Return type name of the stored component.
-    virtual const String& GetTypeName() const { return typeName_; }
+    virtual const String &GetTypeName() const { return typeName_; }
 
     /// Return attribute descriptions, or null if none defined.
     virtual const Vector<AttributeInfo>* GetAttributes() const { return &xmlAttributeInfos_; }
@@ -60,12 +60,12 @@ public:
     virtual bool SaveJSON(JSONValue& dest) const;
 
     /// Initialize the type name. Called by Node when loading.
-    void SetTypeName(const String& typeName);
+    void SetTypeName(const String &typeName);
     /// Initialize the type hash only when type name not known. Called by Node when loading.
     void SetType(StringHash typeHash);
 
     /// Return the XML format attributes. Empty when loaded with binary serialization.
-    const Vector<String>& GetXMLAttributes() const { return xmlAttributes_; }
+    const Vector<String> &GetXMLAttributes() const { return xmlAttributes_; }
 
     /// Return the binary attributes. Empty when loaded with XML serialization.
     const PODVector<unsigned char>& GetBinaryAttributes() const { return binaryAttributes_; }
@@ -80,7 +80,7 @@ public:
         return typeStatic;
     }
     /// Return static type name.
-    static const FlockSDK::String& GetTypeNameStatic()
+    static const FlockSDK::String &GetTypeNameStatic()
     {
         static const String typeNameStatic("UnknownComponent");
         return typeNameStatic;

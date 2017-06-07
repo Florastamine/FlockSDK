@@ -43,7 +43,7 @@ Localization::~Localization()
 {
 }
 
-int Localization::GetLanguageIndex(const String& language)
+int Localization::GetLanguageIndex(const String &language)
 {
     if (language.Empty())
     {
@@ -108,7 +108,7 @@ void Localization::SetLanguage(int index)
     }
 }
 
-void Localization::SetLanguage(const String& language)
+void Localization::SetLanguage(const String &language)
 {
     if (language.Empty())
     {
@@ -129,7 +129,7 @@ void Localization::SetLanguage(const String& language)
     SetLanguage(index);
 }
 
-String Localization::Get(const String& id)
+String Localization::Get(const String &id)
 {
     if (id.Empty())
         return String::EMPTY;
@@ -167,13 +167,13 @@ void Localization::LoadJSON(const JSONValue& source)
         const JSONValue& langs = i->second_;
         for (JSONObject::ConstIterator j = langs.Begin(); j != langs.End(); ++j)
         {
-            const String& lang = j->first_;
+            const String &lang = j->first_;
             if (lang.Empty())
             {
                 FLOCKSDK_LOGWARNING("Localization::LoadJSON(source): language name is empty, string ID=\"" + id + "\"");
                 continue;
             }
-            const String& string = j->second_.GetString();
+            const String &string = j->second_.GetString();
             if (string.Empty())
             {
                 FLOCKSDK_LOGWARNING(
@@ -194,7 +194,7 @@ void Localization::LoadJSON(const JSONValue& source)
     }
 }
 
-void Localization::LoadJSONFile(const String& name)
+void Localization::LoadJSONFile(const String &name)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
     JSONFile* jsonFile = cache->GetResource<JSONFile>(name);

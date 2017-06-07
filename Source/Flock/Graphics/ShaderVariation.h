@@ -91,9 +91,9 @@ public:
     /// Compile the shader. Return true if successful.
     bool Create();
     /// Set name.
-    void SetName(const String& name);
+    void SetName(const String &name);
     /// Set defines.
-    void SetDefines(const String& defines);
+    void SetDefines(const String &defines);
 
     /// Return the owner resource.
     Shader* GetOwner() const;
@@ -102,7 +102,7 @@ public:
     ShaderType GetShaderType() const { return type_; }
 
     /// Return shader name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return full shader name.
     String GetFullName() const { return name_ + "(" + defines_ + ")"; }
@@ -123,29 +123,29 @@ public:
     const PODVector<unsigned char>& GetByteCode() const { return byteCode_; }
 
     /// Return defines.
-    const String& GetDefines() const { return defines_; }
+    const String &GetDefines() const { return defines_; }
 
     /// Return compile error/warning string.
-    const String& GetCompilerOutput() const { return compilerOutput_; }
+    const String &GetCompilerOutput() const { return compilerOutput_; }
 
     /// Return constant buffer data sizes.
     const unsigned* GetConstantBufferSizes() const { return &constantBufferSizes_[0]; }
 
     /// Return defines with the CLIPPLANE define appended. Used internally on Direct3D11 only, will be empty on other APIs.
-    const String& GetDefinesClipPlane() { return definesClipPlane_; }
+    const String &GetDefinesClipPlane() { return definesClipPlane_; }
 
     /// D3D11 vertex semantic names. Used internally.
     static const char* elementSemanticNames[];
 
 private:
     /// Load bytecode from a file. Return true if successful.
-    bool LoadByteCode(const String& binaryShaderName);
+    bool LoadByteCode(const String &binaryShaderName);
     /// Compile from source. Return true if successful.
     bool Compile();
     /// Inspect the constant parameters and input layout (if applicable) from the shader bytecode.
     void ParseParameters(unsigned char* bufData, unsigned bufSize);
     /// Save bytecode to a file.
-    void SaveByteCode(const String& binaryShaderName);
+    void SaveByteCode(const String &binaryShaderName);
     /// Calculate constant buffer sizes from parameters.
     void CalculateConstantBufferSizes();
 

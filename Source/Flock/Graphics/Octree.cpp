@@ -336,7 +336,7 @@ void Octree::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Number of Levels", int, numLevels_, DEFAULT_OCTREE_LEVELS, AM_DEFAULT);
 }
 
-void Octree::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Octree::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     // If any of the (size) attributes change, resize the octree
     Serializable::OnSetAttribute(attr, src);

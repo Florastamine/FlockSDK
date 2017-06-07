@@ -187,7 +187,7 @@ void Text3D::SetMaterial(Material* material)
     UpdateTextMaterials(true);
 }
 
-bool Text3D::SetFont(const String& fontName, int size)
+bool Text3D::SetFont(const String &fontName, int size)
 {
     bool success = text_.SetFont(fontName, size);
 
@@ -222,7 +222,7 @@ bool Text3D::SetFontSize(int size)
     return success;
 }
 
-void Text3D::SetText(const String& text)
+void Text3D::SetText(const String &text)
 {
     text_.SetText(text);
 
@@ -282,7 +282,7 @@ void Text3D::SetTextEffect(TextEffect textEffect)
     UpdateTextMaterials(true);
 }
 
-void Text3D::SetEffectShadowOffset(const IntVector2& offset)
+void Text3D::SetEffectShadowOffset(const IntVector2 &offset)
 {
     text_.SetEffectShadowOffset(offset);
 }
@@ -397,7 +397,7 @@ int Text3D::GetFontSize() const
     return text_.GetFontSize();
 }
 
-const String& Text3D::GetText() const
+const String &Text3D::GetText() const
 {
     return text_.GetText();
 }
@@ -432,7 +432,7 @@ TextEffect Text3D::GetTextEffect() const
     return text_.GetTextEffect();
 }
 
-const IntVector2& Text3D::GetEffectShadowOffset() const
+const IntVector2 &Text3D::GetEffectShadowOffset() const
 {
     return text_.GetEffectShadowOffset();
 }
@@ -550,7 +550,7 @@ void Text3D::SetFontAttr(const ResourceRef& value)
     text_.font_ = cache->GetResource<Font>(value.name_);
 }
 
-void Text3D::SetTextAttr(const String& value)
+void Text3D::SetTextAttr(const String &value)
 {
     text_.SetTextAttr(value);
 }
@@ -613,7 +613,7 @@ void Text3D::UpdateTextBatches()
 
         for (auto i = 0u; i < uiVertexData_.Size(); i += UI_VERTEX_SIZE)
         {
-            Vector3& position = *(reinterpret_cast<Vector3*>(&uiVertexData_[i]));
+            Vector3 &position = *(reinterpret_cast<Vector3*>(&uiVertexData_[i]));
             position += offset;
             position *= TEXT_SCALING;
             position.y_ = -position.y_;

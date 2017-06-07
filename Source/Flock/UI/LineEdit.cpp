@@ -117,7 +117,7 @@ void LineEdit::Update(float timeStep)
     cursor_->SetVisible(cursorVisible);
 }
 
-void LineEdit::OnClickBegin(const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers,
+void LineEdit::OnClickBegin(const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers,
     Cursor* cursor)
 {
     if (button == MOUSEB_LEFT && cursorMovable_)
@@ -131,14 +131,14 @@ void LineEdit::OnClickBegin(const IntVector2& position, const IntVector2& screen
     }
 }
 
-void LineEdit::OnDoubleClick(const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers,
+void LineEdit::OnDoubleClick(const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers,
     Cursor* cursor)
 {
     if (button == MOUSEB_LEFT)
         text_->SetSelection(0);
 }
 
-void LineEdit::OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers,
+void LineEdit::OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers,
     Cursor* cursor)
 {
     UIElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
@@ -146,7 +146,7 @@ void LineEdit::OnDragBegin(const IntVector2& position, const IntVector2& screenP
     dragBeginCursor_ = GetCharIndex(position);
 }
 
-void LineEdit::OnDragMove(const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons,
+void LineEdit::OnDragMove(const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons,
     int qualifiers, Cursor* cursor)
 {
     if (cursorMovable_ && textSelectable_)
@@ -239,7 +239,7 @@ void LineEdit::OnKey(int key, int buttons, int qualifiers)
     case KEY_V:
         if (editable_ && textCopyable_ && qualifiers & QUAL_CTRL)
         {
-            const String& clipBoard = GetSubsystem<UI>()->GetClipboardText();
+            const String &clipBoard = GetSubsystem<UI>()->GetClipboardText();
             if (!clipBoard.Empty())
             {
                 // Remove selected text first
@@ -431,7 +431,7 @@ void LineEdit::OnKey(int key, int buttons, int qualifiers)
         UpdateCursor();
 }
 
-void LineEdit::OnTextInput(const String& text)
+void LineEdit::OnTextInput(const String &text)
 {
     if (!editable_)
         return;
@@ -479,7 +479,7 @@ void LineEdit::OnTextInput(const String& text)
     }
 }
 
-void LineEdit::SetText(const String& text)
+void LineEdit::SetText(const String &text)
 {
     if (text != line_)
     {
@@ -619,7 +619,7 @@ void LineEdit::UpdateCursor()
     cursorBlinkTimer_ = 0.0f;
 }
 
-unsigned LineEdit::GetCharIndex(const IntVector2& position)
+unsigned LineEdit::GetCharIndex(const IntVector2 &position)
 {
     IntVector2 screenPosition = ElementToScreen(position);
     IntVector2 textPosition = text_->ScreenToElement(screenPosition);

@@ -97,11 +97,11 @@ public:
     bool GetUseRendererStats() const { return useRendererStats_; }
 
     /// Set application-specific stats.
-    void SetAppStats(const String& label, const Variant& stats);
+    void SetAppStats(const String &label, const Variant &stats);
     /// Set application-specific stats.
-    void SetAppStats(const String& label, const String& stats);
+    void SetAppStats(const String &label, const String &stats);
     /// Reset application-specific stats. Return true if it was erased successfully.
-    bool ResetAppStats(const String& label);
+    bool ResetAppStats(const String &label);
     /// Clear all application-specific stats.
     void ClearAppStats();
 

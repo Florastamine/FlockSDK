@@ -152,7 +152,7 @@ void RigidBody2D::SetInertia(float inertia)
     MarkNetworkUpdate();
 }
 
-void RigidBody2D::SetMassCenter(const Vector2& center)
+void RigidBody2D::SetMassCenter(const Vector2 &center)
 {
     b2Vec2 b2Center = ToB2Vec2(center);
     if (massData_.center == b2Center)
@@ -295,7 +295,7 @@ void RigidBody2D::SetAwake(bool awake)
     MarkNetworkUpdate();
 }
 
-void RigidBody2D::SetLinearVelocity(const Vector2& linearVelocity)
+void RigidBody2D::SetLinearVelocity(const Vector2 &linearVelocity)
 {
     b2Vec2 b2linearVelocity = ToB2Vec2(linearVelocity);
     if (body_)
@@ -326,13 +326,13 @@ void RigidBody2D::SetAngularVelocity(float angularVelocity)
     MarkNetworkUpdate();
 }
 
-void RigidBody2D::ApplyForce(const Vector2& force, const Vector2& point, bool wake)
+void RigidBody2D::ApplyForce(const Vector2 &force, const Vector2 &point, bool wake)
 {
     if (body_ && force != Vector2::ZERO)
         body_->ApplyForce(ToB2Vec2(force), ToB2Vec2(point), wake);
 }
 
-void RigidBody2D::ApplyForceToCenter(const Vector2& force, bool wake)
+void RigidBody2D::ApplyForceToCenter(const Vector2 &force, bool wake)
 {
     if (body_ && force != Vector2::ZERO)
         body_->ApplyForceToCenter(ToB2Vec2(force), wake);
@@ -344,13 +344,13 @@ void RigidBody2D::ApplyTorque(float torque, bool wake)
         body_->ApplyTorque(torque, wake);
 }
 
-void RigidBody2D::ApplyLinearImpulse(const Vector2& impulse, const Vector2& point, bool wake)
+void RigidBody2D::ApplyLinearImpulse(const Vector2 &impulse, const Vector2 &point, bool wake)
 {
     if (body_ && impulse != Vector2::ZERO)
         body_->ApplyLinearImpulse(ToB2Vec2(impulse), ToB2Vec2(point), wake);
 }
 
-void RigidBody2D::ApplyLinearImpulseToCenter(const Vector2& impulse, bool wake)
+void RigidBody2D::ApplyLinearImpulseToCenter(const Vector2 &impulse, bool wake)
 {
     if (body_ && impulse != Vector2::ZERO)
         body_->ApplyLinearImpulseToCenter(ToB2Vec2(impulse), wake);
@@ -453,7 +453,7 @@ void RigidBody2D::ApplyWorldTransform()
         ApplyWorldTransform(newWorldPosition, newWorldRotation);
 }
 
-void RigidBody2D::ApplyWorldTransform(const Vector3& newWorldPosition, const Quaternion& newWorldRotation)
+void RigidBody2D::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation)
 {
     if (newWorldPosition != node_->GetWorldPosition() || newWorldRotation != node_->GetWorldRotation())
     {

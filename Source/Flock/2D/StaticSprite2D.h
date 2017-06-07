@@ -67,7 +67,7 @@ public:
     /// Set whether to use custom-defined texture rectangle.
     void SetUseTextureRect(bool useTextureRect);
     /// Set hot spot.
-    void SetHotSpot(const Vector2& hotspot);
+    void SetHotSpot(const Vector2 &hotspot);
     /// Set custom material.
     void SetCustomMaterial(Material* customMaterial);
 
@@ -105,7 +105,7 @@ public:
     bool GetUseTextureRect() const { return useTextureRect_; }
 
     /// Return hot spot.
-    const Vector2& GetHotSpot() const { return hotSpot_; }
+    const Vector2 &GetHotSpot() const { return hotSpot_; }
 
     /// Return custom material.
     Material* GetCustomMaterial() const;

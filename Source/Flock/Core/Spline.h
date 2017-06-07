@@ -79,7 +79,7 @@ public:
     InterpolationMode GetInterpolationMode() const { return interpolationMode_; }
 
     /// Return the knots of the spline.
-    const VariantVector& GetKnots() const { return knots_; }
+    const VariantVector &GetKnots() const { return knots_; }
 
     /// Return the knot at the specific index.
     Variant GetKnot(unsigned index) const { return knots_[index]; }
@@ -94,11 +94,11 @@ public:
     void SetKnots(const Vector<Variant>& knots) { knots_ = knots; }
 
     /// Set the value of an existing knot.
-    void SetKnot(const Variant& knot, unsigned index);
+    void SetKnot(const Variant &knot, unsigned index);
     /// Add a knot to the end of the spline.
-    void AddKnot(const Variant& knot);
+    void AddKnot(const Variant &knot);
     /// Add a knot to the spline at a specific index.
-    void AddKnot(const Variant& knot, unsigned index);
+    void AddKnot(const Variant &knot, unsigned index);
 
     /// Remove the last knot on the spline.
     void RemoveKnot() { knots_.Pop(); }
@@ -117,7 +117,7 @@ private:
     /// Perform linear interpolation on the spline.
     Variant LinearInterpolation(const Vector<Variant>& knots, float t) const;
     /// Linear interpolation between two Variants based on underlying type.
-    Variant LinearInterpolation(const Variant& lhs, const Variant& rhs, float t) const;
+    Variant LinearInterpolation(const Variant &lhs, const Variant &rhs, float t) const;
 
     /// Interpolation mode.
     InterpolationMode interpolationMode_;

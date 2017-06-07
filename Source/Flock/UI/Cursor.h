@@ -105,24 +105,24 @@ public:
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
 
     /// Define a shape.
-    void DefineShape(const String& shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot);
+    void DefineShape(const String &shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot);
     /// Define a shape.
-    void DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot);
+    void DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot);
     /// Set current shape.
-    void SetShape(const String& shape);
+    void SetShape(const String &shape);
     /// Set current shape.
     void SetShape(CursorShape shape);
     /// Set whether to use system default shapes. Is only possible when the OS mouse cursor has been set visible from the Input subsystem.
     void SetUseSystemShapes(bool enable);
 
     /// Get current shape.
-    const String& GetShape() const { return shape_; }
+    const String &GetShape() const { return shape_; }
 
     /// Return whether is using system default shapes.
     bool GetUseSystemShapes() const { return useSystemShapes_; }
 
     /// Set shapes attribute.
-    void SetShapesAttr(const VariantVector& value);
+    void SetShapesAttr(const VariantVector &value);
     /// Return shapes attribute.
     VariantVector GetShapesAttr() const;
     /// Apply pending OS cursor shape. Called by UI. No-op when the OS mouse pointer is not used.

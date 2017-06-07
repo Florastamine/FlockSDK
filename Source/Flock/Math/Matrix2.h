@@ -97,7 +97,7 @@ public:
     bool operator !=(const Matrix2& rhs) const { return !(*this == rhs); }
 
     /// Multiply a Vector2.
-    Vector2 operator *(const Vector2& rhs) const
+    Vector2 operator *(const Vector2 &rhs) const
     {
         return Vector2(
             m00_ * rhs.x_ + m01_ * rhs.y_,
@@ -150,7 +150,7 @@ public:
     }
 
     /// Set scaling elements.
-    void SetScale(const Vector2& scale)
+    void SetScale(const Vector2 &scale)
     {
         m00_ = scale.x_;
         m11_ = scale.y_;
@@ -184,7 +184,7 @@ public:
     }
 
     /// Return scaled by a vector.
-    Matrix2 Scaled(const Vector2& scale) const
+    Matrix2 Scaled(const Vector2 &scale) const
     {
         return Matrix2(
             m00_ * scale.x_,

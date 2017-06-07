@@ -183,7 +183,7 @@ TechniqueEntry::~TechniqueEntry()
 {
 }
 
-ShaderParameterAnimationInfo::ShaderParameterAnimationInfo(Material* target, const String& name, ValueAnimation* attributeAnimation,
+ShaderParameterAnimationInfo::ShaderParameterAnimationInfo(Material* target, const String &name, ValueAnimation* attributeAnimation,
     WrapMode wrapMode, float speed) :
     ValueAnimationInfo(target, attributeAnimation, wrapMode, speed),
     name_(name)
@@ -200,7 +200,7 @@ ShaderParameterAnimationInfo::~ShaderParameterAnimationInfo()
 {
 }
 
-void ShaderParameterAnimationInfo::ApplyValue(const Variant& newValue)
+void ShaderParameterAnimationInfo::ApplyValue(const Variant &newValue)
 {
     static_cast<Material*>(target_.Get())->SetShaderParameter(name_, newValue);
 }
@@ -952,7 +952,7 @@ void Material::SetTechnique(unsigned index, Technique* tech, unsigned qualityLev
     ApplyShaderDefines(index);
 }
 
-void Material::SetVertexShaderDefines(const String& defines)
+void Material::SetVertexShaderDefines(const String &defines)
 {
     if (defines != vertexShaderDefines_)
     {
@@ -961,7 +961,7 @@ void Material::SetVertexShaderDefines(const String& defines)
     }
 }
 
-void Material::SetPixelShaderDefines(const String& defines)
+void Material::SetPixelShaderDefines(const String &defines)
 {
     if (defines != pixelShaderDefines_)
     {
@@ -970,7 +970,7 @@ void Material::SetPixelShaderDefines(const String& defines)
     }
 }
 
-void Material::SetShaderParameter(const String& name, const Variant& value)
+void Material::SetShaderParameter(const String &name, const Variant &value)
 {
     MaterialShaderParameter newParam;
     newParam.name_ = name;
@@ -984,12 +984,12 @@ void Material::SetShaderParameter(const String& name, const Variant& value)
         VariantType type = value.GetType();
         if (type == VAR_VECTOR3)
         {
-            const Vector3& vec = value.GetVector3();
+            const Vector3 &vec = value.GetVector3();
             specular_ = vec.x_ > 0.0f || vec.y_ > 0.0f || vec.z_ > 0.0f;
         }
         else if (type == VAR_VECTOR4)
         {
-            const Vector4& vec = value.GetVector4();
+            const Vector4 &vec = value.GetVector4();
             specular_ = vec.x_ > 0.0f || vec.y_ > 0.0f || vec.z_ > 0.0f;
         }
     }
@@ -1001,7 +1001,7 @@ void Material::SetShaderParameter(const String& name, const Variant& value)
     }
 }
 
-void Material::SetShaderParameterAnimation(const String& name, ValueAnimation* animation, WrapMode wrapMode, float speed)
+void Material::SetShaderParameterAnimation(const String &name, ValueAnimation* animation, WrapMode wrapMode, float speed)
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
 
@@ -1035,14 +1035,14 @@ void Material::SetShaderParameterAnimation(const String& name, ValueAnimation* a
     }
 }
 
-void Material::SetShaderParameterAnimationWrapMode(const String& name, WrapMode wrapMode)
+void Material::SetShaderParameterAnimationWrapMode(const String &name, WrapMode wrapMode)
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
     if (info)
         info->SetWrapMode(wrapMode);
 }
 
-void Material::SetShaderParameterAnimationSpeed(const String& name, float speed)
+void Material::SetShaderParameterAnimationSpeed(const String &name, float speed)
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
     if (info)
@@ -1060,7 +1060,7 @@ void Material::SetTexture(TextureUnit unit, Texture* texture)
     }
 }
 
-void Material::SetUVTransform(const Vector2& offset, float rotation, const Vector2& repeat)
+void Material::SetUVTransform(const Vector2 &offset, float rotation, const Vector2 &repeat)
 {
     Matrix3x4 transform(Matrix3x4::IDENTITY);
     transform.m00_ = repeat.x_;
@@ -1086,7 +1086,7 @@ void Material::SetUVTransform(const Vector2& offset, float rotation, const Vecto
     SetShaderParameter("VOffset", Vector4(transform.m10_, transform.m11_, transform.m12_, transform.m13_));
 }
 
-void Material::SetUVTransform(const Vector2& offset, float rotation, float repeat)
+void Material::SetUVTransform(const Vector2 &offset, float rotation, float repeat)
 {
     SetUVTransform(offset, rotation, Vector2(repeat, repeat));
 }
@@ -1141,7 +1141,7 @@ void Material::SetScene(Scene* scene)
     UpdateEventSubscription();
 }
 
-void Material::RemoveShaderParameter(const String& name)
+void Material::RemoveShaderParameter(const String &name)
 {
     StringHash nameHash(name);
     shaderParameters_.Erase(nameHash);
@@ -1163,7 +1163,7 @@ void Material::ReleaseShaders()
     }
 }
 
-SharedPtr<Material> Material::Clone(const String& cloneName) const
+SharedPtr<Material> Material::Clone(const String &cloneName) const
 {
     SharedPtr<Material> ret(new Material(context_));
 
@@ -1208,7 +1208,7 @@ Technique* Material::GetTechnique(unsigned index) const
     return index < techniques_.Size() ? techniques_[index].technique_ : (Technique*)0;
 }
 
-Pass* Material::GetPass(unsigned index, const String& passName) const
+Pass* Material::GetPass(unsigned index, const String &passName) const
 {
     Technique* tech = index < techniques_.Size() ? techniques_[index].technique_ : (Technique*)0;
     return tech ? tech->GetPass(passName) : 0;
@@ -1220,25 +1220,25 @@ Texture* Material::GetTexture(TextureUnit unit) const
     return i != textures_.End() ? i->second_.Get() : (Texture*)0;
 }
 
-const Variant& Material::GetShaderParameter(const String& name) const
+const Variant &Material::GetShaderParameter(const String &name) const
 {
     HashMap<StringHash, MaterialShaderParameter>::ConstIterator i = shaderParameters_.Find(name);
     return i != shaderParameters_.End() ? i->second_.value_ : Variant::EMPTY;
 }
 
-ValueAnimation* Material::GetShaderParameterAnimation(const String& name) const
+ValueAnimation* Material::GetShaderParameterAnimation(const String &name) const
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
     return info == 0 ? 0 : info->GetAnimation();
 }
 
-WrapMode Material::GetShaderParameterAnimationWrapMode(const String& name) const
+WrapMode Material::GetShaderParameterAnimationWrapMode(const String &name) const
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
     return info == 0 ? WM_LOOP : info->GetWrapMode();
 }
 
-float Material::GetShaderParameterAnimationSpeed(const String& name) const
+float Material::GetShaderParameterAnimationSpeed(const String &name) const
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
     return info == 0 ? 0 : info->GetSpeed();
@@ -1254,7 +1254,7 @@ String Material::GetTextureUnitName(TextureUnit unit)
     return textureUnitNames[unit];
 }
 
-Variant Material::ParseShaderParameterValue(const String& value)
+Variant Material::ParseShaderParameterValue(const String &value)
 {
     String valueTrimmed = value.Trimmed();
     if (valueTrimmed.Length() && IsAlpha((unsigned)valueTrimmed[0]))
@@ -1330,7 +1330,7 @@ void Material::RefreshMemoryUse()
     SetMemoryUse(memoryUse);
 }
 
-ShaderParameterAnimationInfo* Material::GetShaderParameterAnimationInfo(const String& name) const
+ShaderParameterAnimationInfo* Material::GetShaderParameterAnimationInfo(const String &name) const
 {
     StringHash nameHash(name);
     HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo> >::ConstIterator i = shaderParameterAnimationInfos_.Find(nameHash);

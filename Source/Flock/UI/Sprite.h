@@ -44,26 +44,26 @@ public:
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
     virtual bool IsWithinScissor(const IntRect& currentScissor);
     /// Update and return screen position.
-    virtual const IntVector2& GetScreenPosition() const;
+    virtual const IntVector2 &GetScreenPosition() const;
     /// Return UI rendering batches.
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
     /// React to position change.
-    virtual void OnPositionSet(const IntVector2& newPosition);
+    virtual void OnPositionSet(const IntVector2 &newPosition);
     /// Convert screen coordinates to element coordinates.
-    virtual IntVector2 ScreenToElement(const IntVector2& screenPosition);
+    virtual IntVector2 ScreenToElement(const IntVector2 &screenPosition);
     /// Convert element coordinates to screen coordinates.
-    virtual IntVector2 ElementToScreen(const IntVector2& position);
+    virtual IntVector2 ElementToScreen(const IntVector2 &position);
 
     /// Set floating point position.
-    void SetPosition(const Vector2& position);
+    void SetPosition(const Vector2 &position);
     /// Set floating point position.
     void SetPosition(float x, float y);
     /// Set hotspot for positioning and rotation.
-    void SetHotSpot(const IntVector2& hotSpot);
+    void SetHotSpot(const IntVector2 &hotSpot);
     /// Set hotspot for positioning and rotation.
     void SetHotSpot(int x, int y);
     /// Set scale. Scale also affects child sprites.
-    void SetScale(const Vector2& scale);
+    void SetScale(const Vector2 &scale);
     /// Set scale. Scale also affects child sprites.
     void SetScale(float x, float y);
     /// Set uniform scale. Scale also affects child sprites.
@@ -80,13 +80,13 @@ public:
     void SetBlendMode(BlendMode mode);
 
     /// Return floating point position.
-    const Vector2& GetPosition() const { return floatPosition_; }
+    const Vector2 &GetPosition() const { return floatPosition_; }
 
     /// Return hotspot.
-    const IntVector2& GetHotSpot() const { return hotSpot_; }
+    const IntVector2 &GetHotSpot() const { return hotSpot_; }
 
     /// Return scale.
-    const Vector2& GetScale() const { return scale_; }
+    const Vector2 &GetScale() const { return scale_; }
 
     /// Return rotation angle.
     float GetRotation() const { return rotation_; }

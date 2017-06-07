@@ -95,12 +95,12 @@ bool Serializer::WriteIntRect(const IntRect& value)
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteIntVector2(const IntVector2& value)
+bool Serializer::WriteIntVector2(const IntVector2 &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteIntVector3(const IntVector3& value)
+bool Serializer::WriteIntVector3(const IntVector3 &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
@@ -110,17 +110,17 @@ bool Serializer::WriteRect(const Rect& value)
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteVector2(const Vector2& value)
+bool Serializer::WriteVector2(const Vector2 &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteVector3(const Vector3& value)
+bool Serializer::WriteVector3(const Vector3 &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WritePackedVector3(const Vector3& value, float maxAbsCoord)
+bool Serializer::WritePackedVector3(const Vector3 &value, float maxAbsCoord)
 {
     short coords[3];
     float v = 32767.0f / maxAbsCoord;
@@ -131,7 +131,7 @@ bool Serializer::WritePackedVector3(const Vector3& value, float maxAbsCoord)
     return Write(&coords[0], sizeof coords) == sizeof coords;
 }
 
-bool Serializer::WriteVector4(const Vector4& value)
+bool Serializer::WriteVector4(const Vector4 &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
@@ -181,7 +181,7 @@ bool Serializer::WriteBoundingBox(const BoundingBox& value)
     return success;
 }
 
-bool Serializer::WriteString(const String& value)
+bool Serializer::WriteString(const String &value)
 {
     const char* chars = value.CString();
     // Count length to the first zero, because ReadString() does the same
@@ -189,7 +189,7 @@ bool Serializer::WriteString(const String& value)
     return Write(chars, length + 1) == length + 1;
 }
 
-bool Serializer::WriteFileID(const String& value)
+bool Serializer::WriteFileID(const String &value)
 {
     bool success = true;
     unsigned length = Min(value.Length(), 4U);
@@ -236,7 +236,7 @@ bool Serializer::WriteResourceRefList(const ResourceRefList& value)
     return success;
 }
 
-bool Serializer::WriteVariant(const Variant& value)
+bool Serializer::WriteVariant(const Variant &value)
 {
     bool success = true;
     VariantType type = value.GetType();
@@ -246,7 +246,7 @@ bool Serializer::WriteVariant(const Variant& value)
     return success;
 }
 
-bool Serializer::WriteVariantData(const Variant& value)
+bool Serializer::WriteVariantData(const Variant &value)
 {
     switch (value.GetType())
     {
@@ -329,7 +329,7 @@ bool Serializer::WriteVariantData(const Variant& value)
     }
 }
 
-bool Serializer::WriteVariantVector(const VariantVector& value)
+bool Serializer::WriteVariantVector(const VariantVector &value)
 {
     bool success = true;
     success &= WriteVLE(value.Size());
@@ -338,7 +338,7 @@ bool Serializer::WriteVariantVector(const VariantVector& value)
     return success;
 }
 
-bool Serializer::WriteStringVector(const StringVector& value)
+bool Serializer::WriteStringVector(const StringVector &value)
 {
     bool success = true;
     success &= WriteVLE(value.Size());
@@ -393,7 +393,7 @@ bool Serializer::WriteNetID(unsigned value)
     return Write(&value, 3) == 3;
 }
 
-bool Serializer::WriteLine(const String& value)
+bool Serializer::WriteLine(const String &value)
 {
     bool success = true;
     success &= Write(value.CString(), value.Length()) == value.Length();

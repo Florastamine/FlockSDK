@@ -41,7 +41,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set target.
-    void SetTarget(const Vector2& target);
+    void SetTarget(const Vector2 &target);
     /// Set max force.
     void SetMaxForce(float maxForce);
     /// Set frequency Hz.
@@ -50,7 +50,7 @@ public:
     void SetDampingRatio(float dampingRatio);
 
     /// Return target.
-    const Vector2& GetTarget() const { return target_; }
+    const Vector2 &GetTarget() const { return target_; }
 
     /// Return max force.
     float GetMaxForce() const { return jointDef_.maxForce; }

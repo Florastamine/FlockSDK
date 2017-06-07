@@ -262,7 +262,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     return true;
 }
 
-bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indentation)
+bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String &indentation)
 {
     Context* context = font_->GetContext();
 
@@ -365,7 +365,7 @@ SharedPtr<Image> FontFaceBitmap::SaveFaceTexture(Texture2D* texture)
     return image;
 }
 
-bool FontFaceBitmap::SaveFaceTexture(Texture2D* texture, const String& fileName)
+bool FontFaceBitmap::SaveFaceTexture(Texture2D* texture, const String &fileName)
 {
     SharedPtr<Image> image = SaveFaceTexture(texture);
     return image ? image->SavePNG(fileName) : false;

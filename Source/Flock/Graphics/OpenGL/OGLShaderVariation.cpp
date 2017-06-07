@@ -101,7 +101,7 @@ bool ShaderVariation::Create()
         return false;
     }
 
-    const String& originalShaderCode = owner_->GetSourceCode(type_);
+    const String &originalShaderCode = owner_->GetSourceCode(type_);
     String shaderCode;
 
     // Check if the shader code contains a version define
@@ -179,7 +179,7 @@ bool ShaderVariation::Create()
     return object_.name_ != 0;
 }
 
-void ShaderVariation::SetDefines(const String& defines)
+void ShaderVariation::SetDefines(const String &defines)
 {
     defines_ = defines;
 }

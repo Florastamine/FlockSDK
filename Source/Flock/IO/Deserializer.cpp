@@ -47,7 +47,7 @@ Deserializer::~Deserializer()
 {
 }
 
-const String& Deserializer::GetName() const
+const String &Deserializer::GetName() const
 {
     return String::EMPTY;
 }

@@ -97,8 +97,8 @@ void DropDownList::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& ver
     if (selectedItem)
     {
         // Can not easily copy the selected item. However, it can be re-rendered on the placeholder's position
-        const IntVector2& targetPos = placeholder_->GetScreenPosition();
-        const IntVector2& originalPos = selectedItem->GetScreenPosition();
+        const IntVector2 &targetPos = placeholder_->GetScreenPosition();
+        const IntVector2 &originalPos = selectedItem->GetScreenPosition();
         IntVector2 offset = targetPos - originalPos;
 
         // GetBatches() usually resets the hover flag. Therefore get its value and then reset it for the real rendering
@@ -117,7 +117,7 @@ void DropDownList::OnShowPopup()
     // Resize the popup to match the size of the list content, and optionally match the button width
     UIElement* content = listView_->GetContentElement();
     content->UpdateLayout();
-    const IntVector2& contentSize = content->GetSize();
+    const IntVector2 &contentSize = content->GetSize();
     const IntRect& border = popup_->GetLayoutBorder();
     popup_->SetSize(resizePopup_ ? GetWidth() : contentSize.x_ + border.left_ + border.right_,
         contentSize.y_ + border.top_ + border.bottom_);
@@ -127,7 +127,7 @@ void DropDownList::OnShowPopup()
     UIElement* root = GetRoot();
     if (root)
     {
-        const IntVector2& screenPos = GetScreenPosition();
+        const IntVector2 &screenPos = GetScreenPosition();
         if (screenPos.y_ + GetHeight() + popup_->GetHeight() > root->GetHeight() && screenPos.y_ - popup_->GetHeight() >= 0)
             showAbove = true;
     }
@@ -187,7 +187,7 @@ void DropDownList::SetSelection(unsigned index)
     listView_->SetSelection(index);
 }
 
-void DropDownList::SetPlaceholderText(const String& text)
+void DropDownList::SetPlaceholderText(const String &text)
 {
     placeholder_->GetChildStaticCast<Text>(0)->SetText(text);
 }
@@ -222,7 +222,7 @@ UIElement* DropDownList::GetSelectedItem() const
     return listView_->GetSelectedItem();
 }
 
-const String& DropDownList::GetPlaceholderText() const
+const String &DropDownList::GetPlaceholderText() const
 {
     return placeholder_->GetChildStaticCast<Text>(0)->GetText();
 }

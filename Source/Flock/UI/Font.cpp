@@ -102,7 +102,7 @@ bool Font::BeginLoad(Deserializer& source)
     return true;
 }
 
-bool Font::SaveXML(Serializer& dest, int pointSize, bool usedGlyphs, const String& indentation)
+bool Font::SaveXML(Serializer& dest, int pointSize, bool usedGlyphs, const String &indentation)
 {
     FontFace* fontFace = GetFace(pointSize);
     if (!fontFace)
@@ -117,12 +117,12 @@ bool Font::SaveXML(Serializer& dest, int pointSize, bool usedGlyphs, const Strin
     return packedFontFace->Save(dest, pointSize, indentation);
 }
 
-void Font::SetAbsoluteGlyphOffset(const IntVector2& offset)
+void Font::SetAbsoluteGlyphOffset(const IntVector2 &offset)
 {
     absoluteOffset_ = offset;
 }
 
-void Font::SetScaledGlyphOffset(const Vector2& offset)
+void Font::SetScaledGlyphOffset(const Vector2 &offset)
 {
     scaledOffset_ = offset;
 }

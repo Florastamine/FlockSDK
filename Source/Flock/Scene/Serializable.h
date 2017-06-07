@@ -52,9 +52,9 @@ public:
     virtual ~Serializable();
 
     /// Handle attribute write access. Default implementation writes to the variable at offset, or invokes the set accessor.
-    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant& src);
+    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant &src);
     /// Handle attribute read access. Default implementation reads the variable at offset, or invokes the get accessor.
-    virtual void OnGetAttribute(const AttributeInfo& attr, Variant& dest) const;
+    virtual void OnGetAttribute(const AttributeInfo& attr, Variant &dest) const;
     /// Return attribute descriptions, or null if none defined.
     virtual const Vector<AttributeInfo>* GetAttributes() const;
     /// Return network replication attribute descriptions, or null if none defined.
@@ -82,9 +82,9 @@ public:
     virtual void MarkNetworkUpdate() { }
 
     /// Set attribute by index. Return true if successfully set.
-    bool SetAttribute(unsigned index, const Variant& value);
+    bool SetAttribute(unsigned index, const Variant &value);
     /// Set attribute by name. Return true if successfully set.
-    bool SetAttribute(const String& name, const Variant& value);
+    bool SetAttribute(const String &name, const Variant &value);
     /// Reset all editable attributes to their default values.
     void ResetToDefault();
     /// Remove instance's default values if they are set previously.
@@ -92,7 +92,7 @@ public:
     /// Set temporary flag. Temporary objects will not be saved.
     void SetTemporary(bool enable);
     /// Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.
-    void SetInterceptNetworkUpdate(const String& attributeName, bool enable);
+    void SetInterceptNetworkUpdate(const String &attributeName, bool enable);
     /// Allocate network attribute state.
     void AllocateNetworkState();
     /// Write initial delta network update.
@@ -109,11 +109,11 @@ public:
     /// Return attribute value by index. Return empty if illegal index.
     Variant GetAttribute(unsigned index) const;
     /// Return attribute value by name. Return empty if not found.
-    Variant GetAttribute(const String& name) const;
+    Variant GetAttribute(const String &name) const;
     /// Return attribute default value by index. Return empty if illegal index.
     Variant GetAttributeDefault(unsigned index) const;
     /// Return attribute default value by name. Return empty if not found.
-    Variant GetAttributeDefault(const String& name) const;
+    Variant GetAttributeDefault(const String &name) const;
     /// Return number of attributes.
     unsigned GetNumAttributes() const;
     /// Return number of network replication attributes.
@@ -123,7 +123,7 @@ public:
     bool IsTemporary() const { return temporary_; }
 
     /// Return whether an attribute's network updates are being intercepted.
-    bool GetInterceptNetworkUpdate(const String& attributeName) const;
+    bool GetInterceptNetworkUpdate(const String &attributeName) const;
 
     /// Return the network attribute state, if allocated.
     NetworkState* GetNetworkState() const { return networkState_.Get(); }
@@ -134,9 +134,9 @@ protected:
 
 private:
     /// Set instance-level default value. Allocate the internal data structure as necessary.
-    void SetInstanceDefault(const String& name, const Variant& defaultValue);
+    void SetInstanceDefault(const String &name, const Variant &defaultValue);
     /// Get instance-level default value.
-    Variant GetInstanceDefault(const String& name) const;
+    Variant GetInstanceDefault(const String &name) const;
 
     /// Attribute default value at each instance level.
     UniquePtr<VariantMap> instanceDefaultValues_;
@@ -161,7 +161,7 @@ public:
     }
 
     /// Invoke getter function.
-    virtual void Get(const Serializable* ptr, Variant& dest) const
+    virtual void Get(const Serializable* ptr, Variant &dest) const
     {
         assert(ptr);
         const T* classPtr = static_cast<const T*>(ptr);
@@ -169,7 +169,7 @@ public:
     }
 
     /// Invoke setter function.
-    virtual void Set(Serializable* ptr, const Variant& value)
+    virtual void Set(Serializable* ptr, const Variant &value)
     {
         assert(ptr);
         T* classPtr = static_cast<T*>(ptr);
@@ -199,7 +199,7 @@ public:
     }
 
     /// Invoke getter function.
-    virtual void Get(const Serializable* ptr, Variant& dest) const
+    virtual void Get(const Serializable* ptr, Variant &dest) const
     {
         assert(ptr);
         const T* classPtr = static_cast<const T*>(ptr);
@@ -207,7 +207,7 @@ public:
     }
 
     /// Invoke setter function.
-    virtual void Set(Serializable* ptr, const Variant& value)
+    virtual void Set(Serializable* ptr, const Variant &value)
     {
         assert(ptr);
         T* classPtr = static_cast<T*>(ptr);
@@ -281,7 +281,7 @@ public:
     }
 
     /// Invoke getter function.
-    virtual void Get(const Serializable* ptr, Variant& dest) const
+    virtual void Get(const Serializable* ptr, Variant &dest) const
     {
         assert(ptr);
         const T* classPtr = static_cast<const T*>(ptr);
@@ -289,7 +289,7 @@ public:
     }
 
     /// Invoke setter function.
-    virtual void Set(Serializable* ptr, const Variant& value)
+    virtual void Set(Serializable* ptr, const Variant &value)
     {
         assert(ptr);
         T* classPtr = static_cast<T*>(ptr);
@@ -319,7 +319,7 @@ public:
     }
 
     /// Invoke getter function.
-    virtual void Get(const Serializable* ptr, Variant& dest) const
+    virtual void Get(const Serializable* ptr, Variant &dest) const
     {
         assert(ptr);
         const T* classPtr = static_cast<const T*>(ptr);
@@ -327,7 +327,7 @@ public:
     }
 
     /// Invoke setter function.
-    virtual void Set(Serializable* ptr, const Variant& value)
+    virtual void Set(Serializable* ptr, const Variant &value)
     {
         assert(ptr);
         T* classPtr = static_cast<T*>(ptr);

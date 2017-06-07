@@ -46,7 +46,7 @@ public:
     /// Apply attribute changes that can not be applied immediately.
     virtual void ApplyAttributes();
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
     /// React to editable status change.
     virtual void OnSetEditable();
 
@@ -96,7 +96,7 @@ protected:
     /// Filter implicit attributes in serialization process.
     virtual bool FilterImplicitAttributes(XMLElement& dest) const;
     /// Filter implicit attributes in serialization process for internal button.
-    bool FilterButtonImplicitAttributes(XMLElement& dest, const String& name) const;
+    bool FilterButtonImplicitAttributes(XMLElement& dest, const String &name) const;
 
     /// Back button.
     SharedPtr<Button> backButton_;

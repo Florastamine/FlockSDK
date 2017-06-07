@@ -94,9 +94,9 @@ public:
     virtual void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
 
     /// Submit a new target position request for this agent.
-    void SetTargetPosition(const Vector3& position);
+    void SetTargetPosition(const Vector3 &position);
     /// Submit a new target velocity request for this agent.
-    void SetTargetVelocity(const Vector3& velocity);
+    void SetTargetVelocity(const Vector3 &velocity);
     /// Reset any target request for the specified agent. Note that the agent will continue to move into the current direction; set a zero target velocity to actually stop.
     void ResetTarget();
     /// Update the node position. When set to false, the node position should be updated by other means (e.g. using Physics) in response to the E_CROWD_AGENT_REPOSITION event.
@@ -126,10 +126,10 @@ public:
     Vector3 GetActualVelocity() const;
 
     /// Return the agent's requested target position.
-    const Vector3& GetTargetPosition() const { return targetPosition_; }
+    const Vector3 &GetTargetPosition() const { return targetPosition_; }
 
     /// Return the agent's requested target velocity.
-    const Vector3& GetTargetVelocity() const { return targetVelocity_; }
+    const Vector3 &GetTargetVelocity() const { return targetVelocity_; }
 
     /// Return the agent's requested target type, if any.
     CrowdAgentRequestedTarget GetRequestedTargetType() const { return requestedTargetType_; }

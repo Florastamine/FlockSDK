@@ -49,7 +49,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Handle attribute write access.
-    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant& src);
+    virtual void OnSetAttribute(const AttributeInfo& attr, const Variant &src);
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     virtual void ApplyAttributes();
     /// Handle enabled/disabled state change.
@@ -58,7 +58,7 @@ public:
     /// Set patch quads per side. Must be a power of two.
     void SetPatchSize(int size);
     /// Set vertex (XZ) and height (Y) spacing.
-    void SetSpacing(const Vector3& spacing);
+    void SetSpacing(const Vector3 &spacing);
     /// Set maximum number of LOD levels for terrain patches. This can be between 1-4.
     void SetMaxLodLevels(unsigned levels);
     /// Set LOD level used for terrain patch occlusion. By default (M_MAX_UNSIGNED) the coarsest. Since the LOD level used needs to be fixed, using finer LOD levels may result in false positive occlusion in cases where the actual rendered geometry is coarser, so use with caution.
@@ -108,13 +108,13 @@ public:
     int GetPatchSize() const { return patchSize_; }
 
     /// Return vertex and height spacing.
-    const Vector3& GetSpacing() const { return spacing_; }
+    const Vector3 &GetSpacing() const { return spacing_; }
 
     /// Return heightmap size in vertices.
-    const IntVector2& GetNumVertices() const { return numVertices_; }
+    const IntVector2 &GetNumVertices() const { return numVertices_; }
 
     /// Return heightmap size in patches.
-    const IntVector2& GetNumPatches() const { return numPatches_; }
+    const IntVector2 &GetNumPatches() const { return numPatches_; }
 
     /// Return maximum number of LOD levels for terrain patches. This can be between 1-4.
     unsigned GetMaxLodLevels() const { return maxLodLevels_; }
@@ -136,11 +136,11 @@ public:
     /// Return patch by patch coordinates including neighbor terrains.
     TerrainPatch* GetNeighborPatch(int x, int z) const;
     /// Return height at world coordinates.
-    float GetHeight(const Vector3& worldPosition) const;
+    float GetHeight(const Vector3 &worldPosition) const;
     /// Return normal at world coordinates.
-    Vector3 GetNormal(const Vector3& worldPosition) const;
+    Vector3 GetNormal(const Vector3 &worldPosition) const;
     /// Convert world position to heightmap pixel position. Note that the internal height data representation is reversed vertically, but in the heightmap image north is at the top.
-    IntVector2 WorldToHeightMap(const Vector3& worldPosition) const;
+    IntVector2 WorldToHeightMap(const Vector3 &worldPosition) const;
 
     /// Return north neighbor terrain.
     Terrain* GetNorthNeighbor() const { return north_; }

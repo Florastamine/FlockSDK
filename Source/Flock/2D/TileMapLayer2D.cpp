@@ -69,8 +69,8 @@ void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
             {
             case OT_RECTANGLE:
                 {
-                    const Vector2& lb = object->GetPosition();
-                    const Vector2& rt = lb + object->GetSize();
+                    const Vector2 &lb = object->GetPosition();
+                    const Vector2 &rt = lb + object->GetSize();
 
                     debug->AddLine(Vector2(lb.x_, lb.y_), Vector2(rt.x_, lb.y_), color, depthTest);
                     debug->AddLine(Vector2(rt.x_, lb.y_), Vector2(rt.x_, rt.y_), color, depthTest);
@@ -196,7 +196,7 @@ TileMap2D* TileMapLayer2D::GetTileMap() const
     return tileMap_;
 }
 
-bool TileMapLayer2D::HasProperty(const String& name) const
+bool TileMapLayer2D::HasProperty(const String &name) const
 {
     if (!tmxLayer_)
         return false;
@@ -204,7 +204,7 @@ bool TileMapLayer2D::HasProperty(const String& name) const
     return tmxLayer_->HasProperty(name);
 }
 
-const String& TileMapLayer2D::GetProperty(const String& name) const
+const String &TileMapLayer2D::GetProperty(const String &name) const
 {
     if (!tmxLayer_)
         return String::EMPTY;

@@ -53,9 +53,9 @@ public:
     /// Set rectangle.
     void SetRectangle(const IntRect& rectangle);
     /// Set hot spot.
-    void SetHotSpot(const Vector2& hotSpot);
+    void SetHotSpot(const Vector2 &hotSpot);
     /// Set offset.
-    void SetOffset(const IntVector2& offset);
+    void SetOffset(const IntVector2 &offset);
     /// Set texture edge offset in pixels. This affects the left/right and top/bottom edges equally to prevent edge sampling artifacts. Default 0.
     void SetTextureEdgeOffset(float offset);
     /// Set sprite sheet.
@@ -68,10 +68,10 @@ public:
     const IntRect& GetRectangle() const { return rectangle_; }
 
     /// Return hot spot.
-    const Vector2& GetHotSpot() const { return hotSpot_; }
+    const Vector2 &GetHotSpot() const { return hotSpot_; }
 
     /// Return offset.
-    const IntVector2& GetOffset() const { return offset_; }
+    const IntVector2 &GetOffset() const { return offset_; }
 
     /// Return texture edge offset.
     float GetTextureEdgeOffset() const { return edgeOffset_; }
@@ -83,7 +83,7 @@ public:
     /// Return draw rectangle.
     bool GetDrawRectangle(Rect& rect, bool flipX = false, bool flipY = false) const;
     /// Return draw rectangle with custom hot spot.
-    bool GetDrawRectangle(Rect& rect, const Vector2& hotSpot, bool flipX = false, bool flipY = false) const;
+    bool GetDrawRectangle(Rect& rect, const Vector2 &hotSpot, bool flipX = false, bool flipY = false) const;
     /// Return texture rectangle.
     bool GetTextureRectangle(Rect& rect, bool flipX = false, bool flipY = false) const;
 

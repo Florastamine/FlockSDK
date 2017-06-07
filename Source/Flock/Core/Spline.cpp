@@ -107,7 +107,7 @@ Variant Spline::GetPoint(float f) const
     }
 }
 
-void Spline::SetKnot(const Variant& knot, unsigned index)
+void Spline::SetKnot(const Variant &knot, unsigned index)
 {
     if (index < knots_.Size())
     {
@@ -121,7 +121,7 @@ void Spline::SetKnot(const Variant& knot, unsigned index)
     }
 }
 
-void Spline::AddKnot(const Variant& knot)
+void Spline::AddKnot(const Variant &knot)
 {
     if (knots_.Size() > 0 && knots_[0].GetType() == knot.GetType())
         knots_.Push(knot);
@@ -132,7 +132,7 @@ void Spline::AddKnot(const Variant& knot)
             knots_[0].GetTypeName().CString());
 }
 
-void Spline::AddKnot(const Variant& knot, unsigned index)
+void Spline::AddKnot(const Variant &knot, unsigned index)
 {
     if (index > knots_.Size())
         index = knots_.Size();
@@ -249,7 +249,7 @@ Variant Spline::LinearInterpolation(const Vector<Variant>& knots, float t) const
     }
 }
 
-Variant Spline::LinearInterpolation(const Variant& lhs, const Variant& rhs, float t) const
+Variant Spline::LinearInterpolation(const Variant &lhs, const Variant &rhs, float t) const
 {
     switch (lhs.GetType())
     {

@@ -70,7 +70,7 @@ public:
     /// Set local-space bounding box.
     void SetBoundingBox(const BoundingBox& box);
     /// Set patch coordinates.
-    void SetCoordinates(const IntVector2& coordinates);
+    void SetCoordinates(const IntVector2 &coordinates);
     /// Reset to LOD level 0.
     void ResetLod();
 
@@ -101,7 +101,7 @@ public:
     PODVector<float>& GetLodErrors() { return lodErrors_; }
 
     /// Return patch coordinates.
-    const IntVector2& GetCoordinates() const { return coordinates_; }
+    const IntVector2 &GetCoordinates() const { return coordinates_; }
 
     /// Return current LOD level.
     unsigned GetLodLevel() const { return lodLevel_; }

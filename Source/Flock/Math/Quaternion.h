@@ -93,7 +93,7 @@ public:
     }
 
     /// Construct from an angle (in degrees) and axis.
-    Quaternion(float angle, const Vector3& axis)
+    Quaternion(float angle, const Vector3 &axis)
     {
         FromAngleAxis(angle, axis);
     }
@@ -111,13 +111,13 @@ public:
     }
 
     /// Construct from the rotation difference between two direction vectors.
-    Quaternion(const Vector3& start, const Vector3& end)
+    Quaternion(const Vector3 &start, const Vector3 &end)
     {
         FromRotationTo(start, end);
     }
 
     /// Construct from orthonormal axes.
-    Quaternion(const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis)
+    Quaternion(const Vector3 &xAxis, const Vector3 &yAxis, const Vector3 &zAxis)
     {
         FromAxes(xAxis, yAxis, zAxis);
     }
@@ -259,7 +259,7 @@ public:
     }
 
     /// Multiply a Vector3.
-    Vector3 operator *(const Vector3& rhs) const
+    Vector3 operator *(const Vector3 &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 q = _mm_loadu_ps(&w_);
@@ -291,17 +291,17 @@ public:
     }
 
     /// Define from an angle (in degrees) and axis.
-    void FromAngleAxis(float angle, const Vector3& axis);
+    void FromAngleAxis(float angle, const Vector3 &axis);
     /// Define from Euler angles (in degrees.)
     void FromEulerAngles(float x, float y, float z);
     /// Define from the rotation difference between two direction vectors.
-    void FromRotationTo(const Vector3& start, const Vector3& end);
+    void FromRotationTo(const Vector3 &start, const Vector3 &end);
     /// Define from orthonormal axes.
-    void FromAxes(const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis);
+    void FromAxes(const Vector3 &xAxis, const Vector3 &yAxis, const Vector3 &zAxis);
     /// Define from a rotation matrix.
     void FromRotationMatrix(const Matrix3& matrix);
     /// Define from a direction to look in and an up direction. Return true if successful, or false if would result in a NaN, in which case the current value remains.
-    bool FromLookRotation(const Vector3& direction, const Vector3& up = Vector3::UP);
+    bool FromLookRotation(const Vector3 &direction, const Vector3 &up = Vector3::UP);
 
     /// Normalize to unit length.
     void Normalize()

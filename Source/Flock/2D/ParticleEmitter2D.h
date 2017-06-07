@@ -133,9 +133,9 @@ private:
     /// Update.
     void Update(float timeStep);
     /// Emit particle.
-    bool EmitParticle(const Vector3& worldPosition, float worldAngle, float worldScale);
+    bool EmitParticle(const Vector3 &worldPosition, float worldAngle, float worldScale);
     /// Update particle.
-    void UpdateParticle(Particle2D& particle, float timeStep, const Vector3& worldPosition, float worldScale);
+    void UpdateParticle(Particle2D& particle, float timeStep, const Vector3 &worldPosition, float worldScale);
 
     /// Particle effect.
     SharedPtr<ParticleEffect2D> effect_;

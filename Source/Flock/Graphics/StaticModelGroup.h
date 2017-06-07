@@ -65,10 +65,10 @@ public:
     Node* GetInstanceNode(unsigned index) const;
 
     /// Set node IDs attribute.
-    void SetNodeIDsAttr(const VariantVector& value);
+    void SetNodeIDsAttr(const VariantVector &value);
 
     /// Return node IDs attribute.
-    const VariantVector& GetNodeIDsAttr() const;
+    const VariantVector &GetNodeIDsAttr() const;
 
 protected:
     /// Handle scene node enabled status changing.

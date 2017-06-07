@@ -64,9 +64,9 @@ String ignoreExtensions_[] = {
 };
 
 int main(int argc, char** argv);
-void Run(const Vector<String>& arguments);
-void ProcessFile(const String& fileName, const String& rootDir);
-void WritePackageFile(const String& fileName, const String& rootDir);
+void Run(const Vector<String> &arguments);
+void ProcessFile(const String &fileName, const String &rootDir);
+void WritePackageFile(const String &fileName, const String &rootDir);
 void WriteHeader(File& dest);
 
 int main(int argc, char** argv)
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void Run(const Vector<String>& arguments)
+void Run(const Vector<String> &arguments)
 {
     if (arguments.Size() < 2)
         ErrorExit(
@@ -101,8 +101,8 @@ void Run(const Vector<String>& arguments)
             "-L      Similar to -l but also output compression ratio (compressed package file only)\n"
         );
 
-    const String& dirName = arguments[0];
-    const String& packageName = arguments[1];
+    const String &dirName = arguments[0];
+    const String &packageName = arguments[1];
     bool isOutputMode = arguments[0].Length() == 2 && arguments[0][0] == '-';
     if (arguments.Size() > 2)
     {
@@ -203,7 +203,7 @@ void Run(const Vector<String>& arguments)
     }
 }
 
-void ProcessFile(const String& fileName, const String& rootDir)
+void ProcessFile(const String &fileName, const String &rootDir)
 {
     String fullPath = rootDir + "/" + fileName;
     File file(context_);
@@ -220,7 +220,7 @@ void ProcessFile(const String& fileName, const String& rootDir)
     entries_.Push(newEntry);
 }
 
-void WritePackageFile(const String& fileName, const String& rootDir)
+void WritePackageFile(const String &fileName, const String &rootDir)
 {
     if (!quiet_)
         PrintLine("Writing package");

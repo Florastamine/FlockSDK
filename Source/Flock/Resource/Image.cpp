@@ -775,7 +775,7 @@ bool Image::Save(Serializer& dest) const
     return success;
 }
 
-bool Image::SaveFile(const String& fileName) const
+bool Image::SaveFile(const String &fileName) const
 {
     if (fileName.EndsWith(".dds", false))
         return SaveDDS(fileName);
@@ -1145,7 +1145,7 @@ void Image::ClearInt(unsigned uintColor)
     }
 }
 
-bool Image::SaveBMP(const String& fileName) const
+bool Image::SaveBMP(const String &fileName) const
 {
     FLOCKSDK_PROFILE(SaveImageBMP);
 
@@ -1168,7 +1168,7 @@ bool Image::SaveBMP(const String& fileName) const
         return false;
 }
 
-bool Image::SavePNG(const String& fileName) const
+bool Image::SavePNG(const String &fileName) const
 {
     FLOCKSDK_PROFILE(SaveImagePNG);
 
@@ -1179,7 +1179,7 @@ bool Image::SavePNG(const String& fileName) const
         return false;
 }
 
-bool Image::SaveTGA(const String& fileName) const
+bool Image::SaveTGA(const String &fileName) const
 {
     FLOCKSDK_PROFILE(SaveImageTGA);
 
@@ -1202,7 +1202,7 @@ bool Image::SaveTGA(const String& fileName) const
         return false;
 }
 
-bool Image::SaveJPG(const String& fileName, int quality) const
+bool Image::SaveJPG(const String &fileName, int quality) const
 {
     FLOCKSDK_PROFILE(SaveImageJPG);
 
@@ -1225,7 +1225,7 @@ bool Image::SaveJPG(const String& fileName, int quality) const
         return false;
 }
 
-bool Image::SaveDDS(const String& fileName) const
+bool Image::SaveDDS(const String &fileName) const
 {
     FLOCKSDK_PROFILE(SaveImageDDS);
 

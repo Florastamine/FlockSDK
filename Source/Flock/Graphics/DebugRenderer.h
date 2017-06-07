@@ -49,7 +49,7 @@ struct DebugLine
     }
 
     /// Construct with start and end positions and color.
-    DebugLine(const Vector3& start, const Vector3& end, unsigned color) :
+    DebugLine(const Vector3 &start, const Vector3 &end, unsigned color) :
         start_(start),
         end_(end),
         color_(color)
@@ -73,7 +73,7 @@ struct DebugTriangle
     }
 
     /// Construct with start and end positions and color.
-    DebugTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, unsigned color) :
+    DebugTriangle(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, unsigned color) :
         v1_(v1),
         v2_(v2),
         v3_(v3),
@@ -109,17 +109,17 @@ public:
     /// Set the camera viewpoint. Call before rendering, or before adding geometry if you want to use culling.
     void SetView(Camera* camera);
     /// Add a line.
-    void AddLine(const Vector3& start, const Vector3& end, const Color& color, bool depthTest = true);
+    void AddLine(const Vector3 &start, const Vector3 &end, const Color& color, bool depthTest = true);
     /// Add a line with color already converted to unsigned.
-    void AddLine(const Vector3& start, const Vector3& end, unsigned color, bool depthTest = true);
+    void AddLine(const Vector3 &start, const Vector3 &end, unsigned color, bool depthTest = true);
     /// Add a solid triangle.
-    void AddTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Color& color, bool depthTest = true);
+    void AddTriangle(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Color& color, bool depthTest = true);
     /// Add a solid triangle with color already converted to unsigned.
-    void AddTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, unsigned color, bool depthTest = true);
+    void AddTriangle(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, unsigned color, bool depthTest = true);
     /// Add a solid quadrangular polygon.
-    void AddPolygon(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Vector3& v4, const Color& color, bool depthTest = true);
+    void AddPolygon(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Vector3 &v4, const Color& color, bool depthTest = true);
     /// Add a solid quadrangular polygon with color already converted to unsigned.
-    void AddPolygon(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Vector3& v4, unsigned color, bool depthTest = true);
+    void AddPolygon(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Vector3 &v4, unsigned color, bool depthTest = true);
     /// Add a scene node represented as its coordinate axes.
     void AddNode(Node* node, float scale = 1.0f, bool depthTest = true);
     /// Add a bounding box.
@@ -133,7 +133,7 @@ public:
     /// Add a sphere.
     void AddSphere(const Sphere& sphere, const Color& color, bool depthTest = true);
     /// Add a cylinder
-    void AddCylinder(const Vector3& position, float radius, float height, const Color& color, bool depthTest = true);
+    void AddCylinder(const Vector3 &position, float radius, float height, const Color& color, bool depthTest = true);
     /// Add a skeleton.
     void AddSkeleton(const Skeleton& skeleton, const Color& color, bool depthTest = true);
     /// Add a triangle mesh.
@@ -141,11 +141,11 @@ public:
         (const void* vertexData, unsigned vertexSize, const void* indexData, unsigned indexSize, unsigned indexStart,
             unsigned indexCount, const Matrix3x4& transform, const Color& color, bool depthTest = true);
     /// Add a circle.
-    void AddCircle(const Vector3& center, const Vector3& normal, float radius, const Color& color, int steps = 64, bool depthTest = true);
+    void AddCircle(const Vector3 &center, const Vector3 &normal, float radius, const Color& color, int steps = 64, bool depthTest = true);
     /// Add a cross.
-    void AddCross(const Vector3& center, float size, const Color& color, bool depthTest = true);
+    void AddCross(const Vector3 &center, float size, const Color& color, bool depthTest = true);
     /// Add a quad on the XZ plane.
-    void AddQuad(const Vector3& center, float width, float height, const Color& color, bool depthTest = true);
+    void AddQuad(const Vector3 &center, float width, float height, const Color& color, bool depthTest = true);
 
     /// Update vertex buffer and render all debug lines. The viewport and rendertarget should be set before.
     void Render();

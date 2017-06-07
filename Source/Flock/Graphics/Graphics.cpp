@@ -68,7 +68,7 @@ void Graphics::SetExternalWindow(void* window)
         FLOCKSDK_LOGERROR("Window already opened, can not set external window");
 }
 
-void Graphics::SetWindowTitle(const String& windowTitle)
+void Graphics::SetWindowTitle(const String &windowTitle)
 {
     windowTitle_ = windowTitle;
     if (window_)
@@ -82,7 +82,7 @@ void Graphics::SetWindowIcon(Image* windowIcon)
         CreateWindowIcon();
 }
 
-void Graphics::SetWindowPosition(const IntVector2& position)
+void Graphics::SetWindowPosition(const IntVector2 &position)
 {
     if (window_)
         SDL_SetWindowPosition(window_, position.x_, position.y_);
@@ -95,7 +95,7 @@ void Graphics::SetWindowPosition(int x, int y)
     SetWindowPosition(IntVector2(x, y));
 }
 
-void Graphics::SetOrientations(const String& orientations)
+void Graphics::SetOrientations(const String &orientations)
 {
     orientations_ = orientations.Trimmed();
     SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.CString());
@@ -106,7 +106,7 @@ bool Graphics::ToggleFullscreen()
     return SetMode(width_, height_, !fullscreen_, borderless_, resizable_, highDPI_, vsync_, tripleBuffer_, multiSample_, monitor_, refreshRate_);
 }
 
-void Graphics::SetShaderParameter(StringHash param, const Variant& value)
+void Graphics::SetShaderParameter(StringHash param, const Variant &value)
 {
     switch (value.GetType())
     {
@@ -230,7 +230,7 @@ void Graphics::Minimize()
     SDL_MinimizeWindow(window_);
 }
 
-void Graphics::BeginDumpShaders(const String& fileName)
+void Graphics::BeginDumpShaders(const String &fileName)
 {
     shaderPrecache_ = new ShaderPrecache(context_, fileName);
 }
@@ -247,7 +247,7 @@ void Graphics::PrecacheShaders(Deserializer& source)
     ShaderPrecache::LoadShaders(this, source);
 }
 
-void Graphics::SetShaderCacheDir(const String& path)
+void Graphics::SetShaderCacheDir(const String &path)
 {
     String trimmedPath = path.Trimmed();
     if (trimmedPath.Length())

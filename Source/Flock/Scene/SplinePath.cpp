@@ -240,7 +240,7 @@ void SplinePath::Reset()
     elapsedTime_ = 0.f;
 }
 
-void SplinePath::SetControlPointIdsAttr(const VariantVector& value)
+void SplinePath::SetControlPointIdsAttr(const VariantVector &value)
 {
     // Just remember the node IDs. They need to go through the SceneResolver, and we actually find the nodes during
     // ApplyAttributes()

@@ -39,7 +39,7 @@ using namespace FlockSDK;
 /// Convert to String.
 const char* tolua_tourho3dstring(lua_State* L, int narg, const char* str);
 /// Convert to String.
-const char* tolua_tourho3dstring(lua_State* L, int narg, const String& str);
+const char* tolua_tourho3dstring(lua_State* L, int narg, const String &str);
 
 /// Set context.
 void SetContext(lua_State* L, Context* context);
@@ -193,7 +193,7 @@ template <> void* ToluaToVector<SharedPtr<VertexBuffer> >(lua_State* L, int narg
 #endif
 
 /// Convert object at the given index and store it in Variant. This function is not thread-safe.
-void ToluaToVariant(lua_State* L, int narg, void* def, Variant& variant);
+void ToluaToVariant(lua_State* L, int narg, void* def, Variant &variant);
 
 /// Push object stored in a Variant to stack. Empty variant value is pushed as nil.
 void ToluaPushVariant(lua_State* L, const Variant* variant, const char* type = 0);

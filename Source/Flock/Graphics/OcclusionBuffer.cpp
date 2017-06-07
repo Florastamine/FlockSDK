@@ -492,9 +492,9 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, unsigned threadInde
         unsigned index = 0;
         while (index + 2 < batch.drawCount_)
         {
-            const Vector3& v0 = *((const Vector3*)(&srcData[index * batch.vertexSize_]));
-            const Vector3& v1 = *((const Vector3*)(&srcData[(index + 1) * batch.vertexSize_]));
-            const Vector3& v2 = *((const Vector3*)(&srcData[(index + 2) * batch.vertexSize_]));
+            const Vector3 &v0 = *((const Vector3*)(&srcData[index * batch.vertexSize_]));
+            const Vector3 &v1 = *((const Vector3*)(&srcData[(index + 1) * batch.vertexSize_]));
+            const Vector3 &v2 = *((const Vector3*)(&srcData[(index + 2) * batch.vertexSize_]));
 
             vertices[0] = ModelTransform(modelViewProj, v0);
             vertices[1] = ModelTransform(modelViewProj, v1);
@@ -516,9 +516,9 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, unsigned threadInde
 
             while (indices < indicesEnd)
             {
-                const Vector3& v0 = *((const Vector3*)(&srcData[indices[0] * batch.vertexSize_]));
-                const Vector3& v1 = *((const Vector3*)(&srcData[indices[1] * batch.vertexSize_]));
-                const Vector3& v2 = *((const Vector3*)(&srcData[indices[2] * batch.vertexSize_]));
+                const Vector3 &v0 = *((const Vector3*)(&srcData[indices[0] * batch.vertexSize_]));
+                const Vector3 &v1 = *((const Vector3*)(&srcData[indices[1] * batch.vertexSize_]));
+                const Vector3 &v2 = *((const Vector3*)(&srcData[indices[2] * batch.vertexSize_]));
 
                 vertices[0] = ModelTransform(modelViewProj, v0);
                 vertices[1] = ModelTransform(modelViewProj, v1);
@@ -535,9 +535,9 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, unsigned threadInde
 
             while (indices < indicesEnd)
             {
-                const Vector3& v0 = *((const Vector3*)(&srcData[indices[0] * batch.vertexSize_]));
-                const Vector3& v1 = *((const Vector3*)(&srcData[indices[1] * batch.vertexSize_]));
-                const Vector3& v2 = *((const Vector3*)(&srcData[indices[2] * batch.vertexSize_]));
+                const Vector3 &v0 = *((const Vector3*)(&srcData[indices[0] * batch.vertexSize_]));
+                const Vector3 &v1 = *((const Vector3*)(&srcData[indices[1] * batch.vertexSize_]));
+                const Vector3 &v2 = *((const Vector3*)(&srcData[indices[2] * batch.vertexSize_]));
 
                 vertices[0] = ModelTransform(modelViewProj, v0);
                 vertices[1] = ModelTransform(modelViewProj, v1);
@@ -550,7 +550,7 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, unsigned threadInde
     }
 }
 
-inline Vector4 OcclusionBuffer::ModelTransform(const Matrix4& transform, const Vector3& vertex) const
+inline Vector4 OcclusionBuffer::ModelTransform(const Matrix4& transform, const Vector3 &vertex) const
 {
     return Vector4(
         transform.m00_ * vertex.x_ + transform.m01_ * vertex.y_ + transform.m02_ * vertex.z_ + transform.m03_,
@@ -560,7 +560,7 @@ inline Vector4 OcclusionBuffer::ModelTransform(const Matrix4& transform, const V
     );
 }
 
-inline Vector3 OcclusionBuffer::ViewportTransform(const Vector4& vertex) const
+inline Vector3 OcclusionBuffer::ViewportTransform(const Vector4 &vertex) const
 {
     float invW = 1.0f / vertex.w_;
     return Vector3(
@@ -570,13 +570,13 @@ inline Vector3 OcclusionBuffer::ViewportTransform(const Vector4& vertex) const
     );
 }
 
-inline Vector4 OcclusionBuffer::ClipEdge(const Vector4& v0, const Vector4& v1, float d0, float d1) const
+inline Vector4 OcclusionBuffer::ClipEdge(const Vector4 &v0, const Vector4 &v1, float d0, float d1) const
 {
     float t = d0 / (d0 - d1);
     return v0 + t * (v1 - v0);
 }
 
-inline float OcclusionBuffer::SignedArea(const Vector3& v0, const Vector3& v1, const Vector3& v2) const
+inline float OcclusionBuffer::SignedArea(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2) const
 {
     float aX = v0.x_ - v1.x_;
     float aY = v0.y_ - v1.y_;
@@ -692,7 +692,7 @@ void OcclusionBuffer::DrawTriangle(Vector4* vertices, unsigned threadIndex)
         ++numTriangles_;
 }
 
-void OcclusionBuffer::ClipVertices(const Vector4& plane, Vector4* vertices, bool* triangles, unsigned& numTriangles)
+void OcclusionBuffer::ClipVertices(const Vector4 &plane, Vector4* vertices, bool* triangles, unsigned& numTriangles)
 {
     unsigned num = numTriangles;
 
@@ -799,7 +799,7 @@ struct Gradients
 struct Edge
 {
     /// Construct from gradients and top & bottom vertices.
-    Edge(const Gradients& gradients, const Vector3& top, const Vector3& bottom, int topY)
+    Edge(const Gradients& gradients, const Vector3 &top, const Vector3 &bottom, int topY)
     {
         float height = (bottom.y_ - top.y_);
         float slope = (height != 0.0f) ? (bottom.x_ - top.x_) / height : 0.0f;

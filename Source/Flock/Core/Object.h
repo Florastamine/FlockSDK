@@ -51,7 +51,7 @@ public:
     /// Return type.
     StringHash GetType() const { return type_; }
     /// Return type name.
-    const String& GetTypeName() const { return typeName_;}
+    const String &GetTypeName() const { return typeName_;}
     /// Return base type info.
     const TypeInfo* GetBaseTypeInfo() const { return baseTypeInfo_; }
 
@@ -69,10 +69,10 @@ private:
         typedef typeName ClassName; \
         typedef baseTypeName BaseClassName; \
         virtual FlockSDK::StringHash GetType() const { return GetTypeInfoStatic()->GetType(); } \
-        virtual const FlockSDK::String& GetTypeName() const { return GetTypeInfoStatic()->GetTypeName(); } \
+        virtual const FlockSDK::String &GetTypeName() const { return GetTypeInfoStatic()->GetTypeName(); } \
         virtual const FlockSDK::TypeInfo* GetTypeInfo() const { return GetTypeInfoStatic(); } \
         static FlockSDK::StringHash GetTypeStatic() { return GetTypeInfoStatic()->GetType(); } \
-        static const FlockSDK::String& GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
+        static const FlockSDK::String &GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
         static const FlockSDK::TypeInfo* GetTypeInfoStatic() { static const FlockSDK::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; } \
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
@@ -89,7 +89,7 @@ public:
     /// Return type hash.
     virtual StringHash GetType() const = 0;
     /// Return type name.
-    virtual const String& GetTypeName() const = 0;
+    virtual const String &GetTypeName() const = 0;
     /// Return type info.
     virtual const TypeInfo* GetTypeInfo() const = 0;
     /// Handle event.
@@ -137,11 +137,11 @@ public:
     /// Return execution context.
     Context* GetContext() const { return context_; }
     /// Return global variable based on key
-    const Variant& GetGlobalVar(StringHash key) const;
+    const Variant &GetGlobalVar(StringHash key) const;
     /// Return all global variables
     const VariantMap& GetGlobalVars() const;
     /// Set global variable with the respective key and value
-    void SetGlobalVar(StringHash key, const Variant& value);
+    void SetGlobalVar(StringHash key, const Variant &value);
     /// Return subsystem by type.
     Object* GetSubsystem(StringHash type) const;
     /// Return active event sender. Null outside event handling.
@@ -159,7 +159,7 @@ public:
     /// Template version of returning a subsystem.
     template <class T> T* GetSubsystem() const;
     /// Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.
-    const String& GetCategory() const;
+    const String &GetCategory() const;
 
 protected:
     /// Execution context.
@@ -205,7 +205,7 @@ public:
     StringHash GetType() const { return typeInfo_->GetType(); }
 
     /// Return type name of objects created by this factory.
-    const String& GetTypeName() const { return typeInfo_->GetTypeName(); }
+    const String &GetTypeName() const { return typeInfo_->GetTypeName(); }
 
 protected:
     /// Execution context.
@@ -347,7 +347,7 @@ struct FLOCKSDK_API EventNameRegistrar
     /// Register an event name for hash reverse mapping.
     static StringHash RegisterEventName(const char* eventName);
     /// Return Event name or empty string if not found.
-    static const String& GetEventName(StringHash eventID);
+    static const String &GetEventName(StringHash eventID);
     /// Return Event name map.
     static HashMap<StringHash, String>& GetEventNameMap();
 };

@@ -391,7 +391,7 @@ VariantMap& Object::GetEventDataMap() const
     return context_->GetEventDataMap();
 }
 
-const Variant& Object::GetGlobalVar(StringHash key) const
+const Variant &Object::GetGlobalVar(StringHash key) const
 {
     return context_->GetGlobalVar(key);
 }
@@ -401,7 +401,7 @@ const VariantMap& Object::GetGlobalVars() const
     return context_->GetGlobalVars();
 }
 
-void Object::SetGlobalVar(StringHash key, const Variant& value)
+void Object::SetGlobalVar(StringHash key, const Variant &value)
 {
     context_->SetGlobalVar(key, value);
 }
@@ -434,7 +434,7 @@ bool Object::HasSubscribedToEvent(Object* sender, StringHash eventType) const
         return FindSpecificEventHandler(sender, eventType) != 0;
 }
 
-const String& Object::GetCategory() const
+const String &Object::GetCategory() const
 {
     const HashMap<String, Vector<StringHash> >& objectCategories = context_->GetObjectCategories();
     for (HashMap<String, Vector<StringHash> >::ConstIterator i = objectCategories.Begin(); i != objectCategories.End(); ++i)
@@ -529,7 +529,7 @@ FlockSDK::StringHash EventNameRegistrar::RegisterEventName(const char* eventName
     return id;
 }
 
-const String& EventNameRegistrar::GetEventName(StringHash eventID)
+const String &EventNameRegistrar::GetEventName(StringHash eventID)
 {
     HashMap<StringHash, String>::ConstIterator it = GetEventNameMap().Find(eventID);
     return  it != GetEventNameMap().End() ? it->second_ : String::EMPTY ;

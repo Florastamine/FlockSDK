@@ -55,7 +55,7 @@ static Vector3 PointOnSphere(float radius, float theta, float phi)
     );
 }
 
-static void DrawDebugArc(const Vector3& worldPosition, const Quaternion& worldRotation, float angle, float distance, bool drawLines,
+static void DrawDebugArc(const Vector3 &worldPosition, const Quaternion& worldRotation, float angle, float distance, bool drawLines,
     const Color& color, DebugRenderer* debug, bool depthTest)
 {
     if (angle <= 0.f)

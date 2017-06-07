@@ -59,20 +59,20 @@ public:
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
 
     /// React to mouse hover.
-    virtual void OnHover(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+    virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag begin.
     virtual void
-        OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, int buttons, int qualifiers, Cursor* cursor);
+        OnDragBegin(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse drag motion.
     virtual void OnDragMove
-        (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons, int qualifiers,
+        (const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons, int qualifiers,
             Cursor* cursor);
     /// React to mouse drag end.
     virtual void
-        OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int buttons, Cursor* cursor);
+        OnDragEnd(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int buttons, Cursor* cursor);
     /// React to mouse drag cancel.
     virtual void
-        OnDragCancel(const IntVector2& position, const IntVector2& screenPosition, int dragButtons, int buttons, Cursor* cursor);
+        OnDragCancel(const IntVector2 &position, const IntVector2 &screenPosition, int dragButtons, int buttons, Cursor* cursor);
 
     /// Set whether can be moved.
     void SetMovable(bool enable);
@@ -91,7 +91,7 @@ public:
     /// Set modal frame color.
     void SetModalFrameColor(const Color& color);
     /// Set modal frame size.
-    void SetModalFrameSize(const IntVector2& size);
+    void SetModalFrameSize(const IntVector2 &size);
     /// Set whether model window can be dismissed with the escape key. Default true.
     void SetModalAutoDismiss(bool enable);
 
@@ -120,14 +120,14 @@ public:
     const Color& GetModalFrameColor() const { return modalFrameColor_; }
 
     /// Get modal frame size.
-    const IntVector2& GetModalFrameSize() const { return modalFrameSize_; }
+    const IntVector2 &GetModalFrameSize() const { return modalFrameSize_; }
 
     /// Return whether can be dismissed with escape key.
     bool GetModalAutoDismiss() const { return modalAutoDismiss_; }
 
 protected:
     /// Identify drag mode (move/resize.)
-    WindowDragMode GetDragMode(const IntVector2& position) const;
+    WindowDragMode GetDragMode(const IntVector2 &position) const;
     /// Set cursor shape based on drag mode.
     void SetCursorShape(WindowDragMode mode, Cursor* cursor) const;
     /// Validate window position.

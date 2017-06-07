@@ -87,13 +87,13 @@ void IKConstraint::SetStretchiness(float stretchiness)
 }
 
 // ----------------------------------------------------------------------------
-const Vector2& IKConstraint::GetLengthConstraints() const
+const Vector2 &IKConstraint::GetLengthConstraints() const
 {
     return lengthConstraints_;
 }
 
 // ----------------------------------------------------------------------------
-void IKConstraint::SetLengthConstraints(const Vector2& lengthConstraints)
+void IKConstraint::SetLengthConstraints(const Vector2 &lengthConstraints)
 {
     lengthConstraints_ = lengthConstraints;
     if (ikNode_ != NULL)

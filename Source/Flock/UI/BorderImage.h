@@ -58,7 +58,7 @@ public:
     /// Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.
     void SetImageBorder(const IntRect& rect);
     /// Set offset to image rectangle used on hover.
-    void SetHoverOffset(const IntVector2& offset);
+    void SetHoverOffset(const IntVector2 &offset);
     /// Set offset to image rectangle used on hover.
     void SetHoverOffset(int x, int y);
     /// Set blend mode.
@@ -79,7 +79,7 @@ public:
     const IntRect& GetImageBorder() const { return imageBorder_; }
 
     /// Return offset to image rectangle used on hover.
-    const IntVector2& GetHoverOffset() const { return hoverOffset_; }
+    const IntVector2 &GetHoverOffset() const { return hoverOffset_; }
 
     /// Return blend mode.
     BlendMode GetBlendMode() const { return blendMode_; }
@@ -95,7 +95,7 @@ public:
 protected:
     /// Return UI rendering batches with offset to image rectangle.
     void GetBatches
-        (PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const IntVector2& offset);
+        (PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor, const IntVector2 &offset);
 
     /// Texture.
     SharedPtr<Texture> texture_;

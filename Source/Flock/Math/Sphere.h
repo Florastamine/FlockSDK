@@ -50,7 +50,7 @@ public:
     }
 
     /// Construct from center and radius.
-    Sphere(const Vector3& center, float radius) :
+    Sphere(const Vector3 &center, float radius) :
         center_(center),
         radius_(radius)
     {
@@ -101,7 +101,7 @@ public:
     }
 
     /// Define from center and radius.
-    void Define(const Vector3& center, float radius)
+    void Define(const Vector3 &center, float radius)
     {
         center_ = center;
         radius_ = radius;
@@ -117,7 +117,7 @@ public:
     void Define(const Polyhedron& poly);
 
     /// Merge a point.
-    void Merge(const Vector3& point)
+    void Merge(const Vector3 &point)
     {
         if (radius_ < 0.0f)
         {
@@ -162,7 +162,7 @@ public:
     }
 
     /// Test if a point is inside.
-    Intersection IsInside(const Vector3& point) const
+    Intersection IsInside(const Vector3 &point) const
     {
         float distSquared = (point - center_).LengthSquared();
         if (distSquared < radius_ * radius_)
@@ -201,7 +201,7 @@ public:
     Intersection IsInsideFast(const BoundingBox& box) const;
 
     /// Return distance of a point to the surface, or 0 if inside.
-    float Distance(const Vector3& point) const { return Max((point - center_).Length() - radius_, 0.0f); }
+    float Distance(const Vector3 &point) const { return Max((point - center_).Length() - radius_, 0.0f); }
 
     /// Sphere center.
     Vector3 center_;

@@ -61,7 +61,7 @@ void ConstraintPrismatic2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintPrismatic2D::SetAnchor(const Vector2& anchor)
+void ConstraintPrismatic2D::SetAnchor(const Vector2 &anchor)
 {
     if (anchor == anchor_)
         return;
@@ -72,7 +72,7 @@ void ConstraintPrismatic2D::SetAnchor(const Vector2& anchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintPrismatic2D::SetAxis(const Vector2& axis)
+void ConstraintPrismatic2D::SetAxis(const Vector2 &axis)
 {
     if (axis == axis_)
         return;

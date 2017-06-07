@@ -254,7 +254,7 @@ void Text::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData,
     hovering_ = false;
 }
 
-void Text::OnResize(const IntVector2& newSize, const IntVector2& delta)
+void Text::OnResize(const IntVector2 &newSize, const IntVector2 &delta)
 {
     if (wordWrap_)
         UpdateText(true);
@@ -267,7 +267,7 @@ void Text::OnIndentSet()
     charLocationsDirty_ = true;
 }
 
-bool Text::SetFont(const String& fontName, int size)
+bool Text::SetFont(const String &fontName, int size)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
     return SetFont(cache->GetResource<Font>(fontName), size);
@@ -307,7 +307,7 @@ void Text::DecodeToUnicode()
         unicodeText_.Push(text_.NextUTF8Char(i));
 }
 
-void Text::SetText(const String& text)
+void Text::SetText(const String &text)
 {
     if (autoLocalizable_)
     {
@@ -413,7 +413,7 @@ void Text::SetTextEffect(TextEffect textEffect)
     textEffect_ = textEffect;
 }
 
-void Text::SetEffectShadowOffset(const IntVector2& offset)
+void Text::SetEffectShadowOffset(const IntVector2 &offset)
 {
     shadowOffset_ = offset;
 }
@@ -478,7 +478,7 @@ ResourceRef Text::GetFontAttr() const
     return GetResourceRef(font_, Font::GetTypeStatic());
 }
 
-void Text::SetTextAttr(const String& value)
+void Text::SetTextAttr(const String &value)
 {
     text_ = value;
     if (autoLocalizable_)

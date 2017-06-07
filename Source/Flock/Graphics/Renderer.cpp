@@ -1258,8 +1258,8 @@ void Renderer::SetBatchShaders(Batch& batch, Technique* tech, bool allowShadows,
     }
 }
 
-void Renderer::SetLightVolumeBatchShaders(Batch& batch, Camera* camera, const String& vsName, const String& psName, const String& vsDefines,
-    const String& psDefines)
+void Renderer::SetLightVolumeBatchShaders(Batch& batch, Camera* camera, const String &vsName, const String &psName, const String &vsDefines,
+    const String &psDefines)
 {
     assert(deferredLightPSVariations_.Size());
 

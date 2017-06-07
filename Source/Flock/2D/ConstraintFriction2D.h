@@ -41,14 +41,14 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    void SetAnchor(const Vector2& anchor);
+    void SetAnchor(const Vector2 &anchor);
     /// Set max force.
     void SetMaxForce(float maxForce);
     /// Set max torque.
     void SetMaxTorque(float maxTorque);
 
     /// Return anchor.
-    const Vector2& GetAnchor() const { return anchor_; }
+    const Vector2 &GetAnchor() const { return anchor_; }
 
     /// Set max force.
     float GetMaxForce() const { return jointDef_.maxForce; }

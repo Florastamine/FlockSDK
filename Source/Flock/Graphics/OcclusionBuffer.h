@@ -157,19 +157,19 @@ public:
 
 private:
     /// Apply modelview transform to vertex.
-    inline Vector4 ModelTransform(const Matrix4& transform, const Vector3& vertex) const;
+    inline Vector4 ModelTransform(const Matrix4& transform, const Vector3 &vertex) const;
     /// Apply projection and viewport transform to vertex.
-    inline Vector3 ViewportTransform(const Vector4& vertex) const;
+    inline Vector3 ViewportTransform(const Vector4 &vertex) const;
     /// Clip an edge.
-    inline Vector4 ClipEdge(const Vector4& v0, const Vector4& v1, float d0, float d1) const;
+    inline Vector4 ClipEdge(const Vector4 &v0, const Vector4 &v1, float d0, float d1) const;
     /// Return signed area of a triangle. If negative, is clockwise.
-    inline float SignedArea(const Vector3& v0, const Vector3& v1, const Vector3& v2) const;
+    inline float SignedArea(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2) const;
     /// Calculate viewport transform.
     void CalculateViewport();
     /// Draw a triangle.
     void DrawTriangle(Vector4* vertices, unsigned threadIndex);
     /// Clip vertices against a plane.
-    void ClipVertices(const Vector4& plane, Vector4* vertices, bool* triangles, unsigned& numTriangles);
+    void ClipVertices(const Vector4 &plane, Vector4* vertices, bool* triangles, unsigned& numTriangles);
     /// Draw a clipped triangle.
     void DrawTriangle2D(const Vector3* vertices, bool clockwise, unsigned threadIndex);
     /// Clear a thread work buffer.

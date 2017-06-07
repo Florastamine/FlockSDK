@@ -98,7 +98,7 @@ public:
     void SetValueType(VariantType valueType);
 
     /// Set key frame.
-    bool SetKeyFrame(float time, const Variant& value);
+    bool SetKeyFrame(float time, const Variant &value);
     /// Set event frame.
     void SetEventFrame(float time, const StringHash& eventType, const VariantMap& eventData = VariantMap());
 
@@ -140,7 +140,7 @@ protected:
     /// Update spline tangents.
     void UpdateSplineTangents();
     /// Return (value1 - value2) * t.
-    Variant SubstractAndMultiply(const Variant& value1, const Variant& value2, float t) const;
+    Variant SubstractAndMultiply(const Variant &value1, const Variant &value2, float t) const;
 
     /// Owner.
     void* owner_;

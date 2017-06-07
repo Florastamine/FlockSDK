@@ -123,7 +123,7 @@ public:
     bool operator !=(const Matrix3& rhs) const { return !(*this == rhs); }
 
     /// Multiply a Vector3.
-    Vector3 operator *(const Vector3& rhs) const
+    Vector3 operator *(const Vector3 &rhs) const
     {
         return Vector3(
             m00_ * rhs.x_ + m01_ * rhs.y_ + m02_ * rhs.z_,
@@ -197,7 +197,7 @@ public:
     }
 
     /// Set scaling elements.
-    void SetScale(const Vector3& scale)
+    void SetScale(const Vector3 &scale)
     {
         m00_ = scale.x_;
         m11_ = scale.y_;
@@ -239,7 +239,7 @@ public:
     }
 
     /// Return scaled by a vector.
-    Matrix3 Scaled(const Vector3& scale) const
+    Matrix3 Scaled(const Vector3 &scale) const
     {
         return Matrix3(
             m00_ * scale.x_,

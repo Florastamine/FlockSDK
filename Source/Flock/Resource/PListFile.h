@@ -62,11 +62,11 @@ public:
     /// Construct from float.
     PListValue(float value);
     /// Construct from string.
-    PListValue(const String& value);
+    PListValue(const String &value);
     /// Construct from value map.
     PListValue(PListValueMap& valueMap);
     /// Construct from value vector.
-    PListValue(PListValueVector& valueVector);
+    PListValue(PListValueVector &valueVector);
     /// Construct from another value.
     PListValue(const PListValue& value);
     /// Destruct.
@@ -85,11 +85,11 @@ public:
     /// Set float.
     void SetFloat(float value);
     /// Set string.
-    void SetString(const String& value);
+    void SetString(const String &value);
     /// Set value map.
     void SetValueMap(const PListValueMap& valueMap);
     /// Set value vector.
-    void SetValueVector(const PListValueVector& valueVector);
+    void SetValueVector(const PListValueVector &valueVector);
 
     /// Return type.
     PListValueType GetType() const { return type_; }
@@ -101,7 +101,7 @@ public:
     /// Return float.
     float GetFloat() const;
     /// Return string.
-    const String& GetString() const;
+    const String &GetString() const;
     /// Return IntRect, for string type.
     IntRect GetIntRect() const;
     /// Return IntVector2, for string type.
@@ -111,12 +111,12 @@ public:
     /// Return value map.
     const PListValueMap& GetValueMap() const;
     /// Return value vector.
-    const PListValueVector& GetValueVector() const;
+    const PListValueVector &GetValueVector() const;
 
     /// Convert to value map (internal use only).
     PListValueMap& ConvertToValueMap();
     /// Convert to value vector (internal use only).
-    PListValueVector& ConvertToValueVector();
+    PListValueVector &ConvertToValueVector();
 
 private:
     /// Reset.
@@ -159,7 +159,7 @@ private:
     /// Load dictionary.
     bool LoadDict(PListValueMap& dict, const XMLElement& dictElem);
     /// Load array.
-    bool LoadArray(PListValueVector& array, const XMLElement& arrayElem);
+    bool LoadArray(PListValueVector &array, const XMLElement& arrayElem);
     /// Load value.
     bool LoadValue(PListValue& value, const XMLElement& valueElem);
 

@@ -54,7 +54,7 @@ NamedPipe::NamedPipe(Context* context) :
 {
 }
 
-NamedPipe::NamedPipe(Context* context, const String& pipeName, bool isServer) :
+NamedPipe::NamedPipe(Context* context, const String &pipeName, bool isServer) :
     Object(context),
     isServer_(false),
 #ifdef _WIN32
@@ -81,7 +81,7 @@ unsigned NamedPipe::Seek(unsigned position)
 
 static const String pipePath("\\\\.\\pipe\\");
 
-bool NamedPipe::Open(const String& pipeName, bool isServer)
+bool NamedPipe::Open(const String &pipeName, bool isServer)
 {
     FLOCKSDK_PROFILE(OpenNamedPipe);
 
@@ -207,7 +207,7 @@ static const String pipePath("/tmp/");
 
 #define SAFE_CLOSE(handle) if (handle != -1) { close(handle); handle = -1; }
 
-bool NamedPipe::Open(const String& pipeName, bool isServer)
+bool NamedPipe::Open(const String &pipeName, bool isServer)
 {
     FLOCKSDK_PROFILE(OpenNamedPipe);
 

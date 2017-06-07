@@ -39,7 +39,7 @@ StringHash::StringHash(const char* str) :
 {
 }
 
-StringHash::StringHash(const String& str) :
+StringHash::StringHash(const String &str) :
     value_(Calculate(str.CString()))
 {
 }

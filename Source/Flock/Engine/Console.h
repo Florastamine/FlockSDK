@@ -60,7 +60,7 @@ public:
     void SetAutoVisibleOnError(bool enable) { autoVisibleOnError_ = enable; }
 
     /// Set the command interpreter.
-    void SetCommandInterpreter(const String& interpreter) { commandInterpreter_ = interpreter; }
+    void SetCommandInterpreter(const String &interpreter) { commandInterpreter_ = interpreter; }
 
     /// Set number of buffered rows.
     void SetNumBufferedRows(unsigned rows);
@@ -71,9 +71,9 @@ public:
     /// Set whether to automatically focus the line edit when showing. Default true on desktops and false on mobile devices, as on mobiles it would pop up the screen keyboard.
     void SetFocusOnShow(bool enable);
     /// Add auto complete option.
-    void AddAutoComplete(const String& option);
+    void AddAutoComplete(const String &option);
     /// Remove auto complete option.
-    void RemoveAutoComplete(const String& option);
+    void RemoveAutoComplete(const String &option);
     /// Update elements to layout properly. Call this after manually adjusting the sub-elements.
     void UpdateElements();
 
@@ -96,7 +96,7 @@ public:
     bool IsAutoVisibleOnError() const { return autoVisibleOnError_; }
 
     /// Return the last used command interpreter.
-    const String& GetCommandInterpreter() const { return commandInterpreter_; }
+    const String &GetCommandInterpreter() const { return commandInterpreter_; }
 
     /// Return number of buffered rows.
     unsigned GetNumBufferedRows() const;
@@ -114,7 +114,7 @@ public:
     unsigned GetHistoryPosition() const { return historyPosition_; }
 
     /// Return history row at index.
-    const String& GetHistoryRow(unsigned index) const;
+    const String &GetHistoryRow(unsigned index) const;
 
     /// Return whether automatically focuses the line edit when showing.
     bool GetFocusOnShow() const { return focusOnShow_; }

@@ -63,15 +63,15 @@ public:
     /// Set fileselector UI style.
     void SetDefaultStyle(XMLFile* style);
     /// Set title text.
-    void SetTitle(const String& text);
+    void SetTitle(const String &text);
     /// Set button texts.
-    void SetButtonTexts(const String& okText, const String& cancelText);
+    void SetButtonTexts(const String &okText, const String &cancelText);
     /// Set current path.
-    void SetPath(const String& path);
+    void SetPath(const String &path);
     /// Set current filename.
-    void SetFileName(const String& fileName);
+    void SetFileName(const String &fileName);
     /// Set filters.
-    void SetFilters(const Vector<String>& filters, unsigned defaultIndex);
+    void SetFilters(const Vector<String> &filters, unsigned defaultIndex);
     /// Set directory selection mode. Default false.
     void SetDirectoryMode(bool enable);
     /// Update elements to layout properly. Call this after manually adjusting the sub-elements.
@@ -108,15 +108,15 @@ public:
     Button* GetCloseButton() const { return closeButton_; }
 
     /// Return window title.
-    const String& GetTitle() const;
+    const String &GetTitle() const;
 
     /// Return current path.
-    const String& GetPath() const { return path_; }
+    const String &GetPath() const { return path_; }
 
     /// Return current filename.
-    const String& GetFileName() const;
+    const String &GetFileName() const;
     /// Return current filter.
-    const String& GetFilter() const;
+    const String &GetFilter() const;
     /// Return current filter index.
     unsigned GetFilterIndex() const;
 
@@ -125,7 +125,7 @@ public:
 
 private:
     /// Set the text of an edit field and ignore the resulting event.
-    void SetLineEditText(LineEdit* edit, const String& text);
+    void SetLineEditText(LineEdit* edit, const String &text);
     /// Refresh the directory listing.
     void RefreshFiles();
     /// Enter a directory or confirm a file. Return true if a directory entered.

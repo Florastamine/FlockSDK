@@ -249,7 +249,7 @@ ConvexData::ConvexData(Model* model, unsigned lodLevel)
         // Copy vertex data
         for (auto j = 0u; j < vertexCount; ++j)
         {
-            const Vector3& v = *((const Vector3*)(&vertexData[(vertexStart + j) * vertexSize]));
+            const Vector3 &v = *((const Vector3*)(&vertexData[(vertexStart + j) * vertexSize]));
             vertices.Push(v);
         }
     }
@@ -432,7 +432,7 @@ void CollisionShape::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("CustomGeometry ComponentID", unsigned, customGeometryID_, 0, AM_DEFAULT | AM_COMPONENTID);
 }
 
-void CollisionShape::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void CollisionShape::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -493,7 +493,7 @@ void CollisionShape::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     }
 }
 
-void CollisionShape::SetBox(const Vector3& size, const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetBox(const Vector3 &size, const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -510,7 +510,7 @@ void CollisionShape::SetBox(const Vector3& size, const Vector3& position, const 
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetSphere(float diameter, const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetSphere(float diameter, const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -527,7 +527,7 @@ void CollisionShape::SetSphere(float diameter, const Vector3& position, const Qu
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetStaticPlane(const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetStaticPlane(const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -543,7 +543,7 @@ void CollisionShape::SetStaticPlane(const Vector3& position, const Quaternion& r
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCylinder(float diameter, float height, const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetCylinder(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -560,7 +560,7 @@ void CollisionShape::SetCylinder(float diameter, float height, const Vector3& po
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCapsule(float diameter, float height, const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetCapsule(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -577,7 +577,7 @@ void CollisionShape::SetCapsule(float diameter, float height, const Vector3& pos
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCone(float diameter, float height, const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetCone(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -594,7 +594,7 @@ void CollisionShape::SetCone(float diameter, float height, const Vector3& positi
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetTriangleMesh(Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position,
+void CollisionShape::SetTriangleMesh(Model* model, unsigned lodLevel, const Vector3 &scale, const Vector3 &position,
     const Quaternion& rotation)
 {
     if (!model)
@@ -619,7 +619,7 @@ void CollisionShape::SetTriangleMesh(Model* model, unsigned lodLevel, const Vect
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCustomTriangleMesh(CustomGeometry* custom, const Vector3& scale, const Vector3& position,
+void CollisionShape::SetCustomTriangleMesh(CustomGeometry* custom, const Vector3 &scale, const Vector3 &position,
     const Quaternion& rotation)
 {
     if (!custom)
@@ -649,7 +649,7 @@ void CollisionShape::SetCustomTriangleMesh(CustomGeometry* custom, const Vector3
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetConvexHull(Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position,
+void CollisionShape::SetConvexHull(Model* model, unsigned lodLevel, const Vector3 &scale, const Vector3 &position,
     const Quaternion& rotation)
 {
     if (!model)
@@ -674,7 +674,7 @@ void CollisionShape::SetConvexHull(Model* model, unsigned lodLevel, const Vector
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCustomConvexHull(CustomGeometry* custom, const Vector3& scale, const Vector3& position,
+void CollisionShape::SetCustomConvexHull(CustomGeometry* custom, const Vector3 &scale, const Vector3 &position,
     const Quaternion& rotation)
 {
     if (!custom)
@@ -735,7 +735,7 @@ void CollisionShape::SetShapeType(ShapeType type)
     }
 }
 
-void CollisionShape::SetSize(const Vector3& size)
+void CollisionShape::SetSize(const Vector3 &size)
 {
     if (size != size_)
     {
@@ -746,7 +746,7 @@ void CollisionShape::SetSize(const Vector3& size)
     }
 }
 
-void CollisionShape::SetPosition(const Vector3& position)
+void CollisionShape::SetPosition(const Vector3 &position)
 {
     if (position != position_)
     {
@@ -766,7 +766,7 @@ void CollisionShape::SetRotation(const Quaternion& rotation)
     }
 }
 
-void CollisionShape::SetTransform(const Vector3& position, const Quaternion& rotation)
+void CollisionShape::SetTransform(const Vector3 &position, const Quaternion& rotation)
 {
     if (position != position_ || rotation != rotation_)
     {
@@ -1163,7 +1163,7 @@ void CollisionShape::UpdateShape()
     retryCreation_ = false;
 }
 
-btCollisionShape* CollisionShape::UpdateDerivedShape(int shapeType, const Vector3& newWorldScale)
+btCollisionShape* CollisionShape::UpdateDerivedShape(int shapeType, const Vector3 &newWorldScale)
 {
     // To be overridden in derived classes.
     return 0;

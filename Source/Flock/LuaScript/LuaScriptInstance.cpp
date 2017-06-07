@@ -94,7 +94,7 @@ void LuaScriptInstance::RegisterObject(Context* context)
         Variant::emptyBuffer, AM_NET | AM_NOEDIT);
 }
 
-void LuaScriptInstance::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void LuaScriptInstance::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     if (attr.ptr_ != (void*)0xffffffff)
     {
@@ -207,7 +207,7 @@ void LuaScriptInstance::OnSetAttribute(const AttributeInfo& attr, const Variant&
     lua_settop(luaState_, top);
 }
 
-void LuaScriptInstance::OnGetAttribute(const AttributeInfo& attr, Variant& dest) const
+void LuaScriptInstance::OnGetAttribute(const AttributeInfo& attr, Variant &dest) const
 {
     if (attr.ptr_ != (void*)0xffffffff)
     {
@@ -298,14 +298,14 @@ void LuaScriptInstance::OnSetEnabled()
         UnsubscribeFromScriptMethodEvents();
 }
 
-void LuaScriptInstance::AddEventHandler(const String& eventName, int functionIndex)
+void LuaScriptInstance::AddEventHandler(const String &eventName, int functionIndex)
 {
     LuaFunction* function = luaScript_->GetFunction(functionIndex);
     if (function)
         eventInvoker_->AddEventHandler(0, eventName, function);
 }
 
-void LuaScriptInstance::AddEventHandler(const String& eventName, const String& functionName)
+void LuaScriptInstance::AddEventHandler(const String &eventName, const String &functionName)
 {
     String realFunctionName = functionName.Replaced(":", ".");
     LuaFunction* function = luaScript_->GetFunction(realFunctionName);
@@ -313,7 +313,7 @@ void LuaScriptInstance::AddEventHandler(const String& eventName, const String& f
         eventInvoker_->AddEventHandler(0, eventName, function);
 }
 
-void LuaScriptInstance::AddEventHandler(Object* sender, const String& eventName, int functionIndex)
+void LuaScriptInstance::AddEventHandler(Object* sender, const String &eventName, int functionIndex)
 {
     if (!sender)
         return;
@@ -323,7 +323,7 @@ void LuaScriptInstance::AddEventHandler(Object* sender, const String& eventName,
         eventInvoker_->AddEventHandler(sender, eventName, function);
 }
 
-void LuaScriptInstance::AddEventHandler(Object* sender, const String& eventName, const String& functionName)
+void LuaScriptInstance::AddEventHandler(Object* sender, const String &eventName, const String &functionName)
 {
     if (!sender)
         return;
@@ -334,12 +334,12 @@ void LuaScriptInstance::AddEventHandler(Object* sender, const String& eventName,
         eventInvoker_->AddEventHandler(sender, eventName, function);
 }
 
-void LuaScriptInstance::RemoveEventHandler(const String& eventName)
+void LuaScriptInstance::RemoveEventHandler(const String &eventName)
 {
     eventInvoker_->UnsubscribeFromEvent(eventName);
 }
 
-void LuaScriptInstance::RemoveEventHandler(Object* sender, const String& eventName)
+void LuaScriptInstance::RemoveEventHandler(Object* sender, const String &eventName)
 {
     if (!sender)
         return;
@@ -360,7 +360,7 @@ void LuaScriptInstance::RemoveAllEventHandlers()
     eventInvoker_->UnsubscribeFromAllEvents();
 }
 
-void LuaScriptInstance::RemoveEventHandlersExcept(const Vector<String>& exceptionNames)
+void LuaScriptInstance::RemoveEventHandlersExcept(const Vector<String> &exceptionNames)
 {
     PODVector<StringHash> exceptionTypes(exceptionNames.Size());
     for (auto i = 0u; i < exceptionTypes.Size(); ++i)
@@ -369,24 +369,24 @@ void LuaScriptInstance::RemoveEventHandlersExcept(const Vector<String>& exceptio
     eventInvoker_->UnsubscribeFromAllEventsExcept(exceptionTypes, true);
 }
 
-bool LuaScriptInstance::HasEventHandler(const String& eventName) const
+bool LuaScriptInstance::HasEventHandler(const String &eventName) const
 {
     return eventInvoker_->HasSubscribedToEvent(eventName);
 }
 
-bool LuaScriptInstance::HasEventHandler(Object* sender, const String& eventName) const
+bool LuaScriptInstance::HasEventHandler(Object* sender, const String &eventName) const
 {
     return eventInvoker_->HasSubscribedToEvent(sender, eventName);
 }
 
-bool LuaScriptInstance::CreateObject(const String& scriptObjectType)
+bool LuaScriptInstance::CreateObject(const String &scriptObjectType)
 {
     SetScriptFile(0);
     SetScriptObjectType(scriptObjectType);
     return scriptObjectRef_ != LUA_REFNIL;
 }
 
-bool LuaScriptInstance::CreateObject(LuaFile* scriptFile, const String& scriptObjectType)
+bool LuaScriptInstance::CreateObject(LuaFile* scriptFile, const String &scriptObjectType)
 {
     SetScriptFile(scriptFile);
     SetScriptObjectType(scriptObjectType);
@@ -407,7 +407,7 @@ void LuaScriptInstance::SetScriptFile(LuaFile* scriptFile)
         FLOCKSDK_LOGERROR("Execute Lua file failed: " + scriptFile_->GetName());
 }
 
-void LuaScriptInstance::SetScriptObjectType(const String& scriptObjectType)
+void LuaScriptInstance::SetScriptObjectType(const String &scriptObjectType)
 {
     if (scriptObjectType == scriptObjectType_)
         return;
@@ -744,7 +744,7 @@ void LuaScriptInstance::ReleaseObject()
         scriptObjectMethods_[i] = 0;
 }
 
-LuaFunction* LuaScriptInstance::GetScriptObjectFunction(const String& functionName) const
+LuaFunction* LuaScriptInstance::GetScriptObjectFunction(const String &functionName) const
 {
     return luaScript_->GetFunction(scriptObjectType_ + "." + functionName, true);
 }

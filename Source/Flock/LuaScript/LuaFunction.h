@@ -60,7 +60,7 @@ public:
     /// Push double to stack.
     void PushDouble(double value);
     /// Push string to stack.
-    void PushString(const String& string);
+    void PushString(const String &string);
     /// Push user type to stack.
     void PushUserType(void* userType, const char* typeName);
 
@@ -89,11 +89,11 @@ public:
     }
 
     /// Push variant to stack.
-    void PushVariant(const Variant& variant, const char* asType = 0);
+    void PushVariant(const Variant &variant, const char* asType = 0);
     /// Push Lua table to stack. When the specified table is not found then a nil is pushed instead.
     void PushLuaTable(const char* tableName);
     /// Push Lua table to stack. When the specified table is not found then a nil is pushed instead.
-    void PushLuaTable(const String& tableName) { PushLuaTable(tableName.CString()); }
+    void PushLuaTable(const String &tableName) { PushLuaTable(tableName.CString()); }
 
     /// Return function ref.
     int GetFunctionRef() const { return functionRef_; }

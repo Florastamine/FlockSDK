@@ -75,7 +75,7 @@ public:
     /// Remove an animation by animation pointer.
     void RemoveAnimationState(Animation* animation);
     /// Remove an animation by animation name.
-    void RemoveAnimationState(const String& animationName);
+    void RemoveAnimationState(const String &animationName);
     /// Remove an animation by animation name hash.
     void RemoveAnimationState(StringHash animationNameHash);
     /// Remove an animation by AnimationState pointer.
@@ -91,7 +91,7 @@ public:
     /// Set vertex morph weight by index.
     void SetMorphWeight(unsigned index, float weight);
     /// Set vertex morph weight by name.
-    void SetMorphWeight(const String& name, float weight);
+    void SetMorphWeight(const String &name, float weight);
     /// Set vertex morph weight by name hash.
     void SetMorphWeight(StringHash nameHash, float weight);
     /// Reset all vertex morphs to zero.
@@ -111,7 +111,7 @@ public:
     /// Return animation state by animation pointer.
     AnimationState* GetAnimationState(Animation* animation) const;
     /// Return animation state by animation name.
-    AnimationState* GetAnimationState(const String& animationName) const;
+    AnimationState* GetAnimationState(const String &animationName) const;
     /// Return animation state by animation name hash.
     AnimationState* GetAnimationState(const StringHash animationNameHash) const;
     /// Return animation state by index.
@@ -135,7 +135,7 @@ public:
     /// Return vertex morph weight by index.
     float GetMorphWeight(unsigned index) const;
     /// Return vertex morph weight by name.
-    float GetMorphWeight(const String& name) const;
+    float GetMorphWeight(const String &name) const;
     /// Return vertex morph weight by name hash.
     float GetMorphWeight(StringHash nameHash) const;
 
@@ -145,9 +145,9 @@ public:
     /// Set model attribute.
     void SetModelAttr(const ResourceRef& value);
     /// Set bones' animation enabled attribute.
-    void SetBonesEnabledAttr(const VariantVector& value);
+    void SetBonesEnabledAttr(const VariantVector &value);
     /// Set animation states attribute.
-    void SetAnimationStatesAttr(const VariantVector& value);
+    void SetAnimationStatesAttr(const VariantVector &value);
     /// Set morphs attribute.
     void SetMorphsAttr(const PODVector<unsigned char>& value);
     /// Return model attribute.

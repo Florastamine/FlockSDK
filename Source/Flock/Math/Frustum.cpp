@@ -29,7 +29,7 @@
 namespace FlockSDK
 {
 
-inline Vector3 ClipEdgeZ(const Vector3& v0, const Vector3& v1, float clipZ)
+inline Vector3 ClipEdgeZ(const Vector3 &v0, const Vector3 &v1, float clipZ)
 {
     return Vector3(
         v1.x_ + (v0.x_ - v1.x_) * ((clipZ - v1.z_) / (v0.z_ - v1.z_)),
@@ -93,7 +93,7 @@ void Frustum::Define(float fov, float aspectRatio, float zoom, float nearZ, floa
     Define(near, far, transform);
 }
 
-void Frustum::Define(const Vector3& near, const Vector3& far, const Matrix3x4& transform)
+void Frustum::Define(const Vector3 &near, const Vector3 &far, const Matrix3x4& transform)
 {
     vertices_[0] = transform * near;
     vertices_[1] = transform * Vector3(near.x_, -near.y_, near.z_);

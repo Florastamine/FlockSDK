@@ -45,7 +45,7 @@ public:
     static void RegisterObject(Context *context);
 
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
 
     /// Set orientation type.
     void SetOrientation(Orientation orientation);
@@ -75,7 +75,7 @@ public:
     void SetLoadingPercentStyle(const String &style) { loadingPercentStyle_ = style; }
 
     /// Returns the loading percent style.
-    const String& GetLoadingPercentStyle() const { return loadingPercentStyle_; }
+    const String &GetLoadingPercentStyle() const { return loadingPercentStyle_; }
 
     /// Sets the flag to display the percent text.
     void SetShowPercentText(bool showPercentText);

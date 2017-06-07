@@ -294,8 +294,8 @@ void DecalSet::SetOptimizeBufferSize(bool enable)
     }
 }
 
-bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Quaternion& worldRotation, float size,
-    float aspectRatio, float depth, const Vector2& topLeftUV, const Vector2& bottomRightUV, float timeToLive, float normalCutoff,
+bool DecalSet::AddDecal(Drawable* target, const Vector3 &worldPosition, const Quaternion& worldRotation, float size,
+    float aspectRatio, float depth, const Vector2 &topLeftUV, const Vector2 &bottomRightUV, float timeToLive, float normalCutoff,
     unsigned subGeometry)
 {
     FLOCKSDK_PROFILE(AddDecal);
@@ -691,7 +691,7 @@ void DecalSet::OnWorldBoundingBoxUpdate()
 }
 
 void DecalSet::GetFaces(Vector<PODVector<DecalVertex> >& faces, Drawable* target, unsigned batchIndex, const Frustum& frustum,
-    const Vector3& decalNormal, float normalCutoff)
+    const Vector3 &decalNormal, float normalCutoff)
 {
     // Try to use the most accurate LOD level if possible
     Geometry* geometry = target->GetLodGeometry(batchIndex, 0);
@@ -805,15 +805,15 @@ void DecalSet::GetFaces(Vector<PODVector<DecalVertex> >& faces, Drawable* target
 
 void DecalSet::GetFace(Vector<PODVector<DecalVertex> >& faces, Drawable* target, unsigned batchIndex, unsigned i0, unsigned i1,
     unsigned i2, const unsigned char* positionData, const unsigned char* normalData, const unsigned char* skinningData,
-    unsigned positionStride, unsigned normalStride, unsigned skinningStride, const Frustum& frustum, const Vector3& decalNormal,
+    unsigned positionStride, unsigned normalStride, unsigned skinningStride, const Frustum& frustum, const Vector3 &decalNormal,
     float normalCutoff)
 {
     bool hasNormals = normalData != 0;
     bool hasSkinning = skinned_ && skinningData != 0;
 
-    const Vector3& v0 = *((const Vector3*)(&positionData[i0 * positionStride]));
-    const Vector3& v1 = *((const Vector3*)(&positionData[i1 * positionStride]));
-    const Vector3& v2 = *((const Vector3*)(&positionData[i2 * positionStride]));
+    const Vector3 &v0 = *((const Vector3*)(&positionData[i0 * positionStride]));
+    const Vector3 &v1 = *((const Vector3*)(&positionData[i1 * positionStride]));
+    const Vector3 &v2 = *((const Vector3*)(&positionData[i2 * positionStride]));
 
     // Calculate unsmoothed face normals if no normal data
     Vector3 faceNormal = Vector3::ZERO;
@@ -824,9 +824,9 @@ void DecalSet::GetFace(Vector<PODVector<DecalVertex> >& faces, Drawable* target,
         faceNormal = (dist1.CrossProduct(dist2)).Normalized();
     }
 
-    const Vector3& n0 = hasNormals ? *((const Vector3*)(&normalData[i0 * normalStride])) : faceNormal;
-    const Vector3& n1 = hasNormals ? *((const Vector3*)(&normalData[i1 * normalStride])) : faceNormal;
-    const Vector3& n2 = hasNormals ? *((const Vector3*)(&normalData[i2 * normalStride])) : faceNormal;
+    const Vector3 &n0 = hasNormals ? *((const Vector3*)(&normalData[i0 * normalStride])) : faceNormal;
+    const Vector3 &n1 = hasNormals ? *((const Vector3*)(&normalData[i1 * normalStride])) : faceNormal;
+    const Vector3 &n2 = hasNormals ? *((const Vector3*)(&normalData[i2 * normalStride])) : faceNormal;
 
     const unsigned char* s0 = hasSkinning ? &skinningData[i0 * skinningStride] : (const unsigned char*)0;
     const unsigned char* s1 = hasSkinning ? &skinningData[i1 * skinningStride] : (const unsigned char*)0;
@@ -953,8 +953,8 @@ bool DecalSet::GetBones(Drawable* target, unsigned batchIndex, const float* blen
     return true;
 }
 
-void DecalSet::CalculateUVs(Decal& decal, const Matrix3x4& view, const Matrix4& projection, const Vector2& topLeftUV,
-    const Vector2& bottomRightUV)
+void DecalSet::CalculateUVs(Decal& decal, const Matrix3x4& view, const Matrix4& projection, const Vector2 &topLeftUV,
+    const Vector2 &bottomRightUV)
 {
     Matrix4 viewProj = projection * view;
 

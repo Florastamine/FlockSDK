@@ -279,7 +279,7 @@ bool Animation::Save(Serializer& dest) const
     return true;
 }
 
-void Animation::SetAnimationName(const String& name)
+void Animation::SetAnimationName(const String &name)
 {
     animationName_ = name;
     animationNameHash_ = StringHash(name);
@@ -290,7 +290,7 @@ void Animation::SetLength(float length)
     length_ = Max(length, 0.0f);
 }
 
-AnimationTrack* Animation::CreateTrack(const String& name)
+AnimationTrack* Animation::CreateTrack(const String &name)
 {
     /// \todo When tracks / keyframes are created dynamically, memory use is not updated
     StringHash nameHash(name);
@@ -304,7 +304,7 @@ AnimationTrack* Animation::CreateTrack(const String& name)
     return &newTrack;
 }
 
-bool Animation::RemoveTrack(const String& name)
+bool Animation::RemoveTrack(const String &name)
 {
     HashMap<StringHash, AnimationTrack>::Iterator i = tracks_.Find(StringHash(name));
     if (i != tracks_.End())
@@ -338,7 +338,7 @@ void Animation::AddTrigger(const AnimationTriggerPoint& trigger)
     Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
 }
 
-void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant& data)
+void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant &data)
 {
     AnimationTriggerPoint newTrigger;
     newTrigger.time_ = timeIsNormalized ? time * length_ : time;
@@ -364,7 +364,7 @@ void Animation::SetNumTriggers(unsigned num)
     triggers_.Resize(num);
 }
 
-SharedPtr<Animation> Animation::Clone(const String& cloneName) const
+SharedPtr<Animation> Animation::Clone(const String &cloneName) const
 {
     SharedPtr<Animation> ret(new Animation(context_));
 
@@ -396,7 +396,7 @@ AnimationTrack* Animation::GetTrack(unsigned index)
 }
 
 
-AnimationTrack* Animation::GetTrack(const String& name)
+AnimationTrack* Animation::GetTrack(const String &name)
 {
     HashMap<StringHash, AnimationTrack>::Iterator i = tracks_.Find(StringHash(name));
     return i != tracks_.End() ? &i->second_ : (AnimationTrack*)0;

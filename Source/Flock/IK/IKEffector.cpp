@@ -94,26 +94,26 @@ void IKEffector::SetTargetNode(Node* targetNode)
 }
 
 // ----------------------------------------------------------------------------
-const String& IKEffector::GetTargetName() const
+const String &IKEffector::GetTargetName() const
 {
     return targetName_;
 }
 
 // ----------------------------------------------------------------------------
-void IKEffector::SetTargetName(const String& nodeName)
+void IKEffector::SetTargetName(const String &nodeName)
 {
     targetName_ = nodeName;
     targetNode_ = NULL;
 }
 
 // ----------------------------------------------------------------------------
-const Vector3& IKEffector::GetTargetPosition() const
+const Vector3 &IKEffector::GetTargetPosition() const
 {
     return targetPosition_;
 }
 
 // ----------------------------------------------------------------------------
-void IKEffector::SetTargetPosition(const Vector3& targetPosition)
+void IKEffector::SetTargetPosition(const Vector3 &targetPosition)
 {
     targetPosition_ = targetPosition;
     if (ikEffector_ != NULL)
@@ -141,7 +141,7 @@ Vector3 IKEffector::GetTargetRotationEuler() const
 }
 
 // ----------------------------------------------------------------------------
-void IKEffector::SetTargetRotationEuler(const Vector3& targetRotation)
+void IKEffector::SetTargetRotationEuler(const Vector3 &targetRotation)
 {
     SetTargetRotation(Quaternion(targetRotation.x_, targetRotation.y_, targetRotation.z_));
 }

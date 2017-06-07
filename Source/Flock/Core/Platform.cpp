@@ -259,14 +259,14 @@ void InitFPU()
 #endif
 }
 
-void ErrorDialog(const String& title, const String& message)
+void ErrorDialog(const String &title, const String &message)
 {
 #ifndef MINI_URHO
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title.CString(), message.CString(), 0);
 #endif
 }
 
-void ErrorExit(const String& message, int exitCode)
+void ErrorExit(const String &message, int exitCode)
 {
     if (!message.Empty())
         PrintLine(message, true);
@@ -289,7 +289,7 @@ void OpenConsoleWindow()
 #endif
 }
 
-void PrintUnicode(const String& str, bool error)
+void PrintUnicode(const String &str, bool error)
 {
 #if defined(_WIN32)
     // If the output stream has been redirected, use fprintf instead of WriteConsoleW,
@@ -311,17 +311,17 @@ void PrintUnicode(const String& str, bool error)
 #endif
 }
 
-void PrintUnicodeLine(const String& str, bool error)
+void PrintUnicodeLine(const String &str, bool error)
 {
     PrintUnicode(str + "\n", error);
 }
 
-void PrintLine(const String& str, bool error)
+void PrintLine(const String &str, bool error)
 {
     fprintf(error ? stderr : stdout, "%s\n", str.CString());
 }
 
-const Vector<String>& ParseArguments(const String& cmdLine, bool skipFirstArgument)
+const Vector<String> &ParseArguments(const String &cmdLine, bool skipFirstArgument)
 {
     arguments.Clear();
 
@@ -368,22 +368,22 @@ const Vector<String>& ParseArguments(const String& cmdLine, bool skipFirstArgume
     return arguments;
 }
 
-const Vector<String>& ParseArguments(const char* cmdLine)
+const Vector<String> &ParseArguments(const char* cmdLine)
 {
     return ParseArguments(String(cmdLine));
 }
 
-const Vector<String>& ParseArguments(const WString& cmdLine)
+const Vector<String> &ParseArguments(const WString &cmdLine)
 {
     return ParseArguments(String(cmdLine));
 }
 
-const Vector<String>& ParseArguments(const wchar_t* cmdLine)
+const Vector<String> &ParseArguments(const wchar_t* cmdLine)
 {
     return ParseArguments(String(cmdLine));
 }
 
-const Vector<String>& ParseArguments(int argc, char** argv)
+const Vector<String> &ParseArguments(int argc, char** argv)
 {
     String cmdLine;
 
@@ -393,7 +393,7 @@ const Vector<String>& ParseArguments(int argc, char** argv)
     return ParseArguments(cmdLine);
 }
 
-const Vector<String>& GetArguments()
+const Vector<String> &GetArguments()
 {
     return arguments;
 }

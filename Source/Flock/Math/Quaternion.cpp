@@ -31,7 +31,7 @@ namespace FlockSDK
 
 const Quaternion Quaternion::IDENTITY;
 
-void Quaternion::FromAngleAxis(float angle, const Vector3& axis)
+void Quaternion::FromAngleAxis(float angle, const Vector3 &axis)
 {
     Vector3 normAxis = axis.Normalized();
     angle *= M_DEGTORAD_2;
@@ -63,7 +63,7 @@ void Quaternion::FromEulerAngles(float x, float y, float z)
     z_ = cosY * cosX * sinZ - sinY * sinX * cosZ;
 }
 
-void Quaternion::FromRotationTo(const Vector3& start, const Vector3& end)
+void Quaternion::FromRotationTo(const Vector3 &start, const Vector3 &end)
 {
     Vector3 normStart = start.Normalized();
     Vector3 normEnd = end.Normalized();
@@ -90,7 +90,7 @@ void Quaternion::FromRotationTo(const Vector3& start, const Vector3& end)
     }
 }
 
-void Quaternion::FromAxes(const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis)
+void Quaternion::FromAxes(const Vector3 &xAxis, const Vector3 &yAxis, const Vector3 &zAxis)
 {
     Matrix3 matrix(
         xAxis.x_, yAxis.x_, zAxis.x_,
@@ -146,7 +146,7 @@ void Quaternion::FromRotationMatrix(const Matrix3& matrix)
     }
 }
 
-bool Quaternion::FromLookRotation(const Vector3& direction, const Vector3& upDirection)
+bool Quaternion::FromLookRotation(const Vector3 &direction, const Vector3 &upDirection)
 {
     Quaternion ret;
     Vector3 forward = direction.Normalized();

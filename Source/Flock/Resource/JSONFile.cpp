@@ -217,7 +217,7 @@ bool JSONFile::Save(Serializer& dest) const
     return Save(dest, "\t");
 }
 
-bool JSONFile::Save(Serializer& dest, const String& indendation) const
+bool JSONFile::Save(Serializer& dest, const String &indendation) const
 {
     rapidjson::Document document;
     ToRapidjsonValue(document, root_, document.GetAllocator());

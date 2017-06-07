@@ -560,7 +560,7 @@ bool Model::SetGeometry(unsigned index, unsigned lodLevel, Geometry* geometry)
     return true;
 }
 
-bool Model::SetGeometryCenter(unsigned index, const Vector3& center)
+bool Model::SetGeometryCenter(unsigned index, const Vector3 &center)
 {
     if (index >= geometryCenters_.Size())
     {
@@ -587,7 +587,7 @@ void Model::SetMorphs(const Vector<ModelMorph>& morphs)
     morphs_ = morphs;
 }
 
-SharedPtr<Model> Model::Clone(const String& cloneName) const
+SharedPtr<Model> Model::Clone(const String &cloneName) const
 {
     SharedPtr<Model> ret(new Model(context_));
 
@@ -727,7 +727,7 @@ const ModelMorph* Model::GetMorph(unsigned index) const
     return index < morphs_.Size() ? &morphs_[index] : 0;
 }
 
-const ModelMorph* Model::GetMorph(const String& name) const
+const ModelMorph* Model::GetMorph(const String &name) const
 {
     return GetMorph(StringHash(name));
 }

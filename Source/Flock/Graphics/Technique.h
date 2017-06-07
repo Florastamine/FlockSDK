@@ -43,7 +43,7 @@ class FLOCKSDK_API Pass : public RefCounted
 {
 public:
     /// Construct.
-    Pass(const String& passName);
+    Pass(const String &passName);
     /// Destruct.
     ~Pass();
 
@@ -62,24 +62,24 @@ public:
     /// Set whether requires desktop level hardware.
     void SetIsDesktop(bool enable);
     /// Set vertex shader name.
-    void SetVertexShader(const String& name);
+    void SetVertexShader(const String &name);
     /// Set pixel shader name.
-    void SetPixelShader(const String& name);
+    void SetPixelShader(const String &name);
     /// Set vertex shader defines. Separate multiple defines with spaces.
-    void SetVertexShaderDefines(const String& defines);
+    void SetVertexShaderDefines(const String &defines);
     /// Set pixel shader defines. Separate multiple defines with spaces.
-    void SetPixelShaderDefines(const String& defines);
+    void SetPixelShaderDefines(const String &defines);
     /// Set vertex shader define excludes. Use to mark defines that the shader code will not recognize, to prevent compiling redundant shader variations.
-    void SetVertexShaderDefineExcludes(const String& excludes);
+    void SetVertexShaderDefineExcludes(const String &excludes);
     /// Set pixel shader define excludes. Use to mark defines that the shader code will not recognize, to prevent compiling redundant shader variations.
-    void SetPixelShaderDefineExcludes(const String& excludes);
+    void SetPixelShaderDefineExcludes(const String &excludes);
     /// Reset shader pointers.
     void ReleaseShaders();
     /// Mark shaders loaded this frame.
     void MarkShadersLoaded(unsigned frameNumber);
 
     /// Return pass name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return pass index. This is used for optimal render-time pass queries that avoid map lookups.
     unsigned GetIndex() const { return index_; }
@@ -109,22 +109,22 @@ public:
     bool IsDesktop() const { return isDesktop_; }
 
     /// Return vertex shader name.
-    const String& GetVertexShader() const { return vertexShaderName_; }
+    const String &GetVertexShader() const { return vertexShaderName_; }
 
     /// Return pixel shader name.
-    const String& GetPixelShader() const { return pixelShaderName_; }
+    const String &GetPixelShader() const { return pixelShaderName_; }
 
     /// Return vertex shader defines.
-    const String& GetVertexShaderDefines() const { return vertexShaderDefines_; }
+    const String &GetVertexShaderDefines() const { return vertexShaderDefines_; }
 
     /// Return pixel shader defines.
-    const String& GetPixelShaderDefines() const { return pixelShaderDefines_; }
+    const String &GetPixelShaderDefines() const { return pixelShaderDefines_; }
     
     /// Return vertex shader define excludes.
-    const String& GetVertexShaderDefineExcludes() const { return vertexShaderDefineExcludes_; }
+    const String &GetVertexShaderDefineExcludes() const { return vertexShaderDefineExcludes_; }
 
     /// Return pixel shader define excludes.
-    const String& GetPixelShaderDefineExcludes() const { return pixelShaderDefineExcludes_; }
+    const String &GetPixelShaderDefineExcludes() const { return pixelShaderDefineExcludes_; }
 
     /// Return vertex shaders.
     Vector<SharedPtr<ShaderVariation> >& GetVertexShaders() { return vertexShaders_; }
@@ -205,13 +205,13 @@ public:
     /// Set whether requires desktop level hardware.
     void SetIsDesktop(bool enable);
     /// Create a new pass.
-    Pass* CreatePass(const String& passName);
+    Pass* CreatePass(const String &passName);
     /// Remove a pass.
-    void RemovePass(const String& passName);
+    void RemovePass(const String &passName);
     /// Reset shader pointers in all passes.
     void ReleaseShaders();
     /// Clone the technique. Passes will be deep copied to allow independent modification.
-    SharedPtr<Technique> Clone(const String& cloneName = String::EMPTY) const;
+    SharedPtr<Technique> Clone(const String &cloneName = String::EMPTY) const;
 
     /// Return whether requires desktop level hardware.
     bool IsDesktop() const { return isDesktop_; }
@@ -223,13 +223,13 @@ public:
     bool HasPass(unsigned passIndex) const { return passIndex < passes_.Size() && passes_[passIndex].Get() != 0; }
 
     /// Return whether has a pass by name. This overload should not be called in time-critical rendering loops; use a pre-acquired pass index instead.
-    bool HasPass(const String& passName) const;
+    bool HasPass(const String &passName) const;
 
     /// Return a pass, or null if not found.
     Pass* GetPass(unsigned passIndex) const { return passIndex < passes_.Size() ? passes_[passIndex].Get() : 0; }
 
     /// Return a pass by name, or null if not found. This overload should not be called in time-critical rendering loops; use a pre-acquired pass index instead.
-    Pass* GetPass(const String& passName) const;
+    Pass* GetPass(const String &passName) const;
 
     /// Return a pass that is supported for rendering, or null if not found.
     Pass* GetSupportedPass(unsigned passIndex) const
@@ -239,7 +239,7 @@ public:
     }
 
     /// Return a supported pass by name. This overload should not be called in time-critical rendering loops; use a pre-acquired pass index instead.
-    Pass* GetSupportedPass(const String& passName) const;
+    Pass* GetSupportedPass(const String &passName) const;
 
     /// Return number of passes.
     unsigned GetNumPasses() const;
@@ -249,10 +249,10 @@ public:
     PODVector<Pass*> GetPasses() const;
 
     /// Return a clone with added shader compilation defines. Called internally by Material.
-    SharedPtr<Technique> CloneWithDefines(const String& vsDefines, const String& psDefines);
+    SharedPtr<Technique> CloneWithDefines(const String &vsDefines, const String &psDefines);
 
     /// Return a pass type index by name. Allocate new if not used yet.
-    static unsigned GetPassIndex(const String& passName);
+    static unsigned GetPassIndex(const String &passName);
 
     /// Index for base pass. Initialized once GetPassIndex() has been called for the first time.
     static unsigned basePassIndex;

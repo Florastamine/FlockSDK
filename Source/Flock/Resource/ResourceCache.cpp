@@ -90,7 +90,7 @@ ResourceCache::~ResourceCache()
     backgroundLoader_.Reset();
 }
 
-bool ResourceCache::AddResourceDir(const String& pathName, unsigned priority)
+bool ResourceCache::AddResourceDir(const String &pathName, unsigned priority)
 {
     MutexLock lock(resourceMutex_);
 
@@ -148,7 +148,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, unsigned priority)
     return true;
 }
 
-bool ResourceCache::AddPackageFile(const String& fileName, unsigned priority)
+bool ResourceCache::AddPackageFile(const String &fileName, unsigned priority)
 {
     SharedPtr<PackageFile> package(new PackageFile(context_));
     return package->Open(fileName) && AddPackageFile(package);
@@ -162,7 +162,7 @@ bool ResourceCache::AddManualResource(Resource* resource)
         return false;
     }
 
-    const String& name = resource->GetName();
+    const String &name = resource->GetName();
     if (name.Empty())
     {
         FLOCKSDK_LOGERROR("Manual resource with empty name, can not add");
@@ -175,7 +175,7 @@ bool ResourceCache::AddManualResource(Resource* resource)
     return true;
 }
 
-void ResourceCache::RemoveResourceDir(const String& pathName)
+void ResourceCache::RemoveResourceDir(const String &pathName)
 {
     MutexLock lock(resourceMutex_);
 
@@ -218,7 +218,7 @@ void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResource
     }
 }
 
-void ResourceCache::RemovePackageFile(const String& fileName, bool releaseResources, bool forceRelease)
+void ResourceCache::RemovePackageFile(const String &fileName, bool releaseResources, bool forceRelease)
 {
     MutexLock lock(resourceMutex_);
 
@@ -238,7 +238,7 @@ void ResourceCache::RemovePackageFile(const String& fileName, bool releaseResour
     }
 }
 
-void ResourceCache::ReleaseResource(StringHash type, const String& name, bool force)
+void ResourceCache::ReleaseResource(StringHash type, const String &name, bool force)
 {
     StringHash nameHash(name);
     const SharedPtr<Resource>& existingRes = FindResource(type, nameHash);
@@ -277,7 +277,7 @@ void ResourceCache::ReleaseResources(StringHash type, bool force)
         UpdateResourceGroup(type);
 }
 
-void ResourceCache::ReleaseResources(StringHash type, const String& partialName, bool force)
+void ResourceCache::ReleaseResources(StringHash type, const String &partialName, bool force)
 {
     bool released = false;
 
@@ -304,7 +304,7 @@ void ResourceCache::ReleaseResources(StringHash type, const String& partialName,
         UpdateResourceGroup(type);
 }
 
-void ResourceCache::ReleaseResources(const String& partialName, bool force)
+void ResourceCache::ReleaseResources(const String &partialName, bool force)
 {
     // Some resources refer to others, like materials to textures. Release twice to ensure these get released.
     // This is not necessary if forcing release
@@ -390,7 +390,7 @@ bool ResourceCache::ReloadResource(Resource* resource)
     return false;
 }
 
-void ResourceCache::ReloadResourceWithDependencies(const String& fileName)
+void ResourceCache::ReloadResourceWithDependencies(const String &fileName)
 {
     StringHash fileNameHash(fileName);
     // If the filename is a resource we keep track of, reload it
@@ -480,7 +480,7 @@ void ResourceCache::RemoveResourceRouter(ResourceRouter* router)
     }
 }
 
-SharedPtr<File> ResourceCache::GetFile(const String& nameIn, bool sendEventOnFailure)
+SharedPtr<File> ResourceCache::GetFile(const String &nameIn, bool sendEventOnFailure)
 {
     MutexLock lock(resourceMutex_);
 
@@ -534,7 +534,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& nameIn, bool sendEventOnFai
     return SharedPtr<File>();
 }
 
-Resource* ResourceCache::GetExistingResource(StringHash type, const String& nameIn)
+Resource* ResourceCache::GetExistingResource(StringHash type, const String &nameIn)
 {
     String name = SanitateResourceName(nameIn);
 
@@ -554,7 +554,7 @@ Resource* ResourceCache::GetExistingResource(StringHash type, const String& name
     return existing;
 }
 
-Resource* ResourceCache::GetResource(StringHash type, const String& nameIn, bool sendEventOnFailure)
+Resource* ResourceCache::GetResource(StringHash type, const String &nameIn, bool sendEventOnFailure)
 {
     String name = SanitateResourceName(nameIn);
 
@@ -628,7 +628,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& nameIn, bool
     return resource;
 }
 
-bool ResourceCache::BackgroundLoadResource(StringHash type, const String& nameIn, bool sendEventOnFailure, Resource* caller)
+bool ResourceCache::BackgroundLoadResource(StringHash type, const String &nameIn, bool sendEventOnFailure, Resource* caller)
 {
     // If empty name, fail immediately
     String name = SanitateResourceName(nameIn);
@@ -643,7 +643,7 @@ bool ResourceCache::BackgroundLoadResource(StringHash type, const String& nameIn
     return backgroundLoader_->QueueResource(type, name, sendEventOnFailure, caller);
 }
 
-SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String& nameIn, bool sendEventOnFailure)
+SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String &nameIn, bool sendEventOnFailure)
 {
     String name = SanitateResourceName(nameIn);
 
@@ -713,7 +713,7 @@ void ResourceCache::GetResources(PODVector<Resource*>& result, StringHash type) 
     }
 }
 
-bool ResourceCache::Exists(const String& nameIn) const
+bool ResourceCache::Exists(const String &nameIn) const
 {
     MutexLock lock(resourceMutex_);
 
@@ -766,7 +766,7 @@ unsigned long long ResourceCache::GetTotalMemoryUse() const
     return total;
 }
 
-String ResourceCache::GetResourceFileName(const String& name) const
+String ResourceCache::GetResourceFileName(const String &name) const
 {
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
     for (auto i = 0u; i < resourceDirs_.Size(); ++i)
@@ -786,7 +786,7 @@ ResourceRouter* ResourceCache::GetResourceRouter(unsigned index) const
     return index < resourceRouters_.Size() ? resourceRouters_[index] : (ResourceRouter*)0;
 }
 
-String ResourceCache::GetPreferredResourceDir(const String& path) const
+String ResourceCache::GetPreferredResourceDir(const String &path) const
 {
     String fixedPath = AddTrailingSlash(path);
 
@@ -822,7 +822,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     return fixedPath;
 }
 
-String ResourceCache::SanitateResourceName(const String& nameIn) const
+String ResourceCache::SanitateResourceName(const String &nameIn) const
 {
     // Sanitate unsupported constructs from the resource name
     String name = GetInternalPath(nameIn);
@@ -853,7 +853,7 @@ String ResourceCache::SanitateResourceName(const String& nameIn) const
     return name.Trimmed();
 }
 
-String ResourceCache::SanitateResourceDirName(const String& nameIn) const
+String ResourceCache::SanitateResourceDirName(const String &nameIn) const
 {
     String fixedPath = AddTrailingSlash(nameIn);
     if (!IsAbsolutePath(fixedPath))
@@ -865,7 +865,7 @@ String ResourceCache::SanitateResourceDirName(const String& nameIn) const
     return fixedPath.Trimmed();
 }
 
-void ResourceCache::StoreResourceDependency(Resource* resource, const String& dependency)
+void ResourceCache::StoreResourceDependency(Resource* resource, const String &dependency)
 {
     if (!resource)
         return;
@@ -1080,7 +1080,7 @@ void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData
     }
 }
 
-File* ResourceCache::SearchResourceDirs(const String& nameIn)
+File* ResourceCache::SearchResourceDirs(const String &nameIn)
 {
     FileSystem* fileSystem = GetSubsystem<FileSystem>();
     for (auto i = 0u; i < resourceDirs_.Size(); ++i)
@@ -1102,7 +1102,7 @@ File* ResourceCache::SearchResourceDirs(const String& nameIn)
     return 0;
 }
 
-File* ResourceCache::SearchPackages(const String& nameIn)
+File* ResourceCache::SearchPackages(const String &nameIn)
 {
     for (auto i = 0u; i < packages_.Size(); ++i)
     {

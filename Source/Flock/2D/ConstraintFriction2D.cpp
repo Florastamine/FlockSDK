@@ -56,7 +56,7 @@ void ConstraintFriction2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintFriction2D::SetAnchor(const Vector2& anchor)
+void ConstraintFriction2D::SetAnchor(const Vector2 &anchor)
 {
     if (anchor == anchor_)
         return;

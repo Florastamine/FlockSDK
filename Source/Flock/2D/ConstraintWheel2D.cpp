@@ -60,7 +60,7 @@ void ConstraintWheel2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintWheel2D::SetAnchor(const Vector2& anchor)
+void ConstraintWheel2D::SetAnchor(const Vector2 &anchor)
 {
     if (anchor == anchor_)
         return;
@@ -71,7 +71,7 @@ void ConstraintWheel2D::SetAnchor(const Vector2& anchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintWheel2D::SetAxis(const Vector2& axis)
+void ConstraintWheel2D::SetAxis(const Vector2 &axis)
 {
     if (axis == axis_)
         return;

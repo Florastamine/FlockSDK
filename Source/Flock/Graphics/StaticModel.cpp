@@ -301,7 +301,7 @@ void StaticModel::SetOcclusionLodLevel(unsigned level)
     MarkNetworkUpdate();
 }
 
-void StaticModel::ApplyMaterialList(const String& fileName)
+void StaticModel::ApplyMaterialList(const String &fileName)
 {
     String useFileName = fileName;
     if (useFileName.Trimmed().Empty() && model_)
@@ -328,7 +328,7 @@ Material* StaticModel::GetMaterial(unsigned index) const
     return index < batches_.Size() ? batches_[index].material_ : (Material*)0;
 }
 
-bool StaticModel::IsInside(const Vector3& point) const
+bool StaticModel::IsInside(const Vector3 &point) const
 {
     if (!node_)
         return false;
@@ -337,7 +337,7 @@ bool StaticModel::IsInside(const Vector3& point) const
     return IsInsideLocal(localPosition);
 }
 
-bool StaticModel::IsInsideLocal(const Vector3& point) const
+bool StaticModel::IsInsideLocal(const Vector3 &point) const
 {
     // Early-out if point is not inside bounding box
     if (boundingBox_.IsInside(point) == OUTSIDE)

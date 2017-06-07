@@ -88,21 +88,21 @@ bool Sprite::IsWithinScissor(const IntRect& currentScissor)
     return visible_;
 }
 
-const IntVector2& Sprite::GetScreenPosition() const
+const IntVector2 &Sprite::GetScreenPosition() const
 {
     // This updates screen position for a sprite
     GetTransform();
     return screenPosition_;
 }
 
-IntVector2 Sprite::ScreenToElement(const IntVector2& screenPosition)
+IntVector2 Sprite::ScreenToElement(const IntVector2 &screenPosition)
 {
     Vector3 floatPos((float)screenPosition.x_, (float)screenPosition.y_, 0.0f);
     Vector3 transformedPos = GetTransform().Inverse() * floatPos;
     return IntVector2((int)transformedPos.x_, (int)transformedPos.y_);
 }
 
-IntVector2 Sprite::ElementToScreen(const IntVector2& position)
+IntVector2 Sprite::ElementToScreen(const IntVector2 &position)
 {
     Vector3 floatPos((float)position.x_, (float)position.y_, 0.0f);
     Vector3 transformedPos = GetTransform() * floatPos;
@@ -116,7 +116,7 @@ void Sprite::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
         color_[C_BOTTOMLEFT].a_ < 1.0f || color_[C_BOTTOMRIGHT].a_ < 1.0f)
         allOpaque = false;
 
-    const IntVector2& size = GetSize();
+    const IntVector2 &size = GetSize();
     UIBatch
         batch(this, blendMode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blendMode_, currentScissor, texture_, &vertexData);
 
@@ -129,13 +129,13 @@ void Sprite::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     hovering_ = false;
 }
 
-void Sprite::OnPositionSet(const IntVector2& newPosition)
+void Sprite::OnPositionSet(const IntVector2 &newPosition)
 {
     // If the integer position was set (layout update?), copy to the float position
     floatPosition_ = Vector2((float)newPosition.x_, (float)newPosition.y_);
 }
 
-void Sprite::SetPosition(const Vector2& position)
+void Sprite::SetPosition(const Vector2 &position)
 {
     if (position != floatPosition_)
     {
@@ -151,7 +151,7 @@ void Sprite::SetPosition(float x, float y)
     SetPosition(Vector2(x, y));
 }
 
-void Sprite::SetHotSpot(const IntVector2& hotSpot)
+void Sprite::SetHotSpot(const IntVector2 &hotSpot)
 {
     if (hotSpot != hotSpot_)
     {
@@ -165,7 +165,7 @@ void Sprite::SetHotSpot(int x, int y)
     SetHotSpot(IntVector2(x, y));
 }
 
-void Sprite::SetScale(const Vector2& scale)
+void Sprite::SetScale(const Vector2 &scale)
 {
     if (scale != scale_)
     {
@@ -232,7 +232,7 @@ const Matrix3x4& Sprite::GetTransform() const
                 parentTransform = parentSprite->GetTransform();
             else
             {
-                const IntVector2& parentScreenPos = parent_->GetScreenPosition() + parent_->GetChildOffset();
+                const IntVector2 &parentScreenPos = parent_->GetScreenPosition() + parent_->GetChildOffset();
                 parentTransform = Matrix3x4::IDENTITY;
                 parentTransform.SetTranslation(Vector3((float)parentScreenPos.x_, (float)parentScreenPos.y_, 0.0f));
             }

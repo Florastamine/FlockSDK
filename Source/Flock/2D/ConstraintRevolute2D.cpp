@@ -59,7 +59,7 @@ void ConstraintRevolute2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintRevolute2D::SetAnchor(const Vector2& anchor)
+void ConstraintRevolute2D::SetAnchor(const Vector2 &anchor)
 {
     if (anchor == anchor_)
         return;

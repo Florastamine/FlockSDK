@@ -105,7 +105,7 @@ void BorderImage::SetImageBorder(const IntRect& rect)
     imageBorder_.bottom_ = Max(rect.bottom_, 0);
 }
 
-void BorderImage::SetHoverOffset(const IntVector2& offset)
+void BorderImage::SetHoverOffset(const IntVector2 &offset)
 {
     hoverOffset_ = offset;
 }
@@ -126,7 +126,7 @@ void BorderImage::SetTiled(bool enable)
 }
 
 void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor,
-    const IntVector2& offset)
+    const IntVector2 &offset)
 {
     bool allOpaque = true;
     if (GetDerivedOpacity() < 1.0f || color_[C_TOPLEFT].a_ < 1.0f || color_[C_TOPRIGHT].a_ < 1.0f ||

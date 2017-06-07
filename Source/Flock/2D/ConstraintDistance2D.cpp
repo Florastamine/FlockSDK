@@ -59,7 +59,7 @@ void ConstraintDistance2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintDistance2D::SetOwnerBodyAnchor(const Vector2& anchor)
+void ConstraintDistance2D::SetOwnerBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == ownerBodyAnchor_)
         return;
@@ -70,7 +70,7 @@ void ConstraintDistance2D::SetOwnerBodyAnchor(const Vector2& anchor)
     MarkNetworkUpdate();
 }
 
-void ConstraintDistance2D::SetOtherBodyAnchor(const Vector2& anchor)
+void ConstraintDistance2D::SetOtherBodyAnchor(const Vector2 &anchor)
 {
     if (anchor == otherBodyAnchor_)
         return;

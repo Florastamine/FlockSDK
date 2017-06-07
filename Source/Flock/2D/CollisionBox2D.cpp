@@ -61,7 +61,7 @@ void CollisionBox2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(CollisionShape2D);
 }
 
-void CollisionBox2D::SetSize(const Vector2& size)
+void CollisionBox2D::SetSize(const Vector2 &size)
 {
     if (size == size_)
         return;
@@ -77,7 +77,7 @@ void CollisionBox2D::SetSize(float width, float height)
     SetSize(Vector2(width, height));
 }
 
-void CollisionBox2D::SetCenter(const Vector2& center)
+void CollisionBox2D::SetCenter(const Vector2 &center)
 {
     if (center == center_)
         return;

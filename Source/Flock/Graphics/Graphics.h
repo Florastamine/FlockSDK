@@ -91,11 +91,11 @@ public:
     /// Set external window handle. Only effective before setting the initial screen mode.
     void SetExternalWindow(void* window);
     /// Set window title.
-    void SetWindowTitle(const String& windowTitle);
+    void SetWindowTitle(const String &windowTitle);
     /// Set window icon.
     void SetWindowIcon(Image* windowIcon);
     /// Set window position. Sets initial position if window is not created yet.
-    void SetWindowPosition(const IntVector2& position);
+    void SetWindowPosition(const IntVector2 &position);
     /// Set window position. Sets initial position if window is not created yet.
     void SetWindowPosition(int x, int y);
     /// Set screen mode. Return true if successful.
@@ -113,7 +113,7 @@ public:
     /// Set forced use of OpenGL 2 even if OpenGL 3 is available. Must be called before setting the screen mode for the first time. Default false. No effect on Direct3D9 & 11.
     void SetForceGL2(bool enable);
     /// Set allowed screen orientations as a space-separated list of "LandscapeLeft", "LandscapeRight", "Portrait" and "PortraitUpsideDown". Affects currently only iOS platform.
-    void SetOrientations(const String& orientations);
+    void SetOrientations(const String &orientations);
     /// Toggle between full screen and windowed mode. Return true if successful.
     bool ToggleFullscreen();
     /// Close the window.
@@ -165,19 +165,19 @@ public:
     /// Set shader color constant.
     void SetShaderParameter(StringHash param, const Color& color);
     /// Set shader 2D vector constant.
-    void SetShaderParameter(StringHash param, const Vector2& vector);
+    void SetShaderParameter(StringHash param, const Vector2 &vector);
     /// Set shader 3x3 matrix constant.
     void SetShaderParameter(StringHash param, const Matrix3& matrix);
     /// Set shader 3D vector constant.
-    void SetShaderParameter(StringHash param, const Vector3& vector);
+    void SetShaderParameter(StringHash param, const Vector3 &vector);
     /// Set shader 4x4 matrix constant.
     void SetShaderParameter(StringHash param, const Matrix4& matrix);
     /// Set shader 4D vector constant.
-    void SetShaderParameter(StringHash param, const Vector4& vector);
+    void SetShaderParameter(StringHash param, const Vector4 &vector);
     /// Set shader 3x4 matrix constant.
     void SetShaderParameter(StringHash param, const Matrix3x4& matrix);
     /// Set shader constant from a variant. Supported variant types: bool, float, vector2, vector3, vector4, color.
-    void SetShaderParameter(StringHash param, const Variant& value);
+    void SetShaderParameter(StringHash param, const Variant &value);
     /// Check whether a shader parameter group needs update. Does not actually check whether parameters exist in the shaders.
     bool NeedParameterUpdate(ShaderParameterGroup group, const void* source);
     /// Check whether a shader parameter exists on the currently set shaders.
@@ -244,13 +244,13 @@ public:
     void SetClipPlane(bool enable, const Plane& clipPlane = Plane::UP, const Matrix3x4& view = Matrix3x4::IDENTITY,
         const Matrix4& projection = Matrix4::IDENTITY);
     /// Begin dumping shader variation names to an XML file for precaching.
-    void BeginDumpShaders(const String& fileName);
+    void BeginDumpShaders(const String &fileName);
     /// End dumping shader variations names.
     void EndDumpShaders();
     /// Precache shader variations from an XML file generated with BeginDumpShaders().
     void PrecacheShaders(Deserializer& source);
     /// Set shader cache directory, Direct3D only. This can either be an absolute path or a path within the resource system.
-    void SetShaderCacheDir(const String& path);
+    void SetShaderCacheDir(const String &path);
 
     /// Return whether rendering initialized.
     bool IsInitialized() const;
@@ -265,7 +265,7 @@ public:
     SDL_Window* GetWindow() const { return window_; }
 
     /// Return window title.
-    const String& GetWindowTitle() const { return windowTitle_; }
+    const String &GetWindowTitle() const { return windowTitle_; }
 
     /// Return graphics API version.
     String GetAPIVersion() const; 
@@ -337,7 +337,7 @@ public:
     bool GetForceGL2() const { return forceGL2_; }
 
     /// Return allowed screen orientations.
-    const String& GetOrientations() const { return orientations_; }
+    const String &GetOrientations() const { return orientations_; }
 
     /// Return whether graphics context is lost and can not render or load GPU resources.
     bool IsDeviceLost() const;
@@ -392,7 +392,7 @@ public:
     /// Return hardware format for a compressed image format, or 0 if unsupported.
     unsigned GetFormat(CompressedFormat format) const;
     /// Return a shader variation by name and defines.
-    ShaderVariation* GetShader(ShaderType type, const String& name, const String& defines = String::EMPTY) const;
+    ShaderVariation* GetShader(ShaderType type, const String &name, const String &defines = String::EMPTY) const;
     /// Return a shader variation by name and defines.
     ShaderVariation* GetShader(ShaderType type, const char* name, const char* defines) const;
     /// Return current vertex buffer by index.
@@ -411,9 +411,9 @@ public:
     ShaderProgram* GetShaderProgram() const;
 
     /// Return texture unit index by name.
-    TextureUnit GetTextureUnit(const String& name);
+    TextureUnit GetTextureUnit(const String &name);
     /// Return texture unit name by index.
-    const String& GetTextureUnitName(TextureUnit unit);
+    const String &GetTextureUnitName(TextureUnit unit);
     /// Return current texture by texture unit index.
     Texture* GetTexture(unsigned index) const;
 
@@ -496,7 +496,7 @@ public:
     bool GetUseClipPlane() const { return useClipPlane_; }
 
     /// Return shader cache directory, Direct3D only.
-    const String& GetShaderCacheDir() const { return shaderCacheDir_; }
+    const String &GetShaderCacheDir() const { return shaderCacheDir_; }
 
     /// Return current rendertarget width and height.
     IntVector2 GetRenderTargetDimensions() const;
@@ -567,10 +567,10 @@ public:
     /// Return the API-specific readable hardware depth format, or 0 if not supported.
     static unsigned GetReadableDepthFormat();
     /// Return the API-specific texture format from a textual description, for example "rgb".
-    static unsigned GetFormat(const String& formatName);
+    static unsigned GetFormat(const String &formatName);
 
     /// Return UV offset required for pixel perfect rendering.
-    static const Vector2& GetPixelUVOffset() { return pixelUVOffset; }
+    static const Vector2 &GetPixelUVOffset() { return pixelUVOffset; }
 
     /// Return maximum number of supported bones for skinning.
     static unsigned GetMaxBones();

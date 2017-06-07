@@ -139,21 +139,21 @@ LuaScript::~LuaScript()
         lua_close(luaState);
 }
 
-void LuaScript::AddEventHandler(const String& eventName, int index)
+void LuaScript::AddEventHandler(const String &eventName, int index)
 {
     LuaFunction* function = GetFunction(index);
     if (function)
         eventInvoker_->AddEventHandler(0, eventName, function);
 }
 
-void LuaScript::AddEventHandler(const String& eventName, const String& functionName)
+void LuaScript::AddEventHandler(const String &eventName, const String &functionName)
 {
     LuaFunction* function = GetFunction(functionName);
     if (function)
         eventInvoker_->AddEventHandler(0, eventName, function);
 }
 
-void LuaScript::AddEventHandler(Object* sender, const String& eventName, int index)
+void LuaScript::AddEventHandler(Object* sender, const String &eventName, int index)
 {
     if (!sender)
         return;
@@ -163,7 +163,7 @@ void LuaScript::AddEventHandler(Object* sender, const String& eventName, int ind
         eventInvoker_->AddEventHandler(sender, eventName, function);
 }
 
-void LuaScript::AddEventHandler(Object* sender, const String& eventName, const String& functionName)
+void LuaScript::AddEventHandler(Object* sender, const String &eventName, const String &functionName)
 {
     if (!sender)
         return;
@@ -173,12 +173,12 @@ void LuaScript::AddEventHandler(Object* sender, const String& eventName, const S
         eventInvoker_->AddEventHandler(sender, eventName, function);
 }
 
-void LuaScript::RemoveEventHandler(const String& eventName)
+void LuaScript::RemoveEventHandler(const String &eventName)
 {
     eventInvoker_->UnsubscribeFromEvent(eventName);
 }
 
-void LuaScript::RemoveEventHandler(Object* sender, const String& eventName)
+void LuaScript::RemoveEventHandler(Object* sender, const String &eventName)
 {
     if (!sender)
         return;
@@ -199,7 +199,7 @@ void LuaScript::RemoveAllEventHandlers()
     eventInvoker_->UnsubscribeFromAllEvents();
 }
 
-void LuaScript::RemoveEventHandlersExcept(const Vector<String>& exceptionNames)
+void LuaScript::RemoveEventHandlersExcept(const Vector<String> &exceptionNames)
 {
     PODVector<StringHash> exceptionTypes(exceptionNames.Size());
     for (auto i = 0u; i < exceptionTypes.Size(); ++i)
@@ -208,17 +208,17 @@ void LuaScript::RemoveEventHandlersExcept(const Vector<String>& exceptionNames)
     eventInvoker_->UnsubscribeFromAllEventsExcept(exceptionTypes, true);
 }
 
-bool LuaScript::HasEventHandler(const String& eventName) const
+bool LuaScript::HasEventHandler(const String &eventName) const
 {
     return eventInvoker_->HasSubscribedToEvent(eventName);
 }
 
-bool LuaScript::HasEventHandler(Object* sender, const String& eventName) const
+bool LuaScript::HasEventHandler(Object* sender, const String &eventName) const
 {
     return eventInvoker_->HasSubscribedToEvent(sender, eventName);
 }
 
-bool LuaScript::ExecuteFile(const String& fileName)
+bool LuaScript::ExecuteFile(const String &fileName)
 {
     FLOCKSDK_PROFILE(ExecuteFile);
 
@@ -232,7 +232,7 @@ bool LuaScript::ExecuteFile(const String& fileName)
     return luaFile && luaFile->LoadAndExecute(luaState_);
 }
 
-bool LuaScript::ExecuteString(const String& string)
+bool LuaScript::ExecuteString(const String &string)
 {
     FLOCKSDK_PROFILE(ExecuteString);
 
@@ -247,7 +247,7 @@ bool LuaScript::ExecuteString(const String& string)
     return true;
 }
 
-bool LuaScript::LoadRawFile(const String& fileName)
+bool LuaScript::LoadRawFile(const String &fileName)
 {
     FLOCKSDK_PROFILE(LoadRawFile);
 
@@ -279,7 +279,7 @@ bool LuaScript::LoadRawFile(const String& fileName)
     return true;
 }
 
-bool LuaScript::ExecuteRawFile(const String& fileName)
+bool LuaScript::ExecuteRawFile(const String &fileName)
 {
     FLOCKSDK_PROFILE(ExecuteRawFile);
 
@@ -297,7 +297,7 @@ bool LuaScript::ExecuteRawFile(const String& fileName)
     return true;
 }
 
-bool LuaScript::ExecuteFunction(const String& functionName)
+bool LuaScript::ExecuteFunction(const String &functionName)
 {
     LuaFunction* function = GetFunction(functionName);
     return function && function->BeginCall() && function->EndCall();
@@ -425,7 +425,7 @@ LuaFunction* LuaScript::GetFunction(int index)
     return function;
 }
 
-LuaFunction* LuaScript::GetFunction(const String& functionName, bool silentIfNotFound)
+LuaFunction* LuaScript::GetFunction(const String &functionName, bool silentIfNotFound)
 {
     if (!luaState_)
         return 0;
@@ -471,7 +471,7 @@ void LuaScript::HandleConsoleCommand(StringHash eventType, VariantMap& eventData
         ExecuteString(eventData[P_COMMAND].GetString());
 }
 
-bool LuaScript::PushLuaFunction(lua_State* L, const String& functionName)
+bool LuaScript::PushLuaFunction(lua_State* L, const String &functionName)
 {
     Vector<String> splitNames = functionName.Split('.');
 

@@ -38,7 +38,7 @@ template <class T> inline void Swap(T& first, T& second)
     second = temp;
 }
 
-template <> FLOCKSDK_API void Swap<String>(String& first, String& second);
+template <> FLOCKSDK_API void Swap<String>(String &first, String &second);
 template <> FLOCKSDK_API void Swap<VectorBase>(VectorBase& first, VectorBase& second);
 template <> FLOCKSDK_API void Swap<ListBase>(ListBase& first, ListBase& second);
 template <> FLOCKSDK_API void Swap<HashBase>(HashBase& first, HashBase& second);

@@ -46,24 +46,24 @@ public:
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
     /// React to mouse click begin.
     virtual void OnClickBegin
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse click end.
     virtual void OnClickEnd
-        (const IntVector2& position, const IntVector2& screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
+        (const IntVector2 &position, const IntVector2 &screenPosition, int button, int buttons, int qualifiers, Cursor* cursor,
             UIElement* beginElement);
     /// React to mouse drag motion.
     virtual void OnDragMove
-        (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, int buttons, int qualifiers,
+        (const IntVector2 &position, const IntVector2 &screenPosition, const IntVector2 &deltaPos, int buttons, int qualifiers,
             Cursor* cursor);
     /// React to a key press.
     virtual void OnKey(int key, int buttons, int qualifiers);
 
     /// Set offset to image rectangle used when pressed.
-    void SetPressedOffset(const IntVector2& offset);
+    void SetPressedOffset(const IntVector2 &offset);
     /// Set offset to image rectangle used when pressed.
     void SetPressedOffset(int x, int y);
     /// Set offset of child elements when pressed.
-    void SetPressedChildOffset(const IntVector2& offset);
+    void SetPressedChildOffset(const IntVector2 &offset);
     /// Set offset of child elements when pressed.
     void SetPressedChildOffset(int x, int y);
     /// Set repeat properties. Rate 0 (default) disables repeat.
@@ -74,10 +74,10 @@ public:
     void SetRepeatRate(float rate);
 
     /// Return pressed image offset.
-    const IntVector2& GetPressedOffset() const { return pressedOffset_; }
+    const IntVector2 &GetPressedOffset() const { return pressedOffset_; }
 
     /// Return offset of child elements when pressed.
-    const IntVector2& GetPressedChildOffset() const { return pressedChildOffset_; }
+    const IntVector2 &GetPressedChildOffset() const { return pressedChildOffset_; }
 
     /// Return repeat delay.
     float GetRepeatDelay() const { return repeatDelay_; }

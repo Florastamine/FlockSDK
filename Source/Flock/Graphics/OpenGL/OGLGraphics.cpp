@@ -1219,7 +1219,7 @@ void Graphics::SetShaderParameter(StringHash param, const Color& color)
     SetShaderParameter(param, color.Data(), 4);
 }
 
-void Graphics::SetShaderParameter(StringHash param, const Vector2& vector)
+void Graphics::SetShaderParameter(StringHash param, const Vector2 &vector)
 {
     if (impl_->shaderProgram_)
     {
@@ -1273,7 +1273,7 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix3& matrix)
     }
 }
 
-void Graphics::SetShaderParameter(StringHash param, const Vector3& vector)
+void Graphics::SetShaderParameter(StringHash param, const Vector3 &vector)
 {
     if (impl_->shaderProgram_)
     {
@@ -1331,7 +1331,7 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix4& matrix)
     }
 }
 
-void Graphics::SetShaderParameter(StringHash param, const Vector4& vector)
+void Graphics::SetShaderParameter(StringHash param, const Vector4 &vector)
 {
     if (impl_->shaderProgram_)
     {
@@ -2028,7 +2028,7 @@ bool Graphics::GetGL3Support()
     return gl3Support;
 }
 
-ShaderVariation* Graphics::GetShader(ShaderType type, const String& name, const String& defines) const
+ShaderVariation* Graphics::GetShader(ShaderType type, const String &name, const String &defines) const
 {
     return GetShader(type, name.CString(), defines.CString());
 }
@@ -2061,7 +2061,7 @@ ShaderProgram* Graphics::GetShaderProgram() const
     return impl_->shaderProgram_;
 }
 
-TextureUnit Graphics::GetTextureUnit(const String& name)
+TextureUnit Graphics::GetTextureUnit(const String &name)
 {
     HashMap<String, TextureUnit>::Iterator i = textureUnits_.Find(name);
     if (i != textureUnits_.End())
@@ -2070,7 +2070,7 @@ TextureUnit Graphics::GetTextureUnit(const String& name)
         return MAX_TEXTURE_UNITS;
 }
 
-const String& Graphics::GetTextureUnitName(TextureUnit unit)
+const String &Graphics::GetTextureUnitName(TextureUnit unit)
 {
     for (HashMap<String, TextureUnit>::Iterator i = textureUnits_.Begin(); i != textureUnits_.End(); ++i)
     {
@@ -2506,7 +2506,7 @@ unsigned Graphics::GetReadableDepthFormat()
     return GL_DEPTH_COMPONENT24;
 }
 
-unsigned Graphics::GetFormat(const String& formatName)
+unsigned Graphics::GetFormat(const String &formatName)
 {
     String nameLower = formatName.ToLower().Trimmed();
 

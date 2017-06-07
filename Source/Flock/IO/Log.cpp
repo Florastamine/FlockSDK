@@ -71,7 +71,7 @@ Log::~Log()
     logInstance = 0;
 }
 
-void Log::Open(const String& fileName)
+void Log::Open(const String &fileName)
 {
     if (fileName.Empty())
         return;
@@ -123,7 +123,7 @@ void Log::SetQuiet(bool quiet)
     quiet_ = quiet;
 }
 
-void Log::Write(int level, const String& message)
+void Log::Write(int level, const String &message)
 {
     // Special case for LOG_RAW level
     if (level == LOG_RAW)
@@ -186,7 +186,7 @@ void Log::Write(int level, const String& message)
     logInstance->inWrite_ = false;
 }
 
-void Log::WriteRaw(const String& message, bool error)
+void Log::WriteRaw(const String &message, bool error)
 {
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())

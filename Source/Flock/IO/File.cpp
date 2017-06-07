@@ -71,7 +71,7 @@ File::File(Context* context) :
 {
 }
 
-File::File(Context* context, const String& fileName, FileMode mode) :
+File::File(Context* context, const String &fileName, FileMode mode) :
     Object(context),
     mode_(FILE_READ),
     handle_(0),
@@ -86,7 +86,7 @@ File::File(Context* context, const String& fileName, FileMode mode) :
     Open(fileName, mode);
 }
 
-File::File(Context* context, PackageFile* package, const String& fileName) :
+File::File(Context* context, PackageFile* package, const String &fileName) :
     Object(context),
     mode_(FILE_READ),
     handle_(0),
@@ -106,12 +106,12 @@ File::~File()
     Close();
 }
 
-bool File::Open(const String& fileName, FileMode mode)
+bool File::Open(const String &fileName, FileMode mode)
 {
     return OpenInternal(fileName, mode);
 }
 
-bool File::Open(PackageFile* package, const String& fileName)
+bool File::Open(PackageFile* package, const String &fileName)
 {
     if (!package)
         return false;
@@ -347,7 +347,7 @@ void File::Flush()
         fflush((FILE*)handle_);
 }
 
-void File::SetName(const String& name)
+void File::SetName(const String &name)
 {
     fileName_ = name;
 }
@@ -357,7 +357,7 @@ bool File::IsOpen() const
     return handle_ != 0;
 }
 
-bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
+bool File::OpenInternal(const String &fileName, FileMode mode, bool fromPackage)
 {
     Close();
 

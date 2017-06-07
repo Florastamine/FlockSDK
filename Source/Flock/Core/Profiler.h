@@ -209,7 +209,7 @@ public:
     void BeginInterval();
 
     /// Return profiling data as text output. This method is not thread-safe.
-    const String& PrintData(bool showUnused = false, bool showTotal = false, unsigned maxDepth = M_MAX_UNSIGNED) const;
+    const String &PrintData(bool showUnused = false, bool showTotal = false, unsigned maxDepth = M_MAX_UNSIGNED) const;
     /// Return the current profiling block.
     const ProfilerBlock* GetCurrentBlock() { return current_; }
     /// Return the root profiling block.
@@ -217,7 +217,7 @@ public:
 
 protected:
     /// Return profiling data as text output for a specified profiling block.
-    void PrintData(ProfilerBlock* block, String& output, unsigned depth, unsigned maxDepth, bool showUnused, bool showTotal) const;
+    void PrintData(ProfilerBlock* block, String &output, unsigned depth, unsigned maxDepth, bool showUnused, bool showTotal) const;
 
     /// Current profiling block.
     ProfilerBlock* current_;

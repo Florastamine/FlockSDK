@@ -48,7 +48,7 @@ public:
     static DBAPI GetAPI();
 
     /// Create new database connection. Return 0 if failed.
-    DbConnection* Connect(const String& connectionString);
+    DbConnection* Connect(const String &connectionString);
     /// Disconnect a database connection. The connection object pointer should not be used anymore after this.
     void Disconnect(DbConnection* connection);
 

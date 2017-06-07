@@ -123,12 +123,12 @@ void Sprite2D::SetRectangle(const IntRect& rectangle)
     rectangle_ = rectangle;
 }
 
-void Sprite2D::SetHotSpot(const Vector2& hotSpot)
+void Sprite2D::SetHotSpot(const Vector2 &hotSpot)
 {
     hotSpot_ = hotSpot;
 }
 
-void Sprite2D::SetOffset(const IntVector2& offset)
+void Sprite2D::SetOffset(const IntVector2 &offset)
 {
     offset_ = offset;
 }
@@ -148,7 +148,7 @@ bool Sprite2D::GetDrawRectangle(Rect& rect, bool flipX, bool flipY) const
     return GetDrawRectangle(rect, hotSpot_, flipX, flipY);
 }
 
-bool Sprite2D::GetDrawRectangle(Rect& rect, const Vector2& hotSpot, bool flipX, bool flipY) const
+bool Sprite2D::GetDrawRectangle(Rect& rect, const Vector2 &hotSpot, bool flipX, bool flipY) const
 {
     if (rectangle_.Width() == 0 || rectangle_.Height() == 0)
         return false;
@@ -220,8 +220,8 @@ Sprite2D* Sprite2D::LoadFromResourceRef(Object* object, const ResourceRef& value
         if (names.Size() != 2)
             return 0;
 
-        const String& spriteSheetName = names[0];
-        const String& spriteName = names[1];
+        const String &spriteSheetName = names[0];
+        const String &spriteName = names[1];
 
         SpriteSheet2D* spriteSheet = cache->GetResource<SpriteSheet2D>(spriteSheetName);
         if (!spriteSheet)

@@ -56,7 +56,7 @@ void ConstraintMouse2D::RegisterObject(Context* context)
     FLOCKSDK_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
-void ConstraintMouse2D::SetTarget(const Vector2& target)
+void ConstraintMouse2D::SetTarget(const Vector2 &target)
 {
     if (target == target_)
         return;

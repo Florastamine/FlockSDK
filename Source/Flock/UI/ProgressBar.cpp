@@ -69,7 +69,7 @@ void ProgressBar::RegisterObject(Context * context)
     FLOCKSDK_ACCESSOR_ATTRIBUTE("Show Percent Text", GetShowPercentText, SetShowPercentText, bool, true, AM_FILE);
 }
 
-void ProgressBar::OnResize(const IntVector2& /*newSize*/, const IntVector2& /*delta*/)
+void ProgressBar::OnResize(const IntVector2 &/*newSize*/, const IntVector2 &/*delta*/)
 {
     UpdateProgressBar();
 }

@@ -41,21 +41,21 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set size.
-    void SetSize(const Vector2& size);
+    void SetSize(const Vector2 &size);
     /// Set size.
     void SetSize(float width, float height);
     /// Set center.
-    void SetCenter(const Vector2& center);
+    void SetCenter(const Vector2 &center);
     /// Set center.
     void SetCenter(float x, float y);
     /// Set angle.
     void SetAngle(float angle);
 
     /// Return size.
-    const Vector2& GetSize() const { return size_; }
+    const Vector2 &GetSize() const { return size_; }
 
     /// Return center.
-    const Vector2& GetCenter() const { return center_; }
+    const Vector2 &GetCenter() const { return center_; }
 
     /// Return angle.
     float GetAngle() const { return angle_; }

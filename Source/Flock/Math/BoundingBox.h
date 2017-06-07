@@ -65,7 +65,7 @@ public:
     }
 
     /// Construct from minimum and maximum vectors.
-    BoundingBox(const Vector3& min, const Vector3& max) :
+    BoundingBox(const Vector3 &min, const Vector3 &max) :
         min_(min),
         max_(max)
     {
@@ -153,7 +153,7 @@ public:
     }
 
     /// Define from minimum and maximum vectors.
-    void Define(const Vector3& min, const Vector3& max)
+    void Define(const Vector3 &min, const Vector3 &max)
     {
         min_ = min;
         max_ = max;
@@ -167,13 +167,13 @@ public:
     }
 
     /// Define from a point.
-    void Define(const Vector3& point)
+    void Define(const Vector3 &point)
     {
         min_ = max_ = point;
     }
 
     /// Merge a point.
-    void Merge(const Vector3& point)
+    void Merge(const Vector3 &point)
     {
 #ifdef FLOCKSDK_SSE
         __m128 vec = _mm_set_ps(1.f, point.z_, point.y_, point.x_);
@@ -275,7 +275,7 @@ public:
     Rect Projected(const Matrix4& projection) const;
 
     /// Test if a point is inside.
-    Intersection IsInside(const Vector3& point) const
+    Intersection IsInside(const Vector3 &point) const
     {
         if (point.x_ < min_.x_ || point.x_ > max_.x_ || point.y_ < min_.y_ || point.y_ > max_.y_ ||
             point.z_ < min_.z_ || point.z_ > max_.z_)

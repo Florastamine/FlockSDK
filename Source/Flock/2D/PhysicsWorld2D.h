@@ -137,7 +137,7 @@ public:
     /// Set sub stepping.
     void SetSubStepping(bool enable);
     /// Set gravity.
-    void SetGravity(const Vector2& gravity);
+    void SetGravity(const Vector2 &gravity);
     /// Set auto clear forces.
     void SetAutoClearForces(bool enable);
     /// Set velocity iterations.
@@ -152,13 +152,13 @@ public:
     void AddDelayedWorldTransform(const DelayedWorldTransform2D& transform);
 
     /// Perform a physics world raycast and return all hits.
-    void Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2& startPoint, const Vector2& endPoint,
+    void Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2 &startPoint, const Vector2 &endPoint,
         unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world raycast and return the closest hit.
-    void RaycastSingle(PhysicsRaycastResult2D& result, const Vector2& startPoint, const Vector2& endPoint,
+    void RaycastSingle(PhysicsRaycastResult2D& result, const Vector2 &startPoint, const Vector2 &endPoint,
         unsigned collisionMask = M_MAX_UNSIGNED);
     /// Return rigid body at point.
-    RigidBody2D* GetRigidBody(const Vector2& point, unsigned collisionMask = M_MAX_UNSIGNED);
+    RigidBody2D* GetRigidBody(const Vector2 &point, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Return rigid body at screen point.
     RigidBody2D* GetRigidBody(int screenX, int screenY, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Return rigid bodies by a box query.
@@ -194,7 +194,7 @@ public:
     bool GetAutoClearForces() const;
 
     /// Return gravity.
-    const Vector2& GetGravity() const { return gravity_; }
+    const Vector2 &GetGravity() const { return gravity_; }
 
     /// Return velocity iterations.
     int GetVelocityIterations() const { return velocityIterations_; }

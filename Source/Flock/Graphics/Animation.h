@@ -125,13 +125,13 @@ public:
     virtual bool Save(Serializer& dest) const;
 
     /// Set animation name.
-    void SetAnimationName(const String& name);
+    void SetAnimationName(const String &name);
     /// Set animation length.
     void SetLength(float length);
     /// Create and return a track by name. If track by same name already exists, returns the existing.
-    AnimationTrack* CreateTrack(const String& name);
+    AnimationTrack* CreateTrack(const String &name);
     /// Remove a track by name. Return true if was found and removed successfully. This is unsafe if the animation is currently used in playback.
-    bool RemoveTrack(const String& name);
+    bool RemoveTrack(const String &name);
     /// Remove all tracks. This is unsafe if the animation is currently used in playback.
     void RemoveAllTracks();
     /// Set a trigger point at index.
@@ -139,7 +139,7 @@ public:
     /// Add a trigger point.
     void AddTrigger(const AnimationTriggerPoint& trigger);
     /// Add a trigger point.
-    void AddTrigger(float time, bool timeIsNormalized, const Variant& data);
+    void AddTrigger(float time, bool timeIsNormalized, const Variant &data);
     /// Remove a trigger point by index.
     void RemoveTrigger(unsigned index);
     /// Remove all trigger points.
@@ -147,10 +147,10 @@ public:
     /// Resize trigger point vector.
     void SetNumTriggers(unsigned num);
     /// Clone the animation.
-    SharedPtr<Animation> Clone(const String& cloneName = String::EMPTY) const;
+    SharedPtr<Animation> Clone(const String &cloneName = String::EMPTY) const;
 
     /// Return animation name.
-    const String& GetAnimationName() const { return animationName_; }
+    const String &GetAnimationName() const { return animationName_; }
 
     /// Return animation name hash.
     StringHash GetAnimationNameHash() const { return animationNameHash_; }
@@ -168,7 +168,7 @@ public:
     AnimationTrack *GetTrack(unsigned index);
 
     /// Return animation track by name.
-    AnimationTrack* GetTrack(const String& name);
+    AnimationTrack* GetTrack(const String &name);
     /// Return animation track by name hash.
     AnimationTrack* GetTrack(StringHash nameHash);
 

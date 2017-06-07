@@ -92,7 +92,7 @@ void Zone::RegisterObject(Context* context)
     FLOCKSDK_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, unsigned, DEFAULT_ZONEMASK, AM_DEFAULT);
 }
 
-void Zone::OnSetAttribute(const AttributeInfo& attr, const Variant& src)
+void Zone::OnSetAttribute(const AttributeInfo& attr, const Variant &src)
 {
     Serializable::OnSetAttribute(attr, src);
 
@@ -220,7 +220,7 @@ const Color& Zone::GetAmbientEndColor()
     return ambientEndColor_;
 }
 
-bool Zone::IsInside(const Vector3& point) const
+bool Zone::IsInside(const Vector3 &point) const
 {
     // Use an oriented bounding box test
     Vector3 localPoint(GetInverseWorldTransform() * point);

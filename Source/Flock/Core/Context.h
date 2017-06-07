@@ -93,7 +93,7 @@ public:
     /// Remove object attribute.
     void RemoveAttribute(StringHash objectType, const char* name);
     /// Update object attribute's default value.
-    void UpdateAttributeDefaultValue(StringHash objectType, const char* name, const Variant& defaultValue);
+    void UpdateAttributeDefaultValue(StringHash objectType, const char* name, const Variant &defaultValue);
     /// Return a preallocated map for event data. Used for optimization to avoid constant re-allocation of event data maps.
     VariantMap& GetEventDataMap();
     /// Initialises the specified SDL systems, if not already. Returns true if successful. This call must be matched with ReleaseSDL() when SDL functions are no longer required, even if this call fails.
@@ -122,19 +122,19 @@ public:
     /// Template version of copying base class attributes to derived class.
     template <class T, class U> void CopyBaseAttributes();
     /// Template version of updating an object attribute's default value.
-    template <class T> void UpdateAttributeDefaultValue(const char* name, const Variant& defaultValue);
+    template <class T> void UpdateAttributeDefaultValue(const char* name, const Variant &defaultValue);
 
     /// Return subsystem by type.
     Object* GetSubsystem(StringHash type) const;
 
     /// Return global variable based on key
-    const Variant& GetGlobalVar(StringHash key) const ;
+    const Variant &GetGlobalVar(StringHash key) const ;
 
     /// Return all global variables.
     const VariantMap& GetGlobalVars() const { return globalVars_; }
 
     /// Set global variable with the respective key and value
-    void SetGlobalVar(StringHash key, const Variant& value);
+    void SetGlobalVar(StringHash key, const Variant &value);
 
     /// Return all subsystems.
     const HashMap<StringHash, SharedPtr<Object> >& GetSubsystems() const { return subsystems_; }
@@ -152,7 +152,7 @@ public:
     EventHandler* GetEventHandler() const { return eventHandler_; }
 
     /// Return object type name from hash, or empty if unknown.
-    const String& GetTypeName(StringHash objectType) const;
+    const String &GetTypeName(StringHash objectType) const;
     /// Return a specific attribute description for an object, or null if not found.
     AttributeInfo* GetAttribute(StringHash objectType, const char* name);
     /// Template version of returning a subsystem.
@@ -259,7 +259,7 @@ template <class T> T* Context::GetSubsystem() const { return static_cast<T*>(Get
 
 template <class T> AttributeInfo* Context::GetAttribute(const char* name) { return GetAttribute(T::GetTypeStatic(), name); }
 
-template <class T> void Context::UpdateAttributeDefaultValue(const char* name, const Variant& defaultValue)
+template <class T> void Context::UpdateAttributeDefaultValue(const char* name, const Variant &defaultValue)
 {
     UpdateAttributeDefaultValue(T::GetTypeStatic(), name, defaultValue);
 }

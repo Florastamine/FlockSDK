@@ -68,7 +68,7 @@ void CollisionCircle2D::SetRadius(float radius)
     MarkNetworkUpdate();
 }
 
-void CollisionCircle2D::SetCenter(const Vector2& center)
+void CollisionCircle2D::SetCenter(const Vector2 &center)
 {
     if (center == center_)
         return;

@@ -48,7 +48,7 @@ public:
     TileMapLayerType2D GetType() const { return type_; }
 
     /// Return name.
-    const String& GetName() const { return name_; }
+    const String &GetName() const { return name_; }
 
     /// Return width.
     int GetWidth() const { return width_; }
@@ -60,9 +60,9 @@ public:
     bool IsVisible() const { return visible_; }
 
     /// Return has property (use for script).
-    bool HasProperty(const String& name) const;
+    bool HasProperty(const String &name) const;
     /// Return property value (use for script).
-    const String& GetProperty(const String& name) const;
+    const String &GetProperty(const String &name) const;
 
 
 protected:
@@ -133,10 +133,10 @@ public:
     bool Load(const XMLElement& element, const TileMapInfo2D& info);
 
     /// Return position.
-    const Vector2& GetPosition() const { return position_; }
+    const Vector2 &GetPosition() const { return position_; }
 
     /// Return source.
-    const String& GetSource() const { return source_; }
+    const String &GetSource() const { return source_; }
 
     /// Return sprite.
     Sprite2D* GetSprite() const;
@@ -194,7 +194,7 @@ public:
 
 private:
     /// Load TSX file.
-    SharedPtr<XMLFile> LoadTSXFile(const String& source);
+    SharedPtr<XMLFile> LoadTSXFile(const String &source);
     /// Load tile set.
     bool LoadTileSet(const XMLElement& element);
 

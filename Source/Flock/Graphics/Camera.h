@@ -65,7 +65,7 @@ public:
     /// Set orthographic mode view uniform size.
     void SetOrthoSize(float orthoSize);
     /// Set orthographic mode view non-uniform size. Disables the auto aspect ratio -mode.
-    void SetOrthoSize(const Vector2& orthoSize);
+    void SetOrthoSize(const Vector2 &orthoSize);
     /// Set aspect ratio manually. Disables the auto aspect ratio -mode.
     void SetAspectRatio(float aspectRatio);
     /// Set polygon fill mode to use when rendering a scene.
@@ -83,7 +83,7 @@ public:
     /// Set automatic aspect ratio based on viewport dimensions. Enabled by default.
     void SetAutoAspectRatio(bool enable);
     /// Set projection offset. It needs to be calculated as (offset in pixels) / (viewport dimensions.)
-    void SetProjectionOffset(const Vector2& offset);
+    void SetProjectionOffset(const Vector2 &offset);
     /// Set reflection mode.
     void SetUseReflection(bool enable);
     /// Set reflection plane in world space for reflection mode.
@@ -145,7 +145,7 @@ public:
     /// Return view matrix.
     const Matrix3x4& GetView() const;
     /// Return frustum near and far sizes.
-    void GetFrustumSize(Vector3& near, Vector3& far) const;
+    void GetFrustumSize(Vector3 &near, Vector3 &far) const;
     /// Return half view size.
     float GetHalfViewSize() const;
     /// Return frustum split by custom near and far clip distances.
@@ -157,14 +157,14 @@ public:
     /// Return ray corresponding to normalized screen coordinates (0 - 1), with origin on the near clip plane.
     Ray GetScreenRay(float x, float y) const;
     /// Convert a world space point to normalized screen coordinates (0 - 1).
-    Vector2 WorldToScreenPoint(const Vector3& worldPos) const;
+    Vector2 WorldToScreenPoint(const Vector3 &worldPos) const;
     /// Convert normalized screen coordinates (0 - 1) and distance along view Z axis (in Z coordinate) to a world space point. The distance can not be closer than the near clip plane.
     /** Note that a HitDistance() from the camera screen ray is not the same as distance along the view Z axis, as under a perspective projection the ray is likely to not be Z-aligned.
      */
-    Vector3 ScreenToWorldPoint(const Vector3& screenPos) const;
+    Vector3 ScreenToWorldPoint(const Vector3 &screenPos) const;
 
     /// Return projection offset.
-    const Vector2& GetProjectionOffset() const { return projectionOffset_; }
+    const Vector2 &GetProjectionOffset() const { return projectionOffset_; }
 
     /// Return whether is using reflection.
     bool GetUseReflection() const { return useReflection_; }
@@ -185,13 +185,13 @@ public:
     bool GetReverseCulling() const { return flipVertical_ ^ useReflection_; }
 
     /// Return distance to position. In orthographic mode uses only Z coordinate.
-    float GetDistance(const Vector3& worldPos) const;
+    float GetDistance(const Vector3 &worldPos) const;
     /// Return squared distance to position. In orthographic mode uses only Z coordinate.
-    float GetDistanceSquared(const Vector3& worldPos) const;
+    float GetDistanceSquared(const Vector3 &worldPos) const;
     /// Return a scene node's LOD scaled distance.
     float GetLodDistance(float distance, float scale, float bias) const;
     /// Return a world rotation for facing a camera on certain axes based on the existing world rotation.
-    Quaternion GetFaceCameraRotation(const Vector3& position, const Quaternion& rotation, FaceCameraMode mode, float minAngle = 0.0f);
+    Quaternion GetFaceCameraRotation(const Vector3 &position, const Quaternion& rotation, FaceCameraMode mode, float minAngle = 0.0f);
     /// Get effective world transform for matrix and frustum calculations including reflection but excluding node scaling.
     Matrix3x4 GetEffectiveWorldTransform() const;
     /// Return if projection parameters are valid for rendering and raycasting.
@@ -202,11 +202,11 @@ public:
     /// Set orthographic size attribute without forcing the aspect ratio.
     void SetOrthoSizeAttr(float orthoSize);
     /// Set reflection plane attribute.
-    void SetReflectionPlaneAttr(const Vector4& value);
+    void SetReflectionPlaneAttr(const Vector4 &value);
     /// Return reflection plane attribute.
     Vector4 GetReflectionPlaneAttr() const;
     /// Set clipping plane attribute.
-    void SetClipPlaneAttr(const Vector4& value);
+    void SetClipPlaneAttr(const Vector4 &value);
     /// Return clipping plane attribute.
     Vector4 GetClipPlaneAttr() const;
 

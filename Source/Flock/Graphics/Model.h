@@ -138,7 +138,7 @@ public:
     /// Set geometry.
     bool SetGeometry(unsigned index, unsigned lodLevel, Geometry* geometry);
     /// Set geometry center.
-    bool SetGeometryCenter(unsigned index, const Vector3& center);
+    bool SetGeometryCenter(unsigned index, const Vector3 &center);
     /// Set skeleton.
     void SetSkeleton(const Skeleton& skeleton);
     /// Set bone mappings when model has more bones than the skinning shader can handle.
@@ -146,7 +146,7 @@ public:
     /// Set vertex morphs.
     void SetMorphs(const Vector<ModelMorph>& morphs);
     /// Clone the model. The geometry data is deep-copied and can be modified in the clone without affecting the original.
-    SharedPtr<Model> Clone(const String& cloneName = String::EMPTY) const;
+    SharedPtr<Model> Clone(const String &cloneName = String::EMPTY) const;
 
     /// Return bounding box.
     const BoundingBox& GetBoundingBox() const { return boundingBox_; }
@@ -176,7 +176,7 @@ public:
     Geometry* GetGeometry(unsigned index, unsigned lodLevel) const;
 
     /// Return geometry center by index.
-    const Vector3& GetGeometryCenter(unsigned index) const
+    const Vector3 &GetGeometryCenter(unsigned index) const
     {
         return index < geometryCenters_.Size() ? geometryCenters_[index] : Vector3::ZERO;
     }
@@ -193,7 +193,7 @@ public:
     /// Return vertex morph by index.
     const ModelMorph* GetMorph(unsigned index) const;
     /// Return vertex morph by name.
-    const ModelMorph* GetMorph(const String& name) const;
+    const ModelMorph* GetMorph(const String &name) const;
     /// Return vertex morph by name hash.
     const ModelMorph* GetMorph(StringHash nameHash) const;
     /// Return vertex buffer morph range start.

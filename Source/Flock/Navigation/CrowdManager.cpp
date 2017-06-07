@@ -191,7 +191,7 @@ void CrowdManager::DrawDebugGeometry(bool depthTest)
     }
 }
 
-void CrowdManager::SetCrowdTarget(const Vector3& position, Node* node)
+void CrowdManager::SetCrowdTarget(const Vector3 &position, Node* node)
 {
     if (!crowd_)
         return;
@@ -219,7 +219,7 @@ void CrowdManager::SetCrowdTarget(const Vector3& position, Node* node)
     }
 }
 
-void CrowdManager::SetCrowdVelocity(const Vector3& velocity, Node* node)
+void CrowdManager::SetCrowdVelocity(const Vector3 &velocity, Node* node)
 {
     if (!crowd_)
         return;
@@ -283,7 +283,7 @@ void CrowdManager::SetNavigationMesh(NavigationMesh* navMesh)
     }
 }
 
-void CrowdManager::SetQueryFilterTypesAttr(const VariantVector& value)
+void CrowdManager::SetQueryFilterTypesAttr(const VariantVector &value)
 {
     if (!crowd_)
         return;
@@ -352,7 +352,7 @@ void CrowdManager::SetAreaCost(unsigned queryFilterType, unsigned areaID, float 
     }
 }
 
-void CrowdManager::SetObstacleAvoidanceTypesAttr(const VariantVector& value)
+void CrowdManager::SetObstacleAvoidanceTypesAttr(const VariantVector &value)
 {
     if (!crowd_)
         return;
@@ -393,7 +393,7 @@ void CrowdManager::SetObstacleAvoidanceParams(unsigned obstacleAvoidanceType, co
     }
 }
 
-Vector3 CrowdManager::FindNearestPoint(const Vector3& point, int queryFilterType, dtPolyRef* nearestRef)
+Vector3 CrowdManager::FindNearestPoint(const Vector3 &point, int queryFilterType, dtPolyRef* nearestRef)
 {
     if (nearestRef)
         *nearestRef = 0;
@@ -401,14 +401,14 @@ Vector3 CrowdManager::FindNearestPoint(const Vector3& point, int queryFilterType
         navigationMesh_->FindNearestPoint(point, Vector3(crowd_->getQueryExtents()), crowd_->getFilter(queryFilterType), nearestRef) : point;
 }
 
-Vector3 CrowdManager::MoveAlongSurface(const Vector3& start, const Vector3& end, int queryFilterType, int maxVisited)
+Vector3 CrowdManager::MoveAlongSurface(const Vector3 &start, const Vector3 &end, int queryFilterType, int maxVisited)
 {
     return crowd_ && navigationMesh_ ?
         navigationMesh_->MoveAlongSurface(start, end, Vector3(crowd_->getQueryExtents()), maxVisited, crowd_->getFilter(queryFilterType)) :
         end;
 }
 
-void CrowdManager::FindPath(PODVector<Vector3>& dest, const Vector3& start, const Vector3& end, int queryFilterType)
+void CrowdManager::FindPath(PODVector<Vector3>& dest, const Vector3 &start, const Vector3 &end, int queryFilterType)
 {
     if (crowd_ && navigationMesh_)
         navigationMesh_->FindPath(dest, start, end, Vector3(crowd_->getQueryExtents()), crowd_->getFilter(queryFilterType));
@@ -422,7 +422,7 @@ Vector3 CrowdManager::GetRandomPoint(int queryFilterType, dtPolyRef* randomRef)
         Vector3::ZERO;
 }
 
-Vector3 CrowdManager::GetRandomPointInCircle(const Vector3& center, float radius, int queryFilterType, dtPolyRef* randomRef)
+Vector3 CrowdManager::GetRandomPointInCircle(const Vector3 &center, float radius, int queryFilterType, dtPolyRef* randomRef)
 {
     if (randomRef)
         *randomRef = 0;
@@ -431,7 +431,7 @@ Vector3 CrowdManager::GetRandomPointInCircle(const Vector3& center, float radius
             crowd_->getFilter(queryFilterType), randomRef) : center;
 }
 
-float CrowdManager::GetDistanceToWall(const Vector3& point, float radius, int queryFilterType, Vector3* hitPos, Vector3* hitNormal)
+float CrowdManager::GetDistanceToWall(const Vector3 &point, float radius, int queryFilterType, Vector3* hitPos, Vector3* hitNormal)
 {
     if (hitPos)
         *hitPos = Vector3::ZERO;
@@ -442,7 +442,7 @@ float CrowdManager::GetDistanceToWall(const Vector3& point, float radius, int qu
             hitPos, hitNormal) : radius;
 }
 
-Vector3 CrowdManager::Raycast(const Vector3& start, const Vector3& end, int queryFilterType, Vector3* hitNormal)
+Vector3 CrowdManager::Raycast(const Vector3 &start, const Vector3 &end, int queryFilterType, Vector3* hitNormal)
 {
     if (hitNormal)
         *hitNormal = Vector3::DOWN;
@@ -618,7 +618,7 @@ bool CrowdManager::CreateCrowd()
     return true;
 }
 
-int CrowdManager::AddAgent(CrowdAgent* agent, const Vector3& pos)
+int CrowdManager::AddAgent(CrowdAgent* agent, const Vector3 &pos)
 {
     if (!crowd_ || !navigationMesh_ || !agent)
         return -1;
