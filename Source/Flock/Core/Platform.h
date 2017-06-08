@@ -90,5 +90,7 @@ FLOCKSDK_API String GetCPUArchitecture();
 FLOCKSDK_API String GetCPUExtensions(); 
 /// Return the vendor ID of the current CPU. 
 FLOCKSDK_API String GetCPUVendorID(); 
+/// Return the brand name of the CPU. 
+FLOCKSDK_API String GetCPUBrandName();
 
 }

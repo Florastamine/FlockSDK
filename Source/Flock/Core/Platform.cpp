@@ -813,6 +813,24 @@ String GetCPUVendorID()
     return s;
 }
 
+#define __CPU_NAME_COPY_REGISTERS_DATA__(slot, id, string) \
+    __GetCPUID__(slot, id); \
+    for (auto i = 0u; i < 4; ++i) \
+        string += String((const char *) &(slot[i]), 4)
+
+String GetCPUBrandName()
+{
+    int c[4];
+    String s; 
+
+    __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000002, s);
+    __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000003, s);
+    
+    __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000004, s);
+
+    return s;
+}
+
 String GetCPUExtensions()
 {
     String s(String::EMPTY); 

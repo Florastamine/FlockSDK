@@ -24,3 +24,4 @@ bool GetCPULittleEndian();
 unsigned long long GetCPUClock();
 String GetCPUExtensions();
 String GetCPUVendorID(); 
+String GetCPUBrandName(); 
