@@ -29,8 +29,8 @@
 
 #include "Downpour.h"
 
-static inline constexpr const char *GetRawScriptLocation() { return("pfiles/core-main.lua"); }
-static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/core-main.dcs"); }
+static inline constexpr const char *GetRawScriptLocation() { return("pfiles/main.lua"); }
+static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/main.dcs"); }
 
 DownpourBase::DownpourBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
 
