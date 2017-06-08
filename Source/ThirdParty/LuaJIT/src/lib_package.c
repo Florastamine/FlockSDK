@@ -32,10 +32,6 @@
 #define SYMPREFIX_CF		"luaopen_%s"
 #define SYMPREFIX_BC		"luaJIT_BC_%s" 
 
-#if defined(DOWNPOUR_PATCH) 
-  #include <stdio.h> 
-#endif 
-
 #if LJ_TARGET_DLOPEN 
 
 #include <dlfcn.h> 
@@ -364,7 +360,6 @@ static char *dp_strcut(const char *str)
     char *rcut = (char *) malloc(sizeof(char) * (str_len - 2));
     memcpy(&rcut[0], &str[0], str_len - 3); 
     rcut[strlen(rcut) - 1] = 0; 
-    printf("[DOWNPOUR_PATCH] -- dp_strcut(): str = [%s]; strlen(str) = [%i]; rcut = [%s]; strlen(rcut) = [%i]\n", str, strlen(str), rcut, strlen(rcut));
 
     return (char *) rcut; 
   } 
@@ -391,9 +386,6 @@ static int lj_cf_package_loader_c(lua_State *L)
   if (filename == NULL) return 1;  /* library not found in this path */ 
   #if defined(DOWNPOUR_PATCH) 
     char *p = dp_get_library_without_arch(name); 
-
-    printf("[DOWNPOUR_PATCH] -- Full library name received through lj_cf_package_loader_c(): %s\n", name);
-    printf("[DOWNPOUR_PATCH] -- Stripped library name: %s\n", p);
     if (ll_loadfunc(L, filename, p, 0) != 0) { 
   #endif 
   #if defined(DOWNPOUR_PATCH) 
