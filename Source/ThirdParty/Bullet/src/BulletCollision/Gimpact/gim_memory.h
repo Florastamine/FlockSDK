@@ -32,7 +32,7 @@ email: projectileman@yahoo.com
 -----------------------------------------------------------------------------
 */
 
-// Modified by Yao Wei Tjong for Flock
+// Modified by Yao Wei Tjong for Urho3D
 
 #include "gim_math.h"
 #include <string.h>
@@ -117,7 +117,7 @@ void * gim_realloc(void *ptr, size_t oldsize, size_t newsize);
 void gim_free(void *ptr);
 
 
-// Flock - allow to disable SIMD, allow MinGW to use SIMD
+// Urho3D - allow to disable SIMD, allow MinGW to use SIMD
 #if (!defined(_M_IX86_FP) || _M_IX86_FP || defined(__SSE__)) && defined(_WIN32) && !defined(__CYGWIN__)
     #define GIM_SIMD_MEMORY 1
 #endif
