@@ -726,6 +726,19 @@ int String::Compare(const char* str, bool caseSensitive) const
     return Compare(CString(), str, caseSensitive);
 }
 
+unsigned String::FindFirstOf(const String &s, unsigned offset)
+{
+  if (offset >= Length())
+    return -1; 
+  
+  for (auto i = offset; i < Length(); ++i)
+    for (auto it = s.Begin(); it != s.End(); ++it)
+      if ((*it) == At(i))
+        return i;
+  
+  return -1;
+}
+
 void String::SetUTF8FromLatin1(const char* str)
 {
     char temp[7];
