@@ -49,6 +49,7 @@
     #include <sys/utsname.h>
     #include <fstream> 
     #include <string> 
+    #include <clocale> 
 #elif defined(__APPLE__)
     #include <sys/sysctl.h>
     #include <SystemConfiguration/SystemConfiguration.h> // For the detection functions inside GetLoginName(). 
@@ -64,6 +65,21 @@
 
 #if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
     #include <emscripten/threading.h>
+#endif 
+
+#if defined(_WIN32)
+    struct LocaleInfo {
+        const char *name;
+        unsigned    lang;
+        unsigned    sublang; 
+
+        LocaleInfo(const char *name = "", unsigned lang = 0, unsigned sublang = 0) :
+            name(name), 
+            lang(lang), 
+            sublang(sublang) {} 
+    };
+
+    static FlockSDK::Vector<LocaleInfo> windows_locale; 
 #endif
 
 #if defined(__i386__)
@@ -825,7 +841,6 @@ String GetCPUBrandName()
 
     __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000002, s);
     __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000003, s);
-    
     __CPU_NAME_COPY_REGISTERS_DATA__(c, 0x80000004, s);
 
     return s;
@@ -907,6 +922,177 @@ String GetCPUExtensions()
 
     s.Erase(s.Length() - 1);
     return s;
+}
+
+String GetLocale()
+{
+#if defined(__linux__) && !defined(__ANDROID__) 
+    std::setlocale(LC_ALL, "");
+    return std::setlocale(LC_ALL, NULL); 
+#elif defined(_WIN32)
+    if (windows_locale.Empty())
+    {
+        windows_locale.Push(LocaleInfo("ar", LANG_ARABIC, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ar_AE", LANG_ARABIC, SUBLANG_ARABIC_UAE));
+        windows_locale.Push(LocaleInfo("ar_BH", LANG_ARABIC, SUBLANG_ARABIC_BAHRAIN));
+        windows_locale.Push(LocaleInfo("ar_DZ", LANG_ARABIC, SUBLANG_ARABIC_ALGERIA));
+        windows_locale.Push(LocaleInfo("ar_EG", LANG_ARABIC, SUBLANG_ARABIC_EGYPT));
+        windows_locale.Push(LocaleInfo("ar_IQ", LANG_ARABIC, SUBLANG_ARABIC_IRAQ));
+        windows_locale.Push(LocaleInfo("ar_JO", LANG_ARABIC, SUBLANG_ARABIC_JORDAN));
+        windows_locale.Push(LocaleInfo("ar_KW", LANG_ARABIC, SUBLANG_ARABIC_KUWAIT));
+        windows_locale.Push(LocaleInfo("ar_LB", LANG_ARABIC, SUBLANG_ARABIC_LEBANON));
+        windows_locale.Push(LocaleInfo("ar_LY", LANG_ARABIC, SUBLANG_ARABIC_LIBYA));
+        windows_locale.Push(LocaleInfo("ar_MA", LANG_ARABIC, SUBLANG_ARABIC_MOROCCO));
+        windows_locale.Push(LocaleInfo("ar_OM", LANG_ARABIC, SUBLANG_ARABIC_OMAN));
+        windows_locale.Push(LocaleInfo("ar_QA", LANG_ARABIC, SUBLANG_ARABIC_QATAR));
+        windows_locale.Push(LocaleInfo("ar_SA", LANG_ARABIC, SUBLANG_ARABIC_SAUDI_ARABIA));
+        windows_locale.Push(LocaleInfo("ar_SY", LANG_ARABIC, SUBLANG_ARABIC_SYRIA));
+        windows_locale.Push(LocaleInfo("ar_TN", LANG_ARABIC, SUBLANG_ARABIC_TUNISIA));
+        windows_locale.Push(LocaleInfo("ar_YE", LANG_ARABIC, SUBLANG_ARABIC_YEMEN));
+        windows_locale.Push(LocaleInfo("be", LANG_BELARUSIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("be_BY", LANG_BELARUSIAN, SUBLANG_BELARUSIAN_BELARUS));
+        windows_locale.Push(LocaleInfo("bg", LANG_BULGARIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("bg_BG", LANG_BULGARIAN, SUBLANG_BULGARIAN_BULGARIA));
+        windows_locale.Push(LocaleInfo("ca", LANG_CATALAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ca_ES", LANG_CATALAN, SUBLANG_CATALAN_CATALAN));
+        windows_locale.Push(LocaleInfo("cs", LANG_CZECH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("cs_CZ", LANG_CZECH, SUBLANG_CZECH_CZECH_REPUBLIC));
+        windows_locale.Push(LocaleInfo("da", LANG_DANISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("da_DK", LANG_DANISH, SUBLANG_DANISH_DENMARK));
+        windows_locale.Push(LocaleInfo("de", LANG_GERMAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("de_AT", LANG_GERMAN, SUBLANG_GERMAN_AUSTRIAN));
+        windows_locale.Push(LocaleInfo("de_CH", LANG_GERMAN, SUBLANG_GERMAN_SWISS));
+        windows_locale.Push(LocaleInfo("de_DE", LANG_GERMAN, SUBLANG_GERMAN));
+        windows_locale.Push(LocaleInfo("de_LU", LANG_GERMAN, SUBLANG_GERMAN_LUXEMBOURG));
+        windows_locale.Push(LocaleInfo("el", LANG_GREEK, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("el_GR", LANG_GREEK, SUBLANG_GREEK_GREECE));
+        windows_locale.Push(LocaleInfo("en", LANG_ENGLISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("en_AU", LANG_ENGLISH, SUBLANG_ENGLISH_AUS));
+        windows_locale.Push(LocaleInfo("en_CA", LANG_ENGLISH, SUBLANG_ENGLISH_CAN));
+        windows_locale.Push(LocaleInfo("en_GB", LANG_ENGLISH, SUBLANG_ENGLISH_UK));
+        windows_locale.Push(LocaleInfo("en_IN", LANG_ENGLISH, SUBLANG_ENGLISH_INDIA));
+        windows_locale.Push(LocaleInfo("en_NZ", LANG_ENGLISH, SUBLANG_ENGLISH_NZ));
+        windows_locale.Push(LocaleInfo("en_PH", LANG_ENGLISH, SUBLANG_ENGLISH_PHILIPPINES));
+        windows_locale.Push(LocaleInfo("en_SG", LANG_ENGLISH, SUBLANG_ENGLISH_SINGAPORE));
+        windows_locale.Push(LocaleInfo("en_US", LANG_ENGLISH, SUBLANG_ENGLISH_US));
+        windows_locale.Push(LocaleInfo("en_ZA", LANG_ENGLISH, SUBLANG_ENGLISH_SOUTH_AFRICA));
+        windows_locale.Push(LocaleInfo("es", LANG_SPANISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("es_AR", LANG_SPANISH, SUBLANG_SPANISH_ARGENTINA));
+        windows_locale.Push(LocaleInfo("es_BO", LANG_SPANISH, SUBLANG_SPANISH_BOLIVIA));
+        windows_locale.Push(LocaleInfo("es_CL", LANG_SPANISH, SUBLANG_SPANISH_CHILE));
+        windows_locale.Push(LocaleInfo("es_CO", LANG_SPANISH, SUBLANG_SPANISH_COLOMBIA));
+        windows_locale.Push(LocaleInfo("es_CR", LANG_SPANISH, SUBLANG_SPANISH_COSTA_RICA));
+        windows_locale.Push(LocaleInfo("es_DO", LANG_SPANISH, SUBLANG_SPANISH_DOMINICAN_REPUBLIC));
+        windows_locale.Push(LocaleInfo("es_EC", LANG_SPANISH, SUBLANG_SPANISH_ECUADOR));
+        windows_locale.Push(LocaleInfo("es_ES", LANG_SPANISH, SUBLANG_SPANISH));
+        windows_locale.Push(LocaleInfo("es_GT", LANG_SPANISH, SUBLANG_SPANISH_GUATEMALA));
+        windows_locale.Push(LocaleInfo("es_HN", LANG_SPANISH, SUBLANG_SPANISH_HONDURAS));
+        windows_locale.Push(LocaleInfo("es_MX", LANG_SPANISH, SUBLANG_SPANISH_MEXICAN));
+        windows_locale.Push(LocaleInfo("es_NI", LANG_SPANISH, SUBLANG_SPANISH_NICARAGUA));
+        windows_locale.Push(LocaleInfo("es_PA", LANG_SPANISH, SUBLANG_SPANISH_PANAMA));
+        windows_locale.Push(LocaleInfo("es_PE", LANG_SPANISH, SUBLANG_SPANISH_PERU));
+        windows_locale.Push(LocaleInfo("es_PR", LANG_SPANISH, SUBLANG_SPANISH_PUERTO_RICO));
+        windows_locale.Push(LocaleInfo("es_PY", LANG_SPANISH, SUBLANG_SPANISH_PARAGUAY));
+        windows_locale.Push(LocaleInfo("es_SV", LANG_SPANISH, SUBLANG_SPANISH_EL_SALVADOR));
+        windows_locale.Push(LocaleInfo("es_US", LANG_SPANISH, SUBLANG_SPANISH_US));
+        windows_locale.Push(LocaleInfo("es_UY", LANG_SPANISH, SUBLANG_SPANISH_URUGUAY));
+        windows_locale.Push(LocaleInfo("es_VE", LANG_SPANISH, SUBLANG_SPANISH_VENEZUELA));
+        windows_locale.Push(LocaleInfo("et", LANG_ESTONIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("et_EE", LANG_ESTONIAN, SUBLANG_ESTONIAN_ESTONIA));
+        windows_locale.Push(LocaleInfo("fi", LANG_FINNISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("fi_FI", LANG_FINNISH, SUBLANG_FINNISH_FINLAND));
+        windows_locale.Push(LocaleInfo("fr", LANG_FRENCH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("fr_BE", LANG_FRENCH, SUBLANG_FRENCH_BELGIAN));
+        windows_locale.Push(LocaleInfo("fr_CA", LANG_FRENCH, SUBLANG_FRENCH_CANADIAN));
+        windows_locale.Push(LocaleInfo("fr_CH", LANG_FRENCH, SUBLANG_FRENCH_SWISS));
+        windows_locale.Push(LocaleInfo("fr_FR", LANG_FRENCH, SUBLANG_FRENCH));
+        windows_locale.Push(LocaleInfo("fr_LU", LANG_FRENCH, SUBLANG_FRENCH_LUXEMBOURG));
+        windows_locale.Push(LocaleInfo("ga", LANG_IRISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ga_IE", LANG_IRISH, SUBLANG_IRISH_IRELAND));
+        windows_locale.Push(LocaleInfo("hi", LANG_HINDI, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("hi_IN", LANG_HINDI, SUBLANG_HINDI_INDIA));
+        windows_locale.Push(LocaleInfo("hr", LANG_CROATIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("hr_HR", LANG_CROATIAN, SUBLANG_CROATIAN_CROATIA));
+        windows_locale.Push(LocaleInfo("hu", LANG_HUNGARIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("hu_HU", LANG_HUNGARIAN, SUBLANG_HUNGARIAN_HUNGARY));
+        windows_locale.Push(LocaleInfo("in", LANG_ARMENIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("in_ID", LANG_INDONESIAN, SUBLANG_INDONESIAN_INDONESIA));
+        windows_locale.Push(LocaleInfo("is", LANG_ICELANDIC, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("is_IS", LANG_ICELANDIC, SUBLANG_ICELANDIC_ICELAND));
+        windows_locale.Push(LocaleInfo("it", LANG_ITALIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("it_CH", LANG_ITALIAN, SUBLANG_ITALIAN_SWISS));
+        windows_locale.Push(LocaleInfo("it_IT", LANG_ITALIAN, SUBLANG_ITALIAN));
+        windows_locale.Push(LocaleInfo("iw", LANG_HEBREW, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("iw_IL", LANG_HEBREW, SUBLANG_HEBREW_ISRAEL));
+        windows_locale.Push(LocaleInfo("ja", LANG_JAPANESE, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ja_JP", LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN));
+        windows_locale.Push(LocaleInfo("ko", LANG_KOREAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ko_KR", LANG_KOREAN, SUBLANG_KOREAN));
+        windows_locale.Push(LocaleInfo("lt", LANG_LITHUANIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("lv", LANG_LATVIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("lv_LV", LANG_LATVIAN, SUBLANG_LATVIAN_LATVIA));
+        windows_locale.Push(LocaleInfo("mk", LANG_MACEDONIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("mk_MK", LANG_MACEDONIAN, SUBLANG_MACEDONIAN_MACEDONIA));
+        windows_locale.Push(LocaleInfo("ms", LANG_MALAY, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ms_MY", LANG_MALAY, SUBLANG_MALAY_MALAYSIA));
+        windows_locale.Push(LocaleInfo("mt", LANG_MALTESE, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("mt_MT", LANG_MALTESE, SUBLANG_MALTESE_MALTA));
+        windows_locale.Push(LocaleInfo("nl", LANG_DUTCH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("nl_BE", LANG_DUTCH, SUBLANG_DUTCH_BELGIAN));
+        windows_locale.Push(LocaleInfo("nl_NL", LANG_DUTCH, SUBLANG_DUTCH));
+        windows_locale.Push(LocaleInfo("no", LANG_NORWEGIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("no_NO", LANG_NORWEGIAN, SUBLANG_NORWEGIAN_BOKMAL));
+        windows_locale.Push(LocaleInfo("no_NO_NY", LANG_NORWEGIAN, SUBLANG_NORWEGIAN_NYNORSK));
+        windows_locale.Push(LocaleInfo("pl", LANG_POLISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("pl_PL", LANG_POLISH, SUBLANG_POLISH_POLAND));
+        windows_locale.Push(LocaleInfo("pt", LANG_PORTUGUESE, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("pt_BR", LANG_PORTUGUESE, SUBLANG_PORTUGUESE_BRAZILIAN));
+        windows_locale.Push(LocaleInfo("pt_PT", LANG_PORTUGUESE, SUBLANG_PORTUGUESE));
+        windows_locale.Push(LocaleInfo("ro", LANG_ROMANIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ro_RO", LANG_ROMANIAN, SUBLANG_ROMANIAN_ROMANIA));
+        windows_locale.Push(LocaleInfo("ru", LANG_RUSSIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("ru_RU", LANG_RUSSIAN, SUBLANG_RUSSIAN_RUSSIA));
+        windows_locale.Push(LocaleInfo("sk", LANG_SLOVAK, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("sk_SK", LANG_SLOVAK, SUBLANG_SLOVAK_SLOVAKIA));
+        windows_locale.Push(LocaleInfo("sl", LANG_SLOVENIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("sl_SI", LANG_SLOVENIAN, SUBLANG_SLOVENIAN_SLOVENIA));
+        windows_locale.Push(LocaleInfo("sq", LANG_ALBANIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("sq_AL", LANG_ALBANIAN, SUBLANG_ALBANIAN_ALBANIA));
+        windows_locale.Push(LocaleInfo("sr", LANG_SERBIAN_NEUTRAL, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("sv", LANG_SWEDISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("sv_SE", LANG_SWEDISH, SUBLANG_SWEDISH));
+        windows_locale.Push(LocaleInfo("th", LANG_THAI, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("th_TH", LANG_THAI, SUBLANG_THAI_THAILAND));
+        windows_locale.Push(LocaleInfo("tr", LANG_TURKISH, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("tr_TR", LANG_TURKISH, SUBLANG_TURKISH_TURKEY));
+        windows_locale.Push(LocaleInfo("uk", LANG_UKRAINIAN, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("uk_UA", LANG_UKRAINIAN, SUBLANG_UKRAINIAN_UKRAINE));
+        windows_locale.Push(LocaleInfo("vi", LANG_VIETNAMESE, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("vi_VN", LANG_VIETNAMESE, SUBLANG_VIETNAMESE_VIETNAM));
+        windows_locale.Push(LocaleInfo("zh", LANG_CHINESE, SUBLANG_NEUTRAL));
+        windows_locale.Push(LocaleInfo("zh_CN", LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED));
+        windows_locale.Push(LocaleInfo("zh_HK", LANG_CHINESE, SUBLANG_CHINESE_HONGKONG));
+        windows_locale.Push(LocaleInfo("zh_SG", LANG_CHINESE, SUBLANG_CHINESE_SINGAPORE));
+    }
+
+    LANGID id = GetUserDefaultUILanguage();
+    const auto bits    = ((1 << 9) - 1); 
+    const auto lang    = id & bits;
+    const auto sublang = id & (~bits);
+          auto neutral = String();
+
+    for (auto it = windows_locale.Begin(); it != windows_locale.End(); ++it)
+    {
+        if (it->lang == lang && it->sublang == SUBLANG_NEUTRAL)
+            neutral = String(it->name); 
+        if (it->lang == lang && it->sublang == sublang)
+            return it->name; 
+    }
+
+    if (!neutral.Empty())
+        return neutral; 
+#endif
+    return "(?)"; 
 }
 
 }

@@ -92,5 +92,6 @@ FLOCKSDK_API String GetCPUExtensions();
 FLOCKSDK_API String GetCPUVendorID(); 
 /// Return the brand name of the CPU. 
 FLOCKSDK_API String GetCPUBrandName();
-
+/// Retrieve the system's current locale. 
+FLOCKSDK_API String GetLocale();
 }
