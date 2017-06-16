@@ -1112,7 +1112,12 @@ String GetClipboard()
 #if defined(__linux__) && !defined(__ANDROID__) 
 #elif defined(_WIN32)
     auto s = String::EMPTY; 
-    if (OpenClipboard(NULL))
+    HWND hwnd = GetActiveWindow();
+
+    while (NULL != GetParent(hwnd))
+        hwnd = GetParent(hwnd);
+
+    if (OpenClipboard(hwnd))
     {
         if (IsClipboardFormatAvailable(CF_UNICODETEXT))
         {
