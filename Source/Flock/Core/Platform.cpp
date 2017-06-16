@@ -1114,7 +1114,7 @@ String GetClipboard()
     auto s = String::EMPTY; 
     HWND hwnd = GetActiveWindow();
 
-    while (NULL != GetParent(hwnd))
+    while (NULL != hwnd)
         hwnd = GetParent(hwnd);
 
     if (OpenClipboard(hwnd))
