@@ -27,6 +27,7 @@
 #include "../IO/FileSystem.h"
 
 #include <cstdio>
+#include <cstdlib> 
 #include <fcntl.h>
 
 #ifdef __APPLE__
@@ -1093,6 +1094,17 @@ String GetLocale()
         return neutral; 
 #endif
     return "(?)"; 
+}
+
+String GetEnvVar(const String &var)
+{
+    auto s = std::getenv(var.CString());
+    return s != NULL ? s : String::EMPTY; 
+}
+
+bool HasEnvVar(const String &var)
+{
+    return std::getenv(var.CString()) != NULL;
 }
 
 }

@@ -94,4 +94,8 @@ FLOCKSDK_API String GetCPUVendorID();
 FLOCKSDK_API String GetCPUBrandName();
 /// Retrieve the system's current locale. 
 FLOCKSDK_API String GetLocale();
+/// Return true if the environment variable in question exists on the target system. 
+FLOCKSDK_API bool HasEnvVar(const String &var);
+/// Retrieve the value of a given environment variable. 
+FLOCKSDK_API String GetEnvVar(const String &var);
 }
