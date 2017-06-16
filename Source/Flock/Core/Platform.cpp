@@ -1107,4 +1107,44 @@ bool HasEnvVar(const String &var)
     return std::getenv(var.CString()) != NULL;
 }
 
+String GetClipboard() 
+{
+#if defined(__linux__) && !defined(__ANDROID__) 
+#elif defined(_WIN32)
+    auto s = String::EMPTY; 
+    if (OpenClipboard(NULL))
+    {
+        if (IsClipboardFormatAvailable(CF_UNICODETEXT))
+        {
+            HGLOBAL mem_block = GetClipboardData(CF_UNICODETEXT);
+            if (NULL != mem_block) 
+            {
+                auto data = (LPWSTR) GlobalLock(mem_block); 
+                if (NULL != data)
+                {
+                    s = String(WString(data)).SubstringUTF8(0); 
+                    GlobalUnlock(mem_block); 
+                }
+            }
+        }
+        else if (IsClipboardFormatAvailable(CF_TEXT)) 
+        {
+            HGLOBAL mem_block = GetClipboardData(CF_UNICODETEXT);
+            if (NULL != mem_block)
+            {
+                auto data = (LPTSTR) GlobalLock(mem_block);
+                if (NULL != data)
+                {
+                    s = String((const char *) data); 
+                    GlobalUnlock(mem_block); 
+                }
+            }
+        }
+        CloseClipboard();
+    }
+
+    return s;
+#endif
+}
+
 }

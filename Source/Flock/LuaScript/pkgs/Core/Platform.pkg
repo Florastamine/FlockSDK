@@ -28,3 +28,4 @@ String GetCPUBrandName();
 String GetLocale();
 bool HasEnvVar(const String &);
 String GetEnvVar(const String &);
+String GetClipboard();
