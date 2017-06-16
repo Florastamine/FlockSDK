@@ -1098,7 +1098,7 @@ String GetLocale()
 
 String GetEnvVar(const String &var)
 {
-    auto s = std::getenv(var.CString());
+    const auto s = std::getenv(var.CString());
     return s != NULL ? s : String::EMPTY; 
 }
 
