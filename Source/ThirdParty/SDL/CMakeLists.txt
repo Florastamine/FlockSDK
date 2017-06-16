@@ -235,9 +235,6 @@ dep_option(VIDEO_WAYLAND       "Use Wayland video driver" ON UNIX_SYS OFF)
 dep_option(WAYLAND_SHARED      "Dynamically load Wayland support" ON VIDEO_WAYLAND OFF)
 # Flock - change the VIDEO_WAYLAND_QT_TOUCH default value to FALSE (this is only needed by Sailfish[?] but we don't know way to auto-detect that yet)
 dep_option(VIDEO_WAYLAND_QT_TOUCH  "QtWayland server support for Wayland video driver" OFF VIDEO_WAYLAND OFF)
-# Flock - change the VIDEO_MIR default value to FALSE (SDL requires the bleeding edge of MIR version which normal Linux distros do not provide)
-dep_option(VIDEO_MIR           "Use Mir video driver" OFF UNIX_SYS OFF)
-dep_option(MIR_SHARED          "Dynamically load Mir support" ON VIDEO_MIR OFF)
 # Flock - bug fix - make VIDEO_X11 build option available for desktop UNIX (including OSX) only
 dep_option(VIDEO_X11           "Use X11 video driver" ON "UNIX_SYS OR APPLE\;NOT RPI AND NOT IOS AND NOT TVOS" OFF)
 dep_option(X11_SHARED          "Dynamically load X11 support" ON VIDEO_X11 OFF)
@@ -579,7 +576,6 @@ if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
   if(SDL_VIDEO)
     # Need to check for Raspberry PI first and add platform specific compiler flags, otherwise the test for GLES fails!
     CheckX11()
-    CheckMir()
     CheckDirectFB()
     # Flock - raname macros
     CheckOpenGL()

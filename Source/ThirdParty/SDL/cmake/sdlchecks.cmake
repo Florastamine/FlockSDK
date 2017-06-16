@@ -446,42 +446,6 @@ macro(CheckX11)
   endif()
 endmacro()
 
-# Requires:
-# - EGL
-# Optional:
-# - MIR_SHARED opt
-# - HAVE_DLOPEN opt
-macro(CheckMir)
-    if(VIDEO_MIR)
-        # Flock - bug fix - do not use pkg-config tool for detection as it only works for host environment and not for rooted environment when cross-compiling
-        find_package (Mir)
-        if (MIR_FOUND)
-            include_directories (${MIR_INCLUDE_DIRS})
-            set(HAVE_VIDEO_MIR TRUE)
-            set(HAVE_SDL_VIDEO TRUE)
-
-            file(GLOB MIR_SOURCES ${SDL2_SOURCE_DIR}/src/video/mir/*.c)
-            set(SOURCE_FILES ${SOURCE_FILES} ${MIR_SOURCES})
-            set(SDL_VIDEO_DRIVER_MIR 1)
-            set(SDL_VIDEO_OPENGL_EGL 1)
-
-            if(MIR_SHARED)
-                if(NOT HAVE_DLOPEN)
-                    message_warn("You must have SDL_LoadObject() support for dynamic Mir loading")
-                else()
-                    get_soname (MIRCLIENT_LIB_SONAME MIR_CLIENT)
-                    get_soname (XKBCOMMON_LIB_SONAME XKB)
-                    set(SDL_VIDEO_DRIVER_MIR_DYNAMIC "\"${MIRCLIENT_LIB_SONAME}\"")
-                    set(SDL_VIDEO_DRIVER_MIR_DYNAMIC_XKBCOMMON "\"${XKBCOMMON_LIB_SONAME}\"")
-                    set(HAVE_MIR_SHARED TRUE)
-                endif()
-            else()
-                list (APPEND EXTRA_LIBS mirclient xkbcommon)
-            endif()
-        endif()
-    endif()
-endmacro()
-
 macro(WaylandProtocolGen _SCANNER _XML _PROTL)
     set(_WAYLAND_PROT_C_CODE "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols/${_PROTL}-protocol.c")
     set(_WAYLAND_PROT_H_CODE "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols/${_PROTL}-client-protocol.h")
