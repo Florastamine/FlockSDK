@@ -1109,9 +1109,14 @@ bool HasEnvVar(const String &var)
 
 String GetClipboard() 
 {
-#if defined(__linux__) && !defined(__ANDROID__) 
-#elif defined(_WIN32)
     auto s = String::EMPTY; 
+#if defined(__linux__) && !defined(__ANDROID__) 
+    auto data = SDL_GetClipboardText();
+    s = String(WString(data)).SubstringUTF8(0); 
+
+    if (data)
+        SDL_free(data);
+#elif defined(_WIN32)
     HWND hwnd = GetActiveWindow();
 
     while (NULL != hwnd)
@@ -1147,9 +1152,8 @@ String GetClipboard()
         }
         CloseClipboard();
     }
-
-    return s;
 #endif
+    return s;
 }
 
 }
