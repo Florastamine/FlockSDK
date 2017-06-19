@@ -519,7 +519,7 @@ if (NOT CMAKE_PROJECT_NAME MATCHES ^Flock-ExternalProject-LuaJIT AND NOT IOS AND
     if (NOT TARGET LuaJIT_universal)
         set (LIBS LuaJIT)
     endif ()
-    list (APPEND LIBS m)
+    list (APPEND LIBS m dl)
 
     # Setup target
     setup_executable (NODEPS)
