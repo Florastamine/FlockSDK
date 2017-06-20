@@ -519,7 +519,11 @@ if (NOT CMAKE_PROJECT_NAME MATCHES ^Flock-ExternalProject-LuaJIT AND NOT IOS AND
     if (NOT TARGET LuaJIT_universal)
         set (LIBS LuaJIT)
     endif ()
-    list (APPEND LIBS m dl)
+    list (APPEND LIBS m)
+
+    if (CMAKE_SYSTEM_NAME STREQUAL Linux)
+        list (APPEND LIBS dl)
+    endif() 
 
     # Setup target
     setup_executable (NODEPS)
