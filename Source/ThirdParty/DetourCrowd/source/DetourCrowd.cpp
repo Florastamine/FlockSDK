@@ -208,7 +208,7 @@ static int getNeighbours(const float* pos, const float height, const float range
 		// Check for overlap.
 		float diff[3];
 		dtVsub(diff, pos, ag->npos);
-		if (dtMathFabs(diff[1]) >= (height+ag->params.height)/2.0f)
+		if (dtMathFabsf(diff[1]) >= (height+ag->params.height)/2.0f)
 			continue;
 		diff[1] = 0;
 		const float distSqr = dtVlenSqr(diff);
@@ -390,7 +390,7 @@ void dtCrowd::purge()
 bool dtCrowd::init(const int maxAgents, const float maxAgentRadius, dtNavMesh* nav, dtUpdateCallback cb)
 {
 	purge();
-
+	
 	m_updateCallback = cb;
 	m_maxAgents = maxAgents;
 	m_maxAgentRadius = maxAgentRadius;
@@ -571,8 +571,8 @@ int dtCrowd::addAgent(const float* pos, const dtCrowdAgentParams* params)
 	
 	ag->active = true;
 
-    // Flock: added to fix illegal memory access when ncorners is queried before the agent has updated
-    ag->ncorners = 0;
+	// Flock: added to fix illegal memory access when ncorners is queried before the agent has updated
+	ag->ncorners = 0;
 
 	return idx;
 }
@@ -665,6 +665,7 @@ bool dtCrowd::resetMoveTarget(const int idx)
 	// Initialize request.
 	ag->targetRef = 0;
 	dtVset(ag->targetPos, 0,0,0);
+	dtVset(ag->dvel, 0,0,0);
 	ag->targetPathqRef = DT_PATHQ_INVALID;
 	ag->targetReplan = false;
 	ag->targetState = DT_CROWDAGENT_TARGET_NONE;
@@ -1376,10 +1377,6 @@ void dtCrowd::update(const float dt, dtCrowdAgentDebugInfo* debug)
 					pen = (1.0f/dist) * (pen*0.5f) * COLLISION_RESOLVE_FACTOR;
 				}
 				
-				// Flock: Avoid tremble when another agent can not move away
-				if (ag->params.separationWeight < 0.0001f) 
-					continue;
-				
 				dtVmad(ag->disp, ag->disp, diff, pen);			
 				
 				w += 1.0f;
@@ -1420,9 +1417,6 @@ void dtCrowd::update(const float dt, dtCrowdAgentDebugInfo* debug)
 			ag->partial = false;
 		}
 
-		// Flock: Add update callback support
-		if (m_updateCallback)
-			(*m_updateCallback)(ag, dt);
 	}
 	
 	// Update agents using off-mesh connection.

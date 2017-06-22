@@ -43,6 +43,10 @@ class dtQueryFilter
 public:
 	dtQueryFilter();
 	
+#ifdef DT_VIRTUAL_QUERYFILTER
+	virtual ~dtQueryFilter() { }
+#endif
+	
 	/// Returns true if the polygon can be visited.  (I.e. Is traversable.)
 	///  @param[in]		ref		The reference id of the polygon test.
 	///  @param[in]		tile	The tile containing the polygon.
@@ -88,12 +92,12 @@ public:
 	/// Returns the traversal cost of the area.
 	///  @param[in]		i		The id of the area.
 	/// @returns The traversal cost of the area.
-	inline float getAreaCost(const int i) const { return (i >= 0 && i < DT_MAX_AREAS) ? m_areaCost[i] : 1.f; }  // Flock: Out of bound check
+	inline float getAreaCost(const int i) const { return m_areaCost[i]; }
 
 	/// Sets the traversal cost of the area.
 	///  @param[in]		i		The id of the area.
 	///  @param[in]		cost	The new cost of traversing the area.
-	inline void setAreaCost(const int i, const float cost) { if (i >= 0 && i < DT_MAX_AREAS) m_areaCost[i] = cost; }  // Flock: Out of bound check
+	inline void setAreaCost(const int i, const float cost) { m_areaCost[i] = cost; } 
 
 	/// Returns the include flags for the filter.
 	/// Any polygons that include one or more of these flags will be
@@ -117,6 +121,37 @@ public:
 
 };
 
+
+
+/// Provides information about raycast hit
+/// filled by dtNavMeshQuery::raycast
+/// @ingroup detour
+struct dtRaycastHit
+{
+	/// The hit parameter. (FLT_MAX if no wall hit.)
+	float t; 
+	
+	/// hitNormal	The normal of the nearest wall hit. [(x, y, z)]
+	float hitNormal[3];
+
+	/// The index of the edge on the final polygon where the wall was hit.
+	int hitEdgeIndex;
+	
+	/// Pointer to an array of reference ids of the visited polygons. [opt]
+	dtPolyRef* path;
+	
+	/// The number of visited polygons. [opt]
+	int pathCount;
+
+	/// The maximum number of polygons the @p path array can hold.
+	int maxPath;
+
+	///  The cost of the path until hit.
+	float pathCost;
+};
+
+
+
 /// Provides the ability to perform pathfinding related queries against
 /// a navigation mesh.
 /// @ingroup detour
@@ -128,7 +163,7 @@ public:
 	
 	/// Initializes the query object.
 	///  @param[in]		nav			Pointer to the dtNavMesh object to use for all queries.
-	///  @param[in]		maxNodes	Maximum number of search nodes. [Limits: 0 < value <= 65536]
+	///  @param[in]		maxNodes	Maximum number of search nodes. [Limits: 0 < value <= 65535]
 	/// @returns The status flags for the query.
 	dtStatus init(const dtNavMesh* nav, const int maxNodes);
 	
@@ -181,10 +216,11 @@ public:
 	///  @param[in]		startPos	A position within the start polygon. [(x, y, z)]
 	///  @param[in]		endPos		A position within the end polygon. [(x, y, z)]
 	///  @param[in]		filter		The polygon filter to apply to the query.
+	///  @param[in]		options		query options (see: #dtFindPathOptions)
 	/// @returns The status flags for the query.
 	dtStatus initSlicedFindPath(dtPolyRef startRef, dtPolyRef endRef,
 								const float* startPos, const float* endPos,
-								const dtQueryFilter* filter);
+								const dtQueryFilter* filter, const unsigned int options = 0);
 
 	/// Updates an in-progress sliced path query.
 	///  @param[in]		maxIter		The maximum number of iterations to perform.
@@ -310,6 +346,7 @@ public:
 	
 	/// Casts a 'walkability' ray along the surface of the navigation mesh from 
 	/// the start position toward the end position.
+	/// @note A wrapper around raycast(..., RaycastHit*). Retained for backward compatibility.
 	///  @param[in]		startRef	The reference id of the start polygon.
 	///  @param[in]		startPos	A position within the start polygon representing 
 	///  							the start of the ray. [(x, y, z)]
@@ -325,6 +362,22 @@ public:
 					 const dtQueryFilter* filter,
 					 float* t, float* hitNormal, dtPolyRef* path, int* pathCount, const int maxPath) const;
 	
+	/// Casts a 'walkability' ray along the surface of the navigation mesh from 
+	/// the start position toward the end position.
+	///  @param[in]		startRef	The reference id of the start polygon.
+	///  @param[in]		startPos	A position within the start polygon representing 
+	///  							the start of the ray. [(x, y, z)]
+	///  @param[in]		endPos		The position to cast the ray toward. [(x, y, z)]
+	///  @param[in]		filter		The polygon filter to apply to the query.
+	///  @param[in]		flags		govern how the raycast behaves. See dtRaycastOptions
+	///  @param[out]	hit			Pointer to a raycast hit structure which will be filled by the results.
+	///  @param[in]		prevRef		parent of start ref. Used during for cost calculation [opt]
+	/// @returns The status flags for the query.
+	dtStatus raycast(dtPolyRef startRef, const float* startPos, const float* endPos,
+					 const dtQueryFilter* filter, const unsigned int options,
+					 dtRaycastHit* hit, dtPolyRef prevRef = 0) const;
+
+
 	/// Finds the distance from the specified position to the nearest polygon wall.
 	///  @param[in]		startRef		The reference id of the polygon containing @p centerPos.
 	///  @param[in]		centerPos		The center of the search circle. [(x, y, z)]
@@ -424,6 +477,9 @@ public:
 	/// @}
 	
 private:
+	// Explicitly disabled copy constructor and copy assignment operator
+	dtNavMeshQuery(const dtNavMeshQuery&);
+	dtNavMeshQuery& operator=(const dtNavMeshQuery&);
 	
 	/// Returns neighbour tile based on side.
 	dtMeshTile* getNeighbourTileAt(int x, int y, int side) const;
@@ -465,6 +521,8 @@ private:
 		dtPolyRef startRef, endRef;
 		float startPos[3], endPos[3];
 		const dtQueryFilter* filter;
+		unsigned int options;
+		float raycastLimitSqr;
 	};
 	dtQueryData m_query;				///< Sliced query state.
 

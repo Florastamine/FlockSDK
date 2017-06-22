@@ -122,10 +122,10 @@ public:
 	void calcTightTileBounds(const struct dtTileCacheLayerHeader* header, float* bmin, float* bmax) const;
 	
 	void getObstacleBounds(const struct dtTileCacheObstacle* ob, float* bmin, float* bmax) const;
-	
+
     // Flock: added function to know when we have too many obstacle requests without update
     bool isObstacleQueueFull() const { return m_nreqs >= MAX_REQUESTS; }
-
+	
 	/// Encodes a tile id.
 	inline dtCompressedTileRef encodeTileId(unsigned int salt, unsigned int it) const
 	{
@@ -168,7 +168,10 @@ public:
 	
 	
 private:
-	
+	// Explicitly disabled copy constructor and copy assignment operator.
+	dtTileCache(const dtTileCache&);
+	dtTileCache& operator=(const dtTileCache&);
+
 	enum ObstacleRequestAction
 	{
 		REQUEST_ADD,
@@ -207,7 +210,6 @@ private:
 	static const int MAX_UPDATE = 64;
 	dtCompressedTileRef m_update[MAX_UPDATE];
 	int m_nupdate;
-	
 };
 
 dtTileCache* dtAllocTileCache();

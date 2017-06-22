@@ -145,10 +145,10 @@ struct dtCrowdAgent
 	float desiredSpeed;
 
 	float npos[3];		///< The current agent position. [(x, y, z)]
-	float disp[3];
-	float dvel[3];		///< The desired velocity of the agent. [(x, y, z)]
-	float nvel[3];
-	float vel[3];		///< The actual velocity of the agent. [(x, y, z)]
+	float disp[3];		///< A temporary value used to accumulate agent displacement during iterative collision resolution. [(x, y, z)]
+	float dvel[3];		///< The desired velocity of the agent. Based on the current path, calculated from scratch each frame. [(x, y, z)]
+	float nvel[3];		///< The desired velocity adjusted by obstacle avoidance, calculated from scratch each frame. [(x, y, z)]
+	float vel[3];		///< The actual velocity of the agent. The change from nvel -> vel is constrained by max acceleration. [(x, y, z)]
 
 	/// The agent's configuration parameters.
 	dtCrowdAgentParams params;
@@ -243,11 +243,11 @@ class dtCrowd
 	bool requestMoveTargetReplan(const int idx, dtPolyRef ref, const float* pos);
 
 	void purge();
-
+	
 public:
 	dtCrowd();
 	~dtCrowd();
-	
+
 	// Flock: Add update callback support
 	/// Initializes the crowd.  
 	///  @param[in]		maxAgents		The maximum number of agents the crowd can manage. [Limit: >= 1]
@@ -357,6 +357,11 @@ public:
 
 	/// Gets the query object used by the crowd.
 	const dtNavMeshQuery* getNavMeshQuery() const { return m_navquery; }
+
+private:
+	// Explicitly disabled copy constructor and copy assignment operator.
+	dtCrowd(const dtCrowd&);
+	dtCrowd& operator=(const dtCrowd&);
 };
 
 /// Allocates a crowd object using the Detour allocator.
