@@ -1110,7 +1110,7 @@ bool HasEnvVar(const String &var)
 String GetClipboard() 
 {
     auto s = String::EMPTY; 
-#if defined(__linux__) && !defined(__ANDROID__) 
+#if (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__) 
     auto data = SDL_GetClipboardText();
     s = String(WString(data)).SubstringUTF8(0); 
 
