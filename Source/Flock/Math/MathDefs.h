@@ -49,6 +49,12 @@ static const float M_DEGTORAD = M_PI / 180.0f;
 static const float M_DEGTORAD_2 = M_PI / 360.0f;    // M_DEGTORAD / 2.f
 static const float M_RADTODEG = 1.0f / M_DEGTORAD;
 
+// Returns a representation of the specified floating-point value as a single format bit layout.
+inline unsigned FloatToRawIntBits(float x)
+{
+    return *((unsigned*)&x);
+}
+
 /// Intersection test result.
 enum Intersection
 {
@@ -93,8 +99,7 @@ inline bool IsNaN(float value) { return value != value; }
 
 inline bool IsNaN(float value)
 {
-    unsigned u = *(unsigned*)(&value);
-    return (u & 0x7fffffff) > 0x7f800000;
+    return (FloatToRawIntBits(value) & 0x7fffffff) > 0x7f800000;
 }
 
 #endif
