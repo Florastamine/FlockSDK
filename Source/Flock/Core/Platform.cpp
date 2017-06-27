@@ -38,6 +38,7 @@
     #include <windows.h>
     #include <io.h>
     #include <shlobj.h>
+    #include <tlhelp32.h>
     #if defined(__MINGW32__)
         #include <lmcons.h>
         #include <ntdef.h> 
@@ -1183,5 +1184,57 @@ String GetClipboard()
 #endif
     return s;
 }
+
+#if defined(__linux__) && !defined(__ANDROID__) 
+pid_t GetProcessHandle(const String &name)
+{
+}
+#elif defined(_WIN32)
+HANDLE OpenProcessHandle(const String &name)
+{
+    DWORD             pid{}; 
+    PROCESSENTRY32    process{};
+    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    size_t sz_PE32  = sizeof(PROCESSENTRY32);
+
+    ZeroMemory(&process, sz_PE32);
+    process.dwSize = sz_PE32;
+
+    if (Process32First(snapshot, &process))
+    {
+        do 
+        {
+            if (name == process.szExeFile)
+            {
+                pid = process.th32ProcessID;
+                break;
+            }
+        } while (Process32Next(snapshot, &process));
+    }
+    CloseHandle(snapshot);
+
+    return (0 != pid) ? OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid) : (HANDLE) 0;
+}
+
+void CloseProcessHandle(HANDLE &h)
+{
+    if (NULL != h)
+        CloseHandle(h);
+}
+
+void KillProcess(HANDLE &h)
+{
+    if (NULL != h)
+    {
+        TerminateProcess(h, 0); 
+        CloseHandle(h); 
+    }
+}
+
+void KillProcess(const String &name)
+{
+    KillProcess(OpenProcessHandle(name)); 
+}
+#endif
 
 }

@@ -30,3 +30,12 @@ bool HasEnvVar(const String &);
 String GetEnvVar(const String &);
 String GetClipboard();
 void SetClipboard(const String &s);
+
+#if defined(__linux__) && !defined(__ANDROID__) 
+pid_t OpenProcessHandle(const String &name);
+#elif defined(_WIN32)
+HANDLE OpenProcessHandle(const String &name);
+void CloseProcessHandle(HANDLE &h);
+void KillProcess(HANDLE &h);
+void KillProcess(const String &name);
+#endif

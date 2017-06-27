@@ -26,6 +26,10 @@
 
 #include <cstdlib>
 
+#if defined(_WIN32)
+    #include <windows.h>
+#endif
+
 namespace FlockSDK
 {
 
@@ -102,4 +106,17 @@ FLOCKSDK_API String GetEnvVar(const String &var);
 FLOCKSDK_API String GetClipboard();
 /// Sets the content of the clipboard. The passed in string will always be converted into a WString. 
 FLOCKSDK_API void SetClipboard(const String &s);
+
+/// A collection of platform-specific APIs for querying and killing processes. 
+/// You can retrieve a specific process's PID by reading the return value of OpenProcessHandle().
+/// And kill it with a call to KillProcess(). The given handle will be closed automatically afterwards. 
+/// If you don't intend to kill the process, you must explicitly close it later with CloseProcessHandle(). 
+#if defined(__linux__) && !defined(__ANDROID__) 
+FLOCKSDK_API pid_t OpenProcessHandle(const String &name);
+#elif defined(_WIN32)
+FLOCKSDK_API HANDLE OpenProcessHandle(const String &name);
+FLOCKSDK_API void CloseProcessHandle(HANDLE &h);
+FLOCKSDK_API void KillProcess(HANDLE &h);
+FLOCKSDK_API void KillProcess(const String &name);
+#endif
 }
