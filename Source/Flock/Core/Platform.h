@@ -100,4 +100,6 @@ FLOCKSDK_API bool HasEnvVar(const String &var);
 FLOCKSDK_API String GetEnvVar(const String &var);
 /// Retrieve the current content of the clipboard. Only supports Windows at the moment. 
 FLOCKSDK_API String GetClipboard();
+/// Sets the content of the clipboard. The passed in string will always be converted into a WString. 
+FLOCKSDK_API void SetClipboard(const String &s);
 }
