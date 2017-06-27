@@ -83,6 +83,17 @@
     static FlockSDK::Vector<LocaleInfo> windows_locale; 
 #endif
 
+#if defined(_WIN32)
+    static HWND GetProcWindow()
+    {
+        HWND hwnd = GetActiveWindow();
+        while (NULL != hwnd)
+            hwnd = GetParent(hwnd);
+        
+        return hwnd; 
+    }
+#endif 
+
 #if defined(__i386__)
 // From http://stereopsis.com/FPU.html
 #define FPU_CW_PREC_MASK        0x0300
@@ -1117,12 +1128,7 @@ String GetClipboard()
     if (data)
         SDL_free(data);
 #elif defined(_WIN32)
-    HWND hwnd = GetActiveWindow();
-
-    while (NULL != hwnd)
-        hwnd = GetParent(hwnd);
-
-    if (OpenClipboard(hwnd))
+    if (OpenClipboard(GetProcWindow()))
     {
         if (IsClipboardFormatAvailable(CF_UNICODETEXT))
         {
