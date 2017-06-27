@@ -35,7 +35,7 @@ void SetClipboard(const String &s);
 pid_t OpenProcessHandle(const String &name);
 #elif defined(_WIN32)
 HANDLE OpenProcessHandle(const String &name);
-void CloseProcessHandle(HANDLE &h);
-void KillProcess(HANDLE &h);
+void CloseProcessHandle(HANDLE h);
+void KillProcess(HANDLE h);
 void KillProcess(const String &name);
 #endif

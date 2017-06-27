@@ -1216,13 +1216,13 @@ HANDLE OpenProcessHandle(const String &name)
     return (0 != pid) ? OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid) : (HANDLE) 0;
 }
 
-void CloseProcessHandle(HANDLE &h)
+void CloseProcessHandle(HANDLE h)
 {
     if (NULL != h)
         CloseHandle(h);
 }
 
-void KillProcess(HANDLE &h)
+void KillProcess(HANDLE h)
 {
     if (NULL != h)
     {

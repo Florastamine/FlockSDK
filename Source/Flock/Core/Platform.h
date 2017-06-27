@@ -115,8 +115,8 @@ FLOCKSDK_API void SetClipboard(const String &s);
 FLOCKSDK_API pid_t OpenProcessHandle(const String &name);
 #elif defined(_WIN32)
 FLOCKSDK_API HANDLE OpenProcessHandle(const String &name);
-FLOCKSDK_API void CloseProcessHandle(HANDLE &h);
-FLOCKSDK_API void KillProcess(HANDLE &h);
+FLOCKSDK_API void CloseProcessHandle(HANDLE h);
+FLOCKSDK_API void KillProcess(HANDLE h);
 FLOCKSDK_API void KillProcess(const String &name);
 #endif
 }
