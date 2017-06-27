@@ -59,4 +59,4 @@ if not "%~1" == "" (
 if exist "%BUILD%\CMakeCache.txt" set "OPTS="
 
 :: Create project with the chosen CMake generator and toolchain
-cmake -E make_directory "%BUILD%" && cmake -E chdir "%BUILD%" cmake %OPTS% %BUILD_OPTS% "%SOURCE%"
+cmake -E make_directory "%BUILD%" && cmake -E chdir "%BUILD%" cmake %OPTS% %BUILD_OPTS% "%SOURCE%\\..\\"

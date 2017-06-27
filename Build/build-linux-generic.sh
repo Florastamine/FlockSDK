@@ -63,7 +63,7 @@ function CheckToolPrint() {
 CheckToolPrint "cmake" "make" "gcc" "g++" "strip" 
 
 # If yes, then begin generating build files and place it into $BuildTargetFolder. 
-../cmake_generic.sh ./$BuildTargetFolder -DWIN32=0 -DFLOCK_SAFE_LUA=1 -DFLOCK_LUA_RAW_SCRIPT_LOADER=1 -DFLOCK_NETWORK=1 -DFLOCK_TOOLS=1 -DFLOCK_EXTRAS=1 -DFLOCK_PACKAGING=1 -DEXTRA_CFLAGS=$ExtraCXXFlags $* 
+./cmake_generic.sh ./$BuildTargetFolder -DWIN32=0 -DFLOCK_SAFE_LUA=1 -DFLOCK_LUA_RAW_SCRIPT_LOADER=1 -DFLOCK_NETWORK=1 -DFLOCK_TOOLS=1 -DFLOCK_EXTRAS=1 -DFLOCK_PACKAGING=1 -DEXTRA_CFLAGS=$ExtraCXXFlags $* 
 
 # Build the project. 
 make -j$NumSpawn --directory=./$BuildTargetFolder 
