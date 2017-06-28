@@ -33,6 +33,9 @@ void SetClipboard(const String &s);
 
 #if defined(__linux__) && !defined(__ANDROID__) 
 pid_t OpenProcessHandle(const String &name);
+void CloseProcessHandle(pid_t &pid);
+void KillProcess(pid_t &pid);
+void KillProcess(const String &name);
 #elif defined(_WIN32)
 HANDLE OpenProcessHandle(const String &name);
 void CloseProcessHandle(HANDLE h);

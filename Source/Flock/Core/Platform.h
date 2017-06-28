@@ -113,6 +113,9 @@ FLOCKSDK_API void SetClipboard(const String &s);
 /// If you don't intend to kill the process, you must explicitly close it later with CloseProcessHandle(). 
 #if defined(__linux__) && !defined(__ANDROID__) 
 FLOCKSDK_API pid_t OpenProcessHandle(const String &name);
+FLOCKSDK_API void CloseProcessHandle(pid_t &pid);
+FLOCKSDK_API void KillProcess(pid_t &pid);
+FLOCKSDK_API void KillProcess(const String &name);
 #elif defined(_WIN32)
 FLOCKSDK_API HANDLE OpenProcessHandle(const String &name);
 FLOCKSDK_API void CloseProcessHandle(HANDLE h);

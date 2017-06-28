@@ -1186,9 +1186,43 @@ String GetClipboard()
 }
 
 #if defined(__linux__) && !defined(__ANDROID__) 
-pid_t GetProcessHandle(const String &name)
+static std::FILE *OpenCommandHandler(const String &command, const String &arguments)
+{
+    return popen((command + " " + arguments).CString(), "r"); 
+}
+
+static void CloseCommandHandler(std::FILE *f)
+{
+    pclose(f); 
+}
+
+pid_t OpenProcessHandle(const String &name)
+{
+    pid_t pid{};
+    char buffer[256]{};
+    auto f = OpenCommandHandler("pidof", name);
+
+    std::fgets(buffer, 256, f); 
+    pid = std::strtoul(buffer, nullptr, 10); 
+    CloseCommandHandler(f); 
+
+    return pid; 
+}
+
+void CloseProcessHandle(pid_t &pid)
 {
 }
+
+void KillProcess(pid_t &pid)
+{
+    CloseCommandHandler(OpenCommandHandler("kill -9"), std::to_string(pid).c_str()); 
+}
+
+void KillProcess(const String &name)
+{
+    CloseCommandHandler(OpenCommandHandler("killall"), name); 
+}
+
 #elif defined(_WIN32)
 HANDLE OpenProcessHandle(const String &name)
 {
@@ -1213,7 +1247,7 @@ HANDLE OpenProcessHandle(const String &name)
     }
     CloseHandle(snapshot);
 
-    return (0 != pid) ? OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid) : (HANDLE) 0;
+    return (0 != pid) ? OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_TERMINATE, FALSE, pid) : (HANDLE) 0;
 }
 
 void CloseProcessHandle(HANDLE h)
