@@ -140,42 +140,50 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     unsigned numGlyphs = (unsigned)face->num_glyphs;
     FLOCKSDK_LOGDEBUGF("Font face %s (%dpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
 
-    PODVector<unsigned> charCodes(numGlyphs);
-    for (auto i = 0u; i < numGlyphs; ++i)
-        charCodes[i] = 0;
+    PODVector<unsigned> charCodes(numGlyphs + 1, 0);
+
+    // Attempt to load space glyph first regardless if it's listed or not
+    // In some fonts (Consola) it is missing
+    charCodes[0] = 32;
 
     FT_UInt glyphIndex;
     FT_ULong charCode = FT_Get_First_Char(face, &glyphIndex);
     while (glyphIndex != 0)
     {
         if (glyphIndex < numGlyphs)
-            charCodes[glyphIndex] = (unsigned)charCode;
+            charCodes[glyphIndex + 1] = (unsigned)charCode;
 
         charCode = FT_Get_Next_Char(face, charCode, &glyphIndex);
     }
 
     // Load each of the glyphs to see the sizes & store other information
-    loadMode_ = (int)(ui->GetForceAutoHint() ? FT_LOAD_FORCE_AUTOHINT : FT_LOAD_DEFAULT);
+    loadMode_ = FT_LOAD_DEFAULT;
+    if (ui->GetForceAutoHint())
+        loadMode_ |= FT_LOAD_FORCE_AUTOHINT;
+    if (ui->GetFontHintLevel() == FONT_HINT_LEVEL_NONE)
+        loadMode_ |= FT_LOAD_NO_HINTING;
+    if (ui->GetFontHintLevel() == FONT_HINT_LEVEL_LIGHT)
+        loadMode_ |= FT_LOAD_TARGET_LIGHT;
+
     ascender_ = RoundToPixels(face->size->metrics.ascender);
-    int descender = RoundToPixels(face->size->metrics.descender);
+    rowHeight_ = RoundToPixels(face->size->metrics.height);
+    pointSize_ = pointSize;
 
     // Check if the font's OS/2 info gives different (larger) values for ascender & descender
     TT_OS2* os2Info = (TT_OS2*)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
     if (os2Info)
     {
+        int descender = RoundToPixels(face->size->metrics.descender);
         ascender_ = Max(ascender_, os2Info->usWinAscent * face->size->metrics.y_ppem / face->units_per_EM);
         ascender_ = Max(ascender_, os2Info->sTypoAscender * face->size->metrics.y_ppem / face->units_per_EM);
         descender = Max(descender, os2Info->usWinDescent * face->size->metrics.y_ppem / face->units_per_EM);
         descender = Max(descender, os2Info->sTypoDescender * face->size->metrics.y_ppem / face->units_per_EM);
+        rowHeight_ = Max(rowHeight_, ascender_ + descender);
     }
-
-    // Store point size and row height. Use the maximum of ascender + descender, or the face's stored default row height
-    pointSize_ = pointSize;
-    rowHeight_ = (int)Max(ascender_ + descender, RoundToPixels(face->size->metrics.height));
 
     int textureWidth = maxTextureSize;
     int textureHeight = maxTextureSize;
-    bool loadAllGlyphs = CanLoadAllGlyphs(charCodes, textureWidth, textureHeight);
+    hasMutableGlyph_ = false;
 
     SharedPtr<Image> image(new Image(font_->GetContext()));
     image->SetSize(textureWidth, textureHeight, 1);
@@ -183,21 +191,17 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     memset(imageData, 0, (size_t)(image->GetWidth() * image->GetHeight()));
     allocator_.Reset(FONT_TEXTURE_MIN_SIZE, FONT_TEXTURE_MIN_SIZE, textureWidth, textureHeight);
 
-    // Attempt to load space glyph first regardless if it's listed or not
-    // In some fonts (Consola) it is missing
-    LoadCharGlyph(32, image);
-
-    for (auto i = 0u; i < numGlyphs; ++i)
+    for (auto i = 0u; i < charCodes.Size(); ++i)
     {
-        unsigned charCode = charCodes[i];
+        auto charCode = charCodes[i];
         if (charCode == 0)
             continue;
 
-        if (!loadAllGlyphs && (charCode > 0xff))
-            break;
-
         if (!LoadCharGlyph(charCode, image))
-            return false;
+        {
+            hasMutableGlyph_ = true;
+            break;
+        }
     }
 
     SharedPtr<Texture2D> texture = LoadFaceTexture(image);
@@ -276,14 +280,11 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
             FLOCKSDK_LOGWARNING("Can not read kerning information: not version 0");
     }
 
-    if (loadAllGlyphs)
+    if (!hasMutableGlyph_)
     {
         FT_Done_Face(face);
         face_ = 0;
-        hasMutableGlyph_ = false;
     }
-    else
-        hasMutableGlyph_ = true;
 
     return true;
 }
