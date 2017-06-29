@@ -95,6 +95,15 @@ if (FLOCK_LUA)
         set (GEN_CPP_FILE LuaScript/generated/${DIR}LuaAPI.cpp)
         list (APPEND GEN_CPP_FILES ${GEN_CPP_FILE})
         file (GLOB PKG_FILES LuaScript/pkgs/${DIR}/*.pkg)
+        if (${DIR} STREQUAL "Core") # I suck at CMake. Like, seriously .
+            if (CMAKE_SYSTEM_NAME STREQUAL Linux)
+                file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.Linux.pkg DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/)
+                file (RENAME ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/Platform.Linux.pkg ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.pkg)
+            elseif(CMAKE_SYSTEM_NAME STREQUAL Windows)
+                file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.Windows.pkg DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/)
+                file (RENAME ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/Platform.Windows.pkg ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.pkg)
+            endif()
+        endif()
         add_custom_command (OUTPUT ${GEN_CPP_FILE}
             COMMAND ${CMAKE_BINARY_DIR}/bin/tool/tolua++ -E ${CMAKE_PROJECT_NAME} -L ToCppHook.lua -o ${CMAKE_CURRENT_BINARY_DIR}/${GEN_CPP_FILE} ${NAME}
             DEPENDS tolua++ ${API_PKG_FILE} ${PKG_FILES} LuaScript/pkgs/ToCppHook.lua
@@ -325,3 +334,5 @@ if (FLOCK_SCP_TO_TARGET)
     add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND scp $<TARGET_FILE:${TARGET_NAME}> ${FLOCK_SCP_TO_TARGET} || exit 0
         COMMENT "Scp-ing Flock library to target system")
 endif ()
+
+file (WRITE ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/Core/Platform.pkg "")
