@@ -88,3 +88,5 @@ Source/ThirdParty/LuaJIT/src/jit/bc/*.lua
 *.skeleton.xml
 *.fbx 
 
+Source/Flock/LuaScript/pkgs/Core/Platform.pkg
+
