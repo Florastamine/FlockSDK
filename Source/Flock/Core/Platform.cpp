@@ -1215,12 +1215,12 @@ void CloseProcessHandle(pid_t &pid)
 
 void KillProcess(pid_t &pid)
 {
-    CloseCommandHandler(OpenCommandHandler("kill -9"), std::to_string(pid).c_str()); 
+    CloseCommandHandler(OpenCommandHandler("kill -9", std::to_string(pid).c_str())); 
 }
 
 void KillProcess(const String &name)
 {
-    CloseCommandHandler(OpenCommandHandler("killall"), name); 
+    CloseCommandHandler(OpenCommandHandler("killall", name)); 
 }
 
 #elif defined(_WIN32)
