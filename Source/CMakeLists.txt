@@ -54,11 +54,12 @@ foreach (TARGET STB GLEW JO LZ4 SQLite StanHull Lua LuaJIT toluapp/src/lib PugiX
 endforeach () 
 
 if (FLOCK_IK)
+    message (STATUS "The following optional component(s) will be installed: IK")
     add_subdirectory (ThirdParty/ik/cmake/Flock)
 endif ()
 
 if (FLOCK_NETWORK)
-    message (STATUS "Found network") 
+    message (STATUS "The following optional component(s) will be installed: Networking")
     add_subdirectory (ThirdParty/Civetweb)
     add_subdirectory (ThirdParty/kNet)
 endif ()
