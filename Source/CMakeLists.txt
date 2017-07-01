@@ -57,6 +57,12 @@ if (FLOCK_IK)
     add_subdirectory (ThirdParty/ik/cmake/Flock)
 endif ()
 
+if (FLOCK_NETWORK)
+    message (STATUS "Found network") 
+    add_subdirectory (ThirdParty/Civetweb)
+    add_subdirectory (ThirdParty/kNet)
+endif ()
+
 # Flock game engine library
 add_subdirectory (Flock)
 

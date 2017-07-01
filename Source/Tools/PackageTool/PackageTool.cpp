@@ -27,7 +27,7 @@
 #include <Flock/IO/FileSystem.h>
 #include <Flock/IO/PackageFile.h>
 
-#ifdef WIN32
+#ifdef _WIN32
     #define WIN32_LEAN_AND_MEAN 
     #define WIN32_EXTRA_LEAN 
     #include <windows.h>
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 {
     Vector<String> arguments;
 
-    #ifdef WIN32
+    #ifdef _WIN32
     arguments = ParseArguments(GetCommandLineW());
     #else
     arguments = ParseArguments(argc, argv);

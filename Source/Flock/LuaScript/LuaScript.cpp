@@ -57,6 +57,9 @@ extern int tolua_MathLuaAPI_open(lua_State*);
 #ifdef FLOCKSDK_NAVIGATION
 extern int tolua_NavigationLuaAPI_open(lua_State*);
 #endif
+#ifdef FLOCKSDK_NETWORK
+extern int tolua_NetworkLuaAPI_open(lua_State*);
+#endif
 extern int tolua_DatabaseLuaAPI_open(lua_State*);
 #ifdef FLOCKSDK_IK
 extern int tolua_IKLuaAPI_open(lua_State*);
@@ -103,6 +106,9 @@ LuaScript::LuaScript(Context* context) :
     tolua_InputLuaAPI_open(luaState_);
 #ifdef FLOCKSDK_NAVIGATION
     tolua_NavigationLuaAPI_open(luaState_);
+#endif
+#ifdef FLOCKSDK_NETWORK
+    tolua_NetworkLuaAPI_open(luaState_);
 #endif
     tolua_DatabaseLuaAPI_open(luaState_);
 #ifdef FLOCKSDK_IK

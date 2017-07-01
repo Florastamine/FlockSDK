@@ -99,7 +99,7 @@ rem if %Bool_StripFound% == 0 (
 rem     call :F_PrintText %Color_Default% "%String_StripNotFound%" 
 rem ) 
 
-call cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DFLOCK_SAFE_LUA=1 -DFLOCK_PACKAGING=1 -DFLOCK_IK=0 -DFLOCK_LOGGING=1 -DFLOCK_PROFILING=1 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
+call cmake_generic.bat %BuildTargetFolder% -G "MinGW Makefiles" -DFLOCK_SAFE_LUA=1 -DFLOCK_PACKAGING=1 -DFLOCK_IK=0 -DFLOCK_NETWORK=1 -DFLOCK_LOGGING=1 -DFLOCK_PROFILING=1 -DEXTRA_CFLAGS=%ExtraCXXFlags% %* 
 start /wait /b %String_Make% --directory=%BuildTargetFolder% 
 
 rem if %Bool_StripFound% == 1 (

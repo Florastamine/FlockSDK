@@ -27,7 +27,7 @@
 
 #include "SDL_windows.h"
 #include <mmsystem.h>
-#ifndef WIN32
+#ifndef _WIN32
 #define WIN32
 #endif
 #undef  WINNT

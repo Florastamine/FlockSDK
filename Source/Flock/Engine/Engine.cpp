@@ -43,6 +43,9 @@
 #ifdef FLOCKSDK_NAVIGATION
 #include "../Navigation/NavigationMesh.h"
 #endif
+#ifdef FLOCKSDK_NETWORK
+#include "../Network/Network.h"
+#endif
 #include "../Database/Database.h"
 #include "../Physics/PhysicsWorld.h"
 #include "../Physics/RaycastVehicle.h"
@@ -85,6 +88,9 @@ Engine::Engine(Context* context) :
     context_->RegisterSubsystem(new FileSystem(context_));
 #ifdef FLOCKSDK_LOGGING
     context_->RegisterSubsystem(new Log(context_));
+#endif
+#ifdef FLOCKSDK_NETWORK
+    context_->RegisterSubsystem(new Network(context_));
 #endif
     context_->RegisterSubsystem(new ResourceCache(context_));
     context_->RegisterSubsystem(new Localization(context_));
@@ -366,6 +372,12 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Init FPU state of main thread
     InitFPU();
+
+// Initialize network
+#ifdef FLOCKSDK_NETWORK
+    if (HasParameter(parameters, "PackageCacheDir"))
+        GetSubsystem<Network>()->SetPackageCacheDir(GetParameter(parameters, "PackageCacheDir").GetString());
+#endif
 
 #ifdef FLOCKSDK_PROFILING
     if (GetParameter(parameters, "EventProfiler", true).GetBool())
