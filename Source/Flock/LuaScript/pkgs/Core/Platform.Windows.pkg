@@ -30,6 +30,8 @@ bool HasEnvVar(const String &);
 String GetEnvVar(const String &);
 String GetClipboard();
 void SetClipboard(const String &s);
+int GetBatteryPercentage();
+int GetBatteryTimeLeft();
 
 HANDLE OpenProcessHandle(const String &name);
 void CloseProcessHandle(HANDLE h);

@@ -106,6 +106,10 @@ FLOCKSDK_API String GetEnvVar(const String &var);
 FLOCKSDK_API String GetClipboard();
 /// Sets the content of the clipboard. The passed in string will always be converted into a WString. 
 FLOCKSDK_API void SetClipboard(const String &s);
+/// Retrieve the percentage (0 - 100) of the battery.
+FLOCKSDK_API int GetBatteryPercentage();
+/// Retrieve the total amount of time left (in seconds) before the battery runs out of power.
+FLOCKSDK_API int GetBatteryTimeLeft();
 
 /// A collection of platform-specific APIs for querying and killing processes. 
 /// You can retrieve a specific process's PID by reading the return value of OpenProcessHandle().

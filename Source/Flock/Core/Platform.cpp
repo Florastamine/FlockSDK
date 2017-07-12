@@ -1185,6 +1185,32 @@ String GetClipboard()
     return s;
 }
 
+#define FLOCKSDK_BATTERY_PERCENTAGE 0
+#define FLOCKSDK_BATTERY_TIME_LEFT  1
+
+static int GetBatteryInformation(int mode)
+{
+    static int u, v;
+    SDL_GetPowerInfo(&u, &v);
+    if (mode == FLOCKSDK_BATTERY_PERCENTAGE)
+        return v;
+    if (mode == FLOCKSDK_BATTERY_TIME_LEFT)
+        return u;
+}
+
+int GetBatteryPercentage()
+{
+    return GetBatteryInformation(FLOCKSDK_BATTERY_PERCENTAGE);
+}
+
+int GetBatteryTimeLeft()
+{
+    return GetBatteryInformation(FLOCKSDK_BATTERY_TIME_LEFT);
+}
+
+#undef FLOCKSDK_BATTERY_PERCENTAGE
+#undef FLOCKSDK_BATTERY_TIME_LEFT
+
 #if defined(__linux__) && !defined(__ANDROID__) 
 static std::FILE *OpenCommandHandler(const String &command, const String &arguments)
 {
