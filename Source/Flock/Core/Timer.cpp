@@ -163,7 +163,7 @@ unsigned Time::GetTimeSinceEpoch()
     return (unsigned)time(NULL);
 }
 
-String Time::GetTimeStamp()
+String Time::GetStringTimeStamp()
 {
     time_t sysTime;
     time(&sysTime);

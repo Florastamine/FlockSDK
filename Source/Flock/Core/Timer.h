@@ -109,7 +109,7 @@ public:
     /// Get system time as seconds since 1.1.1970.
     static unsigned GetTimeSinceEpoch();
     /// Get a date/time stamp as a string.
-    static String GetTimeStamp();
+    static String GetStringTimeStamp();
     /// Sleep for a number of milliseconds.
     static void Sleep(unsigned mSec);
 
