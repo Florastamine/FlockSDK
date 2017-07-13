@@ -1297,4 +1297,11 @@ void KillProcess(const String &name)
 }
 #endif
 
+#if defined(_WIN32)
+bool GetWindowMinimized()
+{
+    return ::IsIconic(GetProcWindow()) != 0;
+}
+#endif
+
 }

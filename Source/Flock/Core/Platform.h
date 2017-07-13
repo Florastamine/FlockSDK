@@ -126,4 +126,9 @@ FLOCKSDK_API void CloseProcessHandle(HANDLE h);
 FLOCKSDK_API void KillProcess(HANDLE h);
 FLOCKSDK_API void KillProcess(const String &name);
 #endif
+
+/// Return true if the window is minimized. Only supports Windows at the moment.
+#if defined(_WIN32)
+FLOCKSDK_API bool GetWindowMinimized();
+#endif
 }
