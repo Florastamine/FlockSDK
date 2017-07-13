@@ -105,11 +105,23 @@ public:
     float GetElapsedTime();
 
     /// Get system time as milliseconds.
-    static unsigned GetSystemTime();
-    /// Get system time as seconds since 1.1.1970.
-    static unsigned GetTimeSinceEpoch();
+    static unsigned long long GetSystemTime();
+
+    /// Get system time, using Unix format.
+    static unsigned long long GetSystemTimeUnix();
+
+    /// Get system time as milliseconds, and return the information as a string.
+    static String GetSystemTimeAsString();
+
+    /// Get system time, using Unix format, and return the information as a string.
+    static String GetSystemTimeUnixAsString();
+
+    /// Get a date/time stamp as a PODVector<char> object, which follows the format of hh/mm/ss.
+    static PODVector<char> GetTimeStamp();
+
     /// Get a date/time stamp as a string.
-    static String GetStringTimeStamp();
+    static String GetTimeStampAsString();
+    
     /// Sleep for a number of milliseconds.
     static void Sleep(unsigned mSec);
 

@@ -24,6 +24,7 @@
 
 #include "../Core/CoreEvents.h"
 #include "../Core/Profiler.h"
+#include "../Core/StringUtils.h"
 
 #include <ctime>
 
@@ -35,7 +36,8 @@
 #include <unistd.h>
 #endif
 
-
+#define __STDC_FORMAT_MACROS // PRIu64 only gets defined if __STDC_FORMAT_MACROS was defined.
+#include <inttypes.h>
 
 namespace FlockSDK
 {
@@ -153,17 +155,40 @@ float Time::GetElapsedTime()
     return elapsedTime_.GetMSec(false) / 1000.0f;
 }
 
-unsigned Time::GetSystemTime()
+unsigned long long Time::GetSystemTime()
 {
     return Tick();
 }
 
-unsigned Time::GetTimeSinceEpoch()
+unsigned long long Time::GetSystemTimeUnix()
 {
-    return (unsigned)time(NULL);
+    return (unsigned long long) time(nullptr);
 }
 
-String Time::GetStringTimeStamp()
+String Time::GetSystemTimeAsString()
+{
+    return ToString("%" PRIu64, GetSystemTime());
+}
+
+String Time::GetSystemTimeUnixAsString()
+{
+    return ToString("%" PRIu64, GetSystemTimeUnix());
+}
+
+PODVector<char> Time::GetTimeStamp()
+{
+    PODVector<char> v(3);
+    time_t t = time(nullptr);
+    struct tm *u = localtime(&t);
+
+    v.Push(u->tm_hour);
+    v.Push(u->tm_min);
+    v.Push(u->tm_sec);
+
+    return PODVector<char>(v);
+}
+
+String Time::GetTimeStampAsString()
 {
     time_t sysTime;
     time(&sysTime);

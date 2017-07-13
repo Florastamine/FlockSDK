@@ -157,7 +157,7 @@ void Log::Write(int level, const String &message)
     logInstance->lastMessage_ = message;
 
     if (logInstance->timeStamp_)
-        formattedMessage = "[" + Time::GetStringTimeStamp() + "] " + formattedMessage;
+        formattedMessage = "[" + Time::GetTimeStampAsString() + "] " + formattedMessage;
 
     if (logInstance->quiet_)
     {

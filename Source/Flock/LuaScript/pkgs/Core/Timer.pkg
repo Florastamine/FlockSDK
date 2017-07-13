@@ -8,9 +8,12 @@ class Time : public Object
     unsigned GetTimerPeriod() const;
     float GetElapsedTime();
 
-    static unsigned GetSystemTime();
-    static unsigned GetTimeSinceEpoch();
-    static String GetStringTimeStamp();
+    static unsigned long long GetSystemTime();
+    static unsigned long long GetSystemTimeUnix();
+    static String GetSystemTimeAsString();
+    static String GetSystemTimeUnixAsString();
+    static PODVector<char> GetTimeStamp();
+    static String GetTimeStampAsString();
     static void Sleep(unsigned mSec);
     
     tolua_readonly tolua_property__get_set unsigned frameNumber;
