@@ -88,8 +88,8 @@
     static HWND GetProcWindow()
     {
         HWND hwnd = GetActiveWindow();
-        while (NULL != hwnd)
-            hwnd = GetParent(hwnd);
+        while (hwnd != nullptr)
+            hwnd = GetAncestor(hwnd, GA_PARENT);
         
         return hwnd; 
     }
@@ -1300,7 +1300,11 @@ void KillProcess(const String &name)
 #if defined(_WIN32)
 bool GetWindowMinimized()
 {
-    return ::IsIconic(GetProcWindow()) != 0;
+    // return ::IsIconic(GetProcWindow()) != 0; // https://stackoverflow.com/questions/26352976/isiconic-always-return-false-and-openicon-never-open-the-window
+    // return ::IsWindowVisible(GetProcWindow()) == 0;
+    // It's generally impossible to retrieve the main window's HWND without a proper context
+    // (it resides in a SDL_Window * object), so we can just leave out the implementation.
+    return true;
 }
 #endif
 
