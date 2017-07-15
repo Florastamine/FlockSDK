@@ -87,9 +87,9 @@
 #if defined(_WIN32)
     static HWND GetProcWindow()
     {
-        HWND hwnd = GetActiveWindow();
-        while (hwnd != nullptr)
-            hwnd = GetAncestor(hwnd, GA_PARENT);
+        HWND hwnd = ::GetActiveWindow();
+        while (::GetAncestor(hwnd, GA_PARENT) != ::GetDesktopWindow())
+            hwnd = ::GetAncestor(hwnd, GA_PARENT);
         
         return hwnd; 
     }
