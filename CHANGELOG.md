@@ -51,7 +51,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Profiling support is now included by default in the build scripts, which can be left out easily. 
 * Now the editor configuration file is located at the same folder as the editor executable and is named `SDKConfig.xml`. 
 * GCC now uses `-O2` instead of `-Ofast` when building the SDK. 
-* The SDK-specific LuaJIT patch is now optional and can be left out to enforce normal LuaJIT behaviour by commenting out `DOWNPOUR_PATCH` inside [`Source/ThirdParty/LuaJIT/src/luaconf.h`](https://github.com/Florastamine/IWBHT_SDK/blob/master/Source/ThirdParty/LuaJIT/src/luaconf.h). 
+* The SDK-specific LuaJIT patch is now optional and can be left out to enforce normal LuaJIT behaviour by commenting out `DOWNPOUR_PATCH` inside [`Source/ThirdParty/LuaJIT/src/luaconf.h`](https://github.com/Florastamine/FlockSDK/blob/master/Source/ThirdParty/LuaJIT/src/luaconf.h). 
 * The SDK now prefers loading pre-compiled Lua scripts instead of raw scripts. 
 
 * Removed testing support. 
@@ -69,3 +69,34 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Added `IntVector2` type. 
 * `64`-bit integer variant type support. 
 * Multi-monitor and refresh rate options for full-screen/borderless. 
+
+# Release 6 -- ??.??.2017 ([engine binaries + tool binaries](https://www.google.co.uk/?gws_rd=ssl)) 
+* The SDK's official name was changed to "Flock SDK", and the new GitHub URL pointing to the repository is now https://github.com/Florastamine/FlockSDK.
+* Various bug-fixes and tweaks. 
+* Improved build files generation time by removing a few unnecessary SDL2 function checks.
+* Shorten main script file name to just `main.lua` instead of `core-main.lua`.
+* `stb_rect_pack.h` was moved to the [tools repository](https://github.com/Florastamine/IWBHT_SDK_Tools).
+* Upgraded `stb_image` (`v2.12` -> `v2.15`) and `stb_image_write` (`v1.02` -> `v1.05`). **Note: Importing 16-bit PNGs should be possible now as `stb_image`, as of `v2.15`, provides suppport for 16-bit PNGs.**
+* Upgraded [FreeType](https://www.freetype.org/) (`v2.7.1` -> `v2.8`).
+* Upgraded [GLEW](http://glew.sourceforge.net/) (`v1.13.0` -> `v2.0.0`).
+* Upgraded [Detour/DetourCrowd/DetourTileCache/Recast](https://github.com/recastnavigation/recastnavigation) (`v1.4` -> `v1.5.1`).
+* Upgraded [Bullet](http://bulletphysics.org/wordpress/) (`2.84` -> `2.86`).
+* Upgraded [Box2D](https://github.com/erincatto/Box2D) to latest `HEAD`.
+* Upgraded [LZ4](https://github.com/lz4/lz4) (`1.7.1` -> `1.7.5`).
+* Upgraded [SQLite](https://www.sqlite.org/index.html) (`3.16.2` -> `3.18.0`).
+* Upgraded [Boost.Preprocessor](https://github.com/boostorg/preprocessor) (to `1.64.0`).
+* Upgraded [rapidjson](https://github.com/miloyip/rapidjson) (`0.1` -> `1.1.0`).
+
+* Complete removal of [AngelScript](http://www.angelcode.com/angelscript/) support when building the SDK. Starting from Release 6 onwards, the [AngelScript](http://www.angelcode.com/angelscript/)-based editor will be slowly replaced by its C++11 rewrite - which would be expected to have (slightly) better performance as well as not having AngelScript as a dependency. Which also means that, the only viable options left for writing Flock games & applications are Lua (through LuaJIT) and C++.
+* Removed `ScriptCompiler` from the [tools repository](https://github.com/Florastamine/IWBHT_SDK_Tools).
+* Dropped [Mir](http://unity.ubuntu.com/mir/index.html) support. The only thing that have been keeping Mir alive was Unity, but now with Canonical dropping Unity from future releases of Ubuntu, there's no reason to keep it around the code base.
+* Dropped [libcpuid](https://github.com/anrieff/libcpuid) as a dependency in favor of self-made functions for detecting the number of CPU cores/threads on Windows platform.
+
+* Added support for first-person view renderable objects. Assign the `bin/pfiles/shaders/techniques/DiffViewRenderables.xml` material to whichever objects you want to mark as unclippable by scene geometry.
+* Integration of volumetric lighting for both forward (`ForwardVolumetricLighting*.xml`) & deferred (`DeferredVolumetricLighting*.xml`) rendering path.
+* Ready-to-use, newly added post-process effects as well as standard shaders: outline (shader); Commodore 64 (C64) (post-process); glitch (post-process); sine (post-process); sketch (post-process); pencil (post-process); dithering (post-process).
+* A large selection of APIs for querying various properties of the currently running machine. (`GetTotalMemory()`, `GetLoginName()`, `GetHostName()`, `GetOSVersion()`, `GetHomePath()`, `GetTemporaryPath()`, `GetCPUBigEndian()`, `GetCPULittleEndian()`, `GetCPUClock()`, `GetCPUArchitecture()`, `GetCPUVendorID()`, `GetCPUBrandName()`, `GetCPUExtensions()`, `GetLocale()`, `GetEnvVar()`, `HasEnvVar()`, `SetClipboard()`, `GetClipboard()`, `GetBatteryPercentage()`, `GetBatteryTimeLeft()`, `OpenProcessHandle()`, `CloseProcessHandle()`, `KillProcess()`).
+* APIs for querying OpenGL/GLSL version, GPU name, GPU basic capabilities (memory, maximum texture size, supported OpenGL extensions) (`Graphics::GetAPIVersion()`, `Graphics::GetAdapterName()`, `Graphics::GetGPUMaxTextureSize()`, `Graphics::GetNumSupportedExtensions()`, `Graphics::GetSupportedExtensions()`, `Graphics::HasExtension()`, `Graphics::GetTotalVideoMemory()`)
+* APIs for querying time/date data: `Timer::GetSystemTimeUnix()`, `Timer::GetSystemTimeAsString()`, `Timer::GetSystemTimeUnixAsString()`, `Timer::GetTimeStamp()`, `Timer::GetTimeStampAsString()`.
+* Networking support was added back, this time with an upgraded version of [CivetWeb](https://github.com/civetweb/civetweb).
+* Added `String::FindFirstOf()`, `Vector3::Orthogonalize()`, `VertexBuffer::UpdateOffsets()`.
