@@ -27,7 +27,7 @@
 namespace FlockSDK
 {
 
-static const int DEFAULT_FONT_SIZE = 12;
+static const float DEFAULT_FONT_SIZE = 12;
 
 class Font;
 class FontFace;
@@ -89,18 +89,18 @@ public:
     /// Return UI rendering batches.
     virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
     /// React to resize.
-    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
+    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
     /// React to indent change.
     virtual void OnIndentSet();
 
     /// Set font by looking from resource cache by name and font size. Return true if successful.
-    bool SetFont(const String &fontName, int size = DEFAULT_FONT_SIZE);
+    bool SetFont(const String& fontName, int size = DEFAULT_FONT_SIZE);
     /// Set font and font size. Return true if successful.
-    bool SetFont(Font* font, int size = DEFAULT_FONT_SIZE);
+    bool SetFont(Font* font, float size = DEFAULT_FONT_SIZE);
     /// Set font size only while retaining the existing font. Return true if successful.
-    bool SetFontSize(int size);
+    bool SetFontSize(float size);
     /// Set text. Text is assumed to be either ASCII or UTF8-encoded.
-    void SetText(const String &text);
+    void SetText(const String& text);
     /// Set row alignment.
     void SetTextAlignment(HorizontalAlignment align);
     /// Set row spacing, 1.0 for original font spacing.
@@ -120,7 +120,7 @@ public:
     /// Set text effect.
     void SetTextEffect(TextEffect textEffect);
     /// Set shadow offset.
-    void SetEffectShadowOffset(const IntVector2 &offset);
+    void SetEffectShadowOffset(const IntVector2& offset);
     /// Set stroke thickness.
     void SetEffectStrokeThickness(int thickness);
     /// Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
@@ -132,10 +132,10 @@ public:
     Font* GetFont() const { return font_; }
 
     /// Return font size.
-    int GetFontSize() const { return fontSize_; }
+    float GetFontSize() const { return fontSize_; }
 
     /// Return text.
-    const String &GetText() const { return text_; }
+    const String& GetText() const { return text_; }
 
     /// Return row alignment.
     HorizontalAlignment GetTextAlignment() const { return textAlignment_; }
@@ -165,7 +165,7 @@ public:
     TextEffect GetTextEffect() const { return textEffect_; }
 
     /// Return effect shadow offset.
-    const IntVector2 &GetEffectShadowOffset() const { return shadowOffset_; }
+    const IntVector2& GetEffectShadowOffset() const { return shadowOffset_; }
 
     /// Return effect stroke thickness.
     int GetEffectStrokeThickness() const { return strokeThickness_; }
@@ -203,7 +203,7 @@ public:
     /// Return font attribute.
     ResourceRef GetFontAttr() const;
     /// Set text attribute.
-    void SetTextAttr(const String &value);
+    void SetTextAttr(const String& value);
     /// Return text attribute.
     String GetTextAttr() const;
 
@@ -228,7 +228,7 @@ protected:
     /// Current face.
     WeakPtr<FontFace> fontFace_;
     /// Font size.
-    int fontSize_;
+    float fontSize_;
     /// UTF-8 encoded text.
     String text_;
     /// Row alignment.

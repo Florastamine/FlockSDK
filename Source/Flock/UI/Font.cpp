@@ -34,13 +34,17 @@
 #include "../Resource/XMLElement.h"
 #include "../Resource/XMLFile.h"
 
-
+/// Convert float to 26.6 fixed-point (as used internally by FreeType)
+static inline int FloatToFixed(float value)
+{
+    return (int) (value * 64);
+}
 
 namespace FlockSDK
 {
 
-static const int MIN_POINT_SIZE = 1;
-static const int MAX_POINT_SIZE = 96;
+static const float MIN_POINT_SIZE = 1;
+static const float MAX_POINT_SIZE = 96;
 
 Font::Font(Context* context) :
     Resource(context),
@@ -117,17 +121,17 @@ bool Font::SaveXML(Serializer& dest, int pointSize, bool usedGlyphs, const Strin
     return packedFontFace->Save(dest, pointSize, indentation);
 }
 
-void Font::SetAbsoluteGlyphOffset(const IntVector2 &offset)
+void Font::SetAbsoluteGlyphOffset(const IntVector2& offset)
 {
     absoluteOffset_ = offset;
 }
 
-void Font::SetScaledGlyphOffset(const Vector2 &offset)
+void Font::SetScaledGlyphOffset(const Vector2& offset)
 {
     scaledOffset_ = offset;
 }
 
-FontFace* Font::GetFace(int pointSize)
+FontFace* Font::GetFace(float pointSize)
 {
     // In headless mode, always return null
     Graphics* graphics = GetSubsystem<Graphics>();
@@ -140,7 +144,9 @@ FontFace* Font::GetFace(int pointSize)
     else
         pointSize = Clamp(pointSize, MIN_POINT_SIZE, MAX_POINT_SIZE);
 
-    HashMap<int, SharedPtr<FontFace> >::Iterator i = faces_.Find(pointSize);
+    // For outline fonts, we return the nearest size in 1/64th increments, as that's what FreeType supports.
+    int key = FloatToFixed(pointSize);
+    HashMap<int, SharedPtr<FontFace> >::Iterator i = faces_.Find(key);
     if (i != faces_.End())
     {
         if (!i->second_->IsDataLost())
@@ -209,23 +215,25 @@ void Font::LoadParameters()
     }
 }
 
-FontFace* Font::GetFaceFreeType(int pointSize)
+FontFace* Font::GetFaceFreeType(float pointSize)
 {
     SharedPtr<FontFace> newFace(new FontFaceFreeType(this));
     if (!newFace->Load(&fontData_[0], fontDataSize_, pointSize))
         return 0;
 
-    faces_[pointSize] = newFace;
+    int key = FloatToFixed(pointSize);
+    faces_[key] = newFace;
     return newFace;
 }
 
-FontFace* Font::GetFaceBitmap(int pointSize)
+FontFace* Font::GetFaceBitmap(float pointSize)
 {
     SharedPtr<FontFace> newFace(new FontFaceBitmap(this));
     if (!newFace->Load(&fontData_[0], fontDataSize_, pointSize))
         return 0;
 
-    faces_[pointSize] = newFace;
+    int key = FloatToFixed(pointSize);
+    faces_[key] = newFace;
     return newFace;
 }
 

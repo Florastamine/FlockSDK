@@ -90,7 +90,7 @@ FontFaceFreeType::~FontFaceFreeType()
     }
 }
 
-bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize, int pointSize)
+bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
 {
     Context* context = font_->GetContext();
 
@@ -138,7 +138,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     face_ = face;
 
     unsigned numGlyphs = (unsigned)face->num_glyphs;
-    FLOCKSDK_LOGDEBUGF("Font face %s (%dpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
+    FLOCKSDK_LOGDEBUGF("Font face %s (%fpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
 
     PODVector<unsigned> charCodes(numGlyphs + 1, 0);
 
