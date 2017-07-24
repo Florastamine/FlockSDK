@@ -127,6 +127,8 @@ public:
     void SetEffectRoundStroke(bool roundStroke);
     /// Set effect color.
     void SetEffectColor(const Color& effectColor);
+    /// Set color of a particular character.
+    void SetColorCharacter(const VariantMap &colorTable);
 
     /// Return font.
     Font* GetFont() const { return font_; }
@@ -275,6 +277,8 @@ protected:
     PODVector<CharLocation> charLocations_;
     /// The text will be automatically translated.
     bool autoLocalizable_;
+    /// Container, which stores a list of character positions and their colors to be changed when updating through ConstructBatch().
+    VariantMap colorTable_;
     /// Localization string id storage. Used when autoLocalizable flag is set.
     String stringId_;
     /// Handle change Language.

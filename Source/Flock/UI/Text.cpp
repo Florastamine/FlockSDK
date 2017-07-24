@@ -806,6 +806,11 @@ int Text::GetRowStartPosition(unsigned rowIndex) const
     return ret;
 }
 
+void Text::SetColorCharacter(const VariantMap &colorTable)
+{
+    colorTable_ = VariantMap(colorTable);
+}
+
 void Text::ConstructBatch(UIBatch& pageBatch, const PODVector<GlyphLocation>& pageGlyphLocation, int dx, int dy, Color* color,
     float depthBias)
 {
@@ -820,6 +825,14 @@ void Text::ConstructBatch(UIBatch& pageBatch, const PODVector<GlyphLocation>& pa
     {
         const GlyphLocation& glyphLocation = pageGlyphLocation[i];
         const FontGlyph& glyph = *glyphLocation.glyph_;
+        if (!colorTable_.Empty())
+        {
+            const auto hash = StringHash(i);
+            if (colorTable_.Contains(hash))
+                pageBatch.SetColor(colorTable_[hash].GetColor());
+            else
+                pageBatch.SetDefaultColor();
+        }
         pageBatch.AddQuad(dx + glyphLocation.x_ + glyph.offsetX_, dy + glyphLocation.y_ + glyph.offsetY_, glyph.width_,
             glyph.height_, glyph.x_, glyph.y_);
     }

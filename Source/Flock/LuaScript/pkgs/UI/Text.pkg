@@ -30,6 +30,7 @@ class Text : public UIElement
     void SetEffectStrokeThickness(int thickness);
     void SetEffectRoundStroke(bool roundStroke);
     void SetEffectColor(const Color& effectColor);
+    void SetColorCharacter(const VariantMap &colorTable);
 
     bool GetAutoLocalizable() const;
     void SetAutoLocalizable(bool enable);
