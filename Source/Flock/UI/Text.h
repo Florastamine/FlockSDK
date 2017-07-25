@@ -101,6 +101,8 @@ public:
     bool SetFontSize(float size);
     /// Set text. Text is assumed to be either ASCII or UTF8-encoded.
     void SetText(const String& text);
+    /// Set text, also parses formatting data from the given text (which color for each part of the text) for later rendering.
+    void SetTextFormatted(const String& text);
     /// Set row alignment.
     void SetTextAlignment(HorizontalAlignment align);
     /// Set row spacing, 1.0 for original font spacing.

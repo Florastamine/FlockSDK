@@ -17,7 +17,7 @@ class Text : public UIElement
     bool SetFontSize(float size);
 
     void SetText(const String text);
-
+    void SetTextFormatted(const String& text);
     void SetTextAlignment(HorizontalAlignment align);
     void SetRowSpacing(float spacing);
     void SetWordwrap(bool enable);

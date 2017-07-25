@@ -33,7 +33,7 @@
 #include "../Resource/Localization.h"
 #include "../Resource/ResourceEvents.h"
 
-
+#include <PugiXml/pugixml.hpp>
 
 namespace FlockSDK
 {
@@ -305,6 +305,38 @@ void Text::DecodeToUnicode()
     unicodeText_.Clear();
     for (auto i = 0u; i < text_.Length();)
         unicodeText_.Push(text_.NextUTF8Char(i));
+}
+
+void Text::SetTextFormatted(const String& text)
+{
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load(text.CString());
+    String string;
+    VariantMap colorMap;
+
+    if (result.status == pugi::status_ok)
+    {
+        pugi::xml_node tree = document.child("Subtitle");
+        for (pugi::xml_node_iterator xni = tree.begin(); xni != tree.end(); ++xni)
+        {
+            auto color = Color(
+                ToFloat(xni->attribute("R").value()),
+                ToFloat(xni->attribute("G").value()),
+                ToFloat(xni->attribute("B").value()),
+                1.0
+            );
+            auto data = xni->attribute("Data").value();
+
+            auto before = string.Length();
+            string += data;
+            auto after = string.Length();
+
+            for (; before < after; ++before)
+                colorMap[StringHash(before)] = color;
+        }
+        SetColorCharacter(colorMap);
+        SetText(string);
+    }
 }
 
 void Text::SetText(const String &text)
