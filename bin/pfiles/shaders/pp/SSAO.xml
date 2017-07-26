@@ -4,6 +4,7 @@
     <command type="scenepass" pass="depth" output="depth" />
     <command type="quad" tag="ssao" vs="ssao" ps="ssao">
         <parameter name="ScreenSize" value="1920 1080" />
+        <parameter name="SSAOQuality" value="3.0" />
         <texture unit="diffuse" name="viewport" />
         <texture unit="emissive" name="depth" />
     </command>
