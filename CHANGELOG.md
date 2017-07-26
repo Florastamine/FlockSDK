@@ -2,7 +2,7 @@
 Initial release. 
 
 # Release 2 -- 01.27.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing)) 
-These builds incorporated a few bug-fixes introduced in the main `Flock` repository as well as new features and upgrades of existing 3rd party libraries. Most notably: 
+These builds incorporated a few bug-fixes introduced in the main `Urho3D` repository as well as new features and upgrades of existing 3rd party libraries. Most notably: 
 * Upgraded [AngelScript](http://www.angelcode.com/angelscript/) from `2.30.2` to `2.31.2`. 
 * Completely removed support for touch controls and touch input. (Because `Windows` and `Linux` are the only two target platforms that are officially supported, and touch controls are more popular on mobile devices. Also the code base would be simplified a lot.) 
 * Gotten rid of legacy and/or unpopular file formats to reduce the size of the AssetImporter tool. (around 5 MiB was cut due to the dropping of a lot of file formats) 
@@ -29,7 +29,7 @@ As usual, this release brought in various fixes, tweaks, upgrades, modifications
 This release does not only moves further into the goal of driving away from the original codebase, but also contains various bugfixes and improvements, outlined below. 
 * General bug-fixes and tweaks. 
 * New editor feature: Basic terrain editing within the editor, which includes terrain manipulation/smoothing, different brush size/types, undo/redo support, and heightmap saving/loading.
-* Dropped the switch to enable C++11 (`-DURHO3D_C++11`). This is an old switch that was left from the `Flock` codebase and is used to enable C++11 support, but it was dropped and now C++11 is mandatorily required. 
+* Dropped the switch to enable C++11 (`-DFLOCKSDK_C++11`). This is an old switch that was left from the `Flock` codebase and is used to enable C++11 support, but it was dropped and now C++11 is mandatorily required. 
 * The 2D component is now an integral part of the SDK, which adds an additional ~2.0 `MiB` overhead to the built executable. 
 * Upgraded [Open Asset Import Library](http://www.assimp.org) from `3.1.1` to `3.3.1`, **thus effectively rendering pre-C++11 compilers to not be able to compile the SDK**. **(*)** 
 * Upgraded [pugixml](http://pugixml.org) from `1.7` to `1.8`. 
@@ -45,7 +45,7 @@ This release does not only moves further into the goal of driving away from the 
 **`Release 4` is the last major release which still provides partial support for compiling the SDK under MSVC compilers. Starting from the fifth release, users are recommended to switch to [Cygwin](https://www.cygwin.com)/[MinGW-W64](http://mingw-w64.org/doku.php)/[MSYS2](http://www.msys2.org) instead.** 
 
 # Release 5 -- 03.31.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing)) 
-This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Flock developers and myself. Enjoy!
+This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Urho3D developers and myself. Enjoy!
 * General bug-fixes and tweaks. 
 * Physics support is now enforced. 
 * Profiling support is now included by default in the build scripts, which can be left out easily. 
@@ -71,32 +71,42 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Multi-monitor and refresh rate options for full-screen/borderless. 
 
 # Release 6 -- ??.??.2017 ([engine binaries + tool binaries](https://www.google.co.uk/?gws_rd=ssl)) 
+## Changes/bugfixes
 * The SDK's official name was changed to "Flock SDK", and the new GitHub URL pointing to the repository is now https://github.com/Florastamine/FlockSDK.
 * Various bug-fixes and tweaks. 
 * Improved build files generation time by removing a few unnecessary SDL2 function checks.
 * Shorten main script file name to just `main.lua` instead of `core-main.lua`.
+* Improved SSAO's overall quality, and also added a new parameter, `SSAOQuality`, which controls the "spreadness" of the effect.
 * `stb_rect_pack.h` was moved to the [tools repository](https://github.com/Florastamine/IWBHT_SDK_Tools).
 * Upgraded `stb_image` (`v2.12` -> `v2.15`) and `stb_image_write` (`v1.02` -> `v1.05`). **Note: Importing 16-bit PNGs should be possible now as `stb_image`, as of `v2.15`, provides suppport for 16-bit PNGs.**
-* Upgraded [FreeType](https://www.freetype.org/) (`v2.7.1` -> `v2.8`).
 * Upgraded [GLEW](http://glew.sourceforge.net/) (`v1.13.0` -> `v2.0.0`).
 * Upgraded [Detour/DetourCrowd/DetourTileCache/Recast](https://github.com/recastnavigation/recastnavigation) (`v1.4` -> `v1.5.1`).
-* Upgraded [Bullet](http://bulletphysics.org/wordpress/) (`2.84` -> `2.86`).
 * Upgraded [Box2D](https://github.com/erincatto/Box2D) to latest `HEAD`.
 * Upgraded [LZ4](https://github.com/lz4/lz4) (`1.7.1` -> `1.7.5`).
-* Upgraded [SQLite](https://www.sqlite.org/index.html) (`3.16.2` -> `3.18.0`).
-* Upgraded [Boost.Preprocessor](https://github.com/boostorg/preprocessor) (to `1.64.0`).
-* Upgraded [rapidjson](https://github.com/miloyip/rapidjson) (`0.1` -> `1.1.0`).
+* Upgraded [SQLite](https://www.sqlite.org/index.html) (`3.16.2` -> `3.19.3`).
 
+## Removals/deprecation of features
 * Complete removal of [AngelScript](http://www.angelcode.com/angelscript/) support when building the SDK. Starting from Release 6 onwards, the [AngelScript](http://www.angelcode.com/angelscript/)-based editor will be slowly replaced by its C++11 rewrite - which would be expected to have (slightly) better performance as well as not having AngelScript as a dependency. Which also means that, the only viable options left for writing Flock games & applications are Lua (through LuaJIT) and C++.
 * Removed `ScriptCompiler` from the [tools repository](https://github.com/Florastamine/IWBHT_SDK_Tools).
 * Dropped [Mir](http://unity.ubuntu.com/mir/index.html) support. The only thing that have been keeping Mir alive was Unity, but now with Canonical dropping Unity from future releases of Ubuntu, there's no reason to keep it around the code base.
 * Dropped [libcpuid](https://github.com/anrieff/libcpuid) as a dependency in favor of self-made functions for detecting the number of CPU cores/threads on Windows platform.
 
+## New features
 * Added support for first-person view renderable objects. Assign the `bin/pfiles/shaders/techniques/DiffViewRenderables.xml` material to whichever objects you want to mark as unclippable by scene geometry.
 * Integration of volumetric lighting for both forward (`ForwardVolumetricLighting*.xml`) & deferred (`DeferredVolumetricLighting*.xml`) rendering path.
 * Ready-to-use, newly added post-process effects as well as standard shaders: outline (shader); Commodore 64 (C64) (post-process); glitch (post-process); sine (post-process); sketch (post-process); pencil (post-process); dithering (post-process).
 * A large selection of APIs for querying various properties of the currently running machine. (`GetTotalMemory()`, `GetLoginName()`, `GetHostName()`, `GetOSVersion()`, `GetHomePath()`, `GetTemporaryPath()`, `GetCPUBigEndian()`, `GetCPULittleEndian()`, `GetCPUClock()`, `GetCPUArchitecture()`, `GetCPUVendorID()`, `GetCPUBrandName()`, `GetCPUExtensions()`, `GetLocale()`, `GetEnvVar()`, `HasEnvVar()`, `SetClipboard()`, `GetClipboard()`, `GetBatteryPercentage()`, `GetBatteryTimeLeft()`, `OpenProcessHandle()`, `CloseProcessHandle()`, `KillProcess()`).
 * APIs for querying OpenGL/GLSL version, GPU name, GPU basic capabilities (memory, maximum texture size, supported OpenGL extensions) (`Graphics::GetAPIVersion()`, `Graphics::GetAdapterName()`, `Graphics::GetGPUMaxTextureSize()`, `Graphics::GetNumSupportedExtensions()`, `Graphics::GetSupportedExtensions()`, `Graphics::HasExtension()`, `Graphics::GetTotalVideoMemory()`)
 * APIs for querying time/date data: `Timer::GetSystemTimeUnix()`, `Timer::GetSystemTimeAsString()`, `Timer::GetSystemTimeUnixAsString()`, `Timer::GetTimeStamp()`, `Timer::GetTimeStampAsString()`.
-* Networking support was added back, this time with an upgraded version of [CivetWeb](https://github.com/civetweb/civetweb).
-* Added `String::FindFirstOf()`, `Vector3::Orthogonalize()`, `VertexBuffer::UpdateOffsets()`.
+* Per-character coloring is now possible through `Text::SetColorCharacter()`, and partial support for multi-colored texts was added through `Text::SetTextFormatted()`.
+* Networking support was added back.
+* Added `String::FindFirstOf()`.
+
+## Changes/bugfixes/new features merged from Urho3D:
+* Various bug-fixes and tweaks. 
+* Upgraded [FreeType](https://www.freetype.org/) (`v2.7.1` -> `v2.8`).
+* Upgraded [Bullet](http://bulletphysics.org/wordpress/) (`2.84` -> `2.86`).
+* Upgraded [rapidjson](https://github.com/miloyip/rapidjson) (`0.1` -> `1.1.0`).
+* Upgraded [Boost.Preprocessor](https://github.com/boostorg/preprocessor) (to `1.64.0`).
+
+* Added `Vector3::Orthogonalize()`, `VertexBuffer::UpdateOffsets()`.
