@@ -49,7 +49,8 @@ ParticleEmitter2D::ParticleEmitter2D(Context* context) :
     emissionTime_(0.0f),
     emitParticleTime_(0.0f),
     boundingBoxMinPoint_(Vector3::ZERO),
-    boundingBoxMaxPoint_(Vector3::ZERO)
+    boundingBoxMaxPoint_(Vector3::ZERO),
+    emitting_(true)
 {
     sourceBatches_.Resize(1);
     sourceBatches_[0].owner_ = this;
@@ -70,6 +71,7 @@ void ParticleEmitter2D::RegisterObject(Context* context)
     FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Sprite ", GetSpriteAttr, SetSpriteAttr, ResourceRef, ResourceRef(Sprite2D::GetTypeStatic()),
         AM_DEFAULT);
     FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, BlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
+    FLOCKSDK_ACCESSOR_ATTRIBUTE("Is Emitting", IsEmitting, SetEmitting, bool, true, AM_DEFAULT);
 }
 
 void ParticleEmitter2D::OnSetEnabled()
@@ -165,6 +167,15 @@ void ParticleEmitter2D::SetSpriteAttr(const ResourceRef& value)
         SetSprite(sprite);
 }
 
+void ParticleEmitter2D::SetEmitting(bool enable)
+{
+    if (enable != emitting_)
+    {
+        emitting_ = enable;
+        emitParticleTime_ = 0.0f;
+    }
+}
+
 ResourceRef ParticleEmitter2D::GetSpriteAttr() const
 {
     return Sprite2D::SaveToResourceRef(sprite_);
@@ -229,7 +240,7 @@ void ParticleEmitter2D::UpdateSourceBatches()
     vertex2.uv_ = textureRect.max_;
     vertex3.uv_ = Vector2(textureRect.max_.x_, textureRect.min_.y_);
 
-    for (auto i = 0u; i < numParticles_; ++i)
+for (auto i = 0u; i < numParticles_; ++i)
     {
         Particle2D& p = particles_[i];
 
@@ -325,7 +336,7 @@ void ParticleEmitter2D::Update(float timeStep)
         }
     }
 
-    if (emissionTime_ > 0.0f)
+    if (emitting_ && emissionTime_ > 0.0f)
     {
         float worldAngle = GetNode()->GetWorldRotation().RollAngle();
 
