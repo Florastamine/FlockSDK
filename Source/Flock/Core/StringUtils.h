@@ -135,6 +135,8 @@ FLOCKSDK_API unsigned ToUpper(unsigned ch);
 FLOCKSDK_API unsigned ToLower(unsigned ch);
 /// Convert a memory size into a formatted size string, of the style "1.5 Mb".
 FLOCKSDK_API String GetFileSizeString(unsigned long long memorySize);
+/// Decode a Base64-encoded string into buffer.
+FLOCKSDK_API PODVector<unsigned char> DecodeBase64(const String &encodedString);
 /// Parse type from a C string.
 template <class T> T FromString(const char* source);
 

@@ -31,7 +31,7 @@
 #include "../2D/Sprite2D.h"
 #include "../2D/TmxFile2D.h"
 
-
+enum EncodeType { XML, CSV, Base64 };
 
 namespace FlockSDK
 {
@@ -101,33 +101,106 @@ bool TmxTileLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
         return false;
     }
 
-    if (dataElem.HasAttribute("encoding") && dataElem.GetAttribute("encoding") != "xml")
+    EncodeType encoding;
+    if (dataElem.HasAttribute("compression"))
     {
-        FLOCKSDK_LOGERROR("Encoding not support now");
+        FLOCKSDK_LOGERROR("Compression not supported now");
         return false;
     }
 
-    XMLElement tileElem = dataElem.GetChild("tile");
-    tiles_.Resize((unsigned)(width_ * height_));
-
-    for (int y = 0; y < height_; ++y)
+    if (dataElem.HasAttribute("encoding"))
     {
-        for (int x = 0; x < width_; ++x)
+        String encodingAttribute = dataElem.GetAttribute("encoding");
+        if (encodingAttribute == "xml")
+            encoding = XML;
+        else if (encodingAttribute == "csv")
+            encoding = CSV;
+        else if (encodingAttribute == "base64")
+            encoding = Base64;
+        else
         {
-            if (!tileElem)
-                return false;
+            FLOCKSDK_LOGERROR("Invalid encoding: " + encodingAttribute);
+            return false;
+        }
+    }
+    else
+        encoding = XML;
 
-            int gid = tileElem.GetInt("gid");
-            if (gid > 0)
+    tiles_.Resize((unsigned)(width_ * height_));
+    if (encoding == XML)
+    {
+        XMLElement tileElem = dataElem.GetChild("tile");
+
+        for (int y = 0; y < height_; ++y)
+        {
+            for (int x = 0; x < width_; ++x)
             {
-                SharedPtr<Tile2D> tile(new Tile2D());
-                tile->gid_ = gid;
-                tile->sprite_ = tmxFile_->GetTileSprite(gid);
-                tile->propertySet_ = tmxFile_->GetTilePropertySet(gid);
-                tiles_[y * width_ + x] = tile;
-            }
+                if (!tileElem)
+                    return false;
 
-            tileElem = tileElem.GetNext("tile");
+                int gid = tileElem.GetInt("gid");
+                if (gid > 0)
+                {
+                    SharedPtr<Tile2D> tile(new Tile2D());
+                    tile->gid_ = gid;
+                    tile->sprite_ = tmxFile_->GetTileSprite(gid);
+                    tile->propertySet_ = tmxFile_->GetTilePropertySet(gid);
+                    tiles_[y * width_ + x] = tile;
+                }
+
+                tileElem = tileElem.GetNext("tile");
+            }
+        }
+    }
+    else if (encoding == CSV)
+    {
+        String dataValue = dataElem.GetValue();
+        Vector<String> gidVector = dataValue.Split(',');
+        int currentIndex = 0;
+        for (int y = 0; y < height_; ++y)
+        {
+            for (int x = 0; x < width_; ++x)
+            {
+                gidVector[currentIndex].Replace("\n", "");
+                int gid = ToInt(gidVector[currentIndex]);
+                if (gid > 0)
+                {
+                    SharedPtr<Tile2D> tile(new Tile2D());
+                    tile->gid_ = gid;
+                    tile->sprite_ = tmxFile_->GetTileSprite(gid);
+                    tile->propertySet_ = tmxFile_->GetTilePropertySet(gid);
+                    tiles_[y * width_ + x] = tile;
+                }
+                ++currentIndex;
+            }
+        }
+    }
+    else if (encoding == Base64)
+    {
+        String dataValue = dataElem.GetValue();
+        int startPosition = 0;
+        while (!IsAlpha(dataValue[startPosition]) && !IsDigit(dataValue[startPosition])
+              && dataValue[startPosition] != '+' && dataValue[startPosition] != '/') ++startPosition;
+        dataValue = dataValue.Substring(startPosition);
+        auto buffer = DecodeBase64(dataValue);
+        int currentIndex = 0;
+        for (int y = 0; y < height_; ++y)
+        {
+            for (int x = 0; x < width_; ++x)
+            {
+                // buffer contains 32-bit integers in little-endian format
+                int gid = (buffer[currentIndex+3] << 24) | (buffer[currentIndex+2] << 16)
+                        | (buffer[currentIndex+1] << 8) | buffer[currentIndex];
+                if (gid > 0)
+                {
+                    SharedPtr<Tile2D> tile(new Tile2D());
+                    tile->gid_ = gid;
+                    tile->sprite_ = tmxFile_->GetTileSprite(gid);
+                    tile->propertySet_ = tmxFile_->GetTilePropertySet(gid);
+                    tiles_[y * width_ + x] = tile;
+                }
+                currentIndex += 4;
+            }
         }
     }
 
@@ -579,7 +652,13 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
 
     for (XMLElement tileElem = tileSetElem.GetChild("tile"); tileElem; tileElem = tileElem.GetNext("tile"))
     {
-        if(tileElem.HasChild("objectgroup"))
+        if (tileElem.HasChild("properties"))
+        {
+            SharedPtr<PropertySet2D> propertySet(new PropertySet2D());
+            propertySet->Load(tileElem.GetChild("properties"));
+            gidToPropertySetMapping_[firstgid + tileElem.GetInt("id")] = propertySet;
+        }
+        else if (tileElem.HasChild("objectgroup"))
         {
             XMLElement objectGroup = tileElem.GetChild("objectgroup");
 
