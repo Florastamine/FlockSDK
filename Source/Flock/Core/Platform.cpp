@@ -871,22 +871,25 @@ String GetCPUExtensions()
     unsigned ext_id = c[0]; 
 
     #define ADD_IF(iindex, bindex, str) \
-        if ((c[(iindex)] & ((int)1 << (bindex)) ) != 0) { if(!s.Contains(str)) s = s + str + ";"; }
+        if ((c[(iindex)] & ((int)1 << (bindex)) ) != 0) { /* if(!s.Contains(str)) */ s = s + str + ";"; }
     
 	if (id >= 0x00000001)
     {
 		__GetCPUID__(c, 0x00000001);
-		ADD_IF(3, 22, "Extended MMX");
 		ADD_IF(3, 23, "MMX");
+        ADD_IF(3, 22, "Extended MMX");
+
 		ADD_IF(3, 25, "SSE");
 		ADD_IF(3, 26, "SSE2");
 		ADD_IF(2, 0, "SSE3");
 		ADD_IF(2, 9, "SSSE3");
 		ADD_IF(2, 19, "SSE4.1");
 		ADD_IF(2, 20, "SSE4.2");
+
 		ADD_IF(2, 25, "AES");
-		ADD_IF(2, 28, "FMA3");
-		ADD_IF(2, 12, "RDRAND");
+		ADD_IF(2, 28, "AVX");
+		ADD_IF(2, 12, "FMA3");
+        ADD_IF(2, 30, "RDRAND");
 	}
 	if (id >= 0x00000007)
     {
@@ -896,40 +899,39 @@ String GetCPUExtensions()
             ADD_IF(1, 5, "AVX2");
 
 		ADD_IF(1, 4, "HLE");
-		ADD_IF(1, 3, "BMI");
+		ADD_IF(1, 3, "BMI1");
 		ADD_IF(1, 8, "BMI2");
 		ADD_IF(1, 19, "ADX");
 		ADD_IF(1, 14, "MPX");
 		ADD_IF(1, 29, "SHA");
+        ADD_IF(2, 0, "PREFETCHWT1");
 
 		if (__GetAVX512Support__())
         {
             s = s + "AVX-512;"; 
-			ADD_IF(1, 16, "AVX-512 F");
-			ADD_IF(1, 28, "AVX-512 CDI");
-			ADD_IF(1, 26, "AVX-512 PFI");
-			ADD_IF(1, 27, "AVX-512 ERI");
-			ADD_IF(1, 31, "AVX-512 VL");
-			ADD_IF(1, 30, "AVX-512 BW");
-			ADD_IF(1, 17, "AVX-512 DQ");
-			ADD_IF(1, 21, "AVX-512 IFMA");
-			ADD_IF(2, 1, "AVX-512 VBMI");
+			ADD_IF(1, 16, "AVX-512-F");
+			ADD_IF(1, 28, "AVX-512-CD");
+			ADD_IF(1, 26, "AVX-512-PF");
+			ADD_IF(1, 27, "AVX-512-ER");
+			ADD_IF(1, 31, "AVX-512-VL");
+			ADD_IF(1, 30, "AVX-512-BW");
+			ADD_IF(1, 17, "AVX-512-DQ");
+			ADD_IF(1, 21, "AVX-512-IFMA");
+			ADD_IF(2, 1, "AVX-512-VBMI");
 		}
-
-		ADD_IF(2, 0, "PREFETCHWT1");
 	}
 	if (ext_id >= 0x80000001) 
     {
 		__GetCPUID__(c, 0x80000001);
 
 		ADD_IF(3, 29, "EM64T");
+        ADD_IF(2, 5, "ABM");
+        ADD_IF(2, 6, "SSE4a");
+        ADD_IF(2, 16, "FMA4");
+        ADD_IF(2, 11, "XOP");
 		ADD_IF(3, 0, "x87");
 		ADD_IF(3, 30, "3DNow!");
 		ADD_IF(3, 31, "Extended 3DNow!");
-		ADD_IF(2, 5, "BMI");
-		ADD_IF(2, 6, "BMI2");
-		ADD_IF(2, 16, "ADX");
-		ADD_IF(2, 11, "MPX");
 	}
     #undef ADD_IF 
 
