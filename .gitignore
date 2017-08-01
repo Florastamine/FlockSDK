@@ -89,4 +89,4 @@ Source/ThirdParty/LuaJIT/src/jit/bc/*.lua
 *.fbx 
 
 Source/Flock/LuaScript/pkgs/Core/Platform.pkg
-
+Cppcheck/

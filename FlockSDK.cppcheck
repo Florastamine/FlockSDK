@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <root name="."/>
+    <builddir>.\Cppcheck</builddir>
+    <exclude>
+        <path name="Source/ThirdParty/"/>
+        <path name="bin/"/>
+        <path name="Build/"/>
+        <path name="CMake/"/>
+    </exclude>
+</project>
