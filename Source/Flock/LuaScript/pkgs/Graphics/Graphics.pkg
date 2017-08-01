@@ -35,6 +35,7 @@ class Graphics : public Object
     int GetWidth() const;
     int GetHeight() const;
     int GetMultiSample() const;
+    IntVector2 GetSize() const;
     bool GetFullscreen() const;
     bool GetResizable() const;
     bool GetBorderless() const;
