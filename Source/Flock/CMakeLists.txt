@@ -43,7 +43,11 @@ endif ()
 
 if (WIN32)
     set (CMAKE_DEBUG_POSTFIX _d)
-endif () 
+endif ()
+
+if (NOT FLOCK_SCENE_EDITOR)
+    list (APPEND EXCLUDED_SOURCE_DIRS AngelScript)
+endif ()
 
 string (REPLACE ";" "/[^;]+;" EXCLUDE_PATTERNS "${EXCLUDED_SOURCE_DIRS};")
 define_source_files (EXCLUDE_PATTERNS ${EXCLUDE_PATTERNS} GLOB_CPP_PATTERNS *.cpp ${GLOB_OBJC_PATTERN} RECURSE GROUP PCH Precompiled.h)

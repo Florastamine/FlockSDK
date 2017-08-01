@@ -68,7 +68,8 @@ typedef double float64_t;
 // Define mkdir for GNUC
 #include <sys/stat.h>
 #include <sys/types.h>
-#define _mkdir(dirname) mkdir(dirname, S_IRWXU)
+// #define _mkdir(dirname) mkdir(dirname, S_IRWXU)
+#define _mkdir(dirname) mkdir(dirname)
 #endif
 #else
 #include <direct.h>

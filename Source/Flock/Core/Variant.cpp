@@ -66,6 +66,7 @@ static const char* typeNames[] =
     "StringVector",
     "Rect",
     "IntVector3",
+    "Int64",
     0
 };
 
@@ -145,6 +146,9 @@ bool Variant::operator ==(const Variant &rhs) const
     {
     case VAR_INT:
         return value_.int_ == rhs.value_.int_;
+
+    case VAR_INT64:
+        return *reinterpret_cast<const long long*>(&value_.int_) == *reinterpret_cast<const long long*>(&rhs.value_.int_);
 
     case VAR_BOOL:
         return value_.bool_ == rhs.value_.bool_;
@@ -253,6 +257,10 @@ void Variant::FromString(VariantType type, const char* value)
     {
     case VAR_INT:
         *this = ToInt(value);
+        break;
+
+    case VAR_INT64:
+        *this = ToInt64(value);
         break;
 
     case VAR_BOOL:
@@ -399,6 +407,9 @@ String Variant::ToString() const
     case VAR_INT:
         return String(value_.int_);
 
+    case VAR_INT64:
+        return String(*reinterpret_cast<const long long*>(&value_.int_));
+
     case VAR_BOOL:
         return String(value_.bool_);
 
@@ -474,6 +485,9 @@ bool Variant::IsZero() const
     {
     case VAR_INT:
         return value_.int_ == 0;
+
+    case VAR_INT64:
+        return *reinterpret_cast<const long long*>(&value_.int_) == 0;
 
     case VAR_BOOL:
         return value_.bool_ == false;
@@ -679,6 +693,16 @@ template <> unsigned Variant::Get<unsigned>() const
     return GetUInt();
 }
 
+template <> long long Variant::Get<long long>() const
+{
+    return GetInt64();
+}
+
+template <> unsigned long long Variant::Get<unsigned long long>() const
+{
+    return GetUInt64();
+}
+
 template <> StringHash Variant::Get<StringHash>() const
 {
     return GetStringHash();
@@ -719,7 +743,7 @@ template <> const Quaternion& Variant::Get<const Quaternion&>() const
     return GetQuaternion();
 }
 
-template <> const Color& Variant::Get<const Color&>() const
+template <> const Color &Variant::Get<const Color&>() const
 {
     return GetColor();
 }
@@ -729,12 +753,12 @@ template <> const String &Variant::Get<const String&>() const
     return GetString();
 }
 
-template <> const Rect& Variant::Get<const Rect&>() const
+template <> const Rect &Variant::Get<const Rect&>() const
 {
     return GetRect();
 }
 
-template <> const IntRect& Variant::Get<const IntRect&>() const
+template <> const IntRect &Variant::Get<const IntRect&>() const
 {
     return GetIntRect();
 }
@@ -749,7 +773,7 @@ template <> const IntVector3 &Variant::Get<const IntVector3&>() const
     return GetIntVector3();
 }
 
-template <> const PODVector<unsigned char>& Variant::Get<const PODVector<unsigned char>&>() const
+template <> const PODVector<unsigned char> &Variant::Get<const PODVector<unsigned char>&>() const
 {
     return GetBuffer();
 }
@@ -764,17 +788,17 @@ template <> RefCounted* Variant::Get<RefCounted*>() const
     return GetPtr();
 }
 
-template <> const Matrix3& Variant::Get<const Matrix3&>() const
+template <> const Matrix3 &Variant::Get<const Matrix3&>() const
 {
     return GetMatrix3();
 }
 
-template <> const Matrix3x4& Variant::Get<const Matrix3x4&>() const
+template <> const Matrix3x4 &Variant::Get<const Matrix3x4&>() const
 {
     return GetMatrix3x4();
 }
 
-template <> const Matrix4& Variant::Get<const Matrix4&>() const
+template <> const Matrix4 &Variant::Get<const Matrix4&>() const
 {
     return GetMatrix4();
 }

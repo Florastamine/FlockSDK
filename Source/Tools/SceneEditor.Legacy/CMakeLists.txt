@@ -20,19 +20,11 @@
 # THE SOFTWARE.
 #
 
-# Set project name
-project (Flock-Tools)
+# Define target name
+set (TARGET_NAME SceneEditor.Legacy)
 
-find_package (Flock REQUIRED)
-include_directories (${FLOCK_INCLUDE_DIRS}) 
+# Define source files
+define_source_files ()
 
-add_subdirectory (Downpour) 
-add_subdirectory (PackageTool) 
-add_subdirectory (SceneEditor) 
-# add_subdirectory (AssetImporter)
-# add_subdirectory (RampGenerator)
-# add_subdirectory (SpritePacker) 
-
-if (FLOCK_SCENE_EDITOR)
-    add_subdirectory (SceneEditor.Legacy)
-endif ()
+# Setup target with resource copying
+setup_main_executable (NOBUNDLE)

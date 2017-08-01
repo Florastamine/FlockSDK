@@ -51,7 +51,12 @@ foreach (TARGET STB GLEW JO LZ4 SQLite StanHull Lua LuaJIT toluapp/src/lib PugiX
         message (STATUS "Found 3rd-party target: " ${TARGET})
         add_subdirectory (ThirdParty/${TARGET})
     endif()
-endforeach () 
+endforeach ()
+
+if (FLOCK_SCENE_EDITOR)
+    message (STATUS "The following optional component(s) will be installed: Editor")
+    add_subdirectory (ThirdParty/AngelScript)
+endif ()
 
 if (FLOCK_IK)
     message (STATUS "The following optional component(s) will be installed: IK")

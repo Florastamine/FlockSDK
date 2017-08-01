@@ -52,6 +52,7 @@ set (CMAKE_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKE
 include (CMakeDependentOption)
 cmake_dependent_option (FLOCK_64BIT "Enable 64-bit build, the default is set based on the native ABI of the chosen compiler toolchain" ${NATIVE_64BIT} "NOT MSVC AND NOT (ARM AND NOT IOS)  AND NOT POWERPC" ${NATIVE_64BIT})     # Intentionally only enable the option for iOS but not for tvOS as the latter is 64-bit only
 option (FLOCK_LUA "Enable additional Lua scripting support" TRUE)
+option (FLOCK_SCENE_EDITOR "Enable building of the scene editor." TRUE)
 option (FLOCK_NAVIGATION "Enable navigation support" TRUE)
 
 if (CMAKE_PROJECT_NAME STREQUAL Flock)
@@ -202,7 +203,11 @@ if (FLOCK_NAVIGATION)
 endif ()
 
 if (FLOCK_NETWORK)
-    add_definitions (-DFLOCKSDK_NETWORK)
+add_definitions (-DFLOCKSDK_NETWORK)
+endif ()
+
+if (FLOCK_SCENE_EDITOR)
+add_definitions (-DFLOCK_SCENE_EDITOR)
 endif ()
 
 # TODO: The logic below is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling, until then ensure the DirectX package is not being searched again in external projects such as when building LuaJIT library
