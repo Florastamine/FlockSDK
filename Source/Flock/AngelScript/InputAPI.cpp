@@ -545,6 +545,7 @@ static void RegisterInput(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Input", "int get_mouseMoveX() const", asMETHOD(Input, GetMouseMoveX), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveY() const", asMETHOD(Input, GetMouseMoveY), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "int get_mouseMoveWheel() const", asMETHOD(Input, GetMouseMoveWheel), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Input", "Vector2 get_inputScale() const", asMETHOD(Input, GetInputScale), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "uint get_numJoysticks() const", asMETHOD(Input, GetNumJoysticks), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticks(int)", asMETHOD(Input, GetJoystick), asCALL_THISCALL);
     engine->RegisterObjectMethod("Input", "JoystickState@+ get_joysticksByIndex(uint)", asMETHOD(Input, GetJoystickByIndex), asCALL_THISCALL);

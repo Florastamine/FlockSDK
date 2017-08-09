@@ -64,6 +64,7 @@ class Input : public Object
     int GetMouseMoveX() const;
     int GetMouseMoveY() const;
     int GetMouseMoveWheel() const;
+    Vector2 GetInputScale() const;
     unsigned GetNumJoysticks() const;
     JoystickState* GetJoystick(int id);
     JoystickState* GetJoystickByIndex(unsigned index);
