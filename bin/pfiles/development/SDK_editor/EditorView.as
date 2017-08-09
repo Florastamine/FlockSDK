@@ -1596,6 +1596,23 @@ void HandlePostRenderUpdate()
         renderer.DrawDebugGeometry(false);
     if (physicsDebug && editorScene.physicsWorld !is null)
         editorScene.physicsWorld.DrawDebugGeometry(true);
+
+    if (physicsDebug && editorScene.physicsWorld2D !is null)
+    {
+        bool needDraw = true;
+        for (uint i = 0; i < selectedComponents.length; ++i)
+        {
+            if (cast<PhysicsWorld2D>(selectedComponents[i]) !is null)
+            {
+                needDraw = false; // Already drawed
+                break;
+            }
+        }
+
+        if (needDraw)
+            physicsWorld2D.DrawDebugGeometry();
+    }
+
     if (octreeDebug && editorScene.octree !is null)
         editorScene.octree.DrawDebugGeometry(true);
 
@@ -1611,7 +1628,7 @@ void HandlePostRenderUpdate()
 
         Array<Component@>@ dynNavMeshes = editorScene.GetComponents("DynamicNavigationMesh", true);
         for (uint i = 0; i < dynNavMeshes.length; ++i)
-            cast<DynamicNavigationMesh>(dynNavMeshes[i]).DrawDebugGeometry(true);        
+            cast<DynamicNavigationMesh>(dynNavMeshes[i]).DrawDebugGeometry(true);
     }
 
     if (setViewportCursor | resizingBorder > 0)
@@ -1772,22 +1789,22 @@ void ViewRaycast(bool mouseClick)
 
         RayQueryResult result = editorScene.octree.RaycastSingle(cameraRay, RAY_TRIANGLE, camera.farClip,
             pickModeDrawableFlags[pickMode], 0x7fffffff);
-        
+
         if (result.drawable !is null)
-        {            
+        {
             Drawable@ drawable = result.drawable;
-            
+
             // for actual last selected node or component in both modes
-            if (hotKeyMode == HOTKEYS_MODE_STANDARD) 
+            if (hotKeyMode == HOTKEYS_MODE_STANDARD)
             {
-                if (input.mouseButtonDown[MOUSEB_LEFT]) 
+                if (input.mouseButtonDown[MOUSEB_LEFT])
                 {
                     lastSelectedNode = drawable.node;
                     lastSelectedDrawable = drawable;
                     lastSelectedComponent = drawable;
                 }
             }
-             
+
             // If selecting a terrain patch, select the parent terrain instead
             if (drawable.typeName != "TerrainPatch")
             {
@@ -1802,12 +1819,11 @@ void ViewRaycast(bool mouseClick)
             {
                 Terrain@ terrainComponent = drawable.node.parent.GetComponent("Terrain");
                 selectedComponent = terrainComponent;
-            
+
                 if(selectedComponent is terrainComponent && input.mouseButtonDown[MOUSEB_LEFT])
                 {
                     selectedComponent = terrainComponent;
-                    IntVector2 pos = terrainComponent.WorldToHeightMap(result.position);
-                    terrainEditor.Work(terrainComponent, result.position); 
+                    terrainEditor.Work(terrainComponent, result.position);
                 }
                 else
                 {
@@ -1837,18 +1853,18 @@ void ViewRaycast(bool mouseClick)
             selectedComponent = body;
         }
     }
-    
+
     bool multiselect = false;
     bool componentSelectQualifier = false;
     bool mouseButtonPressRL = false;
-    
-    if (hotKeyMode == HOTKEYS_MODE_STANDARD) 
+
+    if (hotKeyMode == HOTKEYS_MODE_STANDARD)
     {
         mouseButtonPressRL = input.mouseButtonPress[MOUSEB_LEFT];
         componentSelectQualifier = input.qualifierDown[QUAL_SHIFT];
         multiselect = input.qualifierDown[QUAL_CTRL];
     }
-    
+
     if (mouseClick && mouseButtonPressRL)
     {
         if (selectedComponent !is null)
@@ -1993,12 +2009,12 @@ Vector3 SelectedNodesCenterPoint()
             centerPoint += selectedComponents[i].node.worldPosition;
     }
 
-    if (count > 0) 
+    if (count > 0)
     {
         lastSelectedNodesCenterPoint = centerPoint / count;
         return centerPoint / count;
     }
-    else 
+    else
     {
         lastSelectedNodesCenterPoint = centerPoint;
         return centerPoint;

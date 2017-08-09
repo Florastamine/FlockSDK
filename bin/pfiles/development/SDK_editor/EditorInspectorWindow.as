@@ -189,9 +189,8 @@ void ShowAttributeInspectorWindow()
 
 void HideAttributeInspectorWindow()
 {
-    if (viewportMode == VIEWPORT_COMPACT) 
-        return; 
-
+    if(viewportMode == VIEWPORT_COMPACT)
+        return;
     attributeInspectorWindow.visible = false;
 }
 

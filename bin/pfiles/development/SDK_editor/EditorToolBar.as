@@ -66,8 +66,8 @@ void CreateToolBar()
     fillModeGroup.AddChild(CreateToolBarToggle("FillWireFrame"));
     fillModeGroup.AddChild(CreateToolBarToggle("FillSolid"));
     FinalizeGroupHorizontal(fillModeGroup, "ToolBarToggle");
-    toolBar.AddChild(fillModeGroup); 
-
+    toolBar.AddChild(fillModeGroup);
+    
     toolBar.AddChild(CreateToolBarSpacer(4));
     UIElement@ originGroup = CreateGroup("OriginGroup", LM_HORIZONTAL);
     originGroup.AddChild(CreateToolBarToggle("ShowOrigin"));
@@ -386,12 +386,14 @@ void ToolBarSetViewportMode(StringHash eventType, VariantMap& eventData)
     dropDown.focus = false;     // Lose the focus so the RMB dragging, immediately followed after changing viewport setup, behaves as expected
     uint mode = selected.vars[VIEW_MODE].GetUInt();
     SetViewportMode(mode);
-} 
+}
 
 void ToolBarShowOrigin(StringHash eventType, VariantMap& eventData)
 {
     CheckBox@ edit = eventData["Element"].GetPtr();
-    ShowOrigins (edit.checked); 
+    
+    ShowOrigins (edit.checked);
+        
     toolBarDirty = true;
 }
 
@@ -478,7 +480,7 @@ void UpdateDirtyToolBar()
 
     CheckBox@ fillPointToggle = toolBar.GetChild("FillPoint", true);
     if (fillPointToggle.checked != (fillMode == FILL_POINT))
-        fillPointToggle.checked = fillMode == FILL_POINT; 
+        fillPointToggle.checked = fillMode == FILL_POINT;
 
     CheckBox@ fillWireFrameToggle = toolBar.GetChild("FillWireFrame", true);
     if (fillWireFrameToggle.checked != (fillMode == FILL_WIREFRAME))
@@ -487,7 +489,7 @@ void UpdateDirtyToolBar()
     CheckBox@ fillSolidToggle = toolBar.GetChild("FillSolid", true);
     if (fillSolidToggle.checked != (fillMode == FILL_SOLID))
         fillSolidToggle.checked = fillMode == FILL_SOLID;
-
+        
     CheckBox@ showOriginToggle = toolBar.GetChild("ShowOrigin", true);
     if (showOriginToggle.checked != (EditorOriginShow == true))
         showOriginToggle.checked = EditorOriginShow == true;
