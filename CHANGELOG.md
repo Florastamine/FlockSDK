@@ -73,7 +73,12 @@ This release saw a major delay compared to past releases, which usually takes ar
 # Release 6 -- ??.??.2017 ([engine binaries + tool binaries](https://www.google.co.uk/?gws_rd=ssl)) 
 ## Changes/bugfixes
 * The SDK's official name was changed to "Flock SDK", and the new GitHub URL pointing to the repository is now https://github.com/Florastamine/FlockSDK.
+* Pre-built engine binaries are now Pentium 4 onwards compatible. These binaries were built using an old Pentium 4 machine, which runs Vista SP2 and GCC 7.1. Thus, Vista SP2 or higher is recommended, but it should runs just fine on XP SP3.
 * Various bug-fixes and tweaks. 
+* The pre-built [AngelScript](http://www.angelcode.com/angelscript/)-based scene editor binary now runs on 32-bit `Windows` and `Linux`. Previous releases were shipped with pre-built 32-bit executable for the engine runtime, and 64-bit executable for the scene editor. This was a long-standing issue as anyone who wants to use the scene editor were forced to switch to 64-bit OSes. This bug is now fixed, which also lowered the minimum requirements for running the SDK to 32-bit platforms.
+* Starting from this release, the [AngelScript](http://www.angelcode.com/angelscript/)-based editor will no longer be included by default (it's there though, and can still be built with the `-DFLOCK_SCENE_EDITOR=1` option enabled), and thus has been marked as deprecated.
+* Starting from this release, the engine (& scene editor) will be built with `-DCMAKE_BUILD_TYPE=RelWithDebInfo` instead of `-DCMAKE_BUILD_TYPE=Release`. **This is needed for working around a critical bug related to the legacy scene editor, see below.**
+* `Vector2` can now initializes from `IntVector2`: `Vector2(const IntVector2 &vector);`.
 * Improved build files generation time by removing a few unnecessary SDL2 function checks.
 * Shorten main script file name to just `main.lua` instead of `core-main.lua`.
 * Improved SSAO's overall quality, and also added a new parameter, `SSAOQuality`, which controls the "spreadness" of the effect.
@@ -84,9 +89,9 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Upgraded [Box2D](https://github.com/erincatto/Box2D) to latest `HEAD`.
 * Upgraded [LZ4](https://github.com/lz4/lz4) (`1.7.1` -> `1.7.5`).
 * Upgraded [SQLite](https://www.sqlite.org/index.html) (`3.16.2` -> `3.19.3`).
+* Added [Cppcheck](https://github.com/danmar/cppcheck) definition file (`FlockSDK.cppcheck`), so users can help with fixing C++-related issues.
 
 ## Removals/deprecation of features
-* Complete removal of [AngelScript](http://www.angelcode.com/angelscript/) support when building the SDK. Starting from Release 6 onwards, the [AngelScript](http://www.angelcode.com/angelscript/)-based editor will be slowly replaced by its C++11 rewrite - which would be expected to have (slightly) better performance as well as not having AngelScript as a dependency. Which also means that, the only viable options left for writing Flock games & applications are Lua (through LuaJIT) and C++.
 * Removed `ScriptCompiler` from the [tools repository](https://github.com/Florastamine/IWBHT_SDK_Tools).
 * Dropped [Mir](http://unity.ubuntu.com/mir/index.html) support. The only thing that have been keeping Mir alive was Unity, but now with Canonical dropping Unity from future releases of Ubuntu, there's no reason to keep it around the code base.
 * Dropped [libcpuid](https://github.com/anrieff/libcpuid) as a dependency in favor of self-made functions for detecting the number of CPU cores/threads on Windows platform.
@@ -104,9 +109,36 @@ This release saw a major delay compared to past releases, which usually takes ar
 
 ## Changes/bugfixes/new features merged from Urho3D:
 * Various bug-fixes and tweaks. 
+* Font-related functions (`Text::SetFont()`, `Text::SetFontSize()`, `Text::GetFontSize()`,...) now takes `float` as arguments instead of `int`, which allows for fractional font size.
 * Upgraded [FreeType](https://www.freetype.org/) (`v2.7.1` -> `v2.8`).
 * Upgraded [Bullet](http://bulletphysics.org/wordpress/) (`2.84` -> `2.86`).
 * Upgraded [rapidjson](https://github.com/miloyip/rapidjson) (`0.1` -> `1.1.0`).
-* Upgraded [Boost.Preprocessor](https://github.com/boostorg/preprocessor) (to `1.64.0`).
+* Added a few helper functions for `Matrix3`, `Matrix3x4` and `Matrix4`.
+* Added `Base64` decoding support when loading `.tmx` files.
+* Added `DecodeBase64()`.
 
-* Added `Vector3::Orthogonalize()`, `VertexBuffer::UpdateOffsets()`.
+* **Input**
+* Added `Input::GetInputScale()`.
+
+* **Vector3**
+* Added `Vector3::Orthogonalize()`.
+
+* **VertexBuffer**
+* Added `VertexBuffer::UpdateOffsets()`.
+
+* **Terrain**
+* Added `Terrain::HeightMapToWorld()`.
+
+* **Sphere**
+* Added `Sphere::GetLocalPoint()`, `Sphere::GetPoint()`.
+
+* **DebugRenderer**
+* Added `DebugRenderer::AddSphereSector()`.
+
+* **Graphics**
+* Added `Graphics::GetSize()`.
+
+* **JSONValue**
+* Added `JSONValue::SetVariant()`, `JSONValue::SetVariantMap()`, `JSONValue::GetVariant()`, `JSONValue::GetVariantMap()`.
+
+
