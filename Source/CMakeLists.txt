@@ -60,7 +60,7 @@ endif ()
 
 if (FLOCK_IK)
     message (STATUS "The following optional component(s) will be installed: IK")
-    add_subdirectory (ThirdParty/ik/cmake/Flock)
+    add_subdirectory (ThirdParty/ik)
 endif ()
 
 if (FLOCK_NETWORK)
