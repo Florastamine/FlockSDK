@@ -260,27 +260,18 @@ void DebugRenderer::AddPolyhedron(const Polyhedron& poly, const Color& color, bo
     }
 }
 
-static Vector3 PointOnSphere(const Sphere& sphere, unsigned theta, unsigned phi)
-{
-    return Vector3(
-        sphere.center_.x_ + sphere.radius_ * Sin((float)theta) * Sin((float)phi),
-        sphere.center_.y_ + sphere.radius_ * Cos((float)phi),
-        sphere.center_.z_ + sphere.radius_ * Cos((float)theta) * Sin((float)phi)
-    );
-}
-
 void DebugRenderer::AddSphere(const Sphere& sphere, const Color& color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
 
-    for (auto j = 0u; j < 180; j += 45)
+    for (float j = 0; j < 180; j += 45)
     {
-        for (auto i = 0u; i < 360; i += 45)
+        for (float i = 0; i < 360; i += 45)
         {
-            Vector3 p1 = PointOnSphere(sphere, i, j);
-            Vector3 p2 = PointOnSphere(sphere, i + 45, j);
-            Vector3 p3 = PointOnSphere(sphere, i, j + 45);
-            Vector3 p4 = PointOnSphere(sphere, i + 45, j + 45);
+            Vector3 p1 = sphere.GetPoint(i, j);
+            Vector3 p2 = sphere.GetPoint(i + 45, j);
+            Vector3 p3 = sphere.GetPoint(i, j + 45);
+            Vector3 p4 = sphere.GetPoint(i + 45, j + 45);
 
             AddLine(p1, p2, uintColor, depthTest);
             AddLine(p3, p4, uintColor, depthTest);
@@ -349,10 +340,10 @@ void DebugRenderer::AddCylinder(const Vector3 &position, float radius, float hei
     Vector3 heightVec(0, height, 0);
     Vector3 offsetXVec(radius, 0, 0);
     Vector3 offsetZVec(0, 0, radius);
-    for (auto i = 0u; i < 360; i += 45)
+    for (float i = 0; i < 360; i += 45)
     {
-        Vector3 p1 = PointOnSphere(sphere, i, 90);
-        Vector3 p2 = PointOnSphere(sphere, i + 45, 90);
+        Vector3 p1 = sphere.GetPoint(i, 90);
+        Vector3 p2 = sphere.GetPoint(i + 45, 90);
         AddLine(p1, p2, color, depthTest);
         AddLine(p1 + heightVec, p2 + heightVec, color, depthTest);
     }
