@@ -22,6 +22,7 @@
 
 #include "../Precompiled.h"
 
+#include "../Core/APIVersionQuery.h"
 #include "../Core/Platform.h"
 #include "../Core/StringUtils.h"
 #include "../IO/FileSystem.h"
