@@ -379,7 +379,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3 &worldPosition, const Qu
     Decal& newDecal = decals_.Back();
     newDecal.timeToLive_ = timeToLive;
 
-    Vector<PODVector<DecalVertex> > faces;
+    Vector<PODVector<DecalVertex>> faces;
     PODVector<DecalVertex> tempFace;
 
     unsigned numBatches = target->GetBatches().Size();
@@ -690,7 +690,7 @@ void DecalSet::OnWorldBoundingBoxUpdate()
     }
 }
 
-void DecalSet::GetFaces(Vector<PODVector<DecalVertex> >& faces, Drawable* target, unsigned batchIndex, const Frustum& frustum,
+void DecalSet::GetFaces(Vector<PODVector<DecalVertex>>& faces, Drawable* target, unsigned batchIndex, const Frustum& frustum,
     const Vector3 &decalNormal, float normalCutoff)
 {
     // Try to use the most accurate LOD level if possible
@@ -803,7 +803,7 @@ void DecalSet::GetFaces(Vector<PODVector<DecalVertex> >& faces, Drawable* target
     }
 }
 
-void DecalSet::GetFace(Vector<PODVector<DecalVertex> >& faces, Drawable* target, unsigned batchIndex, unsigned i0, unsigned i1,
+void DecalSet::GetFace(Vector<PODVector<DecalVertex>>& faces, Drawable* target, unsigned batchIndex, unsigned i0, unsigned i1,
     unsigned i2, const unsigned char* positionData, const unsigned char* normalData, const unsigned char* skinningData,
     unsigned positionStride, unsigned normalStride, unsigned skinningStride, const Frustum& frustum, const Vector3 &decalNormal,
     float normalCutoff)
@@ -885,8 +885,8 @@ bool DecalSet::GetBones(Drawable* target, unsigned batchIndex, const float* blen
         return false;
 
     // Check whether target is using global or per-geometry skinning
-    const Vector<PODVector<Matrix3x4> >& geometrySkinMatrices = animatedModel->GetGeometrySkinMatrices();
-    const Vector<PODVector<unsigned> >& geometryBoneMappings = animatedModel->GetGeometryBoneMappings();
+    const Vector<PODVector<Matrix3x4>>& geometrySkinMatrices = animatedModel->GetGeometrySkinMatrices();
+    const Vector<PODVector<unsigned>>& geometryBoneMappings = animatedModel->GetGeometryBoneMappings();
 
     for (auto i = 0u; i < 4; ++i)
     {

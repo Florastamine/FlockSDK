@@ -159,11 +159,11 @@ void FileSelector::SetDefaultStyle(XMLFile* style)
     okButton_->SetStyle("FileSelectorButton");
     cancelButton_->SetStyle("FileSelectorButton");
 
-    const Vector<SharedPtr<UIElement> >& filterTexts = filterList_->GetListView()->GetContentElement()->GetChildren();
+    const Vector<SharedPtr<UIElement>>& filterTexts = filterList_->GetListView()->GetContentElement()->GetChildren();
     for (auto i = 0u; i < filterTexts.Size(); ++i)
         filterTexts[i]->SetStyle("FileSelectorFilterText");
 
-    const Vector<SharedPtr<UIElement> >& listTexts = fileList_->GetContentElement()->GetChildren();
+    const Vector<SharedPtr<UIElement>>& listTexts = fileList_->GetContentElement()->GetChildren();
     for (auto i = 0u; i < listTexts.Size(); ++i)
         listTexts[i]->SetStyle("FileSelectorListText");
 

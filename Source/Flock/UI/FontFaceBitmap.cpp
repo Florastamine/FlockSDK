@@ -216,11 +216,11 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     unsigned components = ConvertFormatToNumComponents(fontFace->textures_[0]->GetFormat());
 
     // Save the existing textures as image resources
-    Vector<SharedPtr<Image> > oldImages;
+    Vector<SharedPtr<Image>> oldImages;
     for (auto i = 0u; i < fontFace->textures_.Size(); ++i)
         oldImages.Push(SaveFaceTexture(fontFace->textures_[i]));
 
-    Vector<SharedPtr<Image> > newImages(numPages);
+    Vector<SharedPtr<Image>> newImages(numPages);
     for (auto i = 0u; i < numPages; ++i)
     {
         SharedPtr<Image> image(new Image(font_->GetContext()));

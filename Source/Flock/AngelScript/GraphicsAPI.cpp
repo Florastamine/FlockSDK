@@ -976,7 +976,7 @@ static Model* ModelClone(const String& cloneName, Model* ptr)
 static bool ModelSetVertexBuffers(CScriptArray* vertexBuffers, CScriptArray* morphRangeStarts, CScriptArray* morphRangeCounts, Model* ptr)
 {
     Vector<VertexBuffer*> vbRawPtrs = ArrayToVector<VertexBuffer*>(vertexBuffers);
-    Vector<SharedPtr<VertexBuffer> > vbPtrs(vbRawPtrs.Size());
+    Vector<SharedPtr<VertexBuffer>> vbPtrs(vbRawPtrs.Size());
     for (unsigned i = 0; i < vbRawPtrs.Size(); ++i)
         vbPtrs[i] = SharedPtr<VertexBuffer>(vbRawPtrs[i]);
 
@@ -986,7 +986,7 @@ static bool ModelSetVertexBuffers(CScriptArray* vertexBuffers, CScriptArray* mor
 static bool ModelSetIndexBuffers(CScriptArray* indexBuffers, Model* ptr)
 {
     Vector<IndexBuffer*> ibRawPtrs = ArrayToVector<IndexBuffer*>(indexBuffers);
-    Vector<SharedPtr<IndexBuffer> > ibPtrs(ibRawPtrs.Size());
+    Vector<SharedPtr<IndexBuffer>> ibPtrs(ibRawPtrs.Size());
     for (unsigned i = 0; i < ibRawPtrs.Size(); ++i)
         ibPtrs[i] = SharedPtr<IndexBuffer>(ibRawPtrs[i]);
 

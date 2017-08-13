@@ -544,7 +544,7 @@ void TmxFile2D::AddLayer(TmxLayer2D *layer)
 
 Sprite2D* TmxFile2D::GetTileSprite(int gid) const
 {
-    HashMap<int, SharedPtr<Sprite2D> >::ConstIterator i = gidToSpriteMapping_.Find(gid);
+    HashMap<int, SharedPtr<Sprite2D>>::ConstIterator i = gidToSpriteMapping_.Find(gid);
     if (i == gidToSpriteMapping_.End())
         return 0;
 
@@ -553,7 +553,7 @@ Sprite2D* TmxFile2D::GetTileSprite(int gid) const
 
 PropertySet2D* TmxFile2D::GetTilePropertySet(int gid) const
 {
-    HashMap<int, SharedPtr<PropertySet2D> >::ConstIterator i = gidToPropertySetMapping_.Find(gid);
+    HashMap<int, SharedPtr<PropertySet2D>>::ConstIterator i = gidToPropertySetMapping_.Find(gid);
     if (i == gidToPropertySetMapping_.End())
         return 0;
     return i->second_;
@@ -590,7 +590,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
     if (element.HasAttribute("source"))
     {
         String source = element.GetAttribute("source");
-        HashMap<String, SharedPtr<XMLFile> >::Iterator i = tsxXMLFiles_.Find(source);
+        HashMap<String, SharedPtr<XMLFile>>::Iterator i = tsxXMLFiles_.Find(source);
         if (i == tsxXMLFiles_.End())
         {
             SharedPtr<XMLFile> tsxXMLFile = LoadTSXFile(source);

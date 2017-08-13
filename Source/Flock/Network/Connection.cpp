@@ -1332,7 +1332,7 @@ void Connection::ProcessExistingNode(Node* node, NodeReplicationState& nodeState
     // Check for new components
     if (nodeState.componentStates_.Size() != node->GetNumNetworkComponents())
     {
-        const Vector<SharedPtr<Component> >& components = node->GetComponents();
+        const Vector<SharedPtr<Component>>& components = node->GetComponents();
         for (auto i = 0u; i < components.Size(); ++i)
         {
             Component* component = components[i];

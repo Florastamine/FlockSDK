@@ -211,7 +211,7 @@ void ScriptFile::AddEventHandler(Object* sender, StringHash eventType, const Str
 void ScriptFile::RemoveEventHandler(StringHash eventType)
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
     {
         i->second_->UnsubscribeFromEvent(eventType);
@@ -224,7 +224,7 @@ void ScriptFile::RemoveEventHandler(StringHash eventType)
 void ScriptFile::RemoveEventHandler(Object* sender, StringHash eventType)
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
     {
         i->second_->UnsubscribeFromEvent(sender, eventType);
@@ -236,7 +236,7 @@ void ScriptFile::RemoveEventHandler(Object* sender, StringHash eventType)
 void ScriptFile::RemoveEventHandlers(Object* sender)
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
     {
         i->second_->UnsubscribeFromEvents(sender);
@@ -248,7 +248,7 @@ void ScriptFile::RemoveEventHandlers(Object* sender)
 void ScriptFile::RemoveEventHandlers()
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
     {
         i->second_->UnsubscribeFromAllEvents();
@@ -260,7 +260,7 @@ void ScriptFile::RemoveEventHandlers()
 void ScriptFile::RemoveEventHandlersExcept(const PODVector<StringHash>& exceptions)
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
     {
         i->second_->UnsubscribeFromAllEventsExcept(exceptions, true);
@@ -272,7 +272,7 @@ void ScriptFile::RemoveEventHandlersExcept(const PODVector<StringHash>& exceptio
 bool ScriptFile::HasEventHandler(StringHash eventType) const
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::ConstIterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::ConstIterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
         return i->second_->HasSubscribedToEvent(eventType);
     else
@@ -282,7 +282,7 @@ bool ScriptFile::HasEventHandler(StringHash eventType) const
 bool ScriptFile::HasEventHandler(Object* sender, StringHash eventType) const
 {
     asIScriptObject* receiver = static_cast<asIScriptObject*>(asGetActiveContext()->GetThisPointer());
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::ConstIterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::ConstIterator i = eventInvokers_.Find(receiver);
     if (i != eventInvokers_.End())
         return i->second_->HasSubscribedToEvent(sender, eventType);
     else
@@ -517,7 +517,7 @@ asIScriptFunction* ScriptFile::GetMethod(asIScriptObject* object, const String& 
     if (!type)
         return 0;
 
-    HashMap<asITypeInfo*, HashMap<String, asIScriptFunction*> >::ConstIterator i = methods_.Find(type);
+    HashMap<asITypeInfo*, HashMap<String, asIScriptFunction*>>::ConstIterator i = methods_.Find(type);
     if (i != methods_.End())
     {
         HashMap<String, asIScriptFunction*>::ConstIterator j = i->second_.Find(declaration);
@@ -561,7 +561,7 @@ void ScriptFile::AddEventHandlerInternal(Object* sender, StringHash eventType, c
         }
     }
 
-    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker> >::Iterator i = eventInvokers_.Find(receiver);
+    HashMap<asIScriptObject*, SharedPtr<ScriptEventInvoker>>::Iterator i = eventInvokers_.Find(receiver);
     // Remove previous handler in case an object pointer gets reused
     if (i != eventInvokers_.End() && !i->second_->IsObjectAlive())
     {

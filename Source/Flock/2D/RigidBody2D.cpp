@@ -401,7 +401,7 @@ void RigidBody2D::ReleaseBody()
         return;
 
     // Make a copy for iteration
-    Vector<WeakPtr<Constraint2D> > constraints = constraints_;
+    Vector<WeakPtr<Constraint2D>> constraints = constraints_;
     for (auto i = 0u; i < constraints.Size(); ++i)
     {
         if (constraints[i])

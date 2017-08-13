@@ -131,13 +131,13 @@ template <> int ToluaPushPODVector<bool>(double /*overload*/, lua_State* L, void
     return 1;
 }
 
-// Explicit template specialization for Vector<SharedPtr<IndexBuffer> > and Vector<SharedPtr<VertexBuffer> >
+// Explicit template specialization for Vector<SharedPtr<IndexBuffer>> and Vector<SharedPtr<VertexBuffer>>
 
-template <> void* ToluaToVector<SharedPtr<IndexBuffer> >(lua_State* L, int narg, void* def)
+template <> void* ToluaToVector<SharedPtr<IndexBuffer>>(lua_State* L, int narg, void* def)
 {
     if (!lua_istable(L, narg))
         return 0;
-    static Vector<SharedPtr<IndexBuffer> > result;
+    static Vector<SharedPtr<IndexBuffer>> result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
     for (auto i = 0u; i < result.Size(); ++i)
@@ -149,11 +149,11 @@ template <> void* ToluaToVector<SharedPtr<IndexBuffer> >(lua_State* L, int narg,
     return &result;
 }
 
-template <> void* ToluaToVector<SharedPtr<VertexBuffer> >(lua_State* L, int narg, void* def)
+template <> void* ToluaToVector<SharedPtr<VertexBuffer>>(lua_State* L, int narg, void* def)
 {
     if (!lua_istable(L, narg))
         return 0;
-    static Vector<SharedPtr<VertexBuffer> > result;
+    static Vector<SharedPtr<VertexBuffer>> result;
     result.Clear();
     result.Resize((unsigned)lua_objlen(L, narg));
     for (auto i = 0u; i < result.Size(); ++i)

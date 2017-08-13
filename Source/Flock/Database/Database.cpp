@@ -46,7 +46,7 @@ DbConnection* Database::Connect(const String &connectionString)
     SharedPtr<DbConnection> connection;
     if (IsPooling())
     {
-        Vector<SharedPtr<DbConnection> >& connectionsPool = connectionsPool_[connectionString];
+        Vector<SharedPtr<DbConnection>>& connectionsPool = connectionsPool_[connectionString];
         while (!connectionsPool.Empty())
         {
             connection = connectionsPool.Back();
@@ -82,7 +82,7 @@ void Database::Disconnect(DbConnection* connection)
 
     if (IsPooling())
     {
-        Vector<SharedPtr<DbConnection> >& connectionsPool = connectionsPool_[connection->GetConnectionString()];
+        Vector<SharedPtr<DbConnection>>& connectionsPool = connectionsPool_[connection->GetConnectionString()];
         if (connectionsPool.Size() < poolSize_)
             connectionsPool.Push(dbConnection);
     }

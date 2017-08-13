@@ -211,7 +211,7 @@ String Pass::GetEffectivePixelShaderDefines() const
     return String::Joined(psDefines, " ");
 }
 
-Vector<SharedPtr<ShaderVariation> >& Pass::GetVertexShaders(const StringHash& extraDefinesHash)
+Vector<SharedPtr<ShaderVariation>>& Pass::GetVertexShaders(const StringHash& extraDefinesHash)
 {
     // If empty hash, return the base shaders
     if (!extraDefinesHash.Value())
@@ -220,7 +220,7 @@ Vector<SharedPtr<ShaderVariation> >& Pass::GetVertexShaders(const StringHash& ex
         return extraVertexShaders_[extraDefinesHash];
 }
 
-Vector<SharedPtr<ShaderVariation> >& Pass::GetPixelShaders(const StringHash& extraDefinesHash)
+Vector<SharedPtr<ShaderVariation>>& Pass::GetPixelShaders(const StringHash& extraDefinesHash)
 {
     if (!extraDefinesHash.Value())
         return pixelShaders_;
@@ -369,7 +369,7 @@ void Technique::SetIsDesktop(bool enable)
 
 void Technique::ReleaseShaders()
 {
-    for (Vector<SharedPtr<Pass> >::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
+    for (Vector<SharedPtr<Pass>>::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
     {
         Pass* pass = i->Get();
         if (pass)
@@ -384,7 +384,7 @@ SharedPtr<Technique> Technique::Clone(const String &cloneName) const
     ret->SetName(cloneName);
 
     // Deep copy passes
-    for (Vector<SharedPtr<Pass> >::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
+    for (Vector<SharedPtr<Pass>>::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
     {
         Pass* srcPass = i->Get();
         if (!srcPass)
@@ -460,7 +460,7 @@ unsigned Technique::GetNumPasses() const
 {
     unsigned ret = 0;
 
-    for (Vector<SharedPtr<Pass> >::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
+    for (Vector<SharedPtr<Pass>>::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
     {
         if (i->Get())
             ++ret;
@@ -473,7 +473,7 @@ Vector<String> Technique::GetPassNames() const
 {
     Vector<String> ret;
 
-    for (Vector<SharedPtr<Pass> >::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
+    for (Vector<SharedPtr<Pass>>::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
     {
         Pass* pass = i->Get();
         if (pass)
@@ -487,7 +487,7 @@ PODVector<Pass*> Technique::GetPasses() const
 {
     PODVector<Pass*> ret;
 
-    for (Vector<SharedPtr<Pass> >::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
+    for (Vector<SharedPtr<Pass>>::ConstIterator i = passes_.Begin(); i != passes_.End(); ++i)
     {
         Pass* pass = i->Get();
         if (pass)
@@ -506,7 +506,7 @@ SharedPtr<Technique> Technique::CloneWithDefines(const String &vsDefines, const 
     Pair<StringHash, StringHash> key = MakePair(StringHash(vsDefines), StringHash(psDefines));
 
     // Return existing if possible
-    HashMap<Pair<StringHash, StringHash>, SharedPtr<Technique> >::Iterator i = cloneTechniques_.Find(key);
+    HashMap<Pair<StringHash, StringHash>, SharedPtr<Technique>>::Iterator i = cloneTechniques_.Find(key);
     if (i != cloneTechniques_.End())
         return i->second_;
 
@@ -514,7 +514,7 @@ SharedPtr<Technique> Technique::CloneWithDefines(const String &vsDefines, const 
     // since the clones are never stored to the resource cache
     i = cloneTechniques_.Insert(MakePair(key, Clone(GetName())));
 
-    for (Vector<SharedPtr<Pass> >::ConstIterator j = i->second_->passes_.Begin(); j != i->second_->passes_.End(); ++j)
+    for (Vector<SharedPtr<Pass>>::ConstIterator j = i->second_->passes_.Begin(); j != i->second_->passes_.End(); ++j)
     {
         Pass* pass = (*j);
         if (!pass)

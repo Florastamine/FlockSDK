@@ -777,7 +777,7 @@ bool Material::Save(XMLElement& dest) const
     }
 
     // Write shader parameter animations
-    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo> >::ConstIterator j = shaderParameterAnimationInfos_.Begin();
+    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo>>::ConstIterator j = shaderParameterAnimationInfos_.Begin();
          j != shaderParameterAnimationInfos_.End(); ++j)
     {
         ShaderParameterAnimationInfo* info = j->second_;
@@ -884,7 +884,7 @@ bool Material::Save(JSONValue& dest) const
 
     // Write shader parameter animations
     JSONValue shaderParamAnimationsVal;
-    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo> >::ConstIterator j = shaderParameterAnimationInfos_.Begin();
+    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo>>::ConstIterator j = shaderParameterAnimationInfos_.Begin();
          j != shaderParameterAnimationInfos_.End(); ++j)
     {
         ShaderParameterAnimationInfo* info = j->second_;
@@ -1213,7 +1213,7 @@ Pass* Material::GetPass(unsigned index, const String &passName) const
 
 Texture* Material::GetTexture(TextureUnit unit) const
 {
-    HashMap<TextureUnit, SharedPtr<Texture> >::ConstIterator i = textures_.Find(unit);
+    HashMap<TextureUnit, SharedPtr<Texture>>::ConstIterator i = textures_.Find(unit);
     return i != textures_.End() ? i->second_.Get() : (Texture*)0;
 }
 
@@ -1330,7 +1330,7 @@ void Material::RefreshMemoryUse()
 ShaderParameterAnimationInfo* Material::GetShaderParameterAnimationInfo(const String &name) const
 {
     StringHash nameHash(name);
-    HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo> >::ConstIterator i = shaderParameterAnimationInfos_.Find(nameHash);
+    HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo>>::ConstIterator i = shaderParameterAnimationInfos_.Find(nameHash);
     if (i == shaderParameterAnimationInfos_.End())
         return 0;
     return i->second_;
@@ -1363,7 +1363,7 @@ void Material::HandleAttributeAnimationUpdate(StringHash eventType, VariantMap& 
     WeakPtr<Object> self(this);
 
     Vector<String> finishedNames;
-    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo> >::ConstIterator i = shaderParameterAnimationInfos_.Begin();
+    for (HashMap<StringHash, SharedPtr<ShaderParameterAnimationInfo>>::ConstIterator i = shaderParameterAnimationInfos_.Begin();
          i != shaderParameterAnimationInfos_.End(); ++i)
     {
         bool finished = i->second_->Update(timeStep);

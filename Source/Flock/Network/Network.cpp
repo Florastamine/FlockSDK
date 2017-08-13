@@ -176,7 +176,7 @@ void Network::ClientDisconnected(kNet::MessageConnection* connection)
     connection->Disconnect(0);
 
     // Remove the client connection that corresponds to this MessageConnection
-    HashMap<kNet::MessageConnection*, SharedPtr<Connection> >::Iterator i = clientConnections_.Find(connection);
+    HashMap<kNet::MessageConnection*, SharedPtr<Connection>>::Iterator i = clientConnections_.Find(connection);
     if (i != clientConnections_.End())
     {
         Connection* connection = i->second_;
@@ -406,7 +406,7 @@ Connection* Network::GetConnection(kNet::MessageConnection* connection) const
         return serverConnection_;
     else
     {
-        HashMap<kNet::MessageConnection*, SharedPtr<Connection> >::ConstIterator i = clientConnections_.Find(connection);
+        HashMap<kNet::MessageConnection*, SharedPtr<Connection>>::ConstIterator i = clientConnections_.Find(connection);
         if (i != clientConnections_.End())
             return i->second_;
         else
@@ -419,9 +419,9 @@ Connection* Network::GetServerConnection() const
     return serverConnection_;
 }
 
-Vector<SharedPtr<Connection> > Network::GetClientConnections() const
+Vector<SharedPtr<Connection>> Network::GetClientConnections() const
 {
-    Vector<SharedPtr<Connection> > ret;
+    Vector<SharedPtr<Connection>> ret;
     for (auto i = clientConnections_.Begin();
          i != clientConnections_.End(); ++i)
         ret.Push(i->second_);

@@ -421,7 +421,7 @@ LuaFunction* LuaScript::GetFunction(int index)
     if (!functionPointer)
         return 0;
 
-    HashMap<const void*, SharedPtr<LuaFunction> >::Iterator i = functionPointerToFunctionMap_.Find(functionPointer);
+    HashMap<const void*, SharedPtr<LuaFunction>>::Iterator i = functionPointerToFunctionMap_.Find(functionPointer);
     if (i != functionPointerToFunctionMap_.End())
         return i->second_;
 
@@ -436,7 +436,7 @@ LuaFunction* LuaScript::GetFunction(const String &functionName, bool silentIfNot
     if (!luaState_)
         return 0;
 
-    HashMap<String, SharedPtr<LuaFunction> >::Iterator i = functionNameToFunctionMap_.Find(functionName);
+    HashMap<String, SharedPtr<LuaFunction>>::Iterator i = functionNameToFunctionMap_.Find(functionName);
     if (i != functionNameToFunctionMap_.End())
         return i->second_;
 

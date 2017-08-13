@@ -37,7 +37,7 @@
 namespace FlockSDK
 {
 
-unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<SharedPtr<VertexBuffer> >& buffers)
+unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<SharedPtr<VertexBuffer>>& buffers)
 {
     for (auto i = 0u; i < buffers.Size(); ++i)
     {
@@ -47,7 +47,7 @@ unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<SharedPtr<VertexB
     return 0;
 }
 
-unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<SharedPtr<IndexBuffer> >& buffers)
+unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<SharedPtr<IndexBuffer>>& buffers)
 {
     for (auto i = 0u; i < buffers.Size(); ++i)
     {
@@ -202,7 +202,7 @@ bool Model::BeginLoad(Deserializer& source)
         geometryBoneMappings_.Push(boneMapping);
 
         unsigned numLodLevels = source.ReadUInt();
-        Vector<SharedPtr<Geometry> > geometryLodLevels;
+        Vector<SharedPtr<Geometry>> geometryLodLevels;
         geometryLodLevels.Reserve(numLodLevels);
         loadGeometries_[i].Resize(numLodLevels);
 
@@ -461,7 +461,7 @@ void Model::SetBoundingBox(const BoundingBox& box)
     boundingBox_ = box;
 }
 
-bool Model::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer> >& buffers, const PODVector<unsigned>& morphRangeStarts,
+bool Model::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, const PODVector<unsigned>& morphRangeStarts,
     const PODVector<unsigned>& morphRangeCounts)
 {
     for (auto i = 0u; i < buffers.Size(); ++i)
@@ -492,7 +492,7 @@ bool Model::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer> >& buffers, co
     return true;
 }
 
-bool Model::SetIndexBuffers(const Vector<SharedPtr<IndexBuffer> >& buffers)
+bool Model::SetIndexBuffers(const Vector<SharedPtr<IndexBuffer>>& buffers)
 {
     for (auto i = 0u; i < buffers.Size(); ++i)
     {
@@ -577,7 +577,7 @@ void Model::SetSkeleton(const Skeleton& skeleton)
     skeleton_ = skeleton;
 }
 
-void Model::SetGeometryBoneMappings(const Vector<PODVector<unsigned> >& geometryBoneMappings)
+void Model::SetGeometryBoneMappings(const Vector<PODVector<unsigned>>& geometryBoneMappings)
 {
     geometryBoneMappings_ = geometryBoneMappings;
 }
@@ -602,7 +602,7 @@ SharedPtr<Model> Model::Clone(const String &cloneName) const
 
     // Deep copy vertex/index buffers
     HashMap<VertexBuffer*, VertexBuffer*> vbMapping;
-    for (Vector<SharedPtr<VertexBuffer> >::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
+    for (Vector<SharedPtr<VertexBuffer>>::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
     {
         VertexBuffer* origBuffer = *i;
         SharedPtr<VertexBuffer> cloneBuffer;
@@ -629,7 +629,7 @@ SharedPtr<Model> Model::Clone(const String &cloneName) const
     }
 
     HashMap<IndexBuffer*, IndexBuffer*> ibMapping;
-    for (Vector<SharedPtr<IndexBuffer> >::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
+    for (Vector<SharedPtr<IndexBuffer>>::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
     {
         IndexBuffer* origBuffer = *i;
         SharedPtr<IndexBuffer> cloneBuffer;

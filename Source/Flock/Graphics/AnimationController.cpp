@@ -154,7 +154,7 @@ void AnimationController::Update(float timeStep)
     }
 
     // Node hierarchy animations need to be applied manually
-    for (Vector<SharedPtr<AnimationState> >::Iterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::Iterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
         (*i)->Apply();
 }
 
@@ -583,7 +583,7 @@ AnimationState* AnimationController::GetAnimationState(StringHash nameHash) cons
         return model->GetAnimationState(nameHash);
 
     // Node hierarchy mode
-    for (Vector<SharedPtr<AnimationState> >::ConstIterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::ConstIterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
     {
         Animation* animation = (*i)->GetAnimation();
         if (animation->GetNameHash() == nameHash || animation->GetAnimationNameHash() == nameHash)
@@ -827,7 +827,7 @@ VariantVector AnimationController::GetNodeAnimationStatesAttr() const
     VariantVector ret;
     ret.Reserve(nodeAnimationStates_.Size() * 3 + 1);
     ret.Push(nodeAnimationStates_.Size());
-    for (Vector<SharedPtr<AnimationState> >::ConstIterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::ConstIterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
     {
         AnimationState* state = *i;
         Animation* animation = state->GetAnimation();
@@ -876,7 +876,7 @@ void AnimationController::RemoveAnimationState(AnimationState* state)
     }
 
     // Node hierarchy mode
-    for (Vector<SharedPtr<AnimationState> >::Iterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::Iterator i = nodeAnimationStates_.Begin(); i != nodeAnimationStates_.End(); ++i)
     {
         if ((*i) == state)
         {

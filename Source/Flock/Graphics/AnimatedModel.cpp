@@ -348,7 +348,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
-        const Vector<Vector<SharedPtr<Geometry> > >& geometries = model->GetGeometries();
+        const Vector<Vector<SharedPtr<Geometry>> >& geometries = model->GetGeometries();
         const PODVector<Vector3>& geometryCenters = model->GetGeometryCenters();
         for (auto i = 0u; i < geometries.Size(); ++i)
         {
@@ -357,7 +357,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
         }
 
         // Copy geometry bone mappings
-        const Vector<PODVector<unsigned> >& geometryBoneMappings = model->GetGeometryBoneMappings();
+        const Vector<PODVector<unsigned>>& geometryBoneMappings = model->GetGeometryBoneMappings();
         geometryBoneMappings_.Clear();
         geometryBoneMappings_.Reserve(geometryBoneMappings.Size());
         for (auto i = 0u; i < geometryBoneMappings.Size(); ++i)
@@ -464,7 +464,7 @@ void AnimatedModel::RemoveAnimationState(Animation* animation)
         RemoveAnimationState(animation->GetNameHash());
     else
     {
-        for (Vector<SharedPtr<AnimationState> >::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+        for (Vector<SharedPtr<AnimationState>>::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
         {
             AnimationState* state = *i;
             if (!state->GetAnimation())
@@ -484,7 +484,7 @@ void AnimatedModel::RemoveAnimationState(const String &animationName)
 
 void AnimatedModel::RemoveAnimationState(StringHash animationNameHash)
 {
-    for (Vector<SharedPtr<AnimationState> >::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         AnimationState* state = *i;
         Animation* animation = state->GetAnimation();
@@ -503,7 +503,7 @@ void AnimatedModel::RemoveAnimationState(StringHash animationNameHash)
 
 void AnimatedModel::RemoveAnimationState(AnimationState* state)
 {
-    for (Vector<SharedPtr<AnimationState> >::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         if (*i == state)
         {
@@ -652,7 +652,7 @@ float AnimatedModel::GetMorphWeight(StringHash nameHash) const
 
 AnimationState* AnimatedModel::GetAnimationState(Animation* animation) const
 {
-    for (Vector<SharedPtr<AnimationState> >::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         if ((*i)->GetAnimation() == animation)
             return *i;
@@ -668,7 +668,7 @@ AnimationState* AnimatedModel::GetAnimationState(const String &animationName) co
 
 AnimationState* AnimatedModel::GetAnimationState(StringHash animationNameHash) const
 {
-    for (Vector<SharedPtr<AnimationState> >::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         Animation* animation = (*i)->GetAnimation();
         if (animation)
@@ -875,7 +875,7 @@ VariantVector AnimatedModel::GetAnimationStatesAttr() const
     VariantVector ret;
     ret.Reserve(animationStates_.Size() * 6 + 1);
     ret.Push(animationStates_.Size());
-    for (Vector<SharedPtr<AnimationState> >::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::ConstIterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         AnimationState* state = *i;
         Animation* animation = state->GetAnimation();
@@ -999,7 +999,7 @@ void AnimatedModel::AssignBoneNodes()
         SetSkeleton(model_->GetSkeleton(), true);
 
     // Re-assign the same start bone to animations to get the proper bone node this time
-    for (Vector<SharedPtr<AnimationState> >::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+    for (Vector<SharedPtr<AnimationState>>::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
     {
         AnimationState* state = *i;
         state->SetStartBone(state->GetStartBone());
@@ -1100,8 +1100,8 @@ void AnimatedModel::MarkMorphsDirty()
 
 void AnimatedModel::CloneGeometries()
 {
-    const Vector<SharedPtr<VertexBuffer> >& originalVertexBuffers = model_->GetVertexBuffers();
-    HashMap<VertexBuffer*, SharedPtr<VertexBuffer> > clonedVertexBuffers;
+    const Vector<SharedPtr<VertexBuffer>>& originalVertexBuffers = model_->GetVertexBuffers();
+    HashMap<VertexBuffer*, SharedPtr<VertexBuffer>> clonedVertexBuffers;
     morphVertexBuffers_.Resize(originalVertexBuffers.Size());
 
     for (auto i = 0u; i < originalVertexBuffers.Size(); ++i)
@@ -1135,7 +1135,7 @@ void AnimatedModel::CloneGeometries()
 
             // Add an additional vertex stream into the clone, which supplies only the morphable vertex data, while the static
             // data comes from the original vertex buffer(s)
-            const Vector<SharedPtr<VertexBuffer> >& originalBuffers = original->GetVertexBuffers();
+            const Vector<SharedPtr<VertexBuffer>>& originalBuffers = original->GetVertexBuffers();
             unsigned totalBuf = originalBuffers.Size();
             for (unsigned k = 0; k < originalBuffers.Size(); ++k)
             {
@@ -1283,7 +1283,7 @@ void AnimatedModel::ApplyAnimation()
     if (isMaster_)
     {
         skeleton_.ResetSilent();
-        for (Vector<SharedPtr<AnimationState> >::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
+        for (Vector<SharedPtr<AnimationState>>::Iterator i = animationStates_.Begin(); i != animationStates_.End(); ++i)
             (*i)->Apply();
 
         // Skeleton reset and animations apply the node transforms "silently" to avoid repeated marking dirty. Mark dirty now

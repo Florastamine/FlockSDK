@@ -131,7 +131,7 @@ bool ProcSky::Initialize() {
 
   // Use first child as light node if it exists; otherwise, create it.
   if (!lightNode_) {
-    const Vector<SharedPtr<Node> >& children = node_->GetChildren();
+    const Vector<SharedPtr<Node>>& children = node_->GetChildren();
     if (children.Size()) {
       lightNode_ = children[0];
     }
