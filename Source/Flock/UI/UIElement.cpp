@@ -85,11 +85,6 @@ static const char* layoutModes[] =
 
 extern const char* UI_CATEGORY;
 
-static bool CompareUIElements(const UIElement* lhs, const UIElement* rhs)
-{
-    return lhs->GetPriority() < rhs->GetPriority();
-}
-
 XPathQuery UIElement::styleXPathQuery_("/elements/element[@type=$typeName]", "typeName:String");
 
 UIElement::UIElement(Context* context) :
@@ -1815,7 +1810,7 @@ void UIElement::SortChildren()
         // Only sort when there is no layout
         /// \todo Order is not stable when children have same priorities
         if (layoutMode_ == LM_FREE)
-            Sort(children_.Begin(), children_.End(), CompareUIElements);
+            Sort(children_.Begin(), children_.End(), [] (const UIElement* lhs, const UIElement* rhs) { return lhs->GetPriority() < rhs->GetPriority(); });
         sortOrderDirty_ = false;
     }
 }

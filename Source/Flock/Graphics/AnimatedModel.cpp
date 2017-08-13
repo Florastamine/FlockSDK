@@ -61,11 +61,6 @@ const char* animationStatesStructureElementNames[] =
     0
 };
 
-static bool CompareAnimationOrder(const SharedPtr<AnimationState>& lhs, const SharedPtr<AnimationState>& rhs)
-{
-    return lhs->GetLayer() < rhs->GetLayer();
-}
-
 static const unsigned MAX_ANIMATION_STATES = 256;
 
 AnimatedModel::AnimatedModel(Context* context) :
@@ -1279,7 +1274,7 @@ void AnimatedModel::ApplyAnimation()
     // Make sure animations are in ascending priority order
     if (animationOrderDirty_)
     {
-        Sort(animationStates_.Begin(), animationStates_.End(), CompareAnimationOrder);
+        Sort(animationStates_.Begin(), animationStates_.End(), [] (const SharedPtr<AnimationState>& lhs, const SharedPtr<AnimationState>& rhs) { return lhs->GetLayer() < rhs->GetLayer(); });
         animationOrderDirty_ = false;
     }
 

@@ -40,15 +40,6 @@
 namespace FlockSDK
 {
 
-static bool CompareEntries(const FileSelectorEntry& lhs, const FileSelectorEntry& rhs)
-{
-    if (lhs.directory_ && !rhs.directory_)
-        return true;
-    if (!lhs.directory_ && rhs.directory_)
-        return false;
-    return lhs.name_.Compare(rhs.name_, false) < 0;
-}
-
 FileSelector::FileSelector(Context* context) :
     Object(context),
     directoryMode_(false),
@@ -318,7 +309,13 @@ void FileSelector::RefreshFiles()
 
     // Sort and add to the list view
     // While items are being added, disable layout update for performance optimization
-    Sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
+    Sort(fileEntries_.Begin(), fileEntries_.End(), [] (const FileSelectorEntry& lhs, const FileSelectorEntry& rhs) {
+        if (lhs.directory_ && !rhs.directory_)
+            return true;
+        if (!lhs.directory_ && rhs.directory_)
+            return false;
+        return lhs.name_.Compare(rhs.name_, false) < 0;
+    });
     UIElement* listContent = fileList_->GetContentElement();
     listContent->DisableLayoutUpdate();
     for (auto i = 0u; i < fileEntries_.Size(); ++i)

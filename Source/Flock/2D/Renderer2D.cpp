@@ -90,19 +90,6 @@ void Renderer2D::RegisterObject(Context* context)
     context->RegisterFactory<Renderer2D>();
 }
 
-static inline bool CompareRayQueryResults(RayQueryResult& lr, RayQueryResult& rr)
-{
-    Drawable2D* lhs = static_cast<Drawable2D*>(lr.drawable_);
-    Drawable2D* rhs = static_cast<Drawable2D*>(rr.drawable_);
-    if (lhs->GetLayer() != rhs->GetLayer())
-        return lhs->GetLayer() > rhs->GetLayer();
-
-    if (lhs->GetOrderInLayer() != rhs->GetOrderInLayer())
-        return lhs->GetOrderInLayer() > rhs->GetOrderInLayer();
-
-    return lhs->GetID() > rhs->GetID();
-}
-
 void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQueryResult>& results)
 {
     unsigned resultSize = results.Size();
@@ -113,7 +100,19 @@ void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQuery
     }
 
     if (results.Size() != resultSize)
-        Sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
+    {
+        Sort(results.Begin() + resultSize, results.End(), [] (RayQueryResult& lr, RayQueryResult& rr) {
+            auto *lhs = static_cast<Drawable2D*>(lr.drawable_);
+            auto *rhs = static_cast<Drawable2D*>(rr.drawable_);
+            if (lhs->GetLayer() != rhs->GetLayer())
+                return lhs->GetLayer() > rhs->GetLayer();
+        
+            if (lhs->GetOrderInLayer() != rhs->GetOrderInLayer())
+                return lhs->GetOrderInLayer() > rhs->GetOrderInLayer();
+        
+            return lhs->GetID() > rhs->GetID();
+        });
+    }
 }
 
 void Renderer2D::UpdateBatches(const FrameInfo& frame)
@@ -404,20 +403,6 @@ void Renderer2D::GetDrawables(PODVector<Drawable2D*>& dest, Node* node)
         GetDrawables(dest, i->Get());
 }
 
-static inline bool CompareSourceBatch2Ds(const SourceBatch2D* lhs, const SourceBatch2D* rhs)
-{
-    if (lhs->distance_ != rhs->distance_)
-        return lhs->distance_ > rhs->distance_;
-
-    if (lhs->drawOrder_ != rhs->drawOrder_)
-        return lhs->drawOrder_ < rhs->drawOrder_;
-
-    if (lhs->material_ != rhs->material_)
-        return lhs->material_->GetNameHash() < rhs->material_->GetNameHash();
-
-    return lhs < rhs;
-}
-
 void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* camera)
 {
     // Already update in same frame
@@ -446,7 +431,18 @@ void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* cam
         sourceBatch->distance_ = camera->GetDistance(worldPos);
     }
     
-    Sort(sourceBatches.Begin(), sourceBatches.End(), CompareSourceBatch2Ds);
+    Sort(sourceBatches.Begin(), sourceBatches.End(), [] (const SourceBatch2D* lhs, const SourceBatch2D* rhs) {
+        if (lhs->distance_ != rhs->distance_)
+            return lhs->distance_ > rhs->distance_;
+    
+        if (lhs->drawOrder_ != rhs->drawOrder_)
+            return lhs->drawOrder_ < rhs->drawOrder_;
+    
+        if (lhs->material_ != rhs->material_)
+            return lhs->material_->GetNameHash() < rhs->material_->GetNameHash();
+    
+        return lhs < rhs;
+    });
 
     viewBatchInfo.batchCount_ = 0;
     Material* currMaterial = 0;

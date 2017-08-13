@@ -40,46 +40,6 @@
 namespace FlockSDK
 {
 
-inline bool CompareBatchesState(Batch* lhs, Batch* rhs)
-{
-    if (lhs->renderOrder_ != rhs->renderOrder_)
-        return lhs->renderOrder_ < rhs->renderOrder_;
-    else if (lhs->sortKey_ != rhs->sortKey_)
-        return lhs->sortKey_ < rhs->sortKey_;
-    else
-        return lhs->distance_ < rhs->distance_;
-}
-
-inline bool CompareBatchesFrontToBack(Batch* lhs, Batch* rhs)
-{
-    if (lhs->renderOrder_ != rhs->renderOrder_)
-        return lhs->renderOrder_ < rhs->renderOrder_;
-    else if (lhs->distance_ != rhs->distance_)
-        return lhs->distance_ < rhs->distance_;
-    else
-        return lhs->sortKey_ < rhs->sortKey_;
-}
-
-inline bool CompareBatchesBackToFront(Batch* lhs, Batch* rhs)
-{
-    if (lhs->renderOrder_ != rhs->renderOrder_)
-        return lhs->renderOrder_ < rhs->renderOrder_;
-    else if (lhs->distance_ != rhs->distance_)
-        return lhs->distance_ > rhs->distance_;
-    else
-        return lhs->sortKey_ < rhs->sortKey_;
-}
-
-inline bool CompareInstancesFrontToBack(const InstanceData& lhs, const InstanceData& rhs)
-{
-    return lhs.distance_ < rhs.distance_;
-}
-
-inline bool CompareBatchGroupOrder(BatchGroup* lhs, BatchGroup* rhs)
-{
-    return lhs->renderOrder_ < rhs->renderOrder_;
-}
-
 void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, unsigned split, Renderer* renderer)
 {
     Camera* shadowCamera = queue->shadowSplits_[split].shadowCamera_;
@@ -695,7 +655,14 @@ void BatchQueue::SortBackToFront()
     for (auto i = 0u; i < batches_.Size(); ++i)
         sortedBatches_[i] = &batches_[i];
 
-    Sort(sortedBatches_.Begin(), sortedBatches_.End(), CompareBatchesBackToFront);
+    Sort(sortedBatches_.Begin(), sortedBatches_.End(), [] (Batch* lhs, Batch* rhs) {
+        if (lhs->renderOrder_ != rhs->renderOrder_)
+            return lhs->renderOrder_ < rhs->renderOrder_;
+        else if (lhs->distance_ != rhs->distance_)
+            return lhs->distance_ > rhs->distance_;
+        else
+            return lhs->sortKey_ < rhs->sortKey_;
+    });
 
     sortedBatchGroups_.Resize(batchGroups_.Size());
     
@@ -703,7 +670,7 @@ void BatchQueue::SortBackToFront()
     for (HashMap<BatchGroupKey, BatchGroup>::Iterator i = batchGroups_.Begin(); i != batchGroups_.End(); ++i)
         sortedBatchGroups_[index++] = &i->second_;
     
-    Sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), CompareBatchGroupOrder);
+    Sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), [] (BatchGroup* lhs, BatchGroup* rhs) { return lhs->renderOrder_ < rhs->renderOrder_; });
 }
 
 void BatchQueue::SortFrontToBack()
@@ -720,7 +687,7 @@ void BatchQueue::SortFrontToBack()
     {
         if (i->second_.instances_.Size() <= maxSortedInstances_)
         {
-            Sort(i->second_.instances_.Begin(), i->second_.instances_.End(), CompareInstancesFrontToBack);
+            Sort(i->second_.instances_.Begin(), i->second_.instances_.End(), [] (const InstanceData& lhs, const InstanceData& rhs) { return lhs.distance_ < rhs.distance_; });
             if (i->second_.instances_.Size())
                 i->second_.distance_ = i->second_.instances_[0].distance_;
         }
@@ -744,7 +711,14 @@ void BatchQueue::SortFrontToBack()
 
 void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
 {
-    Sort(batches.Begin(), batches.End(), CompareBatchesFrontToBack);
+    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) {
+        if (lhs->renderOrder_ != rhs->renderOrder_)
+            return lhs->renderOrder_ < rhs->renderOrder_;
+        else if (lhs->distance_ != rhs->distance_)
+            return lhs->distance_ < rhs->distance_;
+        else
+            return lhs->sortKey_ < rhs->sortKey_;
+    });
 
     unsigned freeShaderID = 0;
     unsigned short freeMaterialID = 0;
@@ -792,7 +766,14 @@ void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
     geometryRemapping_.Clear();
 
     // Finally sort again with the rewritten ID's
-    Sort(batches.Begin(), batches.End(), CompareBatchesState);
+    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) {
+        if (lhs->renderOrder_ != rhs->renderOrder_)
+            return lhs->renderOrder_ < rhs->renderOrder_;
+        else if (lhs->sortKey_ != rhs->sortKey_)
+            return lhs->sortKey_ < rhs->sortKey_;
+        else
+            return lhs->distance_ < rhs->distance_;
+    });
 }
 
 void BatchQueue::SetInstancingData(void* lockedData, unsigned stride, unsigned& freeIndex)

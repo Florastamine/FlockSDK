@@ -57,11 +57,6 @@ void UpdateDrawablesWork(const WorkItem* item, unsigned threadIndex)
     }
 }
 
-inline bool CompareRayQueryResults(const RayQueryResult& lhs, const RayQueryResult& rhs)
-{
-    return lhs.distance_ < rhs.distance_;
-}
-
 Octant::Octant(const BoundingBox& box, unsigned level, Octant* parent, Octree* root, unsigned index) :
     level_(level),
     numDrawables_(0),
@@ -509,7 +504,7 @@ void Octree::Raycast(RayOctreeQuery& query) const
 
     query.result_.Clear();
     GetDrawablesInternal(query);
-    Sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+    Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) { return lhs.distance_ < rhs.distance_; });
 }
 
 void Octree::RaycastSingle(RayOctreeQuery& query) const
@@ -547,7 +542,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
 
     if (query.result_.Size() > 1)
     {
-        Sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+        Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) { return lhs.distance_ < rhs.distance_; });
         query.result_.Resize(1);
     }
 }

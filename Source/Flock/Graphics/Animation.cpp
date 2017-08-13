@@ -39,22 +39,12 @@
 namespace FlockSDK
 {
 
-inline bool CompareTriggers(AnimationTriggerPoint& lhs, AnimationTriggerPoint& rhs)
-{
-    return lhs.time_ < rhs.time_;
-}
-
-inline bool CompareKeyFrames(AnimationKeyFrame& lhs, AnimationKeyFrame& rhs)
-{
-    return lhs.time_ < rhs.time_;
-}
-
 void AnimationTrack::SetKeyFrame(unsigned index, const AnimationKeyFrame& keyFrame)
 {
     if (index < keyFrames_.Size())
     {
         keyFrames_[index] = keyFrame;
-        FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), [] (AnimationKeyFrame& lhs, AnimationKeyFrame& rhs) { return lhs.time_ < rhs.time_; });
     }
     else if (index == keyFrames_.Size())
         AddKeyFrame(keyFrame);
@@ -65,13 +55,13 @@ void AnimationTrack::AddKeyFrame(const AnimationKeyFrame& keyFrame)
     bool needSort = keyFrames_.Size() ? keyFrames_.Back().time_ > keyFrame.time_ : false;
     keyFrames_.Push(keyFrame);
     if (needSort)
-        FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), [] (AnimationKeyFrame& lhs, AnimationKeyFrame& rhs) { return lhs.time_ < rhs.time_; });
 }
 
 void AnimationTrack::InsertKeyFrame(unsigned index, const AnimationKeyFrame& keyFrame)
 {
     keyFrames_.Insert(index, keyFrame);
-    FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+    FlockSDK::Sort(keyFrames_.Begin(), keyFrames_.End(), [] (AnimationKeyFrame& lhs, AnimationKeyFrame& rhs) { return lhs.time_ < rhs.time_; });
 }
 
 void AnimationTrack::RemoveKeyFrame(unsigned index)
@@ -328,14 +318,14 @@ void Animation::SetTrigger(unsigned index, const AnimationTriggerPoint& trigger)
     else if (index < triggers_.Size())
     {
         triggers_[index] = trigger;
-        Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+        Sort(triggers_.Begin(), triggers_.End(), [] (AnimationTriggerPoint& lhs, AnimationTriggerPoint& rhs) { return lhs.time_ < rhs.time_; });
     }
 }
 
 void Animation::AddTrigger(const AnimationTriggerPoint& trigger)
 {
     triggers_.Push(trigger);
-    Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    Sort(triggers_.Begin(), triggers_.End(), [] (AnimationTriggerPoint& lhs, AnimationTriggerPoint& rhs) { return lhs.time_ < rhs.time_; });
 }
 
 void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant &data)
@@ -345,7 +335,7 @@ void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant &dat
     newTrigger.data_ = data;
     triggers_.Push(newTrigger);
 
-    Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    Sort(triggers_.Begin(), triggers_.End(), [] (AnimationTriggerPoint& lhs, AnimationTriggerPoint& rhs) { return lhs.time_ < rhs.time_; });
 }
 
 void Animation::RemoveTrigger(unsigned index)

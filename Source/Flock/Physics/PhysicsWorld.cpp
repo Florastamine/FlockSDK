@@ -61,11 +61,6 @@ static const Vector3 DEFAULT_GRAVITY = Vector3(0.0f, -9.81f, 0.0f);
 
 PhysicsWorldConfig PhysicsWorld::config;
 
-static bool CompareRaycastResults(const PhysicsRaycastResult& lhs, const PhysicsRaycastResult& rhs)
-{
-    return lhs.distance_ < rhs.distance_;
-}
-
 void InternalPreTickCallback(btDynamicsWorld* world, btScalar timeStep)
 {
     static_cast<PhysicsWorld*>(world->getWorldUserInfo())->PreStep(timeStep);
@@ -74,18 +69,6 @@ void InternalPreTickCallback(btDynamicsWorld* world, btScalar timeStep)
 void InternalTickCallback(btDynamicsWorld* world, btScalar timeStep)
 {
     static_cast<PhysicsWorld*>(world->getWorldUserInfo())->PostStep(timeStep);
-}
-
-static bool CustomMaterialCombinerCallback(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0,
-    int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1)
-{
-    btAdjustInternalEdgeContacts(cp, colObj1Wrap, colObj0Wrap, partId1, index1);
-
-    cp.m_combinedFriction = colObj0Wrap->getCollisionObject()->getFriction() * colObj1Wrap->getCollisionObject()->getFriction();
-    cp.m_combinedRestitution =
-        colObj0Wrap->getCollisionObject()->getRestitution() * colObj1Wrap->getCollisionObject()->getRestitution();
-
-    return true;
 }
 
 /// Callback for physics world queries.
@@ -133,7 +116,15 @@ PhysicsWorld::PhysicsWorld(Context* context) :
     debugRenderer_(0),
     debugMode_(btIDebugDraw::DBG_DrawWireframe | btIDebugDraw::DBG_DrawConstraints | btIDebugDraw::DBG_DrawConstraintLimits)
 {
-    gContactAddedCallback = CustomMaterialCombinerCallback;
+    gContactAddedCallback = [] (btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) {
+        btAdjustInternalEdgeContacts(cp, colObj1Wrap, colObj0Wrap, partId1, index1);
+    
+        cp.m_combinedFriction = colObj0Wrap->getCollisionObject()->getFriction() * colObj1Wrap->getCollisionObject()->getFriction();
+        cp.m_combinedRestitution =
+            colObj0Wrap->getCollisionObject()->getRestitution() * colObj1Wrap->getCollisionObject()->getRestitution();
+    
+        return true;
+    };
 
     if (PhysicsWorld::config.collisionConfig_)
         collisionConfiguration_ = PhysicsWorld::config.collisionConfig_;
@@ -376,7 +367,7 @@ void PhysicsWorld::Raycast(PODVector<PhysicsRaycastResult>& result, const Ray& r
         result.Push(newResult);
     }
 
-    Sort(result.Begin(), result.End(), CompareRaycastResults);
+    Sort(result.Begin(), result.End(), [] (const PhysicsRaycastResult& lhs, const PhysicsRaycastResult& rhs) { return lhs.distance_ < rhs.distance_; });
 }
 
 void PhysicsWorld::RaycastSingle(PhysicsRaycastResult& result, const Ray& ray, float maxDistance, unsigned collisionMask)

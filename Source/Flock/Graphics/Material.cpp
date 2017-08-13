@@ -157,14 +157,6 @@ StringHash ParseTextureTypeXml(ResourceCache* cache, String filename)
 
 static TechniqueEntry noEntry;
 
-bool CompareTechniqueEntries(const TechniqueEntry& lhs, const TechniqueEntry& rhs)
-{
-    if (lhs.lodDistance_ != rhs.lodDistance_)
-        return lhs.lodDistance_ > rhs.lodDistance_;
-    else
-        return lhs.qualityLevel_ > rhs.qualityLevel_;
-}
-
 TechniqueEntry::TechniqueEntry() :
     qualityLevel_(0),
     lodDistance_(0.0f)
@@ -1190,7 +1182,12 @@ SharedPtr<Material> Material::Clone(const String &cloneName) const
 
 void Material::SortTechniques()
 {
-    Sort(techniques_.Begin(), techniques_.End(), CompareTechniqueEntries);
+    Sort(techniques_.Begin(), techniques_.End(), [] (const TechniqueEntry& lhs, const TechniqueEntry& rhs) {
+        if (lhs.lodDistance_ != rhs.lodDistance_)
+            return lhs.lodDistance_ > rhs.lodDistance_;
+        else
+            return lhs.qualityLevel_ > rhs.qualityLevel_;
+    });
 }
 
 void Material::MarkForAuxView(unsigned frameNumber)

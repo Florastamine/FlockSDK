@@ -48,11 +48,6 @@ const char* trailTypeNames[] =
     0
 };
 
-inline bool CompareTails(TrailPoint* lhs, TrailPoint* rhs)
-{
-    return lhs->sortDistance_ > rhs->sortDistance_;
-}
-
 RibbonTrail::RibbonTrail(Context* context) :
     Drawable(context, DRAWABLE_GEOMETRY),
     geometry_(new Geometry(context_)),
@@ -553,7 +548,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
 
     // Sort points
     if (sorted_)
-        Sort(sortedPoints_.Begin(), sortedPoints_.End(), CompareTails);
+        Sort(sortedPoints_.Begin(), sortedPoints_.End(), [] (TrailPoint* lhs, TrailPoint* rhs) { return lhs->sortDistance_ > rhs->sortDistance_; });
 
     // Update individual trail elapsed length
     float trailLength = 0.0f;
