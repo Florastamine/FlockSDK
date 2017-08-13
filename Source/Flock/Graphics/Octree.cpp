@@ -504,7 +504,7 @@ void Octree::Raycast(RayOctreeQuery& query) const
 
     query.result_.Clear();
     GetDrawablesInternal(query);
-    Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) { return lhs.distance_ < rhs.distance_; });
+    Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) -> bool { return lhs.distance_ < rhs.distance_; });
 }
 
 void Octree::RaycastSingle(RayOctreeQuery& query) const
@@ -542,7 +542,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
 
     if (query.result_.Size() > 1)
     {
-        Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) { return lhs.distance_ < rhs.distance_; });
+        Sort(query.result_.Begin(), query.result_.End(), [] (const RayQueryResult& lhs, const RayQueryResult& rhs) -> bool { return lhs.distance_ < rhs.distance_; });
         query.result_.Resize(1);
     }
 }

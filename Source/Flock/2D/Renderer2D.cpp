@@ -101,7 +101,7 @@ void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, PODVector<RayQuery
 
     if (results.Size() != resultSize)
     {
-        Sort(results.Begin() + resultSize, results.End(), [] (RayQueryResult& lr, RayQueryResult& rr) {
+        Sort(results.Begin() + resultSize, results.End(), [] (RayQueryResult& lr, RayQueryResult& rr) -> bool {
             auto *lhs = static_cast<Drawable2D*>(lr.drawable_);
             auto *rhs = static_cast<Drawable2D*>(rr.drawable_);
             if (lhs->GetLayer() != rhs->GetLayer())
@@ -431,7 +431,7 @@ void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* cam
         sourceBatch->distance_ = camera->GetDistance(worldPos);
     }
     
-    Sort(sourceBatches.Begin(), sourceBatches.End(), [] (const SourceBatch2D* lhs, const SourceBatch2D* rhs) {
+    Sort(sourceBatches.Begin(), sourceBatches.End(), [] (const SourceBatch2D* lhs, const SourceBatch2D* rhs) -> bool {
         if (lhs->distance_ != rhs->distance_)
             return lhs->distance_ > rhs->distance_;
     

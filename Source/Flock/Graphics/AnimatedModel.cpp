@@ -1274,7 +1274,7 @@ void AnimatedModel::ApplyAnimation()
     // Make sure animations are in ascending priority order
     if (animationOrderDirty_)
     {
-        Sort(animationStates_.Begin(), animationStates_.End(), [] (const SharedPtr<AnimationState>& lhs, const SharedPtr<AnimationState>& rhs) { return lhs->GetLayer() < rhs->GetLayer(); });
+        Sort(animationStates_.Begin(), animationStates_.End(), [] (const SharedPtr<AnimationState>& lhs, const SharedPtr<AnimationState>& rhs) -> bool { return lhs->GetLayer() < rhs->GetLayer(); });
         animationOrderDirty_ = false;
     }
 

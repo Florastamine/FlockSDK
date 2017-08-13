@@ -548,7 +548,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
 
     // Sort points
     if (sorted_)
-        Sort(sortedPoints_.Begin(), sortedPoints_.End(), [] (TrailPoint* lhs, TrailPoint* rhs) { return lhs->sortDistance_ > rhs->sortDistance_; });
+        Sort(sortedPoints_.Begin(), sortedPoints_.End(), [] (TrailPoint* lhs, TrailPoint* rhs) -> bool { return lhs->sortDistance_ > rhs->sortDistance_; });
 
     // Update individual trail elapsed length
     float trailLength = 0.0f;

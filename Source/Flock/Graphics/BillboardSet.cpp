@@ -626,7 +626,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
 
     if (sorted_)
     {
-        Sort(sortedBillboards_.Begin(), sortedBillboards_.End(), [] (Billboard* lhs, Billboard* rhs) { return lhs->sortDistance_ > rhs->sortDistance_; });
+        Sort(sortedBillboards_.Begin(), sortedBillboards_.End(), [] (Billboard* lhs, Billboard* rhs) -> bool { return lhs->sortDistance_ > rhs->sortDistance_; });
         Vector3 worldPos = node_->GetWorldPosition();
         // Store the "last sorted position" now
         previousOffset_ = (worldPos - frame.camera_->GetNode()->GetWorldPosition());

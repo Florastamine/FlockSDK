@@ -116,7 +116,7 @@ PhysicsWorld::PhysicsWorld(Context* context) :
     debugRenderer_(0),
     debugMode_(btIDebugDraw::DBG_DrawWireframe | btIDebugDraw::DBG_DrawConstraints | btIDebugDraw::DBG_DrawConstraintLimits)
 {
-    gContactAddedCallback = [] (btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) {
+    gContactAddedCallback = [] (btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) -> bool {
         btAdjustInternalEdgeContacts(cp, colObj1Wrap, colObj0Wrap, partId1, index1);
     
         cp.m_combinedFriction = colObj0Wrap->getCollisionObject()->getFriction() * colObj1Wrap->getCollisionObject()->getFriction();
@@ -367,7 +367,7 @@ void PhysicsWorld::Raycast(PODVector<PhysicsRaycastResult>& result, const Ray& r
         result.Push(newResult);
     }
 
-    Sort(result.Begin(), result.End(), [] (const PhysicsRaycastResult& lhs, const PhysicsRaycastResult& rhs) { return lhs.distance_ < rhs.distance_; });
+    Sort(result.Begin(), result.End(), [] (const PhysicsRaycastResult& lhs, const PhysicsRaycastResult& rhs) -> bool { return lhs.distance_ < rhs.distance_; });
 }
 
 void PhysicsWorld::RaycastSingle(PhysicsRaycastResult& result, const Ray& ray, float maxDistance, unsigned collisionMask)

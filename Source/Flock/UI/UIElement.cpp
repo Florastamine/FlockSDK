@@ -1810,7 +1810,7 @@ void UIElement::SortChildren()
         // Only sort when there is no layout
         /// \todo Order is not stable when children have same priorities
         if (layoutMode_ == LM_FREE)
-            Sort(children_.Begin(), children_.End(), [] (const UIElement* lhs, const UIElement* rhs) { return lhs->GetPriority() < rhs->GetPriority(); });
+            Sort(children_.Begin(), children_.End(), [] (const UIElement* lhs, const UIElement* rhs) -> bool { return lhs->GetPriority() < rhs->GetPriority(); });
         sortOrderDirty_ = false;
     }
 }

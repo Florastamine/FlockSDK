@@ -1182,7 +1182,7 @@ SharedPtr<Material> Material::Clone(const String &cloneName) const
 
 void Material::SortTechniques()
 {
-    Sort(techniques_.Begin(), techniques_.End(), [] (const TechniqueEntry& lhs, const TechniqueEntry& rhs) {
+    Sort(techniques_.Begin(), techniques_.End(), [] (const TechniqueEntry& lhs, const TechniqueEntry& rhs) -> bool {
         if (lhs.lodDistance_ != rhs.lodDistance_)
             return lhs.lodDistance_ > rhs.lodDistance_;
         else

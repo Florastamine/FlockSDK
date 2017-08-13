@@ -309,7 +309,7 @@ void FileSelector::RefreshFiles()
 
     // Sort and add to the list view
     // While items are being added, disable layout update for performance optimization
-    Sort(fileEntries_.Begin(), fileEntries_.End(), [] (const FileSelectorEntry& lhs, const FileSelectorEntry& rhs) {
+    Sort(fileEntries_.Begin(), fileEntries_.End(), [] (const FileSelectorEntry& lhs, const FileSelectorEntry& rhs) -> bool {
         if (lhs.directory_ && !rhs.directory_)
             return true;
         if (!lhs.directory_ && rhs.directory_)

@@ -655,7 +655,7 @@ void BatchQueue::SortBackToFront()
     for (auto i = 0u; i < batches_.Size(); ++i)
         sortedBatches_[i] = &batches_[i];
 
-    Sort(sortedBatches_.Begin(), sortedBatches_.End(), [] (Batch* lhs, Batch* rhs) {
+    Sort(sortedBatches_.Begin(), sortedBatches_.End(), [] (Batch* lhs, Batch* rhs) -> bool {
         if (lhs->renderOrder_ != rhs->renderOrder_)
             return lhs->renderOrder_ < rhs->renderOrder_;
         else if (lhs->distance_ != rhs->distance_)
@@ -670,7 +670,7 @@ void BatchQueue::SortBackToFront()
     for (HashMap<BatchGroupKey, BatchGroup>::Iterator i = batchGroups_.Begin(); i != batchGroups_.End(); ++i)
         sortedBatchGroups_[index++] = &i->second_;
     
-    Sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), [] (BatchGroup* lhs, BatchGroup* rhs) { return lhs->renderOrder_ < rhs->renderOrder_; });
+    Sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), [] (BatchGroup* lhs, BatchGroup* rhs) -> bool { return lhs->renderOrder_ < rhs->renderOrder_; });
 }
 
 void BatchQueue::SortFrontToBack()
@@ -687,7 +687,7 @@ void BatchQueue::SortFrontToBack()
     {
         if (i->second_.instances_.Size() <= maxSortedInstances_)
         {
-            Sort(i->second_.instances_.Begin(), i->second_.instances_.End(), [] (const InstanceData& lhs, const InstanceData& rhs) { return lhs.distance_ < rhs.distance_; });
+            Sort(i->second_.instances_.Begin(), i->second_.instances_.End(), [] (const InstanceData& lhs, const InstanceData& rhs) -> bool { return lhs.distance_ < rhs.distance_; });
             if (i->second_.instances_.Size())
                 i->second_.distance_ = i->second_.instances_[0].distance_;
         }
@@ -711,7 +711,7 @@ void BatchQueue::SortFrontToBack()
 
 void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
 {
-    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) {
+    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) -> bool {
         if (lhs->renderOrder_ != rhs->renderOrder_)
             return lhs->renderOrder_ < rhs->renderOrder_;
         else if (lhs->distance_ != rhs->distance_)
@@ -766,7 +766,7 @@ void BatchQueue::SortFrontToBack2Pass(PODVector<Batch*>& batches)
     geometryRemapping_.Clear();
 
     // Finally sort again with the rewritten ID's
-    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) {
+    Sort(batches.Begin(), batches.End(), [] (Batch* lhs, Batch* rhs) -> bool {
         if (lhs->renderOrder_ != rhs->renderOrder_)
             return lhs->renderOrder_ < rhs->renderOrder_;
         else if (lhs->sortKey_ != rhs->sortKey_)
