@@ -37,4 +37,5 @@ FLOCKSDK_API String GetLZ4Version();
 FLOCKSDK_API String GetRapidJSONVersion();
 FLOCKSDK_API String GetJOJPEGVersion();
 FLOCKSDK_API String GettoluappVersion();
+FLOCKSDK_API String GetEngineVersion();
 }

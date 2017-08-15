@@ -12,6 +12,7 @@ String GetLZ4Version();
 String GetRapidJSONVersion();
 String GetJOJPEGVersion();
 String GettoluappVersion();
+String GetEngineVersion();
 
 void ErrorDialog(const String title, const String message);
 void ErrorExit(const String message = String::EMPTY, int exitCode = EXIT_FAILURE);
