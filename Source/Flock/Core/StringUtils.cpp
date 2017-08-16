@@ -282,12 +282,8 @@ static void AddRoundKey(uint8_t round)
 {
   uint8_t i,j;
   for (i=0;i<4;++i)
-  {
     for (j = 0; j < 4; ++j)
-    {
-      (*state)[i][j] ^= RoundKey[round * Nb * 4 + i * Nb + j];
-    }
-  }
+        (*state)[i][j] ^= RoundKey[round * Nb * 4 + i * Nb + j];
 }
 
 // The SubBytes Function Substitutes the values in the
@@ -296,12 +292,8 @@ static void SubBytes(void)
 {
   uint8_t i, j;
   for (i = 0; i < 4; ++i)
-  {
     for (j = 0; j < 4; ++j)
-    {
-      (*state)[j][i] = getSBoxValue((*state)[j][i]);
-    }
-  }
+        (*state)[j][i] = getSBoxValue((*state)[j][i]);
 }
 
 // The ShiftRows() function shifts the rows in the state to the left.
@@ -385,11 +377,7 @@ static void InvMixColumns(void)
   uint8_t a, b, c, d;
   for (i = 0; i < 4; ++i)
   { 
-    a = (*state)[i][0];
-    b = (*state)[i][1];
-    c = (*state)[i][2];
-    d = (*state)[i][3];
-
+    a = (*state)[i][0]; b = (*state)[i][1]; c = (*state)[i][2]; d = (*state)[i][3];
     (*state)[i][0] = Multiply(a, 0x0e) ^ Multiply(b, 0x0b) ^ Multiply(c, 0x0d) ^ Multiply(d, 0x09);
     (*state)[i][1] = Multiply(a, 0x09) ^ Multiply(b, 0x0e) ^ Multiply(c, 0x0b) ^ Multiply(d, 0x0d);
     (*state)[i][2] = Multiply(a, 0x0d) ^ Multiply(b, 0x09) ^ Multiply(c, 0x0e) ^ Multiply(d, 0x0b);
@@ -404,12 +392,8 @@ static void InvSubBytes(void)
 {
   uint8_t i,j;
   for (i = 0; i < 4; ++i)
-  {
     for (j = 0; j < 4; ++j)
-    {
-      (*state)[j][i] = getSBoxInvert((*state)[j][i]);
-    }
-  }
+        (*state)[j][i] = getSBoxInvert((*state)[j][i]);
 }
 
 static void InvShiftRows(void)
@@ -496,10 +480,10 @@ static void InvCipher(void)
 /* Public functions:                                                         */
 /*****************************************************************************/
 #if defined(ECB) && (ECB == 1)
-void AES_ECB_encrypt(const uint8_t* input, const uint8_t* key, uint8_t* output, const uint32_t length)
+static void AES_ECB_encrypt(const uint8_t* input, const uint8_t* key, uint8_t* output, const uint32_t length)
 {
   // Copy input to output, and work in-memory on output
-  memcpy(output, input, length);
+  std::memcpy(output, input, length);
   state = (state_t*)output;
 
   Key = key;
@@ -509,10 +493,10 @@ void AES_ECB_encrypt(const uint8_t* input, const uint8_t* key, uint8_t* output, 
   Cipher();
 }
 
-void AES_ECB_decrypt(const uint8_t* input, const uint8_t* key, uint8_t *output, const uint32_t length)
+static void AES_ECB_decrypt(const uint8_t* input, const uint8_t* key, uint8_t *output, const uint32_t length)
 {
   // Copy input to output, and work in-memory on output
-  memcpy(output, input, length);
+  std::memcpy(output, input, length);
   state = (state_t*)output;
 
   // The KeyExpansion routine must be called before encryption.
@@ -533,7 +517,7 @@ static void XorWithIv(uint8_t* buf)
   }
 }
 
-void AES_CBC_encrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, const uint8_t* key, const uint8_t* iv)
+static void AES_CBC_encrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, const uint8_t* key, const uint8_t* iv)
 {
   uintptr_t i;
   uint8_t extra = length % BLOCKLEN; /* Remaining bytes in the last non-full block */
@@ -546,31 +530,28 @@ void AES_CBC_encrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, co
   }
 
   if (iv != 0)
-  {
     Iv = (uint8_t*)iv;
-  }
 
   for (i = 0; i < length; i += BLOCKLEN)
   {
     XorWithIv(input);
-    memcpy(output, input, BLOCKLEN);
+    std::memcpy(output, input, BLOCKLEN);
     state = (state_t*)output;
     Cipher();
     Iv = output;
     input += BLOCKLEN;
     output += BLOCKLEN;
-    //printf("Step %d - %d", i/16, i);
   }
 
   if (extra)
   {
-    memcpy(output, input, extra);
+    std::memcpy(output, input, extra);
     state = (state_t*)output;
     Cipher();
   }
 }
 
-void AES_CBC_decrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, const uint8_t* key, const uint8_t* iv)
+static void AES_CBC_decrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, const uint8_t* key, const uint8_t* iv)
 {
   uintptr_t i;
   uint8_t extra = length % BLOCKLEN; /* Remaining bytes in the last non-full block */
@@ -584,13 +565,11 @@ void AES_CBC_decrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, co
 
   // If iv is passed as 0, we continue to encrypt without re-setting the Iv
   if (iv != 0)
-  {
     Iv = (uint8_t*)iv;
-  }
 
   for (i = 0; i < length; i += BLOCKLEN)
   {
-    memcpy(output, input, BLOCKLEN);
+    std::memcpy(output, input, BLOCKLEN);
     state = (state_t*)output;
     InvCipher();
     XorWithIv(output);
@@ -601,7 +580,7 @@ void AES_CBC_decrypt_buffer(uint8_t* output, uint8_t* input, uint32_t length, co
 
   if (extra)
   {
-    memcpy(output, input, extra);
+    std::memcpy(output, input, extra);
     state = (state_t*)output;
     InvCipher();
   }
