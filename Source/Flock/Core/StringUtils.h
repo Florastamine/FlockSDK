@@ -137,6 +137,12 @@ FLOCKSDK_API unsigned ToLower(unsigned ch);
 FLOCKSDK_API String GetFileSizeString(unsigned long long memorySize);
 /// Decode a Base64-encoded string into buffer.
 FLOCKSDK_API PODVector<unsigned char> DecodeBase64(const String &encodedString);
+/// Performs AES-256, ECB mode encrypting of a given string/key pair, and returns the encrypted string.
+FLOCKSDK_API String AESEncrypt(const String &s, const char *k);
+/// Performs decrypting of a previously AES-256-, ECB mode-encrypted string, and returns the original string.
+FLOCKSDK_API String AESDecrypt(const String &s, const char *k);
+/// Performs encrypting the given string/key pair, but returns the encrypted string in hexadecimal format instead.
+FLOCKSDK_API String AESEncryptToString(const String &s, const char *key);
 /// Parse type from a C string.
 template <class T> T FromString(const char* source);
 
