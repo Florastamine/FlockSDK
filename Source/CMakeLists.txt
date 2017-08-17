@@ -76,7 +76,9 @@ if (FLOCK_SECURITY)
     else ()
         add_definitions(-DFLOCK_SECURITY_KEY=\"${FLOCK_SECURITY_KEY}\")
     endif()
-    message (STATUS "FLOCK_SECURITY_KEY=${FLOCK_SECURITY_KEY}")
+    add_subdirectory (ThirdParty/CryptoPP)
+    message (STATUS "The following optional component(s) will be installed: Security")
+    message (STATUS "Your security key is: ${FLOCK_SECURITY_KEY}")
 endif()
 
 # Flock game engine library
