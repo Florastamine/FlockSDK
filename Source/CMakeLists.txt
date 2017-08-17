@@ -69,6 +69,16 @@ if (FLOCK_NETWORK)
     add_subdirectory (ThirdParty/kNet)
 endif ()
 
+if (FLOCK_SECURITY)
+    add_definitions (-DFLOCK_SECURITY)
+    if ("${FLOCK_SECURITY_KEY}" STREQUAL "")
+        add_definitions(-DFLOCK_SECURITY_KEY=\"DEFAULT_SECURITY_STRING\")
+    else ()
+        add_definitions(-DFLOCK_SECURITY_KEY=\"${FLOCK_SECURITY_KEY}\")
+    endif()
+    message (STATUS "FLOCK_SECURITY_KEY=${FLOCK_SECURITY_KEY}")
+endif()
+
 # Flock game engine library
 add_subdirectory (Flock)
 

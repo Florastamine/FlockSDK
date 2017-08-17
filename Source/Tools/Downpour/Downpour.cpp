@@ -80,5 +80,9 @@ int main(int argc, char **argv)
     DPGame->argc_   = argc;
     DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
 
+    #if defined(FLOCK_SECURITY) // Which means FLOCK_SECURITY_KEY was also defined through CMake.
+      FLOCKSDK_LOGINFO(String("FLOCK_SECURITY_KEY: ") + FLOCK_SECURITY_KEY);
+    #endif
+
     return (FlockSDK::SharedPtr<DownpourBase>(DPGame))->Run();
 } 
