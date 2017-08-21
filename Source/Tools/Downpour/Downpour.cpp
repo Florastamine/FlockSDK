@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+#include <Flock/Core/Platform.h>
 #include <Flock/Engine/Engine.h>
 #include <Flock/IO/FileSystem.h>
 #include <Flock/IO/Log.h>
@@ -30,7 +31,7 @@
 #include "Downpour.h"
 
 static inline constexpr const char *GetRawScriptLocation() { return("pfiles/main.lua"); }
-static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/main.dcs"); }
+static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/main.s"); }
 
 DownpourBase::DownpourBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
 
@@ -40,10 +41,18 @@ void DownpourBase::Setup()
 
     if (fsObject)
     {
+		// Search for main.lua
         if (fsObject->FileExists(GetCompiledScriptLocation()))
-            moduleName_ = GetCompiledScriptLocation();
+			moduleName_ = GetCompiledScriptLocation();
+		// Search for main.s, which is the compiled version of main.lua (allows for smaller code size and faster execution)
         else if (fsObject->FileExists(GetRawScriptLocation())) 
-            moduleName_ = GetRawScriptLocation();
+			moduleName_ = GetRawScriptLocation();
+		// Try the passed argument
+		else
+		{
+			if (argv_ != FlockSDK::String::EMPTY && argv_[0] != '-')
+				moduleName_ = argv_.Replaced('\\', '/');
+		}
     }
 } 
 
@@ -79,10 +88,6 @@ int main(int argc, char **argv)
     auto *DPGame    = new DownpourBase(DPContext);
     DPGame->argc_   = argc;
     DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
-
-    #if defined(FLOCK_SECURITY) // Which means FLOCK_SECURITY_KEY was also defined through CMake.
-      FLOCKSDK_LOGINFO(String("FLOCK_SECURITY_KEY: ") + FLOCK_SECURITY_KEY);
-    #endif
 
     return (FlockSDK::SharedPtr<DownpourBase>(DPGame))->Run();
 } 
