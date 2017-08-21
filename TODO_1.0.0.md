@@ -4,8 +4,11 @@ This is an incomplete list of things that need to be done before the SDK can be 
 * Re-work the build tools, which still wraps around CMake scripts, but also provides an optional GUI shell, allowing the user to generate a custom .bat or .sh script with the configuration specified in the GUI for building the SDK.
 * Write examples for fork-specific new features/changes, and also port various examples from the original engine for completeness and to provide a way of studying the engine API.
 * Implement basic game script encryption/decryption, with a private key provided by the user during the compilation process.
-* Integrate Auburns/FastNoiseSIMD into the SDK, with functionalities provided for SSE2 2D/3D Perlin/Simplex/White noise. 
+those who looking into writing games and/or applications with the SDK.* Integrate Auburns/FastNoiseSIMD into the SDK, with functionalities provided for SSE2 2D/3D Perlin/Simplex/White noise. 
 * Add different PRNGs besides the default one, for example, Mersenne Twister, multiply-with-carry, and so on.
+* Upgrade LuaJIT to `LuaJIT 2.1.0-beta3`.
+* Utility program which does compiling the release version of the engine/game, packaging assets, wrapping up game scripts, cleaning up, doing post-compilation steps (UPX compression, etc.).
+* Add several more math functions: numerical integration with different methods, noise generation,...
 * Mechanism for random human name generation.
 * Steamworks SDK integration.
 * `std`-based containers (`std::string`, `std::vector<>`, to name a few) will have bigger influence, and will slowly replace the SDK's self-made containers.
@@ -16,4 +19,4 @@ This is an incomplete list of things that need to be done before the SDK can be 
 * Vietnamese translation for the scene editor.
 
 ## Post-`v1.0.0`
-* A complete, working, first-person game demo, written in both Lua and C++11, with the purpose of showcasing various features of the engine and provides a starting point for those who looking into writing games and/or applications with the SDK.
+* A complete, working, first-person game demo, written in both Lua and C++11, with the purpose of showcasing various features of the engine and provides a starting point for 
