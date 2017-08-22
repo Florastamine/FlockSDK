@@ -12,6 +12,7 @@
 /lib*/
 generated/
 /Source/Flock/tolua++-prefix/
+/Build/targets/
 
 # Output files
 /Source/**/*.a
@@ -48,6 +49,9 @@ generated/
 /*.project
 /*.workspace
 
+# Visual Studio Code project settings
+/.vscode
+
 # CMake generated build files
 CMakeCache.txt
 CMakeFiles/
@@ -73,20 +77,14 @@ CTestTestfile.cmake
 # Misc.
 configure*
 *~
+*.user
 *.swp
 .DS_Store
+*.exe
 *.log
 *.bak
 Thumbs.db
 .directory
 
-/Build/targets
-/.vscode
-*.user
-Source/ThirdParty/LuaJIT/src/jit/bc/*.lua
-*.mesh.xml
-*.skeleton.xml
-*.fbx 
-
-Source/Flock/LuaScript/pkgs/Core/Platform.pkg
+# Cppcheck
 Cppcheck/
