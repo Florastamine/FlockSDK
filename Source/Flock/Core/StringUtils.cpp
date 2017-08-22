@@ -1315,6 +1315,12 @@ String GetFileSizeString(unsigned long long memorySize)
     return output;
 }
 
+char ToChar(int i)
+{
+    static constexpr const char t[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    return i > 9 || i < 0 ? '?' : t[i];
+}
+
 // Implementation of Base64 decoding originally by Ren� Nyffenegger.
 // Modified by Konstantin Guschin and Lasse Oorni.
 /*

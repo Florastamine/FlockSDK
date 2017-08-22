@@ -25,8 +25,9 @@
 #include "../Core/Variant.h"
 
 namespace FlockSDK
-{
-
+{    
+/// Parse a single character out of a single-digit integer. Returns '?' if the given integer is not a single digit.
+FLOCKSDK_API char ToChar(int i);
 /// Parse a bool from a string. Check for the first non-empty character (converted to lowercase) being either 't', 'y' or '1'.
 FLOCKSDK_API bool ToBool(const String &source);
 /// Parse a bool from a C string. Check for the first non-empty character (converted to lowercase) being either 't', 'y' or '1'.
