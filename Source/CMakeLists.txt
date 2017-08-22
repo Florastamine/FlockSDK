@@ -58,7 +58,6 @@ if (FLOCK_EXPERIMENTAL)
 
     if (FLOCK_SCENE_EDITOR)
         message (STATUS "[Experimental] The following optional component(s) will be installed: Editor")
-        add_subdirectory (ThirdParty/AngelScript)
     endif ()
 
     if (FLOCK_SECURITY)
@@ -84,6 +83,10 @@ if (FLOCK_NETWORK)
     add_subdirectory (ThirdParty/Civetweb)
     add_subdirectory (ThirdParty/kNet)
 endif ()
+
+# AngelScript, which is for the legacy scene editor.
+# Additionally, the rewrite (C++11) version can be built with FLOCK_SCENE_EDITOR.
+add_subdirectory (ThirdParty/AngelScript)
 
 # Flock game engine library
 add_subdirectory (Flock)
