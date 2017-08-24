@@ -1041,12 +1041,14 @@ void CreateContextMenu()
 
 void UpdateWindowTitle()
 {
+    /*
     String sceneName = GetFileNameAndExtension(editorScene.fileName);
     if (sceneName.empty || sceneName == TEMP_SCENE_NAME || sceneName == TEMP_BINARY_SCENE_NAME)
         sceneName = "Untitled";
     if (sceneModified)
         sceneName += "*";
     graphics.windowTitle = "I Won't Be Here Tomorrow SDK - " + sceneName;
+    */
 }
 
 void HandlePopup(Menu@ menu)
