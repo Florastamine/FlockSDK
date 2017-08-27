@@ -1,4 +1,4 @@
-This is an incomplete list of things that need to be done before the SDK can be able to reach `v1.0.0`, in no particular order.
+This is an incomplete list of things that need to be done before the SDK can be able to reach `v1.0.0`, in no particular order. However, without even reaching `v1.0.0`, the SDK is already in a fairly stable state (except the experimental feature(s), which can be enabled through `FLOCK_EXPERIMENTAL`), and can be downloaded, compiled and used straight away.
 
 ## Pre-`v1.0.0`
 * Re-work the build tools, which still wraps around CMake scripts, but also provides an optional GUI shell, allowing the user to generate a custom .bat or .sh script with the configuration specified in the GUI for building the SDK.

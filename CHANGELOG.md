@@ -70,8 +70,9 @@ This release saw a major delay compared to past releases, which usually takes ar
 * `64`-bit integer variant type support. 
 * Multi-monitor and refresh rate options for full-screen/borderless. 
 
-# Release 6 -- ??.??.2017 ([engine binaries + tool binaries](https://www.google.co.uk/?gws_rd=ssl)) 
+# Release 6 -- 08.27.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiRHZJLW5Eb3VYbFE/view?usp=sharing) | [Debug binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaibENYTzUxM0RYTG8/view?usp=sharing)) 
 ## Changes/bugfixes
+* Pre-compiled binaries are now provided under ZIP packages instead of 7z, which would reduce both CPU and memory usage consumption for decompression.
 * The SDK's official name was changed to "Flock SDK", and the new GitHub URL pointing to the repository is now https://github.com/Florastamine/FlockSDK.
 * Pre-built engine binaries are now Pentium 4 onwards compatible. These binaries were built using an old Pentium 4 machine, which runs Vista SP2 and GCC 7.1. Thus, Vista SP2 or higher is recommended, but it should runs just fine on XP SP3.
 * Various bug-fixes and tweaks. 
