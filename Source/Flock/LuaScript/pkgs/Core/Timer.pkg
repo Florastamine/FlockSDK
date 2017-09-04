@@ -12,7 +12,10 @@ class Time : public Object
     static unsigned long long GetSystemTimeUnix();
     static String GetSystemTimeAsString();
     static String GetSystemTimeUnixAsString();
-    static PODVector<char> GetTimeStamp();
+    static PODVector<int> GetTimeStamp();
+    static int GetCurrentTimeHours();
+    static int GetCurrentTimeMinutes();
+    static int GetCurrentTimeSeconds();
     static String GetTimeStampAsString();
     static void Sleep(unsigned mSec);
     

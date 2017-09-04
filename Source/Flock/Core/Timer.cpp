@@ -175,9 +175,10 @@ String Time::GetSystemTimeUnixAsString()
     return ToString("%" PRIu64, GetSystemTimeUnix());
 }
 
-PODVector<char> Time::GetTimeStamp()
+PODVector<int> Time::GetTimeStamp()
 {
-    PODVector<char> v(3);
+    PODVector<int> v;
+    v.Reserve(3);
     time_t t = time(nullptr);
     struct tm *u = localtime(&t);
 
@@ -185,7 +186,22 @@ PODVector<char> Time::GetTimeStamp()
     v.Push(u->tm_min);
     v.Push(u->tm_sec);
 
-    return PODVector<char>(v);
+    return v;
+}
+
+int Time::GetCurrentTimeHours()
+{
+    return GetTimeStamp()[0];
+}
+
+int Time::GetCurrentTimeMinutes()
+{
+    return GetTimeStamp()[1];
+}
+
+int Time::GetCurrentTimeSeconds()
+{
+    return GetTimeStamp()[2];
 }
 
 String Time::GetTimeStampAsString()
