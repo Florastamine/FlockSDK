@@ -60,6 +60,9 @@ int Max @ MaxInt(int lhs, int rhs);
 int Abs @ AbsInt(int value);
 int Clamp @ ClampInt(int value, int min, int max);
 
+double DegToRad(double d);
+double RadToDeg(double d);
+
 bool IsPowerOfTwo(unsigned value);
 
 unsigned NextPowerOfTwo(unsigned value);

@@ -178,6 +178,18 @@ template <class T> T Ceil(T x) { return ceil(x); }
 /// Round value up.
 template <class T> int CeilToInt(T x) { return static_cast<int>(ceil(x)); }
 
+/// Performs conversion from degrees to radians.
+inline double DegToRad(double d)
+{
+    return (d * M_PI) / 180.0;
+}
+
+/// Performs conversion from radians to degrees.
+inline double RadToDeg(double d)
+{
+    return (d * 180.0) / M_PI;
+}
+
 /// Check whether an unsigned integer is a power of two.
 inline bool IsPowerOfTwo(unsigned value)
 {
