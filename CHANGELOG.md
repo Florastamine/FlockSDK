@@ -108,7 +108,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Networking support was added back.
 * Added `String::FindFirstOf()`.
 
-## Changes/bugfixes/new features merged from Urho3D:
+## Changes/bugfixes/new features merged from Urho3D
 * Various bug-fixes and tweaks. 
 * Font-related functions (`Text::SetFont()`, `Text::SetFontSize()`, `Text::GetFontSize()`,...) now takes `float` as arguments instead of `int`, which allows for fractional font size.
 * Upgraded [FreeType](https://www.freetype.org/) (`v2.7.1` -> `v2.8`).
@@ -142,4 +142,17 @@ This release saw a major delay compared to past releases, which usually takes ar
 * **JSONValue**
 * Added `JSONValue::SetVariant()`, `JSONValue::SetVariantMap()`, `JSONValue::GetVariant()`, `JSONValue::GetVariantMap()`.
 
+# Release ? -- ??.??.2017 ([Release binaries](https://www.google.co.uk/?gws_rd=ssl) | [Debug binaries](https://www.google.co.uk/?gws_rd=ssl)) 
+## Changes/bugfixes
+* Fixed a bug which caused `Time::GetTimeStamp()` to return a `PODVector<>` with 6 elements, with the first 3 being empty, uninitialized values. Also its return type was changed from `PODVector<char>` to `PODVector<int>`.
+* Tools' binaries were moved to `./tool/bin`. This was due to some tools (LuaSrcDiet, for example) need scripts for bootstrapping purposes, and we can't just mix scripts with binaries.
 
+## Removals/deprecation of features
+* `luac` was excluded from the build, as users are generally advised to use LuaJIT over vanilla Lua due to performance reasons, the number of supported libraries, and FFI.
+
+## New features
+* Integrated a simplified version of [LuaSrcDiet](https://github.com/LuaDist/luasrcdiet) for compressing and minify-ing Lua scripts.
+* Added `Time::GetCurrentTimeHours()`, `Time::GetCurrentTimeMinutes()`, `Time::GetCurrentTimeSeconds()` for querying parts of the time stamp.
+* Added `DegToRad()`, `RadToDeg()`.
+
+## Changes/bugfixes/new features merged from Urho3D
