@@ -7,7 +7,6 @@
 /bin/*.app.dSYM/
 /bin/jit/
 /bin/Screenshots/
-/bin/tool/
 /include/
 /lib*/
 generated/

@@ -51,17 +51,17 @@ set (LIBS Lua)
 list (APPEND LIBS m) 
 
 # Setup target
-setup_executable (NODEPS)
-adjust_target_name ()   # Adjust to intended target output name
+setup_executable (NODEPS TOOL)
 
+# Don't do luac, as we will (mostly) want to use LuaJIT instead. (performance, libraries, FFI)
 # Define target name for Lua compiler
-set (TARGET_NAME luac)
+# set (TARGET_NAME luac)
 
 # Define source files
-set (SOURCE_FILES src/luac.c)
+# set (SOURCE_FILES src/luac.c)
 
 # Define dependency libs
 # Same as above
 
 # Setup target
-setup_executable (NODEPS)
+# setup_executable (NODEPS)

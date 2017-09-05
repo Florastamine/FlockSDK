@@ -646,9 +646,9 @@ macro (setup_executable)
     endif ()
     if (ARG_TOOL)
         list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH YES)
-        if (NOT ARG_PRIVATE AND NOT DEST_RUNTIME_DIR MATCHES tool)
-            set_output_directories (${CMAKE_BINARY_DIR}/bin/tool LOCAL RUNTIME PDB)
-            set (RUNTIME_DIR ${CMAKE_BINARY_DIR}/bin/tool)
+        if (NOT ARG_PRIVATE AND NOT DEST_RUNTIME_DIR MATCHES tool/bin)
+            set_output_directories (${CMAKE_BINARY_DIR}/bin/tool/bin LOCAL RUNTIME PDB)
+            set (RUNTIME_DIR ${CMAKE_BINARY_DIR}/bin/tool/bin)
         endif ()
     endif ()
     if (NOT ARG_NODEPS)
@@ -707,12 +707,12 @@ macro (find_flock_tool VAR NAME)
     find_program (${VAR} ${NAME} HINTS ${ARG_HINTS} PATHS ${ARG_PATHS} PATH_SUFFIXES ${ARG_PATH_SUFFIXES} DOC ${ARG_DOC} NO_DEFAULT_PATH)
     mark_as_advanced (${VAR})  # Hide it from cmake-gui in non-advanced mode
     if (NOT ${VAR})
-        set (${VAR} ${CMAKE_BINARY_DIR}/bin/tool/${NAME})
+        set (${VAR} ${CMAKE_BINARY_DIR}/bin/tool/bin/${NAME})
         if (ARG_MSG_MODE AND NOT CMAKE_PROJECT_NAME STREQUAL Flock)
             message (${ARG_MSG_MODE}
                 "Could not find ${VAR} tool in the Flock build tree or Flock SDK. Your project may not build successfully without this tool. "
                 "You may have to first rebuild the Flock in its build tree or reinstall Flock SDK to get this tool built or installed properly. "
-                "Alternatively, copy the ${VAR} executable manually into bin/tool subdirectory in your own project build tree.")
+                "Alternatively, copy the ${VAR} executable manually into bin/tool/bin subdirectory in your own project build tree.")
         endif ()
     endif ()
 endmacro ()
@@ -753,7 +753,7 @@ macro (setup_main_executable)
         endforeach ()
         # Flock project builds the PackageTool as required; downstream project uses PackageTool found in the Flock build tree or Flock SDK
         find_flock_tool (PACKAGE_TOOL PackageTool
-            HINTS ${CMAKE_BINARY_DIR}/bin/tool ${FLOCK_HOME}/bin/tool
+            HINTS ${CMAKE_BINARY_DIR}/bin/tool/bin ${FLOCK_HOME}/bin/tool/bin
             DOC "Path to PackageTool" MSG_MODE WARNING)
         if (CMAKE_PROJECT_NAME STREQUAL Flock)
             set (PACKAGING_DEP DEPENDS PackageTool)
@@ -1074,7 +1074,7 @@ else ()
     # Ensure the output directory exist before creating the symlinks
     file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
     # Create symbolic links in the build tree
-    foreach (I pfiles)
+    foreach (I pfiles tool) 
         if (NOT EXISTS ${CMAKE_BINARY_DIR}/bin/${I})
             create_symlink (${CMAKE_SOURCE_DIR}/bin/${I} ${CMAKE_BINARY_DIR}/bin/${I} FALLBACK_TO_COPY)
         endif ()

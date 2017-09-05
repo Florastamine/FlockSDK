@@ -526,7 +526,7 @@ if (NOT CMAKE_PROJECT_NAME MATCHES ^Flock-ExternalProject-LuaJIT AND NOT IOS AND
     endif() 
 
     # Setup target
-    setup_executable (NODEPS)
+    setup_executable (NODEPS TOOL)
     adjust_target_name ()   # Adjust to intended target output name
     if (TARGET LuaJIT_universal)
         add_dependencies (${TARGET_NAME} LuaJIT_universal)

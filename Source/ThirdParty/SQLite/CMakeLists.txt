@@ -53,7 +53,7 @@ if (NOT WIN32)
 endif ()
 
 # Setup target
-setup_executable (NODEPS)
+setup_executable (NODEPS TOOL)
 
 # SQLite will not work correctly with the -ffast-math option of GCC
 string (REPLACE -ffast-math "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
