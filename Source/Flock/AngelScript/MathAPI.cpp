@@ -38,6 +38,11 @@ static void RegisterMathFunctions(asIScriptEngine* engine)
     engine->RegisterEnumValue("Intersection", "INTERSECTS", INTERSECTS);
     engine->RegisterEnumValue("Intersection", "INSIDE", INSIDE);
 
+    engine->RegisterEnum("PRNG");
+    engine->RegisterEnumValue("PRNG", "MERSENNE_TWISTER", MERSENNE_TWISTER);
+    engine->RegisterEnumValue("PRNG", "LINEAR_CONGRUENTIAL_GENERATOR", LINEAR_CONGRUENTIAL_GENERATOR);
+    engine->RegisterEnumValue("PRNG", "SUBTRACT_WITH_CARRY", SUBTRACT_WITH_CARRY);
+
     engine->RegisterGlobalProperty("const float M_INFINITY", (void*)&M_INFINITY);
     engine->RegisterGlobalProperty("const float M_EPSILON", (void*)&M_EPSILON);
     engine->RegisterGlobalProperty("const float M_LARGE_EPSILON", (void*)&M_LARGE_EPSILON);
