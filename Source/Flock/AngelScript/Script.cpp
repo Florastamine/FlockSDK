@@ -118,14 +118,10 @@ Script::Script(Context* context) :
     RegisterInputAPI(scriptEngine_);
     RegisterAudioAPI(scriptEngine_);
     RegisterUIAPI(scriptEngine_);
-#ifdef FLOCKSDK_IK
-    RegisterIKAPI(scriptEngine_);
-#endif
     RegisterPhysicsAPI(scriptEngine_);
 #ifdef FLOCKSDK_NAVIGATION
     RegisterNavigationAPI(scriptEngine_);
 #endif
-    RegisterUrho2DAPI(scriptEngine_);
     RegisterScriptAPI(scriptEngine_);
     RegisterEngineAPI(scriptEngine_);
 
