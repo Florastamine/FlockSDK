@@ -87,15 +87,11 @@ static void RegisterMathFunctions(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("uint NextPowerOfTwo(uint)", asFUNCTION(NextPowerOfTwo), asCALL_CDECL);
     engine->RegisterGlobalFunction("uint CountSetBits(uint)", asFUNCTION(CountSetBits), asCALL_CDECL);
     engine->RegisterGlobalFunction("uint SDBMHash(uint, uint8)", asFUNCTION(SDBMHash), asCALL_CDECL);
-    engine->RegisterGlobalFunction("float Random()", asFUNCTIONPR(Random, (), float), asCALL_CDECL);
-    engine->RegisterGlobalFunction("float Random(float)", asFUNCTIONPR(Random, (float), float), asCALL_CDECL);
-    engine->RegisterGlobalFunction("float Random(float, float)", asFUNCTIONPR(Random, (float, float), float), asCALL_CDECL);
-    engine->RegisterGlobalFunction("int RandomInt()", asFUNCTION(Rand), asCALL_CDECL);
-    engine->RegisterGlobalFunction("int RandomInt(int)", asFUNCTIONPR(Random, (int), int), asCALL_CDECL);
-    engine->RegisterGlobalFunction("int RandomInt(int, int)", asFUNCTIONPR(Random, (int, int), int), asCALL_CDECL);
-    engine->RegisterGlobalFunction("float RandomNormal(float, float)", asFUNCTIONPR(RandomNormal, (float, float), float), asCALL_CDECL);
-    engine->RegisterGlobalFunction("void SetRandomSeed(uint)", asFUNCTION(SetRandomSeed), asCALL_CDECL);
-    engine->RegisterGlobalFunction("uint GetRandomSeed()", asFUNCTION(GetRandomSeed), asCALL_CDECL);
+    engine->RegisterGlobalFunction("float Random(PRNG p = MERSENNE_TWISTER)", asFUNCTIONPR(Random, (PRNG), float), asCALL_CDECL);
+    engine->RegisterGlobalFunction("float Random(float, PRNG p = MERSENNE_TWISTER)", asFUNCTIONPR(Random, (float, PRNG), float), asCALL_CDECL);
+    engine->RegisterGlobalFunction("float Random(float, float, PRNG p = MERSENNE_TWISTER)", asFUNCTIONPR(Random, (float, float, PRNG), float), asCALL_CDECL);
+    engine->RegisterGlobalFunction("int RandomInt(int, PRNG p = MERSENNE_TWISTER)", asFUNCTIONPR(Random, (int, PRNG), int), asCALL_CDECL);
+    engine->RegisterGlobalFunction("int RandomInt(int, int, PRNG p = MERSENNE_TWISTER)", asFUNCTIONPR(Random, (int, int, PRNG), int), asCALL_CDECL);
 }
 
 static void ConstructIntRect(IntRect* ptr)

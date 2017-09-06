@@ -22,11 +22,21 @@
 
 #pragma once
 
-#include "../Math/Random.h"
-
 #include <cstdlib>
 #include <cmath>
 #include <limits>
+#include <random>
+
+// __rdtsc()
+#if defined(_WIN32)
+    #include <intrin.h> 
+#elif defined(__linux__) && !defined(__ANDROID__)
+    #include <x86intrin.h>
+#endif
+
+static std::mt19937 mt19937(__rdtsc()); // MT
+static std::minstd_rand minstd_rand(__rdtsc()); // LCG
+static std::ranlux24 ranlux24(__rdtsc()); // SWC
 
 namespace FlockSDK
 {
@@ -222,23 +232,62 @@ inline unsigned CountSetBits(unsigned value)
 /// Update a hash with the given 8-bit value using the SDBM algorithm.
 inline unsigned SDBMHash(unsigned hash, unsigned char c) { return c + (hash << 6) + (hash << 16) - hash; }
 
+/// A list of various generators which one can use to generate random numbers.
+/// Difference between provided generators: https://stackoverflow.com/questions/16536617/random-engine-differences
+enum PRNG
+{
+    MERSENNE_TWISTER,
+    LINEAR_CONGRUENTIAL_GENERATOR,
+    SUBTRACT_WITH_CARRY
+};
+
+template <typename T, typename U> static inline T GenerateDistribution(const PRNG &p, U &u)
+{
+    switch (p)
+    {
+        case MERSENNE_TWISTER:
+            return u(mt19937);
+        case LINEAR_CONGRUENTIAL_GENERATOR:
+            return u(minstd_rand);
+        case SUBTRACT_WITH_CARRY:
+            return u(ranlux24);
+    }
+}
+
 /// Return a random float between 0.0 (inclusive) and 1.0 (exclusive.)
-inline float Random() { return Rand() / 32768.0f; }
+inline float Random(PRNG p = MERSENNE_TWISTER)
+{
+    static std::uniform_real_distribution<float> d(0.0, 1.0);
+    return GenerateDistribution<float, std::uniform_real_distribution<float>>(p, d);
+}
 
 /// Return a random float between 0.0 and range, inclusive from both ends.
-inline float Random(float range) { return Rand() * range / 32767.0f; }
+inline float Random(float range, PRNG p = MERSENNE_TWISTER)
+{
+    static std::uniform_real_distribution<float> d(0.0, range);
+    return GenerateDistribution<float, std::uniform_real_distribution<float>>(p, d);
+}
 
 /// Return a random float between min and max, inclusive from both ends.
-inline float Random(float min, float max) { return Rand() * (max - min) / 32767.0f + min; }
+inline float Random(float min, float max, PRNG p = MERSENNE_TWISTER)
+{
+    static std::uniform_real_distribution<float> d(min, max);
+    return GenerateDistribution<float, std::uniform_real_distribution<float>>(p, d);
+}
 
 /// Return a random integer between 0 and range - 1.
-inline int Random(int range) { return (int)(Random() * range); }
+inline int Random(int range, PRNG p = MERSENNE_TWISTER)
+{
+    static std::uniform_int_distribution<int> d(0, range);
+    return GenerateDistribution<int, std::uniform_int_distribution<int>>(p, d);
+}
 
 /// Return a random integer between min and max - 1.
-inline int Random(int min, int max) { float range = (float)(max - min); return (int)(Random() * range) + min; }
-
-/// Return a random normal distributed number with the given mean value and variance.
-inline float RandomNormal(float meanValue, float variance) { return RandStandardNormal() * sqrtf(variance) + meanValue; }
+inline int Random(int min, int max, PRNG p = MERSENNE_TWISTER)
+{
+    static std::uniform_int_distribution<int> d(min, max);
+    return GenerateDistribution<int, std::uniform_int_distribution<int>>(p, d);
+}
 
 /// Convert float to half float. From https://gist.github.com/martinkallman/5049614
 inline unsigned short FloatToHalf(float value)

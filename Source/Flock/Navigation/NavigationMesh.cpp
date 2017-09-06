@@ -606,7 +606,7 @@ Vector3 NavigationMesh::GetRandomPoint(const dtQueryFilter* filter, dtPolyRef* r
     dtPolyRef polyRef;
     Vector3 point(Vector3::ZERO);
 
-    navMeshQuery_->findRandomPoint(filter ? filter : queryFilter_.Get(), Random, randomRef ? randomRef : &polyRef, &point.x_);
+    navMeshQuery_->findRandomPoint(filter ? filter : queryFilter_.Get(), [] () -> float { return Random(); }, randomRef ? randomRef : &polyRef, &point.x_);
 
     return node_->GetWorldTransform() * point;
 }
@@ -635,7 +635,7 @@ Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3 &center, float radi
         randomRef = &polyRef;
     Vector3 point(localCenter);
 
-    navMeshQuery_->findRandomPointAroundCircle(startRef, &localCenter.x_, radius, queryFilter, Random, randomRef, &point.x_);
+    navMeshQuery_->findRandomPointAroundCircle(startRef, &localCenter.x_, radius, queryFilter, [] () -> float { return Random(); }, randomRef, &point.x_);
 
     return transform * point;
 }

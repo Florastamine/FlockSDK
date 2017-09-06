@@ -70,9 +70,17 @@ unsigned NextPowerOfTwo(unsigned value);
 unsigned CountSetBits(unsigned value);
 
 unsigned SDBMHash(unsigned hash, unsigned char c);
-float Random();
-float Random(float range);
-float Random(float min, float max);
-int Random @ RandomInt(int range);
-int Random @ RandomInt(int min, int max);
-float RandomNormal(float meanValue, float variance);
+
+enum PRNG
+{
+    MERSENNE_TWISTER,
+    LINEAR_CONGRUENTIAL_GENERATOR,
+    SUBTRACT_WITH_CARRY
+};
+
+float Random(PRNG p = MERSENNE_TWISTER);
+float Random(float range, PRNG p = MERSENNE_TWISTER);
+float Random(float min, float max, PRNG p = MERSENNE_TWISTER);
+int Random @ RandomInt(int range, PRNG p = MERSENNE_TWISTER);
+int Random @ RandomInt(int min, int max, PRNG p = MERSENNE_TWISTER);
+
