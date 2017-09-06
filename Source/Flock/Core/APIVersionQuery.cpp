@@ -29,7 +29,7 @@
 #include <Bullet/LinearMath/btScalar.h>
 #include <GLEW/glew.h>
 #include <ft2build.h>
-#include <FreeType/freetype.h>
+#include <freetype/freetype.h>
 #include <SDL/SDL_version.h>
 #include <SQLite/sqlite3.h>
 #include <PugiXml/pugixml.hpp>
