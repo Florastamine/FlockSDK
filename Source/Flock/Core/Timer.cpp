@@ -184,7 +184,7 @@ static struct tm *GetTimeDescription()
 PODVector<int> Time::GetTimeStamp()
 {
     struct tm *u = GetTimeDescription();
-    return PODVector<int>{u->tm_hour, u->tm_min, u->tm_sec};
+    return PODVector<int>{u->tm_hour, u->tm_min, u->tm_sec, u->tm_mday, u->tm_mon + 1, u->tm_year + 1900};
 }
 
 int Time::GetCurrentTimeHours()
@@ -200,6 +200,32 @@ int Time::GetCurrentTimeMinutes()
 int Time::GetCurrentTimeSeconds()
 {
     return GetTimeDescription()->tm_sec;
+}
+
+int Time::GetCurrentDayOfMonth()
+{
+    return GetTimeDescription()->tm_mday;
+}
+
+int Time::GetCurrentMonthOfYear()
+{
+    return GetTimeDescription()->tm_mon + 1;
+}
+
+int Time::GetCurrentYear()
+{
+    return GetTimeDescription()->tm_year + 1900;
+}
+
+int Time::GetCurrentDayOfWeek()
+{
+    auto d = GetTimeDescription()->tm_wday;
+    return d == 0 ? 7 : d; // Re-map Sunday into 7 so that we have 1 as the week beginning.
+}
+
+int Time::GetCurrentDayOfYear()
+{
+    return GetTimeDescription()->tm_yday + 1;
 }
 
 String Time::GetTimeStampAsString()

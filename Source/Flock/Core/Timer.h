@@ -116,7 +116,7 @@ public:
     /// Get system time, using Unix format, and return the information as a string.
     static String GetSystemTimeUnixAsString();
 
-    /// Get a date/time stamp as a PODVector<int> object, which follows the format of hh/mm/ss.
+    /// Get a date/time stamp as a PODVector<int> object, which follows the format of hh/mm/ss/dd/mm/yyyy.
     static PODVector<int> GetTimeStamp();
 
     /// These functions are intended to be used script-side, as C++ users can simply just parse the PODVector<> returned from GetTimeStamp().
@@ -128,6 +128,21 @@ public:
 
     /// Returns the seconds part of the current time stamp.
     static int GetCurrentTimeSeconds();
+
+    /// Returns the current day of month.
+    static int GetCurrentDayOfMonth();
+
+    /// Returns the current month of year.
+    static int GetCurrentMonthOfYear();
+
+    /// Returns the current year.
+    static int GetCurrentYear();
+
+    /// Returns the current weekday, with Monday as the starting point. (1 = Monday, 7 = Sunday)
+    static int GetCurrentDayOfWeek();
+
+    /// Returns the current day of year. (1 - 365)
+    static int GetCurrentDayOfYear();
 
     /// Get a date/time stamp as a string.
     static String GetTimeStampAsString();

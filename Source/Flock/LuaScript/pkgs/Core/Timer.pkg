@@ -16,6 +16,11 @@ class Time : public Object
     static int GetCurrentTimeHours();
     static int GetCurrentTimeMinutes();
     static int GetCurrentTimeSeconds();
+    static int GetCurrentDayOfMonth();
+    static int GetCurrentMonthOfYear();
+    static int GetCurrentYear();
+    static int GetCurrentDayOfWeek();
+    static int GetCurrentDayOfYear();
     static String GetTimeStampAsString();
     static void Sleep(unsigned mSec);
     
