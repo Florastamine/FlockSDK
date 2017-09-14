@@ -362,6 +362,6 @@ const Color Color::BLEU_DE_FRANCE(49.0f / 255.0f, 140.0f / 255.0f, 231.0f / 255.
 const Color Color::SCARLET(1.0f, 36.0f / 255.0f, 0.0f); // https://en.wikipedia.org/wiki/Scarlet_(color)
 const Color Color::SAND(194.0f / 255.0f, 178.0f / 255.0f, 128.0f / 255.0f); // https://en.wikipedia.org/wiki/Desert_sand_(color)#Sand
 const Color Color::PEACH(1.0f, 229.0f / 255.0f, 180.0f / 255.0f); // https://en.wikipedia.org/wiki/Peach_(color)
-const Color Color::PEAR(209.0f / 255.0f, 226.0f / 255.0f, 49.0f / 255.0f) // https://en.wikipedia.org/wiki/Chartreuse_(color)#Pear
+const Color Color::PEAR(209.0f / 255.0f, 226.0f / 255.0f, 49.0f / 255.0f); // https://en.wikipedia.org/wiki/Chartreuse_(color)#Pear
 const Color Color::IVORY(1.0f, 1.0f, 240.0f / 255.0f); // https://en.wikipedia.org/wiki/Ivory_(color)
 }
