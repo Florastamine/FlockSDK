@@ -209,27 +209,37 @@ public:
     /// Alpha value.
     float a_;
 
-    /// Opaque white color.
     static const Color WHITE;
-    /// Opaque gray color.
     static const Color GRAY;
-    /// Opaque black color.
     static const Color BLACK;
-    /// Opaque red color.
     static const Color RED;
-    /// Opaque green color.
     static const Color GREEN;
-    /// Opaque blue color.
     static const Color BLUE;
-    /// Opaque cyan color.
     static const Color CYAN;
-    /// Opaque magenta color.
     static const Color MAGENTA;
-    /// Opaque yellow color.
     static const Color YELLOW;
-    /// Transparent color (black with no alpha).
+    static const Color GRAY_DARK;
+    static const Color VIOLET;
+    static const Color LIME;
+    static const Color LIME_ARCTIC;
+    static const Color CHERRY;
+    static const Color INDIGO;
+    static const Color CRIMSON;
+    static const Color LAVENDER;
+    static const Color LEMON_BITTER;
+    static const Color LILAC_PALE;
+    static const Color TEAL;
+    static const Color ORCHID;
+    static const Color GREEN_APPLE;
+    static const Color AQUAMARINE;
+    static const Color BLEU_DE_FRANCE;
+    static const Color SCARLET;
+    static const Color SAND;
+    static const Color PEACH;
+    static const Color PEAR;
+    static const Color IVORY;
     static const Color TRANSPARENT;
-
+    
 protected:
     /// Return hue value given greatest and least RGB component, value-wise.
     float Hue(float min, float max) const;

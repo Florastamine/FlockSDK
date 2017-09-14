@@ -331,9 +331,12 @@ void Color::FromHCM(float h, float c, float m)
     b_ += m;
 }
 
-
+// An updated and modified version of the color vectors constants introduced in
+// https://github.com/Florastamine/Gone-in-November/blob/5142a38515919c4a2f9c1a0fa68e3fc75796e261/source/utils/utilities.h,
+// which is also a small collection of utility functions developed and maintained by myself.
 const Color Color::WHITE;
 const Color Color::GRAY(0.5f, 0.5f, 0.5f);
+const Color Color::GRAY_DARK(32.0f / 255.0f, 32.0f / 255.0f, 32.0f / 255.0f); // https://www.w3schools.com/colors/colors_shades.asp
 const Color Color::BLACK(0.0f, 0.0f, 0.0f);
 const Color Color::RED(1.0f, 0.0f, 0.0f);
 const Color Color::GREEN(0.0f, 1.0f, 0.0f);
@@ -342,4 +345,23 @@ const Color Color::CYAN(0.0f, 1.0f, 1.0f);
 const Color Color::MAGENTA(1.0f, 0.0f, 1.0f);
 const Color Color::YELLOW(1.0f, 1.0f, 0.0f);
 const Color Color::TRANSPARENT(0.0f, 0.0f, 0.0f, 0.0f);
+const Color Color::VIOLET(143.0f / 255.0f, 0.0f, 1.0f); // https://en.wikipedia.org/wiki/Purple
+const Color Color::LIME(191.0f / 255.0f, 1.0f, 0.0f); // https://en.wikipedia.org/wiki/Lime_(color)
+const Color Color::LIME_ARCTIC(208.0f / 255.0f, 1.0f, 20.0f / 255.0f); // https://en.wikipedia.org/wiki/Lime_(color)#Arctic_Lime
+const Color Color::CHERRY(222.0f / 255.0f, 49.0f / 255.0f, 99.0f / 255.0f); // https://en.wikipedia.org/wiki/Cerise_(color)
+const Color Color::INDIGO(75.0f / 255.0f, 0.0f, 130.0f / 255.0f); // https://en.wikipedia.org/wiki/Indigo
+const Color Color::CRIMSON(220.0f / 255.0f, 20.0f / 255.0f, 60.0f / 255.0f); // https://en.wikipedia.org/wiki/Crimson
+const Color Color::LAVENDER(181.0f / 255.0f, 126.0f / 255.0f, 220.0f / 255.0f); // https://en.wikipedia.org/wiki/Lavender_(color)#Lavender_.28floral.29
+const Color Color::LEMON_BITTER(202.0f / 255.0f, 224.0f / 255.0f, 13.0f / 255.0f); // https://en.wikipedia.org/wiki/Lemon_(color)#Bitter_lemon
+const Color Color::LILAC_PALE(220.0f / 255.0f, 208.0f / 255.0f, 1.0f); // https://en.wikipedia.org/wiki/Lilac_(color)#Pale_lilac
+const Color Color::TEAL(0.0f, 128.0f / 255.0f, 128.0f / 255.0f); // https://en.wikipedia.org/wiki/Teal
+const Color Color::ORCHID(218.0f / 255.0f, 112.0f / 255.0f, 214.0f / 255.0f); // https://en.wikipedia.org/wiki/Orchid_(color)
+const Color Color::GREEN_APPLE(141.0f / 255.0f, 182.0f / 255.0f, 0.0f); // https://en.wikipedia.org/wiki/Chartreuse_(color)#Apple_green
+const Color Color::AQUAMARINE(127.0f / 255.0f, 1.0f, 212.0f / 255.0f); // https://en.wikipedia.org/wiki/Aquamarine_(color)
+const Color Color::BLEU_DE_FRANCE(49.0f / 255.0f, 140.0f / 255.0f, 231.0f / 255.0f); // https://en.wikipedia.org/wiki/Bleu_de_France_(colour)
+const Color Color::SCARLET(1.0f, 36.0f / 255.0f, 0.0f); // https://en.wikipedia.org/wiki/Scarlet_(color)
+const Color Color::SAND(194.0f / 255.0f, 178.0f / 255.0f, 128.0f / 255.0f); // https://en.wikipedia.org/wiki/Desert_sand_(color)#Sand
+const Color Color::PEACH(1.0f, 229.0f / 255.0f, 180.0f / 255.0f); // https://en.wikipedia.org/wiki/Peach_(color)
+const Color Color::PEAR(209.0f / 255.0f, 226.0f / 255.0f, 49.0f / 255.0f) // https://en.wikipedia.org/wiki/Chartreuse_(color)#Pear
+const Color Color::IVORY(1.0f, 1.0f, 240.0f / 255.0f); // https://en.wikipedia.org/wiki/Ivory_(color)
 }
