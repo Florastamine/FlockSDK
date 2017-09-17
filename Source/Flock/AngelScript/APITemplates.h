@@ -1318,7 +1318,3 @@ template <class T> void RegisterButton(asIScriptEngine* engine, const char* clas
 }
 
 }
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif

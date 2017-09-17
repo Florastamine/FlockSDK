@@ -262,10 +262,6 @@ static Script* GetScript()
 
 static void RegisterScript(asIScriptEngine* engine)
 {
-    engine->RegisterEnum("DumpMode");
-    engine->RegisterEnumValue("DumpMode", "DOXYGEN", DOXYGEN);
-    engine->RegisterEnumValue("DumpMode", "C_HEADER", C_HEADER);
-
     RegisterObject<Script>(engine, "Script");
     engine->RegisterObjectMethod("Script", "bool Execute(const String&in)", asMETHOD(Script, Execute), asCALL_THISCALL);
     engine->RegisterObjectMethod("Script", "void set_defaultScriptFile(ScriptFile@+)", asMETHOD(Script, SetDefaultScriptFile), asCALL_THISCALL);
