@@ -209,6 +209,7 @@ public:
     /// Alpha value.
     float a_;
 
+    /// Color constants, which are in the [0.0f; 1.0f] range. 
     static const Color WHITE;
     static const Color GRAY;
     static const Color BLACK;
