@@ -144,15 +144,32 @@ This release saw a major delay compared to past releases, which usually takes ar
 
 # Release ? -- ??.??.2017 ([Release binaries](https://www.google.co.uk/?gws_rd=ssl) | [Debug binaries](https://www.google.co.uk/?gws_rd=ssl)) 
 ## Changes/bugfixes
+* The SDK (engine + tools) can now be properly built under `Linux`.
+* The engine runtime (`Downpour`) now accepts an additional argument specifying the script to run. By default, `pfiles/main.lua` will be executed if none is given or the data folder (which is, most of the time, `pfiles`) already contains `main.lua`.
+* Supplementary tools (`isql`, `lua`, `luajit`, `tolua++`, `PackageTool`) were moved to a separate folder (`./bin/tool/`). Engine binaries still reside at `./bin/`.
 * Fixed a bug which caused `Time::GetTimeStamp()` to return a `PODVector<>` with 6 elements, with the first 3 being empty, uninitialized values. Also its return type was changed from `PODVector<char>` to `PODVector<int>`.
+* Partially resolved the issue which caused constant editor crashes.
 * Tools' binaries were moved to `./tool/bin`. This was due to some tools (LuaSrcDiet, for example) need scripts for bootstrapping purposes, and we can't just mix scripts with binaries.
 
 ## Removals/deprecation of features
+* Removed edge detection post-process effect (`EdgeDetection.glsl`).
 * `luac` was excluded from the build, as users are generally advised to use LuaJIT over vanilla Lua due to performance reasons, the number of supported libraries, and FFI.
 
 ## New features
+* The classic random number generator (`FlockSDK::Random()` and its associates) were replaced with C++11 generators. Three methods of generating numbers were provided: Mersenne Twister, which is powered by `mt19937`; LCG (`minstd_rand`) and Subtract-with-carry (`ranlux24`). The APIs still stay the same, but now there's an additional argument (defaults to `MERSENNE_TWISTER`), which you can use to specify which generator to use:
+```c++
+float Random(PRNG p = MERSENNE_TWISTER);
+float Random(float range, PRNG p = MERSENNE_TWISTER);
+float Random(float min, float max, PRNG p = MERSENNE_TWISTER);
+int Random(int range, PRNG p = MERSENNE_TWISTER);
+int Random(int min, int max, PRNG p = MERSENNE_TWISTER);
+```
 * Integrated a simplified version of [LuaSrcDiet](https://github.com/LuaDist/luasrcdiet) for compressing and minify-ing Lua scripts.
+* Added a new build option (`FLOCK_EXPERIMENTAL`), which combines all development features of the next release(s) into one place.
+** It currently includes the **in-development security module** and the **scene editor rewrite**.
+** New features/changes from `FLOCK_EXPERIMENTAL` are highly unstable and prone to crashes. Use with caution.
 * Added `Time::GetCurrentTimeHours()`, `Time::GetCurrentTimeMinutes()`, `Time::GetCurrentTimeSeconds()` for querying parts of the time stamp.
-* Added `DegToRad()`, `RadToDeg()`.
+* Added `DegToRad()`, `RadToDeg()`, `ToChar()`.
+* Added a new large batch of color constants: `GRAY_DARK`, `VIOLET`, `LIME`, `LIME_ARCTIC`, `CHERRY`, `INDIGO`, `CRIMSON`, `LAVENDER`, `LEMON_BITTER`, `LILAC_PALE`, `TEAL`, `ORCHID`, `GREEN_APPLE`, `AQUAMARINE`, `BLEU_DE_FRANCE`, `SCARLET`, `SAND`, `PEACH`, `PEAR`, `IVORY`.
 
 ## Changes/bugfixes/new features merged from Urho3D
