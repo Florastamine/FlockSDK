@@ -726,7 +726,7 @@ int String::Compare(const char* str, bool caseSensitive) const
     return Compare(CString(), str, caseSensitive);
 }
 
-unsigned String::FindFirstOf(const String &s, unsigned offset)
+unsigned String::FindFirstOf(const String &s, unsigned offset) const
 {
   if (offset >= Length())
     return -1; 

@@ -419,7 +419,7 @@ public:
     bool Contains(char c, bool caseSensitive = true) const { return Find(c, 0, caseSensitive) != NPOS; }
 
     /// Searches the string for the first character that matches any of the characters specified in its arguments.
-    unsigned FindFirstOf(const String &s, unsigned offset = 0);
+    unsigned FindFirstOf(const String &s, unsigned offset = 0) const;
 
     /// Construct UTF8 content from Latin1.
     void SetUTF8FromLatin1(const char* str);
