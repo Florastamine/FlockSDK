@@ -1,0 +1,4 @@
+<material>
+    <cull value="none" />
+    <technique name="shaders/techniques/DiffUnlitAlpha.xml" />
+</material>

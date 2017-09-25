@@ -56,6 +56,7 @@
 #include "../UI/UIEvents.h"
 #include "../UI/Window.h"
 #include "../UI/View3D.h"
+#include "../UI/RichText3D.h"
 
 #include <SDL/SDL.h>
 
@@ -1770,7 +1771,9 @@ void RegisterUILibrary(Context* context)
     CheckBox::RegisterObject(context);
     Cursor::RegisterObject(context);
     Text::RegisterObject(context);
+    RichWidget::RegisterObject(context);
     Text3D::RegisterObject(context);
+    RichText3D::RegisterObject(context);
     Window::RegisterObject(context);
     View3D::RegisterObject(context);
     LineEdit::RegisterObject(context);
