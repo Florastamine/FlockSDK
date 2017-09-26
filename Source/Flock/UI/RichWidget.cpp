@@ -173,7 +173,7 @@ void RichWidget::RemoveWidgetBatches()
 
 void RichWidget::RemoveUnusedWidgetBatches()
 {
-    for (auto it = items_.Begin(); it != items_.End())
+    for (auto it = items_.Begin(); it != items_.End();)
     {
         if ((*it)->use_count_ == 0 && (*it)->IsEmpty())
         {
