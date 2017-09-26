@@ -148,7 +148,7 @@ void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const Font
             bool is_color_tag = tag.StartsWith("color");
             bool is_size_tag = tag.StartsWith("size");
             bool is_font_tag = tag.StartsWith("font");
-            bool is_quad_tag = tag.StartsWith("quad");
+            // bool is_quad_tag = tag.StartsWith("quad");
 
             if (is_br_tag)
             {
@@ -213,6 +213,7 @@ void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const Font
                 if (tokens.Size() == 2)
                     block.font.face = tokens[1];
             }
+            /*
             else if (is_quad_tag)
             {
                 // Append current text as a block
@@ -239,6 +240,7 @@ void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const Font
                         block.text = value;
                 }
             }
+            */
         }
         else if (current_block)
             current_block->text = text.Substring(last_tag_end, tag_begin - last_tag_end);
