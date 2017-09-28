@@ -124,7 +124,7 @@ struct TextLine
 /// RichText3D
 class RichText3D : public RichWidget
 {
-  FLOCKSDK_OBJECT(RichText3D, RichWidget);
+    FLOCKSDK_OBJECT(RichText3D, RichWidget);
 public:
     /// Register object factory. Drawable must be registered first.
     static void RegisterObject(Context* context);
@@ -141,21 +141,21 @@ public:
     /// Set the default font for blocks without formatting.
     void SetDefaultFont(const String& face, unsigned size);
     /// Get default font name
-    String GetDefaultFontName() const { return default_font_state_.face; }
+    String GetDefaultFontName() const { return defaultFontState_.face; }
     /// Get default font size
-    unsigned GetDefaultFontSize() const { return default_font_state_.size; }
+    unsigned GetDefaultFontSize() const { return defaultFontState_.size; }
     /// Set text color.
     void SetTextColor(const Color& color);
     /// Get text color.
-    Color GetTextColor() const { return default_font_state_.color; }
+    Color GetTextColor() const { return defaultFontState_.color; }
     /// Set text alignment.
     void SetAlignment(HorizontalAlignment align);
     /// Get text alignment.
     HorizontalAlignment GetAlignment() const { return alignment_; }
     /// Set additional line spacing (can be negative).
-    void SetLineSpacing(int line_spacing);
+    void SetLineSpacing(int lineSpacing);
     /// Get additional line spacing.
-    int GetLineSpacing() const { return line_spacing_; }
+    int GetLineSpacing() const { return lineSpacing_; }
     /// Set word wrapping.
     void SetWrapping(bool wrapping);
     /// Get wrapping.
@@ -173,9 +173,9 @@ public:
     /// Get ticker scroll speed.
     float GetTickerSpeed() const;
     /// Set single line.
-    void SetSingleLine(bool single_line);
+    void SetSingleLine(bool singleLine);
     /// Get single line.
-    bool GetSingleLine() const { return single_line_; }
+    bool GetSingleLine() const { return singleLine_; }
     /// Reset the ticker to the beginning.
     void ResetTicker();
     /// Set ticker position (0-1 range).
@@ -183,7 +183,7 @@ public:
     /// Get ticker position (0-1 range).
     float GetTickerPosition() const;
     /// Get refresh count - number of times the view is recompiled.
-    unsigned GetRefreshCount() const { return refresh_count_; }
+    unsigned GetRefreshCount() const { return refreshCount_; }
     /// Get font ResourceRef.
     ResourceRef GetFontAttr() const;
     /// Set font ResourceRef.
@@ -196,29 +196,29 @@ protected:
     /// The caption text.
     String text_;
     /// Additional line spacing (can be negative).
-    int line_spacing_;
+    int lineSpacing_;
     /// Ticker type.
-    TickerType ticker_type_;
+    TickerType tickerType_;
     /// Ticker direction.
-    TickerDirection ticker_direction_;
+    TickerDirection tickerDirection_;
     /// Ticker speed.
-    float ticker_speed_;
+    float tickerSpeed_;
     /// Default font state for unformatted text.
-    FontState default_font_state_;
+    FontState defaultFontState_;
     /// The lines of text.
     Vector<TextLine> lines_; // TODO: could be removed in the future.
     /// The scroll origin of the text (in ticker mode).
-    Vector3 scroll_origin_;
+    Vector3 scrollOrigin_;
     /// Is the text single line.
-    bool single_line_;
+    bool singleLine_;
     /// Ticker position (0-1).
-    float ticker_position_;
+    float tickerPosition_;
     /// Wrapping
     TextWrapping wrapping_;
     /// Alignment
     HorizontalAlignment alignment_;
     /// How many times this text has recompiled itself
-    unsigned refresh_count_;
+    unsigned refreshCount_;
 
     /// Compile the text to render items.
     void CompileTextLayout();

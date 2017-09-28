@@ -28,31 +28,12 @@
 #include "../Engine/Engine.h"
 #include "../Core/CoreEvents.h"
 
+// Don't you dare trying constexpr ;).
+static const char *s_ticker_types[] = { "None", "Horizontal", "Vertical", "Both", nullptr };
+static const char *s_ticker_directions[] = { "Negative", "Positive", nullptr };
+static const char *s_horizontal_alignments[] = { "Left", "Center", "Right", nullptr };
+
 namespace FlockSDK {
-
-static const char *ticker_types[] =
-{
-  "None",
-  "Horizontal",
-  "Vertical",
-  "Both",
-  nullptr
-};
-
-static const char *ticker_directions[] =
-{
-  "Negative",
-  "Positive",
-  nullptr
-};
-
-static const char *horizontal_alignments[] =
-{
-  "Left",
-  "Center",
-  "Right",
-  nullptr
-};
 
 extern const char *GEOMETRY_CATEGORY;
 
@@ -69,9 +50,9 @@ void RichText3D::RegisterObject(Context* context)
   FLOCKSDK_ACCESSOR_ATTRIBUTE("Word Wrap", GetWrapping, SetWrapping, bool, true, AM_DEFAULT);
   FLOCKSDK_ACCESSOR_ATTRIBUTE("Single Line", GetSingleLine, SetSingleLine, bool, false, AM_DEFAULT);
   FLOCKSDK_ACCESSOR_ATTRIBUTE("Line Spacing", GetLineSpacing, SetLineSpacing, int, 0, AM_DEFAULT);
-  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Text Alignment", GetAlignment, SetAlignment, HorizontalAlignment, horizontal_alignments, HA_LEFT, AM_DEFAULT);
-  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Ticker Type", GetTickerType, SetTickerType, TickerType, ticker_types, TickerType_None, AM_DEFAULT);
-  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Ticker Direction", GetTickerDirection, SetTickerDirection, TickerDirection, ticker_directions, TickerDirection_Negative, AM_DEFAULT);
+  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Text Alignment", GetAlignment, SetAlignment, HorizontalAlignment, s_horizontal_alignments, HA_LEFT, AM_DEFAULT);
+  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Ticker Type", GetTickerType, SetTickerType, TickerType, s_ticker_types, TickerType_None, AM_DEFAULT);
+  FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Ticker Direction", GetTickerDirection, SetTickerDirection, TickerDirection, s_ticker_directions, TickerDirection_Negative, AM_DEFAULT);
   FLOCKSDK_ACCESSOR_ATTRIBUTE("Ticker Speed", GetTickerSpeed, SetTickerSpeed, float, 120, AM_DEFAULT);
   FLOCKSDK_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, bool, true, AM_DEFAULT);
   FLOCKSDK_COPY_BASE_ATTRIBUTES(RichWidget);
@@ -79,19 +60,19 @@ void RichText3D::RegisterObject(Context* context)
 }
 
 RichText3D::RichText3D(Context* context)
- : ticker_type_(TickerType_None)
- , ticker_direction_(TickerDirection_Negative)
- , ticker_speed_(60)
- , scroll_origin_(0.0f, 0.0f)
- , single_line_(false)
+ : tickerType_(TickerType_None)
+ , tickerDirection_(TickerDirection_Negative)
+ , tickerSpeed_(60)
+ , scrollOrigin_(0.0f, 0.0f)
+ , singleLine_(false)
  , wrapping_(WRAP_WORD)
- , ticker_position_(0.0f)
- , refresh_count_(0)
+ , tickerPosition_(0.0f)
+ , refreshCount_(0)
  , alignment_(HA_LEFT)
- , line_spacing_(0)
+ , lineSpacing_(0)
  , RichWidget(context)
 {
-    default_font_state_.color = Color(Color::WHITE);
+    defaultFontState_.color = Color(Color::WHITE);
     SetDefaultFont("fonts/SDK/Anonymous Pro.ttf", 32);
 
     // TODO: disable this handler when the component is disabled
@@ -114,7 +95,7 @@ const String& RichText3D::GetText() const
 
 void RichText3D::SetTextColor(const Color& color)
 {
-    default_font_state_.color = color;
+    defaultFontState_.color = color;
     SetFlags(WidgetFlags_All);
 }
 
@@ -124,14 +105,15 @@ void RichText3D::SetAlignment(HorizontalAlignment align)
     SetFlags(WidgetFlags_All);
 }
 
-void RichText3D::SetLineSpacing(int line_spacing) {
-    line_spacing_ = line_spacing;
+void RichText3D::SetLineSpacing(int lineSpacing)
+{
+    lineSpacing_ = lineSpacing;
     SetFlags(WidgetFlags_All);
 }
 
 void RichText3D::SetTickerType(TickerType type)
 {
-    ticker_type_ = type;
+    tickerType_ = type;
     ResetTicker();
 }
 
@@ -142,53 +124,53 @@ void RichText3D::SetWrapping(bool wrapping) {
 
 TickerType RichText3D::GetTickerType() const
 {
-    return ticker_type_;
+    return tickerType_;
 }
 
 void RichText3D::SetTickerDirection(TickerDirection direction)
 {
-    ticker_direction_ = direction;
+    tickerDirection_ = direction;
     ResetTicker();
 }
 
 TickerDirection RichText3D::GetTickerDirection() const
 {
-    return ticker_direction_;
+    return tickerDirection_;
 }
 
 void RichText3D::SetTickerSpeed(float pixelspersecond)
 {
-    ticker_speed_ = pixelspersecond;
+    tickerSpeed_ = pixelspersecond;
 }
 
 float RichText3D::GetTickerSpeed() const
 {
-    return ticker_speed_;
+    return tickerSpeed_;
 }
 
-void RichText3D::SetSingleLine(bool single_line)
+void RichText3D::SetSingleLine(bool singleLine)
 {
-    single_line_ = single_line;
+    singleLine_ = singleLine;
     SetFlags(WidgetFlags_All);
 }
 
 void RichText3D::ResetTicker()
 {
-    scroll_origin_ = Vector3::ZERO;
+    scrollOrigin_ = Vector3::ZERO;
 
-    if (ticker_type_ == TickerType_Horizontal)
-      scroll_origin_ = Vector3(content_size_.x_ * (ticker_direction_ == TickerDirection_Negative ? 1.0f : -1.0f), 0.0f, 0.0f);
-    else if (ticker_type_ == TickerType_Vertical)
-      scroll_origin_ = Vector3(0.0f, content_size_.y_ * (ticker_direction_ == TickerDirection_Negative ? 1.0f : -1.0f), 0.0f);
+    if (tickerType_ == TickerType_Horizontal)
+      scrollOrigin_ = Vector3(content_size_.x_ * (tickerDirection_ == TickerDirection_Negative ? 1.0f : -1.0f), 0.0f, 0.0f);
+    else if (tickerType_ == TickerType_Vertical)
+      scrollOrigin_ = Vector3(0.0f, content_size_.y_ * (tickerDirection_ == TickerDirection_Negative ? 1.0f : -1.0f), 0.0f);
     else
-      SetDrawOrigin(scroll_origin_);
+      SetDrawOrigin(scrollOrigin_);
 
-    ticker_position_ = 0.0f;
+    tickerPosition_ = 0.0f;
 }
 
 float RichText3D::GetTickerPosition() const
 {
-    return ticker_position_;
+    return tickerPosition_;
 }
 
 void RichText3D::SetTickerPosition(float tickerPosition)
@@ -198,40 +180,40 @@ void RichText3D::SetTickerPosition(float tickerPosition)
 
 void RichText3D::SetDefaultFont(const String& face, unsigned size)
 {
-    default_font_state_.face = face;
-    default_font_state_.size = size;
-    default_font_state_.bold = false;
-    default_font_state_.italic = false;
-    default_font_state_.underlined = false;
+    defaultFontState_.face = face;
+    defaultFontState_.size = size;
+    defaultFontState_.bold = false;
+    defaultFontState_.italic = false;
+    defaultFontState_.underlined = false;
     SetFlags(WidgetFlags_All);
 }
 
 ResourceRef RichText3D::GetFontAttr() const
 {
-    return ResourceRef(Font::GetTypeStatic(), default_font_state_.face);
+    return ResourceRef(Font::GetTypeStatic(), defaultFontState_.face);
 }
 
 void RichText3D::SetFontAttr(const ResourceRef& value)
 {
-    default_font_state_.face = value.name_;
+    defaultFontState_.face = value.name_;
     SetFlags(WidgetFlags_All);
 }
 
 int RichText3D::GetFontSizeAttr() const
 {
-    return default_font_state_.size;
+    return defaultFontState_.size;
 }
 
 void RichText3D::SetFontSizeAttr(int size)
 {
-    default_font_state_.size = size;
+    defaultFontState_.size = size;
     SetFlags(WidgetFlags_All);
 }
 
 void RichText3D::ArrangeTextBlocks(Vector<TextBlock>& markup_blocks)
 {
   TextLine line;
-  if (!single_line_)
+  if (!singleLine_)
   {
     Vector<TextLine> markupLines;
     // for every new line in a block, create a new TextLine
@@ -337,9 +319,9 @@ void RichText3D::ArrangeTextBlocks(Vector<TextBlock>& markup_blocks)
             fontstate.face = bit->font.face;
             fontstate.size = bit->font.size;
             if (fontstate.face.Empty())
-              fontstate.face = default_font_state_.face;
+              fontstate.face = defaultFontState_.face;
             if (fontstate.size <= 0)
-              fontstate.size = default_font_state_.size;
+              fontstate.size = defaultFontState_.size;
             id.AppendWithFormat("%s.%d%s", fontstate.face.CString(), fontstate.size, bi.CString());
             RichWidgetText* text_renderer = CacheWidgetBatch<RichWidgetText>(id);
             text_renderer->SetFont(fontstate.face, fontstate.size);
@@ -535,9 +517,9 @@ void RichText3D::DrawTextLines()
         fontstate.face = bit->font.face;
         fontstate.size = bit->font.size;
         if (fontstate.face.Empty())
-          fontstate.face = default_font_state_.face;
+          fontstate.face = defaultFontState_.face;
         if (fontstate.size <= 0)
-          fontstate.size = default_font_state_.size;
+          fontstate.size = defaultFontState_.size;
         String bi = String(bit->font.bold ? "b" : "") + String(bit->font.italic ? "i" : "");
         if (!bi.Empty())
           bi = String(".") + bi;
@@ -552,7 +534,7 @@ void RichText3D::DrawTextLines()
         }
       }
     }
-    yoffset += line_max_height + line_spacing_;
+    yoffset += line_max_height + lineSpacing_;
     content_size_.x_ = Max<float>(content_size_.x_, xoffset);
     content_size_.y_ = (float) yoffset;
   }
@@ -566,7 +548,7 @@ void RichText3D::CompileTextLayout()
   Vector<TextBlock> markup_blocks;
   markup_blocks.Reserve(10);
 
-  ParseRichTextHTML(text_, markup_blocks, default_font_state_);  
+  ParseRichTextHTML(text_, markup_blocks, defaultFontState_);  
   ArrangeTextBlocks(markup_blocks);
   DrawTextLines();
 }
@@ -586,23 +568,23 @@ void RichText3D::UpdateTickerAnimation(FlockSDK::StringHash eventType, FlockSDK:
   }
 
   // Update ticker state
-  if (ticker_type_ != TickerType_None)
+  if (tickerType_ != TickerType_None)
   {
     // ticker direction sign
     int vertical_dir = 0, horizontal_dir = 0;
 
-    if (ticker_type_ == TickerType_Horizontal)
-      horizontal_dir = ticker_direction_ == TickerDirection_Negative ? -1 : 1;
-    else if (ticker_type_ == TickerType_Vertical)
-      vertical_dir = ticker_direction_ == TickerDirection_Negative ? -1 : 1;
+    if (tickerType_ == TickerType_Horizontal)
+      horizontal_dir = tickerDirection_ == TickerDirection_Negative ? -1 : 1;
+    else if (tickerType_ == TickerType_Vertical)
+      vertical_dir = tickerDirection_ == TickerDirection_Negative ? -1 : 1;
 
     // move the ticker, cap the time elapsed to 100ms to prevent long jumps
-    float move_factor = ticker_speed_ * (elapsed < 0.1f ? elapsed : 0.1f);
-    scroll_origin_.x_ += horizontal_dir * move_factor;
-    scroll_origin_.y_ += vertical_dir * move_factor;
+    float move_factor = tickerSpeed_ * (elapsed < 0.1f ? elapsed : 0.1f);
+    scrollOrigin_.x_ += horizontal_dir * move_factor;
+    scrollOrigin_.y_ += vertical_dir * move_factor;
 
     // move the content
-    SetDrawOrigin(scroll_origin_);
+    SetDrawOrigin(scrollOrigin_);
 
     // check if the text has scrolled out
     bool scrolled_out = false;
@@ -610,23 +592,23 @@ void RichText3D::UpdateTickerAnimation(FlockSDK::StringHash eventType, FlockSDK:
 
     IntRect actual_clip_region = GetClipRegion();
     // detect ticker scrolling out of the clip region and update the ticker position
-    if (ticker_type_ == TickerType_Horizontal)
+    if (tickerType_ == TickerType_Horizontal)
     {
       ticker_max = (horizontal_dir == -1 ? content_size_.x_ : content_size_.x_ + actual_clip_region.Width());
-      scrolled_out = horizontal_dir * scroll_origin_.x_ > ticker_max;
-      ticker_position_ = ticker_max != 0 ? ((float) horizontal_dir * scroll_origin_.x_ / ticker_max) : 0;
+      scrolled_out = horizontal_dir * scrollOrigin_.x_ > ticker_max;
+      tickerPosition_ = ticker_max != 0 ? ((float) horizontal_dir * scrollOrigin_.x_ / ticker_max) : 0;
     }
-    else if (ticker_type_ == TickerType_Vertical)
+    else if (tickerType_ == TickerType_Vertical)
     {
       ticker_max = (vertical_dir == -1 ? content_size_.y_ : content_size_.y_ + actual_clip_region.Height());
-      scrolled_out = vertical_dir * scroll_origin_.y_ > ticker_max;
-      ticker_position_ = ticker_max != 0 ? ((float) vertical_dir * scroll_origin_.y_ / ticker_max) : 0;
+      scrolled_out = vertical_dir * scrollOrigin_.y_ > ticker_max;
+      tickerPosition_ = ticker_max != 0 ? ((float) vertical_dir * scrollOrigin_.y_ / ticker_max) : 0;
     }
 
     if (scrolled_out)
     {
       if (content_size_ != Vector2::ZERO)
-        refresh_count_++;
+        refreshCount_++;
 
       // TODO: send an event
       ResetTicker();
