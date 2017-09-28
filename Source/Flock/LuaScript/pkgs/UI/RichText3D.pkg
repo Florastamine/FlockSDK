@@ -1,0 +1,85 @@
+$#include "UI/RichText3D.h"
+
+enum TickerType
+{
+    TickerType_None,
+    TickerType_Horizontal,
+    TickerType_Vertical,
+};
+
+enum TickerDirection
+{
+    TickerDirection_Negative,
+    TickerDirection_Positive,
+};
+
+enum TextWrapping
+{
+    WRAP_NONE,
+    WRAP_WORD
+};
+
+class RichText3D : public RichWidget
+{
+    RichText3D(Context* context);
+    virtual ~RichText3D();
+
+    void ResetTicker();
+
+    void SetText(const String& text);
+    const String& GetText() const;
+    void SetDefaultFont(const String& face, unsigned size);
+    String GetDefaultFontName() const { return defaultFontState_.face; }
+    unsigned GetDefaultFontSize() const { return defaultFontState_.size; }
+    void SetTextColor(const Color& color);
+    Color GetTextColor() const { return defaultFontState_.color; }
+    void SetAlignment(HorizontalAlignment align);
+    HorizontalAlignment GetAlignment() const { return alignment_; }
+    void SetLineSpacing(int lineSpacing);
+    int GetLineSpacing() const { return lineSpacing_; }
+    void SetWrapping(bool wrapping);
+    bool GetWrapping() const { return wrapping_ == WRAP_WORD; }
+    void SetTickerType(TickerType type);
+    TickerType GetTickerType() const;
+    void SetTickerDirection(TickerDirection direction);
+    TickerDirection GetTickerDirection() const;
+    void SetTickerSpeed(float pixelspersecond);
+    float GetTickerSpeed() const;
+    void SetSingleLine(bool singleLine);
+    bool GetSingleLine() const { return singleLine_; }
+    float GetTickerPosition() const;
+    unsigned GetRefreshCount() const { return refreshCount_; }
+    ResourceRef GetFontAttr() const;
+    void SetFontAttr(const ResourceRef& value);
+    int GetFontSizeAttr() const;
+    void SetFontSizeAttr(int size);
+
+    tolua_property__get_set String text;
+    tolua_property__get_set int lineSpacing;
+    tolua_property__get_set TickerType tickerType;
+    tolua_property__get_set TickerDirection tickerDirection;
+    tolua_property__get_set float tickerSpeed;
+    tolua_property__get_set bool singleLine;
+    tolua_property__get_set TextWrapping wrapping;
+    tolua_property__get_set HorizontalAlignment alignment;
+    tolua_readonly tolua_property__get_set float tickerPosition;
+    tolua_readonly tolua_property__get_set unsigned refreshCount;
+
+    // TODO: Expose defaultFontState_.face and defaultFontState_.size individually as properties.
+    // For now, just use GetDefaultFontName()/GetDefaultFontSize().
+    // FontState defaultFontState;
+};
+
+${
+#define TOLUA_DISABLE_tolua_UILuaAPI_RichText3D_new00
+static int tolua_UILuaAPI_RichText3D_new00(lua_State* tolua_S)
+{
+    return ToluaNewObject<RichText3D>(tolua_S);
+}
+
+#define TOLUA_DISABLE_tolua_UILuaAPI_RichText3D_new00_local
+static int tolua_UILuaAPI_RichText3D_new00_local(lua_State* tolua_S)
+{
+    return ToluaNewObjectGC<RichText3D>(tolua_S);
+}
+$}
