@@ -144,7 +144,8 @@ This release saw a major delay compared to past releases, which usually takes ar
 
 # Release ? -- ??.??.2017 ([Release binaries](https://www.google.co.uk/?gws_rd=ssl) | [Debug binaries](https://www.google.co.uk/?gws_rd=ssl)) 
 ## Changes/bugfixes
-* Various bug-fixes and tweaks. 
+* Various bug-fixes and tweaks.
+* Performance improvements to the Lua scripting side due to the switch to the incremental garbage collector (`LUA_GCSTEP`).
 * The SDK (engine + tools) can now be properly built under `Linux`.
 * The engine runtime (`Downpour`) now accepts an additional argument specifying the script to run. By default, `pfiles/main.lua` will be executed if none is given or the data folder (which is, most of the time, `pfiles`) already contains `main.lua`.
 * Fixed a bug which caused `Time::GetTimeStamp()` to return a `PODVector<>` with 6 elements, with the first 3 being empty, uninitialized values. Also its return type was changed from `PODVector<char>` to `PODVector<int>`.
@@ -156,6 +157,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * `luac` was excluded from the build, as users are generally advised to use LuaJIT over vanilla Lua due to performance reasons, the number of supported libraries, and FFI.
 
 ## New features
+* Integration of rich text formatting support. As an extension to the existing 3D text component, it allows for text rendering with different fonts, sizes, colors, and embedded images within one text block.
 * The classic random number generator (`FlockSDK::Random()` and its associates) were replaced with C++11 generators. Three methods of generating numbers were provided: Mersenne Twister, which is powered by `mt19937`; LCG (`minstd_rand`) and Subtract-with-carry (`ranlux24`). The APIs still stay the same, but now there's an additional argument (defaults to `MERSENNE_TWISTER`), which you can use to specify which generator to use:
 ```c++
 float Random(PRNG p = MERSENNE_TWISTER);
