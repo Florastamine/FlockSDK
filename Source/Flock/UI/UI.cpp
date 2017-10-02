@@ -32,6 +32,10 @@
 #include "../Graphics/ShaderVariation.h"
 #include "../Graphics/Texture2D.h"
 #include "../Graphics/VertexBuffer.h"
+#include "../Graphics/Octree.h"
+#include "../Graphics/Viewport.h"
+#include "../Graphics/Camera.h"
+#include "../Scene/Scene.h"
 #include "../Input/Input.h"
 #include "../Input/InputEvents.h"
 #include "../IO/Log.h"
@@ -57,10 +61,9 @@
 #include "../UI/Window.h"
 #include "../UI/View3D.h"
 #include "../UI/RichText3D.h"
+#include "../UI/UIComponent.h"
 
 #include <SDL/SDL.h>
-
-
 
 namespace FlockSDK
 {
@@ -392,45 +395,106 @@ void UI::RenderUpdate()
     // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
     IntRect currentScissor = IntRect(rootPos.x_, rootPos.y_, rootPos.x_ + rootSize.x_, rootPos.y_ + rootSize.y_);
     if (rootElement_->IsVisible())
-        GetBatches(rootElement_, currentScissor);
+        GetBatches(batches_, vertexData_, rootElement_, currentScissor);
 
     // Save the batch size of the non-modal batches for later use
     nonModalBatchSize_ = batches_.Size();
 
     // Get rendering batches from the modal UI elements
-    GetBatches(rootModalElement_, currentScissor);
+    GetBatches(batches_, vertexData_, rootModalElement_, currentScissor);
 
     // Get batches from the cursor (and its possible children) last to draw it on top of everything
     if (cursor_ && cursor_->IsVisible() && !osCursorVisible)
     {
         currentScissor = IntRect(0, 0, rootSize.x_, rootSize.y_);
         cursor_->GetBatches(batches_, vertexData_, currentScissor);
-        GetBatches(cursor_, currentScissor);
+        GetBatches(batches_, vertexData_, cursor_, currentScissor);
+    }
+
+    // Get batches for UI elements rendered into textures. Each element rendered into texture is treated as root element.
+    for (auto it = renderToTexture_.Begin(); it != renderToTexture_.End();)
+    {
+        WeakPtr<UIComponent> component = *it;
+        if (component.Null() || !component->IsEnabled())
+            it = renderToTexture_.Erase(it);
+        else if (component->IsEnabled())
+        {
+            component->batches_.Clear();
+            component->vertexData_.Clear();
+            UIElement* element = component->GetRoot();
+            const IntVector2 &size = element->GetSize();
+            const IntVector2 &pos = element->GetPosition();
+            // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
+            IntRect scissor = IntRect(pos.x_, pos.y_, pos.x_ + size.x_, pos.y_ + size.y_);
+            GetBatches(component->batches_, component->vertexData_, element, scissor);
+
+            // UIElement does not have anything to show. Insert dummy batch that will clear the texture.
+            if (component->batches_.Empty())
+            {
+                UIBatch batch(element, BLEND_REPLACE, scissor, nullptr, &component->vertexData_);
+                batch.SetColor(Color::BLACK);
+                batch.AddQuad(scissor.left_, scissor.top_, scissor.right_, scissor.bottom_, 0, 0);
+                component->batches_.Push(batch);
+            }
+            ++it;
+        }
     }
 }
 
-void UI::Render(bool resetRenderTargets)
+void UI::Render(bool renderUICommand)
 {
-    // Perform the default render only if not rendered yet
-    if (resetRenderTargets && uiRendered_)
-        return;
-
     FLOCKSDK_PROFILE(RenderUI);
 
     // If the OS cursor is visible, apply its shape now if changed
-    bool osCursorVisible = GetSubsystem<Input>()->IsMouseVisible();
-    if (cursor_ && osCursorVisible)
-        cursor_->ApplyOSCursorShape();
+    if (!renderUICommand)
+    {
+        bool osCursorVisible = GetSubsystem<Input>()->IsMouseVisible();
+        if (cursor_ && osCursorVisible)
+            cursor_->ApplyOSCursorShape();
+    }
 
-    SetVertexData(vertexBuffer_, vertexData_);
-    SetVertexData(debugVertexBuffer_, debugVertexData_);
+    // Perform the default backbuffer render only if not rendered yet, or additional renders through RenderUI command
+    if (renderUICommand || !uiRendered_)
+    {
+        SetVertexData(vertexBuffer_, vertexData_);
+        SetVertexData(debugVertexBuffer_, debugVertexData_);
 
-    // Render non-modal batches
-    Render(resetRenderTargets, vertexBuffer_, batches_, 0, nonModalBatchSize_);
-    // Render debug draw
-    Render(resetRenderTargets, debugVertexBuffer_, debugDrawBatches_, 0, debugDrawBatches_.Size());
-    // Render modal batches
-    Render(resetRenderTargets, vertexBuffer_, batches_, nonModalBatchSize_, batches_.Size());
+        if (!renderUICommand)
+            graphics_->ResetRenderTargets();
+        // Render non-modal batches
+        Render(vertexBuffer_, batches_, 0, nonModalBatchSize_);
+        // Render debug draw
+        Render(debugVertexBuffer_, debugDrawBatches_, 0, debugDrawBatches_.Size());
+        // Render modal batches
+        Render(vertexBuffer_, batches_, nonModalBatchSize_, batches_.Size());
+    }
+    
+    // Render to UIComponent textures. This is skipped when called from the RENDERUI command
+    if (!renderUICommand)
+    {
+        for (auto it = renderToTexture_.Begin(); it != renderToTexture_.End(); it++)
+        {
+            WeakPtr<UIComponent> component = *it;
+            if (component->IsEnabled())
+            {
+                SetVertexData(component->vertexBuffer_, component->vertexData_);
+                SetVertexData(component->debugVertexBuffer_, component->debugVertexData_);
+                
+                RenderSurface* surface = component->GetTexture()->GetRenderSurface();
+                graphics_->SetRenderTarget(0, surface);
+                graphics_->SetViewport(IntRect(0, 0, surface->GetWidth(), surface->GetHeight()));
+                graphics_->Clear(FlockSDK::CLEAR_COLOR);
+
+                Render(component->vertexBuffer_, component->batches_, 0, component->batches_.Size());
+                Render(component->debugVertexBuffer_, component->debugDrawBatches_, 0, component->debugDrawBatches_.Size());
+                component->debugDrawBatches_.Clear();
+                component->debugVertexData_.Clear();
+            }
+        }
+
+        if (renderToTexture_.Size())
+            graphics_->ResetRenderTargets();
+    }
 
     // Clear the debug draw batches and data
     debugDrawBatches_.Clear();
@@ -443,11 +507,26 @@ void UI::DebugDraw(UIElement* element)
 {
     if (element)
     {
-        const IntVector2 &rootSize = rootElement_->GetSize();
-        const IntVector2 &rootPos = rootElement_->GetPosition();
-        element->GetDebugDrawBatches(debugDrawBatches_, debugVertexData_, IntRect(rootPos.x_, rootPos.y_,
-                                                                                  rootPos.x_ + rootSize.x_,
-                                                                                  rootPos.y_ + rootSize.y_));
+        UIElement* root = element->GetRoot();
+        if (!root)
+            root = element;
+        const IntVector2 &rootSize = root->GetSize();
+        const IntVector2 &rootPos = root->GetPosition();
+        IntRect scissor(rootPos.x_, rootPos.y_, rootPos.x_ + rootSize.x_, rootPos.y_ + rootSize.y_);
+        if (root == rootElement_ || root == rootModalElement_)
+            element->GetDebugDrawBatches(debugDrawBatches_, debugVertexData_, scissor);
+        else
+        {
+            for (auto it = renderToTexture_.Begin(); it != renderToTexture_.End(); it++)
+            {
+                WeakPtr<UIComponent> component = *it;
+                if (component.NotNull() && component->GetRoot() == root && component->IsEnabled())
+                {
+                    element->GetDebugDrawBatches(component->debugDrawBatches_, component->debugVertexData_, scissor);
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -626,18 +705,62 @@ IntVector2 UI::GetCursorPosition() const
     return cursor_ ? cursor_->GetPosition() : GetSubsystem<Input>()->GetMousePosition();
 }
 
+UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition)
+{
+    UIElement* result = nullptr;
+
+    if (HasModalElement())
+        result = GetElementAt(rootModalElement_, position, enabledOnly);
+
+    if (!result)
+        result = GetElementAt(rootElement_, position, enabledOnly);
+
+    // Mouse was not hovering UI element. Check elements rendered on 3D objects.
+    if (!result && renderToTexture_.Size())
+    {
+        for (auto it = renderToTexture_.Begin(); it != renderToTexture_.End(); it++)
+        {
+            WeakPtr<UIComponent> component = *it;
+            if (component.Null() || !component->IsEnabled())
+                continue;
+
+            IntVector2 screenPosition;
+            if (component->ScreenToUIPosition(position, screenPosition))
+            {
+                result = GetElementAt(component->GetRoot(), screenPosition, enabledOnly);
+                if (result)
+                {
+                    if (elementScreenPosition)
+                        *elementScreenPosition = screenPosition;
+                    break;
+                }
+            }
+        }
+    }
+    else if (elementScreenPosition)
+        *elementScreenPosition = position;
+
+    return result;
+}
+
+
 UIElement* UI::GetElementAt(const IntVector2 &position, bool enabledOnly)
 {
+    return GetElementAt(position, enabledOnly, nullptr);
+}
+
+UIElement* UI::GetElementAt(UIElement* root, const IntVector2& position, bool enabledOnly)
+{
     IntVector2 positionCopy(position);
-    const IntVector2 &rootSize = rootElement_->GetSize();
-    const IntVector2 &rootPos = rootElement_->GetPosition();
+    const IntVector2& rootSize = root->GetSize();
+    const IntVector2& rootPos = root->GetPosition();
 
     // If position is out of bounds of root element return null.
     if (position.x_ < rootPos.x_ || position.x_ > rootPos.x_ + rootSize.x_)
-        return 0;
+        return nullptr;
 
     if (position.y_ < rootPos.y_ || position.y_ > rootPos.y_ + rootSize.y_)
-        return 0;
+        return nullptr;
 
     // If UI is smaller than the screen, wrap if necessary
     if (rootSize.x_ > 0 && rootSize.y_ > 0)
@@ -648,8 +771,8 @@ UIElement* UI::GetElementAt(const IntVector2 &position, bool enabledOnly)
             positionCopy.y_ = rootPos.y_ + ((positionCopy.y_ - rootPos.y_) % rootSize.y_);
     }
 
-    UIElement* result = 0;
-    GetElementAt(result, HasModalElement() ? rootModalElement_ : rootElement_, positionCopy, enabledOnly);
+    UIElement* result = nullptr;
+    GetElementAt(result, root, positionCopy, enabledOnly);
     return result;
 }
 
@@ -790,8 +913,7 @@ void UI::SetVertexData(VertexBuffer* dest, const PODVector<float>& vertexData)
     dest->SetData(&vertexData[0]);
 }
 
-void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<UIBatch>& batches, unsigned batchStart,
-    unsigned batchEnd)
+void UI::Render(VertexBuffer* buffer, const PODVector<UIBatch>& batches, unsigned batchStart, unsigned batchEnd)
 {
     // Engine does not render when window is closed or device is lost
     assert(graphics_ && graphics_->IsInitialized() && !graphics_->IsDeviceLost());
@@ -799,13 +921,20 @@ void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<U
     if (batches.Empty())
         return;
 
-    if (resetRenderTargets)
-        graphics_->ResetRenderTargets();
-
+    unsigned alphaFormat = Graphics::GetAlphaFormat();
+    RenderSurface* surface = graphics_->GetRenderTarget(0);
     IntVector2 viewSize = graphics_->GetViewport().Size();
     Vector2 invScreenSize(1.0f / (float)viewSize.x_, 1.0f / (float)viewSize.y_);
     Vector2 scale(2.0f * invScreenSize.x_, -2.0f * invScreenSize.y_);
     Vector2 offset(-1.0f, 1.0f);
+
+    if (surface)
+    {
+        // On OpenGL, flip the projection if rendering to a texture so that the texture can be addressed in the
+        // same way as a render texture produced on Direct3D.
+        offset.y_ = -offset.y_;
+        scale.y_ = -scale.y_;
+    }
 
     Matrix4 projection(Matrix4::IDENTITY);
     projection.m00_ = scale.x_ * uiScale_;
@@ -818,7 +947,12 @@ void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<U
 
     graphics_->ClearParameterSources();
     graphics_->SetColorWrite(true);
-    graphics_->SetCullMode(CULL_CCW);
+    // Reverse winding if rendering to texture on OpenGL
+    if (surface)
+        graphics_->SetCullMode(CULL_CW);
+    else
+        graphics_->SetCullMode(CULL_CCW);
+    
     graphics_->SetDepthTest(CMP_ALWAYS);
     graphics_->SetDepthWrite(false);
     graphics_->SetFillMode(FILL_SOLID);
@@ -832,7 +966,6 @@ void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<U
     ShaderVariation* diffMaskTexturePS = graphics_->GetShader(PS, "Basic", "DIFFMAP ALPHAMASK VERTEXCOLOR");
     ShaderVariation* alphaTexturePS = graphics_->GetShader(PS, "Basic", "ALPHAMAP VERTEXCOLOR");
 
-    unsigned alphaFormat = Graphics::GetAlphaFormat();
 
     for (unsigned i = batchStart; i < batchEnd; ++i)
     {
@@ -879,6 +1012,15 @@ void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<U
         scissor.right_ = (int)(scissor.right_ * uiScale_);
         scissor.bottom_ = (int)(scissor.bottom_ * uiScale_);
 
+        // Flip scissor vertically if using OpenGL texture rendering
+        if (surface)
+        {
+            int top = scissor.top_;
+            int bottom = scissor.bottom_;
+            scissor.top_ = viewSize.y_ - bottom;
+            scissor.bottom_ = viewSize.y_ - top;
+        }
+
         graphics_->SetBlendMode(batch.blendMode_);
         graphics_->SetScissorTest(true, scissor);
         graphics_->SetTexture(0, batch.texture_);
@@ -887,7 +1029,7 @@ void UI::Render(bool resetRenderTargets, VertexBuffer* buffer, const PODVector<U
     }
 }
 
-void UI::GetBatches(UIElement* element, IntRect currentScissor)
+void UI::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, UIElement* element, IntRect currentScissor)
 {
     // Set clipping scissor for child elements. No need to draw if zero size
     element->AdjustScissor(currentScissor);
@@ -895,30 +1037,30 @@ void UI::GetBatches(UIElement* element, IntRect currentScissor)
         return;
 
     element->SortChildren();
-    const Vector<SharedPtr<UIElement>>& children = element->GetChildren();
+    const auto &children = element->GetChildren();
     if (children.Empty())
         return;
 
     // For non-root elements draw all children of same priority before recursing into their children: assumption is that they have
     // same renderstate
-    Vector<SharedPtr<UIElement>>::ConstIterator i = children.Begin();
+    auto i = children.Begin();
     if (element->GetTraversalMode() == TM_BREADTH_FIRST)
     {
-        Vector<SharedPtr<UIElement>>::ConstIterator j = i;
+        auto j = i;
         while (i != children.End())
         {
             int currentPriority = (*i)->GetPriority();
             while (j != children.End() && (*j)->GetPriority() == currentPriority)
             {
                 if ((*j)->IsWithinScissor(currentScissor) && (*j) != cursor_)
-                    (*j)->GetBatches(batches_, vertexData_, currentScissor);
+                    (*j)->GetBatches(batches, vertexData, currentScissor);
                 ++j;
             }
             // Now recurse into the children
             while (i != j)
             {
                 if ((*i)->IsVisible() && (*i) != cursor_)
-                    GetBatches(*i, currentScissor);
+                    GetBatches(batches, vertexData, *i, currentScissor);
                 ++i;
             }
         }
@@ -931,9 +1073,9 @@ void UI::GetBatches(UIElement* element, IntRect currentScissor)
             if ((*i) != cursor_)
             {
                 if ((*i)->IsWithinScissor(currentScissor))
-                    (*i)->GetBatches(batches_, vertexData_, currentScissor);
+                    (*i)->GetBatches(batches, vertexData, currentScissor);
                 if ((*i)->IsVisible())
-                    GetBatches(*i, currentScissor);
+                    GetBatches(batches, vertexData, *i, currentScissor);
             }
             ++i;
         }
@@ -1064,9 +1206,10 @@ void UI::ReleaseFontFaces()
         fonts[i]->ReleaseFaces();
 }
 
-void UI::ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, Cursor* cursor)
+void UI::ProcessHover(const IntVector2 &windowCursorPos, int buttons, int qualifiers, Cursor* cursor)
 {
-    WeakPtr<UIElement> element(GetElementAt(cursorPos));
+    IntVector2 cursorPos;
+    WeakPtr<UIElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
 
     for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
     {
@@ -1097,7 +1240,7 @@ void UI::ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, 
                 // Begin hover event
                 if (!hoveredElements_.Contains(element))
                 {
-                    SendDragOrHoverEvent(E_HOVERBEGIN, element, cursorPos, IntVector2::ZERO, 0);
+                    SendDragOrHoverEvent(E_HOVERBEGIN, element, cursorPos, IntVector2::ZERO, nullptr);
                     // Exit if element is destroyed by the event handling
                     if (!element)
                         return;
@@ -1142,7 +1285,7 @@ void UI::ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, 
             // Begin hover event
             if (!hoveredElements_.Contains(element))
             {
-                SendDragOrHoverEvent(E_HOVERBEGIN, element, cursorPos, IntVector2::ZERO, 0);
+                SendDragOrHoverEvent(E_HOVERBEGIN, element, cursorPos, IntVector2::ZERO, nullptr);
                 // Exit if element is destroyed by the event handling
                 if (!element)
                     return;
@@ -1152,11 +1295,12 @@ void UI::ProcessHover(const IntVector2 &cursorPos, int buttons, int qualifiers, 
     }
 }
 
-void UI::ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
+void UI::ProcessClickBegin(const IntVector2 &windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
 {
     if (cursorVisible)
     {
-        WeakPtr<UIElement> element(GetElementAt(cursorPos));
+        IntVector2 cursorPos;
+        WeakPtr<UIElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
 
         bool newButton = true; 
         buttons |= button;
@@ -1172,7 +1316,7 @@ void UI::ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons,
 
             // Handle click
             element->OnClickBegin(element->ScreenToElement(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
-            SendClickEvent(E_UIMOUSECLICK, 0, element, cursorPos, button, buttons, qualifiers);
+            SendClickEvent(E_UIMOUSECLICK, nullptr, element, cursorPos, button, buttons, qualifiers);
 
             // Fire double click event if element matches and is in time
             if (doubleClickElement_ && element == doubleClickElement_ &&
@@ -1180,7 +1324,7 @@ void UI::ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons,
             {
                 element->OnDoubleClick(element->ScreenToElement(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
                 doubleClickElement_.Reset();
-                SendClickEvent(E_UIMOUSEDOUBLECLICK, 0, element, cursorPos, button, buttons, qualifiers);
+                SendClickEvent(E_UIMOUSEDOUBLECLICK, nullptr, element, cursorPos, button, buttons, qualifiers);
             }
             else
             {
@@ -1217,22 +1361,23 @@ void UI::ProcessClickBegin(const IntVector2 &cursorPos, int button, int buttons,
         {
             // If clicked over no element, or a disabled element, lose focus (but not if there is a modal element)
             if (!HasModalElement())
-                SetFocusElement(0);
-            SendClickEvent(E_UIMOUSECLICK, 0, element, cursorPos, button, buttons, qualifiers);
+                SetFocusElement(nullptr);
+            SendClickEvent(E_UIMOUSECLICK, nullptr, element, cursorPos, button, buttons, qualifiers);
 
             if (clickTimer_.GetMSec(true) < (unsigned)(doubleClickInterval_ * 1000) && lastMouseButtons_ == buttons)
-                SendClickEvent(E_UIMOUSEDOUBLECLICK, 0, element, cursorPos, button, buttons, qualifiers);
+                SendClickEvent(E_UIMOUSEDOUBLECLICK, nullptr, element, cursorPos, button, buttons, qualifiers);
         }
 
         lastMouseButtons_ = buttons;
     }
 }
 
-void UI::ProcessClickEnd(const IntVector2 &cursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
+void UI::ProcessClickEnd(const IntVector2 &windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible)
 {
     WeakPtr<UIElement> element;
+    IntVector2 cursorPos = windowCursorPos;
     if (cursorVisible)
-        element = GetElementAt(cursorPos);
+        element = GetElementAt(cursorPos, true, &cursorPos);
 
     // Handle end of drag
     for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
@@ -1293,11 +1438,14 @@ void UI::ProcessClickEnd(const IntVector2 &cursorPos, int button, int buttons, i
     }
 }
 
-void UI::ProcessMove(const IntVector2 &cursorPos, const IntVector2 &cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
+void UI::ProcessMove(const IntVector2 &windowCursorPos, const IntVector2 &cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
     bool cursorVisible)
 {
     if (cursorVisible && dragElementsCount_ > 0 && buttons)
     {
+        IntVector2 cursorPos;
+        GetElementAt(windowCursorPos, true, &cursorPos);
+
         Input* input = GetSubsystem<Input>();
         bool mouseGrabbed = input->IsMouseGrabbed();
         for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
@@ -1760,6 +1908,18 @@ IntVector2 UI::GetEffectiveRootElementSize(bool applyScale) const
     return size;
 }
 
+void UI::SetRenderToTexture(UIComponent* component, bool enable)
+{
+    WeakPtr<UIComponent> weak(component);
+    if (enable)
+    {
+        if (!renderToTexture_.Contains(weak))
+            renderToTexture_.Push(weak);
+    }
+    else
+        renderToTexture_.Remove(weak);
+}
+
 void RegisterUILibrary(Context* context)
 {
     Font::RegisterObject(context);
@@ -1787,6 +1947,7 @@ void RegisterUILibrary(Context* context)
     MessageBox::RegisterObject(context);
     ProgressBar::RegisterObject(context);
     ToolTip::RegisterObject(context);
+    UIComponent::RegisterObject(context);
 }
 
 }
