@@ -81,9 +81,9 @@ public:
     virtual void OnSetEnabled();
 
     /// Add a scripted event handler.
-    virtual void AddEventHandler(StringHash eventType, const String& handlerName);
+    virtual void AddEventHandler(StringHash eventType, const String &handlerName);
     /// Add a scripted event handler for a specific sender.
-    virtual void AddEventHandler(Object* sender, StringHash eventType, const String& handlerName);
+    virtual void AddEventHandler(Object* sender, StringHash eventType, const String &handlerName);
     /// Remove a scripted event handler.
     virtual void RemoveEventHandler(StringHash eventType);
     /// Remove a scripted event handler for a specific sender.
@@ -100,20 +100,20 @@ public:
     virtual bool HasEventHandler(Object* sender, StringHash eventType) const;
 
     /// Create object of certain class from the script file. Return true if successful.
-    bool CreateObject(ScriptFile* scriptFile, const String& className);
+    bool CreateObject(ScriptFile* scriptFile, const String &className);
     /// Set script file only. Recreate object if necessary.
     void SetScriptFile(ScriptFile* scriptFile);
     /// Set class name only. Recreate object if necessary.
-    void SetClassName(const String& className);
+    void SetClassName(const String &className);
     /// Query for a method by declaration and execute. Log an error if not found.
-    bool Execute(const String& declaration, const VariantVector& parameters = Variant::emptyVariantVector);
+    bool Execute(const String &declaration, const VariantVector& parameters = Variant::emptyVariantVector);
     /// Execute a method.
     bool Execute(asIScriptFunction* method, const VariantVector& parameters = Variant::emptyVariantVector);
     /// Add a delay-executed method call, optionally repeating.
     void DelayedExecute
-        (float delay, bool repeat, const String& declaration, const VariantVector& parameters = Variant::emptyVariantVector);
+        (float delay, bool repeat, const String &declaration, const VariantVector& parameters = Variant::emptyVariantVector);
     /// Clear pending delay-executed method calls. If empty declaration given, clears all.
-    void ClearDelayedExecute(const String& declaration = String::EMPTY);
+    void ClearDelayedExecute(const String &declaration = String::EMPTY);
 
     /// Return script file.
     ScriptFile* GetScriptFile() const { return scriptFile_; }
@@ -122,12 +122,12 @@ public:
     asIScriptObject* GetScriptObject() const { return scriptObject_; }
 
     /// Return class name.
-    const String& GetClassName() const { return className_; }
+    const String &GetClassName() const { return className_; }
 
     /// Check if the object is derived from a class.
-    bool IsA(const String& className) const;
+    bool IsA(const String &className) const;
     /// Check if has a method.
-    bool HasMethod(const String& declaration) const;
+    bool HasMethod(const String &declaration) const;
 
     /// Set script file attribute.
     void SetScriptFileAttr(const ResourceRef& value);

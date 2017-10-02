@@ -45,7 +45,7 @@ UIBatch::UIBatch() :
     SetDefaultColor();
 }
 
-UIBatch::UIBatch(UIElement* element, BlendMode blendMode, const IntRect& scissor, Texture* texture, PODVector<float>* vertexData) :
+UIBatch::UIBatch(UIElement* element, BlendMode blendMode, const IntRect &scissor, Texture* texture, PODVector<float>* vertexData) :
     element_(element),
     blendMode_(blendMode),
     scissor_(scissor),
@@ -58,7 +58,7 @@ UIBatch::UIBatch(UIElement* element, BlendMode blendMode, const IntRect& scissor
     SetDefaultColor();
 }
 
-void UIBatch::SetColor(const Color& color, bool overrideAlpha)
+void UIBatch::SetColor(const Color &color, bool overrideAlpha)
 {
     if (!element_)
         overrideAlpha = true;
@@ -343,8 +343,8 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2 &a, const Int
 }
 
 void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2 &a, const IntVector2 &b, const IntVector2 &c, const IntVector2 &d,
-    const IntVector2 &texA, const IntVector2 &texB, const IntVector2 &texC, const IntVector2 &texD, const Color& colA,
-    const Color& colB, const Color& colC, const Color& colD)
+    const IntVector2 &texA, const IntVector2 &texB, const IntVector2 &texC, const IntVector2 &texD, const Color &colA,
+    const Color &colB, const Color &colC, const Color &colD)
 {
     Vector3 v1 = (transform * Vector3((float)a.x_, (float)a.y_, 0.0f)) - posAdjust;
     Vector3 v2 = (transform * Vector3((float)b.x_, (float)b.y_, 0.0f)) - posAdjust;

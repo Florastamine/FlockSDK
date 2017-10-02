@@ -137,13 +137,13 @@ public:
     /// Perform UI element update.
     virtual void Update(float timeStep);
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
-    virtual bool IsWithinScissor(const IntRect& currentScissor);
+    virtual bool IsWithinScissor(const IntRect &currentScissor);
     /// Update and return screen position.
     virtual const IntVector2 &GetScreenPosition() const;
     /// Return UI rendering batches.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
     /// Return UI rendering batches for debug draw.
-    virtual void GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
     /// React to mouse hover.
     virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
     /// React to mouse click begin.
@@ -267,11 +267,11 @@ public:
     /// Set pivot relative to element's size (from 0 to 1, where 0.5 is center.) Overrides horizontal & vertical alignment.
     void SetPivot(float x, float y);
     /// Set child element clipping border.
-    void SetClipBorder(const IntRect& rect);
+    void SetClipBorder(const IntRect &rect);
     /// Set color on all corners.
-    void SetColor(const Color& color);
+    void SetColor(const Color &color);
     /// Set color on one corner.
-    void SetColor(Corner corner, const Color& color);
+    void SetColor(Corner corner, const Color &color);
     /// Set priority.
     void SetPriority(int priority);
     /// Set opacity.
@@ -315,13 +315,13 @@ public:
     /// Set default style file for later use by children elements.
     void SetDefaultStyle(XMLFile* style);
     /// Set layout parameters.
-    void SetLayout(LayoutMode mode, int spacing = 0, const IntRect& border = IntRect::ZERO);
+    void SetLayout(LayoutMode mode, int spacing = 0, const IntRect &border = IntRect::ZERO);
     /// Set layout mode only.
     void SetLayoutMode(LayoutMode mode);
     /// Set layout spacing.
     void SetLayoutSpacing(int spacing);
     /// Set layout border.
-    void SetLayoutBorder(const IntRect& border);
+    void SetLayoutBorder(const IntRect &border);
     /// Set layout flex scale.
     void SetLayoutFlexScale(const Vector2 &scale);
     /// Set horizontal indentation.
@@ -461,10 +461,10 @@ public:
     const Vector2 &GetPivot() const { return pivot_; }
 
     /// Return child element clipping border.
-    const IntRect& GetClipBorder() const { return clipBorder_; }
+    const IntRect &GetClipBorder() const { return clipBorder_; }
 
     /// Return corner color.
-    const Color& GetColor(Corner corner) const { return color_[corner]; }
+    const Color &GetColor(Corner corner) const { return color_[corner]; }
 
     /// Return priority.
     int GetPriority() const { return priority_; }
@@ -538,7 +538,7 @@ public:
     int GetLayoutSpacing() const { return layoutSpacing_; }
 
     /// Return layout border.
-    const IntRect& GetLayoutBorder() const { return layoutBorder_; }
+    const IntRect &GetLayoutBorder() const { return layoutBorder_; }
 
     /// Return layout flex scale.
     const Vector2 &GetLayoutFlexScale() const { return layoutFlexScale_; }
@@ -564,7 +564,7 @@ public:
     /// Return root element.
     UIElement* GetRoot() const;
     /// Return derived color. Only valid when no gradient.
-    const Color& GetDerivedColor() const;
+    const Color &GetDerivedColor() const;
     /// Return a user variable.
     const Variant &GetVar(const StringHash& key) const;
 
@@ -615,12 +615,12 @@ public:
     /// Set hovering state.
     void SetHovering(bool enable);
     /// Adjust scissor for rendering.
-    void AdjustScissor(IntRect& currentScissor);
+    void AdjustScissor(IntRect &currentScissor);
     /// Get UI rendering batches with a specified offset. Also recurse to child elements.
     void GetBatchesWithOffset(IntVector2 &offset, PODVector<UIBatch>& batches, PODVector<float>& vertexData, IntRect currentScissor);
 
     /// Return color attribute. Uses just the top-left color.
-    const Color& GetColorAttr() const { return color_[0]; }
+    const Color &GetColorAttr() const { return color_[0]; }
 
     /// Return traversal mode for rendering.
     TraversalMode GetTraversalMode() const { return traversalMode_; }

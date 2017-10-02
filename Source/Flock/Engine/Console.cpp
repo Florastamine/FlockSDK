@@ -270,8 +270,8 @@ void Console::RemoveAutoComplete(const String &option)
 void Console::UpdateElements()
 {
     int width = GetSubsystem<UI>()->GetRoot()->GetWidth();
-    const IntRect& border = background_->GetLayoutBorder();
-    const IntRect& panelBorder = rowContainer_->GetScrollPanel()->GetClipBorder();
+    const IntRect &border = background_->GetLayoutBorder();
+    const IntRect &panelBorder = rowContainer_->GetScrollPanel()->GetClipBorder();
     rowContainer_->SetFixedWidth(width - border.left_ - border.right_);
     rowContainer_->SetFixedHeight(
         displayedRows_ * rowContainer_->GetItem((unsigned)0)->GetHeight() + panelBorder.top_ + panelBorder.bottom_ +
@@ -334,7 +334,7 @@ bool Console::PopulateInterpreter()
         interpreters_->AddItem(text);
     }
 
-    const IntRect& border = interpreters_->GetPopup()->GetLayoutBorder();
+    const IntRect &border = interpreters_->GetPopup()->GetLayoutBorder();
     interpreters_->SetMaxWidth(interpreters_->GetListView()->GetContentElement()->GetWidth() + border.left_ + border.right_);
     bool enabled = interpreters_->GetNumItems() > 1;
     interpreters_->SetEnabled(enabled);

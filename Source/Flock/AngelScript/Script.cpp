@@ -48,7 +48,7 @@ class ScriptResourceRouter : public ResourceRouter
     }
 
     /// Check if request is for an AngelScript file and reroute to compiled version if necessary (.as file not available)
-    virtual void Route(String& name, ResourceRequest requestType)
+    virtual void Route(String &name, ResourceRequest requestType)
     {
         String extension = GetExtension(name);
         if (extension == ".as")
@@ -159,7 +159,7 @@ Script::~Script()
         cache->RemoveResourceRouter(router_);
 }
 
-bool Script::Execute(const String& line)
+bool Script::Execute(const String &line)
 {
     // Note: compiling code each time is slow. Not to be used for performance-critical or repeating activity
     FLOCKSDK_PROFILE(ExecuteImmediate);

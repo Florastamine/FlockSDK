@@ -380,13 +380,13 @@ void UIElement::Update(float timeStep)
 {
 }
 
-void UIElement::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void UIElement::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     // Reset hovering for next frame
     hovering_ = false;
 }
 
-void UIElement::GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void UIElement::GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     UIBatch batch(this, BLEND_ALPHA, currentScissor, 0, &vertexData);
 
@@ -422,7 +422,7 @@ void UIElement::GetDebugDrawBatches(PODVector<UIBatch>& batches, PODVector<float
     UIBatch::AddOrMerge(batch, batches);
 }
 
-bool UIElement::IsWithinScissor(const IntRect& currentScissor)
+bool UIElement::IsWithinScissor(const IntRect &currentScissor)
 {
     if (!visible_)
         return false;
@@ -851,7 +851,7 @@ void UIElement::SetPivot(float x, float y)
     SetPivot(Vector2(x, y));
 }
 
-void UIElement::SetClipBorder(const IntRect& rect)
+void UIElement::SetClipBorder(const IntRect &rect)
 {
     clipBorder_.left_ = Max(rect.left_, 0);
     clipBorder_.top_ = Max(rect.top_, 0);
@@ -859,7 +859,7 @@ void UIElement::SetClipBorder(const IntRect& rect)
     clipBorder_.bottom_ = Max(rect.bottom_, 0);
 }
 
-void UIElement::SetColor(const Color& color)
+void UIElement::SetColor(const Color &color)
 {
     for (auto i = 0u; i < MAX_UIELEMENT_CORNERS; ++i)
         color_[i] = color;
@@ -867,7 +867,7 @@ void UIElement::SetColor(const Color& color)
     derivedColorDirty_ = true;
 }
 
-void UIElement::SetColor(Corner corner, const Color& color)
+void UIElement::SetColor(Corner corner, const Color &color)
 {
     color_[corner] = color;
     colorGradient_ = false;
@@ -1078,7 +1078,7 @@ void UIElement::SetDefaultStyle(XMLFile* style)
     defaultStyle_ = style;
 }
 
-void UIElement::SetLayout(LayoutMode mode, int spacing, const IntRect& border)
+void UIElement::SetLayout(LayoutMode mode, int spacing, const IntRect &border)
 {
     layoutMode_ = mode;
     layoutSpacing_ = Max(spacing, 0);
@@ -1100,7 +1100,7 @@ void UIElement::SetLayoutSpacing(int spacing)
     UpdateLayout();
 }
 
-void UIElement::SetLayoutBorder(const IntRect& border)
+void UIElement::SetLayoutBorder(const IntRect &border)
 {
     layoutBorder_ = IntRect(Max(border.left_, 0), Max(border.top_, 0), Max(border.right_, 0), Max(border.bottom_, 0));
     UpdateLayout();
@@ -1698,7 +1698,7 @@ UIElement* UIElement::GetRoot() const
     return root;
 }
 
-const Color& UIElement::GetDerivedColor() const
+const Color &UIElement::GetDerivedColor() const
 {
     if (derivedColorDirty_)
     {
@@ -1830,7 +1830,7 @@ void UIElement::SetHovering(bool enable)
     hovering_ = enable;
 }
 
-void UIElement::AdjustScissor(IntRect& currentScissor)
+void UIElement::AdjustScissor(IntRect &currentScissor)
 {
     if (clipChildren_)
     {

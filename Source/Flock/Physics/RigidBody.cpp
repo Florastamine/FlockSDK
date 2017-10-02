@@ -252,7 +252,7 @@ void RigidBody::SetPosition(const Vector3 &position)
     }
 }
 
-void RigidBody::SetRotation(const Quaternion& rotation)
+void RigidBody::SetRotation(const Quaternion &rotation)
 {
     if (body_)
     {
@@ -278,7 +278,7 @@ void RigidBody::SetRotation(const Quaternion& rotation)
     }
 }
 
-void RigidBody::SetTransform(const Vector3 &position, const Quaternion& rotation)
+void RigidBody::SetTransform(const Vector3 &position, const Quaternion &rotation)
 {
     if (body_)
     {
@@ -714,7 +714,7 @@ void RigidBody::GetCollidingBodies(PODVector<RigidBody*>& result) const
         result.Clear();
 }
 
-void RigidBody::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation)
+void RigidBody::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion &newWorldRotation)
 {
     // In case of holding an extra reference to the RigidBody, this could be called in a situation
     // where node is already null

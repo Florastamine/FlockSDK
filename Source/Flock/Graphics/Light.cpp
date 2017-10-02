@@ -298,7 +298,7 @@ void Light::SetPerVertex(bool enable)
     MarkNetworkUpdate();
 }
 
-void Light::SetColor(const Color& color)
+void Light::SetColor(const Color &color)
 {
     color_ = Color(color.r_, color.g_, color.b_, 1.0f);
     MarkNetworkUpdate();

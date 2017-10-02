@@ -405,8 +405,8 @@ Variant ValueAnimation::LinearInterpolation(unsigned index1, unsigned index2, fl
     case VAR_INTRECT:
         {
             float s = 1.0f - t;
-            const IntRect& r1 = value1.GetIntRect();
-            const IntRect& r2 = value2.GetIntRect();
+            const IntRect &r1 = value1.GetIntRect();
+            const IntRect &r2 = value2.GetIntRect();
             return IntRect((int)(r1.left_ * s + r2.left_ * t), (int)(r1.top_ * s + r2.top_ * t), (int)(r1.right_ * s + r2.right_ * t),
                 (int)(r1.bottom_ * s + r2.bottom_ * t));
         }

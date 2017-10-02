@@ -81,19 +81,19 @@ RichText3D::RichText3D(Context* context)
 
 RichText3D::~RichText3D() {}
 
-void RichText3D::SetText(const String& text)
+void RichText3D::SetText(const String &text)
 {
     text_ = text;
     SetFlags(WidgetFlags_All);
     ResetTicker();
 }
 
-const String& RichText3D::GetText() const
+const String &RichText3D::GetText() const
 {
     return text_;
 }
 
-void RichText3D::SetTextColor(const Color& color)
+void RichText3D::SetTextColor(const Color &color)
 {
     defaultFontState_.color = color;
     SetFlags(WidgetFlags_All);
@@ -178,7 +178,7 @@ void RichText3D::SetTickerPosition(float tickerPosition)
     // TODO: implement
 }
 
-void RichText3D::SetDefaultFont(const String& face, unsigned size)
+void RichText3D::SetDefaultFont(const String &face, unsigned size)
 {
     defaultFontState_.face = face;
     defaultFontState_.size = size;
@@ -282,7 +282,7 @@ void RichText3D::ArrangeTextBlocks(Vector<TextBlock>& markup_blocks)
             while ((crpos = bit->text.Find("\r")) != String::NPOS)
               bit->text.Erase(crpos, 1);
             
-            auto SplitWords = [] (const String& str, Vector<String>& tokens, const String& delimiters = " ", bool trimEmpty = false) -> void {
+            auto SplitWords = [] (const String &str, Vector<String>& tokens, const String &delimiters = " ", bool trimEmpty = false) -> void {
               unsigned pos, lastPos = 0;
               while(true) {
                 pos = str.FindFirstOf(delimiters, lastPos);

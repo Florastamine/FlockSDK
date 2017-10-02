@@ -11,8 +11,8 @@ class RibbonTrail : public Drawable
     void SetMaterial(Material* material);
     void SetVertexDistance(float length);
     void SetWidth(float width);
-    void SetStartColor(const Color& c);
-    void SetEndColor(const Color& c);
+    void SetStartColor(const Color &c);
+    void SetEndColor(const Color &c);
     void SetStartScale(float startScale);
     void SetEndScale(float endScale);
     void SetTrailType(TrailType type);
@@ -28,8 +28,8 @@ class RibbonTrail : public Drawable
     Material* GetMaterial() const;
     float GetVertexDistance() const;
     float GetWidth() const;
-    const Color& GetStartColor() const;
-    const Color& GetEndColor() const;
+    const Color &GetStartColor() const;
+    const Color &GetEndColor() const;
     float GetStartScale() const;
     float GetEndScale() const;
     TrailType GetTrailType() const;
@@ -43,8 +43,8 @@ class RibbonTrail : public Drawable
     tolua_property__get_set Material* material;
     tolua_property__get_set float vertexDistance;
     tolua_property__get_set float width;
-    tolua_property__get_set Color& startColor;
-    tolua_property__get_set Color& endColor;
+    tolua_property__get_set Color &startColor;
+    tolua_property__get_set Color &endColor;
     tolua_property__get_set float startScale;
     tolua_property__get_set float endScale;
     tolua_property__get_set TrailType trailType;

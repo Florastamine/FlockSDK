@@ -453,7 +453,7 @@ void RigidBody2D::ApplyWorldTransform()
         ApplyWorldTransform(newWorldPosition, newWorldRotation);
 }
 
-void RigidBody2D::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation)
+void RigidBody2D::ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion &newWorldRotation)
 {
     if (newWorldPosition != node_->GetWorldPosition() || newWorldRotation != node_->GetWorldRotation())
     {

@@ -24,7 +24,7 @@ static int tolua_ResourceLuaAPI_JSONFile_new00_local(lua_State* tolua_S)
     return ToluaNewObjectGC<JSONFile>(tolua_S);
 }
 
-static bool JSONFileSave(const JSONFile* resource, const String& fileName, const String& indentation)
+static bool JSONFileSave(const JSONFile* resource, const String &fileName, const String &indentation)
 {
     if (!resource)
         return false;

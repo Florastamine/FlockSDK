@@ -92,7 +92,7 @@ RichWidget::~RichWidget()
     RemoveWidgetBatches();
 }
 
-void RichWidget::SetClipRegion(const IntRect& rect)
+void RichWidget::SetClipRegion(const IntRect &rect)
 {
     bool modified = clip_region_ != rect;
     clip_region_ = rect;
@@ -107,7 +107,7 @@ void RichWidget::SetClipToContent(bool value)
     SetFlags(WidgetFlags_All);
 }
 
-void RichWidget::SetInternalScale(const Vector2& scale)
+void RichWidget::SetInternalScale(const Vector2 &scale)
 {
     bool modified = internal_scale_ != scale;
     internal_scale_ = scale;
@@ -116,7 +116,7 @@ void RichWidget::SetInternalScale(const Vector2& scale)
 }
 
 
-void RichWidget::SetPadding(const IntRect& padding)
+void RichWidget::SetPadding(const IntRect &padding)
 {
     bool modified = padding_ != padding;
     padding_ = padding;
@@ -124,7 +124,7 @@ void RichWidget::SetPadding(const IntRect& padding)
         SetFlags(WidgetFlags_All);
 }
 
-void RichWidget::SetDrawOrigin(const Vector3& point)
+void RichWidget::SetDrawOrigin(const Vector3 &point)
 {
     bool modified = draw_origin_ != point;
     draw_origin_ = point;
@@ -236,7 +236,7 @@ void RichWidget::SetZBias(int zbias)
     }
 }
 
-void RichWidget::SetShadowOffset(const Vector4& shadow_offset)
+void RichWidget::SetShadowOffset(const Vector4 &shadow_offset)
 {
     bool modified = shadow_offset_ != shadow_offset;
     shadow_offset_ = shadow_offset;
@@ -244,7 +244,7 @@ void RichWidget::SetShadowOffset(const Vector4& shadow_offset)
         SetFlags(WidgetFlags_GeometryDirty);
 }
 
-void RichWidget::SetShadowColor(const Color& color)
+void RichWidget::SetShadowColor(const Color &color)
 {
     bool modified = shadow_color_ != color;
     shadow_color_ = color;
@@ -402,7 +402,7 @@ void RichWidget::UpdateTextBatches()
     {
         for (auto i = 0u; i < ui_vertex_data_.Size(); i += UI_VERTEX_SIZE)
         {
-            Vector3& position = *(reinterpret_cast<Vector3*>(&ui_vertex_data_[i]));
+            Vector3 &position = *(reinterpret_cast<Vector3*>(&ui_vertex_data_[i]));
             position += offset;
             position *= unitsPerPixel;
             position.y_ = -position.y_;

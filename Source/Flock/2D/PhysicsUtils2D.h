@@ -31,7 +31,7 @@
 namespace FlockSDK
 {
 
-inline Color ToColor(const b2Color& color)
+inline Color ToColor(const b2Color &color)
 {
     return Color(color.r, color.g, color.b);
 }

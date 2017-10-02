@@ -124,13 +124,13 @@ void IKEffector::SetTargetPosition(const Vector3 &targetPosition)
 }
 
 // ----------------------------------------------------------------------------
-const Quaternion& IKEffector::GetTargetRotation() const
+const Quaternion &IKEffector::GetTargetRotation() const
 {
     return targetRotation_;
 }
 
 // ----------------------------------------------------------------------------
-void IKEffector::SetTargetRotation(const Quaternion& targetRotation)
+void IKEffector::SetTargetRotation(const Quaternion &targetRotation)
 {
     targetRotation_ = targetRotation;
     if (ikEffectorNode_)

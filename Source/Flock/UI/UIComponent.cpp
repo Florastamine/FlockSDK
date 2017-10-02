@@ -126,7 +126,7 @@ void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
         FLOCKSDK_LOGERROR("UIComponent: resizing texture failed.");
 }
 
-bool UIComponent::ScreenToUIPosition(IntVector2 screenPos, IntVector2& result)
+bool UIComponent::ScreenToUIPosition(IntVector2 screenPos, IntVector2 &result)
 {
     Scene* scene = GetScene();
     if (!scene)
@@ -176,7 +176,7 @@ bool UIComponent::ScreenToUIPosition(IntVector2 screenPos, IntVector2& result)
             return false;
         }
 
-        Vector2& uv = queryResult.textureUV_;
+        Vector2 &uv = queryResult.textureUV_;
         result = IntVector2(static_cast<int>(uv.x_ * rootElement_->GetWidth()),
                             static_cast<int>(uv.y_ * rootElement_->GetHeight()));
         return true;

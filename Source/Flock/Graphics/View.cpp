@@ -328,7 +328,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     // Validate the rect and calculate size. If zero rect, use whole rendertarget size
     int rtWidth = renderTarget ? renderTarget->GetWidth() : graphics_->GetWidth();
     int rtHeight = renderTarget ? renderTarget->GetHeight() : graphics_->GetHeight();
-    const IntRect& rect = viewport->GetRect();
+    const IntRect &rect = viewport->GetRect();
 
     if (rect != IntRect::ZERO)
     {
@@ -762,7 +762,7 @@ void View::SetCommandShaderParameters(const RenderPathCommand& command)
         graphics_->SetShaderParameter(k->first_, k->second_);
 }
 
-void View::SetGBufferShaderParameters(const IntVector2 &texSize, const IntRect& viewRect)
+void View::SetGBufferShaderParameters(const IntVector2 &texSize, const IntRect &viewRect)
 {
     float texWidth = (float)texSize.x_;
     float texHeight = (float)texSize.y_;
@@ -2625,7 +2625,7 @@ void View::SetupDirLightShadowCamera(Camera* shadowCamera, Light* light, float n
     QuantizeDirLightShadowCamera(shadowCamera, light, IntRect(0, 0, 0, 0), shadowBox);
 }
 
-void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRect& shadowViewport,
+void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRect &shadowViewport,
     const BoundingBox& shadowCasterBox)
 {
     const FocusParameters& parameters = light->GetShadowFocus();
@@ -2672,7 +2672,7 @@ void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRec
     }
 }
 
-void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, const IntRect& shadowViewport,
+void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, const IntRect &shadowViewport,
     const BoundingBox& viewBox)
 {
     Node* shadowCameraNode = shadowCamera->GetNode();

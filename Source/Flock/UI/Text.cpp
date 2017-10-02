@@ -123,7 +123,7 @@ void Text::ApplyAttributes()
     UpdateText();
 }
 
-void Text::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void Text::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     FontFace* face = font_ ? font_->GetFace(fontSize_) : (FontFace*)0;
     if (!face)
@@ -307,7 +307,7 @@ void Text::DecodeToUnicode()
         unicodeText_.Push(text_.NextUTF8Char(i));
 }
 
-void Text::SetTextFormatted(const String& text)
+void Text::SetTextFormatted(const String &text)
 {
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load(text.CString());
@@ -430,12 +430,12 @@ void Text::ClearSelection()
     selectionLength_ = 0;
 }
 
-void Text::SetSelectionColor(const Color& color)
+void Text::SetSelectionColor(const Color &color)
 {
     selectionColor_ = color;
 }
 
-void Text::SetHoverColor(const Color& color)
+void Text::SetHoverColor(const Color &color)
 {
     hoverColor_ = color;
 }
@@ -460,7 +460,7 @@ void Text::SetEffectRoundStroke(bool roundStroke)
     roundStroke_ = roundStroke;
 }
 
-void Text::SetEffectColor(const Color& effectColor)
+void Text::SetEffectColor(const Color &effectColor)
 {
     effectColor_ = effectColor;
 }

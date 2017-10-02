@@ -81,7 +81,7 @@ protected:
     /// Handle resizing of element. Setting size of element will automatically resize texture. UIElement size matches size of texture.
     void OnElementResized(StringHash eventType, VariantMap& args);
     /// Convert screen position to position on UIElement.
-    bool ScreenToUIPosition(IntVector2 screenPos, IntVector2& result);
+    bool ScreenToUIPosition(IntVector2 screenPos, IntVector2 &result);
 
     friend class UI;
 };

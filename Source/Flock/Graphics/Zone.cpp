@@ -115,13 +115,13 @@ void Zone::SetBoundingBox(const BoundingBox& box)
     MarkNetworkUpdate();
 }
 
-void Zone::SetAmbientColor(const Color& color)
+void Zone::SetAmbientColor(const Color &color)
 {
     ambientColor_ = color;
     MarkNetworkUpdate();
 }
 
-void Zone::SetFogColor(const Color& color)
+void Zone::SetFogColor(const Color &color)
 {
     fogColor_ = color;
     MarkNetworkUpdate();
@@ -198,7 +198,7 @@ const Matrix3x4& Zone::GetInverseWorldTransform() const
     return inverseWorld_;
 }
 
-const Color& Zone::GetAmbientStartColor()
+const Color &Zone::GetAmbientStartColor()
 {
     if (!ambientGradient_)
         return ambientColor_;
@@ -209,7 +209,7 @@ const Color& Zone::GetAmbientStartColor()
     return ambientStartColor_;
 }
 
-const Color& Zone::GetAmbientEndColor()
+const Color &Zone::GetAmbientEndColor()
 {
     if (!ambientGradient_)
         return ambientColor_;

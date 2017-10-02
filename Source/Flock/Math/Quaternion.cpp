@@ -244,7 +244,7 @@ Matrix3 Quaternion::RotationMatrix() const
     );
 }
 
-Quaternion Quaternion::Slerp(const Quaternion& rhs, float t) const
+Quaternion Quaternion::Slerp(const Quaternion &rhs, float t) const
 {
     // Favor accuracy for native code builds
     float cosAngle = DotProduct(rhs);
@@ -275,7 +275,7 @@ Quaternion Quaternion::Slerp(const Quaternion& rhs, float t) const
     return *this * t1 + (rhs * sign) * t2;
 }
 
-Quaternion Quaternion::Nlerp(const Quaternion& rhs, float t, bool shortestPath) const
+Quaternion Quaternion::Nlerp(const Quaternion &rhs, float t, bool shortestPath) const
 {
     Quaternion result;
     float fCos = DotProduct(rhs);

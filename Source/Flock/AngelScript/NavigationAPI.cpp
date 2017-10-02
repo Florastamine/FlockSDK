@@ -42,14 +42,14 @@ void RegisterNavigable(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Navigable", "bool get_recursive() const", asMETHOD(Navigable, IsRecursive), asCALL_THISCALL);
 }
 
-static CScriptArray* NavigationMeshFindPath(const Vector3& start, const Vector3& end, const Vector3& extents, NavigationMesh* ptr)
+static CScriptArray* NavigationMeshFindPath(const Vector3 &start, const Vector3 &end, const Vector3 &extents, NavigationMesh* ptr)
 {
     PODVector<Vector3> dest;
     ptr->FindPath(dest, start, end, extents);
     return VectorToArray<Vector3>(dest, "Array<Vector3>");
 }
 
-static CScriptArray* DynamicNavigationMeshFindPath(const Vector3& start, const Vector3& end, const Vector3& extents, DynamicNavigationMesh* ptr)
+static CScriptArray* DynamicNavigationMeshFindPath(const Vector3 &start, const Vector3 &end, const Vector3 &extents, DynamicNavigationMesh* ptr)
 {
     PODVector<Vector3> dest;
     ptr->FindPath(dest, start, end, extents);
@@ -62,12 +62,12 @@ static CScriptArray* CrowdManagerGetAgents(Node* node, bool inCrowdFilter, Crowd
     return VectorToHandleArray<CrowdAgent>(agents, "Array<CrowdAgent@>");
 }
 
-static Vector3 NavigationMeshFindNearestPoint(const Vector3& point, const Vector3& extents, NavigationMesh* ptr)
+static Vector3 NavigationMeshFindNearestPoint(const Vector3 &point, const Vector3 &extents, NavigationMesh* ptr)
 {
     return ptr->FindNearestPoint(point, extents);
 }
 
-static Vector3 NavigationMeshMoveAlongSurface(const Vector3& start, const Vector3& end, const Vector3& extents, int maxVisited, NavigationMesh* ptr)
+static Vector3 NavigationMeshMoveAlongSurface(const Vector3 &start, const Vector3 &end, const Vector3 &extents, int maxVisited, NavigationMesh* ptr)
 {
     return ptr->MoveAlongSurface(start, end, extents, maxVisited);
 }
@@ -77,17 +77,17 @@ static Vector3 NavigationMeshGetRandomPoint(NavigationMesh* ptr)
     return ptr->GetRandomPoint();
 }
 
-static Vector3 NavigationMeshGetRandomPointInCircle(const Vector3& center, float radius, const Vector3& extents, NavigationMesh* ptr)
+static Vector3 NavigationMeshGetRandomPointInCircle(const Vector3 &center, float radius, const Vector3 &extents, NavigationMesh* ptr)
 {
     return ptr->GetRandomPointInCircle(center, radius, extents);
 }
 
-static float NavigationMeshGetDistanceToWall(const Vector3& point, float radius, const Vector3& extents, NavigationMesh* ptr)
+static float NavigationMeshGetDistanceToWall(const Vector3 &point, float radius, const Vector3 &extents, NavigationMesh* ptr)
 {
     return ptr->GetDistanceToWall(point, radius, extents);
 }
 
-static Vector3 NavigationMeshRaycast(const Vector3& start, const Vector3& end, const Vector3& extents, NavigationMesh* ptr)
+static Vector3 NavigationMeshRaycast(const Vector3 &start, const Vector3 &end, const Vector3 &extents, NavigationMesh* ptr)
 {
     return ptr->Raycast(start, end, extents);
 }
@@ -97,7 +97,7 @@ static Vector3 CrowdManagerGetRandomPoint(int queryFilterType, CrowdManager* cro
     return crowdManager->GetRandomPoint(queryFilterType);
 }
 
-static Vector3 CrowdManagerRandomPointInCircle(const Vector3& center, float radius, int queryFilterType, CrowdManager* manager)
+static Vector3 CrowdManagerRandomPointInCircle(const Vector3 &center, float radius, int queryFilterType, CrowdManager* manager)
 {
     return manager->GetRandomPointInCircle(center, radius, queryFilterType);
 }
@@ -142,7 +142,7 @@ template<class T> static void RegisterNavMeshBase(asIScriptEngine* engine, const
     engine->RegisterObjectMethod(name, "void set_detailSampleMaxError(float)", asMETHOD(T, SetDetailSampleMaxError), asCALL_THISCALL);
     engine->RegisterObjectMethod(name, "float get_detailSampleMaxError() const", asMETHOD(T, GetDetailSampleMaxError), asCALL_THISCALL);
     engine->RegisterObjectMethod(name, "void set_padding(const Vector3&in)", asMETHOD(T, SetPadding), asCALL_THISCALL);
-    engine->RegisterObjectMethod(name, "const Vector3& get_padding() const", asMETHOD(T, GetPadding), asCALL_THISCALL);
+    engine->RegisterObjectMethod(name, "const Vector3 &get_padding() const", asMETHOD(T, GetPadding), asCALL_THISCALL);
     engine->RegisterObjectMethod(name, "bool get_initialized() const", asMETHOD(T, IsInitialized), asCALL_THISCALL);
     engine->RegisterObjectMethod(name, "const BoundingBox& get_boundingBox() const", asMETHOD(T, GetBoundingBox), asCALL_THISCALL);
     engine->RegisterObjectMethod(name, "BoundingBox get_worldBoundingBox() const", asMETHOD(T, GetWorldBoundingBox), asCALL_THISCALL);
@@ -299,9 +299,9 @@ void RegisterCrowdAgent(asIScriptEngine* engine)
     engine->RegisterObjectMethod("CrowdAgent", "void set_updateNodePosition(bool)", asMETHOD(CrowdAgent, SetUpdateNodePosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "bool get_updateNodePosition() const", asMETHOD(CrowdAgent, GetUpdateNodePosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "void set_targetPosition(const Vector3&in)", asMETHOD(CrowdAgent, SetTargetPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CrowdAgent", "const Vector3& get_targetPosition()", asMETHOD(CrowdAgent, GetTargetPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CrowdAgent", "const Vector3 &get_targetPosition()", asMETHOD(CrowdAgent, GetTargetPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "void set_targetVelocity(const Vector3&in)", asMETHOD(CrowdAgent, SetTargetVelocity), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CrowdAgent", "const Vector3& get_targetVelocity()", asMETHOD(CrowdAgent, GetTargetVelocity), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CrowdAgent", "const Vector3 &get_targetVelocity()", asMETHOD(CrowdAgent, GetTargetVelocity), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "void set_maxAccel(float)", asMETHOD(CrowdAgent, SetMaxAccel), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "float get_maxAccel()", asMETHOD(CrowdAgent, GetMaxAccel), asCALL_THISCALL);
     engine->RegisterObjectMethod("CrowdAgent", "void set_maxSpeed(float)", asMETHOD(CrowdAgent, SetMaxSpeed), asCALL_THISCALL);

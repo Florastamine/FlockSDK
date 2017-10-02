@@ -363,22 +363,22 @@ void ParticleEffect2D::SetTangentialAccelVariance(float tangentialAccelVariance)
     tangentialAccelVariance_ = tangentialAccelVariance;
 }
 
-void ParticleEffect2D::SetStartColor(const Color& startColor)
+void ParticleEffect2D::SetStartColor(const Color &startColor)
 {
     startColor_ = startColor;
 }
 
-void ParticleEffect2D::SetStartColorVariance(const Color& startColorVariance)
+void ParticleEffect2D::SetStartColorVariance(const Color &startColorVariance)
 {
     startColorVariance_ = startColorVariance;
 }
 
-void ParticleEffect2D::SetFinishColor(const Color& finishColor)
+void ParticleEffect2D::SetFinishColor(const Color &finishColor)
 {
     finishColor_ = finishColor;
 }
 
-void ParticleEffect2D::SetFinishColorVariance(const Color& finishColorVariance)
+void ParticleEffect2D::SetFinishColorVariance(const Color &finishColorVariance)
 {
     finishColorVariance_ = finishColorVariance;
 }
@@ -553,7 +553,7 @@ void ParticleEffect2D::WriteFloat(XMLElement& element, const String &name, float
     child.SetFloat("value", value);
 }
 
-void ParticleEffect2D::WriteColor(XMLElement& element, const String &name, const Color& color) const
+void ParticleEffect2D::WriteColor(XMLElement& element, const String &name, const Color &color) const
 {
     XMLElement child = element.CreateChild(name);
     child.SetFloat("red", color.r_);

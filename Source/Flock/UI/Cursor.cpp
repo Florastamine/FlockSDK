@@ -107,7 +107,7 @@ void Cursor::RegisterObject(Context* context)
     FLOCKSDK_MIXED_ACCESSOR_ATTRIBUTE("Shapes", GetShapesAttr, SetShapesAttr, VariantVector, Variant::emptyVariantVector, AM_FILE);
 }
 
-void Cursor::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void Cursor::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     unsigned initialSize = vertexData.Size();
     const IntVector2 &offset = shapeInfos_[shape_].hotSpot_;
@@ -121,7 +121,7 @@ void Cursor::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     }
 }
 
-void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot)
+void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect &imageRect, const IntVector2 &hotSpot)
 {
     if (shape < CS_NORMAL || shape >= CS_MAX_SHAPES)
     {
@@ -132,7 +132,7 @@ void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRe
     DefineShape(shapeNames[shape], image, imageRect, hotSpot);
 }
 
-void Cursor::DefineShape(const String &shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot)
+void Cursor::DefineShape(const String &shape, Image* image, const IntRect &imageRect, const IntVector2 &hotSpot)
 {
     if (!image)
         return;

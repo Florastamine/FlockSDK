@@ -30,7 +30,7 @@
 namespace FlockSDK
 {
 
-static bool ScriptFileExecute(const String& declaration, CScriptArray* srcParams, ScriptFile* ptr)
+static bool ScriptFileExecute(const String &declaration, CScriptArray* srcParams, ScriptFile* ptr)
 {
     VariantVector destParams(srcParams ? srcParams->GetSize() : 0);
 
@@ -44,7 +44,7 @@ static bool ScriptFileExecute(const String& declaration, CScriptArray* srcParams
     return ptr->Execute(declaration, destParams);
 }
 
-static void ScriptFileDelayedExecute(float delay, bool repeat, const String& declaration, CScriptArray* srcParams, ScriptFile* ptr)
+static void ScriptFileDelayedExecute(float delay, bool repeat, const String &declaration, CScriptArray* srcParams, ScriptFile* ptr)
 {
     VariantVector destParams(srcParams ? srcParams->GetSize() : 0);
 
@@ -58,7 +58,7 @@ static void ScriptFileDelayedExecute(float delay, bool repeat, const String& dec
     ptr->DelayedExecute(delay, repeat, declaration, destParams);
 }
 
-static asIScriptObject* NodeCreateScriptObjectWithFile(ScriptFile* file, const String& className, CreateMode mode, Node* ptr)
+static asIScriptObject* NodeCreateScriptObjectWithFile(ScriptFile* file, const String &className, CreateMode mode, Node* ptr)
 {
     if (!file)
         return 0;
@@ -94,7 +94,7 @@ static void RegisterScriptFile(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("ScriptFile@+ get_scriptFile()", asFUNCTION(GetScriptContextFile), asCALL_CDECL);
 }
 
-static asIScriptObject* NodeCreateScriptObject(const String& scriptFileName, const String& className, CreateMode mode, Node* ptr)
+static asIScriptObject* NodeCreateScriptObject(const String &scriptFileName, const String &className, CreateMode mode, Node* ptr)
 {
     ResourceCache* cache = GetScriptContext()->GetSubsystem<ResourceCache>();
     return NodeCreateScriptObjectWithFile(cache->GetResource<ScriptFile>(scriptFileName), className, mode, ptr);
@@ -118,7 +118,7 @@ asIScriptObject* NodeGetScriptObject(Node* ptr)
     return 0;
 }
 
-asIScriptObject* NodeGetNamedScriptObject(const String& className, Node* ptr)
+asIScriptObject* NodeGetNamedScriptObject(const String &className, Node* ptr)
 {
     const Vector<SharedPtr<Component>>& components = ptr->GetComponents();
     for (Vector<SharedPtr<Component>>::ConstIterator i = components.Begin(); i != components.End(); ++i)
@@ -138,7 +138,7 @@ asIScriptObject* NodeGetNamedScriptObject(const String& className, Node* ptr)
     return 0;
 }
 
-static bool ScriptInstanceExecute(const String& declaration, CScriptArray* srcParams, ScriptInstance* ptr)
+static bool ScriptInstanceExecute(const String &declaration, CScriptArray* srcParams, ScriptInstance* ptr)
 {
     VariantVector destParams(srcParams ? srcParams->GetSize() : 0);
 
@@ -152,7 +152,7 @@ static bool ScriptInstanceExecute(const String& declaration, CScriptArray* srcPa
     return ptr->Execute(declaration, destParams);
 }
 
-static void ScriptInstanceDelayedExecute(float delay, bool repeat, const String& declaration, CScriptArray* srcParams, ScriptInstance* ptr)
+static void ScriptInstanceDelayedExecute(float delay, bool repeat, const String &declaration, CScriptArray* srcParams, ScriptInstance* ptr)
 {
     VariantVector destParams(srcParams ? srcParams->GetSize() : 0);
 
@@ -171,7 +171,7 @@ static ScriptInstance* GetSelf()
     return GetScriptContextInstance();
 }
 
-static void SelfDelayedExecute(float delay, bool repeat, const String& declaration, CScriptArray* srcParams)
+static void SelfDelayedExecute(float delay, bool repeat, const String &declaration, CScriptArray* srcParams)
 {
     VariantVector destParams(srcParams ? srcParams->GetSize() : 0);
 
@@ -193,7 +193,7 @@ static void SelfDelayedExecute(float delay, bool repeat, const String& declarati
     }
 }
 
-static void SelfClearDelayedExecute(const String& declaration)
+static void SelfClearDelayedExecute(const String &declaration)
 {
     ScriptInstance* ptr = GetScriptContextInstance();
     if (ptr)
@@ -245,7 +245,7 @@ static void RegisterScriptInstance(asIScriptEngine* engine)
     engine->RegisterObjectMethod("ScriptInstance", "ScriptFile@+ get_scriptFile() const", asMETHOD(ScriptInstance, GetScriptFile), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScriptInstance", "ScriptObject@+ get_scriptObject() const", asMETHOD(ScriptInstance, GetScriptObject), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScriptInstance", "void set_className(const String&in)", asMETHOD(ScriptInstance, SetClassName), asCALL_THISCALL);
-    engine->RegisterObjectMethod("ScriptInstance", "const String& get_className() const", asMETHOD(ScriptInstance, GetClassName), asCALL_THISCALL);
+    engine->RegisterObjectMethod("ScriptInstance", "const String &get_className() const", asMETHOD(ScriptInstance, GetClassName), asCALL_THISCALL);
     engine->RegisterGlobalFunction("ScriptInstance@+ get_self()", asFUNCTION(GetSelf), asCALL_CDECL);
 
     // Register convenience functions for controlling self, similar to event sending

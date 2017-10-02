@@ -29,7 +29,7 @@ class NavigationMesh : public Component
     void SetEdgeMaxError(float error);
     void SetDetailSampleDistance(float distance);
     void SetDetailSampleMaxError(float error);
-    void SetPadding(const Vector3& padding);
+    void SetPadding(const Vector3 &padding);
     void SetAreaCost(unsigned areaID, float cost);
     bool Build();
     bool Build(const BoundingBox& boundingBox);
@@ -37,13 +37,13 @@ class NavigationMesh : public Component
     void SetDrawOffMeshConnections(bool enable);
     void SetDrawNavAreas(bool enable);
 
-    Vector3 FindNearestPoint(const Vector3& point, const Vector3& extents = Vector3::ONE);
-    Vector3 MoveAlongSurface(const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE, int maxVisited = 3);
-    tolua_outside const PODVector<Vector3>& NavigationMeshFindPath @ FindPath(const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE);
+    Vector3 FindNearestPoint(const Vector3 &point, const Vector3 &extents = Vector3::ONE);
+    Vector3 MoveAlongSurface(const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE, int maxVisited = 3);
+    tolua_outside const PODVector<Vector3>& NavigationMeshFindPath @ FindPath(const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE);
     Vector3 GetRandomPoint();
-    Vector3 GetRandomPointInCircle(const Vector3& center, float radius, const Vector3& extents = Vector3::ONE);
-    float GetDistanceToWall(const Vector3& point, float radius, const Vector3& extents = Vector3::ONE);
-    Vector3 Raycast(const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE);
+    Vector3 GetRandomPointInCircle(const Vector3 &center, float radius, const Vector3 &extents = Vector3::ONE);
+    float GetDistanceToWall(const Vector3 &point, float radius, const Vector3 &extents = Vector3::ONE);
+    Vector3 Raycast(const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE);
     void DrawDebugGeometry(bool depthTest);
 
     int GetTileSize() const;
@@ -59,7 +59,7 @@ class NavigationMesh : public Component
     float GetEdgeMaxError() const;
     float GetDetailSampleDistance() const;
     float GetDetailSampleMaxError() const;
-    const Vector3& GetPadding() const;
+    const Vector3 &GetPadding() const;
     float GetAreaCost(unsigned areaID) const;
     bool IsInitialized() const;
     const BoundingBox& GetBoundingBox() const;
@@ -82,7 +82,7 @@ class NavigationMesh : public Component
     tolua_property__get_set float edgeMaxError;
     tolua_property__get_set float detailSampleDistance;
     tolua_property__get_set float detailSampleMaxError;
-    tolua_property__get_set Vector3& padding;
+    tolua_property__get_set Vector3 &padding;
     tolua_property__get_set NavmeshPartitionType partitionType;
     tolua_property__get_set bool drawOffMeshConnections;
     tolua_property__get_set bool drawNavAreas;
@@ -93,7 +93,7 @@ class NavigationMesh : public Component
 };
 
 ${
-const PODVector<Vector3>& NavigationMeshFindPath(NavigationMesh* navMesh, const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE)
+const PODVector<Vector3>& NavigationMeshFindPath(NavigationMesh* navMesh, const Vector3 &start, const Vector3 &end, const Vector3 &extents = Vector3::ONE)
 {
     static PODVector<Vector3> dest;
     dest.Clear();

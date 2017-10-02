@@ -86,7 +86,7 @@ void DebugRenderer::SetView(Camera* camera)
     frustum_ = camera->GetFrustum();
 }
 
-void DebugRenderer::AddLine(const Vector3 &start, const Vector3 &end, const Color& color, bool depthTest)
+void DebugRenderer::AddLine(const Vector3 &start, const Vector3 &end, const Color &color, bool depthTest)
 {
     AddLine(start, end, color.ToUInt(), depthTest);
 }
@@ -102,7 +102,7 @@ void DebugRenderer::AddLine(const Vector3 &start, const Vector3 &end, unsigned c
         noDepthLines_.Push(DebugLine(start, end, color));
 }
 
-void DebugRenderer::AddTriangle(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Color& color, bool depthTest)
+void DebugRenderer::AddTriangle(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Color &color, bool depthTest)
 {
     AddTriangle(v1, v2, v3, color.ToUInt(), depthTest);
 }
@@ -118,7 +118,7 @@ void DebugRenderer::AddTriangle(const Vector3 &v1, const Vector3 &v2, const Vect
         noDepthTriangles_.Push(DebugTriangle(v1, v2, v3, color));
 }
 
-void DebugRenderer::AddPolygon(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Vector3 &v4, const Color& color, bool depthTest)
+void DebugRenderer::AddPolygon(const Vector3 &v1, const Vector3 &v2, const Vector3 &v3, const Vector3 &v4, const Color &color, bool depthTest)
 {
     AddTriangle(v1, v2, v3, color, depthTest);
     AddTriangle(v3, v4, v1, color, depthTest);
@@ -143,7 +143,7 @@ void DebugRenderer::AddNode(Node* node, float scale, bool depthTest)
     AddLine(start, start + rotation * (scale * Vector3::FORWARD), Color::BLUE.ToUInt(), depthTest);
 }
 
-void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Color& color, bool depthTest, bool solid)
+void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Color &color, bool depthTest, bool solid)
 {
     const Vector3 &min = box.min_;
     const Vector3 &max = box.max_;
@@ -183,7 +183,7 @@ void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Color& color, b
     }
 }
 
-void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Matrix3x4& transform, const Color& color, bool depthTest, bool solid)
+void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Matrix3x4& transform, const Color &color, bool depthTest, bool solid)
 {
     const Vector3 &min = box.min_;
     const Vector3 &max = box.max_;
@@ -226,7 +226,7 @@ void DebugRenderer::AddBoundingBox(const BoundingBox& box, const Matrix3x4& tran
 }
 
 
-void DebugRenderer::AddFrustum(const Frustum& frustum, const Color& color, bool depthTest)
+void DebugRenderer::AddFrustum(const Frustum& frustum, const Color &color, bool depthTest)
 {
     const Vector3* vertices = frustum.vertices_;
     unsigned uintColor = color.ToUInt();
@@ -245,7 +245,7 @@ void DebugRenderer::AddFrustum(const Frustum& frustum, const Color& color, bool 
     AddLine(vertices[3], vertices[7], uintColor, depthTest);
 }
 
-void DebugRenderer::AddPolyhedron(const Polyhedron& poly, const Color& color, bool depthTest)
+void DebugRenderer::AddPolyhedron(const Polyhedron& poly, const Color &color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
 
@@ -260,7 +260,7 @@ void DebugRenderer::AddPolyhedron(const Polyhedron& poly, const Color& color, bo
     }
 }
 
-void DebugRenderer::AddSphere(const Sphere& sphere, const Color& color, bool depthTest)
+void DebugRenderer::AddSphere(const Sphere& sphere, const Color &color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
 
@@ -281,7 +281,7 @@ void DebugRenderer::AddSphere(const Sphere& sphere, const Color& color, bool dep
     }
 }
 
-void DebugRenderer::AddSphereSector(const Sphere& sphere, const Quaternion& rotation, float angle, bool drawLines, const Color& color, bool depthTest)
+void DebugRenderer::AddSphereSector(const Sphere& sphere, const Quaternion &rotation, float angle, bool drawLines, const Color &color, bool depthTest)
 {
     if (angle <= 0.0f)
         return;
@@ -334,7 +334,7 @@ void DebugRenderer::AddSphereSector(const Sphere& sphere, const Quaternion& rota
     }
 }
 
-void DebugRenderer::AddCylinder(const Vector3 &position, float radius, float height, const Color& color, bool depthTest)
+void DebugRenderer::AddCylinder(const Vector3 &position, float radius, float height, const Color &color, bool depthTest)
 {
     Sphere sphere(position, radius);
     Vector3 heightVec(0, height, 0);
@@ -353,7 +353,7 @@ void DebugRenderer::AddCylinder(const Vector3 &position, float radius, float hei
     AddLine(position - offsetZVec, position + heightVec - offsetZVec, color, depthTest);
 }
 
-void DebugRenderer::AddSkeleton(const Skeleton& skeleton, const Color& color, bool depthTest)
+void DebugRenderer::AddSkeleton(const Skeleton& skeleton, const Color &color, bool depthTest)
 {
     const Vector<Bone>& bones = skeleton.GetBones();
     if (!bones.Size())
@@ -388,7 +388,7 @@ void DebugRenderer::AddSkeleton(const Skeleton& skeleton, const Color& color, bo
 }
 
 void DebugRenderer::AddTriangleMesh(const void* vertexData, unsigned vertexSize, const void* indexData, unsigned indexSize,
-    unsigned indexStart, unsigned indexCount, const Matrix3x4& transform, const Color& color, bool depthTest)
+    unsigned indexStart, unsigned indexCount, const Matrix3x4& transform, const Color &color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
     const unsigned char* srcData = (const unsigned char*)vertexData;
@@ -432,7 +432,7 @@ void DebugRenderer::AddTriangleMesh(const void* vertexData, unsigned vertexSize,
     }
 }
 
-void DebugRenderer::AddCircle(const Vector3 &center, const Vector3 &normal, float radius, const Color& color, int steps, bool depthTest)
+void DebugRenderer::AddCircle(const Vector3 &center, const Vector3 &normal, float radius, const Color &color, int steps, bool depthTest)
 {
     Quaternion orientation;
     orientation.FromRotationTo(Vector3::UP, normal.Normalized());
@@ -452,7 +452,7 @@ void DebugRenderer::AddCircle(const Vector3 &center, const Vector3 &normal, floa
     AddLine(center, p, uintColor, depthTest);
 }
 
-void DebugRenderer::AddCross(const Vector3 &center, float size, const Color& color, bool depthTest)
+void DebugRenderer::AddCross(const Vector3 &center, float size, const Color &color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
 
@@ -467,7 +467,7 @@ void DebugRenderer::AddCross(const Vector3 &center, float size, const Color& col
     }
 }
 
-void DebugRenderer::AddQuad(const Vector3 &center, float width, float height, const Color& color, bool depthTest)
+void DebugRenderer::AddQuad(const Vector3 &center, float width, float height, const Color &color, bool depthTest)
 {
     unsigned uintColor = color.ToUInt();
 

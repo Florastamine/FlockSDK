@@ -26,12 +26,12 @@ class RichText3D : public RichWidget
 
     void ResetTicker();
 
-    void SetText(const String& text);
-    const String& GetText() const;
-    void SetDefaultFont(const String& face, unsigned size);
+    void SetText(const String &text);
+    const String &GetText() const;
+    void SetDefaultFont(const String &face, unsigned size);
     String GetDefaultFontName() const { return defaultFontState_.face; }
     unsigned GetDefaultFontSize() const { return defaultFontState_.size; }
-    void SetTextColor(const Color& color);
+    void SetTextColor(const Color &color);
     Color GetTextColor() const { return defaultFontState_.color; }
     void SetAlignment(HorizontalAlignment align);
     HorizontalAlignment GetAlignment() const { return alignment_; }

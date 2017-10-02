@@ -525,7 +525,7 @@ void Scene::StopAsyncLoading()
     resolver_.Reset();
 }
 
-Node* Scene::Instantiate(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::Instantiate(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(Instantiate);
 
@@ -548,7 +548,7 @@ Node* Scene::Instantiate(Deserializer& source, const Vector3 &position, const Qu
     }
 }
 
-Node* Scene::InstantiateXML(const XMLElement& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateXML(const XMLElement& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(InstantiateXML);
 
@@ -571,7 +571,7 @@ Node* Scene::InstantiateXML(const XMLElement& source, const Vector3 &position, c
     }
 }
 
-Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     FLOCKSDK_PROFILE(InstantiateJSON);
 
@@ -594,7 +594,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3 &position, c
     }
 }
 
-Node* Scene::InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     SharedPtr<XMLFile> xml(new XMLFile(context_));
     if (!xml->Load(source))
@@ -603,7 +603,7 @@ Node* Scene::InstantiateXML(Deserializer& source, const Vector3 &position, const
     return InstantiateXML(xml->GetRoot(), position, rotation, mode);
 }
 
-Node* Scene::InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     SharedPtr<JSONFile> json(new JSONFile(context_));
     if (!json->Load(source))

@@ -55,7 +55,7 @@ public:
     virtual UpdateGeometryType GetUpdateGeometryType();
 
     /// Set font by looking from resource cache by name and font size. Return true if successful.
-    bool SetFont(const String& fontName, float size = DEFAULT_FONT_SIZE);
+    bool SetFont(const String &fontName, float size = DEFAULT_FONT_SIZE);
     /// Set font and font size. Return true if successful.
     bool SetFont(Font* font, float size = DEFAULT_FONT_SIZE);
     /// Set font size only while retaining the existing font. Return true if successful.
@@ -63,7 +63,7 @@ public:
     /// Set material.
     void SetMaterial(Material* material);
     /// Set text. Text is assumed to be either ASCII or UTF8-encoded.
-    void SetText(const String& text);
+    void SetText(const String &text);
     /// Set horizontal and vertical alignment.
     void SetAlignment(HorizontalAlignment hAlign, VerticalAlignment vAlign);
     /// Set horizontal alignment.
@@ -79,21 +79,21 @@ public:
     /// Set text effect.
     void SetTextEffect(TextEffect textEffect);
     /// Set shadow offset.
-    void SetEffectShadowOffset(const IntVector2& offset);
+    void SetEffectShadowOffset(const IntVector2 &offset);
     /// Set stroke thickness.
     void SetEffectStrokeThickness(int thickness);
     /// Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
     void SetEffectRoundStroke(bool roundStroke);
     /// Set effect color.
-    void SetEffectColor(const Color& effectColor);
+    void SetEffectColor(const Color &effectColor);
     /// Set effect Z bias.
     void SetEffectDepthBias(float bias);
     /// Set text width. Only has effect in word wrap mode.
     void SetWidth(int width);
     /// Set color on all corners.
-    void SetColor(const Color& color);
+    void SetColor(const Color &color);
     /// Set color on one corner.
-    void SetColor(Corner corner, const Color& color);
+    void SetColor(Corner corner, const Color &color);
     /// Set opacity.
     void SetOpacity(float opacity);
     /// Set whether text has fixed size on screen (pixel-perfect) regardless of distance to camera. Works best when combined with face camera rotation. Default false.
@@ -108,7 +108,7 @@ public:
     /// Return material.
     Material* GetMaterial() const;
     /// Return text.
-    const String& GetText() const;
+    const String &GetText() const;
     /// Return row alignment.
     HorizontalAlignment GetTextAlignment() const;
     /// Return horizontal alignment.
@@ -122,13 +122,13 @@ public:
     /// Return text effect.
     TextEffect GetTextEffect() const;
     /// Return effect shadow offset.
-    const IntVector2& GetEffectShadowOffset() const;
+    const IntVector2 &GetEffectShadowOffset() const;
     /// Return effect stroke thickness.
     int GetEffectStrokeThickness() const;
     /// Return effect round stroke.
     bool GetEffectRoundStroke() const;
     /// Return effect color.
-    const Color& GetEffectColor() const;
+    const Color &GetEffectColor() const;
     /// Return effect depth bias.
     float GetEffectDepthBias() const;
     /// Return text width.
@@ -148,7 +148,7 @@ public:
     /// Return size of character by index.
     IntVector2 GetCharSize(unsigned index);
     /// Return corner color.
-    const Color& GetColor(Corner corner) const;
+    const Color &GetColor(Corner corner) const;
     /// Return opacity.
     float GetOpacity() const;
     /// Return whether text has fixed screen size.
@@ -165,12 +165,12 @@ public:
     /// Return material attribute.
     ResourceRef GetMaterialAttr() const;
     /// Set text attribute.
-    void SetTextAttr(const String& value);
+    void SetTextAttr(const String &value);
     /// Return text attribute.
     String GetTextAttr() const;
 
     /// Get color attribute. Uses just the top-left color.
-    const Color& GetColorAttr() const { return text_.color_[0]; }
+    const Color &GetColorAttr() const { return text_.color_[0]; }
 
 protected:
     /// Handle node being assigned.

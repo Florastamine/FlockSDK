@@ -63,7 +63,7 @@ void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
         for (auto i = 0u; i < objectGroup_->GetNumObjects(); ++i)
         {
             TileMapObject2D* object = objectGroup_->GetObject(i);
-            const Color& color = Color::YELLOW;
+            const Color &color = Color::YELLOW;
 
             switch (object->GetObjectType())
             {

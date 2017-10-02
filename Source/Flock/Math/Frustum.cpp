@@ -38,7 +38,7 @@ inline Vector3 ClipEdgeZ(const Vector3 &v0, const Vector3 &v1, float clipZ)
     );
 }
 
-void ProjectAndMergeEdge(Vector3 v0, Vector3 v1, Rect& rect, const Matrix4& projection)
+void ProjectAndMergeEdge(Vector3 v0, Vector3 v1, Rect &rect, const Matrix4& projection)
 {
     // Check if both vertices behind near plane
     if (v0.z_ < M_MIN_NEARCLIP && v1.z_ < M_MIN_NEARCLIP)

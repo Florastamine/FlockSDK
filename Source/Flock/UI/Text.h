@@ -87,22 +87,22 @@ public:
     /// Apply attribute changes that can not be applied immediately.
     virtual void ApplyAttributes();
     /// Return UI rendering batches.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
     /// React to resize.
-    virtual void OnResize(const IntVector2& newSize, const IntVector2& delta);
+    virtual void OnResize(const IntVector2 &newSize, const IntVector2 &delta);
     /// React to indent change.
     virtual void OnIndentSet();
 
     /// Set font by looking from resource cache by name and font size. Return true if successful.
-    bool SetFont(const String& fontName, float size = DEFAULT_FONT_SIZE);
+    bool SetFont(const String &fontName, float size = DEFAULT_FONT_SIZE);
     /// Set font and font size. Return true if successful.
     bool SetFont(Font* font, float size = DEFAULT_FONT_SIZE);
     /// Set font size only while retaining the existing font. Return true if successful.
     bool SetFontSize(float size);
     /// Set text. Text is assumed to be either ASCII or UTF8-encoded.
-    void SetText(const String& text);
+    void SetText(const String &text);
     /// Set text, also parses formatting data from the given text (which color for each part of the text) for later rendering.
-    void SetTextFormatted(const String& text);
+    void SetTextFormatted(const String &text);
     /// Set row alignment.
     void SetTextAlignment(HorizontalAlignment align);
     /// Set row spacing, 1.0 for original font spacing.
@@ -116,19 +116,19 @@ public:
     /// Clear selection.
     void ClearSelection();
     /// Set selection background color. Color with 0 alpha (default) disables.
-    void SetSelectionColor(const Color& color);
+    void SetSelectionColor(const Color &color);
     /// Set hover background color. Color with 0 alpha (default) disables.
-    void SetHoverColor(const Color& color);
+    void SetHoverColor(const Color &color);
     /// Set text effect.
     void SetTextEffect(TextEffect textEffect);
     /// Set shadow offset.
-    void SetEffectShadowOffset(const IntVector2& offset);
+    void SetEffectShadowOffset(const IntVector2 &offset);
     /// Set stroke thickness.
     void SetEffectStrokeThickness(int thickness);
     /// Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
     void SetEffectRoundStroke(bool roundStroke);
     /// Set effect color.
-    void SetEffectColor(const Color& effectColor);
+    void SetEffectColor(const Color &effectColor);
     /// Set color of a particular character.
     void SetColorCharacter(const VariantMap &colorTable);
 
@@ -139,7 +139,7 @@ public:
     float GetFontSize() const { return fontSize_; }
 
     /// Return text.
-    const String& GetText() const { return text_; }
+    const String &GetText() const { return text_; }
 
     /// Return row alignment.
     HorizontalAlignment GetTextAlignment() const { return textAlignment_; }
@@ -160,16 +160,16 @@ public:
     unsigned GetSelectionLength() const { return selectionLength_; }
 
     /// Return selection background color.
-    const Color& GetSelectionColor() const { return selectionColor_; }
+    const Color &GetSelectionColor() const { return selectionColor_; }
 
     /// Return hover background color.
-    const Color& GetHoverColor() const { return hoverColor_; }
+    const Color &GetHoverColor() const { return hoverColor_; }
 
     /// Return text effect.
     TextEffect GetTextEffect() const { return textEffect_; }
 
     /// Return effect shadow offset.
-    const IntVector2& GetEffectShadowOffset() const { return shadowOffset_; }
+    const IntVector2 &GetEffectShadowOffset() const { return shadowOffset_; }
 
     /// Return effect stroke thickness.
     int GetEffectStrokeThickness() const { return strokeThickness_; }
@@ -178,7 +178,7 @@ public:
     bool GetEffectRoundStroke() const { return roundStroke_; }
 
     /// Return effect color.
-    const Color& GetEffectColor() const { return effectColor_; }
+    const Color &GetEffectColor() const { return effectColor_; }
 
     /// Return row height.
     int GetRowHeight() const { return rowHeight_; }
@@ -207,7 +207,7 @@ public:
     /// Return font attribute.
     ResourceRef GetFontAttr() const;
     /// Set text attribute.
-    void SetTextAttr(const String& value);
+    void SetTextAttr(const String &value);
     /// Return text attribute.
     String GetTextAttr() const;
 

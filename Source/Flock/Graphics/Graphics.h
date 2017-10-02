@@ -125,9 +125,9 @@ public:
     /// End frame rendering and swap buffers.
     void EndFrame();
     /// Clear any or all of rendertarget, depth buffer and stencil buffer.
-    void Clear(unsigned flags, const Color& color = Color(0.0f, 0.0f, 0.0f, 0.0f), float depth = 1.0f, unsigned stencil = 0);
+    void Clear(unsigned flags, const Color &color = Color(0.0f, 0.0f, 0.0f, 0.0f), float depth = 1.0f, unsigned stencil = 0);
     /// Resolve multisampled backbuffer to a texture rendertarget. The texture's size should match the viewport size.
-    bool ResolveToTexture(Texture2D* destination, const IntRect& viewport);
+    bool ResolveToTexture(Texture2D* destination, const IntRect &viewport);
     /// Resolve a multisampled texture on itself.
     bool ResolveToTexture(Texture2D* texture);
     /// Resolve a multisampled cube texture on itself.
@@ -163,7 +163,7 @@ public:
     /// Set shader boolean constant.
     void SetShaderParameter(StringHash param, bool value);
     /// Set shader color constant.
-    void SetShaderParameter(StringHash param, const Color& color);
+    void SetShaderParameter(StringHash param, const Color &color);
     /// Set shader 2D vector constant.
     void SetShaderParameter(StringHash param, const Vector2 &vector);
     /// Set shader 3x3 matrix constant.
@@ -215,7 +215,7 @@ public:
     /// Set depth-stencil surface.
     void SetDepthStencil(Texture2D* texture);
     /// Set viewport.
-    void SetViewport(const IntRect& rect);
+    void SetViewport(const IntRect &rect);
     /// Set blending and alpha-to-coverage modes. Alpha-to-coverage is not supported on Direct3D9.
     void SetBlendMode(BlendMode mode, bool alphaToCoverage = false);
     /// Set color write on/off.
@@ -233,9 +233,9 @@ public:
     /// Set line antialiasing on/off.
     void SetLineAntiAlias(bool enable);
     /// Set scissor test.
-    void SetScissorTest(bool enable, const Rect& rect = Rect::FULL, bool borderInclusive = true);
+    void SetScissorTest(bool enable, const Rect &rect = Rect::FULL, bool borderInclusive = true);
     /// Set scissor test.
-    void SetScissorTest(bool enable, const IntRect& rect);
+    void SetScissorTest(bool enable, const IntRect &rect);
     /// Set stencil test.
     void SetStencilTest
         (bool enable, CompareMode mode = CMP_ALWAYS, StencilOp pass = OP_KEEP, StencilOp fail = OP_KEEP, StencilOp zFail = OP_KEEP,
@@ -472,7 +472,7 @@ public:
     bool GetScissorTest() const { return scissorTest_; }
 
     /// Return scissor rectangle coordinates.
-    const IntRect& GetScissorRect() const { return scissorRect_; }
+    const IntRect &GetScissorRect() const { return scissorRect_; }
 
     /// Return stencil compare mode.
     CompareMode GetStencilTestMode() const { return stencilTestMode_; }

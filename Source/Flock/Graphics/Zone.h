@@ -50,9 +50,9 @@ public:
     /// Set local-space bounding box. Will be used as an oriented bounding box to test whether objects or the camera are inside.
     void SetBoundingBox(const BoundingBox& box);
     /// Set ambient color
-    void SetAmbientColor(const Color& color);
+    void SetAmbientColor(const Color &color);
     /// Set fog color.
-    void SetFogColor(const Color& color);
+    void SetFogColor(const Color &color);
     /// Set fog start distance.
     void SetFogStart(float start);
     /// Set fog end distance.
@@ -76,15 +76,15 @@ public:
     const Matrix3x4& GetInverseWorldTransform() const;
 
     /// Return zone's own ambient color, disregarding gradient mode.
-    const Color& GetAmbientColor() const { return ambientColor_; }
+    const Color &GetAmbientColor() const { return ambientColor_; }
 
     /// Return ambient start color. Not safe to call from worker threads due to possible octree query.
-    const Color& GetAmbientStartColor();
+    const Color &GetAmbientStartColor();
     /// Return ambient end color. Not safe to call from worker threads due to possible octree query.
-    const Color& GetAmbientEndColor();
+    const Color &GetAmbientEndColor();
 
     /// Return fog color.
-    const Color& GetFogColor() const { return fogColor_; }
+    const Color &GetFogColor() const { return fogColor_; }
 
     /// Return fog start distance.
     float GetFogStart() const { return fogStart_; }

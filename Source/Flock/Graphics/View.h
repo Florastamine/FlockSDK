@@ -154,7 +154,7 @@ public:
     bool GetDrawDebug() const { return drawDebug_; }
 
     /// Return view rectangle.
-    const IntRect& GetViewRect() const { return viewRect_; }
+    const IntRect &GetViewRect() const { return viewRect_; }
     
     /// Return view dimensions.
     const IntVector2 &GetViewSize() const { return viewSize_; }
@@ -187,7 +187,7 @@ public:
     /// Set command's shader parameters if any. Called internally by View.
     void SetCommandShaderParameters(const RenderPathCommand& command);
     /// Set G-buffer offset and inverse size shader parameters. Called by Batch and internally by View.
-    void SetGBufferShaderParameters(const IntVector2 &texSize, const IntRect& viewRect);
+    void SetGBufferShaderParameters(const IntVector2 &texSize, const IntRect &viewRect);
 
     /// Draw a fullscreen quad. Shaders and renderstates must have been set beforehand. Quad will be drawn to the middle of depth range, similarly to deferred directional lights.
     void DrawFullscreenQuad(bool setIdentityProjection = false);
@@ -244,10 +244,10 @@ private:
     void SetupDirLightShadowCamera(Camera* shadowCamera, Light* light, float nearSplit, float farSplit);
     /// Finalize shadow camera view after shadow casters and the shadow map are known.
     void
-        FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRect& shadowViewport, const BoundingBox& shadowCasterBox);
+        FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRect &shadowViewport, const BoundingBox& shadowCasterBox);
     /// Quantize a directional light shadow camera view to eliminate swimming.
     void
-        QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, const IntRect& shadowViewport, const BoundingBox& viewBox);
+        QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, const IntRect &shadowViewport, const BoundingBox& viewBox);
     /// Check visibility of one shadow caster.
     bool IsShadowCasterVisible(Drawable* drawable, BoundingBox lightViewBox, Camera* shadowCamera, const Matrix3x4& lightView,
         const Frustum& lightViewFrustum, const BoundingBox& lightViewFrustumBox);

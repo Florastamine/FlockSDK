@@ -6,7 +6,7 @@ class ScrollView : public UIElement
     virtual ~ScrollView();
     
     void SetContentElement(UIElement* element);
-    void SetViewPosition(const IntVector2& position);
+    void SetViewPosition(const IntVector2 &position);
     void SetViewPosition(int x, int y);
     void SetScrollBarsVisible(bool horizontal, bool vertical);
     void SetScrollBarsAutoVisible(bool enable);
@@ -17,7 +17,7 @@ class ScrollView : public UIElement
     void SetAutoDisableChildren(bool disable);
     void SetAutoDisableThreshold(float amount);
 
-    const IntVector2& GetViewPosition() const;
+    const IntVector2 &GetViewPosition() const;
     UIElement* GetContentElement() const;
     ScrollBar* GetHorizontalScrollBar() const;
     ScrollBar* GetVerticalScrollBar() const;
@@ -30,7 +30,7 @@ class ScrollView : public UIElement
     bool GetAutoDisableChildren() const;
     float GetAutoDisableThreshold() const;
 
-    tolua_property__get_set IntVector2& viewPosition;
+    tolua_property__get_set IntVector2 &viewPosition;
     tolua_property__get_set UIElement* contentElement;
     tolua_readonly tolua_property__get_set ScrollBar* horizontalScrollBar;
     tolua_readonly tolua_property__get_set ScrollBar* verticalScrollBar;

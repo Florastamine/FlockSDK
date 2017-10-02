@@ -59,7 +59,7 @@ public:
     /// Set shadow compare mode. Not used on Direct3D9.
     void SetShadowCompare(bool enable);
     /// Set border color for border addressing mode.
-    void SetBorderColor(const Color& color);
+    void SetBorderColor(const Color &color);
     /// Set sRGB sampling and writing mode.
     void SetSRGB(bool enable);
     /// Set backup texture to use when rendering to this texture.
@@ -98,7 +98,7 @@ public:
     bool GetShadowCompare() const { return shadowCompare_; }
 
     /// Return border color.
-    const Color& GetBorderColor() const { return borderColor_; }
+    const Color &GetBorderColor() const { return borderColor_; }
 
     /// Return whether is using sRGB sampling and writing.
     bool GetSRGB() const { return sRGB_; }

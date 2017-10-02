@@ -209,7 +209,7 @@ void Constraint::SetPosition(const Vector3 &position)
     }
 }
 
-void Constraint::SetRotation(const Quaternion& rotation)
+void Constraint::SetRotation(const Quaternion &rotation)
 {
     if (rotation != rotation_)
     {
@@ -251,7 +251,7 @@ void Constraint::SetOtherPosition(const Vector3 &position)
     }
 }
 
-void Constraint::SetOtherRotation(const Quaternion& rotation)
+void Constraint::SetOtherRotation(const Quaternion &rotation)
 {
     if (rotation != otherRotation_)
     {

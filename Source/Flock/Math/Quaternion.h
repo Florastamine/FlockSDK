@@ -50,7 +50,7 @@ public:
     }
 
     /// Copy-construct from another quaternion.
-    Quaternion(const Quaternion& quat)
+    Quaternion(const Quaternion &quat)
 #if defined(FLOCKSDK_SSE) 
     {
         _mm_storeu_ps(&w_, _mm_loadu_ps(&quat.w_));
@@ -136,7 +136,7 @@ public:
 #endif
 
     /// Assign from another quaternion.
-    Quaternion& operator =(const Quaternion& rhs)
+    Quaternion &operator =(const Quaternion &rhs)
     {
 #if defined(FLOCKSDK_SSE)
         _mm_storeu_ps(&w_, _mm_loadu_ps(&rhs.w_));
@@ -150,7 +150,7 @@ public:
     }
 
     /// Add-assign a quaternion.
-    Quaternion& operator +=(const Quaternion& rhs)
+    Quaternion &operator +=(const Quaternion &rhs)
     {
 #ifdef FLOCKSDK_SSE
         _mm_storeu_ps(&w_, _mm_add_ps(_mm_loadu_ps(&w_), _mm_loadu_ps(&rhs.w_)));
@@ -164,7 +164,7 @@ public:
     }
 
     /// Multiply-assign a scalar.
-    Quaternion& operator *=(float rhs)
+    Quaternion &operator *=(float rhs)
     {
 #ifdef FLOCKSDK_SSE
         _mm_storeu_ps(&w_, _mm_mul_ps(_mm_loadu_ps(&w_), _mm_set1_ps(rhs)));
@@ -178,7 +178,7 @@ public:
     }
 
     /// Test for equality with another quaternion without epsilon.
-    bool operator ==(const Quaternion& rhs) const
+    bool operator ==(const Quaternion &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 c = _mm_cmpeq_ps(_mm_loadu_ps(&w_), _mm_loadu_ps(&rhs.w_));
@@ -191,7 +191,7 @@ public:
     }
 
     /// Test for inequality with another quaternion without epsilon.
-    bool operator !=(const Quaternion& rhs) const { return !(*this == rhs); }
+    bool operator !=(const Quaternion &rhs) const { return !(*this == rhs); }
 
     /// Multiply with a scalar.
     Quaternion operator *(float rhs) const
@@ -214,7 +214,7 @@ public:
     }
 
     /// Add a quaternion.
-    Quaternion operator +(const Quaternion& rhs) const
+    Quaternion operator +(const Quaternion &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         return Quaternion(_mm_add_ps(_mm_loadu_ps(&w_), _mm_loadu_ps(&rhs.w_)));
@@ -224,7 +224,7 @@ public:
     }
 
     /// Subtract a quaternion.
-    Quaternion operator -(const Quaternion& rhs) const
+    Quaternion operator -(const Quaternion &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         return Quaternion(_mm_sub_ps(_mm_loadu_ps(&w_), _mm_loadu_ps(&rhs.w_)));
@@ -234,7 +234,7 @@ public:
     }
 
     /// Multiply a quaternion.
-    Quaternion operator *(const Quaternion& rhs) const
+    Quaternion operator *(const Quaternion &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 q1 = _mm_loadu_ps(&w_);
@@ -389,7 +389,7 @@ public:
     }
 
     /// Calculate dot product.
-    float DotProduct(const Quaternion& rhs) const
+    float DotProduct(const Quaternion &rhs) const
     {
 #ifdef FLOCKSDK_SSE
         __m128 q1 = _mm_loadu_ps(&w_);
@@ -404,7 +404,7 @@ public:
     }
 
     /// Test for equality with another quaternion with epsilon.
-    bool Equals(const Quaternion& rhs) const
+    bool Equals(const Quaternion &rhs) const
     {
         return FlockSDK::Equals(w_, rhs.w_) && FlockSDK::Equals(x_, rhs.x_) && FlockSDK::Equals(y_, rhs.y_) && FlockSDK::Equals(z_, rhs.z_);
     }
@@ -438,9 +438,9 @@ public:
     /// Return the rotation matrix that corresponds to this quaternion.
     Matrix3 RotationMatrix() const;
     /// Spherical interpolation with another quaternion.
-    Quaternion Slerp(const Quaternion& rhs, float t) const;
+    Quaternion Slerp(const Quaternion &rhs, float t) const;
     /// Normalized linear interpolation with another quaternion.
-    Quaternion Nlerp(const Quaternion& rhs, float t, bool shortestPath = false) const;
+    Quaternion Nlerp(const Quaternion &rhs, float t, bool shortestPath = false) const;
 
     /// Return float data.
     const float* Data() const { return &w_; }

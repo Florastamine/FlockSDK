@@ -56,7 +56,7 @@ RichWidgetText::RichWidgetText(Context* context)
 
 RichWidgetText::~RichWidgetText() {}
 
-void RichWidgetText::SetFont(const String& fontname, int pointsize)
+void RichWidgetText::SetFont(const String &fontname, int pointsize)
 {
     bool changed = pointsize_ != pointsize || (font_face_ && font_->GetName() != fontname);
     pointsize_ = pointsize;
@@ -94,12 +94,12 @@ void RichWidgetText::SetFont(const String& fontname, int pointsize)
     }
 }
 
-void RichWidgetText::DrawQuad(const Rect& vertices, float z, const Rect& texCoords, const Color& color)
+void RichWidgetText::DrawQuad(const Rect &vertices, float z, const Rect &texCoords, const Color &color)
 {
     AddQuad(vertices, z, texCoords, color);
 }
 
-void RichWidgetText::DrawGlyph(const Rect& texCoords, float x, float y, float z, float width, float height, const Color& color)
+void RichWidgetText::DrawGlyph(const Rect &texCoords, float x, float y, float z, float width, float height, const Color &color)
 {
     Rect vertices;
     vertices.min_.x_ = x;
@@ -109,7 +109,7 @@ void RichWidgetText::DrawGlyph(const Rect& texCoords, float x, float y, float z,
     DrawQuad(vertices, z, texCoords, color);
 }
 
-void RichWidgetText::DrawGlyphScaled(const Rect& texCoords, float x, float y, float z, float width, float height, const Vector2& scale, const Color& color)
+void RichWidgetText::DrawGlyphScaled(const Rect &texCoords, float x, float y, float z, float width, float height, const Vector2 &scale, const Color &color)
 {
     Rect vertices;
     vertices.min_.x_ = x * scale.x_;
@@ -119,7 +119,7 @@ void RichWidgetText::DrawGlyphScaled(const Rect& texCoords, float x, float y, fl
     DrawQuad(vertices, z, texCoords, color);
 }
 
-void RichWidgetText::AddText(const String& text, const Vector3& pos, const Color& color)
+void RichWidgetText::AddText(const String &text, const Vector3 &pos, const Color &color)
 {
     if (!font_ || !font_face_)
         return;
@@ -182,7 +182,7 @@ void RichWidgetText::AddText(const String& text, const Vector3& pos, const Color
     }
 }
 
-Vector2 RichWidgetText::CalculateTextExtents(const String& text)
+Vector2 RichWidgetText::CalculateTextExtents(const String &text)
 {
     Vector2 res;
     if (!font_face_)

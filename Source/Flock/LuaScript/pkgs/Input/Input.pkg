@@ -41,7 +41,7 @@ class Input : public Object
     bool RemoveScreenJoystick(int id);
     void SetScreenJoystickVisible(int id, bool enable);
     void SetScreenKeyboardVisible(bool enable);
-    void SetMousePosition(const IntVector2& position);
+    void SetMousePosition(const IntVector2 &position);
     void CenterMousePosition();
 
     int GetKeyFromName(const String name) const;

@@ -186,7 +186,7 @@ bool ScriptFile::EndLoad()
     return success;
 }
 
-void ScriptFile::AddEventHandler(StringHash eventType, const String& handlerName)
+void ScriptFile::AddEventHandler(StringHash eventType, const String &handlerName)
 {
     if (!compiled_)
         return;
@@ -194,7 +194,7 @@ void ScriptFile::AddEventHandler(StringHash eventType, const String& handlerName
     AddEventHandlerInternal(0, eventType, handlerName);
 }
 
-void ScriptFile::AddEventHandler(Object* sender, StringHash eventType, const String& handlerName)
+void ScriptFile::AddEventHandler(Object* sender, StringHash eventType, const String &handlerName)
 {
     if (!compiled_)
         return;
@@ -289,7 +289,7 @@ bool ScriptFile::HasEventHandler(Object* sender, StringHash eventType) const
         return false;
 }
 
-bool ScriptFile::Execute(const String& declaration, const VariantVector& parameters, bool unprepare)
+bool ScriptFile::Execute(const String &declaration, const VariantVector& parameters, bool unprepare)
 {
     asIScriptFunction* function = GetFunction(declaration);
     if (!function)
@@ -327,7 +327,7 @@ bool ScriptFile::Execute(asIScriptFunction* function, const VariantVector& param
     return success;
 }
 
-bool ScriptFile::Execute(asIScriptObject* object, const String& declaration, const VariantVector& parameters, bool unprepare)
+bool ScriptFile::Execute(asIScriptObject* object, const String &declaration, const VariantVector& parameters, bool unprepare)
 {
     if (!object)
         return false;
@@ -369,7 +369,7 @@ bool ScriptFile::Execute(asIScriptObject* object, asIScriptFunction* method, con
     return success;
 }
 
-void ScriptFile::DelayedExecute(float delay, bool repeat, const String& declaration, const VariantVector& parameters)
+void ScriptFile::DelayedExecute(float delay, bool repeat, const String &declaration, const VariantVector& parameters)
 {
     DelayedCall call;
     call.period_ = call.delay_ = Max(delay, 0.0f);
@@ -386,7 +386,7 @@ void ScriptFile::DelayedExecute(float delay, bool repeat, const String& declarat
     }
 }
 
-void ScriptFile::ClearDelayedExecute(const String& declaration)
+void ScriptFile::ClearDelayedExecute(const String &declaration)
 {
     if (declaration.Empty())
         delayedCalls_.Clear();
@@ -402,7 +402,7 @@ void ScriptFile::ClearDelayedExecute(const String& declaration)
     }
 }
 
-asIScriptObject* ScriptFile::CreateObject(const String& className, bool useInterface)
+asIScriptObject* ScriptFile::CreateObject(const String &className, bool useInterface)
 {
     FLOCKSDK_PROFILE(CreateObject);
 
@@ -484,7 +484,7 @@ bool ScriptFile::SaveByteCode(Serializer& dest)
         return false;
 }
 
-asIScriptFunction* ScriptFile::GetFunction(const String& declarationIn)
+asIScriptFunction* ScriptFile::GetFunction(const String &declarationIn)
 {
     if (!compiled_)
         return 0;
@@ -503,7 +503,7 @@ asIScriptFunction* ScriptFile::GetFunction(const String& declarationIn)
     return function;
 }
 
-asIScriptFunction* ScriptFile::GetMethod(asIScriptObject* object, const String& declarationIn)
+asIScriptFunction* ScriptFile::GetMethod(asIScriptObject* object, const String &declarationIn)
 {
     if (!compiled_ || !object)
         return 0;
@@ -535,7 +535,7 @@ void ScriptFile::CleanupEventInvoker(asIScriptObject* object)
     eventInvokers_.Erase(object);
 }
 
-void ScriptFile::AddEventHandlerInternal(Object* sender, StringHash eventType, const String& handlerName)
+void ScriptFile::AddEventHandlerInternal(Object* sender, StringHash eventType, const String &handlerName)
 {
     String declaration = "void " + handlerName + "(StringHash, VariantMap&)";
     asIScriptFunction* function = 0;

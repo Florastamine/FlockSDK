@@ -34,10 +34,10 @@ class RichWidgetBatch;
 // Quad storage.
 struct Quad
 {
-    Quad(const Rect& vertices,
+    Quad(const Rect &vertices,
       float z,
-      const Rect& texcoords,
-      const Color& color)
+      const Rect &texcoords,
+      const Color &color)
       : vertices_(vertices)
       , z_(z)
       , tex_coords_(texcoords)
@@ -75,13 +75,13 @@ public:
     /// Force the WidgetBatch to redraw.
     void SetDirty() { is_dirty_ = true; }
     /// Add a quad.
-    void AddQuad(const Rect& vertices, float z, const Rect& texcoords, const Color& color);
+    void AddQuad(const Rect &vertices, float z, const Rect &texcoords, const Color &color);
     /// Remove all quads.
     void ClearQuads();
     /// Is the render item empty (has no quads)?
     bool IsEmpty() const { return quads_.Empty(); }
     /// Get UI batches from this widget.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
 protected:
     friend class RichWidget;
     /// Used in RichWidget for caching.

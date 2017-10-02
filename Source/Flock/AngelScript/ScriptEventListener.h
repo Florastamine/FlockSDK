@@ -56,9 +56,9 @@ public:
     virtual ~ScriptEventListener() { };
 
     /// Add a scripted event handler.
-    virtual void AddEventHandler(StringHash eventType, const String& handlerName) = 0;
+    virtual void AddEventHandler(StringHash eventType, const String &handlerName) = 0;
     /// Add a scripted event handler for a specific sender.
-    virtual void AddEventHandler(Object* sender, StringHash eventType, const String& handlerName) = 0;
+    virtual void AddEventHandler(Object* sender, StringHash eventType, const String &handlerName) = 0;
     /// Remove a scripted event handler.
     virtual void RemoveEventHandler(StringHash eventType) = 0;
     /// Remove a scripted event handler for a specific sender.

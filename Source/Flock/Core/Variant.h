@@ -286,14 +286,14 @@ public:
     }
 
     /// Construct from a quaternion.
-    Variant(const Quaternion& value) :
+    Variant(const Quaternion &value) :
         type_(VAR_NONE)
     {
         *this = value;
     }
 
     /// Construct from a color.
-    Variant(const Color& value) :
+    Variant(const Color &value) :
         type_(VAR_NONE)
     {
         *this = value;
@@ -370,14 +370,14 @@ public:
     }
 
     /// Construct from a rect.
-    Variant(const Rect& value) :
+    Variant(const Rect &value) :
         type_(VAR_NONE)
     {
         *this = value;
     }
 
     /// Construct from an integer rect.
-    Variant(const IntRect& value) :
+    Variant(const IntRect &value) :
         type_(VAR_NONE)
     {
         *this = value;
@@ -564,7 +564,7 @@ public:
     }
 
     /// Assign from a quaternion.
-    Variant &operator =(const Quaternion& rhs)
+    Variant &operator =(const Quaternion &rhs)
     {
         SetType(VAR_QUATERNION);
         *(reinterpret_cast<Quaternion*>(&value_)) = rhs;
@@ -572,7 +572,7 @@ public:
     }
 
     /// Assign from a color.
-    Variant &operator =(const Color& rhs)
+    Variant &operator =(const Color &rhs)
     {
         SetType(VAR_COLOR);
         *(reinterpret_cast<Color*>(&value_)) = rhs;
@@ -655,7 +655,7 @@ public:
     }
 
     /// Assign from a rect.
-    Variant &operator =(const Rect& rhs)
+    Variant &operator =(const Rect &rhs)
     {
         SetType(VAR_RECT);
         *(reinterpret_cast<Rect*>(&value_)) = rhs;
@@ -663,7 +663,7 @@ public:
     }
 
     /// Assign from an integer rect.
-    Variant &operator =(const IntRect& rhs)
+    Variant &operator =(const IntRect &rhs)
     {
         SetType(VAR_INTRECT);
         *(reinterpret_cast<IntRect*>(&value_)) = rhs;
@@ -761,13 +761,13 @@ public:
     }
 
     /// Test for equality with a quaternion. To return true, both the type and value must match.
-    bool operator ==(const Quaternion& rhs) const
+    bool operator ==(const Quaternion &rhs) const
     {
         return type_ == VAR_QUATERNION ? *(reinterpret_cast<const Quaternion*>(&value_)) == rhs : false;
     }
 
     /// Test for equality with a color. To return true, both the type and value must match.
-    bool operator ==(const Color& rhs) const
+    bool operator ==(const Color &rhs) const
     {
         return type_ == VAR_COLOR ? *(reinterpret_cast<const Color*>(&value_)) == rhs : false;
     }
@@ -825,13 +825,13 @@ public:
     }
 
     /// Test for equality with a rect. To return true, both the type and value must match.
-    bool operator ==(const Rect& rhs) const
+    bool operator ==(const Rect &rhs) const
     {
         return type_ == VAR_RECT ? *(reinterpret_cast<const Rect*>(&value_)) == rhs : false;
     }
 
     /// Test for equality with an integer rect. To return true, both the type and value must match.
-    bool operator ==(const IntRect& rhs) const
+    bool operator ==(const IntRect &rhs) const
     {
         return type_ == VAR_INTRECT ? *(reinterpret_cast<const IntRect*>(&value_)) == rhs : false;
     }
@@ -914,7 +914,7 @@ public:
     bool operator !=(const Vector4 &rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with a Quaternion.
-    bool operator !=(const Quaternion& rhs) const { return !(*this == rhs); }
+    bool operator !=(const Quaternion &rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with a string.
     bool operator !=(const String &rhs) const { return !(*this == rhs); }
@@ -944,10 +944,10 @@ public:
     bool operator !=(const VariantMap& rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with a rect.
-    bool operator !=(const Rect& rhs) const { return !(*this == rhs); }
+    bool operator !=(const Rect &rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with an integer rect.
-    bool operator !=(const IntRect& rhs) const { return !(*this == rhs); }
+    bool operator !=(const IntRect &rhs) const { return !(*this == rhs); }
 
     /// Test for inequality with an IntVector2.
     bool operator !=(const IntVector2 &rhs) const { return !(*this == rhs); }
@@ -1079,13 +1079,13 @@ public:
     const Vector4 &GetVector4() const { return type_ == VAR_VECTOR4 ? *reinterpret_cast<const Vector4*>(&value_) : Vector4::ZERO; }
 
     /// Return quaternion or identity on type mismatch.
-    const Quaternion& GetQuaternion() const
+    const Quaternion &GetQuaternion() const
     {
         return type_ == VAR_QUATERNION ? *reinterpret_cast<const Quaternion*>(&value_) : Quaternion::IDENTITY;
     }
 
     /// Return color or default on type mismatch. Vector4 is aliased to Color if necessary.
-    const Color& GetColor() const { return (type_ == VAR_COLOR || type_ == VAR_VECTOR4) ? *reinterpret_cast<const Color*>(&value_) : Color::WHITE; }
+    const Color &GetColor() const { return (type_ == VAR_COLOR || type_ == VAR_VECTOR4) ? *reinterpret_cast<const Color*>(&value_) : Color::WHITE; }
 
     /// Return string or empty on type mismatch.
     const String &GetString() const { return type_ == VAR_STRING ? *reinterpret_cast<const String*>(&value_) : String::EMPTY; }
@@ -1141,10 +1141,10 @@ public:
     }
 
     /// Return a rect or empty on type mismatch.
-    const Rect& GetRect() const { return type_ == VAR_RECT ? *reinterpret_cast<const Rect*>(&value_) : Rect::ZERO; }
+    const Rect &GetRect() const { return type_ == VAR_RECT ? *reinterpret_cast<const Rect*>(&value_) : Rect::ZERO; }
 
     /// Return an integer rect or empty on type mismatch.
-    const IntRect& GetIntRect() const { return type_ == VAR_INTRECT ? *reinterpret_cast<const IntRect*>(&value_) : IntRect::ZERO; }
+    const IntRect &GetIntRect() const { return type_ == VAR_INTRECT ? *reinterpret_cast<const IntRect*>(&value_) : IntRect::ZERO; }
 
     /// Return an IntVector2 or empty on type mismatch.
     const IntVector2 &GetIntVector2() const
@@ -1326,15 +1326,15 @@ template <> FLOCKSDK_API const Vector3 &Variant::Get<const Vector3&>() const;
 
 template <> FLOCKSDK_API const Vector4 &Variant::Get<const Vector4&>() const;
 
-template <> FLOCKSDK_API const Quaternion& Variant::Get<const Quaternion&>() const;
+template <> FLOCKSDK_API const Quaternion &Variant::Get<const Quaternion&>() const;
 
-template <> FLOCKSDK_API const Color& Variant::Get<const Color&>() const;
+template <> FLOCKSDK_API const Color &Variant::Get<const Color&>() const;
 
 template <> FLOCKSDK_API const String &Variant::Get<const String&>() const;
 
-template <> FLOCKSDK_API const Rect& Variant::Get<const Rect&>() const;
+template <> FLOCKSDK_API const Rect &Variant::Get<const Rect&>() const;
 
-template <> FLOCKSDK_API const IntRect& Variant::Get<const IntRect&>() const;
+template <> FLOCKSDK_API const IntRect &Variant::Get<const IntRect&>() const;
 
 template <> FLOCKSDK_API const IntVector2 &Variant::Get<const IntVector2&>() const;
 

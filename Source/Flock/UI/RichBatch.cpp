@@ -94,7 +94,7 @@ void RichWidgetBatch::SetParentWidget(RichWidget* parent)
     parent_widget_ = parent;
 }
 
-void RichWidgetBatch::AddQuad(const Rect &vertices, float z, const Rect &texcoords, const FlockSDK::Color& color)
+void RichWidgetBatch::AddQuad(const Rect &vertices, float z, const Rect &texcoords, const FlockSDK::Color &color)
 {
     quads_.Push(Quad(vertices, z, texcoords, color));
     SetDirty();

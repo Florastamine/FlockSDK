@@ -1459,7 +1459,7 @@ void Renderer::OptimizeLightByStencil(Light* light, Camera* camera)
         graphics_->SetStencilTest(false);
 }
 
-const Rect& Renderer::GetLightScissor(Light* light, Camera* camera)
+const Rect &Renderer::GetLightScissor(Light* light, Camera* camera)
 {
     Pair<Light*, Camera*> combination(light, camera);
 
@@ -1504,7 +1504,7 @@ void Renderer::UpdateQueuedViewport(unsigned index)
 
     views_.Push(WeakPtr<View>(view));
 
-    const IntRect& viewRect = viewport->GetRect();
+    const IntRect &viewRect = viewport->GetRect();
     Scene* scene = viewport->GetScene();
     if (!scene)
         return;

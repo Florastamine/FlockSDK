@@ -516,7 +516,7 @@ float Camera::GetLodDistance(float distance, float scale, float bias) const
         return orthoSize_ / d;
 }
 
-Quaternion Camera::GetFaceCameraRotation(const Vector3 &position, const Quaternion& rotation, FaceCameraMode mode, float minAngle)
+Quaternion Camera::GetFaceCameraRotation(const Vector3 &position, const Quaternion &rotation, FaceCameraMode mode, float minAngle)
 {
     if (!node_)
         return rotation;

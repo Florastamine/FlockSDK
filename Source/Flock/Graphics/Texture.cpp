@@ -120,7 +120,7 @@ void Texture::SetShadowCompare(bool enable)
     parametersDirty_ = true;
 }
 
-void Texture::SetBorderColor(const Color& color)
+void Texture::SetBorderColor(const Color &color)
 {
     borderColor_ = color;
     parametersDirty_ = true;

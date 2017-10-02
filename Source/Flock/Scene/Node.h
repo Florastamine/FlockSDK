@@ -137,7 +137,7 @@ public:
     void SetPosition2D(float x, float y) { SetPosition(Vector3(x, y, 0.0f)); }
 
     /// Set rotation in parent space.
-    void SetRotation(const Quaternion& rotation);
+    void SetRotation(const Quaternion &rotation);
 
     /// Set rotation in parent space (for 2D).
     void SetRotation2D(float rotation) { SetRotation(Quaternion(rotation)); }
@@ -156,11 +156,11 @@ public:
     void SetScale2D(float x, float y) { SetScale(Vector3(x, y, 1.0f)); }
 
     /// Set both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.
-    void SetTransform(const Vector3 &position, const Quaternion& rotation);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation);
     /// Set both position, rotation and uniform scale in parent space as an atomic operation.
-    void SetTransform(const Vector3 &position, const Quaternion& rotation, float scale);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation, float scale);
     /// Set both position, rotation and scale in parent space as an atomic operation.
-    void SetTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale);
     /// Set node transformation in parent space as an atomic operation.
     void SetTransform(const Matrix3x4& matrix);
 
@@ -189,7 +189,7 @@ public:
     void SetWorldPosition2D(float x, float y) { SetWorldPosition(Vector3(x, y, 0.0f)); }
 
     /// Set rotation in world space.
-    void SetWorldRotation(const Quaternion& rotation);
+    void SetWorldRotation(const Quaternion &rotation);
 
     /// Set rotation in world space (for 2D).
     void SetWorldRotation2D(float rotation) { SetWorldRotation(Quaternion(rotation)); }
@@ -208,11 +208,11 @@ public:
     void SetWorldScale2D(float x, float y) { SetWorldScale(Vector3(x, y, 1.0f)); }
 
     /// Set both position and rotation in world space as an atomic operation.
-    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation);
+    void SetWorldTransform(const Vector3 &position, const Quaternion &rotation);
     /// Set both position, rotation and uniform scale in world space as an atomic operation.
-    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation, float scale);
+    void SetWorldTransform(const Vector3 &position, const Quaternion &rotation, float scale);
     /// Set both position, rotation and scale in world space as an atomic opration.
-    void SetWorldTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
+    void SetWorldTransform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale);
 
     /// Set both position and rotation in world space as an atomic operation (for 2D).
     void SetWorldTransform2D(const Vector2 &position, float rotation)
@@ -239,13 +239,13 @@ public:
     void Translate2D(const Vector2 &delta, TransformSpace space = TS_LOCAL) { Translate(Vector3(delta), space); }
 
     /// Rotate the scene node in the chosen transform space.
-    void Rotate(const Quaternion& delta, TransformSpace space = TS_LOCAL);
+    void Rotate(const Quaternion &delta, TransformSpace space = TS_LOCAL);
 
     /// Rotate the scene node in the chosen transform space (for 2D).
     void Rotate2D(float delta, TransformSpace space = TS_LOCAL) { Rotate(Quaternion(delta), space); }
 
     /// Rotate around a point in the chosen transform space.
-    void RotateAround(const Vector3 &point, const Quaternion& delta, TransformSpace space = TS_LOCAL);
+    void RotateAround(const Vector3 &point, const Quaternion &delta, TransformSpace space = TS_LOCAL);
 
     /// Rotate around a point in the chosen transform space (for 2D).
     void RotateAround2D(const Vector2 &point, float delta, TransformSpace space = TS_LOCAL)
@@ -374,7 +374,7 @@ public:
     Vector2 GetPosition2D() const { return Vector2(position_.x_, position_.y_); }
 
     /// Return rotation in parent space.
-    const Quaternion& GetRotation() const { return rotation_; }
+    const Quaternion &GetRotation() const { return rotation_; }
 
     /// Return rotation in parent space (for 2D).
     float GetRotation2D() const { return rotation_.RollAngle(); }
@@ -619,13 +619,13 @@ public:
     void SetPositionSilent(const Vector3 &position) { position_ = position; }
 
     /// Set position in parent space silently without marking the node & child nodes dirty. Used by animation code.
-    void SetRotationSilent(const Quaternion& rotation) { rotation_ = rotation; }
+    void SetRotationSilent(const Quaternion &rotation) { rotation_ = rotation; }
 
     /// Set scale in parent space silently without marking the node & child nodes dirty. Used by animation code.
     void SetScaleSilent(const Vector3 &scale) { scale_ = scale; }
 
     /// Set local transform silently without marking the node & child nodes dirty. Used by animation code.
-    void SetTransformSilent(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale);
+    void SetTransformSilent(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale);
 
 protected:
     /// Handle attribute animation added.

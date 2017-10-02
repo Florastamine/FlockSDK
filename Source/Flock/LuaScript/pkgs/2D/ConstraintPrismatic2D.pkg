@@ -2,8 +2,8 @@ $#include "2D/ConstraintPrismatic2D.h"
 
 class ConstraintPrismatic2D : Constraint2D
 {
-    void SetAnchor(const Vector2& anchor);
-    void SetAxis(const Vector2& axis);
+    void SetAnchor(const Vector2 &anchor);
+    void SetAxis(const Vector2 &axis);
     void SetEnableLimit(bool enableLimit);
     void SetLowerTranslation(float lowerTranslation);
     void SetUpperTranslation(float upperTranslation);
@@ -11,8 +11,8 @@ class ConstraintPrismatic2D : Constraint2D
     void SetMaxMotorForce(float maxMotorForce);
     void SetMotorSpeed(float motorSpeed);
 
-    const Vector2& GetAnchor() const;
-    const Vector2& GetAxis() const;
+    const Vector2 &GetAnchor() const;
+    const Vector2 &GetAxis() const;
     bool GetEnableLimit() const;
     float GetLowerTranslation() const;
     float GetUpperTranslation() const;
@@ -20,8 +20,8 @@ class ConstraintPrismatic2D : Constraint2D
     float GetMaxMotorForce() const;
     float GetMotorSpeed() const;
 
-    tolua_property__get_set Vector2& anchor;
-    tolua_property__get_set Vector2& axis;
+    tolua_property__get_set Vector2 &anchor;
+    tolua_property__get_set Vector2 &axis;
     tolua_property__get_set bool enableLimit;
     tolua_property__get_set float lowerTranslation;
     tolua_property__get_set float upperTranslation;

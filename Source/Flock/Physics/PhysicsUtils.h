@@ -36,17 +36,17 @@ inline btVector3 ToBtVector3(const Vector3 &vector)
     return btVector3(vector.x_, vector.y_, vector.z_);
 }
 
-inline btQuaternion ToBtQuaternion(const Quaternion& quaternion)
+inline btQuaternion ToBtQuaternion(const Quaternion &quaternion)
 {
     return btQuaternion(quaternion.x_, quaternion.y_, quaternion.z_, quaternion.w_);
 }
 
-inline Vector3 ToVector3(const btVector3& vector)
+inline Vector3 ToVector3(const btVector3 &vector)
 {
     return Vector3(vector.x(), vector.y(), vector.z());
 }
 
-inline Quaternion ToQuaternion(const btQuaternion& quaternion)
+inline Quaternion ToQuaternion(const btQuaternion &quaternion)
 {
     return Quaternion(quaternion.w(), quaternion.x(), quaternion.y(), quaternion.z());
 }

@@ -117,7 +117,7 @@ static void JSONValueSetDouble(JSONValue* jsonValue, double value)
     (*jsonValue) = value;
 }
 
-static void JSONValueSetString(JSONValue* jsonValue, const String& value)
+static void JSONValueSetString(JSONValue* jsonValue, const String &value)
 {
     (*jsonValue) = value;
 }

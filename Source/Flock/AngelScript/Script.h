@@ -42,14 +42,6 @@ class Scene;
 class ScriptFile;
 class ScriptInstance;
 
-/// Output mode for DumpAPI method.
-enum DumpMode
-{
-    DOXYGEN = 0,
-    C_HEADER,
-    MAX_DUMP_MODES
-};
-
 /// Scripting subsystem. Allows execution of AngelScript.
 class FLOCKSDK_API Script : public Object
 {
@@ -64,7 +56,7 @@ public:
     ~Script();
 
     /// Compile and execute a line of script in immediate mode.
-    bool Execute(const String& line);
+    bool Execute(const String &line);
     /// Set immediate mode script file.
     void SetDefaultScriptFile(ScriptFile* file);
     /// Set immediate mode scene.
@@ -113,8 +105,6 @@ private:
 
     /// Return a script function/method execution context for the current execution nesting level.
     asIScriptContext* GetScriptFileContext();
-    /// Output a sanitated row of script API. No-ops when FLOCKSDK_LOGGING not defined.
-    void OutputAPIRow(DumpMode mode, const String& row, bool removeReference = false, const String& separator = ";");
     /// Handle a console command event.
     void HandleConsoleCommand(StringHash eventType, VariantMap& eventData);
 

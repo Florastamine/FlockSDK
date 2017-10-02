@@ -43,7 +43,7 @@ namespace FlockSDK
 void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, unsigned split, Renderer* renderer)
 {
     Camera* shadowCamera = queue->shadowSplits_[split].shadowCamera_;
-    const IntRect& viewport = queue->shadowSplits_[split].shadowViewport_;
+    const IntRect &viewport = queue->shadowSplits_[split].shadowViewport_;
 
     Matrix3x4 shadowView(shadowCamera->GetView());
     Matrix4 shadowProj(shadowCamera->GetGPUProjection());

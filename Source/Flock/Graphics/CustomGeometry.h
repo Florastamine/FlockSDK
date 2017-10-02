@@ -79,7 +79,7 @@ public:
     /// Define a vertex normal.
     void DefineNormal(const Vector3 &normal);
     /// Define a vertex color.
-    void DefineColor(const Color& color);
+    void DefineColor(const Color &color);
     /// Define a vertex UV coordinate.
     void DefineTexCoord(const Vector2 &texCoord);
     /// Define a vertex tangent.

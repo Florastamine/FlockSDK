@@ -62,7 +62,7 @@ Matrix4 Matrix4::operator *(const Matrix3x4& rhs) const
     );
 }
 
-void Matrix4::Decompose(Vector3 &translation, Quaternion& rotation, Vector3 &scale) const
+void Matrix4::Decompose(Vector3 &translation, Quaternion &rotation, Vector3 &scale) const
 {
     translation.x_ = m03_;
     translation.y_ = m13_;

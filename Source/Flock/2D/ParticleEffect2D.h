@@ -85,13 +85,13 @@ public:
     /// Set tangential acceleration variance.
     void SetTangentialAccelVariance(float tangentialAccelVariance);
     /// Set start color.
-    void SetStartColor(const Color& startColor);
+    void SetStartColor(const Color &startColor);
     /// Set start color variance.
-    void SetStartColorVariance(const Color& startColorVariance);
+    void SetStartColorVariance(const Color &startColorVariance);
     /// Set finish color.
-    void SetFinishColor(const Color& finishColor);
+    void SetFinishColor(const Color &finishColor);
     /// Set finish color variance.
-    void SetFinishColorVariance(const Color& finishColorVariance);
+    void SetFinishColorVariance(const Color &finishColorVariance);
     /// Set max particles.
     void SetMaxParticles(int maxParticles);
     /// Set start particle size.
@@ -171,16 +171,16 @@ public:
     float GetTangentialAccelVariance() const { return tangentialAccelVariance_; }
 
     /// Return start color.
-    const Color& GetStartColor() const { return startColor_; }
+    const Color &GetStartColor() const { return startColor_; }
 
     /// Return start color variance.
-    const Color& GetStartColorVariance() const { return startColorVariance_; }
+    const Color &GetStartColorVariance() const { return startColorVariance_; }
 
     /// Return finish color.
-    const Color& GetFinishColor() const { return finishColor_; }
+    const Color &GetFinishColor() const { return finishColor_; }
 
     /// Return finish color variance.
-    const Color& GetFinishColorVariance() const { return finishColorVariance_; }
+    const Color &GetFinishColorVariance() const { return finishColorVariance_; }
 
     /// Return max particles.
     int GetMaxParticles() const { return maxParticles_; }
@@ -250,7 +250,7 @@ private:
     /// Write float.
     void WriteFloat(XMLElement& element, const String &name, float value) const;
     /// Write Color.
-    void WriteColor(XMLElement& element, const String &name, const Color& color) const;
+    void WriteColor(XMLElement& element, const String &name, const Color &color) const;
     /// Write Vector2.
     void WriteVector2(XMLElement& element, const String &name, const Vector2 &value) const;
 

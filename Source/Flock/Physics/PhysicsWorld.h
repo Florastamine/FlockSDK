@@ -143,16 +143,16 @@ public:
     static void RegisterObject(Context* context);
 
     /// Check if an AABB is visible for debug drawing.
-    virtual bool isVisible(const btVector3& aabbMin, const btVector3& aabbMax);
+    virtual bool isVisible(const btVector3 &aabbMin, const btVector3 &aabbMax);
     /// Draw a physics debug line.
-    virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color);
+    virtual void drawLine(const btVector3 &from, const btVector3 &to, const btVector3 &color);
     /// Log warning from the physics engine.
     virtual void reportErrorWarning(const char* warningString);
     /// Draw a physics debug contact point. Not implemented.
     virtual void drawContactPoint
-        (const btVector3& pointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color);
+        (const btVector3 &pointOnB, const btVector3 &normalOnB, btScalar distance, int lifeTime, const btVector3 &color);
     /// Draw physics debug 3D text. Not implemented.
-    virtual void draw3dText(const btVector3& location, const char* textString);
+    virtual void draw3dText(const btVector3 &location, const char* textString);
 
     /// Set debug draw flags.
     virtual void setDebugMode(int debugMode) { debugMode_ = debugMode; }
@@ -196,11 +196,11 @@ public:
     void SphereCast
         (PhysicsRaycastResult& result, const Ray& ray, float radius, float maxDistance, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world swept convex test using a user-supplied collision shape and return the first hit.
-    void ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3 &startPos, const Quaternion& startRot,
-        const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
+    void ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3 &startPos, const Quaternion &startRot,
+        const Vector3 &endPos, const Quaternion &endRot, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Perform a physics world swept convex test using a user-supplied Bullet collision shape and return the first hit.
-    void ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3 &startPos, const Quaternion& startRot,
-        const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED);
+    void ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3 &startPos, const Quaternion &startRot,
+        const Vector3 &endPos, const Quaternion &endRot, unsigned collisionMask = M_MAX_UNSIGNED);
     /// Invalidate cached collision geometry for a model.
     void RemoveCachedGeometry(Model* model);
     /// Return rigid bodies by a sphere query.

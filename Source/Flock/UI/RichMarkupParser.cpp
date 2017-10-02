@@ -28,7 +28,7 @@ struct ColorMap {
     const FlockSDK::Color color;
 };
 
-static FlockSDK::Color ParseHTMLColor(const FlockSDK::String& str)
+static FlockSDK::Color ParseHTMLColor(const FlockSDK::String &str)
 {
     static const ColorMap color_table[] = {
         { "white", FlockSDK::Color::WHITE },
@@ -97,7 +97,7 @@ namespace FlockSDK {
 ///  <font=fonts/SDK/Annonymous Pro.ttf></font> - change text font
 ///  <img src=image.png width=320 height=240 /> - embed an image
 ///  TODO: <quad material=material.xml width=10 height=10 x=10 y=10 />
-void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const FontState& default_font_state)
+void ParseRichTextHTML(const String &text, Vector<TextBlock>& blocks, const FontState& default_font_state)
 {
     unsigned pos = 0, last_tag_end = 0;
     unsigned tag_begin = 0, tag_end = 0;
@@ -178,8 +178,8 @@ void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const Font
                     if (tokens.Size() != 2)
                       continue;
                     
-                    const String& name = tokens[0];
-                    const String& value = tokens[1];
+                    const String &name = tokens[0];
+                    const String &value = tokens[1];
                     if (name == "width")
                         block.image_width = ToFloat(value);
                     else if (name == "height")
@@ -230,8 +230,8 @@ void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const Font
                     auto tokens = t.Split('=');
                     if (tokens.Size() != 2)
                         continue;
-                    const String& name = tokens[0];
-                    const String& value = tokens[1];
+                    const String &name = tokens[0];
+                    const String &value = tokens[1];
                     if (name == "width")
                         block.image_width = ToFloat(value);
                     else if (name == "height")

@@ -65,7 +65,7 @@ public:
     virtual void ClientDisconnected(kNet::MessageConnection* connection);
 
     /// Connect to a server using UDP protocol. Return true if connection process successfully started.
-    bool Connect(const String& address, unsigned short port, Scene* scene, const VariantMap& identity = Variant::emptyVariantMap);
+    bool Connect(const String &address, unsigned short port, Scene* scene, const VariantMap& identity = Variant::emptyVariantMap);
     /// Disconnect the connection to the server. If wait time is non-zero, will block while waiting for disconnect to finish.
     void Disconnect(int waitMSec = 0);
     /// Start a server on a port using UDP protocol. Return true if successful.
@@ -98,13 +98,13 @@ public:
     /// Unregister all remote events.
     void UnregisterAllRemoteEvents();
     /// Set the package download cache directory.
-    void SetPackageCacheDir(const String& path);
+    void SetPackageCacheDir(const String &path);
     /// Trigger all client connections in the specified scene to download a package file from the server. Can be used to download additional resource packages when clients are already joined in the scene. The package must have been added as a requirement to the scene, or else the eventual download will fail.
     void SendPackageToClients(Scene* scene, PackageFile* package);
     /// Perform an HTTP request to the specified URL. Empty verb defaults to a GET request. Return a request object which can be used to read the response data.
     SharedPtr<HttpRequest> MakeHttpRequest
-        (const String& url, const String& verb = String::EMPTY, const Vector<String>& headers = Vector<String>(),
-            const String& postData = String::EMPTY);
+        (const String &url, const String &verb = String::EMPTY, const Vector<String>& headers = Vector<String>(),
+            const String &postData = String::EMPTY);
 
     /// Return network update FPS.
     int GetUpdateFps() const { return updateFps_; }
@@ -127,7 +127,7 @@ public:
     bool CheckRemoteEvent(StringHash eventType) const;
 
     /// Return the package download cache directory.
-    const String& GetPackageCacheDir() const { return packageCacheDir_; }
+    const String &GetPackageCacheDir() const { return packageCacheDir_; }
 
     /// Process incoming messages from connections. Called by HandleBeginFrame.
     void Update(float timeStep);

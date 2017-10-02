@@ -24,19 +24,19 @@ class PhysicsWorld2D : Component
     void SetWarmStarting(bool enable);
     void SetContinuousPhysics(bool enable);
     void SetSubStepping(bool enable);
-    void SetGravity(const Vector2& gravity);
+    void SetGravity(const Vector2 &gravity);
     void SetAutoClearForces(bool enable);
     void SetVelocityIterations(int velocityIterations);
     void SetPositionIterations(int positionIterations);
 
-    // void Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
-    tolua_outside const PODVector<PhysicsRaycastResult2D>& PhysicsWorld2DRaycast @ Raycast(const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
-    // void RaycastSingle(PhysicsRaycastResult2D& result, const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
-    tolua_outside PhysicsRaycastResult2D PhysicsWorld2DRaycastSingle @ RaycastSingle(const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
-    RigidBody2D* GetRigidBody(const Vector2& point, unsigned collisionMask = M_MAX_UNSIGNED);
+    // void Raycast(PODVector<PhysicsRaycastResult2D>& results, const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
+    tolua_outside const PODVector<PhysicsRaycastResult2D>& PhysicsWorld2DRaycast @ Raycast(const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
+    // void RaycastSingle(PhysicsRaycastResult2D& result, const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
+    tolua_outside PhysicsRaycastResult2D PhysicsWorld2DRaycastSingle @ RaycastSingle(const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED);
+    RigidBody2D* GetRigidBody(const Vector2 &point, unsigned collisionMask = M_MAX_UNSIGNED);
     RigidBody2D* GetRigidBody(int screenX, int screenY, unsigned collisionMask = M_MAX_UNSIGNED);
-    // void GetRigidBodies(PODVector<RigidBody2D*>& result, const Rect& aabb, unsigned collisionMask = M_MAX_UNSIGNED);
-    tolua_outside const PODVector<RigidBody2D*>& PhysicsWorld2DGetRigidBodies @ GetRigidBodies(const Rect& aabb, unsigned collisionMask = M_MAX_UNSIGNED);
+    // void GetRigidBodies(PODVector<RigidBody2D*>& result, const Rect &aabb, unsigned collisionMask = M_MAX_UNSIGNED);
+    tolua_outside const PODVector<RigidBody2D*>& PhysicsWorld2DGetRigidBodies @ GetRigidBodies(const Rect &aabb, unsigned collisionMask = M_MAX_UNSIGNED);
 
     bool IsUpdateEnabled() const;
     bool GetDrawShape() const;
@@ -49,7 +49,7 @@ class PhysicsWorld2D : Component
     bool GetContinuousPhysics() const;
     bool GetSubStepping() const;
     bool GetAutoClearForces() const;
-    const Vector2& GetGravity() const;
+    const Vector2 &GetGravity() const;
     int GetVelocityIterations() const;
     int GetPositionIterations() const;
 
@@ -64,13 +64,13 @@ class PhysicsWorld2D : Component
     tolua_property__get_set bool continuousPhysics;
     tolua_property__get_set bool subStepping;
     tolua_property__get_set bool autoClearForces;
-    tolua_property__get_set Vector2& gravity;
+    tolua_property__get_set Vector2 &gravity;
     tolua_property__get_set int velocityIterations;
     tolua_property__get_set int positionIterations;
 };
 
 ${
-const PODVector<PhysicsRaycastResult2D>& PhysicsWorld2DRaycast(PhysicsWorld2D* physicsWorld, const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED)
+const PODVector<PhysicsRaycastResult2D>& PhysicsWorld2DRaycast(PhysicsWorld2D* physicsWorld, const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED)
 {
     static PODVector<PhysicsRaycastResult2D> results;
     results.Clear();
@@ -78,14 +78,14 @@ const PODVector<PhysicsRaycastResult2D>& PhysicsWorld2DRaycast(PhysicsWorld2D* p
     return results;
 }
 
-PhysicsRaycastResult2D PhysicsWorld2DRaycastSingle(PhysicsWorld2D* physicsWorld, const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED)
+PhysicsRaycastResult2D PhysicsWorld2DRaycastSingle(PhysicsWorld2D* physicsWorld, const Vector2 &startPoint, const Vector2 &endPoint, unsigned collisionMask = M_MAX_UNSIGNED)
 {
     PhysicsRaycastResult2D result;
     physicsWorld->RaycastSingle(result, startPoint, endPoint, collisionMask);
     return result;
 }
 
-const PODVector<RigidBody2D*>& PhysicsWorld2DGetRigidBodies(PhysicsWorld2D* physicsWorld, const Rect& aabb, unsigned collisionMask = M_MAX_UNSIGNED)
+const PODVector<RigidBody2D*>& PhysicsWorld2DGetRigidBodies(PhysicsWorld2D* physicsWorld, const Rect &aabb, unsigned collisionMask = M_MAX_UNSIGNED)
 {
     static PODVector<RigidBody2D*> results;
     results.Clear();

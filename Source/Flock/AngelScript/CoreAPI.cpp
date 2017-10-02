@@ -39,7 +39,7 @@ static void ConstructStringHashCopy(const StringHash& hash, StringHash* ptr)
     new(ptr) StringHash(hash);
 }
 
-static void ConstructStringHashInit(const String& str, StringHash* ptr)
+static void ConstructStringHashInit(const String &str, StringHash* ptr)
 {
     new(ptr) StringHash(str);
 }
@@ -80,7 +80,7 @@ static void ConstructResourceRef(ResourceRef* ptr)
     new(ptr) ResourceRef();
 }
 
-static void ConstructResourceRefValue(const String& type, const String& name, ResourceRef* ptr)
+static void ConstructResourceRefValue(const String &type, const String &name, ResourceRef* ptr)
 {
     new(ptr) ResourceRef(type, name);
 }
@@ -125,7 +125,7 @@ static bool ResourceRefListIsEmpty(ResourceRefList* ptr)
     return ptr->names_.Size() == 0;
 }
 
-static void ResourceRefListSetName(unsigned index, const String& name, ResourceRefList* ptr)
+static void ResourceRefListSetName(unsigned index, const String &name, ResourceRefList* ptr)
 {
     if (index >= ptr->names_.Size())
     {
@@ -136,7 +136,7 @@ static void ResourceRefListSetName(unsigned index, const String& name, ResourceR
     ptr->names_[index] = name;
 }
 
-static const String& ResourceRefListGetName(unsigned index, ResourceRefList* ptr)
+static const String &ResourceRefListGetName(unsigned index, ResourceRefList* ptr)
 {
     if (index >= ptr->names_.Size())
     {
@@ -213,32 +213,32 @@ static void ConstructVariantDouble(double value, Variant* ptr)
     new(ptr)Variant(value);
 }
 
-static void ConstructVariantVector2(const Vector2& value, Variant* ptr)
+static void ConstructVariantVector2(const Vector2 &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantVector3(const Vector3& value, Variant* ptr)
+static void ConstructVariantVector3(const Vector3 &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantVector4(const Vector4& value, Variant* ptr)
+static void ConstructVariantVector4(const Vector4 &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantQuaternion(const Quaternion& value, Variant* ptr)
+static void ConstructVariantQuaternion(const Quaternion &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantColor(const Color& value, Variant* ptr)
+static void ConstructVariantColor(const Color &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantString(const String& value, Variant* ptr)
+static void ConstructVariantString(const String &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
@@ -272,22 +272,22 @@ static void ConstructVariantVariantMap(const VariantMap& value, Variant* ptr)
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantRect(const Rect& value, Variant* ptr)
+static void ConstructVariantRect(const Rect &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantIntRect(const IntRect& value, Variant* ptr)
+static void ConstructVariantIntRect(const IntRect &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantIntVector2(const IntVector2& value, Variant* ptr)
+static void ConstructVariantIntVector2(const IntVector2 &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantIntVector3(const IntVector3& value, Variant* ptr)
+static void ConstructVariantIntVector3(const IntVector3 &value, Variant* ptr)
 {
     new(ptr) Variant(value);
 }
@@ -326,12 +326,12 @@ static void ConstructVariantMatrix4(const Matrix4& value, Variant* ptr)
     new(ptr) Variant(value);
 }
 
-static void ConstructVariantTypeNameValue(const String& type, const String& value, Variant* ptr)
+static void ConstructVariantTypeNameValue(const String &type, const String &value, Variant* ptr)
 {
     new(ptr) Variant(type, value);
 }
 
-static void ConstructVariantTypeValue(VariantType type, const String& value, Variant* ptr)
+static void ConstructVariantTypeValue(VariantType type, const String &value, Variant* ptr)
 {
     new(ptr) Variant(type, value);
 }
@@ -409,7 +409,7 @@ static void DestructVariantMap(VariantMap* ptr)
     ptr->~VariantMap();
 }
 
-static Variant& VariantMapAt(const String& key, VariantMap& map)
+static Variant& VariantMapAt(const String &key, VariantMap& map)
 {
     return map[key];
 }
@@ -419,12 +419,12 @@ static Variant& VariantMapAtHash(StringHash key, VariantMap& map)
     return map[key];
 }
 
-static bool VariantMapContains(const String& key, VariantMap& map)
+static bool VariantMapContains(const String &key, VariantMap& map)
 {
     return map.Contains(key);
 }
 
-static bool VariantMapErase(const String& key, VariantMap& map)
+static bool VariantMapErase(const String &key, VariantMap& map)
 {
     return map.Erase(key);
 }
@@ -499,7 +499,7 @@ static void RegisterVariant(asIScriptEngine* engine)
     engine->RegisterObjectMethod("ResourceRefList", "uint get_length() const", asFUNCTION(ResourceRefListGetSize), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("ResourceRefList", "bool get_empty() const", asFUNCTION(ResourceRefListIsEmpty), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("ResourceRefList", "void set_names(uint, const String&in) const", asFUNCTION(ResourceRefListSetName), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("ResourceRefList", "const String& get_names(uint) const", asFUNCTION(ResourceRefListGetName), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("ResourceRefList", "const String &get_names(uint) const", asFUNCTION(ResourceRefListGetName), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectProperty("ResourceRefList", "StringHash type", offsetof(ResourceRef, type_));
 
     RegisterRefCounted<RefCounted>(engine, "RefCounted");
@@ -608,21 +608,21 @@ static void RegisterVariant(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Variant", "bool GetBool() const", asMETHOD(Variant, GetBool), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "float GetFloat() const", asMETHOD(Variant, GetFloat), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "double GetDouble() const", asMETHOD(Variant, GetDouble), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Vector2& GetVector2() const", asMETHOD(Variant, GetVector2), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Vector3& GetVector3() const", asMETHOD(Variant, GetVector3), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Vector4& GetVector4() const", asMETHOD(Variant, GetVector4), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Quaternion& GetQuaternion() const", asMETHOD(Variant, GetQuaternion), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Color& GetColor() const", asMETHOD(Variant, GetColor), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const String& GetString() const", asMETHOD(Variant, GetString), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Vector2 &GetVector2() const", asMETHOD(Variant, GetVector2), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Vector3 &GetVector3() const", asMETHOD(Variant, GetVector3), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Vector4 &GetVector4() const", asMETHOD(Variant, GetVector4), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Quaternion &GetQuaternion() const", asMETHOD(Variant, GetQuaternion), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Color &GetColor() const", asMETHOD(Variant, GetColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const String &GetString() const", asMETHOD(Variant, GetString), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "const ResourceRef& GetResourceRef() const", asMETHOD(Variant, GetResourceRef), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "const ResourceRefList& GetResourceRefList() const", asMETHOD(Variant, GetResourceRefList), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "Array<Variant>@ GetVariantVector() const", asFUNCTION(VariantGetVariantVector), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("Variant", "Array<String>@ GetStringVector() const", asFUNCTION(VariantGetStringVector), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("Variant", "const VariantMap& GetVariantMap() const", asMETHOD(Variant, GetVariantMap), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const Rect& GetRect() const", asMETHOD(Variant, GetRect), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const IntRect& GetIntRect() const", asMETHOD(Variant, GetIntRect), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const IntVector2& GetIntVector2() const", asMETHOD(Variant, GetIntVector2), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Variant", "const IntVector3& GetIntVector3() const", asMETHOD(Variant, GetIntVector3), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const Rect &GetRect() const", asMETHOD(Variant, GetRect), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const IntRect &GetIntRect() const", asMETHOD(Variant, GetIntRect), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const IntVector2 &GetIntVector2() const", asMETHOD(Variant, GetIntVector2), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Variant", "const IntVector3 &GetIntVector3() const", asMETHOD(Variant, GetIntVector3), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "RefCounted@+ GetPtr() const", asMETHOD(Variant, GetPtr), asCALL_THISCALL);
     engine->RegisterObjectMethod("Variant", "ScriptObject@+ GetScriptObject() const", asFUNCTION(VariantGetScriptObject), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("Variant", "const Matrix3& GetMatrix3() const", asMETHOD(Variant, GetMatrix3), asCALL_THISCALL);
@@ -727,13 +727,13 @@ static CScriptArray* StringSplit(char separator, bool keepEmptyStrings, const St
     return VectorToArray<String>(result, "Array<String>");
 }
 
-static void StringJoin(CScriptArray* arr, const String& glue, String* str)
+static void StringJoin(CScriptArray* arr, const String &glue, String* str)
 {
     Vector<String> subStrings = ArrayToVector<String>(arr);
     str->Join(subStrings, glue);
 }
 
-static String StringJoined(CScriptArray* arr, const String& glue)
+static String StringJoined(CScriptArray* arr, const String &glue)
 {
     Vector<String> subStrings = ArrayToVector<String>(arr);
     return String::Joined(subStrings, glue);
@@ -860,7 +860,7 @@ static CScriptArray* AttributeInfoGetVariantStructureElementNames(AttributeInfo*
     return VectorToArray<String>(variantStructureElementNames, "Array<String>");
 }
 
-static Object* CreateObject(const String& objectType)
+static Object* CreateObject(const String &objectType)
 {
     if (Context* context = GetScriptContext())
     {
@@ -873,35 +873,35 @@ static Object* CreateObject(const String& objectType)
     return 0;
 }
 
-static void SendEvent(const String& eventType, VariantMap& eventData)
+static void SendEvent(const String &eventType, VariantMap& eventData)
 {
     Object* sender = GetScriptContextEventListenerObject();
     if (sender)
         sender->SendEvent(eventType, eventData);
 }
 
-static void SubscribeToEvent(const String& eventType, const String& handlerName)
+static void SubscribeToEvent(const String &eventType, const String &handlerName)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     if (listener)
         listener->AddEventHandler(eventType, handlerName);
 }
 
-static void SubscribeToSenderEvent(Object* sender, const String& eventType, const String& handlerName)
+static void SubscribeToSenderEvent(Object* sender, const String &eventType, const String &handlerName)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     if (listener)
         listener->AddEventHandler(sender, eventType, handlerName);
 }
 
-static void UnsubscribeFromEvent(const String& eventType)
+static void UnsubscribeFromEvent(const String &eventType)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     if (listener)
         listener->RemoveEventHandler(eventType);
 }
 
-static void UnsubscribeFromSenderEvent(Object* sender, const String& eventType)
+static void UnsubscribeFromSenderEvent(Object* sender, const String &eventType)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     if (listener)
@@ -936,19 +936,19 @@ static void UnsubscribeFromAllEventsExcept(CScriptArray* exceptions)
     listener->RemoveEventHandlersExcept(destExceptions);
 }
 
-static bool HasSubscribedToEvent(const String& eventType)
+static bool HasSubscribedToEvent(const String &eventType)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     return listener ? listener->HasEventHandler(StringHash(eventType)) : false;
 }
 
-static bool HasSubscribedToSenderEvent(Object* sender, const String& eventType)
+static bool HasSubscribedToSenderEvent(Object* sender, const String &eventType)
 {
     ScriptEventListener* listener = GetScriptContextEventListener();
     return listener ? listener->HasEventHandler(sender, StringHash(eventType)) : false;
 }
 
-static void RegisterEventName(const String& eventName)
+static void RegisterEventName(const String &eventName)
 {
     EventNameRegistrar::RegisterEventName(eventName.CString());
 }
@@ -958,7 +958,7 @@ static Object* GetEventSender()
     return GetScriptContext()->GetEventSender();
 }
 
-static const String& GetTypeName(StringHash type)
+static const String &GetTypeName(StringHash type)
 {
     return GetScriptContext()->GetTypeName(type);
 }
@@ -983,12 +983,12 @@ static void DestructWeakHandle(WeakPtr<RefCounted>* ptr)
     ptr->~WeakPtr<RefCounted>();
 }
 
-static void SetGlobalVar(const String& key, Variant value)
+static void SetGlobalVar(const String &key, Variant value)
 {
     GetScriptContext()->SetGlobalVar(key, value);
 }
 
-static Variant GetGlobalVar(const String& key)
+static Variant GetGlobalVar(const String &key)
 {
     return GetScriptContext()->GetGlobalVar(key);
 }
@@ -1027,7 +1027,7 @@ void RegisterObject(asIScriptEngine* engine)
     engine->RegisterGlobalFunction("bool HasSubscribedToEvent(Object@+, const String&in)", asFUNCTION(HasSubscribedToSenderEvent), asCALL_CDECL);
     engine->RegisterGlobalFunction("void RegisterEventName(const String&in)", asFUNCTION(RegisterEventName), asCALL_CDECL);
     engine->RegisterGlobalFunction("Object@+ GetEventSender()", asFUNCTION(GetEventSender), asCALL_CDECL);
-    engine->RegisterGlobalFunction("const String& GetTypeName(StringHash)", asFUNCTION(GetTypeName), asCALL_CDECL);
+    engine->RegisterGlobalFunction("const String &GetTypeName(StringHash)", asFUNCTION(GetTypeName), asCALL_CDECL);
     engine->RegisterGlobalFunction("void SetGlobalVar(const String&in, Variant&in)", asFUNCTION(SetGlobalVar), asCALL_CDECL);
     engine->RegisterGlobalFunction("Variant GetGlobalVar(const String&in)", asFUNCTION(GetGlobalVar), asCALL_CDECL);
     engine->RegisterGlobalFunction("VariantMap& get_globalVars()", asFUNCTION(GetGlobalVars), asCALL_CDECL);

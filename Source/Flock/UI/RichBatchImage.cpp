@@ -41,7 +41,7 @@ RichWidgetImage::RichWidgetImage(Context* context) : RichWidgetBatch(context)
 
 RichWidgetImage::~RichWidgetImage() {}
 
-void RichWidgetImage::SetImageSource(const String& sourceUrl)
+void RichWidgetImage::SetImageSource(const String &sourceUrl)
 {
     if (!texture_ || sourceUrl != texture_->GetName())
     {

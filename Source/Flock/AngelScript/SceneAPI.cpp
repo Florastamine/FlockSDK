@@ -55,7 +55,7 @@ static void RegisterSerializable(asIScriptEngine* engine)
     RegisterSerializable<Serializable>(engine, "Serializable");
 }
 
-static void ValueAnimationSetEventFrame(float time, const String& eventType, const VariantMap& eventData, ValueAnimation* ptr)
+static void ValueAnimationSetEventFrame(float time, const String &eventType, const VariantMap& eventData, ValueAnimation* ptr)
 {
     ptr->SetEventFrame(time, eventType, eventData);
 }
@@ -103,7 +103,7 @@ static void RegisterAnimatable(asIScriptEngine* engine)
     RegisterAnimatable<Animatable>(engine, "Animatable");
 }
 
-static bool NodeSaveXML(File* file, const String& indentation, Node* ptr)
+static bool NodeSaveXML(File* file, const String &indentation, Node* ptr)
 {
     return file && ptr->SaveXML(*file, indentation);
 }
@@ -113,7 +113,7 @@ static bool NodeSaveJSON(File* file, Node* ptr)
     return file && ptr->SaveJSON(*file);
 }
 
-static bool NodeSaveXMLVectorBuffer(VectorBuffer& buffer, const String& indentation, Node* ptr)
+static bool NodeSaveXMLVectorBuffer(VectorBuffer& buffer, const String &indentation, Node* ptr)
 {
     return ptr->SaveXML(buffer, indentation);
 }
@@ -173,7 +173,7 @@ static bool SceneLoadXMLVectorBuffer(VectorBuffer& buffer, Scene* ptr)
     return ptr->LoadXML(buffer);
 }
 
-static CScriptArray* SceneGetNodesWithTag(const String& tag, Scene* ptr)
+static CScriptArray* SceneGetNodesWithTag(const String &tag, Scene* ptr)
 {
     PODVector<Node*> nodes;
     ptr->GetNodesWithTag(nodes, tag);
@@ -190,62 +190,62 @@ static bool SceneLoadJSON(File* file, Scene* ptr)
     return file && ptr->LoadJSON(*file);
 }
 
-static bool SceneSaveXML(File* file, const String& indentation, Scene* ptr)
+static bool SceneSaveXML(File* file, const String &indentation, Scene* ptr)
 {
     return file && ptr->SaveXML(*file, indentation);
 }
 
-static bool SceneSaveJSON(File* file, const String& indentation, Scene* ptr)
+static bool SceneSaveJSON(File* file, const String &indentation, Scene* ptr)
 {
     return file && ptr->SaveJSON(*file, indentation);
 }
 
-static bool SceneSaveXMLVectorBuffer(VectorBuffer& buffer, const String& indentation, Scene* ptr)
+static bool SceneSaveXMLVectorBuffer(VectorBuffer& buffer, const String &indentation, Scene* ptr)
 {
     return ptr->SaveXML(buffer, indentation);
 }
 
-static bool SceneSaveJSONVectorBuffer(VectorBuffer& buffer, const String& indentation, Scene* ptr)
+static bool SceneSaveJSONVectorBuffer(VectorBuffer& buffer, const String &indentation, Scene* ptr)
 {
     return ptr->SaveJSON(buffer, indentation);
 }
 
-static Node* SceneInstantiate(File* file, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiate(File* file, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return file ? ptr->Instantiate(*file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateVectorBuffer(VectorBuffer& buffer, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateVectorBuffer(VectorBuffer& buffer, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return ptr->Instantiate(buffer, position, rotation, mode);
 }
 
-static Node* SceneInstantiateXML(File* file, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateXML(File* file, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return file ? ptr->InstantiateXML(*file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateJSON(File* file, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateJSON(File* file, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return file ? ptr->InstantiateJSON(*file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateXMLVectorBuffer(VectorBuffer& buffer, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateXMLVectorBuffer(VectorBuffer& buffer, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return ptr->InstantiateXML(buffer, position, rotation, mode);
 }
 
-static Node* SceneInstantiateJSONVectorBuffer(VectorBuffer& buffer, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateJSONVectorBuffer(VectorBuffer& buffer, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return ptr->InstantiateJSON(buffer, position, rotation, mode);
 }
 
-static Node* SceneInstantiateXMLFile(XMLFile* xml, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateXMLFile(XMLFile* xml, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return xml ? ptr->InstantiateXML(xml->GetRoot(), position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateJSONFile(JSONFile* json, const Vector3& position, const Quaternion& rotation, CreateMode mode, Scene* ptr)
+static Node* SceneInstantiateJSONFile(JSONFile* json, const Vector3 &position, const Quaternion &rotation, CreateMode mode, Scene* ptr)
 {
     return json ? ptr->InstantiateJSON(json->GetRoot(), position, rotation, mode) : 0;
 }
@@ -262,7 +262,7 @@ static CScriptArray* GetObjectCategories()
     return VectorToArray<String>(categories, "Array<String>");
 }
 
-static CScriptArray* GetObjectsByCategory(const String& category)
+static CScriptArray* GetObjectsByCategory(const String &category)
 {
     const HashMap<String, Vector<StringHash>>& categories = GetScriptContext()->GetObjectCategories();
     Vector<String> components;
@@ -286,7 +286,7 @@ static CScriptArray* GetObjectsByCategory(const String& category)
     return VectorToArray<String>(components, "Array<String>");
 }
 
-static CScriptArray* GetObjectAttributeInfos(const String& objectType)
+static CScriptArray* GetObjectAttributeInfos(const String &objectType)
 {
     const Vector<AttributeInfo>* attributes = GetScriptContext()->GetAttributes(FlockSDK::StringHash(objectType));
     Vector<AttributeInfo> copiedAttributes;
@@ -313,9 +313,9 @@ static void RegisterSmoothedTransform(asIScriptEngine* engine)
     RegisterComponent<SmoothedTransform>(engine, "SmoothedTransform");
     engine->RegisterObjectMethod("SmoothedTransform", "void Update(float, float)", asMETHOD(SmoothedTransform, Update), asCALL_THISCALL);
     engine->RegisterObjectMethod("SmoothedTransform", "void set_targetPosition(const Vector3&in)", asMETHOD(SmoothedTransform, SetTargetPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("SmoothedTransform", "const Vector3& get_targetPosition() const", asMETHOD(SmoothedTransform, GetTargetPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("SmoothedTransform", "const Vector3 &get_targetPosition() const", asMETHOD(SmoothedTransform, GetTargetPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("SmoothedTransform", "void set_targetRotation(const Quaternion&in)", asMETHOD(SmoothedTransform, SetTargetRotation), asCALL_THISCALL);
-    engine->RegisterObjectMethod("SmoothedTransform", "const Quaternion& get_targetRotation() const", asMETHOD(SmoothedTransform, GetTargetRotation), asCALL_THISCALL);
+    engine->RegisterObjectMethod("SmoothedTransform", "const Quaternion &get_targetRotation() const", asMETHOD(SmoothedTransform, GetTargetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("SmoothedTransform", "void set_targetWorldPosition(const Vector3&in)", asMETHOD(SmoothedTransform, SetTargetWorldPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("SmoothedTransform", "Vector3 get_targetWorldPosition() const", asMETHOD(SmoothedTransform, GetTargetWorldPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("SmoothedTransform", "void set_targetWorldRotation(const Quaternion&in)", asMETHOD(SmoothedTransform, SetTargetWorldRotation), asCALL_THISCALL);
@@ -395,7 +395,7 @@ static void RegisterScene(asIScriptEngine* engine)
 
     engine->RegisterObjectMethod("Scene", "Component@+ GetComponent(uint) const", asMETHODPR(Scene, GetComponent, (unsigned) const, Component*), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "Node@+ GetNode(uint) const", asMETHOD(Scene, GetNode), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Scene", "const String& GetVarName(StringHash) const", asMETHOD(Scene, GetVarName), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Scene", "const String &GetVarName(StringHash) const", asMETHOD(Scene, GetVarName), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "void Update(float)", asMETHOD(Scene, Update), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "void set_updateEnabled(bool)", asMETHOD(Scene, SetUpdateEnabled), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "bool get_updateEnabled() const", asMETHOD(Scene, IsUpdateEnabled), asCALL_THISCALL);
@@ -413,7 +413,7 @@ static void RegisterScene(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Scene", "void set_asyncLoadingMs(int)", asMETHOD(Scene, SetAsyncLoadingMs), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "int get_asyncLoadingMs() const", asMETHOD(Scene, GetAsyncLoadingMs), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "uint get_checksum() const", asMETHOD(Scene, GetChecksum), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Scene", "const String& get_fileName() const", asMETHOD(Scene, GetFileName), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Scene", "const String &get_fileName() const", asMETHOD(Scene, GetFileName), asCALL_THISCALL);
     engine->RegisterObjectMethod("Scene", "Array<PackageFile@>@ get_requiredPackageFiles() const", asFUNCTION(SceneGetRequiredPackageFiles), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("Node", "Scene@+ get_scene() const", asMETHOD(Node, GetScene), asCALL_THISCALL);
     engine->RegisterGlobalFunction("Scene@+ get_scene()", asFUNCTION(GetScriptContextScene), asCALL_CDECL);

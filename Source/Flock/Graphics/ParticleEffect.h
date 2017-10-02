@@ -45,14 +45,14 @@ struct ColorFrame
     }
 
     /// Construct with a color and zero time.
-    ColorFrame(const Color& color) :
+    ColorFrame(const Color &color) :
         color_(color),
         time_(0.0f)
     {
     }
 
     /// Construct from a color and time.
-    ColorFrame(const Color& color, float time) :
+    ColorFrame(const Color &color, float time) :
         color_(color),
         time_(time)
     {
@@ -187,7 +187,7 @@ public:
     void SetFaceCameraMode(FaceCameraMode mode);
 
     /// Add a color frame sorted in the correct position based on time.
-    void AddColorTime(const Color& color, const float time);
+    void AddColorTime(const Color &color, const float time);
     /// Add a color frame sorted in the correct position based on time.
     void AddColorFrame(const ColorFrame& colorFrame);
     /// Remove color frame at index
@@ -202,7 +202,7 @@ public:
     void SortColorFrames();
 
     /// Add a texture frame sorted in the correct position based on time.
-    void AddTextureTime(const Rect& uv, const float time);
+    void AddTextureTime(const Rect &uv, const float time);
     /// Add a texture frame sorted in the correct position based on time.
     void AddTextureFrame(const TextureFrame& textureFrame);
     /// Remove texture frame at index

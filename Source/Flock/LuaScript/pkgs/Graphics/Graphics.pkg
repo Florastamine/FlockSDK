@@ -5,7 +5,7 @@ class Graphics : public Object
 {
     void SetWindowTitle(const String windowTitle);
     void SetWindowIcon(Image* windowIcon);
-    void SetWindowPosition(const IntVector2& position);
+    void SetWindowPosition(const IntVector2 &position);
     void SetWindowPosition(int x, int y);
 
     bool SetMode(int width, int height, bool fullscreen, bool borderless, bool resizable, bool highDPI, bool vsync, bool tripleBuffer, int multiSample, int monitor, int refreshRate);
@@ -126,7 +126,7 @@ Graphics* GetGraphics();
 tolua_readonly tolua_property__get_set Graphics* graphics;
 
 ${
-static void GraphicsPrecacheShaders(Graphics* graphics, const String& fileName)
+static void GraphicsPrecacheShaders(Graphics* graphics, const String &fileName)
 {
     if (!graphics)
         return;

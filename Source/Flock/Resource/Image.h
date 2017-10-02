@@ -116,9 +116,9 @@ public:
     /// Set new image data.
     void SetData(const unsigned char* pixelData);
     /// Set a 2D pixel.
-    void SetPixel(int x, int y, const Color& color);
+    void SetPixel(int x, int y, const Color &color);
     /// Set a 3D pixel.
-    void SetPixel(int x, int y, int z, const Color& color);
+    void SetPixel(int x, int y, int z, const Color &color);
     /// Set a 2D pixel with an integer color. R component is in the 8 lowest bits.
     void SetPixelInt(int x, int y, unsigned uintColor);
     /// Set a 3D pixel with an integer color. R component is in the 8 lowest bits.
@@ -132,7 +132,7 @@ public:
     /// Resize image by bilinear resampling. Return true if successful.
     bool Resize(int width, int height);
     /// Clear the image with a color.
-    void Clear(const Color& color);
+    void Clear(const Color &color);
     /// Clear the image with an integer color. R component is in the 8 lowest bits.
     void ClearInt(unsigned uintColor);
     /// Save in BMP format. Return true if successful.
@@ -201,9 +201,9 @@ public:
     /// Return a compressed mip level.
     CompressedLevel GetCompressedLevel(unsigned index) const;
     /// Return subimage from the image by the defined rect or null if failed. 3D images are not supported. You must free the subimage yourself.
-    Image* GetSubimage(const IntRect& rect) const;
+    Image* GetSubimage(const IntRect &rect) const;
     /// Return an SDL surface from the image, or null if failed. Only RGB images are supported. Specify rect to only return partial image. You must free the surface yourself.
-    SDL_Surface* GetSDLSurface(const IntRect& rect = IntRect::ZERO) const;
+    SDL_Surface* GetSDLSurface(const IntRect &rect = IntRect::ZERO) const;
     /// Precalculate the mip levels. Used by asynchronous texture loading.
     void PrecalculateLevels();
     /// Clean up the mip levels.

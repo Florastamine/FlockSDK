@@ -8,7 +8,7 @@ class Octree : public Component
     void RemoveManualDrawable(Drawable* drawable);
 
     // void GetDrawables(OctreeQuery& query) const;
-    tolua_outside const PODVector<OctreeQueryResult>& OctreeGetDrawablesPoint @ GetDrawables(const Vector3& point, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK) const;
+    tolua_outside const PODVector<OctreeQueryResult>& OctreeGetDrawablesPoint @ GetDrawables(const Vector3 &point, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK) const;
     tolua_outside const PODVector<OctreeQueryResult>& OctreeGetDrawablesBoundingBox @ GetDrawables(const BoundingBox& box, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK) const;
     tolua_outside const PODVector<OctreeQueryResult>& OctreeGetDrawablesFrustum @ GetDrawables(const Frustum& frustum, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK) const;
     tolua_outside const PODVector<OctreeQueryResult>& OctreeGetDrawablesSphere @ GetDrawables(const Sphere& sphere, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK) const;
@@ -28,7 +28,7 @@ class Octree : public Component
 };
 
 ${
-static const PODVector<OctreeQueryResult>& OctreeGetDrawablesPoint(const Octree* octree, const Vector3& point, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK)
+static const PODVector<OctreeQueryResult>& OctreeGetDrawablesPoint(const Octree* octree, const Vector3 &point, unsigned char drawableFlags = DRAWABLE_ANY, unsigned viewMask = DEFAULT_VIEWMASK)
 {
     PODVector<Drawable*> drawableResult;
     PointOctreeQuery query(drawableResult, point, drawableFlags, viewMask);

@@ -102,12 +102,12 @@ public:
     static void RegisterObject(Context* context);
 
     /// Return UI rendering batches.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
 
     /// Define a shape.
-    void DefineShape(const String &shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot);
+    void DefineShape(const String &shape, Image* image, const IntRect &imageRect, const IntVector2 &hotSpot);
     /// Define a shape.
-    void DefineShape(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2 &hotSpot);
+    void DefineShape(CursorShape shape, Image* image, const IntRect &imageRect, const IntVector2 &hotSpot);
     /// Set current shape.
     void SetShape(const String &shape);
     /// Set current shape.

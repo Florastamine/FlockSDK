@@ -210,7 +210,7 @@ void Color::Invert(bool invertAlpha)
         a_ = 1.0f - a_;
 }
 
-Color Color::Lerp(const Color& rhs, float t) const
+Color Color::Lerp(const Color &rhs, float t) const
 {
     float invT = 1.0f - t;
     return Color(

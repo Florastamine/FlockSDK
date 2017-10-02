@@ -96,7 +96,7 @@ void StaticSprite2D::SetSprite(Sprite2D* sprite)
     UpdateDrawRect();
 }
 
-void StaticSprite2D::SetDrawRect(const Rect& rect)
+void StaticSprite2D::SetDrawRect(const Rect &rect)
 {
     drawRect_ = rect;
 
@@ -106,7 +106,7 @@ void StaticSprite2D::SetDrawRect(const Rect& rect)
     }
 }
 
-void StaticSprite2D::SetTextureRect(const Rect& rect)
+void StaticSprite2D::SetTextureRect(const Rect &rect)
 {
     textureRect_ = rect;
 
@@ -149,7 +149,7 @@ void StaticSprite2D::SetFlipY(bool flipY)
     SetFlip(flipX_, flipY);
 }
 
-void StaticSprite2D::SetColor(const Color& color)
+void StaticSprite2D::SetColor(const Color &color)
 {
     if (color == color_)
         return;

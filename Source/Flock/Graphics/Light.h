@@ -177,7 +177,7 @@ public:
     /// Set vertex lighting mode.
     void SetPerVertex(bool enable);
     /// Set color.
-    void SetColor(const Color& color);
+    void SetColor(const Color &color);
     /// Set temperature of the light in Kelvin. Modulates the light color when "use physical values" is enabled.
     void SetTemperature(float temperature);
     /// Set area light radius. Greater than zero activates area light mode. Works only with PBR shaders.
@@ -226,7 +226,7 @@ public:
     bool GetPerVertex() const { return perVertex_; }
 
     /// Return color.
-    const Color& GetColor() const { return color_; }
+    const Color &GetColor() const { return color_; }
 
     /// Return the temperature of the light in Kelvin.
     float GetTemperature() const { return temperature_; }

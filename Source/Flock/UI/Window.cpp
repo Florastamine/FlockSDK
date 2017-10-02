@@ -83,7 +83,7 @@ void Window::RegisterObject(Context* context)
     // Instead it should be set false in code when needed
 }
 
-void Window::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void Window::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     if (modal_)
     {
@@ -270,7 +270,7 @@ void Window::SetFixedHeightResizing(bool enable)
     fixedHeightResizing_ = enable;
 }
 
-void Window::SetResizeBorder(const IntRect& rect)
+void Window::SetResizeBorder(const IntRect &rect)
 {
     resizeBorder_.left_ = Max(rect.left_, 0);
     resizeBorder_.top_ = Max(rect.top_, 0);
@@ -298,12 +298,12 @@ void Window::SetModal(bool modal)
     }
 }
 
-void Window::SetModalShadeColor(const Color& color)
+void Window::SetModalShadeColor(const Color &color)
 {
     modalShadeColor_ = color;
 }
 
-void Window::SetModalFrameColor(const Color& color)
+void Window::SetModalFrameColor(const Color &color)
 {
     modalFrameColor_ = color;
 }

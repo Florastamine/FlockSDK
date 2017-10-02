@@ -85,11 +85,11 @@ class Variant
     bool GetBool() const;
     float GetFloat() const;
     double GetDouble() const;
-    const Vector2& GetVector2() const;
-    const Vector3& GetVector3() const;
-    const Vector4& GetVector4() const;
-    const Quaternion& GetQuaternion() const;
-    const Color& GetColor() const;
+    const Vector2 &GetVector2() const;
+    const Vector3 &GetVector3() const;
+    const Vector4 &GetVector4() const;
+    const Quaternion &GetQuaternion() const;
+    const Color &GetColor() const;
     const String GetString() const;
     const PODVector<unsigned char>& GetBuffer @ GetRawBuffer() const;
     VectorBuffer GetVectorBuffer @ GetBuffer() const;     // For backward compatibility reason, keep the old alias
@@ -99,10 +99,10 @@ class Variant
     const Vector<Variant>& GetVariantVector() const;
     const VariantMap& GetVariantMap() const;
     const Vector<String>& GetStringVector() const;
-    const Rect& GetRect() const;
-    const IntRect& GetIntRect() const;
-    const IntVector2& GetIntVector2() const;
-    const IntVector3& GetIntVector3() const;
+    const Rect &GetRect() const;
+    const IntRect &GetIntRect() const;
+    const IntVector2 &GetIntVector2() const;
+    const IntVector3 &GetIntVector3() const;
     RefCounted* GetPtr(const char* type) const;
     const Matrix3& GetMatrix3() const;
     const Matrix3x4& GetMatrix3x4() const;

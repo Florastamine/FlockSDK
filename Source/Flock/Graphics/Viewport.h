@@ -48,7 +48,7 @@ public:
     /// Construct with a full rectangle.
     Viewport(Context* context, Scene* scene, Camera* camera, RenderPath* renderPath = 0);
     /// Construct with a specified rectangle.
-    Viewport(Context* context, Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath = 0);
+    Viewport(Context* context, Scene* scene, Camera* camera, const IntRect &rect, RenderPath* renderPath = 0);
     /// Destruct.
     ~Viewport();
 
@@ -57,7 +57,7 @@ public:
     /// Set viewport camera.
     void SetCamera(Camera* camera);
     /// Set view rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions.
-    void SetRect(const IntRect& rect);
+    void SetRect(const IntRect &rect);
     /// Set rendering path.
     void SetRenderPath(RenderPath* path);
     /// Set rendering path from an XML file.
@@ -75,7 +75,7 @@ public:
     View* GetView() const;
 
     /// Return view rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions. In this case you could fetch the actual view rectangle from View object, though it will be valid only after the first frame.
-    const IntRect& GetRect() const { return rect_; }
+    const IntRect &GetRect() const { return rect_; }
 
     /// Return rendering path.
     RenderPath* GetRenderPath() const;

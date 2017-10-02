@@ -73,13 +73,13 @@ public:
     /// Write a double.
     bool WriteDouble(double value);
     /// Write an IntRect.
-    bool WriteIntRect(const IntRect& value);
+    bool WriteIntRect(const IntRect &value);
     /// Write an IntVector2.
     bool WriteIntVector2(const IntVector2 &value);
     /// Write an IntVector3.
     bool WriteIntVector3(const IntVector3 &value);
     /// Write a Rect.
-    bool WriteRect(const Rect& value);
+    bool WriteRect(const Rect &value);
     /// Write a Vector2.
     bool WriteVector2(const Vector2 &value);
     /// Write a Vector3.
@@ -89,9 +89,9 @@ public:
     /// Write a Vector4.
     bool WriteVector4(const Vector4 &value);
     /// Write a quaternion.
-    bool WriteQuaternion(const Quaternion& value);
+    bool WriteQuaternion(const Quaternion &value);
     /// Write a quaternion with each component packed in 16 bits.
-    bool WritePackedQuaternion(const Quaternion& value);
+    bool WritePackedQuaternion(const Quaternion &value);
     /// Write a Matrix3.
     bool WriteMatrix3(const Matrix3& value);
     /// Write a Matrix3x4.
@@ -99,7 +99,7 @@ public:
     /// Write a Matrix4.
     bool WriteMatrix4(const Matrix4& value);
     /// Write a color.
-    bool WriteColor(const Color& value);
+    bool WriteColor(const Color &value);
     /// Write a bounding box.
     bool WriteBoundingBox(const BoundingBox& value);
     /// Write a null-terminated string.

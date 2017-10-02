@@ -58,7 +58,7 @@ public:
     }
 
     /// Construct from a rect, with the Z dimension left zero.
-    BoundingBox(const Rect& rect) :
+    BoundingBox(const Rect &rect) :
         min_(Vector3(rect.min_, 0.0f)),
         max_(Vector3(rect.max_, 0.0f))
     {
@@ -127,7 +127,7 @@ public:
     }
 
     /// Assign from a Rect, with the Z dimension left zero.
-    BoundingBox& operator =(const Rect& rhs)
+    BoundingBox& operator =(const Rect &rhs)
     {
         min_ = Vector3(rhs.min_, 0.0f);
         max_ = Vector3(rhs.max_, 0.0f);
@@ -147,7 +147,7 @@ public:
     }
 
     /// Define from a Rect.
-    void Define(const Rect& rect)
+    void Define(const Rect &rect)
     {
         Define(Vector3(rect.min_, 0.0f), Vector3(rect.max_, 0.0f));
     }

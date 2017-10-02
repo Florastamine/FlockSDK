@@ -44,12 +44,12 @@
 namespace FlockSDK
 {
 
-static bool FontSaveXMLVectorBuffer(VectorBuffer& buffer, int pointSize, bool usedGlyphs, const String& indentation, Font* ptr)
+static bool FontSaveXMLVectorBuffer(VectorBuffer& buffer, int pointSize, bool usedGlyphs, const String &indentation, Font* ptr)
 {
     return ptr->SaveXML(buffer, pointSize, usedGlyphs, indentation);
 }
 
-static bool FontSaveXML(const String& fileName, int pointSize, bool usedGlyphs, const String& indentation, Font* ptr)
+static bool FontSaveXML(const String &fileName, int pointSize, bool usedGlyphs, const String &indentation, Font* ptr)
 {
     if (fileName.Empty())
         return false;
@@ -58,7 +58,7 @@ static bool FontSaveXML(const String& fileName, int pointSize, bool usedGlyphs, 
     return ptr->SaveXML(file, pointSize, usedGlyphs, indentation);
 }
 
-static bool FontSaveXMLFile(File* file, int pointSize, bool usedGlyphs, const String& indentation, Font* ptr)
+static bool FontSaveXMLFile(File* file, int pointSize, bool usedGlyphs, const String &indentation, Font* ptr)
 {
     return ptr->SaveXML(*file, pointSize, usedGlyphs, indentation);
 }
@@ -76,9 +76,9 @@ static void RegisterFont(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Font", "bool SaveXML(const String&in, int, bool usedGlyphs = false, const String&in indentation = \"\t\")", asFUNCTION(FontSaveXML), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("Font", "IntVector2 GetTotalGlyphOffset(float) const", asMETHOD(Font, GetTotalGlyphOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Font", "void set_absoluteGlyphOffset(const IntVector2&)", asMETHOD(Font, SetAbsoluteGlyphOffset), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Font", "const IntVector2& get_absoluteGlyphOffset() const", asMETHOD(Font, GetAbsoluteGlyphOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Font", "const IntVector2 &get_absoluteGlyphOffset() const", asMETHOD(Font, GetAbsoluteGlyphOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Font", "void set_scaledGlyphOffset(const Vector2&)", asMETHOD(Font, SetScaledGlyphOffset), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Font", "const Vector2& get_scaledGlyphOffset() const", asMETHOD(Font, GetScaledGlyphOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Font", "const Vector2 &get_scaledGlyphOffset() const", asMETHOD(Font, GetScaledGlyphOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Font", "FontType get_fontType() const", asMETHOD(Font, GetFontType), asCALL_THISCALL);
 }
 
@@ -143,17 +143,17 @@ static void RegisterSprite(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Sprite", "void SetScale(float)", asMETHODPR(Sprite, SetScale, (float), void), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void SetFullImageRect()", asMETHOD(Sprite, SetFullImageRect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_position(const Vector2&)", asMETHODPR(Sprite, SetPosition, (const Vector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Sprite", "const Vector2& get_position() const", asMETHODPR(Sprite, GetPosition, () const, const Vector2&), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Sprite", "const Vector2 &get_position() const", asMETHODPR(Sprite, GetPosition, () const, const Vector2&), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_hotSpot(const IntVector2&)", asMETHODPR(Sprite, SetHotSpot, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Sprite", "const IntVector2& get_hotSpot() const", asMETHOD(Sprite, GetHotSpot), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Sprite", "const IntVector2 &get_hotSpot() const", asMETHOD(Sprite, GetHotSpot), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_scale(const Vector2&)", asMETHODPR(Sprite, SetScale, (const Vector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Sprite", "const Vector2& get_scale() const", asMETHOD(Sprite, GetScale), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Sprite", "const Vector2 &get_scale() const", asMETHOD(Sprite, GetScale), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_rotation(float)", asMETHOD(Sprite, SetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "float get_rotation() const", asMETHOD(Sprite, GetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_texture(Texture@+)", asMETHOD(Sprite, SetTexture), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "Texture@+ get_texture() const", asMETHOD(Sprite, GetTexture), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_imageRect(const IntRect&in)", asMETHODPR(Sprite, SetImageRect, (const IntRect&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Sprite", "const IntRect& get_imageRect() const", asMETHOD(Sprite, GetImageRect), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Sprite", "const IntRect &get_imageRect() const", asMETHOD(Sprite, GetImageRect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "void set_blendMode(BlendMode)", asMETHOD(Sprite, SetBlendMode), asCALL_THISCALL);
     engine->RegisterObjectMethod("Sprite", "BlendMode get_blendMode() const", asMETHOD(Sprite, GetBlendMode), asCALL_THISCALL);
 }
@@ -180,7 +180,7 @@ static void RegisterCursor(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Cursor", "void SetShape(const String&in)", asMETHODPR(Cursor, SetShape, (const String&), void), asCALL_THISCALL);
     engine->RegisterObjectMethod("Cursor", "void SetShape(CursorShape)", asMETHODPR(Cursor, SetShape, (CursorShape), void), asCALL_THISCALL);
     engine->RegisterObjectMethod("Cursor", "void set_shape(const String&in)", asMETHODPR(Cursor, SetShape, (const String&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Cursor", "const String& get_shape() const", asMETHOD(Cursor, GetShape), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Cursor", "const String &get_shape() const", asMETHOD(Cursor, GetShape), asCALL_THISCALL);
     engine->RegisterObjectMethod("Cursor", "void set_useSystemShapes(bool)", asMETHOD(Cursor, SetUseSystemShapes), asCALL_THISCALL);
     engine->RegisterObjectMethod("Cursor", "bool get_useSystemShapes() const", asMETHOD(Cursor, GetUseSystemShapes), asCALL_THISCALL);
 }
@@ -197,7 +197,7 @@ static void RegisterCheckBox(asIScriptEngine* engine)
     engine->RegisterObjectMethod("CheckBox", "void set_checked(bool)", asMETHOD(CheckBox, SetChecked), asCALL_THISCALL);
     engine->RegisterObjectMethod("CheckBox", "bool get_checked() const", asMETHOD(CheckBox, IsChecked), asCALL_THISCALL);
     engine->RegisterObjectMethod("CheckBox", "void set_checkedOffset(const IntVector2&in)", asMETHODPR(CheckBox, SetCheckedOffset, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CheckBox", "const IntVector2& get_checkedOffset() const", asMETHOD(CheckBox, GetCheckedOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CheckBox", "const IntVector2 &get_checkedOffset() const", asMETHOD(CheckBox, GetCheckedOffset), asCALL_THISCALL);
 }
 
 static void RegisterSlider(asIScriptEngine* engine)
@@ -245,7 +245,7 @@ static void RegisterScrollView(asIScriptEngine* engine)
     engine->RegisterObjectMethod("ScrollView", "void set_contentElement(UIElement@+)", asMETHOD(ScrollView, SetContentElement), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScrollView", "UIElement@+ get_contentElement() const", asMETHOD(ScrollView, GetContentElement), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScrollView", "void set_viewPosition(const IntVector2&in)", asMETHODPR(ScrollView, SetViewPosition, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("ScrollView", "const IntVector2& get_viewPosition() const", asMETHOD(ScrollView, GetViewPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("ScrollView", "const IntVector2 &get_viewPosition() const", asMETHOD(ScrollView, GetViewPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScrollView", "void set_scrollStep(float)", asMETHOD(ScrollView, SetScrollStep), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScrollView", "float get_scrollStep() const", asMETHOD(ScrollView, GetScrollStep), asCALL_THISCALL);
     engine->RegisterObjectMethod("ScrollView", "void set_pageStep(float)", asMETHOD(ScrollView, SetPageStep), asCALL_THISCALL);
@@ -323,7 +323,7 @@ static void RegisterListView(asIScriptEngine* engine)
     engine->RegisterObjectMethod("ListView", "Array<UIElement@>@ GetItems() const", asFUNCTION(ListViewGetItems), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("ListView", "uint FindItem(UIElement@+)", asMETHOD(ListView, FindItem), asCALL_THISCALL);
     engine->RegisterObjectMethod("ListView", "void set_viewPosition(const IntVector2&in)", asMETHODPR(ListView, SetViewPosition, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("ListView", "const IntVector2& get_viewPosition() const", asMETHOD(ListView, GetViewPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("ListView", "const IntVector2 &get_viewPosition() const", asMETHOD(ListView, GetViewPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("ListView", "UIElement@+ get_contentElement() const", asMETHOD(ListView, GetContentElement), asCALL_THISCALL);
     engine->RegisterObjectMethod("ListView", "ScrollBar@+ get_horizontalScrollBar() const", asMETHOD(ListView, GetHorizontalScrollBar), asCALL_THISCALL);
     engine->RegisterObjectMethod("ListView", "ScrollBar@+ get_verticalScrollBar() const", asMETHOD(ListView, GetVerticalScrollBar), asCALL_THISCALL);
@@ -379,7 +379,7 @@ static void RegisterText(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Text", "bool set_fontSize(float)", asMETHOD(Text, SetFontSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "float get_fontSize() const", asMETHOD(Text, GetFontSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_text(const String&in)", asMETHOD(Text, SetText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text", "const String& get_text() const", asMETHOD(Text, GetText), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text", "const String &get_text() const", asMETHOD(Text, GetText), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_textAlignment(HorizontalAlignment)", asMETHOD(Text, SetTextAlignment), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "HorizontalAlignment get_textAlignment() const", asMETHOD(Text, GetTextAlignment), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_rowSpacing(float)", asMETHOD(Text, SetRowSpacing), asCALL_THISCALL);
@@ -391,19 +391,19 @@ static void RegisterText(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Text", "uint get_selectionStart() const", asMETHOD(Text, GetSelectionStart), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "uint get_selectionLength() const", asMETHOD(Text, GetSelectionLength), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_selectionColor(const Color&in)", asMETHOD(Text, SetSelectionColor), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text", "const Color& get_selectionColor() const", asMETHOD(Text, GetSelectionColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text", "const Color &get_selectionColor() const", asMETHOD(Text, GetSelectionColor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_hoverColor(const Color&in)", asMETHOD(Text, SetHoverColor), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text", "const Color& get_hoverColor() const", asMETHOD(Text, GetHoverColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text", "const Color &get_hoverColor() const", asMETHOD(Text, GetHoverColor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_textEffect(TextEffect)", asMETHOD(Text, SetTextEffect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "TextEffect get_textEffect() const", asMETHOD(Text, GetTextEffect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_effectShadowOffset(const IntVector2&in)", asMETHOD(Text, SetEffectShadowOffset), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text", "const IntVector2& get_effectShadowOffset() const", asMETHOD(Text, GetEffectShadowOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text", "const IntVector2 &get_effectShadowOffset() const", asMETHOD(Text, GetEffectShadowOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_effectStrokeThickness(int)", asMETHOD(Text, SetEffectStrokeThickness), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "int get_effectStrokeThickness() const", asMETHOD(Text, GetEffectStrokeThickness), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_effectRoundStroke(bool)", asMETHOD(Text, SetEffectRoundStroke), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "bool get_effectRoundStroke() const", asMETHOD(Text, GetEffectRoundStroke), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "void set_effectColor(const Color&in)", asMETHOD(Text, SetEffectColor), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text", "const Color& get_effectColor() const", asMETHOD(Text, GetEffectColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text", "const Color &get_effectColor() const", asMETHOD(Text, GetEffectColor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "uint get_numRows() const", asMETHOD(Text, GetNumRows), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "uint get_numChars() const", asMETHOD(Text, GetNumChars), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text", "float get_rowWidths(uint) const", asMETHOD(Text, GetRowWidth), asCALL_THISCALL);
@@ -424,7 +424,7 @@ static void RegisterText3D(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Text3D", "void set_material(Material@+)", asMETHOD(Text3D, SetMaterial), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "Material@+ get_material() const", asMETHOD(Text3D, GetMaterial), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_text(const String&in)", asMETHOD(Text3D, SetText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text3D", "const String& get_text() const", asMETHOD(Text3D, GetText), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text3D", "const String &get_text() const", asMETHOD(Text3D, GetText), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_textAlignment(HorizontalAlignment)", asMETHOD(Text3D, SetTextAlignment), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "HorizontalAlignment get_textAlignment() const", asMETHOD(Text3D, GetTextAlignment), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_horizontalAlignment(HorizontalAlignment)", asMETHOD(Text3D, SetHorizontalAlignment), asCALL_THISCALL);
@@ -438,13 +438,13 @@ static void RegisterText3D(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Text3D", "void set_textEffect(TextEffect)", asMETHOD(Text3D, SetTextEffect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "TextEffect get_textEffect() const", asMETHOD(Text3D, GetTextEffect), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_effectShadowOffset(const IntVector2&in)", asMETHOD(Text3D, SetEffectShadowOffset), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text3D", "const IntVector2& get_effectShadowOffset() const", asMETHOD(Text3D, GetEffectShadowOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text3D", "const IntVector2 &get_effectShadowOffset() const", asMETHOD(Text3D, GetEffectShadowOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_effectStrokeThickness(int)", asMETHOD(Text3D, SetEffectStrokeThickness), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "int get_effectStrokeThickness() const", asMETHOD(Text3D, GetEffectStrokeThickness), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_effectRoundStroke(bool)", asMETHOD(Text3D, SetEffectRoundStroke), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "bool get_effectRoundStroke() const", asMETHOD(Text3D, GetEffectRoundStroke), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_effectColor(const Color&in)", asMETHOD(Text3D, SetEffectColor), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text3D", "const Color& get_effectColor() const", asMETHOD(Text3D, GetEffectColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text3D", "const Color &get_effectColor() const", asMETHOD(Text3D, GetEffectColor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_effectDepthBias(float)", asMETHOD(Text3D, SetEffectDepthBias), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "float get_effectDepthBias() const", asMETHOD(Text3D, GetEffectDepthBias), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_width(int)", asMETHOD(Text3D, SetWidth), asCALL_THISCALL);
@@ -452,7 +452,7 @@ static void RegisterText3D(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Text3D", "int get_height() const", asMETHOD(Text3D, GetHeight), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_color(const Color&in)", asMETHODPR(Text3D, SetColor, (const Color&), void), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_colors(Corner, const Color&in)", asMETHODPR(Text3D, SetColor, (Corner, const Color&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Text3D", "const Color& get_colors(Corner) const", asMETHOD(Text3D, GetColor), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Text3D", "const Color &get_colors(Corner) const", asMETHOD(Text3D, GetColor), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_opacity(float)", asMETHOD(Text3D, SetOpacity), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "float get_opacity() const", asMETHOD(Text3D, GetOpacity), asCALL_THISCALL);
     engine->RegisterObjectMethod("Text3D", "void set_fixedScreenSize(bool)", asMETHOD(Text3D, SetFixedScreenSize), asCALL_THISCALL);
@@ -471,7 +471,7 @@ static void RegisterLineEdit(asIScriptEngine* engine)
 {
     RegisterBorderImage<LineEdit>(engine, "LineEdit");
     engine->RegisterObjectMethod("LineEdit", "void set_text(const String&in)", asMETHOD(LineEdit, SetText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("LineEdit", "const String& get_text() const", asMETHOD(LineEdit, GetText), asCALL_THISCALL);
+    engine->RegisterObjectMethod("LineEdit", "const String &get_text() const", asMETHOD(LineEdit, GetText), asCALL_THISCALL);
     engine->RegisterObjectMethod("LineEdit", "void set_cursorPosition(uint)", asMETHOD(LineEdit, SetCursorPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("LineEdit", "uint get_cursorPosition() const", asMETHOD(LineEdit, GetCursorPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("LineEdit", "void set_cursorBlinkRate(float)", asMETHOD(LineEdit, SetCursorBlinkRate), asCALL_THISCALL);
@@ -498,14 +498,14 @@ static void RegisterMenu(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Menu", "void set_popup(UIElement@+)", asMETHOD(Menu, SetPopup), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "UIElement@+ get_popup() const", asMETHOD(Menu, GetPopup), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "void set_popupOffset(const IntVector2&in)", asMETHODPR(Menu, SetPopupOffset, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Menu", "const IntVector2& get_popupOffset() const", asMETHOD(Menu, GetPopupOffset), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Menu", "const IntVector2 &get_popupOffset() const", asMETHOD(Menu, GetPopupOffset), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "void set_showPopup(bool)", asMETHOD(Menu, ShowPopup), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "bool get_showPopup() const", asMETHOD(Menu, GetShowPopup), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "int get_acceleratorKey() const", asMETHOD(Menu, GetAcceleratorKey), asCALL_THISCALL);
     engine->RegisterObjectMethod("Menu", "int get_acceleratorQualifiers() const", asMETHOD(Menu, GetAcceleratorQualifiers), asCALL_THISCALL);
 }
 
-static MessageBox* ConstructMessageBox(const String& messageString, const String& titleString, XMLFile* layoutFile, XMLFile* styleFile)
+static MessageBox* ConstructMessageBox(const String &messageString, const String &titleString, XMLFile* layoutFile, XMLFile* styleFile)
 {
     return new MessageBox(GetScriptContext(), messageString, titleString, layoutFile, styleFile);
 }
@@ -515,9 +515,9 @@ static void RegisterMessageBox(asIScriptEngine* engine)
     RegisterObject<MessageBox>(engine, "MessageBox");
     engine->RegisterObjectBehaviour("MessageBox", asBEHAVE_FACTORY, "MessageBox@+ f(const String&in messageString = String(), const String&in titleString = String(), XMLFile@+ layoutFile = null, XMLFile@+ styleFile = null)", asFUNCTION(ConstructMessageBox), asCALL_CDECL);
     engine->RegisterObjectMethod("MessageBox", "void set_title(const String&in)", asMETHOD(MessageBox, SetTitle), asCALL_THISCALL);
-    engine->RegisterObjectMethod("MessageBox", "const String& get_title() const", asMETHOD(MessageBox, GetTitle), asCALL_THISCALL);
+    engine->RegisterObjectMethod("MessageBox", "const String &get_title() const", asMETHOD(MessageBox, GetTitle), asCALL_THISCALL);
     engine->RegisterObjectMethod("MessageBox", "void set_message(const String&in)", asMETHOD(MessageBox, SetMessage), asCALL_THISCALL);
-    engine->RegisterObjectMethod("MessageBox", "const String& get_message() const", asMETHOD(MessageBox, GetMessage), asCALL_THISCALL);
+    engine->RegisterObjectMethod("MessageBox", "const String &get_message() const", asMETHOD(MessageBox, GetMessage), asCALL_THISCALL);
     engine->RegisterObjectMethod("MessageBox", "UIElement@+ get_window() const", asMETHOD(MessageBox, GetWindow), asCALL_THISCALL);
 }
 
@@ -568,7 +568,7 @@ static void RegisterDropDownList(asIScriptEngine* engine)
     engine->RegisterObjectMethod("DropDownList", "ListView@+ get_listView() const", asMETHOD(DropDownList, GetListView), asCALL_THISCALL);
     engine->RegisterObjectMethod("DropDownList", "UIElement@+ get_placeholder() const", asMETHOD(DropDownList, GetPlaceholder), asCALL_THISCALL);
     engine->RegisterObjectMethod("DropDownList", "void set_placeholderText(const String&in)", asMETHOD(DropDownList, SetPlaceholderText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DropDownList", "const String& get_placeholderText() const", asMETHOD(DropDownList, GetPlaceholderText), asCALL_THISCALL);
+    engine->RegisterObjectMethod("DropDownList", "const String &get_placeholderText() const", asMETHOD(DropDownList, GetPlaceholderText), asCALL_THISCALL);
 }
 
 static void RegisterWindow(asIScriptEngine* engine)
@@ -614,14 +614,14 @@ static void RegisterFileSelector(asIScriptEngine* engine)
     engine->RegisterObjectMethod("FileSelector", "void SetFilters(Array<String>@+, uint)", asFUNCTION(FileSelectorSetFilters), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("FileSelector", "void UpdateElements()", asMETHOD(FileSelector, UpdateElements), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "void set_title(const String&in)", asMETHOD(FileSelector, SetTitle), asCALL_THISCALL);
-    engine->RegisterObjectMethod("FileSelector", "const String& get_title() const", asMETHOD(FileSelector, GetTitle), asCALL_THISCALL);
+    engine->RegisterObjectMethod("FileSelector", "const String &get_title() const", asMETHOD(FileSelector, GetTitle), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "void set_path(const String&in)", asMETHOD(FileSelector, SetPath), asCALL_THISCALL);
-    engine->RegisterObjectMethod("FileSelector", "const String& get_path() const", asMETHOD(FileSelector, GetPath), asCALL_THISCALL);
+    engine->RegisterObjectMethod("FileSelector", "const String &get_path() const", asMETHOD(FileSelector, GetPath), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "void set_fileName(const String&in)", asMETHOD(FileSelector, SetFileName), asCALL_THISCALL);
-    engine->RegisterObjectMethod("FileSelector", "const String& get_fileName() const", asMETHOD(FileSelector, GetFileName), asCALL_THISCALL);
+    engine->RegisterObjectMethod("FileSelector", "const String &get_fileName() const", asMETHOD(FileSelector, GetFileName), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "void set_directoryMode(bool)", asMETHOD(FileSelector, SetDirectoryMode), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "bool get_directoryMode() const", asMETHOD(FileSelector, GetDirectoryMode), asCALL_THISCALL);
-    engine->RegisterObjectMethod("FileSelector", "const String& get_filter() const", asMETHOD(FileSelector, GetFilter), asCALL_THISCALL);
+    engine->RegisterObjectMethod("FileSelector", "const String &get_filter() const", asMETHOD(FileSelector, GetFilter), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "uint get_filterIndex() const", asMETHOD(FileSelector, GetFilterIndex), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "void set_defaultStyle(XMLFile@+)", asMETHOD(FileSelector, SetDefaultStyle), asCALL_THISCALL);
     engine->RegisterObjectMethod("FileSelector", "XMLFile@+ get_defaultStyle() const", asMETHOD(FileSelector, GetDefaultStyle), asCALL_THISCALL);
@@ -761,7 +761,7 @@ static void RegisterUI(asIScriptEngine* engine)
     engine->RegisterObjectMethod("UI", "UIElement@+ get_root() const", asMETHOD(UI, GetRoot), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "UIElement@+ get_modalRoot() const", asMETHOD(UI, GetRootModalElement), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "void set_clipBoardText(const String&in)", asMETHOD(UI, SetClipboardText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("UI", "const String& get_clipBoardText() const", asMETHOD(UI, GetClipboardText), asCALL_THISCALL);
+    engine->RegisterObjectMethod("UI", "const String &get_clipBoardText() const", asMETHOD(UI, GetClipboardText), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "void set_doubleClickInterval(float)", asMETHOD(UI, SetDoubleClickInterval), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "float get_doubleClickInterval() const", asMETHOD(UI, GetDoubleClickInterval), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "void set_dragBeginInterval(float)", asMETHOD(UI, SetDragBeginInterval), asCALL_THISCALL);
@@ -787,7 +787,7 @@ static void RegisterUI(asIScriptEngine* engine)
     engine->RegisterObjectMethod("UI", "void set_scale(float value)", asMETHOD(UI, SetScale), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "float get_scale() const", asMETHOD(UI, GetScale), asCALL_THISCALL);
     engine->RegisterObjectMethod("UI", "void set_customSize(const IntVector2&in)", asMETHODPR(UI, SetCustomSize, (const IntVector2&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("UI", "const IntVector2& get_customSize() const", asMETHOD(UI, GetCustomSize), asCALL_THISCALL);
+    engine->RegisterObjectMethod("UI", "const IntVector2 &get_customSize() const", asMETHOD(UI, GetCustomSize), asCALL_THISCALL);
     engine->RegisterGlobalFunction("UI@+ get_ui()", asFUNCTION(GetUI), asCALL_CDECL);
 }
 

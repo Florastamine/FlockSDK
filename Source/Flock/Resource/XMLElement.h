@@ -115,7 +115,7 @@ public:
     /// Set a buffer attribute.
     bool SetBuffer(const String &name, const PODVector<unsigned char>& value);
     /// Set a color attribute.
-    bool SetColor(const String &name, const Color& value);
+    bool SetColor(const String &name, const Color &value);
     /// Set a float attribute.
     bool SetFloat(const String &name, float value);
     /// Set a double attribute.
@@ -129,15 +129,15 @@ public:
     /// Set a long long integer attribute.
     bool SetInt64(const String &name, long long value);
     /// Set an IntRect attribute.
-    bool SetIntRect(const String &name, const IntRect& value);
+    bool SetIntRect(const String &name, const IntRect &value);
     /// Set an IntVector2 attribute.
     bool SetIntVector2(const String &name, const IntVector2 &value);
     /// Set an IntVector3 attribute.
     bool SetIntVector3(const String &name, const IntVector3 &value);
     /// Set a Rect attribute.
-    bool SetRect(const String &name, const Rect& value);
+    bool SetRect(const String &name, const Rect &value);
     /// Set a quaternion attribute.
-    bool SetQuaternion(const String &name, const Quaternion& value);
+    bool SetQuaternion(const String &name, const Quaternion &value);
     /// Set a string attribute.
     bool SetString(const String &name, const String &value);
     /// Set a variant attribute.

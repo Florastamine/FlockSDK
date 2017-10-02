@@ -118,7 +118,7 @@ void Sprite2D::SetTexture(Texture2D* texture)
     }
 }
 
-void Sprite2D::SetRectangle(const IntRect& rectangle)
+void Sprite2D::SetRectangle(const IntRect &rectangle)
 {
     rectangle_ = rectangle;
 }
@@ -143,12 +143,12 @@ void Sprite2D::SetSpriteSheet(SpriteSheet2D* spriteSheet)
     spriteSheet_ = spriteSheet;
 }
 
-bool Sprite2D::GetDrawRectangle(Rect& rect, bool flipX, bool flipY) const
+bool Sprite2D::GetDrawRectangle(Rect &rect, bool flipX, bool flipY) const
 {
     return GetDrawRectangle(rect, hotSpot_, flipX, flipY);
 }
 
-bool Sprite2D::GetDrawRectangle(Rect& rect, const Vector2 &hotSpot, bool flipX, bool flipY) const
+bool Sprite2D::GetDrawRectangle(Rect &rect, const Vector2 &hotSpot, bool flipX, bool flipY) const
 {
     if (rectangle_.Width() == 0 || rectangle_.Height() == 0)
         return false;
@@ -167,7 +167,7 @@ bool Sprite2D::GetDrawRectangle(Rect& rect, const Vector2 &hotSpot, bool flipX, 
     return true;
 }
 
-bool Sprite2D::GetTextureRectangle(Rect& rect, bool flipX, bool flipY) const
+bool Sprite2D::GetTextureRectangle(Rect &rect, bool flipX, bool flipY) const
 {
     if (!texture_)
         return false;

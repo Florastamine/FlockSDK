@@ -26,6 +26,6 @@
 
 namespace FlockSDK {
     /// Parse the text and outputs the text as TextBlock array.
-    void ParseRichTextHTML(const String& text, Vector<TextBlock>& blocks, const FontState& default_font_state);
+    void ParseRichTextHTML(const String &text, Vector<TextBlock>& blocks, const FontState& default_font_state);
 } // namespace FlockSDK
 

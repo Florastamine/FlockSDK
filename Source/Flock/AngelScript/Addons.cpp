@@ -2273,7 +2273,7 @@ static void ConstructString(String* ptr)
     new(ptr) String();
 }
 
-static void ConstructStringCopy(const String& str, String* ptr)
+static void ConstructStringCopy(const String &str, String* ptr)
 {
     new(ptr) String(str);
 }
@@ -2283,7 +2283,7 @@ static void DestructString(String* ptr)
     ptr->~String();
 }
 
-static char* StringCharAt(unsigned i, String& str)
+static char* StringCharAt(unsigned i, String &str)
 {
     if (i >= str.Length())
     {
@@ -2295,7 +2295,7 @@ static char* StringCharAt(unsigned i, String& str)
     return &str[i];
 }
 
-static int StringCmp(const String& lhs, const String& rhs)
+static int StringCmp(const String &lhs, const String &rhs)
 {
     int cmp = 0;
     if (lhs < rhs)
@@ -2305,7 +2305,7 @@ static int StringCmp(const String& lhs, const String& rhs)
     return cmp;
 }
 
-void StringResize(unsigned newSize, String& str)
+void StringResize(unsigned newSize, String &str)
 {
     unsigned oldSize = str.Length();
     str.Resize(newSize);
@@ -2338,117 +2338,117 @@ static void ConstructStringBool(bool value, String* ptr)
     new(ptr) String(value);
 }
 
-static String& StringAssignInt(int value, String& str)
+static String &StringAssignInt(int value, String &str)
 {
     str = String(value);
     return str;
 }
 
-static String& StringAddAssignInt(int value, String& str)
+static String &StringAddAssignInt(int value, String &str)
 {
     str += String(value);
     return str;
 }
 
-static String StringAddInt(int value, const String& str)
+static String StringAddInt(int value, const String &str)
 {
     return str + String(value);
 }
 
-static String StringAddIntReverse(int value, const String& str)
+static String StringAddIntReverse(int value, const String &str)
 {
     return String(value) + str;
 }
 
-static String& StringAssignUInt(unsigned value, String& str)
+static String &StringAssignUInt(unsigned value, String &str)
 {
     str = String(value);
     return str;
 }
 
-static String& StringAddAssignUInt(unsigned value, String& str)
+static String &StringAddAssignUInt(unsigned value, String &str)
 {
     str += String(value);
     return str;
 }
 
-static String StringAddUInt(unsigned value, const String& str)
+static String StringAddUInt(unsigned value, const String &str)
 {
     return str + String(value);
 }
 
-static String StringAddUIntReverse(unsigned value, const String& str)
+static String StringAddUIntReverse(unsigned value, const String &str)
 {
     return String(value) + str;
 }
 
-static String& StringAssignFloat(float value, String& str)
+static String &StringAssignFloat(float value, String &str)
 {
     str = String(value);
     return str;
 }
 
-static String& StringAddAssignFloat(float value, String& str)
+static String &StringAddAssignFloat(float value, String &str)
 {
     str += String(value);
     return str;
 }
 
-static String StringAddFloat(float value, const String& str)
+static String StringAddFloat(float value, const String &str)
 {
     return str + String(value);
 }
 
-static String StringAddFloatReverse(float value, const String& str)
+static String StringAddFloatReverse(float value, const String &str)
 {
     return String(value) + str;
 }
 
-static String& StringAssignDouble(double value, String& str)
+static String &StringAssignDouble(double value, String &str)
 {
     str = String(value);
     return str;
 }
 
-static String& StringAddAssignDouble(double value, String& str)
+static String &StringAddAssignDouble(double value, String &str)
 {
     str += String(value);
     return str;
 }
 
-static String StringAddDouble(double value, const String& str)
+static String StringAddDouble(double value, const String &str)
 {
     return str + String(value);
 }
 
-static String StringAddDoubleReverse(double value, const String& str)
+static String StringAddDoubleReverse(double value, const String &str)
 {
     return String(value) + str;
 }
 
-static String& StringAssignBool(bool value, String& str)
+static String &StringAssignBool(bool value, String &str)
 {
     str = String(value);
     return str;
 }
 
-static String& StringAddAssignBool(bool value, String& str)
+static String &StringAddAssignBool(bool value, String &str)
 {
     str += String(value);
     return str;
 }
 
-static String StringAddBool(bool value, const String& str)
+static String StringAddBool(bool value, const String &str)
 {
     return str + String(value);
 }
 
-static String StringAddBoolReverse(bool value, const String& str)
+static String StringAddBoolReverse(bool value, const String &str)
 {
     return String(value) + str;
 }
 
-static void StringSetUTF8FromLatin1(const String& src, String& str)
+static void StringSetUTF8FromLatin1(const String &src, String &str)
 {
     str.SetUTF8FromLatin1(src.CString());
 }
@@ -2463,8 +2463,8 @@ void RegisterString(asIScriptEngine *engine)
     engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructString), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f(const String&in)", asFUNCTION(ConstructStringCopy), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("String", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(DestructString), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(const String&in)", asMETHODPR(String, operator =, (const String&), String&), asCALL_THISCALL);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(const String&in)", asMETHODPR(String, operator +=, (const String&), String&), asCALL_THISCALL);
+    engine->RegisterObjectMethod("String", "String &opAssign(const String&in)", asMETHODPR(String, operator =, (const String&), String&), asCALL_THISCALL);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(const String&in)", asMETHODPR(String, operator +=, (const String&), String&), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "bool opEquals(const String&in) const", asMETHODPR(String, operator ==, (const String&) const, bool), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "int opCmp(const String&in) const", asFUNCTION(StringCmp), asCALL_CDECL_OBJFIRST);
     engine->RegisterObjectMethod("String", "String opAdd(const String&in) const", asMETHODPR(String, operator +, (const String&) const, String), asCALL_THISCALL);
@@ -2486,7 +2486,7 @@ void RegisterString(asIScriptEngine *engine)
     engine->RegisterObjectMethod("String", "String ToUpper() const", asMETHOD(String, ToUpper), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "String ToLower() const", asMETHOD(String, ToLower), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "String Trimmed() const", asMETHOD(String, Trimmed), asCALL_THISCALL);
-    engine->RegisterObjectMethod("String", "void SetUTF8FromLatin1(const String& in)", asFUNCTION(StringSetUTF8FromLatin1), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "void SetUTF8FromLatin1(const String &in)", asFUNCTION(StringSetUTF8FromLatin1), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "uint get_utf8Length() const", asMETHOD(String, LengthUTF8), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "uint ByteOffsetUTF8(uint) const", asMETHOD(String, ByteOffsetUTF8), asCALL_THISCALL);
     engine->RegisterObjectMethod("String", "uint NextUTF8Char(uint&) const", asMETHOD(String, NextUTF8Char), asCALL_THISCALL);
@@ -2508,24 +2508,24 @@ void RegisterString(asIScriptEngine *engine)
     engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(ConstructStringFloat), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f(double)", asFUNCTION(ConstructStringDouble), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f(bool)", asFUNCTION(ConstructStringBool), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(int)", asFUNCTION(StringAssignInt), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(int)", asFUNCTION(StringAddAssignInt), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAssign(int)", asFUNCTION(StringAssignInt), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(int)", asFUNCTION(StringAddAssignInt), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd(int) const", asFUNCTION(StringAddInt), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd_r(int) const", asFUNCTION(StringAddIntReverse), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(uint)", asFUNCTION(StringAssignUInt), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(uint)", asFUNCTION(StringAddAssignUInt), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAssign(uint)", asFUNCTION(StringAssignUInt), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(uint)", asFUNCTION(StringAddAssignUInt), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd(uint) const", asFUNCTION(StringAddUInt), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd_r(uint) const", asFUNCTION(StringAddUIntReverse), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(float)", asFUNCTION(StringAssignFloat), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(float)", asFUNCTION(StringAddAssignFloat), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAssign(float)", asFUNCTION(StringAssignFloat), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(float)", asFUNCTION(StringAddAssignFloat), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd(float) const", asFUNCTION(StringAddFloat), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd_r(float) const", asFUNCTION(StringAddFloatReverse), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(double)", asFUNCTION(StringAssignDouble), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(double)", asFUNCTION(StringAddAssignDouble), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAssign(double)", asFUNCTION(StringAssignDouble), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(double)", asFUNCTION(StringAddAssignDouble), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd(double) const", asFUNCTION(StringAddDouble), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd_r(double) const", asFUNCTION(StringAddDoubleReverse), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAssign(bool)", asFUNCTION(StringAssignBool), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectMethod("String", "String& opAddAssign(bool)", asFUNCTION(StringAddAssignBool), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAssign(bool)", asFUNCTION(StringAssignBool), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectMethod("String", "String &opAddAssign(bool)", asFUNCTION(StringAddAssignBool), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd(bool) const", asFUNCTION(StringAddBool), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("String", "String opAdd_r(bool) const", asFUNCTION(StringAddBoolReverse), asCALL_CDECL_OBJLAST);
 }

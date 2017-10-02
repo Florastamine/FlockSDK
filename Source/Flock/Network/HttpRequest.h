@@ -45,7 +45,7 @@ class FLOCKSDK_API HttpRequest : public RefCounted, public Deserializer, public 
 {
 public:
     /// Construct with parameters.
-    HttpRequest(const String& url, const String& verb, const Vector<String>& headers, const String& postData);
+    HttpRequest(const String &url, const String &verb, const Vector<String>& headers, const String &postData);
     /// Destruct. Release the connection object.
     ~HttpRequest();
 
@@ -60,10 +60,10 @@ public:
     virtual bool IsEof() const;
 
     /// Return URL used in the request.
-    const String& GetURL() const { return url_; }
+    const String &GetURL() const { return url_; }
 
     /// Return verb used in the request. Default GET if empty verb specified on construction.
-    const String& GetVerb() const { return verb_; }
+    const String &GetVerb() const { return verb_; }
 
     /// Return error. Only non-empty in the error state.
     String GetError() const;

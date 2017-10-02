@@ -294,7 +294,7 @@ void DecalSet::SetOptimizeBufferSize(bool enable)
     }
 }
 
-bool DecalSet::AddDecal(Drawable* target, const Vector3 &worldPosition, const Quaternion& worldRotation, float size,
+bool DecalSet::AddDecal(Drawable* target, const Vector3 &worldPosition, const Quaternion &worldRotation, float size,
     float aspectRatio, float depth, const Vector2 &topLeftUV, const Vector2 &bottomRightUV, float timeToLive, float normalCutoff,
     unsigned subGeometry)
 {

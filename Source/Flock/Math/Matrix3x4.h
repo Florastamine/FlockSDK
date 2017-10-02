@@ -169,7 +169,7 @@ public:
     }
 
     /// Construct from translation, rotation and uniform scale.
-    Matrix3x4(const Vector3 &translation, const Quaternion& rotation, float scale)
+    Matrix3x4(const Vector3 &translation, const Quaternion &rotation, float scale)
     {
 #ifdef FLOCKSDK_SSE
         __m128 t = _mm_set_ps(1.f, translation.z_, translation.y_, translation.x_);
@@ -183,7 +183,7 @@ public:
     }
 
     /// Construct from translation, rotation and nonuniform scale.
-    Matrix3x4(const Vector3 &translation, const Quaternion& rotation, const Vector3 &scale)
+    Matrix3x4(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
     {
 #ifdef FLOCKSDK_SSE
         __m128 t = _mm_set_ps(1.f, translation.z_, translation.y_, translation.x_);
@@ -691,7 +691,7 @@ public:
     }
 
     /// Return decomposition to translation, rotation and scale.
-    void Decompose(Vector3 &translation, Quaternion& rotation, Vector3 &scale) const;
+    void Decompose(Vector3 &translation, Quaternion &rotation, Vector3 &scale) const;
 
     /// Return inverse.
     Matrix3x4 Inverse() const;

@@ -192,7 +192,7 @@ void Network::ClientDisconnected(kNet::MessageConnection* connection)
     }
 }
 
-bool Network::Connect(const String& address, unsigned short port, Scene* scene, const VariantMap& identity)
+bool Network::Connect(const String &address, unsigned short port, Scene* scene, const VariantMap& identity)
 {
     FLOCKSDK_PROFILE(Connect);
 
@@ -364,7 +364,7 @@ void Network::UnregisterAllRemoteEvents()
     allowedRemoteEvents_.Clear();
 }
 
-void Network::SetPackageCacheDir(const String& path)
+void Network::SetPackageCacheDir(const String &path)
 {
     packageCacheDir_ = AddTrailingSlash(path);
 }
@@ -390,8 +390,8 @@ void Network::SendPackageToClients(Scene* scene, PackageFile* package)
     }
 }
 
-SharedPtr<HttpRequest> Network::MakeHttpRequest(const String& url, const String& verb, const Vector<String>& headers,
-    const String& postData)
+SharedPtr<HttpRequest> Network::MakeHttpRequest(const String &url, const String &verb, const Vector<String>& headers,
+    const String &postData)
 {
     FLOCKSDK_PROFILE(MakeHttpRequest);
 

@@ -10,26 +10,26 @@ enum CollisionEventMode
 class RigidBody : public Component
 {
     void SetMass(float mass);
-    void SetPosition(const Vector3& position);
-    void SetRotation(const Quaternion& rotation);
-    void SetTransform(const Vector3& position, const Quaternion& rotation);
-    void SetLinearVelocity(const Vector3& velocity);
-    void SetLinearFactor(const Vector3& factor);
+    void SetPosition(const Vector3 &position);
+    void SetRotation(const Quaternion &rotation);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation);
+    void SetLinearVelocity(const Vector3 &velocity);
+    void SetLinearFactor(const Vector3 &factor);
     void SetLinearRestThreshold(float threshold);
     void SetLinearDamping(float damping);
-    void SetAngularVelocity(const Vector3& angularVelocity);
-    void SetAngularFactor(const Vector3& factor);
+    void SetAngularVelocity(const Vector3 &angularVelocity);
+    void SetAngularFactor(const Vector3 &factor);
     void SetAngularRestThreshold(float threshold);
     void SetAngularDamping(float factor);
     void SetFriction(float friction);
-    void SetAnisotropicFriction(const Vector3& friction);
+    void SetAnisotropicFriction(const Vector3 &friction);
     void SetRollingFriction(float friction);
     void SetRestitution(float restitution);
     void SetContactProcessingThreshold(float threshold);
     void SetCcdRadius(float radius);
     void SetCcdMotionThreshold(float threshold);
     void SetUseGravity(bool enable);
-    void SetGravityOverride(const Vector3& gravity);
+    void SetGravityOverride(const Vector3 &gravity);
     void SetKinematic(bool enable);
     void SetTrigger(bool enable);
     void SetCollisionLayer(unsigned layer);
@@ -39,12 +39,12 @@ class RigidBody : public Component
     void DisableMassUpdate();
     void EnableMassUpdate();
 
-    void ApplyForce(const Vector3& force);
-    void ApplyForce(const Vector3& force, const Vector3& position);
-    void ApplyTorque(const Vector3& torque);
-    void ApplyImpulse(const Vector3& impulse);
-    void ApplyImpulse(const Vector3& impulse, const Vector3& position);
-    void ApplyTorqueImpulse(const Vector3& torque);
+    void ApplyForce(const Vector3 &force);
+    void ApplyForce(const Vector3 &force, const Vector3 &position);
+    void ApplyTorque(const Vector3 &torque);
+    void ApplyImpulse(const Vector3 &impulse);
+    void ApplyImpulse(const Vector3 &impulse, const Vector3 &position);
+    void ApplyTorqueImpulse(const Vector3 &torque);
     void ResetForces();
     void Activate();
     void ReAddBodyToWorld();
@@ -55,7 +55,7 @@ class RigidBody : public Component
     Quaternion GetRotation() const;
     Vector3 GetLinearVelocity() const;
     Vector3 GetLinearFactor() const;
-    Vector3 GetVelocityAtPoint(const Vector3& position) const;
+    Vector3 GetVelocityAtPoint(const Vector3 &position) const;
     float GetLinearRestThreshold() const;
     float GetLinearDamping() const;
     Vector3 GetAngularVelocity() const;
@@ -70,8 +70,8 @@ class RigidBody : public Component
     float GetCcdRadius() const;
     float GetCcdMotionThreshold() const;
     bool GetUseGravity() const;
-    const Vector3& GetGravityOverride() const;
-    const Vector3& GetCenterOfMass() const;
+    const Vector3 &GetGravityOverride() const;
+    const Vector3 &GetCenterOfMass() const;
     bool IsKinematic() const;
     bool IsTrigger() const;
     bool IsActive() const;
@@ -99,8 +99,8 @@ class RigidBody : public Component
     tolua_property__get_set float ccdRadius;
     tolua_property__get_set float ccdMotionThreshold;
     tolua_property__get_set bool useGravity;
-    tolua_property__get_set Vector3& gravityOverride;
-    tolua_readonly tolua_property__get_set Vector3& centerOfMass;
+    tolua_property__get_set Vector3 &gravityOverride;
+    tolua_readonly tolua_property__get_set Vector3 &centerOfMass;
     tolua_property__is_set bool kinematic;
     tolua_property__is_set bool trigger;
     tolua_readonly tolua_property__is_set bool active;

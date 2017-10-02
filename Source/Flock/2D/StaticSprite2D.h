@@ -57,7 +57,7 @@ public:
     /// Set flip Y.
     void SetFlipY(bool flipY);
     /// Set color.
-    void SetColor(const Color& color);
+    void SetColor(const Color &color);
     /// Set alpha.
     void SetAlpha(float alpha);
     /// Set whether to use custom-defined hot spot.
@@ -75,10 +75,10 @@ public:
     Sprite2D* GetSprite() const;
 
     /// Return draw rect.
-    const Rect& GetDrawRect() const { return drawRect_; }
+    const Rect &GetDrawRect() const { return drawRect_; }
 
     /// Return texture rect.
-    const Rect& GetTextureRect() const { return textureRect_; }
+    const Rect &GetTextureRect() const { return textureRect_; }
 
     /// Return blend mode.
     BlendMode GetBlendMode() const { return blendMode_; }
@@ -90,7 +90,7 @@ public:
     bool GetFlipY() const { return flipY_; }
 
     /// Return color.
-    const Color& GetColor() const { return color_; }
+    const Color &GetColor() const { return color_; }
 
     /// Return alpha.
     float GetAlpha() const { return color_.a_; }

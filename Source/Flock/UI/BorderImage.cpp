@@ -65,7 +65,7 @@ void BorderImage::RegisterObject(Context* context)
     FLOCKSDK_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, BlendMode, blendModeNames, 0, AM_FILE);
 }
 
-void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     GetBatches(batches, vertexData, currentScissor, hovering_ || selected_ || HasFocus() ? hoverOffset_ : IntVector2::ZERO);
 }
@@ -77,7 +77,7 @@ void BorderImage::SetTexture(Texture* texture)
         SetFullImageRect();
 }
 
-void BorderImage::SetImageRect(const IntRect& rect)
+void BorderImage::SetImageRect(const IntRect &rect)
 {
     if (rect != IntRect::ZERO)
         imageRect_ = rect;
@@ -89,7 +89,7 @@ void BorderImage::SetFullImageRect()
         SetImageRect(IntRect(0, 0, texture_->GetWidth(), texture_->GetHeight()));
 }
 
-void BorderImage::SetBorder(const IntRect& rect)
+void BorderImage::SetBorder(const IntRect &rect)
 {
     border_.left_ = Max(rect.left_, 0);
     border_.top_ = Max(rect.top_, 0);
@@ -97,7 +97,7 @@ void BorderImage::SetBorder(const IntRect& rect)
     border_.bottom_ = Max(rect.bottom_, 0);
 }
 
-void BorderImage::SetImageBorder(const IntRect& rect)
+void BorderImage::SetImageBorder(const IntRect &rect)
 {
     imageBorder_.left_ = Max(rect.left_, 0);
     imageBorder_.top_ = Max(rect.top_, 0);
@@ -125,7 +125,7 @@ void BorderImage::SetTiled(bool enable)
     tiled_ = enable;
 }
 
-void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor,
+void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor,
     const IntVector2 &offset)
 {
     bool allOpaque = true;
@@ -137,7 +137,7 @@ void BorderImage::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vert
         batch(this, blendMode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blendMode_, currentScissor, texture_, &vertexData);
 
     // Calculate size of the inner rect, and texture dimensions of the inner rect
-    const IntRect& uvBorder = (imageBorder_ == IntRect::ZERO) ? border_ : imageBorder_;
+    const IntRect &uvBorder = (imageBorder_ == IntRect::ZERO) ? border_ : imageBorder_;
     int x = GetIndentWidth();
     IntVector2 size = GetSize();
     size.x_ -= x;

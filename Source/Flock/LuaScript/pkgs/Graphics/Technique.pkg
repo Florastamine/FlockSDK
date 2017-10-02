@@ -92,7 +92,7 @@ static const PODVector<Pass*>& TechniqueGetPasses(const Technique* technique)
     return vector;
 }
 
-static Technique* TechniqueClone(const Technique* technique, const String& cloneName = String::EMPTY)
+static Technique* TechniqueClone(const Technique* technique, const String &cloneName = String::EMPTY)
 {
     if (!technique)
         return 0;

@@ -96,7 +96,7 @@ void SpriteSheet2D::SetTexture(Texture2D* texture)
     texture_ = texture;
 }
 
-void SpriteSheet2D::DefineSprite(const String &name, const IntRect& rectangle, const Vector2 &hotSpot, const IntVector2 &offset)
+void SpriteSheet2D::DefineSprite(const String &name, const IntRect &rectangle, const Vector2 &hotSpot, const IntVector2 &offset)
 {
     if (!texture_)
         return;

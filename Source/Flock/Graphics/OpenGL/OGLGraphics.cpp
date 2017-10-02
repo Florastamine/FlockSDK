@@ -618,7 +618,7 @@ void Graphics::EndFrame()
     CleanupScratchBuffers();
 }
 
-void Graphics::Clear(unsigned flags, const Color& color, float depth, unsigned stencil)
+void Graphics::Clear(unsigned flags, const Color &color, float depth, unsigned stencil)
 {
     PrepareDraw();
 
@@ -666,7 +666,7 @@ void Graphics::Clear(unsigned flags, const Color& color, float depth, unsigned s
         glStencilMask(stencilWriteMask_);
 }
 
-bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
+bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect &viewport)
 {
     if (!destination || !destination->GetRenderSurface())
         return false;
@@ -1214,7 +1214,7 @@ void Graphics::SetShaderParameter(StringHash param, bool value)
     }
 }
 
-void Graphics::SetShaderParameter(StringHash param, const Color& color)
+void Graphics::SetShaderParameter(StringHash param, const Color &color)
 {
     SetShaderParameter(param, color.Data(), 4);
 }
@@ -1672,7 +1672,7 @@ void Graphics::SetDepthStencil(Texture2D* texture)
     SetDepthStencil(depthStencil);
 }
 
-void Graphics::SetViewport(const IntRect& rect)
+void Graphics::SetViewport(const IntRect &rect)
 {
     PrepareDraw();
 
@@ -1813,7 +1813,7 @@ void Graphics::SetLineAntiAlias(bool enable)
     }
 }
 
-void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusive)
+void Graphics::SetScissorTest(bool enable, const Rect &rect, bool borderInclusive)
 {
     // During some light rendering loops, a full rect is toggled on/off repeatedly.
     // Disable scissor in that case to reduce state changes
@@ -1861,7 +1861,7 @@ void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusiv
     }
 }
 
-void Graphics::SetScissorTest(bool enable, const IntRect& rect)
+void Graphics::SetScissorTest(bool enable, const IntRect &rect)
 {
     IntVector2 rtSize(GetRenderTargetDimensions());
     IntVector2 viewPos(viewport_.left_, viewport_.top_);

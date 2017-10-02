@@ -89,9 +89,9 @@ public:
     /// Set width of the tail. Only works for face camera trail type.
     void SetWidth(float width);
     /// Set vertex blended color for start of trail.
-    void SetStartColor(const Color& color);
+    void SetStartColor(const Color &color);
     /// Set vertex blended scale for end of trail.
-    void SetEndColor(const Color& color);
+    void SetEndColor(const Color &color);
     /// Set vertex blended color for start of trail.
     void SetStartScale(float startScale);
     /// Set vertex blended scale for end of trail.
@@ -126,10 +126,10 @@ public:
     float GetWidth() const { return width_; }
 
     /// Get vertex blended color for start of trail.
-    const Color& GetStartColor() const { return startColor_; }
+    const Color &GetStartColor() const { return startColor_; }
 
     /// Get vertex blended color for end of trail.
-    const Color& GetEndColor() const { return endColor_;  }
+    const Color &GetEndColor() const { return endColor_;  }
 
     /// Get vertex blended scale for start of trail.
     float GetStartScale() const { return startScale_; }

@@ -11,14 +11,14 @@ class IKEffector : public Component
     Node* GetTargetNode() const;
     void SetTargetNode(Node* targetNode);
 
-    const String& GetTargetName() const;
-    void SetTargetName(const String& nodeName);
+    const String &GetTargetName() const;
+    void SetTargetName(const String &nodeName);
 
-    const Vector3& GetTargetPosition() const;
-    void SetTargetPosition(const Vector3& targetPosition);
+    const Vector3 &GetTargetPosition() const;
+    void SetTargetPosition(const Vector3 &targetPosition);
 
-    const Quaternion& GetTargetRotation() const;
-    void SetTargetRotation(const Quaternion& targetRotation);
+    const Quaternion &GetTargetRotation() const;
+    void SetTargetRotation(const Quaternion &targetRotation);
 
     unsigned GetChainLength() const;
     void SetChainLength(unsigned chainLength);

@@ -10,11 +10,11 @@ enum FontType
 
 class Font : public Resource
 {
-    void SetAbsoluteGlyphOffset(const IntVector2& offset);
-    void SetScaledGlyphOffset(const Vector2& offset);
+    void SetAbsoluteGlyphOffset(const IntVector2 &offset);
+    void SetScaledGlyphOffset(const Vector2 &offset);
     
-    const IntVector2& GetAbsoluteGlyphOffset() const;
-    const Vector2& GetScaledGlyphOffset() const;
+    const IntVector2 &GetAbsoluteGlyphOffset() const;
+    const Vector2 &GetScaledGlyphOffset() const;
     IntVector2 GetTotalGlyphOffset(int pointSize) const;
     FontType GetFontType() const;
     bool IsSDFFont() const;

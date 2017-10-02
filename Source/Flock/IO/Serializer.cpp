@@ -90,7 +90,7 @@ bool Serializer::WriteDouble(double value)
     return Write(&value, sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteIntRect(const IntRect& value)
+bool Serializer::WriteIntRect(const IntRect &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
@@ -105,7 +105,7 @@ bool Serializer::WriteIntVector3(const IntVector3 &value)
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteRect(const Rect& value)
+bool Serializer::WriteRect(const Rect &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
@@ -136,12 +136,12 @@ bool Serializer::WriteVector4(const Vector4 &value)
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteQuaternion(const Quaternion& value)
+bool Serializer::WriteQuaternion(const Quaternion &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WritePackedQuaternion(const Quaternion& value)
+bool Serializer::WritePackedQuaternion(const Quaternion &value)
 {
     short coords[4];
     Quaternion norm = value.Normalized();
@@ -168,7 +168,7 @@ bool Serializer::WriteMatrix4(const Matrix4& value)
     return Write(value.Data(), sizeof value) == sizeof value;
 }
 
-bool Serializer::WriteColor(const Color& value)
+bool Serializer::WriteColor(const Color &value)
 {
     return Write(value.Data(), sizeof value) == sizeof value;
 }

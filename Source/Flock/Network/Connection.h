@@ -127,9 +127,9 @@ public:
     /// Set new controls.
     void SetControls(const Controls& newControls);
     /// Set the observer position for interest management, to be sent to the server.
-    void SetPosition(const Vector3& position);
+    void SetPosition(const Vector3 &position);
     /// Set the observer rotation for interest management, to be sent to the server. Note: not used by the NetworkPriority component.
-    void SetRotation(const Quaternion& rotation);
+    void SetRotation(const Quaternion &rotation);
     /// Set the connection pending status. Called by Network.
     void SetConnectPending(bool connectPending);
     /// Set whether to log data in/out statistics.
@@ -165,10 +165,10 @@ public:
     unsigned char GetTimeStamp() const { return timeStamp_; }
 
     /// Return the observer position sent by the client for interest management.
-    const Vector3& GetPosition() const { return position_; }
+    const Vector3 &GetPosition() const { return position_; }
 
     /// Return the observer rotation sent by the client for interest management.
-    const Quaternion& GetRotation() const { return rotation_; }
+    const Quaternion &GetRotation() const { return rotation_; }
 
     /// Return whether is a client connection.
     bool IsClient() const { return isClient_; }
@@ -214,7 +214,7 @@ public:
     /// Return number of package downloads remaining.
     unsigned GetNumDownloads() const;
     /// Return name of current package download, or empty if no downloads.
-    const String& GetDownloadName() const;
+    const String &GetDownloadName() const;
     /// Return progress of current package download, or 1.0 if no downloads.
     float GetDownloadProgress() const;
     /// Trigger client connection to download a package file from the server. Can be used to download additional resource packages when client is already joined in a scene. The package must have been added as a requirement to the scene the client is joined in, or else the eventual download will fail.
@@ -260,13 +260,13 @@ private:
     /// Check a package list received from server and initiate package downloads as necessary. Return true on success, or false if failed to initialze downloads (cache dir not set)
     bool RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg);
     /// Initiate a package download.
-    void RequestPackage(const String& name, unsigned fileSize, unsigned checksum);
+    void RequestPackage(const String &name, unsigned fileSize, unsigned checksum);
     /// Send an error reply for a package download.
-    void SendPackageError(const String& name);
+    void SendPackageError(const String &name);
     /// Handle scene load failure on the server or client.
     void OnSceneLoadFailed();
     /// Handle a package download failure on the client.
-    void OnPackageDownloadFailed(const String& name);
+    void OnPackageDownloadFailed(const String &name);
     /// Handle all packages loaded successfully. Also called directly on MSG_LOADSCENE if there are none.
     void OnPackagesReady();
 

@@ -77,9 +77,9 @@ public:
     /// Set rigid body position in world space.
     void SetPosition(const Vector3 &position);
     /// Set rigid body rotation in world space.
-    void SetRotation(const Quaternion& rotation);
+    void SetRotation(const Quaternion &rotation);
     /// Set rigid body position and rotation in world space as an atomic operation.
-    void SetTransform(const Vector3 &position, const Quaternion& rotation);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation);
     /// Set linear velocity.
     void SetLinearVelocity(const Vector3 &velocity);
     /// Set linear degrees of freedom. Use 1 to enable an axis or 0 to disable. Default is all axes enabled (1, 1, 1).
@@ -229,7 +229,7 @@ public:
     void GetCollidingBodies(PODVector<RigidBody*>& result) const;
 
     /// Apply new world transform after a simulation step. Called internally.
-    void ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion& newWorldRotation);
+    void ApplyWorldTransform(const Vector3 &newWorldPosition, const Quaternion &newWorldRotation);
     /// Update mass and inertia to the Bullet rigid body.
     void UpdateMass();
     /// Update gravity parameters to the Bullet rigid body.

@@ -412,7 +412,7 @@ public:
     /// Optimize a light by marking it to the stencil buffer and setting a stencil test.
     void OptimizeLightByStencil(Light* light, Camera* camera);
     /// Return a scissor rectangle for a light.
-    const Rect& GetLightScissor(Light* light, Camera* camera);
+    const Rect &GetLightScissor(Light* light, Camera* camera);
 
     /// Return a view or its source view if it uses one. Used internally for render statistics.
     static View* GetActualView(View* view);

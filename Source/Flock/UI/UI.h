@@ -139,7 +139,7 @@ public:
     /// Return UI element at global screen coordinates. By default returns only input-enabled elements.
     UIElement* GetElementAt(int x, int y, bool enabledOnly = true);
     /// Get a child element at element's screen position relative to specified root element.
-    UIElement* GetElementAt(UIElement* root, const IntVector2& position, bool enabledOnly = true);
+    UIElement* GetElementAt(UIElement* root, const IntVector2 &position, bool enabledOnly = true);
 
     /// Return focused element.
     UIElement* GetFocusElement() const { return focusElement_; }
@@ -234,33 +234,33 @@ private:
     /// Generate batches from an UI element recursively. Skip the cursor element.
     void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, UIElement* element, IntRect currentScissor);
     /// Return UI element at global screen coordinates. Return position converted to element's screen coordinates.
-    UIElement* GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition);
+    UIElement* GetElementAt(const IntVector2 &position, bool enabledOnly, IntVector2* elementScreenPosition);
     /// Return UI element at screen position recursively.
-    void GetElementAt(UIElement*& result, UIElement* current, const IntVector2& position, bool enabledOnly);
+    void GetElementAt(UIElement*& result, UIElement* current, const IntVector2 &position, bool enabledOnly);
     /// Return the first element in hierarchy that can alter focus.
     UIElement* GetFocusableElement(UIElement* element);
     /// Return cursor position and visibility either from the cursor element, or the Input subsystem.
-    void GetCursorPositionAndVisible(IntVector2& pos, bool& visible);
+    void GetCursorPositionAndVisible(IntVector2 &pos, bool& visible);
     /// Set active cursor's shape.
     void SetCursorShape(CursorShape shape);
     /// Force release of font faces when global font properties change.
     void ReleaseFontFaces();
     /// Handle button or touch hover.
-    void ProcessHover(const IntVector2& windowCursorPos, int buttons, int qualifiers, Cursor* cursor);
+    void ProcessHover(const IntVector2 &windowCursorPos, int buttons, int qualifiers, Cursor* cursor);
     /// Handle button or touch begin.
     void
-        ProcessClickBegin(const IntVector2& windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
+        ProcessClickBegin(const IntVector2 &windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
     /// Handle button or touch end.
-    void ProcessClickEnd(const IntVector2& windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
+    void ProcessClickEnd(const IntVector2 &windowCursorPos, int button, int buttons, int qualifiers, Cursor* cursor, bool cursorVisible);
     /// Handle mouse or touch move.
-    void ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
+    void ProcessMove(const IntVector2 &windowCursorPos, const IntVector2 &cursorDeltaPos, int buttons, int qualifiers, Cursor* cursor,
         bool cursorVisible);
     /// Send a UI element drag or hover begin event.
     void SendDragOrHoverEvent
-        (StringHash eventType, UIElement* element, const IntVector2& screenPos, const IntVector2& deltaPos, UI::DragData* dragData);
+        (StringHash eventType, UIElement* element, const IntVector2 &screenPos, const IntVector2 &deltaPos, UI::DragData* dragData);
     /// Send a UI click or double click event.
     void SendClickEvent
-        (StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2& pos, int button, int buttons,
+        (StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2 &pos, int button, int buttons,
             int qualifiers);
     /// Handle screen mode event.
     void HandleScreenMode(StringHash eventType, VariantMap& eventData);

@@ -53,7 +53,7 @@ static int tolua_AudioLuaAPI_Sound_new00_local(lua_State* tolua_S)
     return ToluaNewObjectGC<Sound>(tolua_S);
 }
 
-static bool SoundLoadRaw(Sound* sound, const String& fileName)
+static bool SoundLoadRaw(Sound* sound, const String &fileName)
 {
     if (!sound)
         return false;
@@ -65,7 +65,7 @@ static bool SoundLoadRaw(Sound* sound, const String& fileName)
     return sound->LoadRaw(file);
 }
 
-static bool SoundLoadWav(Sound* sound, const String& fileName)
+static bool SoundLoadWav(Sound* sound, const String &fileName)
 {
     if (!sound)
         return false;
@@ -77,7 +77,7 @@ static bool SoundLoadWav(Sound* sound, const String& fileName)
     return sound->LoadWav(file);
 }
 
-static bool SoundLoadOggVorbis(Sound* sound, const String& fileName)
+static bool SoundLoadOggVorbis(Sound* sound, const String &fileName)
 {
     if (!sound)
         return false;

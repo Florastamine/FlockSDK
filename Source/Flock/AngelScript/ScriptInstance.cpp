@@ -192,7 +192,7 @@ void ScriptInstance::OnSetEnabled()
     UpdateEventSubscription();
 }
 
-bool ScriptInstance::CreateObject(ScriptFile* scriptFile, const String& className)
+bool ScriptInstance::CreateObject(ScriptFile* scriptFile, const String &className)
 {
     className_ = String::EMPTY; // Do not create object during SetScriptFile()
     SetScriptFile(scriptFile);
@@ -225,7 +225,7 @@ void ScriptInstance::SetScriptFile(ScriptFile* scriptFile)
     MarkNetworkUpdate();
 }
 
-void ScriptInstance::SetClassName(const String& className)
+void ScriptInstance::SetClassName(const String &className)
 {
     if (className == className_ && scriptObject_)
         return;
@@ -237,7 +237,7 @@ void ScriptInstance::SetClassName(const String& className)
     MarkNetworkUpdate();
 }
 
-bool ScriptInstance::Execute(const String& declaration, const VariantVector& parameters)
+bool ScriptInstance::Execute(const String &declaration, const VariantVector& parameters)
 {
     if (!scriptObject_)
         return false;
@@ -260,7 +260,7 @@ bool ScriptInstance::Execute(asIScriptFunction* method, const VariantVector& par
     return scriptFile_->Execute(scriptObject_, method, parameters);
 }
 
-void ScriptInstance::DelayedExecute(float delay, bool repeat, const String& declaration, const VariantVector& parameters)
+void ScriptInstance::DelayedExecute(float delay, bool repeat, const String &declaration, const VariantVector& parameters)
 {
     if (!scriptObject_)
         return;
@@ -277,7 +277,7 @@ void ScriptInstance::DelayedExecute(float delay, bool repeat, const String& decl
         UpdateEventSubscription();
 }
 
-void ScriptInstance::ClearDelayedExecute(const String& declaration)
+void ScriptInstance::ClearDelayedExecute(const String &declaration)
 {
     if (declaration.Empty())
         delayedCalls_.Clear();
@@ -293,7 +293,7 @@ void ScriptInstance::ClearDelayedExecute(const String& declaration)
     }
 }
 
-void ScriptInstance::AddEventHandler(StringHash eventType, const String& handlerName)
+void ScriptInstance::AddEventHandler(StringHash eventType, const String &handlerName)
 {
     if (!scriptObject_)
         return;
@@ -314,7 +314,7 @@ void ScriptInstance::AddEventHandler(StringHash eventType, const String& handler
     SubscribeToEvent(eventType, FLOCKSDK_HANDLER_USERDATA(ScriptInstance, HandleScriptEvent, (void*)method));
 }
 
-void ScriptInstance::AddEventHandler(Object* sender, StringHash eventType, const String& handlerName)
+void ScriptInstance::AddEventHandler(Object* sender, StringHash eventType, const String &handlerName)
 {
     if (!scriptObject_)
         return;
@@ -376,7 +376,7 @@ bool ScriptInstance::HasEventHandler(Object* sender, StringHash eventType) const
     return HasSubscribedToEvent(sender, eventType);
 }
 
-bool ScriptInstance::IsA(const String& className) const
+bool ScriptInstance::IsA(const String &className) const
 {
     // Early out for the easiest case where that's what we are
     if (className_ == className)
@@ -395,7 +395,7 @@ bool ScriptInstance::IsA(const String& className) const
     return false;
 }
 
-bool ScriptInstance::HasMethod(const String& declaration) const
+bool ScriptInstance::HasMethod(const String &declaration) const
 {
     if (!scriptFile_ || !scriptObject_)
         return false;

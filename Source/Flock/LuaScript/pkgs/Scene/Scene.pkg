@@ -29,10 +29,10 @@ class Scene : public Node
     tolua_outside bool SceneSaveJSON @ SaveJSON(File* dest, const String indentation = "\t") const;
     tolua_outside bool SceneLoadJSON @ LoadJSON(const String fileName);
     tolua_outside bool SceneSaveJSON @ SaveJSON(const String fileName, const String indentation = "\t") const;
-    tolua_outside Node* SceneInstantiate @ Instantiate(File* source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
-    tolua_outside Node* SceneInstantiate @ Instantiate(const String fileName, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
-    tolua_outside Node* SceneInstantiateXML @ InstantiateXML(File* source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
-    tolua_outside Node* SceneInstantiateXML @ InstantiateXML(const String fileName, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    tolua_outside Node* SceneInstantiate @ Instantiate(File* source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
+    tolua_outside Node* SceneInstantiate @ Instantiate(const String fileName, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
+    tolua_outside Node* SceneInstantiateXML @ InstantiateXML(File* source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
+    tolua_outside Node* SceneInstantiateXML @ InstantiateXML(const String fileName, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
 
     bool LoadAsync(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
     bool LoadAsyncXML(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
@@ -82,8 +82,8 @@ class Scene : public Node
     void MarkNetworkUpdate(Component* component);
     void MarkReplicationDirty(Node* node);
     
-    // bool GetNodesWithTag(PODVector<Node*>& dest, const String& tag) const;
-    tolua_outside const PODVector<Node*>&  SceneGetNodesWithTag @ GetNodesWithTag( const String& tag) const; 
+    // bool GetNodesWithTag(PODVector<Node*>& dest, const String &tag) const;
+    tolua_outside const PODVector<Node*>&  SceneGetNodesWithTag @ GetNodesWithTag( const String &tag) const; 
 
     tolua_property__is_set bool updateEnabled;
     tolua_readonly tolua_property__is_set bool asyncLoading;
@@ -123,13 +123,13 @@ static bool SceneSave(const Scene* scene, File* file)
     return file ? scene->Save(*file) : false;
 }
 
-static bool SceneLoad(Scene* scene, const String& fileName)
+static bool SceneLoad(Scene* scene, const String &fileName)
 {
     File file(scene->GetContext(), fileName, FILE_READ);
     return file.IsOpen() && scene->Load(file);
 }
 
-static bool SceneSave(const Scene* scene, const String& fileName)
+static bool SceneSave(const Scene* scene, const String &fileName)
 {
     File file(scene->GetContext(), fileName, FILE_WRITE);
     return file.IsOpen() && scene->Save(file);
@@ -140,18 +140,18 @@ static bool SceneLoadXML(Scene* scene, File* file)
     return file ? scene->LoadXML(*file) : false;
 }
 
-static bool SceneSaveXML(const Scene* scene, File* file, const String& indentation)
+static bool SceneSaveXML(const Scene* scene, File* file, const String &indentation)
 {
     return file ? scene->SaveXML(*file, indentation) : false;
 }
 
-static bool SceneLoadXML(Scene* scene, const String& fileName)
+static bool SceneLoadXML(Scene* scene, const String &fileName)
 {
     File file(scene->GetContext(), fileName, FILE_READ);
     return file.IsOpen() && scene->LoadXML(file);
 }
 
-static const PODVector<Node*>& SceneGetNodesWithTag(const Scene* scene, const String& tag)
+static const PODVector<Node*>& SceneGetNodesWithTag(const Scene* scene, const String &tag)
 {
     static PODVector<Node*> result;
     result.Clear();
@@ -159,7 +159,7 @@ static const PODVector<Node*>& SceneGetNodesWithTag(const Scene* scene, const St
     return result;
 }
 
-static bool SceneSaveXML(const Scene* scene, const String& fileName, const String& indentation)
+static bool SceneSaveXML(const Scene* scene, const String &fileName, const String &indentation)
 {
     File file(scene->GetContext(), fileName, FILE_WRITE);
     if (!file.IsOpen())
@@ -172,18 +172,18 @@ static bool SceneLoadJSON(Scene* scene, File* file)
     return file ? scene->LoadJSON(*file) : false;
 }
 
-static bool SceneSaveJSON(const Scene* scene, File* file, const String& indentation)
+static bool SceneSaveJSON(const Scene* scene, File* file, const String &indentation)
 {
     return file ? scene->SaveJSON(*file, indentation) : false;
 }
 
-static bool SceneLoadJSON(Scene* scene, const String& fileName)
+static bool SceneLoadJSON(Scene* scene, const String &fileName)
 {
     File file(scene->GetContext(), fileName, FILE_READ);
     return file.IsOpen() && scene->LoadJSON(file);
 }
 
-static bool SceneSaveJSON(const Scene* scene, const String& fileName, const String& indentation)
+static bool SceneSaveJSON(const Scene* scene, const String &fileName, const String &indentation)
 {
     File file(scene->GetContext(), fileName, FILE_WRITE);
     if (!file.IsOpen())
@@ -191,35 +191,35 @@ static bool SceneSaveJSON(const Scene* scene, const String& fileName, const Stri
     return scene->SaveJSON(file, indentation);
 }
 
-static bool SceneLoadAsync(Scene* scene, const String& fileName, LoadMode mode)
+static bool SceneLoadAsync(Scene* scene, const String &fileName, LoadMode mode)
 {
     SharedPtr<File> file(new File(scene->GetContext(), fileName, FILE_READ));
     return file->IsOpen() && scene->LoadAsync(file, mode);
 }
 
-static bool SceneLoadAsyncXML(Scene* scene, const String& fileName, LoadMode mode)
+static bool SceneLoadAsyncXML(Scene* scene, const String &fileName, LoadMode mode)
 {
     SharedPtr<File> file(new File(scene->GetContext(), fileName, FILE_READ));
     return file->IsOpen() && scene->LoadAsyncXML(file, mode);
 }
 
-static Node* SceneInstantiate(Scene* scene, File* file, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+static Node* SceneInstantiate(Scene* scene, File* file, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     return file ? scene->Instantiate(*file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiate(Scene* scene, const String& fileName, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+static Node* SceneInstantiate(Scene* scene, const String &fileName, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     File file(scene->GetContext(), fileName, FILE_READ);
     return file.IsOpen() ? scene->Instantiate(file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateXML(Scene* scene, File* file, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+static Node* SceneInstantiateXML(Scene* scene, File* file, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     return file ? scene->InstantiateXML(*file, position, rotation, mode) : 0;
 }
 
-static Node* SceneInstantiateXML(Scene* scene, const String& fileName, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+static Node* SceneInstantiateXML(Scene* scene, const String &fileName, const Vector3 &position, const Quaternion &rotation, CreateMode mode)
 {
     File file(scene->GetContext(), fileName, FILE_READ);
     return file.IsOpen() ? scene->InstantiateXML(file, position, rotation, mode) : 0;

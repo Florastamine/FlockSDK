@@ -58,7 +58,7 @@ public:
     /// Destructor.
     virtual ~RichWidget();
     /// Set the size of the widget (all render items will be clipped to this size).
-    void SetClipRegion(const IntRect& rect);
+    void SetClipRegion(const IntRect &rect);
     /// Get the size of the widget, default IntRect::ZERO - no clipping.
     IntRect GetClipRegion() const { return clip_region_; }
     /// Set clip region to content size automatically, default - true
@@ -66,15 +66,15 @@ public:
     /// Get clip region to content size automatically
     bool GetClipToContent() const { return clip_to_content_; }
     /// Set the internal scale of the widget, e.g. object units per pixel.
-    void SetInternalScale(const Vector2& scale);
+    void SetInternalScale(const Vector2 &scale);
     /// Get internal scale, default 1.0.
     Vector2 GetInternalScale() const { return internal_scale_; }
     /// Set the draw origin, e.g. the point in 3D local space where the render items draw.
-    void SetDrawOrigin(const FlockSDK::Vector3& point);
+    void SetDrawOrigin(const FlockSDK::Vector3 &point);
     /// Get the draw origin, e.g. the point in 3D local space where the render items draw, default Vector3::ZERO.
     Vector3 GetDrawOrigin() const {	return draw_origin_; }
     /// Set padding.
-    void SetPadding(const IntRect& padding);
+    void SetPadding(const IntRect &padding);
     /// Get padding, default IntRect::ZERO.
     IntRect GetPadding() const { return padding_; }
     /// Clear all render items.
@@ -113,11 +113,11 @@ public:
     /// Is shadow effect enabled ?
     bool GetShadowEnabled() const {	return shadow_enabled_; }
     /// Set shadow offset.
-    void SetShadowOffset(const Vector4& shadow_offset);
+    void SetShadowOffset(const Vector4 &shadow_offset);
     /// Get shadow offset.
     Vector4 GetShadowOffset() const { return shadow_offset_; }
     /// Set shadow color.
-    void SetShadowColor(const Color& color);
+    void SetShadowColor(const Color &color);
     /// Get shadow color.
     Color GetShadowColor() const { return shadow_color_; }
     /// Set widget horizontal alignment.

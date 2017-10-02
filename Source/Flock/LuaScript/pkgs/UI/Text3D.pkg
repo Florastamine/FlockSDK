@@ -32,14 +32,14 @@ class Text3D : public Drawable
     void SetRowSpacing(float spacing);
     void SetWordwrap(bool enable);
     void SetTextEffect(TextEffect textEffect);
-    void SetEffectShadowOffset(const IntVector2& offset);
+    void SetEffectShadowOffset(const IntVector2 &offset);
     void SetEffectStrokeThickness(int thickness);
     void SetEffectRoundStroke(bool roundStroke);
-    void SetEffectColor(const Color& effectColor);
+    void SetEffectColor(const Color &effectColor);
     void SetEffectDepthBias(float bias);
     void SetWidth(int width);
-    void SetColor(const Color& color);
-    void SetColor(Corner corner, const Color& color);
+    void SetColor(const Color &color);
+    void SetColor(Corner corner, const Color &color);
     void SetOpacity(float opacity);
     void SetFixedScreenSize(bool enable);
     void SetFaceCameraMode(FaceCameraMode mode);
@@ -54,10 +54,10 @@ class Text3D : public Drawable
     float GetRowSpacing() const;
     bool GetWordwrap() const;
     TextEffect GetTextEffect() const;
-    const IntVector2& GetEffectShadowOffset() const;
+    const IntVector2 &GetEffectShadowOffset() const;
     int GetEffectStrokeThickness() const;
     bool GetEffectRoundStroke() const;
-    const Color& GetEffectColor() const;
+    const Color &GetEffectColor() const;
     float GetEffectDepthBias() const;
     int GetWidth() const;
     int GetHeight() const;
@@ -67,7 +67,7 @@ class Text3D : public Drawable
     int GetRowWidth(unsigned index) const;
     IntVector2 GetCharPosition(unsigned index);
     IntVector2 GetCharSize(unsigned index);
-    const Color& GetColor(Corner corner) const;
+    const Color &GetColor(Corner corner) const;
     float GetOpacity() const;
     bool IsFixedScreenSize() const;
     FaceCameraMode GetFaceCameraMode() const;
@@ -82,13 +82,13 @@ class Text3D : public Drawable
     tolua_property__get_set float rowSpacing;
     tolua_property__get_set bool wordwrap;
     tolua_property__get_set TextEffect textEffect;
-    tolua_property__get_set IntVector2& effectShadowOffset;
+    tolua_property__get_set IntVector2 &effectShadowOffset;
     tolua_property__get_set int effectStrokeThickness;
     tolua_property__get_set bool effectRoundStroke;
-    tolua_property__get_set Color& effectColor;
+    tolua_property__get_set Color &effectColor;
     tolua_property__get_set float effectDepthBias;
     tolua_property__get_set int width;
-    tolua_property__get_set Color& color; // Write only property.
+    tolua_property__get_set Color &color; // Write only property.
     tolua_readonly tolua_property__get_set int height;
     tolua_readonly tolua_property__get_set int rowHeight;
     tolua_readonly tolua_property__get_set unsigned numRows;

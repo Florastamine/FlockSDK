@@ -3,7 +3,7 @@ $#include "Graphics/Terrain.h"
 class Terrain : public Component
 {
     void SetPatchSize(int size);
-    void SetSpacing(const Vector3& spacing);
+    void SetSpacing(const Vector3 &spacing);
     void SetMaxLodLevels(unsigned levels);
     void SetOcclusionLodLevel(unsigned level);
     void SetSmoothing(bool enable);
@@ -28,9 +28,9 @@ class Terrain : public Component
     void ApplyHeightMap();
 
     int GetPatchSize() const;
-    const Vector3& GetSpacing() const;
-    const IntVector2& GetNumVertices() const;
-    const IntVector2& GetNumPatches() const;
+    const Vector3 &GetSpacing() const;
+    const IntVector2 &GetNumVertices() const;
+    const IntVector2 &GetNumPatches() const;
     unsigned GetMaxLodLevels() const;
     unsigned GetOcclusionLodLevel() const;
     bool GetSmoothing() const;
@@ -43,10 +43,10 @@ class Terrain : public Component
     TerrainPatch* GetPatch(unsigned index) const;
     TerrainPatch* GetPatch(int x, int z) const;
     TerrainPatch* GetNeighborPatch(int x, int z) const;
-    float GetHeight(const Vector3& worldPosition) const;
-    Vector3 GetNormal(const Vector3& worldPosition) const;
-    IntVector2 WorldToHeightMap(const Vector3& worldPosition) const;
-    Vector3 HeightMapToWorld(const IntVector2& pixelPosition) const;
+    float GetHeight(const Vector3 &worldPosition) const;
+    Vector3 GetNormal(const Vector3 &worldPosition) const;
+    IntVector2 WorldToHeightMap(const Vector3 &worldPosition) const;
+    Vector3 HeightMapToWorld(const IntVector2 &pixelPosition) const;
     SharedArrayPtr<float> GetHeightData() const;
     float GetDrawDistance() const;
     float GetShadowDistance() const;
@@ -62,9 +62,9 @@ class Terrain : public Component
     bool IsOccludee() const;
 
     tolua_property__get_set int patchSize;
-    tolua_property__get_set Vector3& spacing;
-    tolua_readonly tolua_property__get_set IntVector2& numVertices;
-    tolua_readonly tolua_property__get_set IntVector2& numPatches;
+    tolua_property__get_set Vector3 &spacing;
+    tolua_readonly tolua_property__get_set IntVector2 &numVertices;
+    tolua_readonly tolua_property__get_set IntVector2 &numPatches;
     tolua_property__get_set unsigned maxLodLevels;
     tolua_property__get_set unsigned occlusionLodLevel;
     tolua_property__get_set bool smoothing;

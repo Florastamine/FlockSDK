@@ -57,7 +57,7 @@ static const unsigned STITCH_SOUTH = 2;
 static const unsigned STITCH_WEST = 4;
 static const unsigned STITCH_EAST = 8;
 
-inline void GrowUpdateRegion(IntRect& updateRegion, int x, int y)
+inline void GrowUpdateRegion(IntRect &updateRegion, int x, int y)
 {
     if (updateRegion.left_ < 0)
     {

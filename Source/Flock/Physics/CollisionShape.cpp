@@ -517,7 +517,7 @@ void CollisionShape::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     }
 }
 
-void CollisionShape::SetBox(const Vector3 &size, const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetBox(const Vector3 &size, const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -534,7 +534,7 @@ void CollisionShape::SetBox(const Vector3 &size, const Vector3 &position, const 
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetSphere(float diameter, const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetSphere(float diameter, const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -551,7 +551,7 @@ void CollisionShape::SetSphere(float diameter, const Vector3 &position, const Qu
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetStaticPlane(const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetStaticPlane(const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -567,7 +567,7 @@ void CollisionShape::SetStaticPlane(const Vector3 &position, const Quaternion& r
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCylinder(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetCylinder(float diameter, float height, const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -584,7 +584,7 @@ void CollisionShape::SetCylinder(float diameter, float height, const Vector3 &po
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCapsule(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetCapsule(float diameter, float height, const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -601,7 +601,7 @@ void CollisionShape::SetCapsule(float diameter, float height, const Vector3 &pos
     MarkNetworkUpdate();
 }
 
-void CollisionShape::SetCone(float diameter, float height, const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetCone(float diameter, float height, const Vector3 &position, const Quaternion &rotation)
 {
     if (model_)
         UnsubscribeFromEvent(model_, E_RELOADFINISHED);
@@ -619,7 +619,7 @@ void CollisionShape::SetCone(float diameter, float height, const Vector3 &positi
 }
 
 void CollisionShape::SetTriangleMesh(Model* model, unsigned lodLevel, const Vector3 &scale, const Vector3 &position,
-    const Quaternion& rotation)
+    const Quaternion &rotation)
 {
     if (!model)
     {
@@ -644,7 +644,7 @@ void CollisionShape::SetTriangleMesh(Model* model, unsigned lodLevel, const Vect
 }
 
 void CollisionShape::SetCustomTriangleMesh(CustomGeometry* custom, const Vector3 &scale, const Vector3 &position,
-    const Quaternion& rotation)
+    const Quaternion &rotation)
 {
     if (!custom)
     {
@@ -674,7 +674,7 @@ void CollisionShape::SetCustomTriangleMesh(CustomGeometry* custom, const Vector3
 }
 
 void CollisionShape::SetConvexHull(Model* model, unsigned lodLevel, const Vector3 &scale, const Vector3 &position,
-    const Quaternion& rotation)
+    const Quaternion &rotation)
 {
     if (!model)
     {
@@ -699,7 +699,7 @@ void CollisionShape::SetConvexHull(Model* model, unsigned lodLevel, const Vector
 }
 
 void CollisionShape::SetCustomConvexHull(CustomGeometry* custom, const Vector3 &scale, const Vector3 &position,
-    const Quaternion& rotation)
+    const Quaternion &rotation)
 {
     if (!custom)
     {
@@ -780,7 +780,7 @@ void CollisionShape::SetPosition(const Vector3 &position)
     }
 }
 
-void CollisionShape::SetRotation(const Quaternion& rotation)
+void CollisionShape::SetRotation(const Quaternion &rotation)
 {
     if (rotation != rotation_)
     {
@@ -790,7 +790,7 @@ void CollisionShape::SetRotation(const Quaternion& rotation)
     }
 }
 
-void CollisionShape::SetTransform(const Vector3 &position, const Quaternion& rotation)
+void CollisionShape::SetTransform(const Vector3 &position, const Quaternion &rotation)
 {
     if (position != position_ || rotation != rotation_)
     {

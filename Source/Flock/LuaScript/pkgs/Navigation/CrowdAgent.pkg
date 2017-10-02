@@ -44,8 +44,8 @@ class CrowdAgent : public Component
 {
     void DrawDebugGeometry(bool depthTest);
 
-    void SetTargetPosition(const Vector3& position);
-    void SetTargetVelocity(const Vector3& velocity);
+    void SetTargetPosition(const Vector3 &position);
+    void SetTargetVelocity(const Vector3 &velocity);
     void ResetTarget();
     void SetUpdateNodePosition(bool unodepos);
     void SetMaxAccel(float maxAccel);
@@ -60,8 +60,8 @@ class CrowdAgent : public Component
     Vector3 GetPosition() const;
     Vector3 GetDesiredVelocity() const;
     Vector3 GetActualVelocity() const;
-    const Vector3& GetTargetPosition() const;
-    const Vector3& GetTargetVelocity() const;
+    const Vector3 &GetTargetPosition() const;
+    const Vector3 &GetTargetVelocity() const;
     CrowdAgentRequestedTarget GetRequestedTargetType() const;
     CrowdAgentState GetAgentState() const;
     CrowdAgentTargetState GetTargetState() const;

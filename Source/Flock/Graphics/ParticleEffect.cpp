@@ -587,7 +587,7 @@ void ParticleEffect::SetSizeMul(float sizeMul)
     sizeMul_ = sizeMul;
 }
 
-void ParticleEffect::AddColorTime(const Color& color, const float time)
+void ParticleEffect::AddColorTime(const Color &color, const float time)
 {
     unsigned s = colorFrames_.Size();
     colorFrames_.Resize(s + 1);
@@ -662,7 +662,7 @@ void ParticleEffect::SortColorFrames()
         AddColorFrame(cf[i]);
 }
 
-void ParticleEffect::AddTextureTime(const Rect& uv, const float time)
+void ParticleEffect::AddTextureTime(const Rect &uv, const float time)
 {
     unsigned s = textureFrames_.Size();
     textureFrames_.Resize(s + 1);

@@ -821,12 +821,12 @@ bool Image::SetSize(int width, int height, int depth, unsigned components)
     return true;
 }
 
-void Image::SetPixel(int x, int y, const Color& color)
+void Image::SetPixel(int x, int y, const Color &color)
 {
     SetPixelInt(x, y, 0, color.ToUInt());
 }
 
-void Image::SetPixel(int x, int y, int z, const Color& color)
+void Image::SetPixel(int x, int y, int z, const Color &color)
 {
     SetPixelInt(x, y, z, color.ToUInt());
 }
@@ -1111,7 +1111,7 @@ bool Image::Resize(int width, int height)
     return true;
 }
 
-void Image::Clear(const Color& color)
+void Image::Clear(const Color &color)
 {
     ClearInt(color.ToUInt());
 }
@@ -1899,7 +1899,7 @@ CompressedLevel Image::GetCompressedLevel(unsigned index) const
     }
 }
 
-Image* Image::GetSubimage(const IntRect& rect) const
+Image* Image::GetSubimage(const IntRect &rect) const
 {
     if (!data_)
         return 0;
@@ -2007,7 +2007,7 @@ Image* Image::GetSubimage(const IntRect& rect) const
     }
 }
 
-SDL_Surface* Image::GetSDLSurface(const IntRect& rect) const
+SDL_Surface* Image::GetSDLSurface(const IntRect &rect) const
 {
     if (!data_)
         return 0;

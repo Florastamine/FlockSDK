@@ -15,11 +15,11 @@ class CustomGeometry : public Drawable
     void SetNumGeometries(unsigned num);
     void SetDynamic(bool enable);
     void BeginGeometry(unsigned index, PrimitiveType type);
-    void DefineVertex(const Vector3& position);
-    void DefineNormal(const Vector3& normal);
-    void DefineTangent(const Vector4& tangent);
-    void DefineColor(const Color& color);
-    void DefineTexCoord(const Vector2& texCoord);
+    void DefineVertex(const Vector3 &position);
+    void DefineNormal(const Vector3 &normal);
+    void DefineTangent(const Vector4 &tangent);
+    void DefineColor(const Color &color);
+    void DefineTexCoord(const Vector2 &texCoord);
     void DefineGeometry(unsigned index, PrimitiveType type, unsigned numVertices, bool hasNormals, bool hasColors, bool hasTexCoords, bool hasTangents);
     void Commit();
     void SetMaterial(Material* material);

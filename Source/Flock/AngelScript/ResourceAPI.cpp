@@ -39,17 +39,17 @@ void RegisterResource(asIScriptEngine* engine)
     RegisterResource<Resource>(engine, "Resource");
 }
 
-static Resource* ResourceCacheGetResource(const String& type, const String& name, bool sendEventOnFailure, ResourceCache* ptr)
+static Resource* ResourceCacheGetResource(const String &type, const String &name, bool sendEventOnFailure, ResourceCache* ptr)
 {
     return ptr->GetResource(StringHash(type), name, sendEventOnFailure);
 }
 
-static Resource* ResourceCacheGetExistingResource(const String& type, const String& name, ResourceCache* ptr)
+static Resource* ResourceCacheGetExistingResource(const String &type, const String &name, ResourceCache* ptr)
 {
     return ptr->GetExistingResource(StringHash(type), name);
 }
 
-static File* ResourceCacheGetFile(const String& name, ResourceCache* ptr)
+static File* ResourceCacheGetFile(const String &name, ResourceCache* ptr)
 {
     SharedPtr<File> file = ptr->GetFile(name);
     // The shared pointer will go out of scope, so have to increment the reference count
@@ -66,32 +66,32 @@ static CScriptArray* ResourceCacheGetResources(StringHash type, ResourceCache* p
     return VectorToHandleArray(resources, "Array<Resource@>");
 }
 
-static CScriptArray* ResourceCacheGetResourcesString(const String& type, ResourceCache* ptr)
+static CScriptArray* ResourceCacheGetResourcesString(const String &type, ResourceCache* ptr)
 {
     return ResourceCacheGetResources(StringHash(type), ptr);
 }
 
-static void ResourceCacheReleaseResource(const String& type, const String& name, bool force, ResourceCache* ptr)
+static void ResourceCacheReleaseResource(const String &type, const String &name, bool force, ResourceCache* ptr)
 {
     ptr->ReleaseResource(type, name, force);
 }
 
-static void ResourceCacheReleaseResourcesPartial(const String& type, const String& partialName, bool force, ResourceCache* ptr)
+static void ResourceCacheReleaseResourcesPartial(const String &type, const String &partialName, bool force, ResourceCache* ptr)
 {
     ptr->ReleaseResources(type, partialName, force);
 }
 
-static void ResourceCacheSetMemoryBudget(const String& type, unsigned long long budget, ResourceCache* ptr)
+static void ResourceCacheSetMemoryBudget(const String &type, unsigned long long budget, ResourceCache* ptr)
 {
     ptr->SetMemoryBudget(type, budget);
 }
 
-static unsigned long long ResourceCacheGetMemoryBudget(const String& type, ResourceCache* ptr)
+static unsigned long long ResourceCacheGetMemoryBudget(const String &type, ResourceCache* ptr)
 {
     return ptr->GetMemoryBudget(type);
 }
 
-static unsigned long long ResourceCacheGetMemoryUse(const String& type, ResourceCache* ptr)
+static unsigned long long ResourceCacheGetMemoryUse(const String &type, ResourceCache* ptr)
 {
     return ptr->GetMemoryUse(type);
 }
@@ -111,7 +111,7 @@ static CScriptArray* ResourceCacheGetPackageFiles(ResourceCache* ptr)
     return VectorToHandleArray<PackageFile>(ptr->GetPackageFiles(), "Array<PackageFile@>");
 }
 
-static bool ResourceCacheBackgroundLoadResource(const String& type, const String& name, bool sendEventOnFailure, ResourceCache* ptr)
+static bool ResourceCacheBackgroundLoadResource(const String &type, const String &name, bool sendEventOnFailure, ResourceCache* ptr)
 {
     return ptr->BackgroundLoadResource(type, name, sendEventOnFailure);
 }
@@ -279,7 +279,7 @@ static void ConstructJSONValueDouble(double value, JSONValue* ptr)
     new (ptr) JSONValue(value);
 }
 
-static void ConstructJSONValueString(const String& value, JSONValue* ptr)
+static void ConstructJSONValueString(const String &value, JSONValue* ptr)
 {
     new (ptr) JSONValue(value);
 }
@@ -299,7 +299,7 @@ static JSONValue& JSONValueAtPosition(unsigned position, JSONValue& jsonValue)
     return jsonValue[position];
 }
 
-static JSONValue& JSONValueAtKey(const String& key, JSONValue& jsonValue)
+static JSONValue& JSONValueAtKey(const String &key, JSONValue& jsonValue)
 {
     return jsonValue[key];
 }
@@ -397,7 +397,7 @@ static void RegisterJSONValue(asIScriptEngine* engine)
     engine->RegisterObjectMethod("JSONValue", "uint GetUInt() const", asMETHOD(JSONValue, GetUInt), asCALL_THISCALL);
     engine->RegisterObjectMethod("JSONValue", "float GetFloat() const", asMETHOD(JSONValue, GetFloat), asCALL_THISCALL);
     engine->RegisterObjectMethod("JSONValue", "double GetDouble() const", asMETHOD(JSONValue, GetDouble), asCALL_THISCALL);
-    engine->RegisterObjectMethod("JSONValue", "const String& GetString() const", asMETHOD(JSONValue, GetString), asCALL_THISCALL);
+    engine->RegisterObjectMethod("JSONValue", "const String &GetString() const", asMETHOD(JSONValue, GetString), asCALL_THISCALL);
     engine->RegisterObjectMethod("JSONValue", "Variant GetVariant() const", asMETHOD(JSONValue, GetVariant), asCALL_THISCALL);
     engine->RegisterObjectMethod("JSONValue", "VariantMap GetVariantMap() const", asMETHOD(JSONValue, GetVariantMap), asCALL_THISCALL);
 
@@ -423,7 +423,7 @@ static void RegisterJSONValue(asIScriptEngine* engine)
     engine->RegisterObjectMethod("JSONValue", "Array<JSONValue>@ get_values() const", asFUNCTION(JSONValueGetValues), asCALL_CDECL_OBJLAST);
 }
 
-static bool JSONFileSave(File* file, const String& indendation, JSONFile* ptr)
+static bool JSONFileSave(File* file, const String &indendation, JSONFile* ptr)
 {
     return file && ptr->Save(*file, indendation);
 }
@@ -494,7 +494,7 @@ static void ConstructXPathQuery(XPathQuery* ptr)
     new(ptr) XPathQuery();
 }
 
-static void ConstructXPathQueryWithString(const String& queryString, const String& variableString, XPathQuery* ptr)
+static void ConstructXPathQueryWithString(const String &queryString, const String &variableString, XPathQuery* ptr)
 {
     new(ptr) XPathQuery(queryString, variableString);
 }
@@ -606,14 +606,14 @@ static void RegisterXMLElement(asIScriptEngine* engine)
     engine->RegisterObjectMethod("XPathResultSet", "bool get_empty()", asMETHOD(XPathResultSet, Empty), asCALL_THISCALL);
 
     engine->RegisterObjectBehaviour("XPathQuery", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructXPathQuery), asCALL_CDECL_OBJLAST);
-    engine->RegisterObjectBehaviour("XPathQuery", asBEHAVE_CONSTRUCT, "void f(const String&in, const String& arg1 = String())", asFUNCTION(ConstructXPathQueryWithString), asCALL_CDECL_OBJLAST);
+    engine->RegisterObjectBehaviour("XPathQuery", asBEHAVE_CONSTRUCT, "void f(const String&in, const String &arg1 = String())", asFUNCTION(ConstructXPathQueryWithString), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectBehaviour("XPathQuery", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(DestructXPathQuery), asCALL_CDECL_OBJLAST);
     engine->RegisterObjectMethod("XPathQuery", "void Bind()", asMETHOD(XPathQuery, Bind), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "bool SetVariable(const String&in, bool)", asMETHODPR(XPathQuery, SetVariable, (const String&, bool), bool), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "bool SetVariable(const String&in, float)", asMETHODPR(XPathQuery, SetVariable, (const String&, float), bool), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "bool SetVariable(const String&in, const String&in)", asMETHODPR(XPathQuery, SetVariable, (const String&, const String&), bool), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "bool SetVariable(const String&in, const XPathResultSet&in)", asMETHODPR(XPathQuery, SetVariable, (const String&, const XPathResultSet&), bool), asCALL_THISCALL);
-    engine->RegisterObjectMethod("XPathQuery", "bool SetQuery(const String&, const String& arg1 = String(), bool arg2 = true)", asMETHOD(XPathQuery, SetQuery), asCALL_THISCALL);
+    engine->RegisterObjectMethod("XPathQuery", "bool SetQuery(const String&, const String &arg1 = String(), bool arg2 = true)", asMETHOD(XPathQuery, SetQuery), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "void Clear()", asMETHOD(XPathQuery, Clear), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "bool EvaluateToBool(XMLElement)", asMETHOD(XPathQuery, EvaluateToBool), asCALL_THISCALL);
     engine->RegisterObjectMethod("XPathQuery", "float EvaluateToFloat(XMLElement)", asMETHOD(XPathQuery, EvaluateToFloat), asCALL_THISCALL);
@@ -628,7 +628,7 @@ static XMLElement XMLFileGetRootDefault(XMLFile* ptr)
     return ptr->GetRoot();
 }
 
-static bool XMLFileSave(File* file, const String& indendation, XMLFile* ptr)
+static bool XMLFileSave(File* file, const String &indendation, XMLFile* ptr)
 {
     return file && ptr->Save(*file, indendation);
 }

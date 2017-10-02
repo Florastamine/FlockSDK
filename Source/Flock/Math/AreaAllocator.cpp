@@ -95,7 +95,7 @@ bool AreaAllocator::Allocate(int width, int height, int& x, int& y)
                 int oldWidth = size_.x_;
                 size_.x_ <<= 1;
                 // If no allocations yet, simply expand the single free area
-                IntRect& first = freeAreas_.Front();
+                IntRect &first = freeAreas_.Front();
                 if (freeAreas_.Size() == 1 && first.left_ == 0 && first.top_ == 0 && first.right_ == oldWidth &&
                     first.bottom_ == size_.y_)
                     first.right_ = size_.x_;
@@ -110,7 +110,7 @@ bool AreaAllocator::Allocate(int width, int height, int& x, int& y)
                 int oldHeight = size_.y_;
                 size_.y_ <<= 1;
                 // If no allocations yet, simply expand the single free area
-                IntRect& first = freeAreas_.Front();
+                IntRect &first = freeAreas_.Front();
                 if (freeAreas_.Size() == 1 && first.left_ == 0 && first.top_ == 0 && first.right_ == size_.x_ &&
                     first.bottom_ == oldHeight)
                     first.bottom_ = size_.y_;
@@ -161,7 +161,7 @@ bool AreaAllocator::Allocate(int width, int height, int& x, int& y)
     return true;
 }
 
-bool AreaAllocator::SplitRect(unsigned freeAreaIndex, const IntRect& reserve)
+bool AreaAllocator::SplitRect(unsigned freeAreaIndex, const IntRect &reserve)
 {
     // Make a copy, as the vector will be modified
     IntRect original = freeAreas_[freeAreaIndex];

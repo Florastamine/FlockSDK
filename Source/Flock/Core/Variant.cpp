@@ -738,7 +738,7 @@ template <> const Vector4 &Variant::Get<const Vector4&>() const
     return GetVector4();
 }
 
-template <> const Quaternion& Variant::Get<const Quaternion&>() const
+template <> const Quaternion &Variant::Get<const Quaternion&>() const
 {
     return GetQuaternion();
 }

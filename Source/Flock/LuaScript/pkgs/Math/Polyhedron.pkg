@@ -10,8 +10,8 @@ class Polyhedron
 
     void Define(const BoundingBox& box);
     void Define(const Frustum& frustum);
-    void AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2);
-    void AddFace(const Vector3& v0, const Vector3& v1, const Vector3& v2, const Vector3& v3);
+    void AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2);
+    void AddFace(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2, const Vector3 &v3);
     void Clip(const Plane& plane);
     void Clip(const BoundingBox& box);
     void Clip(const Frustum& box);

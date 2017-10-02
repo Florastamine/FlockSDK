@@ -48,7 +48,7 @@ static void RegisterConsole(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Console", "void set_autoVisibleOnError(bool)", asMETHOD(Console, SetAutoVisibleOnError), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "bool get_autoVisibleOnError() const", asMETHOD(Console, IsAutoVisibleOnError), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "void set_commandInterpreter(const String&in)", asMETHOD(Console, SetCommandInterpreter), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Console", "const String& get_commandInterpreter() const", asMETHOD(Console, GetCommandInterpreter), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Console", "const String &get_commandInterpreter() const", asMETHOD(Console, GetCommandInterpreter), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "void set_numBufferedRows(uint)", asMETHOD(Console, SetNumBufferedRows), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "uint get_numBufferedRows() const", asMETHOD(Console, GetNumBufferedRows), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "void set_numRows(uint)", asMETHOD(Console, SetNumRows), asCALL_THISCALL);
@@ -58,7 +58,7 @@ static void RegisterConsole(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Console", "void set_focusOnShow(bool)", asMETHOD(Console, SetFocusOnShow), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "bool get_focusOnShow() const", asMETHOD(Console, GetFocusOnShow), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "uint get_historyPosition() const", asMETHOD(Console, GetHistoryPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Console", "const String& get_historyRow(uint) const", asMETHOD(Console, GetHistoryRow), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Console", "const String &get_historyRow(uint) const", asMETHOD(Console, GetHistoryRow), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "BorderImage@+ get_background() const", asMETHOD(Console, GetBackground), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "LineEdit@+ get_lineEdit() const", asMETHOD(Console, GetLineEdit), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "Button@+ get_closeButton() const", asMETHOD(Console, GetCloseButton), asCALL_THISCALL);

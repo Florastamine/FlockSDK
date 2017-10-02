@@ -59,12 +59,12 @@ static int tolua_ResourceLuaAPI_GetCache00(lua_State* tolua_S)
 #define TOLUA_DISABLE_tolua_get_cache_ptr
 #define tolua_get_cache_ptr tolua_ResourceLuaAPI_GetCache00
 
-static File* ResourceCacheGetFile(ResourceCache* cache, const String& fileName)
+static File* ResourceCacheGetFile(ResourceCache* cache, const String &fileName)
 {
     return cache->GetFile(fileName).Detach();
 }
 
-static bool ResourceCacheBackgroundLoadResource(ResourceCache* cache, StringHash type, const String& fileName, bool sendEventOnFailure)
+static bool ResourceCacheBackgroundLoadResource(ResourceCache* cache, StringHash type, const String &fileName, bool sendEventOnFailure)
 {
     return cache->BackgroundLoadResource(type, fileName, sendEventOnFailure);
 }

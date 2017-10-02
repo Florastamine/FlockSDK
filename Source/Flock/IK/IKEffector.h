@@ -111,9 +111,9 @@ public:
     void SetTargetPosition(const Vector3 &targetPosition);
 
     /// Gets the current target rotation in world space.
-    const Quaternion& GetTargetRotation() const;
+    const Quaternion &GetTargetRotation() const;
     /// Sets the current target rotation. If the effector has a target node then this will have no effect.
-    void SetTargetRotation(const Quaternion& targetRotation);
+    void SetTargetRotation(const Quaternion &targetRotation);
 
     /// Required for the editor, get the target rotation in euler angles
     Vector3 GetTargetRotationEuler() const;

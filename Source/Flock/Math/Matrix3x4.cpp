@@ -38,7 +38,7 @@ const Matrix3x4 Matrix3x4::ZERO(
 
 const Matrix3x4 Matrix3x4::IDENTITY;
 
-void Matrix3x4::Decompose(Vector3 &translation, Quaternion& rotation, Vector3 &scale) const
+void Matrix3x4::Decompose(Vector3 &translation, Quaternion &rotation, Vector3 &scale) const
 {
     translation.x_ = m03_;
     translation.y_ = m13_;

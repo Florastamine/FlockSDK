@@ -17,8 +17,8 @@ class Material : public Resource
     void SetShaderParameterAnimationWrapMode(const String name, WrapMode wrapMode);
     void SetShaderParameterAnimationSpeed(const String name, float speed);
     void SetTexture(TextureUnit unit, Texture* texture);
-    void SetUVTransform(const Vector2& offset, float rotation, const Vector2& repeat);
-    void SetUVTransform(const Vector2& offset, float rotation, float repeat);
+    void SetUVTransform(const Vector2 &offset, float rotation, const Vector2 &repeat);
+    void SetUVTransform(const Vector2 &offset, float rotation, float repeat);
     void SetCullMode(CullMode mode);
     void SetShadowCullMode(CullMode mode);
     void SetFillMode(FillMode mode);
@@ -90,7 +90,7 @@ static int tolua_GraphicsLuaAPI_Material_new00_local(lua_State* tolua_S)
     return ToluaNewObjectGC<Material>(tolua_S);
 }
 
-static Material* MaterialClone(const Material* material, const String& cloneName = String::EMPTY)
+static Material* MaterialClone(const Material* material, const String &cloneName = String::EMPTY)
 {
     if (!material)
         return 0;

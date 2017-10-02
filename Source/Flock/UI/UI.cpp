@@ -705,7 +705,7 @@ IntVector2 UI::GetCursorPosition() const
     return cursor_ ? cursor_->GetPosition() : GetSubsystem<Input>()->GetMousePosition();
 }
 
-UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition)
+UIElement* UI::GetElementAt(const IntVector2 &position, bool enabledOnly, IntVector2* elementScreenPosition)
 {
     UIElement* result = nullptr;
 
@@ -749,11 +749,11 @@ UIElement* UI::GetElementAt(const IntVector2 &position, bool enabledOnly)
     return GetElementAt(position, enabledOnly, nullptr);
 }
 
-UIElement* UI::GetElementAt(UIElement* root, const IntVector2& position, bool enabledOnly)
+UIElement* UI::GetElementAt(UIElement* root, const IntVector2 &position, bool enabledOnly)
 {
     IntVector2 positionCopy(position);
-    const IntVector2& rootSize = root->GetSize();
-    const IntVector2& rootPos = root->GetPosition();
+    const IntVector2 &rootSize = root->GetSize();
+    const IntVector2 &rootPos = root->GetPosition();
 
     // If position is out of bounds of root element return null.
     if (position.x_ < rootPos.x_ || position.x_ > rootPos.x_ + rootSize.x_)

@@ -273,7 +273,7 @@ void CustomGeometry::DefineNormal(const Vector3 &normal)
     elementMask_ |= MASK_NORMAL;
 }
 
-void CustomGeometry::DefineColor(const Color& color)
+void CustomGeometry::DefineColor(const Color &color)
 {
     if (vertices_.Size() < geometryIndex_ || vertices_[geometryIndex_].Empty())
         return;

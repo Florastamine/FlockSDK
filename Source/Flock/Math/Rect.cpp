@@ -51,7 +51,7 @@ String IntRect::ToString() const
     return String(tempBuffer);
 }
 
-void Rect::Clip(const Rect& rect)
+void Rect::Clip(const Rect &rect)
 {
     if (rect.min_.x_ > min_.x_)
         min_.x_ = rect.min_.x_;

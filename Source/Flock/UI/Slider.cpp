@@ -228,7 +228,7 @@ bool Slider::FilterImplicitAttributes(XMLElement& dest) const
 
 void Slider::UpdateSlider()
 {
-    const IntRect& border = knob_->GetBorder();
+    const IntRect &border = knob_->GetBorder();
 
     if (range_ > 0.0f)
     {

@@ -51,7 +51,7 @@ public:
     /// Set texture.
     void SetTexture(Texture2D* texture);
     /// Set rectangle.
-    void SetRectangle(const IntRect& rectangle);
+    void SetRectangle(const IntRect &rectangle);
     /// Set hot spot.
     void SetHotSpot(const Vector2 &hotSpot);
     /// Set offset.
@@ -65,7 +65,7 @@ public:
     Texture2D* GetTexture() const { return texture_; }
 
     /// Return rectangle.
-    const IntRect& GetRectangle() const { return rectangle_; }
+    const IntRect &GetRectangle() const { return rectangle_; }
 
     /// Return hot spot.
     const Vector2 &GetHotSpot() const { return hotSpot_; }
@@ -81,11 +81,11 @@ public:
 
 
     /// Return draw rectangle.
-    bool GetDrawRectangle(Rect& rect, bool flipX = false, bool flipY = false) const;
+    bool GetDrawRectangle(Rect &rect, bool flipX = false, bool flipY = false) const;
     /// Return draw rectangle with custom hot spot.
-    bool GetDrawRectangle(Rect& rect, const Vector2 &hotSpot, bool flipX = false, bool flipY = false) const;
+    bool GetDrawRectangle(Rect &rect, const Vector2 &hotSpot, bool flipX = false, bool flipY = false) const;
     /// Return texture rectangle.
-    bool GetTextureRectangle(Rect& rect, bool flipX = false, bool flipY = false) const;
+    bool GetTextureRectangle(Rect &rect, bool flipX = false, bool flipY = false) const;
 
     /// Save sprite to ResourceRef.
     static ResourceRef SaveToResourceRef(Sprite2D* sprite);

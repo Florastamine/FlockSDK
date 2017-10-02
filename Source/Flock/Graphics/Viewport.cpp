@@ -54,7 +54,7 @@ Viewport::Viewport(Context* context, Scene* scene, Camera* camera, RenderPath* r
     SetRenderPath(renderPath);
 }
 
-Viewport::Viewport(Context* context, Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath) :
+Viewport::Viewport(Context* context, Scene* scene, Camera* camera, const IntRect &rect, RenderPath* renderPath) :
     Object(context),
     scene_(scene),
     camera_(camera),
@@ -83,7 +83,7 @@ void Viewport::SetCullCamera(Camera* camera)
     cullCamera_ = camera;
 }
 
-void Viewport::SetRect(const IntRect& rect)
+void Viewport::SetRect(const IntRect &rect)
 {
     rect_ = rect;
 }

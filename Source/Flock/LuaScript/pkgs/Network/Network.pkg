@@ -67,7 +67,7 @@ static int tolua_NetworkLuaAPI_GetNetwork00(lua_State* tolua_S)
 #define TOLUA_DISABLE_tolua_get_network_ptr
 #define tolua_get_network_ptr tolua_NetworkLuaAPI_GetNetwork00
 
-static HttpRequest* NetworkMakeHttpRequest(Network* network, const String& url, const String& verb = String::EMPTY, const Vector<String>& headers = Vector<String>(), const String postData = String::EMPTY)
+static HttpRequest* NetworkMakeHttpRequest(Network* network, const String &url, const String &verb = String::EMPTY, const Vector<String>& headers = Vector<String>(), const String postData = String::EMPTY)
 {
     if (!network)
         return 0;

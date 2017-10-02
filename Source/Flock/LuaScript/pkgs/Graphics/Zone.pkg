@@ -3,8 +3,8 @@ $#include "Graphics/Zone.h"
 class Zone : public Drawable
 {
     void SetBoundingBox(const BoundingBox& box);
-    void SetAmbientColor(const Color& color);
-    void SetFogColor(const Color& color);
+    void SetAmbientColor(const Color &color);
+    void SetFogColor(const Color &color);
     void SetFogStart(float start);
     void SetFogEnd(float end);
     void SetFogHeight(float height);
@@ -16,10 +16,10 @@ class Zone : public Drawable
     void SetZoneTexture(Texture* texture);
     
     const Matrix3x4& GetInverseWorldTransform() const;
-    const Color& GetAmbientColor() const;
-    const Color& GetAmbientStartColor();
-    const Color& GetAmbientEndColor();
-    const Color& GetFogColor() const;
+    const Color &GetAmbientColor() const;
+    const Color &GetAmbientStartColor();
+    const Color &GetAmbientEndColor();
+    const Color &GetFogColor() const;
     float GetFogStart() const;
     float GetFogEnd() const;
     float GetFogHeight() const;
@@ -30,14 +30,14 @@ class Zone : public Drawable
     bool GetAmbientGradient() const;
     Texture* GetZoneTexture() const;
     
-    bool IsInside(const Vector3& point) const;
+    bool IsInside(const Vector3 &point) const;
     
     tolua_property__get_set BoundingBox& boundingBox;
     tolua_readonly tolua_property__get_set Matrix3x4& inverseWorldTransform;
-    tolua_property__get_set Color& ambientColor;
-    tolua_readonly tolua_property__get_set Color& ambientStartColor;
-    tolua_readonly tolua_property__get_set Color& ambientEndColor;
-    tolua_property__get_set Color& fogColor;
+    tolua_property__get_set Color &ambientColor;
+    tolua_readonly tolua_property__get_set Color &ambientStartColor;
+    tolua_readonly tolua_property__get_set Color &ambientEndColor;
+    tolua_property__get_set Color &fogColor;
     tolua_property__get_set float fogStart;
     tolua_property__get_set float fogEnd;
     tolua_property__get_set float fogHeight;

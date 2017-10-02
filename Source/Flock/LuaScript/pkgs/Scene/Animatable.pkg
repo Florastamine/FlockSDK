@@ -10,7 +10,7 @@ class Animatable : Serializable
     void SetAttributeAnimation(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f);
     void SetAttributeAnimationWrapMode(const String name, WrapMode wrapMode);
     void SetAttributeAnimationSpeed(const String name, float speed);
-    void SetAttributeAnimationTime(const String& name, float time);
+    void SetAttributeAnimationTime(const String &name, float time);
     void RemoveObjectAnimation();
     void RemoveAttributeAnimation(const String name);
 

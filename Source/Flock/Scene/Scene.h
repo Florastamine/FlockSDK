@@ -128,17 +128,17 @@ public:
     /// Stop asynchronous loading.
     void StopAsyncLoading();
     /// Instantiate scene content from binary data. Return root node if successful.
-    Node* Instantiate(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* Instantiate(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML
-        (const XMLElement& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+        (const XMLElement& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
-    Node* InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* InstantiateXML(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
     Node* InstantiateJSON
-        (const JSONValue& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+        (const JSONValue& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
-    Node* InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+    Node* InstantiateJSON(Deserializer& source, const Vector3 &position, const Quaternion &rotation, CreateMode mode = REPLICATED);
 
     /// Clear scene completely of either replicated, local or all nodes and components.
     void Clear(bool clearReplicated = true, bool clearLocal = true);

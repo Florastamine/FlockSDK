@@ -324,7 +324,7 @@ bool XMLElement::SetBuffer(const String &name, const PODVector<unsigned char>& v
         return SetBuffer(name, &value[0], value.Size());
 }
 
-bool XMLElement::SetColor(const String &name, const Color& value)
+bool XMLElement::SetColor(const String &name, const Color &value)
 {
     return SetAttribute(name, value.ToString());
 }
@@ -359,7 +359,7 @@ bool XMLElement::SetInt64(const String &name, long long value)
     return SetAttribute(name, String(value));
 }
 
-bool XMLElement::SetIntRect(const String &name, const IntRect& value)
+bool XMLElement::SetIntRect(const String &name, const IntRect &value)
 {
     return SetAttribute(name, value.ToString());
 }
@@ -374,12 +374,12 @@ bool XMLElement::SetIntVector3(const String &name, const IntVector3 &value)
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetRect(const String &name, const Rect& value)
+bool XMLElement::SetRect(const String &name, const Rect &value)
 {
     return SetAttribute(name, value.ToString());
 }
 
-bool XMLElement::SetQuaternion(const String &name, const Quaternion& value)
+bool XMLElement::SetQuaternion(const String &name, const Quaternion &value)
 {
     return SetAttribute(name, value.ToString());
 }

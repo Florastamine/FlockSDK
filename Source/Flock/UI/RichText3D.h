@@ -135,17 +135,17 @@ public:
     virtual ~RichText3D();
 
     /// Set display text inside the view.
-    void SetText(const String& text);
+    void SetText(const String &text);
     /// Get currently displayed text (as markup).
-    const String& GetText() const;
+    const String &GetText() const;
     /// Set the default font for blocks without formatting.
-    void SetDefaultFont(const String& face, unsigned size);
+    void SetDefaultFont(const String &face, unsigned size);
     /// Get default font name
     String GetDefaultFontName() const { return defaultFontState_.face; }
     /// Get default font size
     unsigned GetDefaultFontSize() const { return defaultFontState_.size; }
     /// Set text color.
-    void SetTextColor(const Color& color);
+    void SetTextColor(const Color &color);
     /// Get text color.
     Color GetTextColor() const { return defaultFontState_.color; }
     /// Set text alignment.

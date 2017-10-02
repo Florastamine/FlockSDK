@@ -46,7 +46,7 @@ public:
     }
 
     /// Copy-construct from another color.
-    Color(const Color& color) :
+    Color(const Color &color) :
         r_(color.r_),
         g_(color.g_),
         b_(color.b_),
@@ -55,7 +55,7 @@ public:
     }
 
     /// Construct from another color and modify the alpha.
-    Color(const Color& color, float a) :
+    Color(const Color &color, float a) :
         r_(color.r_),
         g_(color.g_),
         b_(color.b_),
@@ -91,7 +91,7 @@ public:
     }
     
     /// Assign from another color.
-    Color& operator =(const Color& rhs)
+    Color &operator =(const Color &rhs)
     {
         r_ = rhs.r_;
         g_ = rhs.g_;
@@ -101,25 +101,25 @@ public:
     }    
 
     /// Test for equality with another color without epsilon.
-    bool operator ==(const Color& rhs) const { return r_ == rhs.r_ && g_ == rhs.g_ && b_ == rhs.b_ && a_ == rhs.a_; }
+    bool operator ==(const Color &rhs) const { return r_ == rhs.r_ && g_ == rhs.g_ && b_ == rhs.b_ && a_ == rhs.a_; }
 
     /// Test for inequality with another color without epsilon.
-    bool operator !=(const Color& rhs) const { return r_ != rhs.r_ || g_ != rhs.g_ || b_ != rhs.b_ || a_ != rhs.a_; }
+    bool operator !=(const Color &rhs) const { return r_ != rhs.r_ || g_ != rhs.g_ || b_ != rhs.b_ || a_ != rhs.a_; }
 
     /// Multiply with a scalar.
     Color operator *(float rhs) const { return Color(r_ * rhs, g_ * rhs, b_ * rhs, a_ * rhs); }
 
     /// Add a color.
-    Color operator +(const Color& rhs) const { return Color(r_ + rhs.r_, g_ + rhs.g_, b_ + rhs.b_, a_ + rhs.a_); }
+    Color operator +(const Color &rhs) const { return Color(r_ + rhs.r_, g_ + rhs.g_, b_ + rhs.b_, a_ + rhs.a_); }
 
     /// Return negation.
     Color operator -() const { return Color(-r_, -g_, -b_, -a_); }
 
     /// Subtract a color.
-    Color operator -(const Color& rhs) const { return Color(r_ - rhs.r_, g_ - rhs.g_, b_ - rhs.b_, a_ - rhs.a_); }
+    Color operator -(const Color &rhs) const { return Color(r_ - rhs.r_, g_ - rhs.g_, b_ - rhs.b_, a_ - rhs.a_); }
 
     /// Add-assign a color.
-    Color& operator +=(const Color& rhs)
+    Color &operator +=(const Color &rhs)
     {
         r_ += rhs.r_;
         g_ += rhs.g_;
@@ -186,13 +186,13 @@ public:
     /// Inverts the RGB channels and optionally the alpha channel as well.
     void Invert(bool invertAlpha = false);
     /// Return linear interpolation of this color with another color.
-    Color Lerp(const Color& rhs, float t) const;
+    Color Lerp(const Color &rhs, float t) const;
 
     /// Return color with absolute components.
     Color Abs() const { return Color(FlockSDK::Abs(r_), FlockSDK::Abs(g_), FlockSDK::Abs(b_), FlockSDK::Abs(a_)); }
 
     /// Test for equality with another color with epsilon.
-    bool Equals(const Color& rhs) const
+    bool Equals(const Color &rhs) const
     {
         return FlockSDK::Equals(r_, rhs.r_) && FlockSDK::Equals(g_, rhs.g_) && FlockSDK::Equals(b_, rhs.b_) && FlockSDK::Equals(a_, rhs.a_);
     }
@@ -253,6 +253,6 @@ protected:
 };
 
 /// Multiply Color with a scalar.
-inline Color operator *(float lhs, const Color& rhs) { return rhs * lhs; }
+inline Color operator *(float lhs, const Color &rhs) { return rhs * lhs; }
 
 }

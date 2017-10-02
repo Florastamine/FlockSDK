@@ -14,7 +14,7 @@ class ParticleEffect2D : public Resource
 };
 
 ${
-static ParticleEffect2D* ParticleEffect2DClone(const ParticleEffect2D* effect, const String& cloneName = String::EMPTY)
+static ParticleEffect2D* ParticleEffect2DClone(const ParticleEffect2D* effect, const String &cloneName = String::EMPTY)
 {
     if (!effect)
         return 0;

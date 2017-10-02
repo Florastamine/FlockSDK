@@ -91,11 +91,11 @@ static void RegisterCollisionShape(asIScriptEngine* engine)
     engine->RegisterObjectMethod("CollisionShape", "void set_shapeType(ShapeType)", asMETHOD(CollisionShape, SetShapeType), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "ShapeType get_shapeType() const", asMETHOD(CollisionShape, GetShapeType), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "void set_size(const Vector3&in)", asMETHOD(CollisionShape, SetSize), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CollisionShape", "const Vector3& get_size() const", asMETHOD(CollisionShape, GetSize), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CollisionShape", "const Vector3 &get_size() const", asMETHOD(CollisionShape, GetSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "void set_position(const Vector3&in)", asMETHOD(CollisionShape, SetPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CollisionShape", "const Vector3& get_position() const", asMETHOD(CollisionShape, GetPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CollisionShape", "const Vector3 &get_position() const", asMETHOD(CollisionShape, GetPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "void set_rotation(const Quaternion&in)", asMETHOD(CollisionShape, SetRotation), asCALL_THISCALL);
-    engine->RegisterObjectMethod("CollisionShape", "const Quaternion& get_rotation() const", asMETHOD(CollisionShape, GetRotation), asCALL_THISCALL);
+    engine->RegisterObjectMethod("CollisionShape", "const Quaternion &get_rotation() const", asMETHOD(CollisionShape, GetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "void set_margin(float)", asMETHOD(CollisionShape, SetMargin), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "float get_margin() const", asMETHOD(CollisionShape, GetMargin), asCALL_THISCALL);
     engine->RegisterObjectMethod("CollisionShape", "void set_model(Model@+)", asMETHOD(CollisionShape, SetModel), asCALL_THISCALL);
@@ -173,8 +173,8 @@ static void RegisterRigidBody(asIScriptEngine* engine)
     engine->RegisterObjectMethod("RigidBody", "void set_useGravity(bool)", asMETHOD(RigidBody, SetUseGravity), asCALL_THISCALL);
     engine->RegisterObjectMethod("RigidBody", "bool get_useGravity() const", asMETHOD(RigidBody, GetUseGravity), asCALL_THISCALL);
     engine->RegisterObjectMethod("RigidBody", "void set_gravityOverride(const Vector3&in)", asMETHOD(RigidBody, SetGravityOverride), asCALL_THISCALL);
-    engine->RegisterObjectMethod("RigidBody", "const Vector3& get_gravityOverride() const", asMETHOD(RigidBody, GetGravityOverride), asCALL_THISCALL);
-    engine->RegisterObjectMethod("RigidBody", "const Vector3& get_centerOfMass() const", asMETHOD(RigidBody, GetCenterOfMass), asCALL_THISCALL);
+    engine->RegisterObjectMethod("RigidBody", "const Vector3 &get_gravityOverride() const", asMETHOD(RigidBody, GetGravityOverride), asCALL_THISCALL);
+    engine->RegisterObjectMethod("RigidBody", "const Vector3 &get_centerOfMass() const", asMETHOD(RigidBody, GetCenterOfMass), asCALL_THISCALL);
     engine->RegisterObjectMethod("RigidBody", "void set_trigger(bool)", asMETHOD(RigidBody, SetTrigger), asCALL_THISCALL);
     engine->RegisterObjectMethod("RigidBody", "bool get_trigger() const", asMETHOD(RigidBody, IsTrigger), asCALL_THISCALL);
     engine->RegisterObjectMethod("RigidBody", "void set_kinematic(bool)", asMETHOD(RigidBody, SetKinematic), asCALL_THISCALL);
@@ -201,21 +201,21 @@ static void RegisterConstraint(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Constraint", "void set_constraintType(ConstraintType)", asMETHOD(Constraint, SetConstraintType), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "ConstraintType get_constraintType() const", asMETHOD(Constraint, GetConstraintType), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_position(const Vector3&in)", asMETHOD(Constraint, SetPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Vector3& get_position() const", asMETHOD(Constraint, GetPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Vector3 &get_position() const", asMETHOD(Constraint, GetPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_rotation(const Quaternion&in)", asMETHOD(Constraint, SetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_axis(const Vector3&in)", asMETHOD(Constraint, SetAxis), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Quaternion& get_rotation() const", asMETHOD(Constraint, GetRotation), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Quaternion &get_rotation() const", asMETHOD(Constraint, GetRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_otherPosition(const Vector3&in)", asMETHOD(Constraint, SetOtherPosition), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Vector3& get_otherPosition() const", asMETHOD(Constraint, GetOtherPosition), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Vector3 &get_otherPosition() const", asMETHOD(Constraint, GetOtherPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_otherRotation(const Quaternion&in)", asMETHOD(Constraint, SetOtherRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_otherAxis(const Vector3&in)", asMETHOD(Constraint, SetOtherAxis), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Quaternion& get_otherRotation() const", asMETHOD(Constraint, GetOtherRotation), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Quaternion &get_otherRotation() const", asMETHOD(Constraint, GetOtherRotation), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_worldPosition(const Vector3&in)", asMETHOD(Constraint, SetWorldPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "Vector3 get_worldPosition() const", asMETHOD(Constraint, GetWorldPosition), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_highLimit(const Vector2&in)", asMETHOD(Constraint, SetHighLimit), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Vector2& get_highLimit() const", asMETHOD(Constraint, GetHighLimit), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Vector2 &get_highLimit() const", asMETHOD(Constraint, GetHighLimit), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_lowLimit(const Vector2&in)", asMETHOD(Constraint, SetLowLimit), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Constraint", "const Vector2& get_lowLimit() const", asMETHOD(Constraint, GetLowLimit), asCALL_THISCALL);
+    engine->RegisterObjectMethod("Constraint", "const Vector2 &get_lowLimit() const", asMETHOD(Constraint, GetLowLimit), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_erp(float)", asMETHOD(Constraint, SetERP), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "float get_erp() const", asMETHOD(Constraint, GetERP), asCALL_THISCALL);
     engine->RegisterObjectMethod("Constraint", "void set_cfm(float)", asMETHOD(Constraint, SetCFM), asCALL_THISCALL);
@@ -255,7 +255,7 @@ static PhysicsRaycastResult PhysicsWorldSphereCast(const Ray& ray, float radius,
     return result;
 }
 
-static PhysicsRaycastResult PhysicsWorldConvexCast(CollisionShape* shape, const Vector3& startPos, const Quaternion& startRot, const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask, PhysicsWorld* ptr)
+static PhysicsRaycastResult PhysicsWorldConvexCast(CollisionShape* shape, const Vector3 &startPos, const Quaternion &startRot, const Vector3 &endPos, const Quaternion &endRot, unsigned collisionMask, PhysicsWorld* ptr)
 {
     PhysicsRaycastResult result;
     ptr->ConvexCast(result, shape, startPos, startRot, endPos, endRot, collisionMask);

@@ -59,7 +59,7 @@ void TileMap2D::RegisterObject(Context* context)
 
 void TileMap2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 {
-    const Color& color = Color::RED;
+    const Color &color = Color::RED;
     float mapW = info_.GetMapWidth();
     float mapH = info_.GetMapHeight();
 

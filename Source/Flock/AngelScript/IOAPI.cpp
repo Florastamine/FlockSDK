@@ -46,7 +46,7 @@ static Log* GetLog()
 
 #ifdef FLOCKSDK_LOGGING
 
-static void Print(const String& value, bool error)
+static void Print(const String &value, bool error)
 {
     Log::WriteRaw(value + "\n", error);
 }
@@ -93,34 +93,34 @@ static void PrintCallStack(bool error)
         Log::WriteRaw(Script::GetCallStack(context), error);
 }
 
-static void LogWrite(const String& str, bool error, Log* ptr)
+static void LogWrite(const String &str, bool error, Log* ptr)
 {
     Log::WriteRaw(str + "\n", error);
 }
 
-static void LogDebug(const String& str, Log* ptr)
+static void LogDebug(const String &str, Log* ptr)
 {
     Log::Write(LOG_DEBUG, str);
 }
 
-static void LogInfo(const String& str, Log* ptr)
+static void LogInfo(const String &str, Log* ptr)
 {
     Log::Write(LOG_INFO, str);
 }
 
-static void LogWarning(const String& str, Log* ptr)
+static void LogWarning(const String &str, Log* ptr)
 {
     Log::Write(LOG_WARNING, str);
 }
 
-static void LogError(const String& str, Log* ptr)
+static void LogError(const String &str, Log* ptr)
 {
     Log::Write(LOG_ERROR, str);
 }
 
 #else
 
-static void Print(const String& value, bool error) { }
+static void Print(const String &value, bool error) { }
 static void Print(int value, bool error) { }
 static void Print(long long value, bool error) { }
 static void Print(unsigned value, bool error) { }
@@ -129,11 +129,11 @@ static void Print(float value, bool error) { }
 static void Print(bool value, bool error) { }
 static void Print(const Variant& value, bool error) { }
 static void PrintCallStack(bool error) { }
-static void LogWrite(const String& str, bool error, Log* ptr) { }
-static void LogDebug(const String& str, Log* ptr) { }
-static void LogInfo(const String& str, Log* ptr) { }
-static void LogWarning(const String& str, Log* ptr) { }
-static void LogError(const String& str, Log* ptr) { }
+static void LogWrite(const String &str, bool error, Log* ptr) { }
+static void LogDebug(const String &str, Log* ptr) { }
+static void LogInfo(const String &str, Log* ptr) { }
+static void LogWarning(const String &str, Log* ptr) { }
+static void LogError(const String &str, Log* ptr) { }
 
 #endif
 
@@ -179,7 +179,7 @@ static File* ConstructFile()
     return new File(GetScriptContext());
 }
 
-static File* ConstructFileAndOpen(const String& fileName, FileMode mode)
+static File* ConstructFileAndOpen(const String &fileName, FileMode mode)
 {
     return new File(GetScriptContext(), fileName, mode);
 }
@@ -189,7 +189,7 @@ static NamedPipe* ConstructNamedPipe()
     return new NamedPipe(GetScriptContext());
 }
 
-static NamedPipe* ConstructNamedPipeAndOpen(const String& fileName, bool isServer)
+static NamedPipe* ConstructNamedPipeAndOpen(const String &fileName, bool isServer)
 {
     return new NamedPipe(GetScriptContext(), fileName, isServer);
 }
@@ -250,14 +250,14 @@ static FileSystem* GetFileSystem()
     return GetScriptContext()->GetSubsystem<FileSystem>();
 }
 
-static CScriptArray* FileSystemScanDir(const String& pathName, const String& filter, unsigned flags, bool recursive, FileSystem* ptr)
+static CScriptArray* FileSystemScanDir(const String &pathName, const String &filter, unsigned flags, bool recursive, FileSystem* ptr)
 {
     Vector<String> result;
     ptr->ScanDir(result, pathName, filter, flags, recursive);
     return VectorToArray<String>(result, "Array<String>");
 }
 
-static int FileSystemSystemRun(const String& fileName, CScriptArray* srcArguments, FileSystem* ptr)
+static int FileSystemSystemRun(const String &fileName, CScriptArray* srcArguments, FileSystem* ptr)
 {
     if (!srcArguments)
         return -1;
@@ -270,7 +270,7 @@ static int FileSystemSystemRun(const String& fileName, CScriptArray* srcArgument
     return ptr->SystemRun(fileName, destArguments);
 }
 
-static unsigned FileSystemSystemRunAsync(const String& fileName, CScriptArray* srcArguments, FileSystem* ptr)
+static unsigned FileSystemSystemRunAsync(const String &fileName, CScriptArray* srcArguments, FileSystem* ptr)
 {
     if (!srcArguments)
         return M_MAX_UNSIGNED;
@@ -393,7 +393,7 @@ static PackageFile* ConstructPackageFile()
     return new PackageFile(GetScriptContext());
 }
 
-static PackageFile* ConstructAndOpenPackageFile(const String& fileName, unsigned startOffset)
+static PackageFile* ConstructAndOpenPackageFile(const String &fileName, unsigned startOffset)
 {
     return new PackageFile(GetScriptContext(), fileName, startOffset);
 }
@@ -410,7 +410,7 @@ static void RegisterPackageFile(asIScriptEngine* engine)
     engine->RegisterObjectBehaviour("PackageFile", asBEHAVE_FACTORY, "PackageFile@+ f(const String&in, uint startOffset = 0)", asFUNCTION(ConstructAndOpenPackageFile), asCALL_CDECL);
     engine->RegisterObjectMethod("PackageFile", "bool Open(const String&in, uint startOffset = 0) const", asMETHOD(PackageFile, Open), asCALL_THISCALL);
     engine->RegisterObjectMethod("PackageFile", "bool Exists(const String&in) const", asMETHOD(PackageFile, Exists), asCALL_THISCALL);
-    engine->RegisterObjectMethod("PackageFile", "const String& get_name() const", asMETHOD(PackageFile, GetName), asCALL_THISCALL);
+    engine->RegisterObjectMethod("PackageFile", "const String &get_name() const", asMETHOD(PackageFile, GetName), asCALL_THISCALL);
     engine->RegisterObjectMethod("PackageFile", "uint get_numFiles() const", asMETHOD(PackageFile, GetNumFiles), asCALL_THISCALL);
     engine->RegisterObjectMethod("PackageFile", "uint get_totalSize() const", asMETHOD(PackageFile, GetTotalSize), asCALL_THISCALL);
     engine->RegisterObjectMethod("PackageFile", "uint get_totalDataSize() const", asMETHOD(PackageFile, GetTotalDataSize), asCALL_THISCALL);

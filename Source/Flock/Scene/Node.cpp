@@ -439,7 +439,7 @@ void Node::SetPosition(const Vector3 &position)
     MarkNetworkUpdate();
 }
 
-void Node::SetRotation(const Quaternion& rotation)
+void Node::SetRotation(const Quaternion &rotation)
 {
     rotation_ = rotation;
     MarkDirty();
@@ -473,7 +473,7 @@ void Node::SetScale(const Vector3 &scale)
     MarkNetworkUpdate();
 }
 
-void Node::SetTransform(const Vector3 &position, const Quaternion& rotation)
+void Node::SetTransform(const Vector3 &position, const Quaternion &rotation)
 {
     position_ = position;
     rotation_ = rotation;
@@ -482,12 +482,12 @@ void Node::SetTransform(const Vector3 &position, const Quaternion& rotation)
     MarkNetworkUpdate();
 }
 
-void Node::SetTransform(const Vector3 &position, const Quaternion& rotation, float scale)
+void Node::SetTransform(const Vector3 &position, const Quaternion &rotation, float scale)
 {
     SetTransform(position, rotation, Vector3(scale, scale, scale));
 }
 
-void Node::SetTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
+void Node::SetTransform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale)
 {
     position_ = position;
     rotation_ = rotation;
@@ -507,7 +507,7 @@ void Node::SetWorldPosition(const Vector3 &position)
     SetPosition((parent_ == scene_ || !parent_) ? position : parent_->GetWorldTransform().Inverse() * position);
 }
 
-void Node::SetWorldRotation(const Quaternion& rotation)
+void Node::SetWorldRotation(const Quaternion &rotation)
 {
     SetRotation((parent_ == scene_ || !parent_) ? rotation : parent_->GetWorldRotation().Inverse() * rotation);
 }
@@ -528,20 +528,20 @@ void Node::SetWorldScale(const Vector3 &scale)
     SetScale((parent_ == scene_ || !parent_) ? scale : scale / parent_->GetWorldScale());
 }
 
-void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion &rotation)
 {
     SetWorldPosition(position);
     SetWorldRotation(rotation);
 }
 
-void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation, float scale)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion &rotation, float scale)
 {
     SetWorldPosition(position);
     SetWorldRotation(rotation);
     SetWorldScale(scale);
 }
 
-void Node::SetWorldTransform(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
+void Node::SetWorldTransform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale)
 {
     SetWorldPosition(position);
     SetWorldRotation(rotation);
@@ -571,7 +571,7 @@ void Node::Translate(const Vector3 &delta, TransformSpace space)
     MarkNetworkUpdate();
 }
 
-void Node::Rotate(const Quaternion& delta, TransformSpace space)
+void Node::Rotate(const Quaternion &delta, TransformSpace space)
 {
     switch (space)
     {
@@ -599,7 +599,7 @@ void Node::Rotate(const Quaternion& delta, TransformSpace space)
     MarkNetworkUpdate();
 }
 
-void Node::RotateAround(const Vector3 &point, const Quaternion& delta, TransformSpace space)
+void Node::RotateAround(const Vector3 &point, const Quaternion &delta, TransformSpace space)
 {
     Vector3 parentSpacePoint;
     Quaternion oldRotation = rotation_;
@@ -1872,7 +1872,7 @@ unsigned Node::GetNumPersistentComponents() const
     return ret;
 }
 
-void Node::SetTransformSilent(const Vector3 &position, const Quaternion& rotation, const Vector3 &scale)
+void Node::SetTransformSilent(const Vector3 &position, const Quaternion &rotation, const Vector3 &scale)
 {
     position_ = position;
     rotation_ = rotation;

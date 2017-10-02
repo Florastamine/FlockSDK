@@ -42,7 +42,7 @@ Vector3 Vec3IK2Urho(const vec3_t* ik)
 }
 
 // ----------------------------------------------------------------------------
-quat_t QuatUrho2IK(const Quaternion& urho)
+quat_t QuatUrho2IK(const Quaternion &urho)
 {
     quat_t ret;
     ret.q.x = urho.x_;

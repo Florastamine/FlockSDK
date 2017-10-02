@@ -979,7 +979,7 @@ void ListView::EnsureItemVisibility(UIElement* item)
 
     IntVector2 newView = GetViewPosition();
     IntVector2 currentOffset = item->GetPosition() - newView;
-    const IntRect& clipBorder = scrollPanel_->GetClipBorder();
+    const IntRect &clipBorder = scrollPanel_->GetClipBorder();
     IntVector2 windowSize(scrollPanel_->GetWidth() - clipBorder.left_ - clipBorder.right_,
         scrollPanel_->GetHeight() - clipBorder.top_ - clipBorder.bottom_);
 

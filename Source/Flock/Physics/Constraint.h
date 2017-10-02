@@ -75,13 +75,13 @@ public:
     /// Set constraint position relative to own body.
     void SetPosition(const Vector3 &position);
     /// Set constraint rotation relative to own body.
-    void SetRotation(const Quaternion& rotation);
+    void SetRotation(const Quaternion &rotation);
     /// Set constraint rotation relative to own body by specifying the axis.
     void SetAxis(const Vector3 &axis);
     /// Set constraint position relative to the other body. If connected to the static world, is a world space position.
     void SetOtherPosition(const Vector3 &position);
     /// Set constraint rotation relative to the other body. If connected to the static world, is a world space rotation.
-    void SetOtherRotation(const Quaternion& rotation);
+    void SetOtherRotation(const Quaternion &rotation);
     /// Set constraint rotation relative to the other body by specifying the axis.
     void SetOtherAxis(const Vector3 &axis);
     /// Set constraint world space position. Resets both own and other body relative position, ie. zeroes the constraint error.
@@ -116,13 +116,13 @@ public:
     const Vector3 &GetPosition() const { return position_; }
 
     /// Return constraint rotation relative to own body.
-    const Quaternion& GetRotation() const { return rotation_; }
+    const Quaternion &GetRotation() const { return rotation_; }
 
     /// Return constraint position relative to other body.
     const Vector3 &GetOtherPosition() const { return otherPosition_; }
 
     /// Return constraint rotation relative to other body.
-    const Quaternion& GetOtherRotation() const { return otherRotation_; }
+    const Quaternion &GetOtherRotation() const { return otherRotation_; }
 
     /// Return constraint world position, calculated from own body.
     Vector3 GetWorldPosition() const;

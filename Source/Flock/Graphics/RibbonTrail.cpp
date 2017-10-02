@@ -811,13 +811,13 @@ void RibbonTrail::SetVertexDistance(float length)
     Commit();
 }
 
-void RibbonTrail::SetEndColor(const Color& color)
+void RibbonTrail::SetEndColor(const Color &color)
 {
     endColor_ = color;
     Commit();
 }
 
-void RibbonTrail::SetStartColor(const Color& color)
+void RibbonTrail::SetStartColor(const Color &color)
 {
     startColor_ = color;
     Commit();

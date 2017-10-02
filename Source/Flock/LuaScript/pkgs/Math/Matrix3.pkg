@@ -11,18 +11,18 @@ class Matrix3
 
     bool operator ==(const Matrix3& rhs) const;
 
-    Vector3 operator * (const Vector3& rhs) const;
+    Vector3 operator * (const Vector3 &rhs) const;
     Matrix3 operator + (const Matrix3& rhs) const;
     Matrix3 operator - (const Matrix3& rhs) const;
     Matrix3 operator * (float rhs) const;
     Matrix3 operator * (const Matrix3& rhs) const;
 
-    void SetScale(const Vector3& scale);
+    void SetScale(const Vector3 &scale);
     void SetScale(float scale);
 
     Vector3 Scale() const;
     Matrix3 Transpose() const;
-    Matrix3 Scaled(const Vector3& scale) const;
+    Matrix3 Scaled(const Vector3 &scale) const;
     bool Equals(const Matrix3& rhs) const;
     Matrix3 Inverse() const;
 

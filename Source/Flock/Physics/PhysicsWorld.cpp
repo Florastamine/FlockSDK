@@ -185,7 +185,7 @@ void PhysicsWorld::RegisterObject(Context* context)
     FLOCKSDK_ACCESSOR_ATTRIBUTE("Split Impulse", GetSplitImpulse, SetSplitImpulse, bool, false, AM_DEFAULT);
 }
 
-bool PhysicsWorld::isVisible(const btVector3& aabbMin, const btVector3& aabbMax)
+bool PhysicsWorld::isVisible(const btVector3 &aabbMin, const btVector3 &aabbMax)
 {
     if (debugRenderer_)
         return debugRenderer_->IsInside(BoundingBox(ToVector3(aabbMin), ToVector3(aabbMax)));
@@ -193,7 +193,7 @@ bool PhysicsWorld::isVisible(const btVector3& aabbMin, const btVector3& aabbMax)
         return false;
 }
 
-void PhysicsWorld::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
+void PhysicsWorld::drawLine(const btVector3 &from, const btVector3 &to, const btVector3 &color)
 {
     if (debugRenderer_)
         debugRenderer_->AddLine(ToVector3(from), ToVector3(to), Color(color.x(), color.y(), color.z()), debugDepthTest_);
@@ -217,12 +217,12 @@ void PhysicsWorld::reportErrorWarning(const char* warningString)
     FLOCKSDK_LOGWARNING("Physics: " + String(warningString));
 }
 
-void PhysicsWorld::drawContactPoint(const btVector3& pointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime,
-    const btVector3& color)
+void PhysicsWorld::drawContactPoint(const btVector3 &pointOnB, const btVector3 &normalOnB, btScalar distance, int lifeTime,
+    const btVector3 &color)
 {
 }
 
-void PhysicsWorld::draw3dText(const btVector3& location, const char* textString)
+void PhysicsWorld::draw3dText(const btVector3 &location, const char* textString)
 {
 }
 
@@ -486,7 +486,7 @@ void PhysicsWorld::SphereCast(PhysicsRaycastResult& result, const Ray& ray, floa
 }
 
 void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, CollisionShape* shape, const Vector3 &startPos,
-    const Quaternion& startRot, const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask)
+    const Quaternion &startRot, const Vector3 &endPos, const Quaternion &endRot, unsigned collisionMask)
 {
     if (!shape || !shape->GetCollisionShape())
     {
@@ -527,7 +527,7 @@ void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, CollisionShape* shap
 }
 
 void PhysicsWorld::ConvexCast(PhysicsRaycastResult& result, btCollisionShape* shape, const Vector3 &startPos,
-    const Quaternion& startRot, const Vector3 &endPos, const Quaternion& endRot, unsigned collisionMask)
+    const Quaternion &startRot, const Vector3 &endPos, const Quaternion &endRot, unsigned collisionMask)
 {
     if (!shape)
     {

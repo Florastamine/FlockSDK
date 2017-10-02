@@ -148,34 +148,34 @@ public:
     virtual void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
 
     /// Set as a box.
-    void SetBox(const Vector3 &size, const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+    void SetBox(const Vector3 &size, const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a sphere.
-    void SetSphere(float diameter, const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+    void SetSphere(float diameter, const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a static plane.
-    void SetStaticPlane(const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+    void SetStaticPlane(const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a cylinder.
     void SetCylinder
-        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a capsule.
     void SetCapsule
-        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a cone.
     void SetCone
-        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion& rotation = Quaternion::IDENTITY);
+        (float diameter, float height, const Vector3 &position = Vector3::ZERO, const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a triangle mesh from Model. If you update a model's geometry and want to reapply the shape, call physicsWorld->RemoveCachedGeometry(model) first.
     void SetTriangleMesh
         (Model* model, unsigned lodLevel = 0, const Vector3 &scale = Vector3::ONE, const Vector3 &position = Vector3::ZERO,
-            const Quaternion& rotation = Quaternion::IDENTITY);
+            const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a triangle mesh from CustomGeometry.
     void SetCustomTriangleMesh(CustomGeometry* custom, const Vector3 &scale = Vector3::ONE, const Vector3 &position = Vector3::ZERO,
-        const Quaternion& rotation = Quaternion::IDENTITY);
+        const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a convex hull from Model.
     void SetConvexHull
         (Model* model, unsigned lodLevel = 0, const Vector3 &scale = Vector3::ONE, const Vector3 &position = Vector3::ZERO,
-            const Quaternion& rotation = Quaternion::IDENTITY);
+            const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a convex hull from CustomGeometry.
     void SetCustomConvexHull(CustomGeometry* custom, const Vector3 &scale = Vector3::ONE, const Vector3 &position = Vector3::ZERO,
-        const Quaternion& rotation = Quaternion::IDENTITY);
+        const Quaternion &rotation = Quaternion::IDENTITY);
     /// Set as a terrain. Only works if the same scene node contains a Terrain component.
     void SetTerrain(unsigned lodLevel = 0);
     /// Set shape type.
@@ -185,9 +185,9 @@ public:
     /// Set offset position.
     void SetPosition(const Vector3 &position);
     /// Set offset rotation.
-    void SetRotation(const Quaternion& rotation);
+    void SetRotation(const Quaternion &rotation);
     /// Set offset transform.
-    void SetTransform(const Vector3 &position, const Quaternion& rotation);
+    void SetTransform(const Vector3 &position, const Quaternion &rotation);
     /// Set collision margin.
     void SetMargin(float margin);
     /// Set triangle mesh / convex hull model.
@@ -214,7 +214,7 @@ public:
     const Vector3 &GetPosition() const { return position_; }
 
     /// Return offset rotation.
-    const Quaternion& GetRotation() const { return rotation_; }
+    const Quaternion &GetRotation() const { return rotation_; }
 
     /// Return collision margin.
     float GetMargin() const { return margin_; }

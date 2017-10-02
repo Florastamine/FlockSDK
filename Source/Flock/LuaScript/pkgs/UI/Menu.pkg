@@ -6,19 +6,19 @@ class Menu : public Button
     virtual ~Menu();
     
     void SetPopup(UIElement* element);
-    void SetPopupOffset(const IntVector2& offset);
+    void SetPopupOffset(const IntVector2 &offset);
     void SetPopupOffset(int x, int y);
     void ShowPopup(bool enable);
     void SetAccelerator(int key, int qualifiers);
 
     UIElement* GetPopup() const;
-    const IntVector2& GetPopupOffset() const;
+    const IntVector2 &GetPopupOffset() const;
     bool GetShowPopup() const;
     int GetAcceleratorKey() const;
     int GetAcceleratorQualifiers() const;
     
     tolua_property__get_set UIElement* popup;
-    tolua_property__get_set IntVector2& popupOffset;
+    tolua_property__get_set IntVector2 &popupOffset;
     tolua_property__get_set bool showPopup;
     tolua_readonly tolua_property__get_set int acceleratorKey;
     tolua_readonly tolua_property__get_set int acceleratorQualifiers;

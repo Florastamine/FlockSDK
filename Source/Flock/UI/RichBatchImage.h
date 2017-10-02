@@ -38,7 +38,7 @@ public:
     virtual ~RichWidgetImage();
 
     /// Set image source url.
-    void SetImageSource(const String& sourceUrl);
+    void SetImageSource(const String &sourceUrl);
     /// Get image source url.
     String GetImageSource() const { return source_url_; }
     /// Add an image quad.

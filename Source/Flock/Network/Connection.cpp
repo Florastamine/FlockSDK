@@ -203,14 +203,14 @@ void Connection::SetControls(const Controls& newControls)
     controls_ = newControls;
 }
 
-void Connection::SetPosition(const Vector3& position)
+void Connection::SetPosition(const Vector3 &position)
 {
     position_ = position;
     if (sendMode_ == OPSM_NONE)
         sendMode_ = OPSM_POSITION;
 }
 
-void Connection::SetRotation(const Quaternion& rotation)
+void Connection::SetRotation(const Quaternion &rotation)
 {
     rotation_ = rotation;
     if (sendMode_ != OPSM_POSITION_ROTATION)
@@ -1025,7 +1025,7 @@ unsigned Connection::GetNumDownloads() const
     return downloads_.Size();
 }
 
-const String& Connection::GetDownloadName() const
+const String &Connection::GetDownloadName() const
 {
     for (auto i = downloads_.Begin(); i != downloads_.End(); ++i)
     {
@@ -1412,7 +1412,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
         // Then the download cache
         for (auto j = 0u; j < downloadedPackages.Size(); ++j)
         {
-            const String& fileName = downloadedPackages[j];
+            const String &fileName = downloadedPackages[j];
             // In download cache, package file name format is checksum_packagename
             if (!fileName.Find(checksumString) && !fileName.Substring(9).Compare(name, false))
             {
@@ -1436,7 +1436,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
     return true;
 }
 
-void Connection::RequestPackage(const String& name, unsigned fileSize, unsigned checksum)
+void Connection::RequestPackage(const String &name, unsigned fileSize, unsigned checksum)
 {
     StringHash nameHash(name);
     if (downloads_.Contains(nameHash))
@@ -1458,7 +1458,7 @@ void Connection::RequestPackage(const String& name, unsigned fileSize, unsigned 
     }
 }
 
-void Connection::SendPackageError(const String& name)
+void Connection::SendPackageError(const String &name)
 {
     msg_.Clear();
     msg_.WriteStringHash(name);
@@ -1476,7 +1476,7 @@ void Connection::OnSceneLoadFailed()
     SendEvent(E_NETWORKSCENELOADFAILED, eventData);
 }
 
-void Connection::OnPackageDownloadFailed(const String& name)
+void Connection::OnPackageDownloadFailed(const String &name)
 {
     FLOCKSDK_LOGERROR("Download of package " + name + " failed");
     // As one package failed, we can not join the scene in any case. Clear the downloads

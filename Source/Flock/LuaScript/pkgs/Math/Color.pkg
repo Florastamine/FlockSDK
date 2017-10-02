@@ -3,15 +3,15 @@ $#include "Math/Color.h"
 class Color
 {
     Color();
-    Color(const Color& color);
-    Color(const Color& color, float a);
+    Color(const Color &color);
+    Color(const Color &color, float a);
     Color(float r, float g, float b);
     Color(float r, float g, float b, float a);
     ~Color();
 
-    bool operator ==(const Color& rhs) const;
+    bool operator ==(const Color &rhs) const;
     Color operator * (float rhs) const;
-    Color operator + (const Color& rhs);
+    Color operator + (const Color &rhs);
 
     unsigned ToUInt() const;
     Vector3 ToHSL() const;
@@ -39,9 +39,9 @@ class Color
 
     void Clip(bool clipAlpha = false);
     void Invert(bool invertAlpha = false);
-    Color Lerp(const Color& rhs, float t) const;
+    Color Lerp(const Color &rhs, float t) const;
     Color Abs() const;
-    bool Equals(const Color& rhs) const;
+    bool Equals(const Color &rhs) const;
 
     String ToString() const;
 

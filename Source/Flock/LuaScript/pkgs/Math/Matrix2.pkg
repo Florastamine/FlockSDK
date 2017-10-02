@@ -11,18 +11,18 @@ class Matrix2
 
     bool operator ==(const Matrix2& rhs) const;
 
-    Vector2 operator * (const Vector2& rhs) const;
+    Vector2 operator * (const Vector2 &rhs) const;
     Matrix2 operator + (const Matrix2& rhs) const;
     Matrix2 operator - (const Matrix2& rhs) const;
     Matrix2 operator * (float rhs) const;
     Matrix2 operator * (const Matrix2& rhs) const;
 
-    void SetScale(const Vector2& scale);
+    void SetScale(const Vector2 &scale);
     void SetScale(float scale);
 
     Vector2 Scale() const;
     Matrix2 Transpose() const;
-    Matrix2 Scaled(const Vector2& scale) const;
+    Matrix2 Scaled(const Vector2 &scale) const;
     bool Equals(const Matrix2& rhs) const;
     Matrix2 Inverse() const;
 

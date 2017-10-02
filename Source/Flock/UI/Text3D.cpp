@@ -297,7 +297,7 @@ void Text3D::SetEffectRoundStroke(bool roundStroke)
     text_.SetEffectRoundStroke(roundStroke);
 }
 
-void Text3D::SetEffectColor(const Color& effectColor)
+void Text3D::SetEffectColor(const Color &effectColor)
 {
     text_.SetEffectColor(effectColor);
 
@@ -320,7 +320,7 @@ void Text3D::SetWidth(int width)
     MarkTextDirty();
 }
 
-void Text3D::SetColor(const Color& color)
+void Text3D::SetColor(const Color &color)
 {
     float oldAlpha = text_.GetColor(C_TOPLEFT).a_;
     text_.SetColor(color);
@@ -335,7 +335,7 @@ void Text3D::SetColor(const Color& color)
     }
 }
 
-void Text3D::SetColor(Corner corner, const Color& color)
+void Text3D::SetColor(Corner corner, const Color &color)
 {
     text_.SetColor(corner, color);
 
@@ -447,7 +447,7 @@ bool Text3D::GetEffectRoundStroke() const
     return text_.GetEffectRoundStroke();
 }
 
-const Color& Text3D::GetEffectColor() const
+const Color &Text3D::GetEffectColor() const
 {
     return text_.GetEffectColor();
 }
@@ -497,7 +497,7 @@ IntVector2 Text3D::GetCharSize(unsigned index)
     return text_.GetCharSize(index);
 }
 
-const Color& Text3D::GetColor(Corner corner) const
+const Color &Text3D::GetColor(Corner corner) const
 {
     return text_.GetColor(corner);
 }

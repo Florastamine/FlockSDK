@@ -207,7 +207,7 @@ void PhysicsWorld2D::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
     contact->SetEnabled(eventData[NodeUpdateContact2D::P_ENABLED].GetBool());
 }
 
-void PhysicsWorld2D::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+void PhysicsWorld2D::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color &color)
 {
     if (!debugRenderer_)
         return;
@@ -219,7 +219,7 @@ void PhysicsWorld2D::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, cons
     debugRenderer_->AddLine(ToVector3(vertices[vertexCount - 1]), ToVector3(vertices[0]), c, debugDepthTest_);
 }
 
-void PhysicsWorld2D::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+void PhysicsWorld2D::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color &color)
 {
     if (!debugRenderer_)
         return;
@@ -230,7 +230,7 @@ void PhysicsWorld2D::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount,
         debugRenderer_->AddTriangle(v, ToVector3(vertices[i]), ToVector3(vertices[i + 1]), c, debugDepthTest_);
 }
 
-void PhysicsWorld2D::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
+void PhysicsWorld2D::DrawCircle(const b2Vec2& center, float32 radius, const b2Color &color)
 {
     if (!debugRenderer_)
         return;
@@ -251,12 +251,12 @@ void PhysicsWorld2D::DrawCircle(const b2Vec2& center, float32 radius, const b2Co
 
 extern FLOCKSDK_API const float PIXEL_SIZE;
 
-void PhysicsWorld2D::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
+void PhysicsWorld2D::DrawPoint(const b2Vec2& p, float32 size, const b2Color &color)
 {
     DrawSolidCircle(p, size * 0.5f * PIXEL_SIZE, b2Vec2(), color);
 }
 
-void PhysicsWorld2D::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
+void PhysicsWorld2D::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color &color)
 {
     if (!debugRenderer_)
         return;
@@ -276,7 +276,7 @@ void PhysicsWorld2D::DrawSolidCircle(const b2Vec2& center, float32 radius, const
     }
 }
 
-void PhysicsWorld2D::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
+void PhysicsWorld2D::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color &color)
 {
     if (debugRenderer_)
         debugRenderer_->AddLine(ToVector3(p1), ToVector3(p2), ToColor(color), debugDepthTest_);
@@ -686,7 +686,7 @@ private:
     unsigned collisionMask_;
 };
 
-void PhysicsWorld2D::GetRigidBodies(PODVector<RigidBody2D*>& results, const Rect& aabb, unsigned collisionMask)
+void PhysicsWorld2D::GetRigidBodies(PODVector<RigidBody2D*>& results, const Rect &aabb, unsigned collisionMask)
 {
     AabbQueryCallback callback(results, collisionMask);
 

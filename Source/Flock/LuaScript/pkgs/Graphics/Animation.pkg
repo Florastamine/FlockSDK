@@ -85,7 +85,7 @@ static int tolua_GraphicsLuaAPI_Animation_new00_local(lua_State* tolua_S)
     return ToluaNewObjectGC<Animation>(tolua_S);
 }
 
-static Animation* AnimationClone(const Animation* animation, const String& cloneName = String::EMPTY)
+static Animation* AnimationClone(const Animation* animation, const String &cloneName = String::EMPTY)
 {
     if (!animation)
         return 0;

@@ -35,7 +35,7 @@ vec3_t Vec3Urho2IK(const Vector3 &urho);
 /// Converts from an IK vec3_t to an Flock Vector3
 Vector3 Vec3IK2Urho(const vec3_t* ik);
 /// Converts from an Flock quaternion to an IK quat_t
-quat_t QuatUrho2IK(const Quaternion& urho);
+quat_t QuatUrho2IK(const Quaternion &urho);
 /// Converts from an IK quat_t to an Flock quaternion
 Quaternion QuatIK2Urho(const quat_t* ik);
 

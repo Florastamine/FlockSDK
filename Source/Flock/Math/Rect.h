@@ -67,14 +67,14 @@ public:
     }
 
     /// Copy-construct from another rect.
-    Rect(const Rect& rect) :
+    Rect(const Rect &rect) :
         min_(rect.min_),
         max_(rect.max_)
     {
     }
 
     /// Assign from another rect.
-    Rect& operator =(const Rect& rhs)
+    Rect &operator =(const Rect &rhs)
     {
         min_ = rhs.min_;
         max_ = rhs.max_;
@@ -82,13 +82,13 @@ public:
     }
 
     /// Test for equality with another rect.
-    bool operator ==(const Rect& rhs) const { return min_ == rhs.min_ && max_ == rhs.max_; }
+    bool operator ==(const Rect &rhs) const { return min_ == rhs.min_ && max_ == rhs.max_; }
 
     /// Test for inequality with another rect.
-    bool operator !=(const Rect& rhs) const { return min_ != rhs.min_ || max_ != rhs.max_; }
+    bool operator !=(const Rect &rhs) const { return min_ != rhs.min_ || max_ != rhs.max_; }
 
     /// Define from another rect.
-    void Define(const Rect& rect)
+    void Define(const Rect &rect)
     {
         min_ = rect.min_;
         max_ = rect.max_;
@@ -121,7 +121,7 @@ public:
     }
 
     /// Merge a rect.
-    void Merge(const Rect& rect)
+    void Merge(const Rect &rect)
     {
         if (rect.min_.x_ < min_.x_)
             min_.x_ = rect.min_.x_;
@@ -141,7 +141,7 @@ public:
     }
 
     /// Clip with another rect.
-    void Clip(const Rect& rect);
+    void Clip(const Rect &rect);
 
     /// Return true if this rect is defined via a previous call to Define() or Merge().
     bool Defined() const
@@ -159,7 +159,7 @@ public:
     Vector2 HalfSize() const { return (max_ - min_) * 0.5f; }
 
     /// Test for equality with another rect with epsilon.
-    bool Equals(const Rect& rhs) const { return min_.Equals(rhs.min_) && max_.Equals(rhs.max_); }
+    bool Equals(const Rect &rhs) const { return min_.Equals(rhs.min_) && max_.Equals(rhs.max_); }
 
     /// Test whether a point is inside.
     Intersection IsInside(const Vector2 &point) const
@@ -171,7 +171,7 @@ public:
     }
 
     /// Test if another rect is inside, outside or intersects.
-    Intersection IsInside(const Rect& rect) const
+    Intersection IsInside(const Rect &rect) const
     {
         if (rect.max_.x_ < min_.x_ || rect.min_.x_ > max_.x_ || rect.max_.y_ < min_.y_ || rect.min_.y_ > max_.y_)
             return OUTSIDE;
@@ -235,13 +235,13 @@ public:
     }
 
     /// Test for equality with another rect.
-    bool operator ==(const IntRect& rhs) const
+    bool operator ==(const IntRect &rhs) const
     {
         return left_ == rhs.left_ && top_ == rhs.top_ && right_ == rhs.right_ && bottom_ == rhs.bottom_;
     }
 
     /// Test for inequality with another rect.
-    bool operator !=(const IntRect& rhs) const
+    bool operator !=(const IntRect &rhs) const
     {
         return left_ != rhs.left_ || top_ != rhs.top_ || right_ != rhs.right_ || bottom_ != rhs.bottom_;
     }

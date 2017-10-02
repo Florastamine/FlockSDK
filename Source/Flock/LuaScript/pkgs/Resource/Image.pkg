@@ -21,8 +21,8 @@ class Image : public Resource
 
     bool SetSize(int width, int height, unsigned components);
     bool SetSize(int width, int height, int depth, unsigned components);
-    void SetPixel(int x, int y, const Color& color);
-    void SetPixel(int x, int y, int z, const Color& color);
+    void SetPixel(int x, int y, const Color &color);
+    void SetPixel(int x, int y, int z, const Color &color);
     void SetPixelInt(int x, int y, unsigned uintColor);
     void SetPixelInt(int x, int y, int z, unsigned uintColor);
     bool LoadColorLUT(Deserializer& source);
@@ -30,7 +30,7 @@ class Image : public Resource
     bool FlipHorizontal();
     bool FlipVertical();
     bool Resize(int width, int height);
-    void Clear(const Color& color);
+    void Clear(const Color &color);
     void ClearInt(unsigned uintColor);
     void SetAlpha(float f); 
     bool SaveBMP(const String fileName) const;
@@ -53,7 +53,7 @@ class Image : public Resource
     bool IsCompressed() const;
     CompressedFormat GetCompressedFormat() const;
     unsigned GetNumCompressedLevels() const;
-    Image* GetSubimage(const IntRect& rect) const;
+    Image* GetSubimage(const IntRect &rect) const;
     bool IsCubemap() const;
     bool IsArray() const;
     bool IsSRGB() const;
@@ -83,7 +83,7 @@ static int tolua_ResourceLuaAPI_Image_new00_local(lua_State* tolua_S)
     return ToluaNewObjectGC<Image>(tolua_S);
 }
 
-static bool ImageLoadColorLUT(Image* image, const String& fileName)
+static bool ImageLoadColorLUT(Image* image, const String &fileName)
 {
     if (!image)
         return false;

@@ -82,7 +82,7 @@ void Sprite::RegisterObject(Context* context)
     FLOCKSDK_ATTRIBUTE("Variables", VariantMap, vars_, Variant::emptyVariantMap, AM_FILE);
 }
 
-bool Sprite::IsWithinScissor(const IntRect& currentScissor)
+bool Sprite::IsWithinScissor(const IntRect &currentScissor)
 {
     /// \todo Implement properly, for now just checks visibility flag
     return visible_;
@@ -109,7 +109,7 @@ IntVector2 Sprite::ElementToScreen(const IntVector2 &position)
     return IntVector2((int)transformedPos.x_, (int)transformedPos.y_);
 }
 
-void Sprite::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void Sprite::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     bool allOpaque = true;
     if (GetDerivedOpacity() < 1.0f || color_[C_TOPLEFT].a_ < 1.0f || color_[C_TOPRIGHT].a_ < 1.0f ||
@@ -200,7 +200,7 @@ void Sprite::SetTexture(Texture* texture)
         SetFullImageRect();
 }
 
-void Sprite::SetImageRect(const IntRect& rect)
+void Sprite::SetImageRect(const IntRect &rect)
 {
     if (rect != IntRect::ZERO)
         imageRect_ = rect;

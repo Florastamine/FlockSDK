@@ -42,11 +42,11 @@ public:
     static void RegisterObject(Context* context);
 
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
-    virtual bool IsWithinScissor(const IntRect& currentScissor);
+    virtual bool IsWithinScissor(const IntRect &currentScissor);
     /// Update and return screen position.
     virtual const IntVector2 &GetScreenPosition() const;
     /// Return UI rendering batches.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
     /// React to position change.
     virtual void OnPositionSet(const IntVector2 &newPosition);
     /// Convert screen coordinates to element coordinates.
@@ -73,7 +73,7 @@ public:
     /// Set texture.
     void SetTexture(Texture* texture);
     /// Set part of texture to use as the image.
-    void SetImageRect(const IntRect& rect);
+    void SetImageRect(const IntRect &rect);
     /// Use whole texture as the image.
     void SetFullImageRect();
     /// Set blend mode.
@@ -95,7 +95,7 @@ public:
     Texture* GetTexture() const { return texture_; }
 
     /// Return image rectangle.
-    const IntRect& GetImageRect() const { return imageRect_; }
+    const IntRect &GetImageRect() const { return imageRect_; }
 
     /// Return blend mode.
     BlendMode GetBlendMode() const { return blendMode_; }

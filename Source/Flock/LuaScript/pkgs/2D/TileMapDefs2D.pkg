@@ -63,10 +63,10 @@ class TileMapObject2D
     TileMapObjectType2D GetObjectType() const;
     const String GetName() const;
     const String GetType() const;
-    const Vector2& GetPosition() const;
-    const Vector2& GetSize() const;
+    const Vector2 &GetPosition() const;
+    const Vector2 &GetSize() const;
     unsigned GetNumPoints() const;
-    const Vector2& GetPoint(unsigned index) const;
+    const Vector2 &GetPoint(unsigned index) const;
     int GetTileGid() const;
     Sprite2D* GetTileSprite() const;
     bool HasProperty(const String name) const;

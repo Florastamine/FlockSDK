@@ -32,7 +32,7 @@ static int tolua_ResourceLuaAPI_XMLFile_new00_local(lua_State* tolua_S)
 $}
 
 ${
-static bool XMLFileSave(const XMLFile* resource, const String& fileName, const String& indentation)
+static bool XMLFileSave(const XMLFile* resource, const String &fileName, const String &indentation)
 {
     if (!resource)
         return false;

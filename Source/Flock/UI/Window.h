@@ -56,7 +56,7 @@ public:
     static void RegisterObject(Context* context);
 
     /// Return UI rendering batches.
-    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor);
+    virtual void GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor);
 
     /// React to mouse hover.
     virtual void OnHover(const IntVector2 &position, const IntVector2 &screenPosition, int buttons, int qualifiers, Cursor* cursor);
@@ -83,13 +83,13 @@ public:
     /// Set whether resizing height is fixed.
     void SetFixedHeightResizing(bool enable);
     /// Set resize area width at edges.
-    void SetResizeBorder(const IntRect& rect);
+    void SetResizeBorder(const IntRect &rect);
     /// Set modal flag. When the modal flag is set, the focused window needs to be dismissed first to allow other UI elements to gain focus.
     void SetModal(bool modal);
     /// Set modal shade color.
-    void SetModalShadeColor(const Color& color);
+    void SetModalShadeColor(const Color &color);
     /// Set modal frame color.
-    void SetModalFrameColor(const Color& color);
+    void SetModalFrameColor(const Color &color);
     /// Set modal frame size.
     void SetModalFrameSize(const IntVector2 &size);
     /// Set whether model window can be dismissed with the escape key. Default true.
@@ -108,16 +108,16 @@ public:
     bool GetFixedHeightResizing() const { return fixedHeightResizing_; }
 
     /// Return resize area width at edges.
-    const IntRect& GetResizeBorder() const { return resizeBorder_; }
+    const IntRect &GetResizeBorder() const { return resizeBorder_; }
 
     /// Return modal flag.
     bool IsModal() const { return modal_; }
 
     /// Get modal shade color.
-    const Color& GetModalShadeColor() const { return modalShadeColor_; }
+    const Color &GetModalShadeColor() const { return modalShadeColor_; }
 
     /// Get modal frame color.
-    const Color& GetModalFrameColor() const { return modalFrameColor_; }
+    const Color &GetModalFrameColor() const { return modalFrameColor_; }
 
     /// Get modal frame size.
     const IntVector2 &GetModalFrameSize() const { return modalFrameSize_; }

@@ -43,19 +43,19 @@ public:
     virtual ~RichWidgetText();
 
     /// Draw a quad.
-    void DrawQuad(const Rect& vertices, float z, const Rect& texCoords, const Color& color);
+    void DrawQuad(const Rect &vertices, float z, const Rect &texCoords, const Color &color);
     /// Draw a glyph.
-    void DrawGlyph(const Rect& texCoords, float x, float y, float z, float width, float height, const Color& color);
+    void DrawGlyph(const Rect &texCoords, float x, float y, float z, float width, float height, const Color &color);
     /// Draw a glyph, scaled depending on the bitmap font and pointsize.
-    void DrawGlyphScaled(const Rect& texCoords, float x, float y, float z, float width, float height, const Vector2& scale, const Color& color);
+    void DrawGlyphScaled(const Rect &texCoords, float x, float y, float z, float width, float height, const Vector2 &scale, const Color &color);
     /// Add text.
-    void AddText(const String& text, const Vector3& pos, const Color& color);
+    void AddText(const String &text, const Vector3 &pos, const Color &color);
     /// Set the font.
-    void SetFont(const String& fontname, int pointsize);
+    void SetFont(const String &fontname, int pointsize);
     /// Get the font face (only valid after SetFont).
     FontFace* GetFontFace() const { return font_face_; }
     /// Calculate text extents with the current font
-    Vector2 CalculateTextExtents(const String& text);
+    Vector2 CalculateTextExtents(const String &text);
     /// Row height
     float GetRowHeight() const;
 private:

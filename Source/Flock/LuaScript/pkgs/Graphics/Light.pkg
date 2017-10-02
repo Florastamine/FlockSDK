@@ -45,7 +45,7 @@ class Light : public Drawable
 {
     void SetLightType(LightType type);
     void SetPerVertex(bool enable);
-    void SetColor(const Color& color);
+    void SetColor(const Color &color);
     void SetTemperature(float temperature);
     void SetRadius(float redius);
     void SetLength(float length);
@@ -69,7 +69,7 @@ class Light : public Drawable
 
     LightType GetLightType() const;
     bool GetPerVertex() const;
-    const Color& GetColor() const;
+    const Color &GetColor() const;
     float GetTemperature() const;
     float GetRadius() const;
     float GetLength() const;
@@ -99,7 +99,7 @@ class Light : public Drawable
     
     tolua_property__get_set LightType lightType;
     tolua_property__get_set bool perVertex;
-    tolua_property__get_set Color& color;
+    tolua_property__get_set Color &color;
     tolua_property__get_set float temperature;
     tolua_property__get_set float radius;
     tolua_property__get_set float length;

@@ -86,7 +86,7 @@ void DropDownList::ApplyAttributes()
     SetSelection(selectionAttr_);
 }
 
-void DropDownList::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
+void DropDownList::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect &currentScissor)
 {
     Menu::GetBatches(batches, vertexData, currentScissor);
 
@@ -118,7 +118,7 @@ void DropDownList::OnShowPopup()
     UIElement* content = listView_->GetContentElement();
     content->UpdateLayout();
     const IntVector2 &contentSize = content->GetSize();
-    const IntRect& border = popup_->GetLayoutBorder();
+    const IntRect &border = popup_->GetLayoutBorder();
     popup_->SetSize(resizePopup_ ? GetWidth() : contentSize.x_ + border.left_ + border.right_,
         contentSize.y_ + border.top_ + border.bottom_);
 
