@@ -29,13 +29,17 @@
 
 namespace FlockSDK
 {
-
-static Console* GetConsole()
+static Console *GetConsole()
 {
     return GetScriptContext()->GetSubsystem<Console>();
 }
 
-static void RegisterConsole(asIScriptEngine* engine)
+static Engine *GetEngine()
+{
+    return GetScriptContext()->GetSubsystem<Engine>();
+}
+
+void RegisterEngineAPI(asIScriptEngine* engine)
 {
     RegisterObject<Console>(engine, "Console");
     engine->RegisterObjectMethod("Console", "void Toggle()", asMETHOD(Console, Toggle), asCALL_THISCALL);
@@ -65,55 +69,7 @@ static void RegisterConsole(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Console", "void AddAutoComplete(const String&in)", asMETHOD(Console, AddAutoComplete), asCALL_THISCALL);
     engine->RegisterObjectMethod("Console", "void RemoveAutoComplete(const String&in)", asMETHOD(Console, RemoveAutoComplete), asCALL_THISCALL);
     engine->RegisterGlobalFunction("Console@+ get_console()", asFUNCTION(GetConsole), asCALL_CDECL);
-}
 
-static DebugHud* GetDebugHud()
-{
-    return GetScriptContext()->GetSubsystem<DebugHud>();
-}
-
-static void RegisterDebugHud(asIScriptEngine* engine)
-{
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_NONE", (void*)&DEBUGHUD_SHOW_NONE);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_STATS", (void*)&DEBUGHUD_SHOW_STATS);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_MODE", (void*)&DEBUGHUD_SHOW_MODE);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_PROFILER", (void*)&DEBUGHUD_SHOW_PROFILER);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_EVENTPROFILER", (void*)&DEBUGHUD_SHOW_EVENTPROFILER);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_MEMORY", (void*)&DEBUGHUD_SHOW_MEMORY);
-    engine->RegisterGlobalProperty("const uint DEBUGHUD_SHOW_ALL", (void*)&DEBUGHUD_SHOW_ALL);
-
-    RegisterObject<Console>(engine, "DebugHud");
-    engine->RegisterObjectMethod("DebugHud", "void Update()", asMETHOD(DebugHud, Update), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void Toggle(uint)", asMETHOD(DebugHud, Toggle), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void ToggleAll()", asMETHOD(DebugHud, ToggleAll), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void set_defaultStyle(XMLFile@+)", asMETHOD(DebugHud, SetDefaultStyle), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "XMLFile@+ get_defaultStyle() const", asMETHOD(DebugHud, GetDefaultStyle), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void set_mode(uint)", asMETHOD(DebugHud, SetMode), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "uint get_mode() const", asMETHOD(DebugHud, GetMode), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void set_profilerMaxDepth(uint)", asMETHOD(DebugHud, SetProfilerMaxDepth), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "uint get_profilerMaxDepth() const", asMETHOD(DebugHud, GetProfilerMaxDepth), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void set_profilerInterval(float)", asMETHOD(DebugHud, SetProfilerInterval), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "float get_profilerInterval() const", asMETHOD(DebugHud, GetProfilerInterval), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void set_useRendererStats(bool)", asMETHOD(DebugHud, SetUseRendererStats), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "bool get_useRendererStats() const", asMETHOD(DebugHud, GetUseRendererStats), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "Text@+ get_statsText() const", asMETHOD(DebugHud, GetStatsText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "Text@+ get_modeText() const", asMETHOD(DebugHud, GetModeText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "Text@+ get_profilerText() const", asMETHOD(DebugHud, GetProfilerText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "Text@+ get_memoryText() const", asMETHOD(DebugHud, GetMemoryText), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void SetAppStats(const String&in, const Variant&in)", asMETHODPR(DebugHud, SetAppStats, (const String&, const Variant&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void SetAppStats(const String&in, const String&in)", asMETHODPR(DebugHud, SetAppStats, (const String&, const String&), void), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void ResetAppStats(const String&in)", asMETHOD(DebugHud, ResetAppStats), asCALL_THISCALL);
-    engine->RegisterObjectMethod("DebugHud", "void ClearAppStats()", asMETHOD(DebugHud, ClearAppStats), asCALL_THISCALL);
-    engine->RegisterGlobalFunction("DebugHud@+ get_debugHud()", asFUNCTION(GetDebugHud), asCALL_CDECL);
-}
-
-static Engine* GetEngine()
-{
-    return GetScriptContext()->GetSubsystem<Engine>();
-}
-
-static void RegisterEngine(asIScriptEngine* engine)
-{
     RegisterObject<Engine>(engine, "Engine");
     engine->RegisterObjectMethod("Engine", "void RunFrame()", asMETHOD(Engine, RunFrame), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "void Exit()", asMETHOD(Engine, Exit), asCALL_THISCALL);
@@ -138,13 +94,6 @@ static void RegisterEngine(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Engine", "bool get_exiting() const", asMETHOD(Engine, IsExiting), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "bool get_headless() const", asMETHOD(Engine, IsHeadless), asCALL_THISCALL);
     engine->RegisterGlobalFunction("Engine@+ get_engine()", asFUNCTION(GetEngine), asCALL_CDECL);
-}
-
-void RegisterEngineAPI(asIScriptEngine* engine)
-{
-    RegisterConsole(engine);
-    RegisterDebugHud(engine);
-    RegisterEngine(engine);
 }
 
 }
