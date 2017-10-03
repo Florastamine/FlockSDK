@@ -91,7 +91,6 @@ void CreateUI()
     CreateSoundTypeEditor();
     CreateStatsBar();
     CreateConsole();
-    CreateDebugHud();
     CreateResourceBrowser();
     CreateCamera();
     CreateLayerEditor();
@@ -1018,13 +1017,6 @@ void CreateConsole()
     console.commandInterpreter = consoleCommandInterpreter;
     console.numBufferedRows = 100;
     console.autoVisibleOnError = true;
-}
-
-void CreateDebugHud()
-{
-    engine.CreateDebugHud();
-    debugHud.defaultStyle = uiStyle;
-    debugHud.mode = DEBUGHUD_SHOW_NONE;
 }
 
 void CenterDialog(UIElement@ element)

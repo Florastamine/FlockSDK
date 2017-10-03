@@ -24,7 +24,6 @@
 
 #include "../AngelScript/APITemplates.h"
 #include "../Engine/Console.h"
-#include "../Engine/DebugHud.h"
 #include "../Engine/Engine.h"
 
 namespace FlockSDK
@@ -77,7 +76,6 @@ void RegisterEngineAPI(asIScriptEngine* engine)
     engine->RegisterObjectMethod("Engine", "void DumpResources(bool=false)", asMETHOD(Engine, DumpResources), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "void DumpMemory()", asMETHOD(Engine, DumpMemory), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "Console@+ CreateConsole()", asMETHOD(Engine, CreateConsole), asCALL_THISCALL);
-    engine->RegisterObjectMethod("Engine", "DebugHud@+ CreateDebugHud()", asMETHOD(Engine, CreateDebugHud), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "void set_minFps(int)", asMETHOD(Engine, SetMinFps), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "int get_minFps() const", asMETHOD(Engine, GetMinFps), asCALL_THISCALL);
     engine->RegisterObjectMethod("Engine", "void set_maxFps(int)", asMETHOD(Engine, SetMaxFps), asCALL_THISCALL);
