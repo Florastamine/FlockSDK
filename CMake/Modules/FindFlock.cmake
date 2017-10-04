@@ -35,7 +35,7 @@
 #  FLOCK_64BIT (may be used as input variable for multilib-capable compilers; must be anyway specified as input variable for MSVC due to CMake/VS generator limitation)
 #  FLOCK_LIB_TYPE (may be used as input variable as well to limit the search of library type)
 #  FLOCK_SSE
-#  FLOCK_LUAJIT
+#  FLOCK_LUA
 #
 # WIN32 only:
 #  FLOCK_LIBRARIES_REL
@@ -57,9 +57,9 @@ if (CMAKE_PROJECT_NAME STREQUAL Flock AND TARGET Flock)
     list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_HOME}/include/Flock/ThirdParty/Bullet)
 
     if (FLOCK_LUA)
-        # ditto for Lua/LuaJIT
-        list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_HOME}/include/Flock/ThirdParty/Lua${JIT})
+        list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_HOME}/include/Flock/ThirdParty/LuaJIT)
     endif ()
+
     set (FLOCK_LIBRARIES Flock)
     set (FLOCK_COMPILE_RESULT TRUE)
 else ()
@@ -128,7 +128,7 @@ else ()
         list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_BASE_INCLUDE_DIR}/ThirdParty)
         list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_BASE_INCLUDE_DIR}/ThirdParty/Bullet)
         if (FLOCK_LUA)
-            list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_BASE_INCLUDE_DIR}/ThirdParty/Lua${JIT})
+            list (APPEND FLOCK_INCLUDE_DIRS ${FLOCK_BASE_INCLUDE_DIR}/ThirdParty/LuaJIT)
         endif ()
         # Intentionally do no cache the FLOCK_VERSION as it has potential to change frequently
         file (STRINGS ${FLOCK_BASE_INCLUDE_DIR}/librevision.h FLOCK_VERSION REGEX "^const char\\* revision=\"[^\"]*\".*$")

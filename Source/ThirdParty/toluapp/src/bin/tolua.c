@@ -24,41 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Flock: Add FlockSDK::String Support in tolua++
-static void help (void)
-{
- fprintf(stderr,"\n"
-         "usage: tolua++ [options] input_file\n"
-         "\n"
-         "Command line options are:\n"
-         "  -v       : print version information.\n"
-         "  -o  file : set output file; default is stdout.\n"
-         "  -H  file : create include file.\n"
-         "  -n  name : set package name; default is input file root name.\n"
-         "  -p       : parse only.\n"
-         "  -P       : parse and print structure information (for debug).\n"
-         "  -S       : disable support for urho3d strings.\n"
-         "  -1       : substract 1 to operator[] index (for compatibility with tolua5).\n"
-         "  -L  file : run lua file (with dofile()) before doing anything.\n"
-         "  -D       : disable automatic exporting of destructors for classes that have\n"
-         "             constructors (for compatibility with tolua5)\n"
-         "  -W       : disable warnings for unsupported features (for compatibility\n"
-         "             with tolua5)\n"
-         "  -C       : disable cleanup of included lua code (for easier debugging)\n"
-         "  -E  value[=value] : add extra values to the luastate\n"
-         "  -t       : export a list of types asociates with the C++ typeid name\n"
-         "  -q       : don't print warnings to the console\n"
-         "  -h       : print this message.\n"
-         "Should the input file be omitted, stdin is assumed;\n"
-         "in that case, the package name must be explicitly set.\n\n"
-        );
-}
-
-static void version (void)
-{
- fprintf(stderr, "%s (written by W. Celes, A. Manzur)\n",TOLUA_VERSION);
-}
-
 static void setfield (lua_State* L, int table, char* f, char* v)
 {
  lua_pushstring(L,f);
@@ -78,7 +43,6 @@ static void add_extra (lua_State* L, char* value) {
 static void error (char* o)
 {
  fprintf(stderr,"tolua: unknown option '%s'\n",o);
- help();
  exit(1);
 }
 
@@ -102,7 +66,6 @@ int main (int argc, char* argv[])
 
  if (argc==1)
  {
-  help();
   return 0;
  }
  else
@@ -120,8 +83,9 @@ int main (int argc, char* argv[])
    {
     switch (argv[i][1])
     {
-     case 'v': version(); return 0;
-     case 'h': help(); return 0;
+     case 'v':
+      fprintf(stderr, "%s (written by W. Celes, A. Manzur)\n",TOLUA_VERSION);
+      return 0;
      case 'p': setfield(L,t,"p",""); break;
      case 'P': setfield(L,t,"P",""); break;
      case 'o': setfield(L,t,"o",argv[++i]); break;

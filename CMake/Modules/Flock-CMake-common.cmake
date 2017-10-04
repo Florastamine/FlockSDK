@@ -65,20 +65,19 @@ if (CMAKE_PROJECT_NAME STREQUAL Flock)
     endif ()
     cmake_dependent_option (FLOCK_3DNOW "Enable 3DNow! instruction set (Linux platform only); should only be used for older CPU with (legacy) 3DNow! support" ${HAVE_3DNOW} "NOT WIN32 AND NOT APPLE  AND NOT ARM AND NOT FLOCK_SSE" FALSE)
     cmake_dependent_option (FLOCK_MMX "Enable MMX instruction set (32-bit Linux platform only); the MMX is effectively enabled when 3DNow! or SSE is enabled; should only be used for older CPU with MMX support" ${HAVE_MMX} "NOT WIN32 AND NOT APPLE  AND NOT ARM AND NOT FLOCK_64BIT AND NOT FLOCK_SSE AND NOT FLOCK_3DNOW" FALSE)
-    cmake_dependent_option (FLOCK_LUAJIT "Enable Lua scripting support using LuaJIT (check LuaJIT's CMakeLists.txt for more options)" FALSE "NOT WEB" FALSE)
-    cmake_dependent_option (FLOCK_LUAJIT_AMALG "Enable LuaJIT amalgamated build (LuaJIT only)" FALSE "FLOCK_LUAJIT" FALSE)
-    cmake_dependent_option (FLOCK_SAFE_LUA "Enable Lua C++ wrapper safety checks (Lua/LuaJIT only)" FALSE "FLOCK_LUA OR FLOCK_LUAJIT" FALSE)
+    cmake_dependent_option (FLOCK_LUAJIT_AMALG "Enable LuaJIT amalgamated build" FALSE "FLOCK_LUA" FALSE)
+    cmake_dependent_option (FLOCK_SAFE_LUA "Enable Lua C++ wrapper safety checks" FALSE "FLOCK_LUA" FALSE)
     if (CMAKE_BUILD_TYPE STREQUAL Release OR CMAKE_CONFIGURATION_TYPES)
         set (FLOCK_DEFAULT_LUA_RAW FALSE)
     else ()
         set (FLOCK_DEFAULT_LUA_RAW TRUE)
     endif ()
-    cmake_dependent_option (FLOCK_LUA_RAW_SCRIPT_LOADER "Prefer loading raw script files from the file system before falling back on Flock resource cache. Useful for debugging (e.g. breakpoints), but less performant (Lua/LuaJIT only)" ${FLOCK_DEFAULT_LUA_RAW} "FLOCK_LUA OR FLOCK_LUAJIT" FALSE)
+    cmake_dependent_option (FLOCK_LUA_RAW_SCRIPT_LOADER "Prefer loading raw script files from the file system before falling back on Flock resource cache. Useful for debugging (e.g. breakpoints), but less performant (Lua only)" ${FLOCK_DEFAULT_LUA_RAW} "FLOCK_LUA" FALSE)
     cmake_dependent_option (FLOCK_EXTRAS "Build extras (native only)" FALSE "NOT IOS  " FALSE)
     option (FLOCK_PCH "Enable PCH support" TRUE)
     option (FLOCK_FILEWATCHER "Enable filewatcher support" TRUE)
-    if ((FLOCK_LUA AND NOT FLOCK_LUAJIT) AND NOT WIN32)
-        # Find GNU Readline development library for Lua interpreter and SQLite's isql
+    if (NOT WIN32)
+        # Find GNU Readline development library for SQLite's isql
         find_package (Readline)
     endif ()
     if (CPACK_SYSTEM_NAME STREQUAL Linux)
@@ -180,12 +179,7 @@ if (NOT FLOCK_LIB_TYPE STREQUAL SHARED)
     add_definitions (-DFLOCK_STATIC_DEFINE)
 endif () 
 
-# Add definition for Lua and LuaJIT
-if (FLOCK_LUAJIT)
-    set (JIT JIT)
-    # Implied FLOCK_LUA
-    set (FLOCK_LUA 1)
-endif ()
+# Add definition for LuaJIT
 if (FLOCK_LUA)
     add_definitions (-DFLOCKSDK_LUA)
     # Optionally enable Lua / C++ wrapper safety checks
@@ -193,6 +187,7 @@ if (FLOCK_LUA)
         add_definitions (-DTOLUA_RELEASE)
     endif ()
 endif ()
+
 if (FLOCK_LUA_RAW_SCRIPT_LOADER)
     add_definitions (-DFLOCKSDK_LUA_RAW_SCRIPT_LOADER)
 endif ()
@@ -343,7 +338,7 @@ else ()
     endif ()
 endif ()
 # LuaJIT specific - extra linker flags for linking against LuaJIT (adapted from LuaJIT's original Makefile)
-if (FLOCK_LUAJIT)
+if (FLOCK_LUA)
     if (FLOCK_LIB_TYPE STREQUAL STATIC AND NOT WIN32 AND NOT APPLE)    # The original condition also checks: AND NOT SunOS AND NOT PS3
         # We assume user may want to load C modules compiled for plain Lua with require(), so we have to ensure all the public symbols are exported when linking with Flock (and therefore LuaJIT) statically
         # Note: this implies that loading such modules on Windows platform may only work with SHARED library type
@@ -848,7 +843,7 @@ macro (define_dependency_libs TARGET)
     endif ()
 
     # Flock/LuaJIT external dependency
-    if (FLOCK_LUAJIT AND ${TARGET} MATCHES LuaJIT|Flock)
+    if (FLOCK_LUA AND ${TARGET} MATCHES LuaJIT|Flock)
         if (NOT WIN32 )
             list (APPEND LIBS dl m)
         endif ()

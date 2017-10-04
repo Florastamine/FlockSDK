@@ -70,14 +70,12 @@ set_source_files_properties (${SYMBOLIC_SOURCES} PROPERTIES SYMBOLIC TRUE)
 
 if (FLOCK_LUA)
     # The host tool must be built natively
-    if (CMAKE_CROSSCOMPILING OR FLOCK_LUAJIT)
-        # When cross-compiling or using LuaJIT, build the tolua++ host tool as external project using normal Lua (there is not much point using LuaJIT for the tool building even when technically it can)
+    if (CMAKE_CROSSCOMPILING)
         include (ExternalProject)
         ExternalProject_Add (tolua++
             SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/ThirdParty/toluapp/src/bin
             CMAKE_ARGS -DDEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool/bin -DBAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR})
     else ()
-        # Otherwise, build it internally as per normal
         add_subdirectory (../ThirdParty/toluapp/src/bin ../ThirdParty/toluapp/src/bin)
     endif ()
     # Use the host tool to generate source files for tolua++ API binding
@@ -136,9 +134,9 @@ if (FLOCK_NAVIGATION)
     list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/Detour)
 endif ()
 if (FLOCK_LUA)
-    # Lua/LuaJIT library depends on its own include dir to be added in the header search path
+    # LuaJIT library depends on its own include dir to be added in the header search path
     # This is more practical than patching its header files in many places to make them work with relative path
-    list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/Lua${JIT})
+    list (APPEND INCLUDE_DIRS ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty/LuaJIT)
 endif ()
 # Workaround for GCC 5.4 and above when building a SHARED lib type for Linux platform to fix the undefined symbol "__cpu_model" issue (see #1519)
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3.1 AND CMAKE_SYSTEM_NAME STREQUAL Linux AND FLOCK_LIB_TYPE STREQUAL SHARED)  # 5.3.1 was the last known good version
@@ -259,7 +257,7 @@ install_header_files (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ DESTINATION ${DEST_
 # Generate the include-all-headers header file even though we do not encourage Flock library users to use it
 list (SORT FLOCK_HEADERS)
 list (REVERSE FLOCK_HEADERS)
-set (OPTIONAL_SUBS IK Database Lua Navigation Network Physics Urho2D)
+set (OPTIONAL_SUBS IK Database Navigation Network Physics Urho2D)
 foreach (SUB ${OPTIONAL_SUBS})
     if (FLOCK_HEADERS MATCHES "(include/Flock/${SUB}[^;]+)")
         list (FIND FLOCK_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
@@ -315,8 +313,7 @@ set (ENGINE_INCLUDE_DIRS "${DASH}I\"\${includedir}\" ${DASH}I\"\${includedir}/Fl
 # This is more practical than patching its header files in many places to make them work with relative path
 set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Flock/ThirdParty/Bullet\"")
 if (FLOCK_LUA)
-    # ditto for Lua/LuaJIT
-    set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Flock/ThirdParty/Lua${JIT}\"")
+    set (ENGINE_INCLUDE_DIRS "${ENGINE_INCLUDE_DIRS} ${DASH}I\"\${includedir}/Flock/ThirdParty/LuaJIT\"")
 endif ()
 # todo: Reevaluate the command below when the CMake minimum required version is set to 2.8.12 (and remove only when the deprecated add_compiler_export_flags() is not used anymore)
 # Remove compiler flags that are only used for building the library

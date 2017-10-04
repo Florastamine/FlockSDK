@@ -49,7 +49,7 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL Flock)
     include (Flock-CMake-common)
 
     # Add dependency targets
-    add_subdirectory (${BAKED_CMAKE_SOURCE_DIR}/Source/ThirdParty/Lua host/Lua)
+    add_subdirectory (${BAKED_CMAKE_SOURCE_DIR}/Source/ThirdParty/LuaJIT host/LuaJIT)
     add_subdirectory (${BAKED_CMAKE_SOURCE_DIR}/Source/ThirdParty/toluapp/src/lib host/toluapp)
 endif ()
 
@@ -69,9 +69,9 @@ add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/generated/toluabind.c
 define_source_files (EXTRA_CPP_FILES tolua.c ${CMAKE_CURRENT_BINARY_DIR}/generated/toluabind.c)
 
 # Define dependency libs
-set (LIBS toluapp Lua)
+set (LIBS toluapp LuaJIT)
 list (APPEND LIBS m)
-set (INCLUDE_DIRS ../../include ../../../../ThirdParty/Lua/src)
+set (INCLUDE_DIRS ../../include ../../../../ThirdParty/LuaJIT/src)
 
 # Setup target
 setup_executable (TOOL NODEPS)
