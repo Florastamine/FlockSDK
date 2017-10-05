@@ -129,7 +129,7 @@
 #    option(EXCLUDE_DEPRECATED "Exclude deprecated parts of the library" FALSE)
 #    if (EXCLUDE_DEPRECATED)
 #      set(NO_BUILD_DEPRECATED DEFINE_NO_DEPRECATED)
-#    endif()
+#    endif ()
 #    generate_export_header(somelib ${NO_BUILD_DEPRECATED})
 #
 #
@@ -205,17 +205,17 @@ endmacro()
 
 macro(_test_compiler_hidden_visibility)
 
-  if(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.2")
+  if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.2")
     set(GCC_TOO_OLD TRUE)
   elseif(CMAKE_COMPILER_IS_GNUC AND CMAKE_C_COMPILER_VERSION VERSION_LESS "4.2")
     set(GCC_TOO_OLD TRUE)
   elseif(CMAKE_CXX_COMPILER_ID MATCHES Intel AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "12.0")
     set(_INTEL_TOO_OLD TRUE)
-  endif()
+  endif ()
 
   # Exclude XL here because it misinterprets -fvisibility=hidden even though
   # the check_cxx_compiler_flag passes
-  if(NOT GCC_TOO_OLD
+  if (NOT GCC_TOO_OLD
       AND NOT _INTEL_TOO_OLD
       AND NOT WIN32
       AND NOT CYGWIN
@@ -228,28 +228,28 @@ macro(_test_compiler_hidden_visibility)
     option(USE_COMPILER_HIDDEN_VISIBILITY
       "Use HIDDEN visibility support if available." ON)
     mark_as_advanced(USE_COMPILER_HIDDEN_VISIBILITY)
-  endif()
+  endif ()
 endmacro()
 
 macro(_test_compiler_has_deprecated)
-  if(CMAKE_CXX_COMPILER_ID MATCHES Borland
+  if (CMAKE_CXX_COMPILER_ID MATCHES Borland
       OR CMAKE_CXX_COMPILER_ID MATCHES HP
       OR GCC_TOO_OLD
       OR CMAKE_CXX_COMPILER_ID MATCHES PGI
       OR CMAKE_CXX_COMPILER_ID MATCHES Watcom)
     set(COMPILER_HAS_DEPRECATED "" CACHE INTERNAL
       "Compiler support for a deprecated attribute")
-  else()
+  else ()
     _check_cxx_compiler_attribute("__attribute__((__deprecated__))"
       COMPILER_HAS_DEPRECATED_ATTR)
-    if(COMPILER_HAS_DEPRECATED_ATTR)
+    if (COMPILER_HAS_DEPRECATED_ATTR)
       set(COMPILER_HAS_DEPRECATED "${COMPILER_HAS_DEPRECATED_ATTR}"
         CACHE INTERNAL "Compiler support for a deprecated attribute")
-    else()
+    else ()
       _check_cxx_compiler_attribute("__declspec(deprecated)"
         COMPILER_HAS_DEPRECATED)
-    endif()
-  endif()
+    endif ()
+  endif ()
 endmacro()
 
 get_filename_component(_GENERATE_EXPORT_HEADER_MODULE_DIR
@@ -265,17 +265,17 @@ macro(_DO_SET_MACRO_VALUES TARGET_LIBRARY)
     set(DEFINE_DEPRECATED "__attribute__ ((__deprecated__))")
   elseif(COMPILER_HAS_DEPRECATED)
     set(DEFINE_DEPRECATED "__declspec(deprecated)")
-  endif()
+  endif ()
 
   # Flock: always generate header file regardless of target type
-    if(WIN32)
+    if (WIN32)
       set(DEFINE_EXPORT "__declspec(dllexport)")
       set(DEFINE_IMPORT "__declspec(dllimport)")
     elseif(COMPILER_HAS_HIDDEN_VISIBILITY AND USE_COMPILER_HIDDEN_VISIBILITY)
       set(DEFINE_EXPORT "__attribute__((visibility(\"default\")))")
       set(DEFINE_IMPORT "__attribute__((visibility(\"default\")))")
       set(DEFINE_NO_EXPORT "__attribute__((visibility(\"hidden\")))")
-    endif()
+    endif ()
 endmacro()
 
 macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
@@ -291,9 +291,9 @@ macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
 
   set(BASE_NAME "${TARGET_LIBRARY}")
 
-  if(_GEH_BASE_NAME)
+  if (_GEH_BASE_NAME)
     set(BASE_NAME ${_GEH_BASE_NAME})
-  endif()
+  endif ()
 
   string(TOUPPER ${BASE_NAME} BASE_NAME_UPPER)
   string(TOLOWER ${BASE_NAME} BASE_NAME_LOWER)
@@ -307,43 +307,43 @@ macro(_DO_GENERATE_EXPORT_HEADER TARGET_LIBRARY)
   set(NO_DEPRECATED_MACRO_NAME
     "${_GEH_PREFIX_NAME}${BASE_NAME_UPPER}_NO_DEPRECATED")
 
-  if(_GEH_UNPARSED_ARGUMENTS)
+  if (_GEH_UNPARSED_ARGUMENTS)
     message(FATAL_ERROR "Unknown keywords given to GENERATE_EXPORT_HEADER(): \"${_GEH_UNPARSED_ARGUMENTS}\"")
-  endif()
+  endif ()
 
-  if(_GEH_EXPORT_MACRO_NAME)
+  if (_GEH_EXPORT_MACRO_NAME)
     set(EXPORT_MACRO_NAME ${_GEH_PREFIX_NAME}${_GEH_EXPORT_MACRO_NAME})
-  endif()
+  endif ()
   # Flock: CMake version less than 2.8.12 does not have this sub-command yet, so comment it out until the cmake minimum required is 2.8.12
   #string(MAKE_C_IDENTIFIER ${EXPORT_MACRO_NAME} EXPORT_MACRO_NAME)
-  if(_GEH_EXPORT_FILE_NAME)
-    if(IS_ABSOLUTE ${_GEH_EXPORT_FILE_NAME})
+  if (_GEH_EXPORT_FILE_NAME)
+    if (IS_ABSOLUTE ${_GEH_EXPORT_FILE_NAME})
       set(EXPORT_FILE_NAME ${_GEH_EXPORT_FILE_NAME})
-    else()
+    else ()
       set(EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/${_GEH_EXPORT_FILE_NAME}")
-    endif()
-  endif()
-  if(_GEH_DEPRECATED_MACRO_NAME)
+    endif ()
+  endif ()
+  if (_GEH_DEPRECATED_MACRO_NAME)
     set(DEPRECATED_MACRO_NAME ${_GEH_PREFIX_NAME}${_GEH_DEPRECATED_MACRO_NAME})
-  endif()
+  endif ()
   #string(MAKE_C_IDENTIFIER ${DEPRECATED_MACRO_NAME} DEPRECATED_MACRO_NAME)
-  if(_GEH_NO_EXPORT_MACRO_NAME)
+  if (_GEH_NO_EXPORT_MACRO_NAME)
     set(NO_EXPORT_MACRO_NAME ${_GEH_PREFIX_NAME}${_GEH_NO_EXPORT_MACRO_NAME})
-  endif()
+  endif ()
   #string(MAKE_C_IDENTIFIER ${NO_EXPORT_MACRO_NAME} NO_EXPORT_MACRO_NAME)
-  if(_GEH_STATIC_DEFINE)
+  if (_GEH_STATIC_DEFINE)
     set(STATIC_DEFINE ${_GEH_PREFIX_NAME}${_GEH_STATIC_DEFINE})
-  endif()
+  endif ()
   #string(MAKE_C_IDENTIFIER ${STATIC_DEFINE} STATIC_DEFINE)
 
-  if(_GEH_DEFINE_NO_DEPRECATED)
+  if (_GEH_DEFINE_NO_DEPRECATED)
     set(DEFINE_NO_DEPRECATED TRUE)
-  endif()
+  endif ()
 
-  if(_GEH_NO_DEPRECATED_MACRO_NAME)
+  if (_GEH_NO_DEPRECATED_MACRO_NAME)
     set(NO_DEPRECATED_MACRO_NAME
       ${_GEH_PREFIX_NAME}${_GEH_NO_DEPRECATED_MACRO_NAME})
-  endif()
+  endif ()
   #string(MAKE_C_IDENTIFIER ${NO_DEPRECATED_MACRO_NAME} NO_DEPRECATED_MACRO_NAME)
 
   set(INCLUDE_GUARD_NAME "${EXPORT_MACRO_NAME}_H")
@@ -358,10 +358,10 @@ endmacro()
 
 # Flock: revise to pass the library type by argument so that it does not depend on the target to be added first
 function(GENERATE_EXPORT_HEADER TARGET_LIBRARY type)
-  if(NOT ${type} MATCHES STATIC|SHARED|OBJECT|MODULE)
+  if (NOT ${type} MATCHES STATIC|SHARED|OBJECT|MODULE)
     message(WARNING "This macro can only be used with libraries")
     return()
-  endif()
+  endif ()
   _test_compiler_hidden_visibility()
   _test_compiler_has_deprecated()
   _do_set_macro_values(${TARGET_LIBRARY} ${type})
@@ -369,29 +369,29 @@ function(GENERATE_EXPORT_HEADER TARGET_LIBRARY type)
 endfunction()
 
 function(add_compiler_export_flags)
-  if(NOT CMAKE_MINIMUM_REQUIRED_VERSION VERSION_LESS 2.8.12)
+  if (NOT CMAKE_MINIMUM_REQUIRED_VERSION VERSION_LESS 2.8.12)
     message(DEPRECATION "The add_compiler_export_flags function is obsolete. Use the CXX_VISIBILITY_PRESET and VISIBILITY_INLINES_HIDDEN target properties instead.")
-  endif()
+  endif ()
 
   _test_compiler_hidden_visibility()
   _test_compiler_has_deprecated()
 
-  if(NOT (USE_COMPILER_HIDDEN_VISIBILITY AND COMPILER_HAS_HIDDEN_VISIBILITY))
+  if (NOT (USE_COMPILER_HIDDEN_VISIBILITY AND COMPILER_HAS_HIDDEN_VISIBILITY))
     # Just return if there are no flags to add.
     return()
-  endif()
+  endif ()
 
   set (EXTRA_FLAGS "-fvisibility=hidden")
 
-  if(COMPILER_HAS_HIDDEN_INLINE_VISIBILITY)
+  if (COMPILER_HAS_HIDDEN_INLINE_VISIBILITY)
     set (EXTRA_FLAGS "${EXTRA_FLAGS} -fvisibility-inlines-hidden")
-  endif()
+  endif ()
 
   # Either return the extra flags needed in the supplied argument, or to the
   # CMAKE_CXX_FLAGS if no argument is supplied.
-  if(ARGV0)
+  if (ARGV0)
     set(${ARGV0} "${EXTRA_FLAGS}" PARENT_SCOPE)
-  else()
+  else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_FLAGS}" PARENT_SCOPE)
-  endif()
+  endif ()
 endfunction()

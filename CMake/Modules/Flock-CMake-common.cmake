@@ -130,7 +130,7 @@ if (CMAKE_VERSION VERSION_GREATER 2.8 OR CMAKE_VERSION VERSION_EQUAL 2.8)
     if (NOT CMAKE_CONFIGURATION_TYPES)
         set_property (CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${FLOCK_BUILD_CONFIGURATIONS})
     endif ()
-endif()
+endif ()
 
 # Union all the sysroot variables into one so it can be referred to generically later
 # TODO: to be replaced with CMAKE_SYSROOT later if it is more beneficial
@@ -278,7 +278,7 @@ else ()
             if (FLOCK_MMX)
                 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mmmx")
                 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmmx")
-            endif()
+            endif ()
             if (FLOCK_3DNOW)
                 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m3dnow")
                 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m3dnow")

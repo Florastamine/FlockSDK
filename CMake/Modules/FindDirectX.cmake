@@ -82,7 +82,7 @@ if (MINGW)
     set (FAIL_MESSAGE "Could NOT find DirectX using MinGW default search paths")
 endif ()
 mark_as_advanced (DIRECTX_INCLUDE_DIRS)
-endif() 
+endif () 
 
 # For now take shortcut for the other DirectX components by just checking on the headers and not the libraries
 include (CheckIncludeFiles)

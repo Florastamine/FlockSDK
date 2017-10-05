@@ -96,7 +96,7 @@ if (FLOCK_LUA)
         if (${DIR} STREQUAL "Core") # I suck at CMake. Like, seriously. 
             if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.pkg)
                 file(REMOVE ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.pkg)
-            endif()
+            endif ()
 
             if (CMAKE_SYSTEM_NAME STREQUAL Linux)
                 file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.Linux.pkg DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/)
@@ -104,8 +104,8 @@ if (FLOCK_LUA)
             elseif(CMAKE_SYSTEM_NAME STREQUAL Windows)
                 file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.Windows.pkg DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/)
                 file (RENAME ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/Platform.Windows.pkg ${CMAKE_CURRENT_SOURCE_DIR}/LuaScript/pkgs/${DIR}/Platform.pkg)
-            endif()
-        endif()
+            endif ()
+        endif ()
         add_custom_command (OUTPUT ${GEN_CPP_FILE}
             COMMAND ${CMAKE_BINARY_DIR}/bin/tool//bin/tolua++ -E ${CMAKE_PROJECT_NAME} -L ToCppHook.lua -o ${CMAKE_CURRENT_BINARY_DIR}/${GEN_CPP_FILE} ${NAME}
             DEPENDS tolua++ ${API_PKG_FILE} ${PKG_FILES} LuaScript/pkgs/ToCppHook.lua
