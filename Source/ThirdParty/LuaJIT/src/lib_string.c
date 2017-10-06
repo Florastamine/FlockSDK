@@ -85,6 +85,11 @@ LJLIB_ASM(string_sub)		LJLIB_REC(string_range 1)
 }
 
 /*
+The following license notice applies for the following functionalities:
+* string.ends_with() (string_ends_with)
+* string.hash (string_hash)
+*/
+/*
 PREMAKE 5 (core) license
 ---------------
 
@@ -129,6 +134,29 @@ LJLIB_CF(string_ends_with)
     }
   }
   return 0;
+}
+
+static unsigned long s_hash(const char *s, int seed)
+{
+  /* DJB2 hashing; see http://www.cse.yorku.ca/~oz/hash.html */
+  unsigned long hash = 5381;
+  if (seed != 0) {
+    hash = hash * 33 + seed;
+  }
+
+  while (*s) {
+    hash = hash * 33 + (*s);
+    s++;
+  }
+  return hash;
+}
+
+LJLIB_CF(string_hash)
+{
+	const char *str = luaL_checkstring(L, 1);
+	int seed = (int) luaL_optinteger(L, 2, 0);
+	lua_pushinteger(L, s_hash(str, seed));
+	return 1;
 }
 
 LJLIB_CF(string_rep)		LJLIB_REC(.)
