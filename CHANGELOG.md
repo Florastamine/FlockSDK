@@ -151,13 +151,16 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Fixed a bug which caused `Time::GetTimeStamp()` to return a `PODVector<>` with 6 elements, with the first 3 being empty, uninitialized values. Also its return type was changed from `PODVector<char>` to `PODVector<int>`.
 * Partially resolved the issue which caused constant editor crashes.
 * Tools' binaries (`isql`, `lua`, `luajit`, `tolua++`, `PackageTool`) were moved to `./tool/bin`. This was due to some tools (LuaSrcDiet, for example) need scripts for bootstrapping purposes, and we can't just mix scripts with binaries. Engine binaries still reside at `./bin/`.
+* LuaJIT completely replaces vanilla Lua for building `tolua++`, a tool which is built on-the-fly during the SDK building process for generating C++ <-> Lua bindings. Previously, Lua was used to build `tolua++`, while LuaJIT is used as the scripting engine. This change dropped vanilla Lua and switched to LuaJIT for everything.
 
 ## Removals/deprecation of features
+* Removed [AngelScript](http://www.angelcode.com/angelscript/) scripting support for `DebugHud`. As a result, you can no longer patch the scene editor code to use the profiler from within the editor.
 * Removed edge detection post-process effect (`EdgeDetection.glsl`).
 * `luac` was excluded from the build, as users are generally advised to use LuaJIT over vanilla Lua due to performance reasons, the number of supported libraries, and FFI.
 
 ## New features
 * Integration of rich text formatting support. As an extension to the existing 3D text component, it allows for text rendering with different fonts, sizes, colors, and embedded images within one text block.
+* Integration of 3D UI rendering support.
 * The classic random number generator (`FlockSDK::Random()` and its associates) were replaced with C++11 generators. Three methods of generating numbers were provided: Mersenne Twister, which is powered by `mt19937`; LCG (`minstd_rand`) and Subtract-with-carry (`ranlux24`). The APIs still stay the same, but now there's an additional argument (defaults to `MERSENNE_TWISTER`), which you can use to specify which generator to use:
 ```c++
 float Random(PRNG p = MERSENNE_TWISTER);
@@ -173,5 +176,10 @@ int Random(int min, int max, PRNG p = MERSENNE_TWISTER);
 * Added `Time::GetCurrentTimeHours()`, `Time::GetCurrentTimeMinutes()`, `Time::GetCurrentTimeSeconds()` for querying parts of the time stamp.
 * Added `DegToRad()`, `RadToDeg()`, `ToChar()`.
 * Added a new large batch of color constants: `GRAY_DARK`, `VIOLET`, `LIME`, `LIME_ARCTIC`, `CHERRY`, `INDIGO`, `CRIMSON`, `LAVENDER`, `LEMON_BITTER`, `LILAC_PALE`, `TEAL`, `ORCHID`, `GREEN_APPLE`, `AQUAMARINE`, `BLEU_DE_FRANCE`, `SCARLET`, `SAND`, `PEACH`, `PEAR`, `IVORY`.
+* Added LuaJIT's `string.hash()`, which performs `djb2` hashing on the given string.
 
 ## Changes/bugfixes/new features merged from Urho3D
+* Various bug-fixes and tweaks.
+
+* **Renderer**
+* Added `Renderer::GetViewportForScene()`.
