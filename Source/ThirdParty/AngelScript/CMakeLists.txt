@@ -23,7 +23,7 @@
 # Define target name
 set (TARGET_NAME AngelScript)
 
-add_definitions (-DAS_NO_THREADS)
+add_definitions (-DAS_NO_THREADS=1)
 
 # Define preprocessor macros
 if (NOT EXCEPTIONS)
