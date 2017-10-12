@@ -124,8 +124,21 @@ inline void SetFPUState(unsigned control)
 #if defined(_WIN32)
     #include <intrin.h> 
 
-    static void               __GetCPUID__(int (&out)[4], int x) { __cpuidex(out, x, 0); }
-    static unsigned long long __GetECRInfo__(unsigned x)             { return _xgetbv(x); } // https://software.intel.com/en-us/node/523373 
+    // Some old versions of MinGW (including the legacy MinGW and old versions of MinGW-W64, like the
+    // version comes included with GCC 4.9.3) does not have _xgetbv() in psdk_inc/intrin-impl.h. So, instead
+    // of dealing with workarounds for different versions of MinGW, we'll just roll our own version of _xgetbv(),
+    // it's going to work on every MinGW-based compilers.
+    #if defined(__MINGW32__)
+        static inline unsigned long long xgetbv(unsigned int index)
+        {
+            unsigned int eax, edx;
+            __asm__ __volatile__("xgetbv" : "=a"(eax), "=d"(edx) : "c"(index));
+            return ((unsigned long long) edx << 32) | eax;
+        }
+    #endif
+
+    static void               __GetCPUID__(int (&out)[4], int x) { __cpuid(out, x); }
+    static unsigned long long __GetECRInfo__(unsigned x)         { return xgetbv(x); } // https://software.intel.com/en-us/node/523373 
 #elif defined(__linux__) && !defined(__ANDROID__) 
     #include <cpuid.h> 
 
