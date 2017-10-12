@@ -19,7 +19,8 @@
 # 3. This notice may not be removed or altered from any source distribution.
 #
 
-# Modified by Yao Wei Tjong for Flock, the modified portion is licensed under below license
+# Modified by Yao Wei Tjong for Urho3D, the modified portion is licensed under below license
+# Modified by Florastamine for the Flock SDK.
 
 #
 # Copyright (c) 2008-2017 Flock SDK developers & contributors. 
@@ -106,6 +107,12 @@ endif()
 # Flock - rearrange the if-elseif blocks (specific case before generic case), simplify the regex, and remove unused variables
 if (WIN32)
   set(WINDOWS TRUE)
+elseif (APPLE)
+  if (CMAKE_SYSTEM_NAME MATCHES Darwin)
+    set (DARWIN TRUE)
+  elseif (CMAKE_SYSTEM_NAME MATCHES MacOS)
+    set (MACOSX TRUE)
+  endif ()
 elseif (UNIX)
   set (UNIX_SYS TRUE)
   if (CMAKE_SYSTEM_NAME MATCHES Linux)
@@ -154,21 +161,6 @@ set (ORIG_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
 # Flock - save the original CMake global settings, do not leave them to chances
 set (ORIG_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
 set (ORIG_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
-
-if(CYGWIN)
-  # We build SDL on cygwin without the UNIX emulation layer
-  # Flock - bug fix - we do not support Cygwin build so this fix is untested, just for completeness sake
-  include_directories(/usr/include/mingw)
-  set(CMAKE_REQUIRED_FLAGS "-mno-cygwin ${ORIG_CMAKE_REQUIRED_FLAGS}")
-  check_c_source_compiles("int main(int argc, char **argv) {}"
-    HAVE_GCC_NO_CYGWIN)
-  set(CMAKE_REQUIRED_FLAGS ${ORIG_CMAKE_REQUIRED_FLAGS})
-  if(HAVE_GCC_NO_CYGWIN)
-    list(APPEND EXTRA_LDFLAGS "-mno-cygwin")
-    list(APPEND SDL_LIBS "-mno-cygwin")
-  endif()
-  set(SDL_CFLAGS "${SDL_CFLAGS} -I/usr/include/mingw")
-endif()
 
 add_definitions(-DUSING_GENERATED_CONFIG_H)
 # General includes
@@ -228,7 +220,7 @@ dep_option(PULSEAUDIO_SHARED   "Dynamically load PulseAudio support" ON PULSEAUD
 dep_option(SNDIO               "Support the Roar audio API" ON UNIX_SYS OFF)
 # Flock - commented out RPATH as an option because Flock is configured to always use RPATH, so init the variable to always TRUE
 set (RPATH TRUE)
-# Flock - prefer clock_gettime() when it is available (hide the option for Windows)
+# Flock - prefer clock_gettime() when it is available
 dep_option(CLOCK_GETTIME       "Use clock_gettime() instead of gettimeofday()" ON "NOT WINDOWS" OFF)
 set_option(INPUT_TSLIB         "Use the Touchscreen library for input" ${UNIX_SYS})
 dep_option(VIDEO_WAYLAND       "Use Wayland video driver" ON UNIX_SYS OFF)
@@ -242,13 +234,16 @@ foreach(_SUB Xcursor Xinerama XInput Xrandr Xscrnsaver XShape Xvm)
   string(TOUPPER "VIDEO_X11_${_SUB}" _OPT)
   dep_option(${_OPT}           "Enable ${_SUB} support" ON VIDEO_X11 OFF)
 endforeach()
+# Flock - bug fix - only make the COCOA option available on OSX platform but not iOS/tvOS; it does not make too much sense now for user to disable it because SDL/Apple has dropped support for XQuartz (X11 on Mac), so Cocoa is the only video driver available
+#          But we still keep it as an option here because it should be possible to add back the XQuartz support
+dep_option(VIDEO_COCOA         "Use Cocoa video driver" ON "APPLE AND NOT IOS AND NOT TVOS" OFF)
 # Flock - only make DIRECTX option available on Windows platform when FLOCK_OPENGL is enabled, i.e. DIRECTX variable must always be ON (not an option) when FLOCK_OPENGL is disabled because in this case it must depend on Direct3D which is a component of DirectX
 if (WINDOWS)
   dep_option(DIRECTX           "Use DirectX for Windows audio/video" ON FLOCK_OPENGL ON)
 else ()
   set (DIRECTX OFF)  # Make it off explicitly when not targeting Windows platform, just in case user passes it in accidentally via CLI
 endif ()
-set (RENDER_D3D FALSE) 
+set (RENDER_D3D FALSE)
 
 # TODO: We should (should we?) respect cmake's ${BUILD_SHARED_LIBS} flag here
 # The options below are for compatibility to configure's default behaviour.
@@ -305,7 +300,7 @@ if(USE_GCC OR USE_CLANG)
   if(HAVE_GCC_WDECLARATION_AFTER_STATEMENT)
     check_c_compiler_flag(-Werror=declaration-after-statement HAVE_GCC_WERROR_DECLARATION_AFTER_STATEMENT)
     # Flock - bug fix - SDL does not build cleanly for Android platform with this flag on, make a tweak here rather than changing on their code
-    if(HAVE_GCC_WERROR_DECLARATION_AFTER_STATEMENT)
+    if(HAVE_GCC_WERROR_DECLARATION_AFTER_STATEMENT AND NOT ANDROID)
       list(APPEND EXTRA_CFLAGS "-Werror=declaration-after-statement")
     endif()
     list(APPEND EXTRA_CFLAGS "-Wdeclaration-after-statement")
@@ -372,11 +367,11 @@ if(ASSEMBLY)
     if(FLOCK_ALTIVEC)
       set(SDL_ALTIVEC_BLITTERS 1)
     endif()
-  endif() 
+  endif()
 endif()
 
 # Flock - move from Unix platform-specific section below to here
-if(CLOCK_GETTIME)
+if(CLOCK_GETTIME AND (NOT IOS OR IPHONEOS_DEPLOYMENT_TARGET STREQUAL "" OR NOT IPHONEOS_DEPLOYMENT_TARGET VERSION_LESS 10.0))   # We cheat a little bit here with a hard-coded check because iOS 10.3 SDK when targeting 9.3 has strong symbol for iPhoneOS archs but weak symbol for iPhoneSimulator archs
   # Flock - bug fix - use different variables for different checks because of CMake caches the result variable; this fix the detection on Android platform
   check_library_exists(rt clock_gettime "" FOUND_CLOCK_GETTIME_IN_RT)
   if(FOUND_CLOCK_GETTIME_IN_RT)
@@ -402,11 +397,11 @@ if(LIBC)
     endforeach()
     set(HAVE_SIGNAL_H 1)
     foreach(_FN
-            qsort memset memcpy memmove memcmp
-            _strrev _strupr _strlwr strchr strrchr itoa _ltoa
-            _ultoa strtol strtoul strtoll strtod atoi atof strncmp
-            _stricmp _strnicmp sscanf atan atan2 acos asin ceil copysign
-            cosf fabs floor scalbn sinf sqrtf tanf)
+            malloc calloc realloc free qsort abs memset memcpy memmove memcmp
+            strlen _strrev _strupr _strlwr strchr strrchr strstr itoa _ltoa
+            _ultoa strtol strtoul strtoll strtod atoi atof strcmp strncmp
+            _stricmp _strnicmp sscanf atan atan2 acos asin ceil copysign cos
+            cosf fabs floor log pow scalbn sin sinf sqrt sqrtf tan tanf)
       string(TOUPPER ${_FN} _UPPER)
       set(HAVE_${_UPPER} 1)
     endforeach()
@@ -450,11 +445,11 @@ if(LIBC)
     # Flock - for consistency sake use check_include_file() to check for HAVE_MPROTECT
     check_include_file (sys/mman.h HAVE_MPROTECT)
     foreach(_FN
-            strtod getenv setenv putenv unsetenv
-            qsort bcopy memset memcpy memmove memcmp strlcpy strlcat
-            strdup _strrev _strupr _strlwr strchr strrchr itoa _ltoa
+            strtod malloc calloc realloc free getenv setenv putenv unsetenv
+            qsort abs bcopy memset memcpy memmove memcmp strlen strlcpy strlcat
+            strdup _strrev _strupr _strlwr strchr strrchr strstr itoa _ltoa
             _uitoa _ultoa strtol strtoul _i64toa _ui64toa strtoll strtoull
-            atoi atof strncmp _stricmp strcasecmp _strnicmp strncasecmp
+            atoi atof strcmp strncmp _stricmp strcasecmp _strnicmp strncasecmp
             vsscanf vsnprintf fseeko fseeko64 sigaction setjmp
             nanosleep sysconf sysctlbyname
             )
@@ -548,7 +543,156 @@ if (SDL_THREADS)
   CheckPTHREAD()
 endif ()
 
-if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
+# Platform-specific options and settings
+# Flock - rearrange the if-elseif blocks (specific case before generic case)
+if(APPLE)
+  # Requires the darwin file implementation
+  if(SDL_FILE)
+    file(GLOB EXTRA_SOURCES ${SDL2_SOURCE_DIR}/src/file/cocoa/*.m)
+    set(SOURCE_FILES ${EXTRA_SOURCES} ${SOURCE_FILES})
+    set_source_files_properties(${EXTRA_SOURCES} PROPERTIES LANGUAGE C)
+    set(HAVE_SDL_FILE TRUE)
+    set(SDL_FRAMEWORK_COCOA 1)
+    set(SDL_FRAMEWORK_COREVIDEO 1)
+  else()
+    message_error("SDL_FILE must be enabled to build on MacOS X")
+  endif()
+
+  if(SDL_AUDIO)
+    set(SDL_AUDIO_DRIVER_COREAUDIO 1)
+    file(GLOB AUDIO_SOURCES ${SDL2_SOURCE_DIR}/src/audio/coreaudio/*.m)
+    set(SOURCE_FILES ${SOURCE_FILES} ${AUDIO_SOURCES})
+    set(HAVE_SDL_AUDIO TRUE)
+    set(SDL_FRAMEWORK_COREAUDIO 1)
+    set(SDL_FRAMEWORK_AUDIOTOOLBOX 1)
+  endif()
+
+  if(SDL_JOYSTICK)
+    # Flock - bug fix - make it work for iOS/tvOS platform
+    if (IOS OR TVOS)
+      set (SDL_JOYSTICK_MFI 1)
+      file (GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/iphoneos/*.m)
+    else ()
+      set(SDL_JOYSTICK_IOKIT 1)
+      file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/darwin/*.c)
+      set(SDL_FRAMEWORK_IOKIT 1)
+      set(SDL_FRAMEWORK_FF 1)
+    endif ()
+    set(SOURCE_FILES ${SOURCE_FILES} ${JOYSTICK_SOURCES})
+    set_source_files_properties(${JOYSTICK_SOURCES} PROPERTIES LANGUAGE C)
+    set(HAVE_SDL_JOYSTICK TRUE)
+  endif()
+
+  if(SDL_HAPTIC)
+    # Urho3d - bug fix - make it work for iOS/tvOS platform
+    if (IOS OR TVOS)
+      set (SDL_HAPTIC_DUMMY 1)
+      file (GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/dummy/*.c)
+    else ()
+      set(SDL_HAPTIC_IOKIT 1)
+      file(GLOB HAPTIC_SOURCES ${SDL2_SOURCE_DIR}/src/haptic/darwin/*.c)
+      set(SDL_FRAMEWORK_IOKIT 1)
+      set(SDL_FRAMEWORK_FF 1)
+    endif ()
+    set(SOURCE_FILES ${SOURCE_FILES} ${HAPTIC_SOURCES})
+    set(HAVE_SDL_HAPTIC TRUE)
+    if(NOT SDL_JOYSTICK)
+      message(FATAL_ERROR "SDL_HAPTIC requires SDL_JOYSTICK to be enabled")
+    endif()
+  endif()
+
+  if(SDL_POWER)
+    # Urho3d - bug fix - make it work for iOS/tvOS platform
+    if (IOS OR TVOS)
+      set (SDL_POWER_UIKIT 1)
+      file (GLOB POWER_SOURCES ${SDL2_SOURCE_DIR}/src/power/uikit/*.m)
+    else ()
+      set(SDL_POWER_MACOSX 1)
+      file(GLOB POWER_SOURCES ${SDL2_SOURCE_DIR}/src/power/macosx/*.c)
+      set(SDL_FRAMEWORK_CARBON 1)
+      set(SDL_FRAMEWORK_IOKIT 1)
+    endif ()
+    set(SOURCE_FILES ${SOURCE_FILES} ${POWER_SOURCES})
+    set_source_files_properties(${POWER_SOURCES} PROPERTIES LANGUAGE C)
+    set(HAVE_SDL_POWER TRUE)
+  endif()
+
+  if(SDL_FILESYSTEM)
+    set(SDL_FILESYSTEM_COCOA 1)
+    file(GLOB FILESYSTEM_SOURCES ${SDL2_SOURCE_DIR}/src/filesystem/cocoa/*.m)
+    set_source_files_properties(${FILESYSTEM_SOURCES} PROPERTIES LANGUAGE C)
+    set(SOURCE_FILES ${SOURCE_FILES} ${FILESYSTEM_SOURCES})
+    set(HAVE_SDL_FILESYSTEM TRUE)
+  endif()
+
+  # Actually load the frameworks at the end so we don't duplicate include.
+  # Flock - TODO - this list in complete, do this when we refactor the library dependency handling
+  if(SDL_FRAMEWORK_COREVIDEO)
+    find_library(COREVIDEO CoreVideo)
+    list(APPEND EXTRA_LIBS ${COREVIDEO})
+  endif()
+  if(SDL_FRAMEWORK_COCOA)
+    find_library(COCOA_LIBRARY Cocoa)
+    list(APPEND EXTRA_LIBS ${COCOA_LIBRARY})
+  endif()
+  if(SDL_FRAMEWORK_IOKIT)
+    find_library(IOKIT IOKit)
+    list(APPEND EXTRA_LIBS ${IOKIT})
+  endif()
+  if(SDL_FRAMEWORK_FF)
+    find_library(FORCEFEEDBACK ForceFeedback)
+    list(APPEND EXTRA_LIBS ${FORCEFEEDBACK})
+  endif()
+  if(SDL_FRAMEWORK_CARBON)
+    find_library(CARBON_LIBRARY Carbon)
+    list(APPEND EXTRA_LIBS ${CARBON_LIBRARY})
+  endif()
+  if(SDL_FRAMEWORK_COREAUDIO)
+    find_library(COREAUDIO CoreAudio)
+    list(APPEND EXTRA_LIBS ${COREAUDIO})
+  endif()
+  if(SDL_FRAMEWORK_AUDIOTOOLBOX)
+    find_library(AUDIOTOOLBOX AudioToolbox)
+    list(APPEND EXTRA_LIBS ${AUDIOTOOLBOX})
+  endif()
+
+  # Urho3d - bug fix - make it work for iOS/tvOS platform
+  if(SDL_VIDEO)
+    if (VIDEO_COCOA)
+      # Flock - these are moved from commented CheckCOCOA macro
+      set(SDL_VIDEO_DRIVER_COCOA 1)
+      file(GLOB COCOA_SOURCES ${SDL2_SOURCE_DIR}/src/video/cocoa/*.m)
+      set_source_files_properties(${COCOA_SOURCES} PROPERTIES LANGUAGE C)
+      set(SOURCE_FILES ${SOURCE_FILES} ${COCOA_SOURCES})
+      set(HAVE_SDL_VIDEO TRUE)
+    elseif (IOS OR TVOS)
+      set (SDL_VIDEO_DRIVER_UIKIT 1)
+      file (GLOB UIKIT_SOURCES ${SDL2_SOURCE_DIR}/src/video/uikit/*.m)
+      set_source_files_properties (${UIKIT_SOURCES} PROPERTIES LANGUAGE C)
+      set (SOURCE_FILES ${SOURCE_FILES} ${UIKIT_SOURCES})
+      set (HAVE_SDL_VIDEO TRUE)
+    endif ()
+    if (IOS OR TVOS)
+      set (SDL_VIDEO_OPENGL_ES 1)
+      set (SDL_VIDEO_OPENGL_ES2 1)
+      set (SDL_VIDEO_RENDER_OGL_ES 1)
+      set (SDL_VIDEO_RENDER_OGL_ES2 1)
+      set (HAVE_VIDEO_OPENGLES TRUE)
+    else ()
+      CheckOpenGL ()
+      CheckOpenGLES ()
+    endif ()
+  endif()
+
+  if (IOS OR TVOS)
+    # Enable iPhone keyboard support
+    set (SDL_IPHONE_KEYBOARD 1)
+    # Enable iOS extended launch screen
+    set (SDL_IPHONE_LAUNCHSCREEN 1)
+    # Set max recognized G-force from accelerometer, see src/joystick/uikit/SDL_sysjoystick.m for notes on why this is needed
+    set (SDL_IPHONE_MAX_GFORCE 5.0)
+  endif ()
+elseif(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
   if(SDL_AUDIO)
     if(SYSV5 OR SOLARIS OR HPUX)
         set(SDL_AUDIO_DRIVER_SUNAUDIO 1)
@@ -623,7 +767,8 @@ if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
     find_path (UDEV_H_INCLUDE_DIRS libudev.h)
     if (UDEV_H_INCLUDE_DIRS)
       set (HAVE_LIBUDEV_H TRUE)
-      include_directories (${UDEV_H_INCLUDE_DIRS})
+      include_directories (SYSTEM ${UDEV_H_INCLUDE_DIRS})
+      # TODO: find the shared library and store the result in the SDL_UDEV_DYNAMIC variable
     endif ()
 
     # Flock - bug fix - dbus/dbus.h is installed under path suffix 'dbus-1.0', so the following find_path() is needed even when not cross-compiling
@@ -637,7 +782,7 @@ if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
     find_path (DBUS_ARCH_DEPS_H_INCLUDE_DIRS NAMES dbus/dbus-arch-deps.h PATHS ${DBUS_INC_SEARCH_PATH} /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/dbus-1.0/include)
     if (DBUS_H_INCLUDE_DIRS AND DBUS_H_INCLUDE_DIRS AND DBUS_ARCH_DEPS_H_INCLUDE_DIRS)
       set(HAVE_DBUS_DBUS_H TRUE)
-      include_directories (${DBUS_H_INCLUDE_DIRS} ${DBUS_ARCH_DEPS_H_INCLUDE_DIRS})
+      include_directories (SYSTEM ${DBUS_H_INCLUDE_DIRS} ${DBUS_ARCH_DEPS_H_INCLUDE_DIRS})
       list(APPEND EXTRA_LIBS dbus-1)
     endif ()
 
@@ -652,7 +797,7 @@ if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
     find_path (GLIB_CONFIG_H_INCLUDE_DIRS NAMES glibconfig.h PATHS ${GLIB_INC_SEARCH_PATH} /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/glib-2.0/include)
     if (IBUS_H_INCLUDE_DIRS AND GLIB_H_INCLUDE_DIRS AND GLIB_CONFIG_H_INCLUDE_DIRS)
       set(HAVE_IBUS_IBUS_H TRUE)
-      include_directories(${IBUS_H_INCLUDE_DIRS} ${GLIB_H_INCLUDE_DIRS} ${GLIB_CONFIG_H_INCLUDE_DIRS})
+      include_directories(SYSTEM ${IBUS_H_INCLUDE_DIRS} ${GLIB_H_INCLUDE_DIRS} ${GLIB_CONFIG_H_INCLUDE_DIRS})
       list(APPEND EXTRA_LIBS ibus-1.0)
       set (SDL_USE_IME 1)
     endif ()
@@ -661,7 +806,7 @@ if(UNIX)    # Flock - at this point both UNIX and UNIX_SYS should be equivalent
     find_path (FCITX_H_INCLUDE_DIRS fcitx/frontend.h)
     if (FCITX_H_INCLUDE_DIRS)
       set (HAVE_FCITX_FRONTEND_H TRUE)
-      include_directories (${FCITX_H_INCLUDE_DIRS})
+      include_directories (SYSTEM ${FCITX_H_INCLUDE_DIRS})
       set (SDL_USE_IME 1)
     endif ()
 
@@ -754,6 +899,14 @@ elseif(WINDOWS)
   if(DIRECTX)
     # Flock - bug fix - use our own FindDirectX.cmake module which does not rely on DXSDK_DIR environment variable directly when DirectX SDK is being used
     # Flock - TODO - move the find_package(DirectX) call from Flock common module to here later after we have refactored the library dependency handling
+
+    check_struct_has_member (XINPUT_GAMEPAD_EX wButtons xinput.h HAVE_XINPUT_GAMEPAD_EX)
+    check_struct_has_member (XINPUT_STATE_EX dwPacketNumber xinput.h HAVE_XINPUT_STATE_EX)
+    foreach (VAR HAVE_XINPUT_GAMEPAD_EX HAVE_XINPUT_STATE_EX)
+      if (${VAR})
+        add_definitions (-D${VAR})
+      endif ()
+    endforeach ()
   endif()
 
   if(SDL_AUDIO)
@@ -1054,6 +1207,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS}")
 
 # Define target name
 set (TARGET_NAME SDL)
+
+# Define source files
+file (GLOB H_FILES include/*.h)     # Adding the headers into source files list is just for easier file browsing in the IDE
+list (APPEND SOURCE_FILES ${H_FILES})
 
 # Setup target as STATIC library (as the result we never use EXTRA_LDFLAGS linker flags)
 setup_library ()
