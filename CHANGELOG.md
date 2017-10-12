@@ -104,6 +104,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * A large selection of APIs for querying various properties of the currently running machine. (`GetTotalMemory()`, `GetLoginName()`, `GetHostName()`, `GetOSVersion()`, `GetHomePath()`, `GetTemporaryPath()`, `GetCPUBigEndian()`, `GetCPULittleEndian()`, `GetCPUClock()`, `GetCPUArchitecture()`, `GetCPUVendorID()`, `GetCPUBrandName()`, `GetCPUExtensions()`, `GetLocale()`, `GetEnvVar()`, `HasEnvVar()`, `SetClipboard()`, `GetClipboard()`, `GetBatteryPercentage()`, `GetBatteryTimeLeft()`, `OpenProcessHandle()`, `CloseProcessHandle()`, `KillProcess()`).
 * APIs for querying OpenGL/GLSL version, GPU name, GPU basic capabilities (memory, maximum texture size, supported OpenGL extensions) (`Graphics::GetAPIVersion()`, `Graphics::GetAdapterName()`, `Graphics::GetGPUMaxTextureSize()`, `Graphics::GetNumSupportedExtensions()`, `Graphics::GetSupportedExtensions()`, `Graphics::HasExtension()`, `Graphics::GetTotalVideoMemory()`)
 * APIs for querying time/date data: `Timer::GetSystemTimeUnix()`, `Timer::GetSystemTimeAsString()`, `Timer::GetSystemTimeUnixAsString()`, `Timer::GetTimeStamp()`, `Timer::GetTimeStampAsString()`.
+* APIs for querying SDK version, as well as third-party libraries.
 * Per-character coloring is now possible through `Text::SetColorCharacter()`, and partial support for multi-colored texts was added through `Text::SetTextFormatted()`.
 * Networking support was added back.
 * Added `String::FindFirstOf()`.
@@ -145,6 +146,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 # Release ? -- ??.??.2017 ([Release binaries](https://www.google.co.uk/?gws_rd=ssl) | [Debug binaries](https://www.google.co.uk/?gws_rd=ssl)) 
 ## Changes/bugfixes
 * Various bug-fixes and tweaks.
+* The SDK can now be built under certain older versions of [MinGW-W64](http://mingw-w64.org/doku.php). Specifically, any version of [MinGW-W64](http://mingw-w64.org/doku.php) that comes with [GCC](https://gcc.gnu.org/) 4.9.1 or higher should be able to build the SDK.
 * Performance improvements to the Lua scripting side due to the switch to the incremental garbage collector (`LUA_GCSTEP`).
 * The SDK (engine + tools) can now be properly built under `Linux`.
 * The engine runtime (`Downpour`) now accepts an additional argument specifying the script to run. By default, `pfiles/main.lua` will be executed if none is given or the data folder (which is, most of the time, `pfiles`) already contains `main.lua`.
@@ -152,6 +154,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Partially resolved the issue which caused constant editor crashes.
 * Tools' binaries (`isql`, `lua`, `luajit`, `tolua++`, `PackageTool`) were moved to `./tool/bin`. This was due to some tools (LuaSrcDiet, for example) need scripts for bootstrapping purposes, and we can't just mix scripts with binaries. Engine binaries still reside at `./bin/`.
 * LuaJIT completely replaces vanilla Lua for building `tolua++`, a tool which is built on-the-fly during the SDK building process for generating C++ <-> Lua bindings. Previously, Lua was used to build `tolua++`, while LuaJIT is used as the scripting engine. This change dropped vanilla Lua and switched to LuaJIT for everything.
+* Extended `GetEngineVersion()` to also include the SDK build time stamp, and the [GCC](https://gcc.gnu.org/) version it was built against.
 
 ## Removals/deprecation of features
 * Removed [AngelScript](http://www.angelcode.com/angelscript/) scripting support for `DebugHud`. As a result, you can no longer patch the scene editor code to use the profiler from within the editor.
