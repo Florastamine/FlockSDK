@@ -119,31 +119,16 @@ This release saw a major delay compared to past releases, which usually takes ar
 * Added `Base64` decoding support when loading `.tmx` files.
 * Added `DecodeBase64()`.
 
-* **Input**
-* Added `Input::GetInputScale()`.
+* **Input**: `Input::GetInputScale()`.
+* **Vector3**: `Vector3::Orthogonalize()`.
+* **VertexBuffer**: `VertexBuffer::UpdateOffsets()`.
+* **Terrain**: `Terrain::HeightMapToWorld()`.
+* **Sphere**: `Sphere::GetLocalPoint()`, `Sphere::GetPoint()`.
+* **DebugRenderer**: `DebugRenderer::AddSphereSector()`.
+* **Graphics**: `Graphics::GetSize()`.
+* **JSONValue**: `JSONValue::SetVariant()`, `JSONValue::SetVariantMap()`, `JSONValue::GetVariant()`, `JSONValue::GetVariantMap()`.
 
-* **Vector3**
-* Added `Vector3::Orthogonalize()`.
-
-* **VertexBuffer**
-* Added `VertexBuffer::UpdateOffsets()`.
-
-* **Terrain**
-* Added `Terrain::HeightMapToWorld()`.
-
-* **Sphere**
-* Added `Sphere::GetLocalPoint()`, `Sphere::GetPoint()`.
-
-* **DebugRenderer**
-* Added `DebugRenderer::AddSphereSector()`.
-
-* **Graphics**
-* Added `Graphics::GetSize()`.
-
-* **JSONValue**
-* Added `JSONValue::SetVariant()`, `JSONValue::SetVariantMap()`, `JSONValue::GetVariant()`, `JSONValue::GetVariantMap()`.
-
-# Release ? -- ??.??.2017 ([Release binaries](https://www.google.co.uk/?gws_rd=ssl) | [Debug binaries](https://www.google.co.uk/?gws_rd=ssl)) 
+# Release 7 -- 10.13.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiODRWR2FyRlBscXM/view?usp=sharing))
 ## Changes/bugfixes
 * Various bug-fixes and tweaks.
 * The SDK can now be built under certain older versions of [MinGW-W64](http://mingw-w64.org/doku.php). Specifically, any version of [MinGW-W64](http://mingw-w64.org/doku.php) that comes with [GCC](https://gcc.gnu.org/) 4.9.1 or higher should be able to build the SDK.
@@ -184,5 +169,4 @@ int Random(int min, int max, PRNG p = MERSENNE_TWISTER);
 ## Changes/bugfixes/new features merged from Urho3D
 * Various bug-fixes and tweaks.
 
-* **Renderer**
-* Added `Renderer::GetViewportForScene()`.
+* **Renderer**: `Renderer::GetViewportForScene()`.
