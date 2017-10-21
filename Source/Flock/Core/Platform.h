@@ -110,6 +110,8 @@ FLOCKSDK_API void SetClipboard(const String &s);
 FLOCKSDK_API int GetBatteryPercentage();
 /// Retrieve the total amount of time left (in seconds) before the battery runs out of power.
 FLOCKSDK_API int GetBatteryTimeLeft();
+/// Retrieve a list of kernel modules that were loaded during bootup. (Linux only!)
+FLOCKSDK_API String GetLoadedKernelModules();
 
 /// A collection of platform-specific APIs for querying and killing processes. 
 /// You can retrieve a specific process's PID by reading the return value of OpenProcessHandle().

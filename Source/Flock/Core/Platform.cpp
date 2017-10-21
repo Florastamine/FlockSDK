@@ -1201,6 +1201,21 @@ String GetClipboard()
     return s;
 }
 
+String GetLoadedKernelModules()
+{
+#if defined(__linux__) && !defined(__ANDROID__)
+    std::ifstream file("/proc/modules");
+    std::string line, result;
+
+    while (std::getline(file, line))
+        result += line.substr(0, line.find(' ')) + '\n;
+
+    return result.erase(result.length()).c_str();
+#elif defined(_WIN32)
+    return "(?)";
+#endif
+}
+
 #define FLOCKSDK_BATTERY_PERCENTAGE 0
 #define FLOCKSDK_BATTERY_TIME_LEFT  1
 

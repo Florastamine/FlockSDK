@@ -46,6 +46,7 @@ String GetClipboard();
 void SetClipboard(const String &s);
 int GetBatteryPercentage();
 int GetBatteryTimeLeft();
+String GetLoadedKernelModules();
 
 HANDLE OpenProcessHandle(const String &name);
 void CloseProcessHandle(HANDLE h);
