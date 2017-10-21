@@ -88,6 +88,8 @@ class Graphics : public Object
     static unsigned GetFormat(const String formatName);
     static unsigned GetMaxBones();
 
+    String GetResolutions_Lua(int monitor) const;
+
     tolua_readonly tolua_property__is_set bool initialized;
     tolua_property__get_set String windowTitle;
     tolua_property__get_set IntVector2 windowPosition;
