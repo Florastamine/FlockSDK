@@ -501,12 +501,12 @@ DEFAULT_MMAP_THRESHOLD       default: 256K
 
 */
 
-#ifndef _WIN32
+#ifndef WIN32
 #ifdef _WIN32
 #define WIN32 1
 #endif /* _WIN32 */
 #endif /* WIN32 */
-#ifdef _WIN32
+#ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #define HAVE_MMAP 1
@@ -1265,7 +1265,7 @@ extern void *sbrk(ptrdiff_t);
 #endif /* LACKS_UNISTD_H */
 #endif /* HAVE_MMAP */
 
-#ifndef _WIN32
+#ifndef WIN32
 #ifndef malloc_getpagesize
 #  ifdef _SC_PAGESIZE           /* some SVR4 systems omit an underscore */
 #    ifndef _SC_PAGE_SIZE
@@ -1363,7 +1363,7 @@ extern size_t getpagesize();
 #define IS_MMAPPED_BIT       (SIZE_T_ONE)
 #define USE_MMAP_BIT         (SIZE_T_ONE)
 
-#ifndef _WIN32
+#ifndef WIN32
 #define CALL_MUNMAP(a, s)    munmap((a), (s))
 #define MMAP_PROT            (PROT_READ|PROT_WRITE)
 #if !defined(MAP_ANONYMOUS) && defined(MAP_ANON)
@@ -1469,7 +1469,7 @@ win32munmap(void *ptr, size_t size)
     unique mparams values are initialized only once.
 */
 
-#ifndef _WIN32
+#ifndef WIN32
 /* By default use posix locks */
 #include <pthread.h>
 #define MLOCK_T pthread_mutex_t
@@ -2553,7 +2553,7 @@ init_mparams(void)
         }
         RELEASE_MAGIC_INIT_LOCK();
 
-#ifndef _WIN32
+#ifndef WIN32
         mparams.page_size = malloc_getpagesize;
         mparams.granularity = ((DEFAULT_GRANULARITY != 0) ?
                                DEFAULT_GRANULARITY : mparams.page_size);

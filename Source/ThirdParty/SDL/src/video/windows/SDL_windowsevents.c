@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Flock
+// Modified by Lasse Oorni for Urho3D
 
 #include "../../SDL_internal.h"
 
@@ -32,6 +32,7 @@
 #include "SDL_timer.h"
 #include "SDL_vkeys.h"
 #include "../../events/SDL_events_c.h"
+#include "../../events/SDL_touch_c.h"
 #include "../../events/scancodes_windows.h"
 #include "SDL_assert.h"
 #include "SDL_hints.h"
@@ -350,7 +351,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     SDL_WindowData *data;
     LRESULT returnCode = -1;
 
-    // Flock: detect emulated mouse events
+    // Urho3D: detect emulated mouse events
     // Note: if we move mouse cursor manually (relative mouse motion with hidden cursor) we may get emulated mouse
     // events with zero extra info, so we should only center the cursor when it has actually moved
     BOOL emulatedMouse = (GetMessageExtraInfo() & 0xffffff00) == MOUSEEVENTF_FROMTOUCH;
@@ -463,9 +464,9 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         {
             SDL_Mouse *mouse = SDL_GetMouse();
-            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Flock: detect emulated mouse event
-                // SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
-                SDL_SendMouseMotion(data->window, /* mouseID */ 0, 0, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Urho3D: detect emulated mouse event
+                SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
+                SDL_SendMouseMotion(data->window, mouseID, 0, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
             }
         }
         /* don't break here, fall through to check the wParam like the button presses */
@@ -484,14 +485,14 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             SDL_Mouse *mouse;
 
-            // Flock: in_title_click may be erroneously left on with non-Aero styles, causing the hidden mouse centering to stop working.
+            // Urho3D: in_title_click may be erroneously left on with non-Aero styles, causing the hidden mouse centering to stop working.
             // To work around, reset whenever a normal mouse button up/down event is received
             data->in_title_click = SDL_FALSE;
 
             mouse = SDL_GetMouse();
-            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Flock
-                // SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
-                WIN_CheckWParamMouseButtons(wParam, data, /* mouseID */ 0);
+            if (!emulatedMouse && (!mouse->relative_mode || mouse->relative_mode_warp)) {    // Urho3D
+                SDL_MouseID mouseID = (((GetMessageExtraInfo() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH) ? SDL_TOUCH_MOUSEID : 0);
+                WIN_CheckWParamMouseButtons(wParam, data, mouseID);
             }
         }
         break;
@@ -885,6 +886,58 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             SDL_SendWindowEvent(data->window, SDL_WINDOWEVENT_CLOSE, 0, 0);
         }
         returnCode = 0;
+        break;
+
+    case WM_TOUCH:
+        {
+            UINT i, num_inputs = LOWORD(wParam);
+            PTOUCHINPUT inputs = SDL_stack_alloc(TOUCHINPUT, num_inputs);
+            if (data->videodata->GetTouchInputInfo((HTOUCHINPUT)lParam, num_inputs, inputs, sizeof(TOUCHINPUT))) {
+                RECT rect;
+                float x, y;
+
+                if (!GetClientRect(hwnd, &rect) ||
+                    (rect.right == rect.left && rect.bottom == rect.top)) {
+                    if (inputs) {
+                        SDL_stack_free(inputs);
+                    }
+                    break;
+                }
+                ClientToScreen(hwnd, (LPPOINT) & rect);
+                ClientToScreen(hwnd, (LPPOINT) & rect + 1);
+                rect.top *= 100;
+                rect.left *= 100;
+                rect.bottom *= 100;
+                rect.right *= 100;
+
+                for (i = 0; i < num_inputs; ++i) {
+                    PTOUCHINPUT input = &inputs[i];
+
+                    const SDL_TouchID touchId = (SDL_TouchID)((size_t)input->hSource);
+                    if (SDL_AddTouch(touchId, "") < 0) {
+                        continue;
+                    }
+
+                    /* Get the normalized coordinates for the window */
+                    x = (float)(input->x - rect.left)/(rect.right - rect.left);
+                    y = (float)(input->y - rect.top)/(rect.bottom - rect.top);
+
+                    if (input->dwFlags & TOUCHEVENTF_DOWN) {
+                        SDL_SendTouch(touchId, input->dwID, SDL_TRUE, x, y, 1.0f);
+                    }
+                    if (input->dwFlags & TOUCHEVENTF_MOVE) {
+                        SDL_SendTouchMotion(touchId, input->dwID, x, y, 1.0f);
+                    }
+                    if (input->dwFlags & TOUCHEVENTF_UP) {
+                        SDL_SendTouch(touchId, input->dwID, SDL_FALSE, x, y, 1.0f);
+                    }
+                }
+            }
+            SDL_stack_free(inputs);
+
+            data->videodata->CloseTouchInputHandle((HTOUCHINPUT)lParam);
+            return 0;
+        }
         break;
 
     case WM_DROPFILES:

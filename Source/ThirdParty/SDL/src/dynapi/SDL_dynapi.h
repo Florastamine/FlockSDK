@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Flock
+// Modified by Lasse Oorni for Urho3D
 
 #ifndef _SDL_dynapi_h
 #define _SDL_dynapi_h
@@ -41,7 +41,7 @@
 #error Nope, you have to edit this file to force this off.
 #endif
 
-// Flock: disabled dynamic API
+// Urho3D: disabled dynamic API
 #define SDL_DYNAMIC_API 0
 
 #endif

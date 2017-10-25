@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Yao Wei Tjong for Flock
+// Modified by Yao Wei Tjong for Urho3D
 
 /**
  *  \file begin_code.h
@@ -52,7 +52,7 @@
 #endif
 
 /* Some compilers use a special export keyword */
-// Flock: Only export when it is being requested
+// Urho3D: Only export when it is being requested
 #ifdef SDL_EXPORTS
 #ifndef DECLSPEC
 # if defined(__WIN32__) || defined(__WINRT__)

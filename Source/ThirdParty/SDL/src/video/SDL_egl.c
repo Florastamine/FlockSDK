@@ -19,7 +19,7 @@
  *  3. This notice may not be removed or altered from any source distribution.
  */
 
-// Modified by Yao Wei Tjong for Flock
+// Modified by Yao Wei Tjong for Urho3D
 
 #include "../SDL_internal.h"
 
@@ -41,7 +41,7 @@
 #endif
 #endif /* EGL_KHR_create_context */
 
-// Flock: No need to hardcode the full path, otherwise it won't work for Pidora
+// Urho3D: No need to hardcode the full path, otherwise it won't work for Pidora
 #if SDL_VIDEO_DRIVER_RPI || SDL_VIDEO_DRIVER_ANDROID || SDL_VIDEO_DRIVER_VIVANTE
 #define DEFAULT_EGL "libEGL.so"
 #define DEFAULT_OGL_ES2 "libGLESv2.so"

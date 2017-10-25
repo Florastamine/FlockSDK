@@ -25,6 +25,7 @@
 #include "SDL_assert.h"
 #include "SDL_loadso.h"
 #include "SDL_windowsvideo.h"
+#include "SDL_windowsopengles.h"
 
 /* WGL implementation of SDL OpenGL support */
 

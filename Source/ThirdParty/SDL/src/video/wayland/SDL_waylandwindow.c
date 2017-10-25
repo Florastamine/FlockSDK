@@ -29,6 +29,7 @@
 #include "SDL_waylandevents_c.h"
 #include "SDL_waylandwindow.h"
 #include "SDL_waylandvideo.h"
+#include "SDL_waylandtouch.h"
 #include "SDL_waylanddyn.h"
 
 static void

@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Yao Wei Tjong for Flock
+// Modified by Yao Wei Tjong for Urho3D
 
 #include "../../SDL_internal.h"
 
@@ -32,6 +32,7 @@
 
 #if SDL_VIDEO_OPENGL_GLX
 #include "SDL_loadso.h"
+#include "SDL_x11opengles.h"
 
 #if defined(__IRIX__)
 /* IRIX doesn't have a GL library versioning system */
@@ -651,7 +652,7 @@ X11_GL_CreateContext(_THIS, SDL_Window * window)
                                                     framebuffer_config[0],
                                                     share_context, True, attribs);
                 }
-                // Flock - fix memory leak detected by Valgrind
+                // Urho3D - fix memory leak detected by Valgrind
                 X11_XFree(framebuffer_config);
             }
         }

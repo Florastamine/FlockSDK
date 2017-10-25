@@ -36,6 +36,8 @@
 #include "SDL_joystick.h"
 #include "SDL_gamecontroller.h"
 #include "SDL_quit.h"
+#include "SDL_gesture.h"
+#include "SDL_touch.h"
 
 #include "begin_code.h"
 /* Set up for C function definitions, even when using C++ */
@@ -118,6 +120,16 @@ typedef enum
     SDL_CONTROLLERDEVICEADDED,         /**< A new Game controller has been inserted into the system */
     SDL_CONTROLLERDEVICEREMOVED,       /**< An opened Game controller has been removed */
     SDL_CONTROLLERDEVICEREMAPPED,      /**< The controller mapping was updated */
+
+    /* Touch events */
+    SDL_FINGERDOWN      = 0x700,
+    SDL_FINGERUP,
+    SDL_FINGERMOTION,
+
+    /* Gesture events */
+    SDL_DOLLARGESTURE   = 0x800,
+    SDL_DOLLARRECORD,
+    SDL_MULTIGESTURE,
 
     /* Clipboard events */
     SDL_CLIPBOARDUPDATE = 0x900, /**< The clipboard changed */
@@ -394,6 +406,57 @@ typedef struct SDL_AudioDeviceEvent
     Uint8 padding3;
 } SDL_AudioDeviceEvent;
 
+
+/**
+ *  \brief Touch finger event structure (event.tfinger.*)
+ */
+typedef struct SDL_TouchFingerEvent
+{
+    Uint32 type;        /**< ::SDL_FINGERMOTION or ::SDL_FINGERDOWN or ::SDL_FINGERUP */
+    Uint32 timestamp;
+    SDL_TouchID touchId; /**< The touch device id */
+    SDL_FingerID fingerId;
+    float x;            /**< Normalized in the range 0...1 */
+    float y;            /**< Normalized in the range 0...1 */
+    float dx;           /**< Normalized in the range -1...1 */
+    float dy;           /**< Normalized in the range -1...1 */
+    float pressure;     /**< Normalized in the range 0...1 */
+} SDL_TouchFingerEvent;
+
+
+/**
+ *  \brief Multiple Finger Gesture Event (event.mgesture.*)
+ */
+typedef struct SDL_MultiGestureEvent
+{
+    Uint32 type;        /**< ::SDL_MULTIGESTURE */
+    Uint32 timestamp;
+    SDL_TouchID touchId; /**< The touch device index */
+    float dTheta;
+    float dDist;
+    float x;
+    float y;
+    Uint16 numFingers;
+    Uint16 padding;
+} SDL_MultiGestureEvent;
+
+
+/**
+ * \brief Dollar Gesture Event (event.dgesture.*)
+ */
+typedef struct SDL_DollarGestureEvent
+{
+    Uint32 type;        /**< ::SDL_DOLLARGESTURE or ::SDL_DOLLARRECORD */
+    Uint32 timestamp;
+    SDL_TouchID touchId; /**< The touch device id */
+    SDL_GestureID gestureId;
+    Uint32 numFingers;
+    float error;
+    float x;            /**< Normalized center of gesture */
+    float y;            /**< Normalized center of gesture */
+} SDL_DollarGestureEvent;
+
+
 /**
  *  \brief An event used to request a file open by the system (event.drop.*)
  *         This event is enabled by default, you can disable it with SDL_EventState().
@@ -482,6 +545,9 @@ typedef union SDL_Event
     SDL_QuitEvent quit;             /**< Quit request event data */
     SDL_UserEvent user;             /**< Custom event data */
     SDL_SysWMEvent syswm;           /**< System dependent window event data */
+    SDL_TouchFingerEvent tfinger;   /**< Touch finger event data */
+    SDL_MultiGestureEvent mgesture; /**< Gesture event data */
+    SDL_DollarGestureEvent dgesture; /**< Gesture event data */
     SDL_DropEvent drop;             /**< Drag and drop event data */
 
     /* This is necessary for ABI compatibility between Visual C++ and GCC

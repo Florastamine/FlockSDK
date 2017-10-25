@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-// Modified by Lasse Oorni for Flock
+// Modified by Lasse Oorni for Urho3D
 
 #include "../../SDL_internal.h"
 
@@ -229,7 +229,7 @@ WIN_WarpMouse(SDL_Window * window, int x, int y)
     POINT pt;
 
     /* Don't warp the mouse while we're doing a modal interaction */
-    // Flock: disable check as warping should already be used responsibly and a possible bug #1258 results from this from SDL 2.0.4 onward
+    // Urho3D: disable check as warping should already be used responsibly and a possible bug #1258 results from this from SDL 2.0.4 onward
     //if (data->in_title_click || data->focus_click_pending) {
     //    return;
     //}

@@ -25,6 +25,7 @@
 #include "SDL_x11video.h"
 
 #include "../../events/SDL_keyboard_c.h"
+#include "../../events/scancodes_darwin.h"
 #include "../../events/scancodes_xfree86.h"
 
 #include <X11/keysym.h>
@@ -150,6 +151,7 @@ static const struct
     SDL_Scancode const *table;
     int table_size;
 } scancode_set[] = {
+    { darwin_scancode_table, SDL_arraysize(darwin_scancode_table) },
     { xfree86_scancode_table, SDL_arraysize(xfree86_scancode_table) },
     { xfree86_scancode_table2, SDL_arraysize(xfree86_scancode_table2) },
     { xvnc_scancode_table, SDL_arraysize(xvnc_scancode_table) },
@@ -212,11 +214,11 @@ X11_KeyCodeToSym(_THIS, KeyCode keycode, unsigned char group)
     if (data->xkb) {
         int num_groups     = XkbKeyNumGroups(data->xkb, keycode);
         unsigned char info = XkbKeyGroupInfo(data->xkb, keycode);
-
+        
         if (num_groups && group >= num_groups) {
-
+        
             int action = XkbOutOfRangeGroupAction(info);
-
+            
             if (action == XkbRedirectIntoRange) {
                 if ((group = XkbOutOfRangeGroupNumber(info)) >= num_groups) {
                     group = 0;
@@ -469,7 +471,7 @@ X11_SetTextInputRect(_THIS, SDL_Rect *rect)
         SDL_InvalidParamError("rect");
         return;
     }
-
+       
 #ifdef SDL_USE_IME
     SDL_IME_UpdateTextRect(rect);
 #endif
