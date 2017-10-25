@@ -1208,7 +1208,7 @@ String GetLoadedKernelModules()
     std::string line, result;
 
     while (std::getline(file, line))
-        result += line.substr(0, line.find(' ')) + '\n;
+        result += line.substr(0, line.find(' ')) + '\n';
 
     return result.erase(result.length()).c_str();
 #elif defined(_WIN32)
