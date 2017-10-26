@@ -165,18 +165,6 @@ void Graphics::SetShaderParameter(StringHash param, const Variant &value)
     }
 }
 
-String Graphics::GetResolutions_Lua(int monitor) const
-{
-    auto resolutions = GetResolutions(monitor);
-    auto s           = String();
-    if (resolutions.Size())
-    {
-        for (auto i = resolutions.Begin(); i != resolutions.End(); ++i)
-            s += ToString("%ix%i;", i->x_, i->y_);
-    }
-    return s.Substring(0, s.Length() - 1);
-}
-
 IntVector2 Graphics::GetWindowPosition() const
 {
     if (window_)
