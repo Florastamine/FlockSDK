@@ -708,12 +708,6 @@ void Engine::DumpResources(bool dumpFileName)
 #endif
 }
 
-void Engine::DumpMemory()
-{
-#ifdef FLOCKSDK_LOGGING
-#endif
-}
-
 void Engine::Update()
 {
     FLOCKSDK_PROFILE(Update);
