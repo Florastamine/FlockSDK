@@ -47,7 +47,7 @@ static const FlockSDK::String PugiXMLVersion(FlockSDK::ToString("PugiXml %i", PU
 static const FlockSDK::String LZ4Version(FlockSDK::String("LZ4 ") + LZ4_VERSION_STRING);
 static const FlockSDK::String RapidJSONVersion(FlockSDK::String("RapidJSON ") + RAPIDJSON_VERSION_STRING);
 static const FlockSDK::String JOJPEGVersion("jo_jpeg 1.52"); // Have to rely on the release note.
-static const FlockSDK::String FlockSDKVersion(FlockSDK::ToString("Flock SDK 0.7.0a (%s %s; GCC %s", __DATE__, __TIME__, __VERSION__));
+static const FlockSDK::String FlockSDKVersion(FlockSDK::ToString("Flock SDK 0.7.1a (%s %s; GCC %s)", __DATE__, __TIME__, __VERSION__));
 
 namespace FlockSDK
 {
