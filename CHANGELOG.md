@@ -1,7 +1,7 @@
-# Release 1 -- 01.06.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaiRmcxNTNnVi1QZXc?usp=sharing))
+# Release 0.1.0 -- 01.06.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaiRmcxNTNnVi1QZXc?usp=sharing))
 Initial release. 
 
-# Release 2 -- 01.27.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing)) 
+# Release 0.2.0 -- 01.27.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaidm5UdHh3Rm1tMjQ?usp=sharing)) 
 These builds incorporated a few bug-fixes introduced in the main `Urho3D` repository as well as new features and upgrades of existing 3rd party libraries. Most notably: 
 * Upgraded [AngelScript](http://www.angelcode.com/angelscript/) from `2.30.2` to `2.31.2`. 
 * Completely removed support for touch controls and touch input. (Because `Windows` and `Linux` are the only two target platforms that are officially supported, and touch controls are more popular on mobile devices. Also the code base would be simplified a lot.) 
@@ -10,7 +10,7 @@ These builds incorporated a few bug-fixes introduced in the main `Urho3D` reposi
 
 **`Release 2` is the last release which still fully supports `Direct3D11`/`Direct3D9` on `Windows` platform.** 
 
-# Release 3 -- 02.11.2017 ([engine binaries + tool binaries](https://drive.google.com/open?id=0Bx0q4f1kFRaiOWFaUnAtcTZLYms))
+# Release 0.3.0 -- 02.11.2017 ([engine binaries + tool binaries](https://drive.google.com/open?id=0Bx0q4f1kFRaiOWFaUnAtcTZLYms))
 As usual, this release brought in various fixes, tweaks, upgrades, modifications as well as removals. 
 * General bug-fixes and tweaks. 
 * A few critical components have been made built-in and thus can't be disintegrated from the build through switches from now on. 
@@ -25,7 +25,7 @@ As usual, this release brought in various fixes, tweaks, upgrades, modifications
 
 **`Release 3` is the last release which still compiles on pre-`C++11` environments, due to the upgrade of [Open Asset Import Library](http://www.assimp.org) which was introduced in `Release 4` broke `C++98` compatibility.**  
 
-# Release 4 -- 02.21.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaicmFUaldhNnEtczA?usp=sharing)) 
+# Release 0.4.0 -- 02.21.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaicmFUaldhNnEtczA?usp=sharing)) 
 This release does not only moves further into the goal of driving away from the original codebase, but also contains various bugfixes and improvements, outlined below. 
 * General bug-fixes and tweaks. 
 * New editor feature: Basic terrain editing within the editor, which includes terrain manipulation/smoothing, different brush size/types, undo/redo support, and heightmap saving/loading.
@@ -44,7 +44,7 @@ This release does not only moves further into the goal of driving away from the 
 
 **`Release 4` is the last major release which still provides partial support for compiling the SDK under MSVC compilers. Starting from the fifth release, users are recommended to switch to [Cygwin](https://www.cygwin.com)/[MinGW-W64](http://mingw-w64.org/doku.php)/[MSYS2](http://www.msys2.org) instead.** 
 
-# Release 5 -- 03.31.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing)) 
+# Release 0.5.0 -- 03.31.2017 ([engine binaries + tool binaries](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing)) 
 This release saw a major delay compared to past releases, which usually takes around half a month for each of them, because I've been very busy with the game, and for that development effort was largely shifted to focusing on the game instead. Nevertheless, this is a fairly large release, packed with many brand new features as well as modifications and removals coming from both the Urho3D developers and myself. Enjoy!
 * General bug-fixes and tweaks. 
 * Physics support is now enforced. 
@@ -70,7 +70,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * `64`-bit integer variant type support. 
 * Multi-monitor and refresh rate options for full-screen/borderless. 
 
-# Release 6 -- 08.27.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiRHZJLW5Eb3VYbFE/view?usp=sharing) | [Debug binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaibENYTzUxM0RYTG8/view?usp=sharing)) 
+# Release 0.6.0 -- 08.27.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiRHZJLW5Eb3VYbFE/view?usp=sharing) | [Debug binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaibENYTzUxM0RYTG8/view?usp=sharing)) 
 ## Changes/bugfixes
 * Pre-compiled binaries are now provided under ZIP packages instead of 7z, which would reduce both CPU and memory usage consumption for decompression.
 * The SDK's official name was changed to "Flock SDK", and the new GitHub URL pointing to the repository is now https://github.com/Florastamine/FlockSDK.
@@ -128,7 +128,7 @@ This release saw a major delay compared to past releases, which usually takes ar
 * **Graphics**: `Graphics::GetSize()`.
 * **JSONValue**: `JSONValue::SetVariant()`, `JSONValue::SetVariantMap()`, `JSONValue::GetVariant()`, `JSONValue::GetVariantMap()`.
 
-# Release 7 -- 10.13.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiODRWR2FyRlBscXM/view?usp=sharing))
+# Release 0.7.0 -- 10.13.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiODRWR2FyRlBscXM/view?usp=sharing))
 ## Changes/bugfixes
 * Various bug-fixes and tweaks.
 * The SDK can now be built under certain older versions of [MinGW-W64](http://mingw-w64.org/doku.php). Specifically, any version of [MinGW-W64](http://mingw-w64.org/doku.php) that comes with [GCC](https://gcc.gnu.org/) 4.9.1 or higher should be able to build the SDK.
@@ -171,4 +171,11 @@ int Random(int min, int max, PRNG p = MERSENNE_TWISTER);
 
 * **Renderer**: `Renderer::GetViewportForScene()`.
 
-# Release ? -- ??.??.???? ([Release binaries](https://www.google.co.uk/?gws_rd=ssl))
+# Release 0.7.1 -- 10.26.2017 ([Release binaries](https://drive.google.com/file/d/0Bx0q4f1kFRaiZFRiZTRXYUw1YWM/view?usp=sharing))
+## Changes/bugfixes
+* Pre-built Linux binaries are now available.
+* Fixed building on certain Linux-based distributions running as a guest OS.
+* Fixed wrong SDK version numbering.
+
+## New features
+* Added `GetLoadedKernelModules()` for querying loaded Linux kernel modules.
