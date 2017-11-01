@@ -20,10 +20,14 @@ A: Yes ([here!](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRN
 
 One thing though, these binaries are provided with the intention of providing a quick way of testing and playing around with the SDK, and thus they are not guaranteed to be stable enough for development purposes. These binaries include both executable files which can be run off straight away or static libraries which can be linked alongside your code. 
 
-Latest **unstable** binaries were built and released on `03.31.2017`, and can be downloaded [here](https://drive.google.com/drive/folders/0Bx0q4f1kFRaieTBhZHJJYzRNRHc?usp=sharing). Older versions can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md). 
+Latest **unstable** binaries were built and released on `10.26.2017`, and can be downloaded [here](https://drive.google.com/file/d/0Bx0q4f1kFRaiZFRiZTRXYUw1YWM/view). Older versions can still be downloaded [on the release notes page](https://github.com/Florastamine/IWBHT_SDK/blob/master/CHANGELOG.md). 
 
 **Q: Any instructions on how to build the engine?** 
 A: Instructions are provided [here](https://github.com/Florastamine/IWBHT_SDK/blob/master/BUILDING.md). In short, you will need `cmake` and `g++`. `msvc` isn't supported. A `C++11`-conformant compiler is required for the building process. If you're building on Windows, you can use [MinGW-W64](https://sourceforge.net/projects/mingw-w64/) instead. 
 
 **Q: License?** 
 A: The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3D), and there is no intention of keeping it compatible with the original code. 
+
+Starting from release `0.7.1a`, the engine is going into a "freeze" mode, which means development isn't halted, but temporarily paused. There are several reasons for this:
+1. [CMake](https://cmake.org/) is a great build system, but a burden to maintain.
+2. Pausing the engine development will allow me to devote more of my free time developing the game instead.
