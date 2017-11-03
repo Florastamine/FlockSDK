@@ -59,8 +59,6 @@ protected:
 
     /// Flock engine.
     SharedPtr<Engine> engine_;
-    /// Engine parameters map.
-    VariantMap engineParameters_;
     /// Collected startup error log messages.
     String startupErrors_;
     /// Application exit code.

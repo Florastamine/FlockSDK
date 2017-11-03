@@ -33,8 +33,6 @@ Application::Application(Context* context) :
     Object(context),
     exitCode_(EXIT_SUCCESS)
 {
-    engineParameters_ = Engine::ParseParameters(FlockSDK::GetArguments());
-
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
     engine_ = new Engine(context);
 
@@ -53,7 +51,7 @@ int Application::Run()
         if (exitCode_)
             return exitCode_;
 
-        if (!engine_->Initialize(engineParameters_))
+        if (!engine_->Initialize(Engine::ParseParameters(FlockSDK::GetArguments())))
         {
             ErrorExit();
             return exitCode_;
