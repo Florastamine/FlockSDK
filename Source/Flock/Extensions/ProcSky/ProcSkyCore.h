@@ -45,101 +45,101 @@ class Skybox;
 class StringHash;
 
 class FLOCKSDK_API ProcSky : public Component {
-  FLOCKSDK_OBJECT(ProcSky, Component);
+    FLOCKSDK_OBJECT(ProcSky, Component);
 
 public:
-  ProcSky(Context* context);
-  virtual ~ProcSky();
+    ProcSky(Context* context);
+    virtual ~ProcSky();
 
-  static void RegisterObject(Context* context);
+    static void RegisterObject(Context* context);
 
-  void OnNodeSet(Node *node);
+    void OnNodeSet(Node *node);
   
-  /// Initialize objects and subscribe to update events.
-  bool Initialize();
-  /// Queue render of next frame.
-  void Update();
+    /// Initialize objects and subscribe to update events.
+    bool Initialize();
+    /// Queue render of next frame.
+    void Update();
 
-  inline bool GetUpdateAuto() const { return updateAuto_; }
-  /// Automatic update renders according to update interval. If Manual, user calls Update() to render.
-  void SetUpdateAuto(bool updateAuto);
+    inline bool GetUpdateAuto() const { return updateAuto_; }
 
-  inline float GetUpdateInterval() const { return updateInterval_; }
-  /// Set the rendering interval (default 0).
-  void SetUpdateInterval(float interval) { updateInterval_ = interval; }
+    /// Automatic update renders according to update interval. If Manual, user calls Update() to render.
+    inline void SetUpdateAuto(bool updateAuto) { updateAuto_ = updateAuto; }
 
-  inline float GetUpdateWait() const { return updateWait_; }
-  inline void SetUpdateWait(float f) { updateWait_ = f; }
+    inline float GetUpdateInterval() const { return updateInterval_; }
+    /// Set the rendering interval (default 0).
+    void SetUpdateInterval(float interval) { updateInterval_ = interval; }
 
-  inline unsigned GetRenderSize() const { return renderSize_; } 
-  bool SetRenderSize(unsigned size);
-  void SetRenderSize2(unsigned size); 
+    inline float GetUpdateWait() const { return updateWait_; }
+    inline void SetUpdateWait(float f) { updateWait_ = f; }
 
-  inline float GetRayleighBrightness() const { return rayleighBrightness_; }
-  inline void SetRayleighBrightness(float f) { rayleighBrightness_ = f; } 
+    inline unsigned GetRenderSize() const { return renderSize_; } 
+    bool SetRenderSize(unsigned size);
+    void SetRenderSize2(unsigned size); 
 
-  inline Vector3 GetAirAbsorptionProfile() const { return Kr_; }
-  inline void SetAirAbsorptionProfile(const Vector3 &v) { Kr_.x_ = v.x_; Kr_.y_ = v.y_; Kr_.z_ = v.z_; } 
+    inline float GetRayleighBrightness() const { return rayleighBrightness_; }
+    inline void SetRayleighBrightness(float f) { rayleighBrightness_ = f; } 
 
-  inline float GetMieBrightness() const  { return mieBrightness_; }
-  inline void SetMieBrightness(float f) { mieBrightness_ = f; } 
+    inline Vector3 GetAirAbsorptionProfile() const { return Kr_; }
+    inline void SetAirAbsorptionProfile(const Vector3 &v) { Kr_ = v; }
 
-  inline float GetSpotBrightness() const { return spotBrightness_; }
-  inline void SetSpotBrightness(float f) { spotBrightness_ = f; } 
+    inline float GetMieBrightness() const  { return mieBrightness_; }
+    inline void SetMieBrightness(float f) { mieBrightness_ = f; } 
 
-  inline float GetScatteringStrength() const  { return scatterStrength_; }
-  inline void SetScatteringStrength(float f) { scatterStrength_ = f; } 
+    inline float GetSpotBrightness() const { return spotBrightness_; }
+    inline void SetSpotBrightness(float f) { spotBrightness_ = f; } 
 
-  inline float GetRayleighStrength() const { return rayleighStrength_; }
-  inline void SetRayleighStrength(float f) { rayleighStrength_ = f; } 
+    inline float GetScatteringStrength() const  { return scatterStrength_; }
+    inline void SetScatteringStrength(float f) { scatterStrength_ = f; } 
 
-  inline float GetMieStrength() const { return mieStrength_; }
-  inline void SetMieStrength(float f) { mieStrength_ = f; } 
+    inline float GetRayleighStrength() const { return rayleighStrength_; }
+    inline void SetRayleighStrength(float f) { rayleighStrength_ = f; } 
 
-  inline float GetRayleighCollectionPower() const { return rayleighCollectionPower_; }
-  inline void SetRayleighCollectionPower(float f) { rayleighCollectionPower_ = f; } 
+    inline float GetMieStrength() const { return mieStrength_; }
+    inline void SetMieStrength(float f) { mieStrength_ = f; } 
 
-  inline float GetMieCollectionPower() const { return mieCollectionPower_; }
-  inline void SetMieCollectionPower(float f) { mieCollectionPower_ = f; } 
+    inline float GetRayleighCollectionPower() const { return rayleighCollectionPower_; }
+    inline void SetRayleighCollectionPower(float f) { rayleighCollectionPower_ = f; } 
 
-  inline float GetMieDistribution() const { return mieDistribution_; }
-  inline void SetMieDistribution(float f) { mieDistribution_ = f; } 
+    inline float GetMieCollectionPower() const { return mieCollectionPower_; }
+    inline void SetMieCollectionPower(float f) { mieCollectionPower_ = f; } 
 
-protected:
-  void HandleUpdate(StringHash eventType, VariantMap& eventData);
-  /// Set rendering of next frame active/inactive.
-  void SetRenderQueued(bool enable);
-  void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    inline float GetMieDistribution() const { return mieDistribution_; }
+    inline void SetMieDistribution(float f) { mieDistribution_ = f; }
 
 protected:
-  Camera* cam_;
-  /// Flock Skybox with geometry and main TextureCube.
-  SharedPtr<Skybox> skybox_;
-  /// Node used for light direction.
-  WeakPtr<Node> lightNode_;
-  SharedPtr<RenderPath> rPath_;
-  /// Render size of each face.
-  unsigned renderSize_;
-  float renderFOV_;
-  /// Fixed rotations for each cube face.
-  Matrix3 faceRotations_[MAX_CUBEMAP_FACES];
+    void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
-  bool updateAuto_;
-  float updateInterval_;
-  float updateWait_;
-  bool renderQueued_;
+    /// Set rendering of next frame active/inactive.
+    void SetRenderQueued(bool enable);
+    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+
+    /// Camera used for face projections.
+    Camera* camera_;
+    /// Skybox with geometry and main TextureCube.
+    SharedPtr<Skybox> skybox_;
+    /// Render size of each face.
+    unsigned renderSize_;
+    /// Fixed rotations for each cube face.
+    Matrix3 faceRotations_[MAX_CUBEMAP_FACES];
+
+    SharedPtr<RenderPath> rPath_;
+
+    bool updateAuto_;
+    float updateInterval_;
+    float updateWait_;
+    bool renderQueued_;
+
 public:
-  /// Atmospheric parameters.
-  Vector3 Kr_; // Absorption profile of air.
-  float rayleighBrightness_;
-  float mieBrightness_;
-  float spotBrightness_;
-  float scatterStrength_;
-  float rayleighStrength_;
-  float mieStrength_;
-  float rayleighCollectionPower_;
-  float mieCollectionPower_;
-  float mieDistribution_;
+    Vector3 Kr_; // Absorption profile of air.
+    float rayleighBrightness_;
+    float mieBrightness_;
+    float spotBrightness_;
+    float scatterStrength_;
+    float rayleighStrength_;
+    float mieStrength_;
+    float rayleighCollectionPower_;
+    float mieCollectionPower_;
+    float mieDistribution_;
 }; 
 
 }
