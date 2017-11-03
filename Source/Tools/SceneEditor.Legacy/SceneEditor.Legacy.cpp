@@ -28,10 +28,11 @@
 #include <Flock/LuaScript/LuaScript.h>
 #include <Flock/Resource/ResourceCache.h>
 #include <Flock/Resource/ResourceEvents.h>
+#include <Flock/Core/Platform.h>
 
 #include "SceneEditor.Legacy.h"
 
-static constexpr const char *SDKEditorScriptFile = "pfiles/development/SDK_editor.as";
+static constexpr const char *SDKEditorScriptFile = "development/SDK_editor.as";
 
 SceneEditorLegacyBase::SceneEditorLegacyBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
 
@@ -43,8 +44,8 @@ int main(int argc, char **argv)
 {
     auto *DPContext = new FlockSDK::Context();
     auto *DPGame    = new SceneEditorLegacyBase(DPContext);
-    DPGame->argc_   = argc;
-    DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
+
+    FlockSDK::ParseArguments(argc, argv);
 
     return (FlockSDK::SharedPtr<SceneEditorLegacyBase>(DPGame))->Run();
 }

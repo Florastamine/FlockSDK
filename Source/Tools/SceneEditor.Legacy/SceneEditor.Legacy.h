@@ -37,10 +37,8 @@ class SceneEditorLegacyBase : public FlockSDK::Application {
         void HandleScriptReloadStarted(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
         void HandleScriptReloadFinished(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
         void HandleScriptReloadFailed(FlockSDK::StringHash eventType, FlockSDK::VariantMap& eventData);
-
-        int argc_;
-        FlockSDK::String argv_;
-        FlockSDK::SharedPtr<FlockSDK::ScriptFile> scriptFile_;
     private:
         void Exit(void);
+
+        FlockSDK::SharedPtr<FlockSDK::ScriptFile> scriptFile_;
 };
