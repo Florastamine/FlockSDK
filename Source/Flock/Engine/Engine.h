@@ -72,8 +72,6 @@ public:
     void DumpProfiler();
     /// Dump information of all resources to the log.
     void DumpResources(bool dumpFileName = false);
-    /// Dump information of all memory allocations to the log. Supported in MSVC debug mode only.
-    void DumpMemory();
 
     /// Get timestep of the next frame. Updated by ApplyFrameLimit().
     float GetNextTimeStep() const { return timeStep_; }
