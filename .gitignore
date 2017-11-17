@@ -12,6 +12,7 @@
 generated/
 /Source/Flock/tolua++-prefix/
 /Build/targets/
+.vs/
 
 # Output files
 /Source/**/*.a
@@ -63,6 +64,8 @@ CPackSourceConfig.cmake
 CTestTestfile.cmake
 /Source/**/*.cmake
 !/Source/ThirdParty/SDL/cmake/*.cmake
+
+!Source/Flock/LuaScript/pkgs/Core/Platform.pkg
 
 # Precompiled header files
 *.gch/
