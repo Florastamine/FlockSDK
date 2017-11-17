@@ -23,42 +23,40 @@
 #include <Flock/Core/Platform.h>
 #include <Flock/Engine/Engine.h>
 #include <Flock/IO/FileSystem.h>
-#include <Flock/IO/Log.h>
 #include <Flock/LuaScript/LuaScript.h>
 #include <Flock/Resource/ResourceCache.h>
 #include <Flock/Resource/ResourceEvents.h>
 
 #include "Downpour.h"
 
-static inline constexpr const char *GetRawScriptLocation() { return("pfiles/main.lua"); }
-static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/main.s"); }
+namespace SDK = FlockSDK;
 
-DownpourBase::DownpourBase(FlockSDK::Context* context) : FlockSDK::Application(context) {}
+static inline constexpr const char *GetRawScriptLocation() { return("pfiles/main.lua"); }
+static inline constexpr const char *GetCompiledScriptLocation() { return("pfiles/main.dcs"); }
+
+DownpourBase::DownpourBase(SDK::Context* context) : SDK::Application(context) {}
 
 void DownpourBase::Setup()
 {
-    auto *fsObject = GetSubsystem<FlockSDK::FileSystem>();
+    auto *fsObject = GetSubsystem<SDK::FileSystem>();
 
     if (fsObject)
     {
-		// Search for main.lua
-        if (fsObject->FileExists(GetCompiledScriptLocation()))
-			moduleName_ = GetCompiledScriptLocation();
-		// Search for main.s, which is the compiled version of main.lua (allows for smaller code size and faster execution)
-        else if (fsObject->FileExists(GetRawScriptLocation())) 
-			moduleName_ = GetRawScriptLocation();
-		// Try the passed argument
-		else
-		{
-			if (argv_ != FlockSDK::String::EMPTY && argv_[0] != '-')
-				moduleName_ = argv_.Replaced('\\', '/');
-		}
+        // Search order: checks for arguments -> loads the script specified in the arguments, or tries to
+        // load the compiled version of the script (which has the .s) extension, finally tries to switch
+        // to the plain text version of the script file.
+        if (argv_ != SDK::String::EMPTY && argv_[0] != '-')
+            moduleName_ = argv_.Replaced('\\', '/');
+        else if (fsObject->FileExists(GetCompiledScriptLocation()))
+            moduleName_ = GetCompiledScriptLocation();
+        else
+            moduleName_ = GetRawScriptLocation();
     }
-} 
+}
 
 void DownpourBase::Start()
 {
-    auto *luaScript = new FlockSDK::LuaScript(context_);
+    auto *luaScript = new SDK::LuaScript(context_);
     context_->RegisterSubsystem(luaScript);
 
     if (luaScript->ExecuteFile(moduleName_))
@@ -71,23 +69,25 @@ void DownpourBase::Start()
 
 void DownpourBase::Stop()
 {
-    auto *luaScript = GetSubsystem<FlockSDK::LuaScript>();
+    auto *luaScript = GetSubsystem<SDK::LuaScript>();
     if (luaScript && luaScript->GetFunction("Stop", true))
         luaScript->ExecuteFunction("Stop");
 }
 
-void DownpourBase::Exit(void) 
+void DownpourBase::Exit(void)
 {
     engine_->Exit();
     exitCode_ = EXIT_FAILURE;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
-    auto *DPContext = new FlockSDK::Context();
-    auto *DPGame    = new DownpourBase(DPContext);
-    DPGame->argc_   = argc;
-    DPGame->argv_   = (argc > 1 && argv[1]) ? argv[1] : FlockSDK::String::EMPTY;
+    auto *DPContext = new SDK::Context();
+    auto *DPGame = new DownpourBase(DPContext);
+    DPGame->argc_ = argc;
+    DPGame->argv_ = (argc > 1 && argv[1]) ? argv[1] : SDK::String::EMPTY;
 
-    return (FlockSDK::SharedPtr<DownpourBase>(DPGame))->Run();
-} 
+    SDK::ParseArguments(argc, argv);
+
+    return (SDK::SharedPtr<DownpourBase>(DPGame))->Run();
+}
