@@ -31,3 +31,5 @@ A: The fork follows the same license as [Urho3D](https://github.com/urho3d/Urho3
 Starting from release `0.7.1a`, the engine is going into a "freeze" mode, which means development isn't halted, but temporarily paused. There are several reasons for this:
 1. [CMake](https://cmake.org/) is a great build system, but a burden to maintain.
 2. Pausing the engine development will allow me to devote more of my free time developing the game instead.
+
+The SDK is now deprecated and will no longer receive further development. Please head over to the [Flock SDK Reborn repository](https://github.com/Florastamine/FlockSDK-Reborn) for a newer, better incarnation of the project.
